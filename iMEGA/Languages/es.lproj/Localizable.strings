@@ -283,7 +283,7 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Elige desde Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Capturar";
+"capturePhotoVideo"="Hacer foto";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Escanear documento";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Realizar copias de seguridad automáticas de fotos y videos en la Nube.";
+"Automatically backup your photos and videos to the Cloud Drive."="Realiza una copia de seguridad automática de tus fotos y videos en tu Nube.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar las Subidas de la cámara";
 /* Success message shown when Camera Uploads has been enabled */
@@ -529,7 +529,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Contactos";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
-"Requests"="Recibidas";
+"Requests"="Invitaciones";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
 "Groups"="Grupos";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar valoración";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Por favor, escribe tus comentarios:";
+"pleaseWriteYourFeedback"="Escribe tus comentarios:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="No hay una cuenta de correo electrónico configurada";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -1419,7 +1419,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Términos de uso incumplidos";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Transferencia fallida debido a una estructura de carpetas recursiva";
+"Upload produces recursivity"="La transferencia ha fallado debido a una estructura de directorio recursiva";
 /* Error shown when download a file that has violated ToS/AUP. */
 "Not accessible due to ToS/AUP violation"="No accesible por infringir los Términos de servicio";
 /* Error shown when SSL check has failed */
@@ -2033,7 +2033,7 @@
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contacto encontrado en MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Abrir los ajustes";
+"Open Settings"="Abrir los Ajustes";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invita a contactos y chatea de forma segura con el chat cifrado de MEGA.";
 /* Text showing the user how many contacts would be invited */
@@ -2357,7 +2357,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIONES";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favoritos";
+"Favourite"="Favorito";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Eliminar favoritos";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
@@ -2395,7 +2395,7 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Exportar el enlace y la clave de descifrado por separado.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Más información";
+"Learn more"="Más info";
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="Los enlaces caducan el %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
@@ -2601,7 +2601,7 @@
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados de tu galería. Puedes administrar tu almacenamiento en %@";
 /* The title of Turn on Notifications view */
-"dialog.turnOnNotifications.label.title"="Activar Notificaciones";
+"dialog.turnOnNotifications.label.title"="Activar las notificaciones";
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="De esta manera, verás los nuevos mensajes al instante en tu dispositivo. ";
 /* First step to turn on notifications */

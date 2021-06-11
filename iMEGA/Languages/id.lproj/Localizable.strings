@@ -11,7 +11,7 @@
 /*  */
 "upload"="Unggah";
 /*  */
-"error"="Error";
+"error"="Kesalahan";
 /*  */
 "name"="Nama";
 /* Caption of a button to edit the files that are selected */
@@ -39,7 +39,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Akun anda telah diaktifasi. Silahkan masuk akun anda.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Link konfirmasi anda tidak lagi valid. Akun anda mungkin sudah diaktifkan atau anda mungkin telah membatalkan pendaftaran anda.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Tautan konfirmasi anda tidak lagi valid. Akun anda mungkin sudah diaktifkan atau anda mungkin telah membatalkan pendaftaran anda.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link salah";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -49,7 +49,7 @@
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="Untuk mengakses folder / file ini, anda memerlukan kunci Dekripsi. Jika Anda tidak memiliki kuncinya, silakan hubungi pembuat tautan.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Decryption key";
+"decryptionKey"="Kunci dekripsi";
 /* Button title to try to decrypt the link */
 "decrypt"="Dekripsikan";
 /* Alert title shown when you have written a decryption key not valid */
@@ -65,7 +65,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Anda telah keluar dari perangkat ini dari lokasi lain";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin menggunakan Wi-Fi publik dengan persyaratan tambahan.";
+"sslUnverified_alertTitle"="MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin menggunakan  Wi-Fi publik dengan persyaratan tambahan.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Konten yang anda coba akses tidak tersedia untuk akun ini. Silakan coba masuk dengan akun yang sama seperti di klien web seluler.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -73,13 +73,13 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Server sangat sibuk. Harap tunggu.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Tidak dapat menjangkau MEGA. Silakan periksa konektivitas Anda atau coba lagi nanti.";
+"unableToReachMega"="Tidak dapat menjangkau MEGA. Silakan periksa konektivitas Anda atau coba  lagi nanti.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Terlalu banyak permintaan. Mohon tunggu.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Harap masuk ke akun anda";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Anda harus masuk untuk menyelesaikan perubahan email anda. Harap masuk kembali dengan alamat email anda sekarang dan klik link konfirmasi anda lagi.";
+"needToBeLoggedInToCompleteYourEmailChange"="Anda harus masuk untuk menyelesaikan perubahan email anda. Harap masuk  kembali dengan alamat email anda sekarang dan klik link konfirmasi anda lagi.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Masuk";
 /* Button title which triggers the action to create a MEGA account */
@@ -101,7 +101,7 @@
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="Sandi";
+"passwordPlaceholder"="Kata Sandi";
 /*  */
 "pleaseStrengthenYourPassword"="Harap perkuat password anda.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -109,19 +109,19 @@
 /*  */
 "weak"="Lemah";
 /*  */
-"passwordVeryWeakOrWeak"="Password anda mudah ditebak. Coba untuk membuat password yang lebih panjang. Kombinasikan huruf besar & huruf kecil. Tambahkan sepcial characters. Jangan gunakan nama atau kata yang dapat ditemukan di kamus.";
+"passwordVeryWeakOrWeak"="Password anda mudah ditebak. Coba untuk membuat password yang lebih panjang. Kombinasikan  huruf besar &amp; huruf kecil. Tambahkan sepcial characters. Jangan gunakan nama atau kata yang dapat ditemukan  di kamus.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Sedang";
+"PasswordStrengthMedium"="Menengah";
 /*  */
 "passwordMedium"="Password anda cukup kuat, namun disarankan untuk lebih memperkuat password anda lagi.";
 /*  */
 "good"="Bagus";
 /*  */
-"passwordGood"="Password ini akan menahan serangan brute-force yang paling sering. Harap pastikan bahwa anda akan mengingat password anda.";
+"passwordGood"="Password ini akan menahan serangan brute-force yang paling sering. Harap pastikan bahwa  anda akan mengingat password anda.";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="Kuat";
 /*  */
-"passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa anda akan mengingat password anda.";
+"passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa  anda akan mengingat password anda.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href=\"terms\">Kebijakan Pelayanan MEGA</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
@@ -129,13 +129,13 @@
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Masukan nama yang benar";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Password berbeda";
+"passwordsDoNotMatch"="Kata sandi berbeda";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Anda harus setuju dengan persyaratan layanan untuk mendaftarkan akun MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
-"termsForLosingPasswordCheckboxUnselected"="Anda harus setuju bahwa Anda memahami bahaya kehilangan kata sandi Anda";
+"termsForLosingPasswordCheckboxUnselected"="Anda harus setuju bahwa anda memahami bahaya kehilangan kata sandi anda";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Surel ini telah memiliki akun di Mega.";
+"emailAlreadyRegistered"="Alamat email ini telah memiliki akun terdaftar di MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Menunggu konfirmasi email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -189,9 +189,9 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Koneksi internet tidak tersedia";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Tidak ada file di folder";
+"emptyFolder"="Folder Kosong";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Tidak ada berkas di Cloud Drive anda";
+"cloudDriveEmptyState_title"="Tidak ada berkas di Penyimpanan Cloud anda";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Tambah files";
 /* Title shown when you make a search and there is 'No Results' */
@@ -225,7 +225,7 @@
 /* Success message shown when you Cancelled a contact request */
 "requestCancelled"="Request telah dibatalkan";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Request telah dihapus";
+"requestDeleted"="Permintaan telah dihapus";
 /* Title shown when there's no pending contact requests */
 "noRequestPending"="Tidak ada request pending";
 /* Title shown when the transfers are paused */
@@ -237,7 +237,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Tidak ada upload";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Drive";
+"cloudDrive"="Penyimpanan Cloud";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -259,13 +259,13 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Berhenti sementara";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Dibatalkan";
+"Cancelled"="Batal";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Melengkapi …";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Mencoba lagi …";
 /* Section title of the 'Sort by' */
-"sortTitle"="URUTKAN BERDASAR";
+"sortTitle"="Urutkan berdasar";
 /* Button title to 'Save' the selected option */
 "save"="Simpan";
 /* Sort by option (1/6). This one orders the files alphabethically */
@@ -283,7 +283,7 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Pilih dari Foto";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Ambil foto";
+"capturePhotoVideo"="Tangkap";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scan Document";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
@@ -355,15 +355,15 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Peringatan hak cipta untuk semua pengguna";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA menghargai hak cipta orang lain dan mengharuskan pengguna layanan MEGA cloud menuruti hukum hak cipta.";
+"copyrightMessagePart1"="MEGA menghargai hak cipta orang lain dan mengharuskan pengguna  layanan MEGA cloud menuruti hukum hak cipta.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Anda dilarang menggunakan layanan MEGA cloud untuk melanggar hak cipta. Anda tidak boleh mengunggah, mengunduh, menyimpan, berbagi, menampilkan, mengalirkan, mendistribusikan, mengirim email, menautkan, mengirimkan atau menyediakan file, data, atau konten yang melanggar hak cipta atau hak kepemilikan orang lain atau entitas lainnya.";
+"copyrightMessagePart2"="Anda dilarang menggunakan layanan MEGA cloud untuk melanggar hak  cipta. Anda tidak boleh mengunggah, mengunduh, menyimpan, berbagi, menampilkan, mengalirkan, mendistribusikan,  mengirim email, menautkan, mengirimkan atau menyediakan file, data, atau konten yang melanggar hak cipta atau  hak kepemilikan orang lain atau entitas lainnya.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Setuju";
 /* button caption text that the user clicks when he disagrees */
 "disagree"="Tidak setuju";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
-"linkWithoutKey"="Link tanpa key";
+"linkWithoutKey"="Tautan tanpa kunci";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Link dengan key";
 /* An alert dialog for the Get Link feature */
@@ -379,7 +379,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Salin tautan";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy kunci";
+"copyKey"="Salin kunci";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Buka dengan…";
 /*  */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Lewati";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Cadangkan foto dan video Anda secara otomatis ke Drive Cloud Anda.";
+"Automatically backup your photos and videos to the Cloud Drive."="Cadangkan foto dan video anda ke Penyimpanan Cloud anda secara otomatis.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Aktifkan Upload Kamera";
 /* Success message shown when Camera Uploads has been enabled */
@@ -545,13 +545,13 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Berbagi";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Dibagikan";
+"incoming"="Masuk";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Membagikan";
+"outgoing"="Keluar";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Dibagikan dengan %d kontak";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="Permission telah diubah";
+"permissionsChanged"="Izin telah diubah";
 /* Message shown when a share has been left */
 "shareLeft"="Berbagi ditinggalkan";
 /* Message shown when some shares have been left */
@@ -571,7 +571,7 @@
 /* Message shown when some shares have been removed */
 "sharesRemoved"="Berbagi terhapus";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith"="Dibagikan bersama";
+"sharedWith"="Berbagi dengan";
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Tambah dari Kontak";
 /* Alert title shown when you select to add a contact inserting his/her email */
@@ -585,7 +585,7 @@
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Pengguna telah diundang dan akan muncul di daftar kontak anda setelah diterima.";
 /* Success message shown when some contacts have been invited */
-"theUsersHaveBeenInvited"="Pengguna telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
+"theUsersHaveBeenInvited"="Pengguna telah diundang dan akan muncul dalam daftar kontak anda setelah  undangan anda diterima.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Hapus kontak";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Kirim saran";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Harap tulis feedback anda disini:";
+"pleaseWriteYourFeedback"="Tolong tuliskan masukan anda disini:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Tidak ada alamat email tersedia pada perangkat anda";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -749,7 +749,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ganti kata sandi";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Meng-ekspor Recovery Key dan menyimpan nya di tempat yang aman membolehkan anda mengatur password baru tanpa kehilangan data.";
+"exportMasterKeyFooter"="Meng-ekspor Recovery Key dan menyimpan nya di tempat yang aman  membolehkan anda mengatur password baru tanpa kehilangan data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Mengapa saya butuh Recovery Key?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -773,7 +773,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Jangan gunakan HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Aktifkan pilihan ini jika transfer anda tidak dimulai. Dalam keadaan normal, HTTP cukup memuaskan karena seluruh transfer telah di-enkripsi.";
+"transfersSectionFooter"="Aktifkan pilihan ini jika transfer anda tidak dimulai. Dalam keadaan  normal, HTTP cukup memuaskan karena seluruh transfer telah di-enkripsi.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Opsi download";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -787,7 +787,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link pembatalan telah habis.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk menghapus akun Anda. Anda akan kehilangan semua data yang disimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk menghapus akun Anda. Anda akan  kehilangan semua data yang disimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Akun anda berhasil dihapus.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -997,9 +997,9 @@
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Dapatkan %@ gratis saat anda menambahkan nomor telepon anda. Ini memudahkan kontak anda untuk menemukan anda di MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
-"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Tambahkan nomor telepon Anda ke MEGA. Ini memudahkan kontak Anda untuk menemukan Anda di MEGA.";
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Tambahkan nomor telepon Anda ke MEGA. Ini  memudahkan kontak Anda untuk menemukan Anda di MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Akun Anda telah ditangguhkan sementara karena kemungkinan penyalahgunaan. Harap verifikasi nomor telepon Anda untuk membuka kunci akun Anda.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Akun Anda telah ditangguhkan sementara karena kemungkinan  penyalahgunaan. Harap verifikasi nomor telepon Anda untuk membuka kunci akun Anda.";
 /* Verify your account title */
 "Verify Your Account"="Verifikasi akun anda";
 /* Add your phone number title */
@@ -1053,7 +1053,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
-"Storage"="Gudang";
+"Storage"="Penyimpanan";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Terbatas";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1075,7 +1075,7 @@
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Tingkatkan ke paket khusus";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Tanyakan kepada kami bagaimana anda dapat meningkatkan ke paket khusus:";
+"Ask us how you can upgrade to a custom plan:"="Tanyakan kepada kami bagaimana Anda dapat meningkatkan ke paket khusus:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Request plan";
 /* Header shown to help on the purchasin process */
@@ -1149,7 +1149,7 @@
 /* Empty Conversations section */
 "noConversations"="Tidak ada percakapan";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Mulai mengobrol dengan aman dengan kontak Anda menggunakan enkripsi ujung-ke-ujung";
+"Start chatting securely with your contacts using end-to-end encryption"="Mulai mengobrol dengan aman dengan kontak Anda menggunakan enkripsi  ujung-ke-ujung";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Aktifkan";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1179,7 +1179,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Rich URL previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Tingkatkan pengalaman MEGAchat. Isi URL akan diambil tanpa enkripsi end-to-end.";
+"richPreviewsFooter"="Tingkatkan pengalaman MEGAchat. Isi URL akan diambil tanpa enkripsi  end-to-end.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Suara dan Panggilan Suara";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1233,7 +1233,7 @@
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Kredential Kontak";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="Ini dapat dilakukan pada kehidupan nyata melalui bertemu langsung. Jika ana memiliki channel lain yang sudah ter-verifikasi seperti OTR atau PGP, anda mungkin mau menggunakan itu.";
+"thisIsBestDoneInRealLife"="Ini dapat dilakukan pada kehidupan nyata melalui bertemu  langsung. Jika ana memiliki channel lain yang sudah ter-verifikasi seperti OTR atau PGP, anda mungkin mau  menggunakan itu.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="Kredential saya";
 /* Button to reset the password */
@@ -1315,7 +1315,7 @@
 /*  */
 "never"="Tidak pernah";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Anda menonaktifkan tampilan URL kaya secara permanen. Anda dapat mengaktifkan kembali tampilan URL kaya di pengaturan Anda. Apakah Anda ingin melanjutkan?";
+"richPreviewsConfirmation"="Anda menonaktifkan tampilan URL kaya secara permanen. Anda dapat  mengaktifkan kembali tampilan URL kaya di pengaturan Anda. Apakah Anda ingin melanjutkan?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Hapus preview";
 /*  */
@@ -1331,7 +1331,7 @@
 /* Content of the notification when there is unknown activity on the Chat */
 "You may have new messages"="Anda mungkin memiliki pesan baru";
 /* Notification text body shown when you have received a contact request */
-"contactRequest"="Permintaan kontak";
+"contactRequest"="Permintaan Kontak";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Folder Bersama Baru";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1367,7 +1367,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Beberapa item tidak dapat di share dengan MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Telah berhasil membagikan";
+"Shared successfully"="Berhasil dibagikan";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Gagal transfer:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1457,7 +1457,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Rendah";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Sedang";
+"medium"="Menengah";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Tinggi";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1469,7 +1469,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Terima Otomatis";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Kontak yang memindai Kode QR Anda akan secara otomatis ditambahkan ke daftar kontak Anda.";
+"autoAcceptFooter"="Kontak yang memindai Kode QR Anda akan secara otomatis ditambahkan  ke daftar kontak Anda.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Setel ulang Kode QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1539,7 +1539,7 @@
 /* Label for test password button and titles */
 "testPassword"="Uji Kata Sandi";
 /* Label for recovery key button */
-"backupRecoveryKey"="Backup Recovery Key";
+"backupRecoveryKey"="Cadangkan Recovery Key";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Silakan uji kata sandi Anda di bawah ini untuk memastikan Anda mengingatnya. Jika Anda kehilangan kata sandi Anda, Anda akan kehilangan akses ke data MEGA Anda. [A]Pelajari lebih lanjut[/A]";
 /* Title text for the account confirmation. */
@@ -1643,11 +1643,11 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Maaf, autentikasi dua faktor tidak dapat diaktifkan di perangkat anda. Silakan buka App Store untuk memasang aplikasi Authenticator.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Anda memerlukan aplikasi authenticator untuk mengaktifkan 2FA di MEGA. Anda dapat mengunduh dan memasang aplikasi Google Authenticator, Duo Mobile, Authy, atau Microsoft Authenticator untuk ponsel atau tablet Anda.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Anda memerlukan aplikasi authenticator untuk mengaktifkan 2FA di MEGA. Anda dapat  mengunduh dan memasang aplikasi Google Authenticator, Duo Mobile, Authy, atau Microsoft Authenticator untuk  ponsel atau tablet Anda.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Otentikasi Dua Faktor Diaktifkan";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Lain kali Anda login ke akun Anda, Anda akan diminta memasukkan kode 6-digit yang disediakan oleh aplikasi Otentikasi Anda.";
+"twoFactorAuthenticationEnabledDescription"="Lain kali Anda login ke akun Anda, Anda akan diminta memasukkan kode 6-digit  yang disediakan oleh aplikasi Otentikasi Anda.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Silakan simpan Recovery Key anda di lokasi yang aman";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1679,19 +1679,19 @@
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Anda memegang kunci";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Keamanan adalah alasan kami ada, file Anda aman bersama kami di belakang mesin enkripsi yang diminyaki di mana hanya Anda yang dapat mengakses file Anda.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Keamanan adalah alasan kami ada, file Anda  aman bersama kami di belakang mesin enkripsi yang diminyaki di mana hanya Anda yang dapat mengakses file Anda.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Chat terenkripsi";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Obrolan yang sepenuhnya terenkripsi dengan panggilan suara dan video, perpesanan grup, dan integrasi berbagi file dengan Cloud Drive Anda.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Obrolan yang sepenuhnya terenkripsi dengan  panggilan suara dan video, perpesanan grup, dan integrasi berbagi file dengan Cloud Drive Anda.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Buat Jaringan Anda";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Tambahkan kontak, buat jaringan, berkolaborasi, buat panggilan suara dan video tanpa harus meninggalkan MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Tambahkan kontak, buat jaringan,  berkolaborasi, buat panggilan suara dan video tanpa harus meninggalkan MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Foto Anda di Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Unggahan Kamera adalah fitur penting untuk perangkat seluler apa pun dan kami telah melindungi Anda. Buat akun Anda sekarang.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Unggahan Kamera adalah fitur penting untuk  perangkat seluler apa pun dan kami telah melindungi Anda. Buat akun Anda sekarang.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Siapkan MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1723,7 +1723,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Versi file";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Aktifkan atau nonaktifkan versi file untuk seluruh akun Anda.\nAnda masih dapat menerima versi file dari folder bersama jika kontak Anda telah mengaktifkan ini.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Aktifkan atau nonaktifkan versi file untuk seluruh akun  Anda.\nAnda masih dapat menerima versi file dari folder bersama jika kontak Anda telah mengaktifkan ini.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Ketika versi file dinonaktifkan, versi saat ini akan diganti dengan versi baru setelah file diperbarui (dan perubahan anda pada file tidak akan dicatat lagi). Yakin ingin menonaktifkan versi file?";
 /* Settings preference title to show file versions info of the account */
@@ -1735,9 +1735,9 @@
 /* Text of a button which deletes all historical versions of files in the users entire account. */
 "Delete Previous Versions"="Hapus Versi Sebelumnya";
 /* A warning note about deleting all file versions in the settings section. */
-"All current files will remain. Only historic versions of your files will be deleted."="Ini akan menghapus secara permanen semua versi file Anda sendiri. Setiap versi file yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.";
+"All current files will remain. Only historic versions of your files will be deleted."="Ini akan menghapus secara permanen semua versi file  Anda sendiri. Setiap versi file yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.";
 /* Text of the dialog to delete all the file versions of the account */
-"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Anda akan menghapus riwayat versi semua file. Versi file apa pun yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.\n\nHarap dicatat bahwa file saat ini tidak akan dihapus.";
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Anda akan menghapus riwayat versi semua file. Versi file apa  pun yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.\n\nHarap dicatat bahwa file saat ini tidak  akan dihapus.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
 "Rubbish-Bin Cleaning Scheduler:"="Scheduler Pembersih Sampah";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
@@ -1749,7 +1749,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Tempat Sampah dapat dibersihkan untuk Anda secara otomatis. Periode minimum adalah 7 hari.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Untuk menonaktifkan Penjadwalan Pembersihan Rubbish-Bin atau menetapkan periode retensi yang lebih lama, Anda harus berlangganan ke rencana PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Untuk menonaktifkan Penjadwalan Pembersihan Rubbish-Bin atau  menetapkan periode retensi yang lebih lama, Anda harus berlangganan ke rencana PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Apakah Anda ingin menutup semua sesi lainnya? Ini akan mengeluarkan Anda di semua sesi aktif lainnya kecuali sesi saat ini.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1783,9 +1783,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Dapatkan tautan obrolan";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotasi kunci enkripsi sedikit lebih aman, tetapi tidak memungkinkan anda membuat tautan obrolan dan peserta baru tidak akan melihat pesan sebelumnya.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotasi kunci enkripsi sedikit lebih aman, tetapi tidak memungkinkan  anda membuat tautan obrolan dan peserta baru tidak akan melihat pesan sebelumnya.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Rotasi kunci enkripsi dinonaktifkan untuk percakapan dengan lebih dari 100 peserta.";
+"Key rotation is disabled for conversations with more than 100 participants."="Rotasi kunci enkripsi dinonaktifkan untuk percakapan dengan  lebih dari 100 peserta.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Untuk membuat tautan obrolan, Anda harus memberi nama grup.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1805,9 +1805,9 @@
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ bergabung dengan obrolan grup.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="Anda tidak diizinkan untuk bergabung dengan panggilan ini karena telah mencapai jumlah maksimum peserta.";
+"Error. No more participants are allowed in this group call."="Anda tidak diizinkan untuk bergabung dengan panggilan ini karena  telah mencapai jumlah maksimum peserta.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="Anda tidak diizinkan untuk mengaktifkan video karena panggilan ini telah mencapai jumlah maksimum peserta menggunakan video.";
+"Error. No more video are allowed in this group call."="Anda tidak diizinkan untuk mengaktifkan video karena panggilan ini telah  mencapai jumlah maksimum peserta menggunakan video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Tidak dapat memulai panggilan karena batas peserta telah terlampaui.";
 /* Label shown while joining a public chat */
@@ -1905,7 +1905,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Unggahan Anda tidak dapat dilanjutkan karena akun Anda penuh";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Izinkan kontak Anda melihat terakhir kali Anda aktif di MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="Izinkan kontak Anda melihat terakhir kali Anda aktif di  MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Tunjukkan";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -1931,7 +1931,7 @@
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "Send Location"="Kirim Lokasi";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Lokasi ini akan dibuka menggunakan penyedia peta pihak ketiga di luar platform MEGA terenkripsi ujung ke ujung.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Lokasi ini akan dibuka menggunakan penyedia peta pihak ketiga di luar  platform MEGA terenkripsi ujung ke ujung.";
 /* Text shown in location-type messages */
 "Pinned Location"="Lokasi yang Disematkan";
 /* Plural of participant. 2 participants */
@@ -1943,13 +1943,13 @@
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="Ketuk dan tahan %@ untuk merekam, lepaskan untuk mengirim";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="Tidak mungkin merekam pesan suara saat ada panggilan yang sedang berlangsung.";
+"It is not possible to record voice messages while there is a call in progress"="Tidak mungkin merekam pesan suara saat ada panggilan yang sedang  berlangsung.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
 "Recording..."="Rekaman…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Panggilan yang sedang berlangsung";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="Memutar file media tidak dapat dilakukan saat ada panggilan yang sedang berlangsung.";
+"It is not possible to play content while there is a call in progress"="Memutar file media tidak dapat dilakukan saat ada panggilan yang sedang  berlangsung.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Panggilan Dimulai";
 /* Title for feature Password Reminder */
@@ -2019,13 +2019,13 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Ubah ke server uji?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Anda yakin ingin mengubah ke server pengujian? Akun anda mungkin mengalami masalah yang tidak dapat dipulihkan.";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Anda yakin ingin mengubah ke server pengujian? Akun anda mungkin mengalami  masalah yang tidak dapat dipulihkan.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Aktifkan Akses ke Buku Alamat Anda";
+"Enable Access to Your Address Book"="Aktifkan Akses  ke Buku Alamat Anda";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Temukan kontak dari buku alamat Anda dengan mudah di MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA tidak akan menggunakan data ini untuk tujuan lain apa pun dan tidak akan pernah berinteraksi dengan kontak anda tanpa persetujuan anda.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA tidak akan menggunakan data ini untuk tujuan lain apa pun dan  tidak akan pernah berinteraksi dengan kontak anda tanpa persetujuan anda.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Lihat siapa yang sudah ada di MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2035,7 +2035,7 @@
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Buka Pengaturan";
 /* Text encouraging the user to invite contacts to MEGA */
-"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Undang kontak dan mulailah mengobrol dengan aman dengan obrolan terenkripsi MEGA.";
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Undang kontak dan mulailah mengobrol dengan aman dengan obrolan  terenkripsi MEGA.";
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="Undang kontak [X]";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
@@ -2063,7 +2063,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="Anda tidak dapat menghapus %1$s sebagai kontak karena itu adalah bagian dari akun Bisnis anda.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="Anda tidak dapat menghapus %1$s sebagai kontak karena itu adalah bagian  dari akun Bisnis anda.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="Memerlukan Kode Sandi";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2077,15 +2077,15 @@
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="Manajemen pengguna hanya tersedia dari browser web desktop.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
-"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ada masalah dengan pembayaran terakhir anda. Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.";
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ada masalah dengan pembayaran terakhir anda. Silakan akses MEGA menggunakan  browser desktop untuk informasi lebih lanjut.";
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Akun Bisnis anda telah kedaluwarsa";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Terjadi masalah saat memproses pembayaran anda. MEGA terbatas hanya untuk melihat sampai masalah ini telah diperbaiki di browser web desktop.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Terjadi masalah saat memproses pembayaran anda. MEGA terbatas hanya untuk  melihat sampai masalah ini telah diperbaiki di browser web desktop.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Akun Anda saat ini [B]ditangguhkan[/B]. Anda hanya dapat menelusuri data Anda.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Akun Anda saat ini [B]ditangguhkan[/B]. Anda hanya dapat menelusuri data  Anda.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Meskipun MEGA tidak dapat mengakses data anda, administrator akun bisnis anda memiliki kemampuan untuk mengontrol dan melihat Unggahan Kamera di akun pengguna anda";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Meskipun MEGA tidak dapat mengakses data anda, administrator akun  bisnis anda memiliki kemampuan untuk mengontrol dan melihat Unggahan Kamera di akun pengguna anda";
 /*  */
 "Something went wrong"="Ada yang salah";
 /* Title of the "Links" Shared Items. */
@@ -2095,9 +2095,9 @@
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Kelola berbagi";
 /* Title of the screen that shows the users with whom the user can share a folder */
-"Share with"="Berbagi dengan";
+"Share with"="Berbagi  dengan";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Contact your business account administrator to resolve the issue and activate your account."="Hubungi administrator akun bisnis Anda untuk menyelesaikan masalah dan aktifkan akun Anda.";
+"Contact your business account administrator to resolve the issue and activate your account."="Hubungi administrator akun bisnis Anda untuk menyelesaikan masalah dan  aktifkan akun Anda.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
 "Until this morning"="Sampai pagi ini";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
@@ -2161,7 +2161,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Lihat di Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Link ini tidak terkait dengan akun ini. Silahkan masuk dengan akun yang benar.";
+"This link is not related to this account. Please log in with the correct account."="Link ini tidak terkait dengan akun ini. Silahkan masuk dengan  akun yang benar.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Undang kontak sekarang";
 /* Text showing the user one contact would be invited */
@@ -2201,9 +2201,9 @@
 /* Title of a helping view about locked accounts */
 "Locked Accounts"="Akun Terkunci";
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
-"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Ada kemungkinan bahwa Anda menggunakan kata sandi yang sama untuk akun MEGA Anda seperti untuk layanan lain, dan bahwa setidaknya salah satu dari layanan lain ini telah mengalami pelanggaran data.";
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Ada kemungkinan bahwa Anda menggunakan kata sandi yang sama untuk akun MEGA Anda seperti untuk layanan lain, dan  bahwa setidaknya salah satu dari layanan lain ini telah mengalami pelanggaran data.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Kata sandi Anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun Anda, termasuk, namun tidak terbatas pada, akun MEGA Anda.";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Kata sandi Anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun Anda, termasuk, namun tidak  terbatas pada, akun MEGA Anda.";
 /* Label indicating transfer over quota. */
 "Transfer over quota"="Transfer melebihi kuota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
@@ -2235,9 +2235,9 @@
 /* export Quality Option for Scan document */
 "best"="Terbaik";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
-"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dinonaktifkan oleh administrator Anda. Anda dapat menghubungi administrator akun bisnis Anda untuk rincian lebih lanjut.";
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dinonaktifkan oleh administrator Anda. Anda dapat menghubungi  administrator akun bisnis Anda untuk rincian lebih lanjut.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
-"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dihapus oleh administrator Anda. Silakan hubungi administrator akun bisnis Anda untuk rincian lebih lanjut.";
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dihapus oleh administrator Anda. Silakan hubungi administrator  akun bisnis Anda untuk rincian lebih lanjut.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Masukan nama grup";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
@@ -2287,9 +2287,9 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Saat anda keluar, transfer yang sedang berlangsung akan dibatalkan.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="Saat anda keluar, file dari bagian Offline anda akan dihapus dari perangkat anda.";
+"When you logout, files from your Offline section will be deleted from your device."="Saat anda keluar, file dari bagian Offline anda akan dihapus dari perangkat  anda.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Saat Anda keluar, file dari bagian Offline Anda akan dihapus dari perangkat Anda dan transfer yang sedang berlangsung akan dibatalkan.";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Saat Anda keluar, file dari bagian Offline Anda akan dihapus  dari perangkat Anda dan transfer yang sedang berlangsung akan dibatalkan.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat dibuat pada %s1";
 /* Title shown when there are no shared files */
@@ -2321,9 +2321,9 @@
 /* Title for action to remove the registered phone number. */
 "Remove Phone Number"="Hapus nomor telepon";
 /* Message for action to remove the registered phone number. */
-"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Ini akan menghapus nomor telepon anda yang terkait dari akun anda. Jika nanti anda memilih untuk menambahkan nomor telepon, anda akan diminta untuk memverifikasinya.";
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Ini akan menghapus nomor telepon anda yang terkait dari akun anda. Jika  nanti anda memilih untuk menambahkan nomor telepon, anda akan diminta untuk memverifikasinya.";
 /* Message for action to modify the registered phone number. */
-"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Operasi ini akan menghapus nomor telepon anda saat ini dan memulai proses mengaitkan nomor telepon baru dengan akun anda.";
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Operasi ini akan menghapus nomor telepon anda saat ini dan memulai proses  mengaitkan nomor telepon baru dengan akun anda.";
 /* Information message shown to users when the operation of removing phone number succeed. */
 "Your phone number has been removed successfully."="Nomor telepon anda telah berhasil dihapus.";
 /* A message shown to users when phone number removal fails. */
@@ -2395,7 +2395,7 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Ekspor tautan dan kunci dekripsi secara terpisah.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Belajar Lebih";
+"Learn more"="Pelajari lebih lanjut";
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="Tautan kedaluwarsa %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
@@ -2413,7 +2413,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Sandi Disalin ke Papan Klip";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistem enkripsi ujung-ke-ujung kami memerlukan kunci unik yang dibuat secara otomatis untuk file ini. Tautan dengan kunci ini dibuat secara default, tetapi Anda dapat mengekspor kunci dekripsi secara terpisah untuk lapisan keamanan tambahan.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistem enkripsi ujung-ke-ujung kami memerlukan kunci unik yang dibuat  secara otomatis untuk file ini. Tautan dengan kunci ini dibuat secara default, tetapi anda dapat mengekspor  kunci dekripsi secara terpisah untuk lapisan keamanan tambahan.";
 /* Text related to the decryption key of a public link */
 "Decryption Key"="Kunci Dekripsi";
 /* Text to indicate the user to remove the password of a link */
@@ -2433,7 +2433,7 @@
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
 "History Clearing"="Kliring Sejarah";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
-"Automatically delete messages older than a certain amount of time"="Hapus pesan yang lebih lama dari jangka waktu tertentu secara otomatis.";
+"Automatically delete messages older than a certain amount of time"="Hapus pesan yang lebih lama dari jangka waktu tertentu secara  otomatis.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
 "Automatically delete messages older than one day"="Hapus pesan yang lebih lama dari satu hari secara otomatis.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
@@ -2443,7 +2443,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="Hapus pesan yang lebih lama dari %1 secara otomatis";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Hapus semua pesan dan file yang dibagikan dalam percakapan ini. Tindakan ini tidak dapat diubah.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Hapus semua pesan dan file yang dibagikan dalam percakapan ini.  Tindakan ini tidak dapat diubah.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Hapus Pesan Lebih Lama Dari";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2453,9 +2453,9 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="Satu Bulan";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="Kustom…";
+"Custom..."="Adat…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] mengubah waktu pembersihan pesan menjadi [/B][A] %2$s[/A][B]. [/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] mengubah waktu pembersihan pesan menjadi [/B][A]  %2$s[/A][B]. [/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] menonaktifkan penghapusan pesan.[/B]";
 /*  */
@@ -2503,7 +2503,7 @@
 /* Text description leading the user to perform an action, ie the shortcuts widget */
 "Launch the MEGA app to perform an action"="Luncurkan aplikasi MEGA untuk melakukan tindakan";
 /* Title for document explorer view */
-"Documents"="Document";
+"Documents"="Dokumen";
 /* Title for audio explorer view */
 "Audio"="Audio";
 /* Title for video explorer view */
@@ -2525,7 +2525,7 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Beranda";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Dokumen";
+"Docs"="Docs";
 /* Message shown when a link is shared with separated key */
 "This link was shared without a decryption key. Do you want to share its key?"="Tautan ini dibagikan tanpa kunci dekripsi. Apakah anda ingin membagikan kuncinya?";
 /* Title for password protect link alert */
@@ -2541,7 +2541,7 @@
 /* Cookie dialog header */
 "Before You Continue"="Sebelum anda melanjutkan";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Kami menggunakan penyimpanan lokal dan teknologi serupa (‘Cookies’) untuk memberikan layanan kami kepada anda, meningkatkan pengalaman anda dengan layanan kami dan menyesuaikan iklan yang anda lihat, termasuk melalui pihak ketiga. Terima penggunaan Cookie kami sejak awal kunjungan anda atau sesuaikan Cookie di Pengaturan Cookie. Baca selengkapnya di [A]Kebijakan Cookie[/A] kami.";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Kami menggunakan penyimpanan lokal dan teknologi serupa (‘Cookies’)  untuk memberikan layanan kami kepada anda, meningkatkan pengalaman anda dengan layanan kami dan menyesuaikan  iklan yang anda lihat, termasuk melalui pihak ketiga. Terima penggunaan Cookie kami sejak awal kunjungan anda  atau sesuaikan Cookie di Pengaturan Cookie. Baca selengkapnya di [A]Kebijakan Cookie[/A] kami.";
 /* Cookie dialog button label. */
 "Accept Cookies"="Terima Cookies";
 /* Cookie settings dialog text. */
@@ -2549,23 +2549,23 @@
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "Always On"="Selalu Aktif";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Penting untuk memberi anda fungsionalitas penting dan akses aman ke layanan kami. Untuk alasan ini, mereka tidak membutuhkan persetujuan.";
+"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Penting untuk memberi anda fungsionalitas penting dan akses aman  ke layanan kami. Untuk alasan ini, mereka tidak membutuhkan persetujuan.";
 /* Cookie settings dialog text. */
 "Preference Cookies"="Preferensi Cookies";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Izinkan kami mengingat pengaturan tampilan dan format tertentu yang anda pilih. Tidak menerima Cookie ini berarti kami tidak dapat mengingat beberapa hal untuk anda seperti tata letak layar pilihan anda.";
+"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Izinkan kami mengingat pengaturan tampilan dan format tertentu  yang anda pilih. Tidak menerima Cookie ini berarti kami tidak dapat mengingat beberapa hal untuk anda seperti  tata letak layar pilihan anda.";
 /* Cookie settings dialog text. */
 "Performance and Analytics Cookies"="Cookie Kinerja dan Analisis";
 /* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
+"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Bantu kami untuk memahami bagaimana anda menggunakan layanan  kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini  berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
 /* Cookie settings dialog text. */
 "Advertising Cookies"="Cookie Iklan";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Digunakan oleh kami dan mitra periklanan kami yang disetujui untuk menyesuaikan iklan yang anda lihat di layanan kami dan di situs web lain berdasarkan riwayat penelusuran anda. Tidak menerima Cookies ini berarti kami mungkin menampilkan iklan yang kurang relevan.";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Digunakan oleh kami dan mitra periklanan kami yang disetujui  untuk menyesuaikan iklan yang anda lihat di layanan kami dan di situs web lain berdasarkan riwayat penelusuran  anda. Tidak menerima Cookies ini berarti kami mungkin menampilkan iklan yang kurang relevan.";
 /* Cookie settings dialog text. */
 "Third Party Cookies"="Cookie Pihak Ketiga";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ini adalah Cookies yang dikendalikan oleh orang lain selain kami; kami menggunakan Cookie ini untuk menyediakan jenis fungsionalitas yang dijelaskan di atas. Tidak menerima Cookie ini akan memiliki implikasi yang berbeda tergantung pada jenis Cookie apa setiap Cookie pihak ketiga itu. Klik “Informasi Lebih Lanjut” di bawah untuk detail tentang semua Cookie pihak ketiga yang kami gunakan.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ini adalah Cookies yang dikendalikan oleh orang lain selain  kami; kami menggunakan Cookie ini untuk menyediakan jenis fungsionalitas yang dijelaskan di atas. Tidak menerima  Cookie ini akan memiliki implikasi yang berbeda tergantung pada jenis Cookie apa setiap Cookie pihak ketiga itu.  Klik “Informasi Lebih Lanjut” di bawah untuk detail tentang semua Cookie pihak ketiga yang kami gunakan.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="Informasi Lebih Lanjut";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
@@ -2575,7 +2575,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Buat file baru";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Anda tidak memiliki izin yang diperlukan untuk mengembalikan file ini. Untuk melanjutkan, kita dapat membuat file baru dengan data yang dikembalikan. Apakah Anda ingin melanjutkan?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Anda tidak memiliki izin yang diperlukan untuk mengembalikan file  ini. Untuk melanjutkan, kita dapat membuat file baru dengan data yang dikembalikan. Apakah Anda ingin  melanjutkan?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */

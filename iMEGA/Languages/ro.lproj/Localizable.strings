@@ -241,11 +241,11 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d fișiere";
+"files"="%d de fișiere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
 "oneFolder"="%d folder";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d foldere";
+"folders"="%d de foldere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
 "folderAndFile"="1 folder + 1 fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Pus pe pauză";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Anulat(ă)";
+"Cancelled"="Anulat";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Se finalizează…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -537,7 +537,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d foldere";
+"foldersShared"="%d de foldere";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Inserează o adresă de e-mail";
 /* Title of Shared Items section */
@@ -637,7 +637,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Trimite feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Te rugăm să scrii feedbackul tău aici:";
+"pleaseWriteYourFeedback"="Te rugăm să scrii feedbackul aici:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitivul tău";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -1075,7 +1075,7 @@
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Upgradează la un plan personalizat";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți face upgrade la un plan personalizat";
+"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți să upgradezi la un plan personalizat:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicită un plan";
 /* Header shown to help on the purchasin process */
@@ -1993,7 +1993,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Nicio activitate recentă";
 /* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d elemente";
+"%1$d items"="%1$d de elemente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Link de chat indisponibil";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2309,7 +2309,7 @@
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să contactezi asistența pentru un plan personalizat.</paragraph>";
 /* Over Disk Quota of number of days */
-"%d days"="%d zile";
+"%d days"="%d de zile";
 /* Over Disk Quota of must act immediately to save your data */
 "<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Trebuie să acționezi numaidecât pentru a-ți salva datele.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
@@ -2357,7 +2357,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIUNI";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Adaugă la favorite";
+"Favourite"="Favorit";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Elimină de la favorite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */

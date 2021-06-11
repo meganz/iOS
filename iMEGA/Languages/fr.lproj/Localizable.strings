@@ -111,7 +111,7 @@
 /*  */
 "passwordVeryWeakOrWeak"="Votre mot de passe est facile à deviner. Essayez de le rallonger. Combinez majuscules et minuscules. Ajoutez des caractères spéciaux. N’utilisez pas des noms ou des mots du dictionnaire.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"PasswordStrengthMedium"="Moyen";
+"PasswordStrengthMedium"="Moyenne";
 /*  */
 "passwordMedium"="Votre mot de passe est assez bon pour poursuivre, mais il est recommandé de le renforcer.";
 /*  */
@@ -259,7 +259,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="En pause";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Annulée";
+"Cancelled"="Annulé";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Finalisation…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -313,7 +313,7 @@
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="La numérisation de documents n’est pas proposée";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Un fichier du même nom existe déjà";
+"There is already a file with the same name"="Un fichier porte déjà ce nom";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importer de…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -583,7 +583,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Il est inutile d’ajouter votre propre adresse courriel";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="L’utilisateur a été invité et apparaîtra dans votre liste de contacts si l’invitation est acceptée.";
+"theUserHasBeenInvited"="L’utilisateur a été invité et apparaîtra dans votre liste de contacts une fois l’invitation acceptée.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s’ils acceptent.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -643,7 +643,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Politique des témoins de navigation";
+"Cookie Policy"="Politique sur les Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "Cookie Settings"="Paramètres des Témoins de navigation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -911,7 +911,7 @@
 /* Title of the Transfers section */
 "transfers"="Transferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
-"all"="Tous";
+"all"="Tout";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
 "In Progress"="En cours";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
@@ -1073,7 +1073,7 @@
 /* A label which shows the user's current PRO plan. */
 "Current plan"="Abonnement actuel";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Passer à un abonnement personnalisé";
+"Upgrade to a custom plan"="Surclassement vers un abonnement personnalisé";
 /* Mail subject to upgrade to a custom plan */
 "Ask us how you can upgrade to a custom plan:"="Demandez-nous comment passer à un abonnement personnalisé :";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1457,7 +1457,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Basse";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Moyen";
+"medium"="Moyenne";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Haute";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -2033,7 +2033,7 @@
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact a été trouvé sur MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Ouvrir les réglages";
+"Open Settings"="Ouvrir Réglages";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invitez des contacts et commencez à dialoguer en toute sécurité grâce au dialogue en ligne chiffré de MEGA.";
 /* Text showing the user how many contacts would be invited */
@@ -2505,7 +2505,7 @@
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
-"Audio"="Sons";
+"Audio"="Son";
 /* Title for video explorer view */
 "Videos"="Vidéos";
 /* Photo Explorer Screen: No documents in the account */

@@ -47,11 +47,6 @@ final class AudioPlaylistViewController: UIViewController {
         playlistDelegate = AudioPlaylistIndexedDelegate(delegate: self, traitCollection: traitCollection)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-      super.viewWillTransition(to: size, with: coordinator)
-      tableView.reloadData()
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -122,7 +117,7 @@ final class AudioPlaylistViewController: UIViewController {
             tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
         }
     }
-    
+
     private func enableUserInteraction() {
         tableView.isUserInteractionEnabled = true
     }

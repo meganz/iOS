@@ -229,7 +229,13 @@ final class MiniPlayerViewModel: ViewModelType {
     func dispatch(_ action: MiniPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            shouldInitializePlayer ? preparePlayer() : configurePlayer()
+            if shouldInitializePlayer {
+                DispatchQueue.global(qos: .userInteractive).async {
+                    self.preparePlayer()
+                }
+            } else {
+                configurePlayer()
+            }
         case .onPlayPause:
             playerHandler.playerTogglePlay()
         case .playItem(let item):
