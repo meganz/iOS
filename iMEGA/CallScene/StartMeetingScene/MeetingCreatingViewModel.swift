@@ -54,6 +54,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let link: String?
     
     private let meetingUseCase: MeetingCreatingUseCaseProtocol
+    private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let callsUseCase: CallsUseCaseProtocol
 
     private var isVideoEnabled = false
@@ -66,14 +67,19 @@ final class MeetingCreatingViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: MeetingCreatingViewRouting, type: MeetingConfigurationType, meetingUseCase: MeetingCreatingUseCaseProtocol, link: String?) {
+    init(router: MeetingCreatingViewRouting,
+         type: MeetingConfigurationType,
+         meetingUseCase: MeetingCreatingUseCaseProtocol,
+         audioSessionUseCase: AudioSessionUseCaseProtocol,
+         callsUseCase: CallsUseCaseProtocol,
+         link: String?) {
         self.router = router
         self.type = type
         self.meetingUseCase = meetingUseCase
         self.link = link
-        callsUseCase = CallsUseCase(repository: CallsRepository())
+        self.callsUseCase = callsUseCase
+        self.audioSessionUseCase = audioSessionUseCase
         videoDevices = meetingUseCase.videoDevices()
-
     }
     
     // MARK: - Dispatch action
@@ -104,7 +110,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         case .didTapSpeakerButton:
             isSpeakerEnabled = !isSpeakerEnabled
             invokeCommand?(.updateSpeakerButton(enabled: isSpeakerEnabled))
-            
+            updateSpeaker()
         case .didTapStartMeetingButton:
             switch type {
             case .start:
@@ -137,6 +143,28 @@ final class MeetingCreatingViewModel: ViewModelType {
             firstName = name
         case .updateLastName(let name):
             lastName = name
+        }
+    }
+    
+    private func updateSpeaker() {
+        if isSpeakerEnabled {
+            audioSessionUseCase.enableLoudSpeaker { result in
+                switch result {
+                case .success(_):
+                    MEGALogDebug("Create Meeting: Loud speaker enabled")
+                case .failure(_):
+                    MEGALogDebug("Create Meeting: Failed to enable loud speaker")
+                }
+            }
+        } else {
+            audioSessionUseCase.disableLoudSpeaker { result in
+                switch result {
+                case .success(_):
+                    MEGALogDebug("Create Meeting: Loud speaker disabled")
+                case .failure(_):
+                    MEGALogDebug("Create Meeting: Failed to disable loud speaker")
+                }
+            }
         }
     }
     

@@ -19,7 +19,15 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     }
     
     @objc func build() -> UIViewController {
-        let vm = MeetingCreatingViewModel(router: self, type: type, meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository()), link: link)
+        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance())
+
+        let vm = MeetingCreatingViewModel(
+            router: self,
+            type: type,
+            meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository()),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository:audioSessionRepository),
+            callsUseCase: CallsUseCase(repository: CallsRepository()),
+            link: link)
         let vc = MeetingCreatingViewController(viewModel: vm)
         baseViewController = vc
         return vc
