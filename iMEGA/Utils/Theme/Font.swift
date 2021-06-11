@@ -1,71 +1,72 @@
 import Foundation
 
 struct Font: Codable {
-    typealias FontName = String
-
-    let size: CGFloat
-    let weight: FontWeight
+    let style: TextStyle
+    var weight: Weight? = nil
 }
 
 extension Font {
-    var uiFont: UIFont? { UIFont.systemFont(ofSize: size, weight: weight.systemWeight) }
-}
+    var value: UIFont {
+        guard let weight = weight else {
+            return UIFont.preferredFont(forTextStyle: style.value)
+        }
+        return UIFont.preferredFont(style: style.value,
+                                    weight: weight.value)
+    }
+    
+    enum Weight: String, Codable {
+        case black
+        case bold
+        case heavy
+        case light
+        case medium
+        case regular
+        case semibold
+        case thin
+        case ultraLight
 
-extension Font {
-
-    /// Size 17, Bold
-    static let title = Font(size: 17, weight: .bold)
-
-    /// Size 15, Bold
-    static let titleMedium = Font(size: 15, weight: .bold)
-
-    /// Size 13, Bold
-    static let titleSmall = Font(size: 13, weight: .bold)
-
-    /// Size 11, Regular
-    static let subtitle1 = Font(size: 11, weight: .regular)
-
-    /// Size 17, Semibold
-    static let headline = Font(size: 17, weight: .semibold)
-
-    /// Size 17, Regular
-    static let body = Font(size: 17, weight: .regular)
-
-    /// Size 15, Regular
-    static let subhead = Font(size: 15, weight: .regular)
-
-    /// Size 15, Medium
-    static let subhead2 = Font(size: 15, weight: .medium)
-
-    /// Size 12.5, Semibold
-    static let caption1 = Font(size: 12.5, weight: .semibold)
-
-    /// Size 12.5, Regular
-    static let caption2 = Font(size: 12.5, weight: .regular)
-}
-
-enum FontWeight: String, Codable {
-    case black
-    case bold
-    case heavy
-    case light
-    case medium
-    case regular
-    case semibold
-    case thin
-    case ultraLight
-
-    var systemWeight: UIFont.Weight {
-        switch self {
-        case .black: return .black
-        case .bold: return .bold
-        case .heavy: return .heavy
-        case .light: return .light
-        case .medium: return .medium
-        case .regular: return .regular
-        case .semibold: return .semibold
-        case .thin: return .thin
-        case .ultraLight: return .ultraLight
+        var value: UIFont.Weight {
+            switch self {
+            case .black: return .black
+            case .bold: return .bold
+            case .heavy: return .heavy
+            case .light: return .light
+            case .medium: return .medium
+            case .regular: return .regular
+            case .semibold: return .semibold
+            case .thin: return .thin
+            case .ultraLight: return .ultraLight
+            }
+        }
+    }
+    
+    enum TextStyle: String, Codable {
+        case largeTitle
+        case title1
+        case title2
+        case title3
+        case headline
+        case subheadline
+        case body
+        case callout
+        case footnote
+        case caption1
+        case caption2
+        
+        var value: UIFont.TextStyle {
+            switch self {
+            case .largeTitle: return .largeTitle
+            case .title1: return .title1
+            case .title2: return .title2
+            case .title3: return .title3
+            case .headline: return .headline
+            case .subheadline: return .subheadline
+            case .body: return .body
+            case .callout: return .callout
+            case .footnote: return .footnote
+            case .caption1: return .caption1
+            case .caption2: return .caption2
+            }
         }
     }
 }

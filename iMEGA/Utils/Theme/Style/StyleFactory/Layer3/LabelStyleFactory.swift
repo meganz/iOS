@@ -82,7 +82,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     private func mainNoteStyler() -> LabelStyler {
         let textColorStyler = colorFactory.textColor(.primary).asTextColorStyle
-        let mainNoteTextStyler = textStyleFactory.textStyle(of: .caption1)
+        let mainNoteTextStyler = textStyleFactory.textStyle(of: .captionSemibold)
         let paragraphStyleFactory = self.paragraphStyleFactory
         return { label in
             paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping)
@@ -94,7 +94,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     private func subNoteStyler() -> LabelStyler {
         let textColorStyler = colorFactory.textColor(.primary).asTextColorStyle
-        let subNoteTextStyler = textStyleFactory.textStyle(of: .caption2)
+        let subNoteTextStyler = textStyleFactory.textStyle(of: .caption)
         let paragraphStyleFactory = self.paragraphStyleFactory
         return { label in
             paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping)
@@ -107,7 +107,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
     private func badgeStyler() -> LabelStyler {
         let textColorStyler = colorFactory.independent(.bright).asTextColorStyle
         let backgroundColorStyler = colorFactory.independent(.warning).asBackgroundColorStyle
-        let captionTextStyler = textStyleFactory.textStyle(of: .caption1)
+        let captionTextStyler = textStyleFactory.textStyle(of: .captionSemibold)
         let cornerStyler = cornerStyleFactory.cornerStyle(of: .ten)
         let paragraphStyler = paragraphStyleFactory.paragraphStyle(of: .centered)
         return { label in
@@ -122,7 +122,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     private func title1Styler() -> LabelStyler {
         let textColorStyler = colorFactory.textColor(.primary).asTextColorStyle
-        let titleMediumTextStyler = textStyleFactory.textStyle(of: .titleMedium)
+        let titleMediumTextStyler = textStyleFactory.textStyle(of: .subheadlineBold)
         return { label in
             titleMediumTextStyler
                 .applied(on: textColorStyler
@@ -132,7 +132,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     private func homeBannerStyler() -> LabelStyler {
         let textColorStyler = colorFactory.independent(.dark).asTextColorStyle
-        let titleMediumTextStyler = textStyleFactory.textStyle(of: .titleSmall)
+        let titleMediumTextStyler = textStyleFactory.textStyle(of: .footnoteBold)
         return { label in
             titleMediumTextStyler
                 .applied(on: textColorStyler
@@ -142,7 +142,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     private func homeBannerSubtitleStyler() -> LabelStyler {
         let textColorStyler = colorFactory.independent(.dark).asTextColorStyle
-        let titleMediumTextStyler = textStyleFactory.textStyle(of: .subtitle1)
+        let titleMediumTextStyler = textStyleFactory.textStyle(of: .caption2)
         let multilineTextStyler = paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping)
         return { label in
             titleMediumTextStyler
