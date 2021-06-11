@@ -833,8 +833,6 @@ static MEGAIndexer *indexer;
 }
 
 + (void)deleteUserData {
-    [MEGASdkManager sharedMEGASdk].mnz_isGuestAccount = nil;
-
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];

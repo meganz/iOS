@@ -1472,7 +1472,7 @@
     switch ([request type]) {
             
         case MEGARequestTypeLogout: {
-            if (MEGALinkManager.urlType == URLTypeCancelAccountLink || MEGASdkManager.sharedMEGASdk.mnz_isGuestAccount) {
+            if (MEGALinkManager.urlType == URLTypeCancelAccountLink || MEGASdkManager.sharedMEGASdk.isGuestAccount) {
                 return;
             }
             
@@ -1646,7 +1646,7 @@
             MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
             [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
             
-            if ([MEGASdkManager sharedMEGASdk].mnz_isGuestAccount) {
+            if ([MEGASdkManager sharedMEGASdk].isGuestAccount) {
                 return;
             }
             

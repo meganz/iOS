@@ -49,7 +49,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var firstNametTextfield: UITextField = {
+    private lazy var firstNameTextfield: UITextField = {
         let input = UITextField()
         input.textAlignment = .center
         input.keyboardAppearance = .dark
@@ -139,7 +139,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             flex.addItem().width(100%).paddingHorizontal(43).backgroundColor(.black).justifyContent(.center).define({ flex in
                 // control panel
                 flex.addItem().width(100%).marginTop(12).marginBottom(28).direction(.row).define { flex in
-                    flex.addItem(firstNametTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
+                    flex.addItem(firstNameTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
                     flex.addItem(lastNameTextfield).grow(1).shrink(1).paddingHorizontal(8).display(.none)
                     
                     flex.addItem(meetingNameInputTextfield).grow(1).shrink(1)
@@ -185,7 +185,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     // MARK: - Private methods.
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == firstNametTextfield {
+        if textField == firstNameTextfield {
             lastNameTextfield.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
@@ -232,7 +232,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 startMeetingButton.isEnabled = false
                 startMeetingButton.alpha = 0.5
                 
-                firstNametTextfield.flex.display(.flex)
+                firstNameTextfield.flex.display(.flex)
                 lastNameTextfield.flex.display(.flex)
 
                 meetingNameInputTextfield.flex.display(.none)
@@ -242,14 +242,14 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
                 startMeetingButton.setTitle(NSLocalizedString("Join Meeting", comment: ""), for: .normal)
                 
-                firstNametTextfield.flex.display(.none)
+                firstNameTextfield.flex.display(.none)
                 lastNameTextfield.flex.display(.none)
 
                 meetingNameInputTextfield.flex.display(.flex)
                 
             case .start:
                 
-                firstNametTextfield.flex.display(.none)
+                firstNameTextfield.flex.display(.none)
                 lastNameTextfield.flex.display(.none)
 
                 meetingNameInputTextfield.flex.display(.flex)
@@ -286,7 +286,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
 
             containerView.flex.layout()
             
-            firstNametTextfield.isEnabled = false
+            firstNameTextfield.isEnabled = false
             lastNameTextfield.isEnabled = false
             meetingNameInputTextfield.isEnabled = false
             
@@ -302,7 +302,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
 
             containerView.flex.layout()
             
-            firstNametTextfield.isEnabled = true
+            firstNameTextfield.isEnabled = true
             lastNameTextfield.isEnabled = true
             meetingNameInputTextfield.isEnabled = true
             
@@ -315,7 +315,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     private func updateJoinMeetingButton() {
         guard let configType = configurationType,
               configType == .guestJoin,
-              let firstName = firstNametTextfield.text,
+              let firstName = firstNameTextfield.text,
               let lastname = lastNameTextfield.text else {
             return
         }

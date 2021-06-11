@@ -29,13 +29,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
       }
     }
     
-    private var isUserAGuest: Bool {
-        guard let email = MEGASdkManager.sharedMEGASdk().myUser?.email else {
-            return true
-        }
-        
-        return email.isEmpty
-    }
+    private var isUserAGuest: Bool?
     
     init(viewModel: MeetingParticipantsLayoutViewModel) {
         self.viewModel = viewModel
@@ -97,7 +91,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Execute command
     func executeCommand(_ command: MeetingParticipantsLayoutViewModel.Command) {
         switch command {
-        case .configView(let title, let subtitle):
+        case .configView(let title, let subtitle, let isUserAGuest):
+            self.isUserAGuest = isUserAGuest
             configureNavigationBar(title, subtitle)
             callsCollectionView.configure(with: self)
             localUserView.configure()
@@ -247,7 +242,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func configureNavigationBar(_ title: String, _ subtitle: String) {
         titleView.configure(title: title, subtitle: subtitle)
-        if !isUserAGuest {
+        if !(isUserAGuest ?? false) {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
         navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(self.didTapOptionsButton)),

@@ -17,13 +17,14 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(title: chatRoom.title ?? "", subtitle: "")
+                .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
@@ -43,13 +44,14 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(title: chatRoom.title ?? "", subtitle: "")
+                .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
@@ -70,6 +72,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         
@@ -89,6 +92,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         viewModel.layoutMode = .grid
@@ -112,6 +116,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         viewModel.layoutMode = .grid
@@ -135,6 +140,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         test(viewModel: viewModel,
@@ -156,6 +162,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         test(viewModel: viewModel,
@@ -177,6 +184,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallsLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100),
                                       chatRoom: chatRoom,
                                       call: call)
         viewModel.layoutMode = .speaker

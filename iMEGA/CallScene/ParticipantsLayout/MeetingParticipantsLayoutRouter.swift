@@ -27,8 +27,10 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
                                captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                                localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
                                remoteVideoUseCase: CallsRemoteVideoUseCase(repository: CallsRemoteVideoRepository()),
-                               chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
-                                                                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
+                               chatRoomUseCase: ChatRoomUseCase(
+                                chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+                                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
+                               userUseCase: UserUseCase(repo: .live),
                                chatRoom: chatRoom,
                                call: call,
                                initialVideoCall: initialVideoCall)

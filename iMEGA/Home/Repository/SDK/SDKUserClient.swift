@@ -37,7 +37,7 @@ extension SDKUserClient {
                 return UserSDKEntity(with: user, base64Handle: base64Handle)
             },
             isGuestAccount: {
-                api.mnz_isGuestAccount
+                api.isGuestAccount
             }
         )
     }

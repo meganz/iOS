@@ -33,7 +33,7 @@ private enum CallViewModelConstant {
 
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(title: String, subtitle: String)
+        case configView(title: String, subtitle: String, isUserAGuest: Bool)
         case switchMenusVisibility
         case toggleLayoutButton
         case switchLayoutMode(layout: CallLayoutMode, participantsCount: Int)
@@ -72,11 +72,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
     private let remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let userUseCase: UserUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(router: MeetingParticipantsLayoutRouting, containerViewModel: MeetingContainerViewModel, callsUseCase: CallsUseCaseProtocol, captureDeviceUseCase: CaptureDeviceUseCaseProtocol, localVideoUseCase: CallsLocalVideoUseCaseProtocol, remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol, chatRoomUseCase: ChatRoomUseCaseProtocol, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
+    init(router: MeetingParticipantsLayoutRouting, containerViewModel: MeetingContainerViewModel, callsUseCase: CallsUseCaseProtocol, captureDeviceUseCase: CaptureDeviceUseCaseProtocol, localVideoUseCase: CallsLocalVideoUseCaseProtocol, remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol, chatRoomUseCase: ChatRoomUseCaseProtocol, userUseCase: UserUseCaseProtocol, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
         
         self.router = router
         self.containerViewModel = containerViewModel
@@ -85,6 +86,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.localVideoUseCase = localVideoUseCase
         self.remoteVideoUseCase = remoteVideoUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.userUseCase = userUseCase
         self.chatRoom = chatRoom
         self.call = call
         self.initialVideoCall = initialVideoCall
@@ -219,10 +221,18 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         switch action {
         case .onViewReady:
             if chatRoom.isMeeting {
-                invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: ""))
+                invokeCommand?(
+                    .configView(title: chatRoom.title ?? "",
+                                subtitle: "",
+                                isUserAGuest: userUseCase.isGuestAccount)
+                )
                 initTimerIfNeeded(with: Int(call.duration))
             } else {
-                invokeCommand?(.configView(title: chatRoom.title ?? "", subtitle: initialSubtitle()))
+                invokeCommand?(
+                    .configView(title: chatRoom.title ?? "",
+                                subtitle: initialSubtitle(),
+                                isUserAGuest: userUseCase.isGuestAccount)
+                )
             }
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             remoteVideoUseCase.addRemoteVideoListener(self)
