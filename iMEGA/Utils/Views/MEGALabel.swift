@@ -5,13 +5,8 @@ final class MEGALabel: UILabel {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    override func awakeFromNib() {
+        super.awakeFromNib()
         setup()
     }
     

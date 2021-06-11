@@ -38,7 +38,7 @@ enum SessionSectionRow: Int {
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
 
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameLabel: MEGALabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
