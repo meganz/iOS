@@ -53,6 +53,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updatedCameraPosition(position: CameraPosition)
         case showRenameAlert(title: String)
         case enableRenameButton(Bool)
+        case showNoOneElseHereMessage
+        case showWaitingForOthersMessage
+        case hideEmptyRoomMessage
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -238,6 +241,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             remoteVideoUseCase.addRemoteVideoListener(self)
             if callParticipants.isEmpty && !call.clientSessions.isEmpty {
                 callsUseCase.createActiveSessions()
+            } else {
+                invokeCommand?(.showWaitingForOthersMessage)
             }
             localAvFlagsUpdated(video: initialVideoCall, audio: true)
         case .tapOnView:
@@ -352,6 +357,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             if self?.layoutMode == .grid {
                 self?.invokeCommand?(.updatePageControl(self?.callParticipants.count ?? 0))
             }
+            self?.invokeCommand?(.hideEmptyRoomMessage)
         }
     }
     
@@ -362,6 +368,10 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             }
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
+            
+            if callParticipants.isEmpty {
+                invokeCommand?(.showNoOneElseHereMessage)
+            }
             
             if layoutMode == .grid {
                 invokeCommand?(.updatePageControl(callParticipants.count))

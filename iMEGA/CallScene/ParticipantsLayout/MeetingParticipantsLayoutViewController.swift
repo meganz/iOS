@@ -30,6 +30,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     private var isUserAGuest: Bool?
+    private var emptyMeetingMessageView: EmptyMeetingMessageView?
     
     init(viewModel: MeetingParticipantsLayoutViewModel) {
         self.viewModel = viewModel
@@ -71,6 +72,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         coordinator.animate(alongsideTransition: { _ in
             self.callsCollectionView.collectionViewLayout.invalidateLayout()
             self.localUserView.positionView(by: self.localUserView.center)
+            self.emptyMeetingMessageView?.invalidateIntrinsicContentSize()
         })
     }
     
@@ -141,6 +143,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
                 return
             }
             enableButton.isEnabled = enabled
+        case .showNoOneElseHereMessage:
+            showNoOneElseHereMessageView()
+        case .showWaitingForOthersMessage:
+            showWaitingForOthersMessageView()
+        case .hideEmptyRoomMessage:
+            removeEmptyRoomMessageView()
         }
     }
     
@@ -247,6 +255,27 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(self.didTapOptionsButton)),
                                               layoutModeBarButton]
+    }
+    
+    private func showWaitingForOthersMessageView() {
+        let emptyMessage = EmptyMeetingMessageView.instanceFromNib
+        emptyMessage.messageLabel.text = NSLocalizedString("meetings.message.waitingOthers", comment: "")
+        view.addSubview(emptyMessage)
+        emptyMessage.autoCenterInSuperview()
+        emptyMeetingMessageView = emptyMessage
+    }
+    
+    private func showNoOneElseHereMessageView() {
+        let emptyMessage = EmptyMeetingMessageView.instanceFromNib
+        emptyMessage.messageLabel.text = NSLocalizedString("meetings.message.noOtherParticipants", comment: "")
+        view.addSubview(emptyMessage)
+        emptyMessage.autoCenterInSuperview()
+        emptyMeetingMessageView = emptyMessage
+    }
+    
+    private func removeEmptyRoomMessageView() {
+        emptyMeetingMessageView?.removeFromSuperview()
+        emptyMeetingMessageView = nil
     }
 }
 
