@@ -17,13 +17,17 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0sb-yg-ZOf">
                     <rect key="frame" x="147" y="234.33333333333337" width="120" height="120"/>
                     <constraints>
-                        <constraint firstAttribute="width" priority="750" constant="120" id="5mD-Fn-8Zs"/>
-                        <constraint firstAttribute="height" priority="750" constant="120" id="NMr-tb-dCz"/>
+                        <constraint firstAttribute="width" priority="750" constant="120" id="5mD-Fn-8Zs">
+                            <variation key="heightClass=compact" constant="100"/>
+                        </constraint>
+                        <constraint firstAttribute="height" priority="750" constant="120" id="NMr-tb-dCz">
+                            <variation key="heightClass=compact" constant="100"/>
+                        </constraint>
                         <constraint firstAttribute="width" secondItem="0sb-yg-ZOf" secondAttribute="height" multiplier="1:1" id="YKb-4y-Zny"/>
                     </constraints>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jOP-gA-9dj">
-                    <rect key="frame" x="124.66666666666669" y="389.33333333333331" width="165" height="55"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jOP-gA-9dj">
+                    <rect key="frame" x="124.66666666666669" y="389.33333333333331" width="165" height="49"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-3x-tfh">
                             <rect key="frame" x="0.0" y="0.0" width="165" height="22"/>
@@ -35,7 +39,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jU8-Oa-6ip">
-                            <rect key="frame" x="0.0" y="38" width="165" height="17"/>
+                            <rect key="frame" x="0.0" y="32" width="165" height="17"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="gCF-ST-Qgu"/>
                             </constraints>
@@ -44,7 +48,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1UQ-rI-V75">
-                            <rect key="frame" x="0.0" y="55" width="165" height="0.0"/>
+                            <rect key="frame" x="0.0" y="49" width="165" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="NLd-7F-eH8"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <state key="normal" title="Show Recent Activity"/>
                         </button>
@@ -78,12 +85,12 @@
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="centerY" secondItem="K3f-lP-shF" secondAttribute="centerY" multiplier="0.4" id="1yy-54-HyZ"/>
                 <constraint firstItem="jOP-gA-9dj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="K3f-lP-shF" secondAttribute="leading" constant="40" id="6lU-By-guf"/>
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="centerY" secondItem="K3f-lP-shF" secondAttribute="centerY" multiplier="0.8" id="9ob-Ka-2iS"/>
-                <constraint firstItem="XtC-yn-6bx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jOP-gA-9dj" secondAttribute="bottom" constant="5" id="C82-1b-37E"/>
+                <constraint firstItem="XtC-yn-6bx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jOP-gA-9dj" secondAttribute="bottom" id="C82-1b-37E"/>
                 <constraint firstItem="XtC-yn-6bx" firstAttribute="centerX" secondItem="K3f-lP-shF" secondAttribute="centerX" id="DTe-vd-Bar"/>
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="centerY" secondItem="K3f-lP-shF" secondAttribute="centerY" multiplier="0.6" id="EMV-5Y-jnB"/>
                 <constraint firstItem="K3f-lP-shF" firstAttribute="centerX" secondItem="0sb-yg-ZOf" secondAttribute="centerX" id="J5Q-lw-Uys"/>
                 <constraint firstItem="jOP-gA-9dj" firstAttribute="centerX" secondItem="K3f-lP-shF" secondAttribute="centerX" id="L9P-PX-5Iu"/>
-                <constraint firstItem="jOP-gA-9dj" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="10" id="VeY-F6-IAN"/>
+                <constraint firstItem="jOP-gA-9dj" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="5" id="VeY-F6-IAN"/>
                 <constraint firstItem="K3f-lP-shF" firstAttribute="bottom" secondItem="XtC-yn-6bx" secondAttribute="bottom" constant="35" id="YYc-3T-9XX"/>
                 <constraint firstItem="K3f-lP-shF" firstAttribute="bottom" secondItem="XtC-yn-6bx" secondAttribute="bottom" constant="10" id="mht-Xy-i4U"/>
                 <constraint firstItem="K3f-lP-shF" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jOP-gA-9dj" secondAttribute="trailing" constant="40" id="yv2-NR-v8k"/>
