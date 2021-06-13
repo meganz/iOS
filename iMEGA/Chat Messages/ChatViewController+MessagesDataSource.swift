@@ -16,7 +16,8 @@ extension ChatViewController: MessagesDataSource {
     }
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        guard let chatMessage = message as? ChatMessage else {
+        guard let message = messages[safe: indexPath.section],
+              let chatMessage = message as? ChatMessage else {
             return nil
         }
         
