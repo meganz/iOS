@@ -113,9 +113,6 @@ class AppearanceManager: NSObject {
             navigationBarAppearance.configureWithOpaqueBackground()
             navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             
-            let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
-            navigationBarAppearance.titleTextAttributes = [.font: navigationBarFont]
-            
             navigationBarAppearance.shadowImage = nil
             navigationBarAppearance.shadowColor = nil
             
@@ -132,9 +129,6 @@ class AppearanceManager: NSObject {
         } else {
             UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
             UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            
-            let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
-            UINavigationBar.appearance().titleTextAttributes = [.font: navigationBarFont]
             
             UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
             UINavigationBar.appearance().shadowImage = UIImage()
