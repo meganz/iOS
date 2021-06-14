@@ -318,7 +318,7 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
     func audioLevel(for attende: CallParticipantEntity) {   }
     func participantAdded(with handle: MEGAHandle) {    }
     func participantRemoved(with handle: MEGAHandle) {  }
-    func reconnecting() {   }
-    func reconnected() {    }
+    func connecting() {   }
+    func inProgress() {    }
     func localAvFlagsUpdated(video: Bool, audio: Bool) {    }
 }

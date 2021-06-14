@@ -11,6 +11,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private var speakerViews: Array<UIView>!
     @IBOutlet private weak var pageControl: UIPageControl!
     
+    private var reconncectingNotificationView: CallNotificationView?
+    
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
@@ -131,8 +133,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .participantRemoved(let name):
             showNotification(message: String(format: NSLocalizedString("%@ left the call.", comment: "Message to inform the local user that someone has left the current group call"), name), color: UIColor.mnz_turquoise(for: traitCollection))
         case .reconnecting:
-            showNotification(message: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again"), color: UIColor.systemOrange)
+            showReconnectingNotification()
         case .reconnected:
+            removeReconnectingNotification()
             showNotification(message: NSLocalizedString("online", comment: ""), color: UIColor.systemGreen)
         case .updatedCameraPosition(let position):
             localUserView.transformLocalVideo(for: position)
@@ -195,7 +198,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func showNotification(message: String, color: UIColor) {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: message, backgroundColor: color)
+        notification.show(message: message, backgroundColor: color, autoFadeOut: true)
     }
     
     private func updateNumberOfPageControl(for participantsCount: Int) {
@@ -255,6 +258,19 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(self.didTapOptionsButton)),
                                               layoutModeBarButton]
+    }
+    
+    private func showReconnectingNotification() {
+        let notification = CallNotificationView.instanceFromNib
+        view.addSubview(notification)
+        notification.show(message: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again"), backgroundColor: UIColor.systemOrange, autoFadeOut: false)
+        reconncectingNotificationView = notification
+    }
+    
+    private func removeReconnectingNotification() {
+        guard let notification = reconncectingNotificationView else { return }
+        notification.removeFromSuperview()
+        reconncectingNotificationView = nil
     }
     
     private func showWaitingForOthersMessageView() {

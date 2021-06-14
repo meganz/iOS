@@ -13,8 +13,6 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     private var callId: MEGAHandle?
     private var call: CallEntity?
     
-    private var isReconnecting: Bool = false
-        
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
             self.call = CallEntity(with: call)
@@ -184,14 +182,13 @@ extension CallsRepository: MEGAChatCallDelegate {
         case .initial:
             break
         case .connecting:
-            break
+            callbacksDelegate?.connecting()
         case .joining:
             break
         case .inProgress:
-//            if isReconnecting {
-//                isReconnecting = false
-//                callbacksDelegate?.reconnected()
-//            }
+            if call.hasChanged(for: .status) {
+                callbacksDelegate?.inProgress()
+            }
             
             if call.hasChanged(for: .callComposition) {
                 switch call.callCompositionChange {
@@ -203,16 +200,10 @@ extension CallsRepository: MEGAChatCallDelegate {
                     break
                 }
             }
-            break
         case .terminatingUserParticipation, .destroyed:
             callbacksDelegate?.callTerminated()
         case .userNoPresent:
             break
-//        case .reconnecting:
-//            if !isReconnecting {
-//                isReconnecting = true
-//                callbacksDelegate?.reconnecting()
-//            }
         @unknown default:
             fatalError("Call status has an unkown status")
         }
