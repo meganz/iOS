@@ -465,10 +465,6 @@
             self.visibleUsersArray = [[usersArray sortedArrayUsingComparator:self.userSortComparator] mutableCopy];
             break;
         }
-        case ContactsModeChatStartConversation:
-               [self.navigationController setToolbarHidden:NO];
-            break;
-
             
         default: { //ContactsModeChatStartConversation, ContactsModeChatAttachParticipant, ContactsModeChatCreateGroup and ContactsModeChatNamingGroup
             for (MEGAUser *user in visibleContactsArray) {
