@@ -780,6 +780,10 @@
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
+    if ([self.window.rootViewController isKindOfClass:[OnboardingViewController class]]) {
+        return;
+    }
+    
     OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
     UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
     [onboardingVC.view addSubview:overlayView];

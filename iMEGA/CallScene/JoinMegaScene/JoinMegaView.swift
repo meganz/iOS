@@ -27,7 +27,7 @@ class JoinMegaView: UIView {
         title.font = .boldSystemFont(ofSize: 19)
        
         let subtitle = UILabel()
-        subtitle.text = "Sign up for a free account and get up to 50GB of storage"
+        subtitle.text =  NSLocalizedString("Sign up for a free account and get up to 20GB of storage", comment: "")
         subtitle.numberOfLines = 0
         subtitle.font = .boldSystemFont(ofSize: 11)
         subtitle.textAlignment = .center
@@ -66,7 +66,7 @@ class JoinMegaView: UIView {
             flex.addItem(scrollView).grow(1).shrink(1)
             
             // control area
-            flex.addItem().width(100%).marginTop(28).backgroundColor(.red).paddingHorizontal(43).justifyContent(.center).define({ flex in
+            flex.addItem().width(100%).marginTop(28).paddingHorizontal(43).justifyContent(.center).define({ flex in
                 // control panel
                 flex.addItem(subtitle).marginBottom(16)
                 flex.addItem(createAccountButton).height(50).marginBottom(16).grow(1).shrink(1)

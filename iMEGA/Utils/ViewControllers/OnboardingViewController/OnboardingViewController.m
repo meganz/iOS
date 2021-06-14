@@ -274,6 +274,14 @@
     [self secondaryButtonTapped:nil];
 }
 
+- (void)presentCreateAccountViewController {
+    if (self.type == OnboardingTypeDefault) {
+        [self primaryButtonTapped:nil];
+    } else {
+        MEGALogDebug(@"Oboarding type is not default");
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

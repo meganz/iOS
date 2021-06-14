@@ -2,7 +2,7 @@ import PanModal
 
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     var viewModel: MeetingFloatingPanelViewModel? { get }
-    func dismiss()
+    func dismiss(animated: Bool)
     func shareLink(presenter: UIViewController, sender: UIButton, link: String)
     func inviteParticipants(
         presenter: UIViewController,
@@ -16,6 +16,12 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel)
     func showVideoPermissionError()
     func showAudioPermissionError()
+}
+
+extension MeetingFloatingPanelRouting {
+    func dismiss(animated: Bool = true) {
+        dismiss(animated: animated)
+    }
 }
 
 final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
@@ -70,8 +76,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         presenter?.present(viewController, animated: true)
     }
     
-    func dismiss() {
-        baseViewController?.dismiss(animated: true)
+    func dismiss(animated: Bool) {
+        baseViewController?.dismiss(animated: animated)
     }
     
     func shareLink(presenter: UIViewController, sender: UIButton, link: String) {

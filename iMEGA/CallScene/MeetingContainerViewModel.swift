@@ -9,6 +9,7 @@ enum MeetingContainerAction: ActionType {
     case shareLink(presenter: UIViewController?, sender: AnyObject, completion: UIActivityViewController.CompletionWithItemsHandler?)
     case renameChat
     case dismissCall(completion: (() -> Void)?)
+    case endGuestUserCall(completion: (() -> Void)?)
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -53,13 +54,7 @@ final class MeetingContainerViewModel: ViewModelType {
         case.hangCall(let presenter):
             hangCall(presenter: presenter)
         case .tapOnBackButton:
-            if userUseCase.isGuestAccount {
-                dismissCall {
-                    self.authUseCase.logout()
-                }
-            } else {
-                router.dismiss(completion: nil)
-            }
+            router.dismiss(completion: nil)
         case .changeMenuVisibility:
             router.toggleFloatingPanel(containerViewModel: self)
         case .showOptionsMenu(let presenter, let sender, let isMyselfModerator):
@@ -80,17 +75,22 @@ final class MeetingContainerViewModel: ViewModelType {
             router.renameChat()
         case .dismissCall(let completion):
             dismissCall(completion: completion)
+        case .endGuestUserCall(let completion):
+            dismissCall {
+                if self.userUseCase.isGuestAccount {
+                    self.authUseCase.logout()
+                }
+                
+                guard let completion = completion else { return }
+                completion()
+            }
         }
     }
     
     
     private func hangCall(presenter: UIViewController) {
-        if userUseCase.hasUserLoggedIn {
-            dismissCall {
-                if self.userUseCase.isGuestAccount {
-                    self.authUseCase.logout()
-                }
-            }
+        if !userUseCase.isGuestAccount {
+            dismissCall(completion: nil)
         } else {
             router.showEndMeetingOptions(presenter: presenter, meetingContainerViewModel: self)
         }
