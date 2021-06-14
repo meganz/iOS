@@ -3,6 +3,14 @@ import FlexLayout
 import KeyboardLayoutGuide
 
 class MeetingCreatingView: UIView, UITextFieldDelegate {
+    private struct AvatarProperties {
+        static let initials = "G"
+        static let font = UIFont.preferredFont(forTextStyle: .title1).withWeight(.semibold)
+        static let textColor = UIColor.white
+        static let size = CGSize(width: 80, height: 80)
+        static let backgroundColor = UIColor.mnz_(fromHexString: "#FF6F00")
+        static let backgroundGradientColor = UIColor.mnz_(fromHexString: "#FFA700")
+    }
    
     private weak var vc: MeetingCreatingViewController!
     private let containerView = UIView()
@@ -124,7 +132,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             flex.addItem(localVideoImageView).position(.absolute).all(0)
             flex.addItem().grow(1).shrink(1).justifyContent(.end).alignItems(.center).define { flex in
                 // avatar View
-                flex.addItem(avatarImageView).position(.absolute).width(80).height(80).top(50%).marginTop(-40)
+                flex.addItem(avatarImageView).position(.absolute).size(AvatarProperties.size).top(50%).marginTop(-40)
                 
                 // 4 buttons
                 flex.addItem().direction(.row).justifyContent(.center).paddingBottom(16).define { flex in
@@ -236,6 +244,13 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 lastNameTextfield.flex.display(.flex)
 
                 meetingNameInputTextfield.flex.display(.none)
+                
+                avatarImageView.image =  UIImage(forName: AvatarProperties.initials,
+                                                 size: AvatarProperties.size,
+                                                 backgroundColor: AvatarProperties.backgroundColor,
+                                                 backgroundGradientColor: AvatarProperties.backgroundGradientColor,
+                                                 textColor: AvatarProperties.textColor,
+                                                 font: AvatarProperties.font)
           
             case .join:
                 meetingNameInputTextfield.isHidden = true
