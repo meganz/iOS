@@ -3,7 +3,6 @@ import PanModal
 protocol EndMeetingOptionsRouting: Routing {
     func dismiss(completion: @escaping () -> Void)
     func showJoinMega()
-    func showCreateAccount()
 }
 
 final class EndMeetingOptionsRouter: EndMeetingOptionsRouting {
@@ -32,13 +31,8 @@ final class EndMeetingOptionsRouter: EndMeetingOptionsRouting {
     }
     
     func showJoinMega() {
-        meetingContainerViewModel?.dispatch(.dismissCall(completion: {
+        meetingContainerViewModel?.dispatch(.endGuestUserCall {
             JoinMegaRouter(presenter: UIApplication.mnz_presentingViewController()).start()
-        }))
-    }
-    
-    func showCreateAccount() {
-        let createAccountNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateAccountNavigationControllerID")
-        presenter?.present(createAccountNC, animated: true, completion: nil)
+        })
     }
 }

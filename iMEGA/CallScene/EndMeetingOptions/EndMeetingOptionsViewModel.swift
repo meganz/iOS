@@ -21,9 +21,7 @@ struct EndMeetingOptionsViewModel: ViewModelType {
                 router.showJoinMega()
             }
         case .onCancel:
-            router.dismiss {
-                router.showCreateAccount()
-            }
+            router.dismiss {}
         }
     }
 }

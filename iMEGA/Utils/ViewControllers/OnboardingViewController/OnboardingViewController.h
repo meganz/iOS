@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void (^completion)(void);
 
 - (void)presentLoginViewController;
+- (void)presentCreateAccountViewController;
 
 @end
 

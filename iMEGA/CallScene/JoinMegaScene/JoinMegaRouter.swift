@@ -2,8 +2,14 @@ import Foundation
 import FlexLayout
 
 protocol JoinMegaRouting: Routing {
-    func dismiss()
+    func dismiss(completion: (() -> Void)?)
     func createAccount()
+}
+
+extension JoinMegaRouting {
+    func dismiss() {
+        dismiss(completion: nil)
+    }
 }
 
 class JoinMegaRouter: JoinMegaRouting {
@@ -29,13 +35,21 @@ class JoinMegaRouter: JoinMegaRouting {
     }
     
     // MARK: - UI Actions
-    func dismiss() {
-        baseViewController?.dismiss(animated: true)
+    func dismiss(completion: (() -> Void)?) {
+        baseViewController?.dismiss(animated: true, completion: completion)
     }
     
     func createAccount() {
-        let createAccountNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateAccountNavigationControllerID")
-        baseViewController?.present(createAccountNC, animated: true, completion: nil)
+        dismiss { [weak self] in
+            guard let self = self else { return }
+            
+            if let onboardingViewController = self.presenter as? OnboardingViewController {
+                onboardingViewController.presentCreateAccountViewController()
+            } else {
+                let createAccountNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateAccountNavigationControllerID")
+                self.baseViewController?.present(createAccountNC, animated: true)
+            }
+        }
     }
     
 }

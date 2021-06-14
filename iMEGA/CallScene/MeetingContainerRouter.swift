@@ -9,6 +9,12 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func renameChat()
 }
 
+extension MeetingContainerRouting {
+    func dismiss() {
+        dismiss(completion: nil)
+    }
+}
+
 final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var presenter: UIViewController?
     private let chatRoom: ChatRoomEntity
@@ -66,7 +72,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func dismiss(completion: (() -> Void)?) {
-        floatingPanelRouter?.dismiss()
+        floatingPanelRouter?.dismiss(animated: false)
         baseViewController?.dismiss(animated: false, completion: completion)
     }
     
