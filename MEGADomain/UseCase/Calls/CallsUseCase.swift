@@ -24,8 +24,8 @@ protocol CallsCallbacksUseCaseProtocol: AnyObject {
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
     func participantAdded(with handle: MEGAHandle)
     func participantRemoved(with handle: MEGAHandle)
-    func reconnecting()
-    func reconnected()
+    func connecting()
+    func inProgress()
     func localAvFlagsUpdated(video: Bool, audio: Bool)
 }
 
@@ -123,12 +123,12 @@ extension CallsUseCase: CallsCallbacksRepositoryProtocol {
         callbacksDelegate?.participantRemoved(with: handle)
     }
     
-    func reconnecting() {
-        callbacksDelegate?.reconnecting()
+    func connecting() {
+        callbacksDelegate?.connecting()
     }
     
-    func reconnected() {
-        callbacksDelegate?.reconnected()
+    func inProgress() {
+        callbacksDelegate?.inProgress()
     }
     
     func onHiResSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {

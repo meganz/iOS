@@ -68,6 +68,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var speakerParticipant: CallParticipantEntity?
     internal var layoutMode: CallLayoutMode = .grid
     private var localVideoEnabled: Bool = false
+    private var reconnecting: Bool = false
     private weak var containerViewModel: MeetingContainerViewModel?
 
     private let callsUseCase: CallsUseCaseProtocol
@@ -467,12 +468,18 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
         switchVideoResolutionBasedOnParticipantsCount()
     }
     
-    func reconnecting() {
-        invokeCommand?(.reconnecting)
+    func connecting() {
+        if !reconnecting {
+            reconnecting = true
+            invokeCommand?(.reconnecting)
+        }
     }
     
-    func reconnected() {
-        invokeCommand?(.reconnected)
+    func inProgress() {
+        if reconnecting {
+            invokeCommand?(.reconnected)
+            reconnecting = false
+        }
     }
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {

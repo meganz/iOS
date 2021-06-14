@@ -21,7 +21,7 @@ class CallNotificationView: UIView {
         }
     }
     
-    func show(message: String, backgroundColor: UIColor) {
+    func show(message: String, backgroundColor: UIColor, autoFadeOut: Bool) {
         self.notificationLabel.text = message
         self.backgroundColor = backgroundColor
         self.center = CGPoint(x: UIScreen.main.bounds.size.width / 2, y: -(frame.size.height / 2))
@@ -29,14 +29,20 @@ class CallNotificationView: UIView {
         
         fadeIn()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.fadeOut()
+        if autoFadeOut {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                self?.fadeOut()
+            }
         }
     }
     
     func fadeIn(withDuration duration: TimeInterval = 0.5) {
-        let offset: CGFloat = superview?.safeAreaInsets.top ?? 0 + frame.size.height + 16
+        var offset: CGFloat = frame.size.height + 16
 
+        if let topSafeAreaInsets = superview?.safeAreaInsets.top {
+            offset += topSafeAreaInsets
+        }
+        
         UIView.animate(withDuration: duration, animations: { [weak self] in
             self?.transform = CGAffineTransform(translationX: 0, y: offset)
         })
