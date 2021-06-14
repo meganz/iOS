@@ -14,6 +14,15 @@ class LocalUserView: UIView {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var videoImageView: UIImageView!
     
+    private lazy var blurEffectView : UIVisualEffectView = {
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.layer.cornerRadius = 8
+        blurEffectView.clipsToBounds = true
+        return blurEffectView
+    }()
+
     var offset: CGPoint = .zero
     var corner: Corner = .topRight
     
@@ -34,7 +43,13 @@ class LocalUserView: UIView {
     }
     
     public func transformLocalVideo(for position: CameraPosition) {
+        addSubview(blurEffectView)
+        
         videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            self?.blurEffectView.removeFromSuperview()
+        }
     }
     
     //MARK: - Private
