@@ -53,7 +53,7 @@
 /* Button title to try to decrypt the link */
 "decrypt"="Déchiffrer";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Clé de déchiffrement invalide";
+"decryptionKeyNotValid"="La clé de déchiffrement est invalide";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
 "To access this link, you will need its password."="Afin d’accéder à ce lien, vous devrez en connaître le mot de passe.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
@@ -973,15 +973,15 @@
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Installer l’appli MEGA pour ordinateur";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Vous avez obtenu %@ d’espace de stockage pour avoir installé notre appli MEGA pour ordinateur.";
+"account.achievement.desktopApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé l’appli MEGA pour ordinateur.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="En installant l’appli MEGA pour ordinateur, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA pour ordinateur est offerte pour Windows, macOS et la plupart des versions de Linux.";
+"account.achievement.desktopApp.incomplete.explaination.label"="En installant l’appli MEGA pour ordinateur, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA pour ordinateur est proposée pour Windows, macOS et la plupart des versions de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Installer l’appli MEGA mobile";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé notre appli MEGA mobile.";
+"account.achievement.mobileApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé l’appli MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="En installant notre appli MEGA mobile, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA mobile est proposées pour iOS, Android et Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="En installant l’appli MEGA mobile, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA mobile est proposée pour iOS, Android et Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ d’espace de stockage. Valide pendant 365 jours.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS SUR MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Une demande de dialogue sécurisé MEGA vous attend. Créez un compte sur MEGA et obtenez 20 Go d’espace de stockage gratuit à vie.";
 /* Destination folder name of chat files */
 "My chat files"="Mes fichiers de dialogue en ligne";
 /* Title of the section about the plan in the storage tab in My Account Section */

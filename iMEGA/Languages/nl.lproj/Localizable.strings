@@ -973,15 +973,15 @@
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Installeer de MEGA desktop applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA desktop applicatie. ";
+"account.achievement.desktopApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA desktop applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="Wanneer u onze MEGA desktop applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. MEGA desktop applicatie is beschikbaar voor Windows, MacOS en de meeste Linux distributies.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Wanneer u de MEGA desktop applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. De MEGA desktop applicatie is beschikbaar voor Windows, MacOS en de meeste Linux distributies.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Installeer MEGA mobiele applicatie";
+"account.achievement.mobileApp.title"="Installeer de MEGA mobiele applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van MEGA mobiele applicatie.";
+"account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA mobiele applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA mobiele applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. MEGA mobiele applicatie is beschikbaar voor iOs, Android en Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA mobiele applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. De MEGA mobiele applicatie is beschikbaar voor iOs, Android en Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ aan opslag. Geldig voor 365 dagen.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTEN OP MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Er wacht een MEGA Veilig Gespreksverzoek. Registreer een account op MEGA en ontvang 20 GB gratis levenslange opslag.";
 /* Destination folder name of chat files */
 "My chat files"="Mijn gesprek bestanden";
 /* Title of the section about the plan in the storage tab in My Account Section */

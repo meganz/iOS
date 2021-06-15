@@ -971,17 +971,17 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonus za polecenia";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Zainstaluj aplikację MEGA";
+"account.achievement.desktopApp.title"="Zainstaluj aplikację desktopową MEGA.";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Otrzymałeś %@ przestrzeni dyskowej do instalacji aplikacji desktopowej MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji MEGA desktop otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja MEGA jest dostępna dla systemów Windows, macOS i większości systemów Linux.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji desktopowej MEGA otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja MEGA jest dostępna dla systemów Windows, macOS i większości dystrybucji Linuksa.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Zainstaluj aplikację mobilną MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Otrzymałeś %@ przestrzeni dyskowej do instalacji aplikacji MEGA mobile.";
+"account.achievement.mobileApp.complete.explaination.label"="Za instalację aplikacji MEGA mobile otrzymaliście Państwo %@ przestrzeni dyskowej.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji MEGA mobile otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja MEGA mobile jest dostępna dla systemów iOS, Android i Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji mobilnej MEGA otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja mobilna MEGA jest dostępna dla systemów iOS, Android i Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ pamięci do przechowywania danych. Ważne przez 365 dni.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="KONTAKTY NA MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Masz MEGA Bezpieczny czat na żądanie. Załóż konto w MEGA i otrzymaj 20 GB darmowej pamięci masowej na cały okres użytkowania.";
 /* Destination folder name of chat files */
 "My chat files"="Moje pliki czatu";
 /* Title of the section about the plan in the storage tab in My Account Section */

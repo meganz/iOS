@@ -971,17 +971,17 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonus inviti";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Installa l’app desktop di MEGA";
+"account.achievement.desktopApp.title"="Install the MEGA desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione per aver installato l'app di MEGA per desktop.";
+"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA desktop app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="Quando installi l'app di MEGA per desktop ottieni %@ di spazio di archiviazione complementare, valido per 365 giorni. L'app di MEGA per desktop è disponibile per Windows, macOS e la maggior parte delle distribuzioni Linux.";
+"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Installa l'app di MEGA per mobile";
+"account.achievement.mobileApp.title"="Install the MEGA mobile app";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione per aver installato l'app di MEGA per mobile.";
+"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Quando installi l'app di MEGA per mobile ottieni %@ di spazio di archiviazione complementare, valido per 365 giorni. L'app di MEGA per mobile è disponibile per iOS, Android e Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS, Android and Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ di spazio di archiviazione. Valido per 365 giorni.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */

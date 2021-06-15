@@ -945,7 +945,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="邀请朋友加入";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="单次引荐获得%@存储空间。\n有效期为365天。";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="从手机通讯录中选择联系人或输入多个电子邮件地址";
 /*  */
@@ -967,33 +967,33 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="注册奖励";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
+"account.achievement.registration.explanation.label"="您已获得%@存储空间作为免费帐户注册奖励。";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="推荐奖励";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="安装MEGA桌面应用程序";
+"account.achievement.desktopApp.title"="安装MEGA桌面App";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing MEGA desktop app.";
+"account.achievement.desktopApp.complete.explaination.label"="您已通过安装MEGA桌面App获得了%@存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. MEGA desktop app is avaliable for Windows, macOS and most Linux distros.";
+"account.achievement.desktopApp.incomplete.explaination.label"="安装MEGA桌面App后，您会获得%@免费存储空间，有效期为365天。MEGA桌面App适用于Windows，macOS和大多数Linux发行版。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install MEGA mobile app";
+"account.achievement.mobileApp.title"="安装MEGA手机App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing MEGA mobile app.";
+"account.achievement.mobileApp.complete.explaination.label"="您已通过安装MEGA手机App获得了%@存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. MEGA mobile app is avaliable for iOS, Android and Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="安装MEGA手机App后，您会获得%@免费存储空间，有效期为365天。MEGA手机App适用于iOS，Android和Windows Phone。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
-"account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
+"account.achievement.incomplete.subtitle"="%@存储空间。有效期为365天。";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@ days left";
+"account.achievement.complete.valid.cell.subtitle"="剩余%@天";
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
+"account.achievement.complete.valid.detail.subtitle"="奖励将于%@天后到期。";
 /* Add Phone Number title */
 "Add Phone Number"="添加手机号";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
+"account.achievement.phoneNumber.complete.explaination.label"="您已通过添加手机号获得了%@存储空间。";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="添加您的手机号后，您将获得%@免费存储空间，有效期为365天。";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="添加手机号即可免费获得%@，您的联系人也可轻松在MEGA上找到您。";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA联系人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="您有一条MEGAchat消息等待查收。注册MEGA帐户即可获得20GB永久免费存储空间。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Title of the section about the plan in the storage tab in My Account Section */

@@ -973,13 +973,13 @@
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="MEGAデスクトップアプリをインストール";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="あなたは当社のMEGAデスクトップアプリのインストールに対して、%@のストレージスペースを受け取りました。";
+"account.achievement.desktopApp.complete.explaination.label"="あなたはMEGAデスクトップアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="MEGAデスクトップアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAデスクトップアプリは、Windows、macOS、そして大半のLinuxディストリビューションでご利用いただけます。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="MEGAモバイルアプリをインストール";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="あなたは当社のMEGAモバイルトップアプリのインストールに対して、%@のストレージスペースを受け取りました。";
+"account.achievement.mobileApp.complete.explaination.label"="あなたはMEGAモバイルアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAモバイルアプリは、iOS、Android、Windows Phoneに対応しています。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA上の連絡先";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="待機中のMEGAセキュアチャット要求があります。MEGAにアカウントを登録すると、20GBの生涯無料ストレージが得られます。";
 /* Destination folder name of chat files */
 "My chat files"="私のチャットファイル";
 /* Title of the section about the plan in the storage tab in My Account Section */

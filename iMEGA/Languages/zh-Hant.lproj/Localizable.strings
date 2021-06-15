@@ -571,7 +571,7 @@
 /* Message shown when some shares have been removed */
 "sharesRemoved"="共享已移除";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith"="跟…共享";
+"sharedWith"="共享者";
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="從通訊錄加入";
 /* Alert title shown when you select to add a contact inserting his/her email */
@@ -943,7 +943,7 @@
 /* Title of the Achievements section */
 "achievementsTitle"="成就";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="邀請朋友加入";
+"account.achievement.referral.title"="邀請朋友";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="每推薦1個可獲得%@的儲存空間。\n有效期為365天。";
 /* Text shown to explain how and where you can invite friends */
@@ -973,15 +973,15 @@
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="安裝MEGA桌面應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="您已經安裝MEGA桌面程式而獲得%@儲存空間獎勵。";
+"account.achievement.desktopApp.complete.explaination.label"="您已經安裝MEGA桌面應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="當您安裝MEGA桌面應用程式時，您可獲得%@的贈送儲存空間，有效期為 365天。 MEGA桌面應用程式可在Windows、macOS和大多數Linux發行版使用。";
+"account.achievement.desktopApp.incomplete.explaination.label"="當您安裝MEGA桌面應用程式時，您可獲得%@的免費儲存空間，有效期為 365天。 MEGA桌面應用程式可在Windows、macOS和大多數Linux發行版使用。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="安裝MEGA手機應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="您已經安裝MEGA手機應用程式而獲得%@儲存空間獎勵。";
+"account.achievement.mobileApp.complete.explaination.label"="您已經安裝MEGA手機應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA手機應用程式時，您可獲得%@的贈送儲存空間，有效期為365天。 MEGA手機應用程式可在iOS、Android和Windows的手機上使用。";
+"account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA手機應用程式時，您可獲得%@的免費儲存空間，有效期為365天。 MEGA手機應用程式可在iOS、Android和Windows的手機上使用。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@的儲存空間。有效期為365天。";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1091,7 +1091,7 @@
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="允許購買";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="您必須於iOS設定中啟用應用程式內購買才可恢復購買。";
+"allowPurchase_message"="您必須於iOS設定中啟用應用程式內購買才可恢復訂閱。";
 /* Button title to restore failed purchases */
 "restore"="恢復";
 /* "Monthly" subscriptions */
@@ -1099,7 +1099,7 @@
 /* "Yearly" subscriptions */
 "yearly"="每年";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="此應用程式內的購買項目在App Store尚未能購買。請驗證您的Apple ID的付款設定。";
+"inAppPurchase.error.alert.title.notAvailable"="此應用程式內的購買項目在App Store尚未支援。請驗證您的Apple ID的付款設定。";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="App Store設定";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1485,7 +1485,7 @@
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="條碼已掃描";
 /* title of the screen that shows the users with whom the user has shared a folder */
-"sharedWidth"="與…共享：";
+"sharedWidth"="共享者";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="共享中";
 /* Title of section to display number of all historical versions of files. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="在MEGA上面的聯絡人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="您有一個等待中的MEGA安全對話請求。在MEGA上註冊一個帳戶並獲得20 GB的終身免費儲存空間。";
 /* Destination folder name of chat files */
 "My chat files"="我的對話檔案";
 /* Title of the section about the plan in the storage tab in My Account Section */
