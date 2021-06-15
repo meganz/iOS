@@ -177,7 +177,8 @@ class NodeActionViewController: ActionSheetViewController {
         titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -10)
         titleLabel.text = node.name
-        titleLabel.font = .systemFont(ofSize: 15)
+        titleLabel.font = .preferredFont(forTextStyle: .subheadline)
+        titleLabel.adjustsFontForContentSizeCategory = true
         
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
@@ -194,7 +195,8 @@ class NodeActionViewController: ActionSheetViewController {
         }
         
         subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
-        subtitleLabel.font = .systemFont(ofSize: 12)
+        subtitleLabel.font = .preferredFont(forTextStyle: .caption1)
+        subtitleLabel.adjustsFontForContentSizeCategory = true
         
         let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
         if node.isFile() {
