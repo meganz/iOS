@@ -34,6 +34,7 @@ protocol AudioPlayerStateProtocol {
     func resetAudioPlayerConfiguration()
     func blockAudioPlayerInteraction()
     func unblockAudioPlayerInteraction()
+    func resetCurrentItem()
 }
 
 //MARK: - Audio Player Time Functions
@@ -146,6 +147,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func playerRepeatOne(active: Bool)
     func playerRepeatDisabled()
     func refreshCurrentItemState()
+    func resetCurrentItem()
 }
 
 //MARK: - Audio Player Configuration Functions
