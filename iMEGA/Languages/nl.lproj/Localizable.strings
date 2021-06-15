@@ -1450,8 +1450,6 @@
 "calling..."="Bellen…";
 /* notification subtitle of incoming calls */
 "Incoming call"="Inkomende oproep";
-/* Button title to see the available bonus */
-"getBonus"="Beschikbare Bonus";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Kwaliteit van video's geüpload in een chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTEN OP MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="Hoi! Krijg veilige gesprekken op MEGA met mij en krijg tot 20 GB+ gratis opslag.";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="Mijn gesprek bestanden";
 /* Title of the section about the plan in the storage tab in My Account Section */
