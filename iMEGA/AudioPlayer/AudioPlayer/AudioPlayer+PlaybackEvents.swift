@@ -441,6 +441,22 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     func reset(item: AudioPlayerItem) {
         item.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
     }
+    
+    func resetCurrentItem() {
+        guard let player = queuePlayer, let currentItem = currentItem() else { return }
+        
+        let resumePlaying = isPlaying
+        
+        if resumePlaying {
+            player.pause()
+        }
+        
+        reset(item: currentItem)
+        
+        if resumePlaying {
+            player.play()
+        }
+    }
 }
 
 extension AVQueuePlayer {

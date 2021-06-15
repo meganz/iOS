@@ -158,9 +158,19 @@ final class MiniPlayerViewModel: ViewModelType {
             streamingInfoUseCase?.startServer()
         }
         if let node = node {
-            initialize(with: node)
+            if let currentItem = playerHandler.playerCurrentItem(), currentItem.node == node {
+                configurePlayer()
+                playerHandler.resetCurrentItem()
+            } else {
+                initialize(with: node)
+            }
         } else if let offlineFilePaths = filePaths {
-            initialize(with: offlineFilePaths)
+            if let currentItem = playerHandler.playerCurrentItem(), currentItem.url.path == fileLink {
+                configurePlayer()
+                playerHandler.resetCurrentItem()
+            } else {
+                initialize(with: offlineFilePaths)
+            }
         }
     }
     
