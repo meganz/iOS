@@ -70,6 +70,7 @@
 
 @property (nonatomic) GlobalDNDNotificationControl *globalDNDNotificationControl;
 @property (nonatomic) ChatNotificationControl *chatNotificationControl;
+@property (strong, nonatomic) NSObject *enterMeetingLinkObject;
 
 @end
 
@@ -1025,8 +1026,8 @@
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Join Meeting", nil) detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         @strongify(self)
-        MeetingJoinAlertRouter *router = [[MeetingJoinAlertRouter alloc] initWithViewControllerToPresent:self isGuest:NO];
-        [router start];
+        EnterMeetingLinkRouter *router = [[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO];
+        self.enterMeetingLinkObject = [router start];
     }]];
     
     ActionSheetViewController *moreMinimizedActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
