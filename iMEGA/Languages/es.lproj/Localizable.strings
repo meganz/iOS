@@ -945,7 +945,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invita a tus amigos";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="%@ de almacenamiento gratuito para cada invitación. \n Válido durante 365 días.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleccionar contactos telefónicos o añadir correos electrónicos";
 /*  */
@@ -967,21 +967,21 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bono por registro de cuenta";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
+"account.achievement.registration.explanation.label"="Has obtenido %@ de espacio de almacenamiento como bono de registro gratuito.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonos por invitación";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Instala la aplicación de escritorio";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing MEGA desktop app.";
+"account.achievement.desktopApp.complete.explaination.label"="Has obtenido %@de espacio de almacenamiento por instalar la aplicación de escritorio de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. MEGA desktop app is avaliable for Windows, macOS and most Linux distros.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %@de almacenamiento adicional válido durante 365 días. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install MEGA mobile app";
+"account.achievement.mobileApp.title"="Instala la aplicación móvil de MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing MEGA mobile app.";
+"account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@de espacio de almacenamiento por instalar la aplicación móvil de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. MEGA mobile app is avaliable for iOS, Android and Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Al instalar la aplicación móvil de MEGA, obtienes %@ de espacio de almacenamiento válido durante 365 días. La aplicación móvil está disponible para iOS, Android y Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ de almacenamiento. Válido durante 365 días.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTOS CON CUENTA EN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Tienes una solicitud en espera para chatear de manera segura en MEGA. Registra una cuenta en MEGA y obtén 20 GB de almacenamiento gratuito para siempre.";
 /* Destination folder name of chat files */
 "My chat files"="Mis archivos de chat";
 /* Title of the section about the plan in the storage tab in My Account Section */

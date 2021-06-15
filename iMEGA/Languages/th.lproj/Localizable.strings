@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="ผู้ติดต่อใน MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="คุณมีคำขอ MEGA Secure Chat รออยู่ ลงทะเบียนบัญชีที่ MEGA แล้วรับพื้นที่เก็บข้อมูลฟรี 20 GB ตลอดอายุการใช้งาน";
 /* Destination folder name of chat files */
 "My chat files"="ไฟล์แชทของฉัน";
 /* Title of the section about the plan in the storage tab in My Account Section */

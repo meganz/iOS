@@ -23,7 +23,7 @@
 /* "Size" of the file or folder you are sharing */
 "size"="Größe";
 /* Quality title, used in changing the export quality of scaned doc */
-"Quality"="Quality";
+"Quality"="Bildqualität";
 /*  */
 "folder"="Ordner";
 /* Error message shown when there's no camera available on the device */
@@ -149,7 +149,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bitte geben Sie Speicherplatz frei";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA benötigt mindestens %@ freien Speicherplatz. Löschen Sie bitte nicht mehr benötigte Apps und Videos. Sie können auch die Speichernutzung von MEGA selbst reduzieren.";
 /* Title for the file link view */
 "fileLink"="Link zur Datei";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -211,7 +211,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Kontakte hinzufügen";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invite to MEGA";
+"inviteContact"="Zu MEGA einladen";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Einladung versandt";
 /* Button title to allow the user postpone an action */
@@ -229,21 +229,21 @@
 /* Title shown when there's no pending contact requests */
 "noRequestPending"="Keine Anfragen vorhanden";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Paused Transfers";
+"transfersEmptyState_titlePaused"="Angehaltene Transfers";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="No Transfers";
+"transfersEmptyState_titleAll"="Keine Transfers";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
+"transfersEmptyState_titleDownload"="Keine Downloads";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+"transfersEmptyState_titleUpload"="Keine Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d file";
+"oneFile"="%d Datei";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
 "files"="%d Dateien";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d folder";
+"oneFolder"="%d Ordner";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d Ordner";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
@@ -281,27 +281,27 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Älteste";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Choose from Photos";
+"choosePhotoVideo"="Aus Ihren Fotos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Aufnehmen";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
-"Scan Document"="Scan Document";
+"Scan Document"="Dokument scannen";
 /* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
 "Photos"="Fotos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
-"Voice"="Voice";
+"Voice"="Anruf";
 /* Menu option from the `Add` section that allows the user to share contact. */
 "Contact"="Kontakt";
 /* Menu option from the `Add` section that allows the user to Start Group. */
-"Start Group"="Start Group";
+"Start Group"="Gruppenchat";
 /* Menu option from the `Add` section that allows the user to share Location */
 "Location"="Ort";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Voice Clip";
+"Voice Clip"="Sprachnachricht";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="Neue Textdatei";
 /* Hint text shown on the new text file alert. */
-"file_name"="File name";
+"file_name"="Dateiname";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Neuer Ordner";
 /* Hint text shown on the create folder alert. */
@@ -311,7 +311,7 @@
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Ein Ordner dieses Namens existiert bereits";
 /* A tooltip message which is shown when device does not support document scanning */
-"Document scanning is not available"="Document scanning is not available";
+"Document scanning is not available"="Dokumentscanning nicht verfügbar";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Eine Datei dieses Namens existiert bereits";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -335,11 +335,11 @@
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Link exportieren";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Get Links";
+"getLinks"="Links exportieren";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Manage Link";
+"manageLink"="Link verwalten";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Manage Links";
+"manageLinks"="Links verwalten";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link generieren…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -387,7 +387,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Zum Umbenennen antippen";
 /*  */
-"sendToContact"="Send to Contact";
+"sendToContact"="An Kontakt senden";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Meine Chats";
 /* Toast text upon sending a single file to chat */
@@ -399,9 +399,9 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d Dateien gesendet.";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Remove Link";
+"removeLink"="Link entfernen";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Remove Links";
+"removeLinks"="Links entfernen";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Der Link wurde gelöscht";
 /* Message shown when the links to files and/or folders have been removed */
@@ -453,9 +453,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Neuen Namen eingeben";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="Rename File %@ ?";
+"rename_file_alert_title"="Datei %@ umbenennen?";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="Ersetzen";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="In den Papierkorb verschieben";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -521,7 +521,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu ausgewählt";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="1 ausgewählt";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d ausgewählt";
 /* Title of the Offline section */
@@ -531,9 +531,9 @@
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
 "Requests"="Anfragen";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
-"Groups"="Groups";
+"Groups"="Gruppenchats";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
-"Recently Added"="Recently Added";
+"Recently Added"="Neu hinzugefügt";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 Ordner";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -609,7 +609,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] Kontakte";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Share Folder";
+"shareFolder"="Ordner freigeben";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Ordner freigeben";
 /* Button that allows you to select something (a folder, a message...) */
@@ -703,15 +703,15 @@
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ Speicher voll";
 /* Title to show when device local storage is almost full */
-"Device Storage Almost Full"="Device Storage Almost Full";
+"Device Storage Almost Full"="Gerätespeicher fast voll";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Sie haben für weitere Camera Uploads nicht genügend freien Speicherplatz. Bitte löschen Sie Apps, Videos oder Musik, die Sie nicht mehr benötigen. Sie können Ihren Speicherplatz in %@ verwalten.";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Einstellungen > Allgemein > %@ Speicher";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="Upload Videos for Live Photos";
+"Upload Videos for Live Photos"="Live-Fotos als Videos hochladen";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload All Burst Photos"="Upload All Burst Photos";
+"Upload All Burst Photos"="Alle Burst-Fotos hochladen";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Versteckte Alben hochladen";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -731,11 +731,11 @@
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="Durch die Photos-App freigegebene Alben werden nicht hochgeladen.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload Albums Synced from iTunes"="Upload Albums Synced from iTunes";
+"Upload Albums Synced from iTunes"="Aus iTunes synchronisierte Alben hochladen";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Sychronisierte Alben sind Fotos und Videos, die von iTunes an Ihre Photos-App synchronisiert werden.";
 /* App means “Application” */
-"App Version"="App Version";
+"App Version"="App-Version";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK Version";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -779,7 +779,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="%s belegt";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Delete Account";
+"cancelYourAccount"="Account löschen";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Sie werden alle gespeicherten Daten dieses Accounts verlieren. Wirklich löschen?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -891,15 +891,15 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
+"failedAttempstSectionTitle"="Nach zehn Fehlversuchen werden Sie ausgeloggt und Ihre Offlinedateien gelöscht";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Passcode-Optionen";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4stellig numerisch";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6stellig numerisch";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Alphanumerisch";
 /* Menu item */
 "help"="Hilfe";
 /* Title of the section to access MEGA's help centre */
@@ -913,7 +913,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Alle";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="In Progress";
+"In Progress"="Läuft";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Abgeschlossen";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -945,7 +945,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Laden Sie Ihre Freunde und Bekannten ein";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="%@ Extraspeicherplatz für jeden geworbenen Neukunden. \n Gültig für 365 Tage.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
@@ -971,17 +971,17 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Nutzer werben";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="MEGA-Desktop-App installieren";
+"account.achievement.desktopApp.title"="Install the MEGA desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing MEGA desktop app.";
+"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA desktop app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. MEGA desktop app is avaliable for Windows, macOS and most Linux distros.";
+"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install MEGA mobile app";
+"account.achievement.mobileApp.title"="Install the MEGA mobile app";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing MEGA mobile app.";
+"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. MEGA mobile app is avaliable for iOS, Android and Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS, Android and Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */

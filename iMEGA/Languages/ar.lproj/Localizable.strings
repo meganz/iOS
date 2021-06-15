@@ -945,7 +945,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="ادع اصدقائك";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="%@ من مساحة التخزين عن كل إحالة. \nصالحة لمدة 365 يوم.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الهاتف أو أدخل عناوين بريد إلكتروني متعددة";
 /*  */
@@ -967,33 +967,33 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="مكافآت التسجيل";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
+"account.achievement.registration.explanation.label"="لقد تلقيت %@ من مساحة تخزين كمكافأة تسجيل مجانية.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="علاوات الإحالة";
+"account.achievement.referralBonus.title"="مكافآت الإحالة";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="حمل تطبيق MEGA لسطح المكتب";
+"account.achievement.desktopApp.title"="قم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing MEGA desktop app.";
+"account.achievement.desktopApp.complete.explaination.label"="لقد تلقيت %@ من مساحة التخزين لتثبيتك تطبيق ميغا للحاسوب المكتبي MEGA desktop.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. MEGA desktop app is avaliable for Windows, macOS and most Linux distros.";
+"account.achievement.desktopApp.incomplete.explaination.label"="عند تثبيتك لتطبيق ميغا للحاسوب المكتبي MEGA desktop، ستحصل على %@ من مساحة التخزين المجانية الصالحة لمدة 365 يومًا. يتوفر تطبيق ميغا للحاسوب المكتبي MEGA desktop لأنظمة التشغيل ويندوز Windows و ماك macOS ومعظم إصدارات لينوكس Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install MEGA mobile app";
+"account.achievement.mobileApp.title"="تثبيت تطبيق ميغا للهاتف المحمول MEGA mobile";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing MEGA mobile app.";
+"account.achievement.mobileApp.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لتثبيتك تطبيق ميغا للهاتف المحمول MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. MEGA mobile app is avaliable for iOS, Android and Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا للهاتف المحمول MEGA mobile، تحصل على %@ من مساحة التخزين المجانية الصالحة لمدة 365 يومًا. تطبيق ميغا للهاتف المحمول MEGA mobile متاح لأنظمة أي او اس iOS و اندرويد Android و ويندوز Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
-"account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
+"account.achievement.incomplete.subtitle"="%@ من مساحة التخزين. صالحة لمدة 365 يوماً.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@ days left";
+"account.achievement.complete.valid.cell.subtitle"="%@ يوم/أيام متبقية";
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
+"account.achievement.complete.valid.detail.subtitle"="المكافأة تنتهي في %@ يوم/أيام";
 /* Add Phone Number title */
 "Add Phone Number"="أضف رقم هاتف";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
+"account.achievement.phoneNumber.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لقيامك بإضافة رقم هاتفك.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="عند إضافة رقم هاتفك تحصل على %@ من مساحة التخزين المجانية صالحة لمدة 365 يومًا.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="احصل على %@ مجاناً عند إضافة رقم هاتفك. هذا يسهل العثور عليك من قبل جهات الاتصال الخاصة بك على ميغا MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1969,9 +1969,9 @@
 /* Title for the recents section. */
 "Recents"="مؤخراً";
 /* Title show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.title"="Recent Activity Hidden";
+"recents.emptyState.activityHidden.title"="التفاعل مؤخراً مخفي";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="Show Activity";
+"recents.emptyState.activityHidden.button"="اعرض التفاعل";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 صورة";
 /* Multiple videos title shown in recents section of web client. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="جهات الاتصال على ميغا MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="لديك طلب لمحادثة ميغا MEGA الآمنة في انتظارك. قم بتسجيل حساب على ميغا MEGA واحصل على 20 جيجابايت من مساحة التخزين المجانية مدى الحياة.";
 /* Destination folder name of chat files */
 "My chat files"="ملفات المحادثة الخاصة بي";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2251,9 +2251,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="شكل الفرز والعرض";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
+"settings.userInterface.hideRecentActivity"="إخفاء التفاعل مؤخراً";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
+"settings.userInterface.hideRecentActivity.footer"="إخفاء التفاعل مؤخراً في قسم الصفحة الرئيسية";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="الإفتراضي";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2609,15 +2609,15 @@
 /* Second step to turn on notifications */
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> انقر <b>الإشعارات</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Turn on <b>Allow Notifications</b>";
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> قم بتشغيل <b> السماح للإشعارات</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="أفتح الإعدادات";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Change Launch Tab";
+"Change Launch Tab"="تغيير صفحة التشغيل";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="يمكنك الآن تحديد القسم الذي يفتحه التطبيق عند الإطلاق. اختر الخيار الذي يناسب احتياجاتك بشكل أفضل، سواء كان المحادثة أو السواقة السحابية أو الصفحة الرئيسية.";
 /* Dialog button text for the change launch tab screen */
-"Change Setting"="Change Setting";
+"Change Setting"="تغيير الإعدادات";
 /* Offline log out warning message */
 "offline.logOut.warning.message"="سيتم حذف المحتوى الخاص بك من هذا الجهاز عند تسجيل الخروج.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
@@ -2627,6 +2627,6 @@
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="الملف كبير جدًا ولا يمكن تعديله.";
 /* Hud info message when read unknown encode file. */
-"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+"general.textEditor.hud.unknownEncode"="تعذر تحرير الملف لأن ترميز محتوى غير معروف.";
 /* Show the node owner's name. The %@ is the owner's name */
-"cloudDrive.nodeInfo.owner"="%@ (Owner)";
+"cloudDrive.nodeInfo.owner"="%@ (المالك)";

@@ -1631,7 +1631,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Bắt Đầu Cài Đặt";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Minh.";
+"pleaseEnterTheSixDigitCode"="Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Tại sao cần sử dụng chức năng Xác Minh 2-Bước?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1639,25 +1639,25 @@
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản. Nghĩa là trong trường hợp có người biết mật khẩu để lén vào tài khoản sẽ không thể vào được, và buộc phải nhập thêm đoạn mã 6 chữ số mà chỉ chủ sở hữu tài khoản mới có.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"Authenticator app required"="Cần sử dụng app lập xác minh";
+"Authenticator app required"="Cần sử dụng app lập xác thực";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Xin lỗi, việc xác minh 2-bước không thể kích hoạt được cho thiết bị của bạn. Xin mở App Store và cài đặt một app Lập Xác Minh.";
+"youNeedATwoFactorAuthenticationApp"="Xin lỗi, việc xác thực 2-bước không thể kích hoạt được cho thiết bị của bạn. Xin mở App Store và cài đặt một app Lập Xác Thực.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Cần phải có một app lập xác minh để bật tính năng XM2B với MEGA. Bạn có thể tải và cài đặt Google Authenticator, Duo Mobile, Authy hoặc Microsoft Authenticator app về thiết bị của mình.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Cần phải có một app lập xác thực để bật tính năng XT2B với MEGA. Bạn có thể tải và cài đặt Google Authenticator, Duo Mobile, Authy hoặc Microsoft Authenticator app về thiết bị của mình.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Xác Minh 2-Bước được Bật";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Minh.";
+"twoFactorAuthenticationEnabledDescription"="Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Xin lưu lại Mã Khoá Phục Hồi ở nơi an toàn";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="MEGA sẽ không thể giúp phục hồi tài khoản nếu chủ tài khoản để mất Mã Khoá Phục Hồi, và có chức năng XM2B được bật.";
+"twoFactorAuthenticationEnabledWarning"="MEGA sẽ không thể giúp phục hồi tài khoản nếu chủ tài khoản để mất Mã Phục Hồi, và có chức năng XT2B được bật.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Xác Minh 2-Bước Đã Tắt";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Minh muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp bị mất máy.";
+"scanOrCopyTheSeed"="Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp bị mất máy.";
 /* A button to help them restore their account if they have lost their 2FA device. */
-"lostYourAuthenticatorDevice"="Thiết bị có cài app Lập Xác Minh đã bị mất?";
+"lostYourAuthenticatorDevice"="Thiết bị có cài app Lập Xác Thực đã bị mất?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
 "Save Images in Photos"="Lưu hình ảnh vào Ảnh";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="SỔ LIÊN LẠC TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Bạn có một lời đang chờ bạn tham gia chát trên MEGA. Đăng ký một tài khoản trên MEGA và nhận 20 GB không gian lưu trữ miễn phí vô thời hạn.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp đã gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */
