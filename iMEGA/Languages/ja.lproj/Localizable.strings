@@ -1450,8 +1450,6 @@
 "calling..."="呼び出し中…";
 /* notification subtitle of incoming calls */
 "Incoming call"="着信";
-/* Button title to see the available bonus */
-"getBonus"="ボーナスを獲得";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="チャットにアップロードされた動画の品質";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA上の連絡先";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 20GB+ free storage."="こんにちは！　私とMEGAで安全に会話をして、最大20GBの無料ストレージを獲得しましょう。";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="私のチャットファイル";
 /* Title of the section about the plan in the storage tab in My Account Section */

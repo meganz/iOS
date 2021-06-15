@@ -136,6 +136,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)registerNotificationsForUpload {
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMemoryWarningNotification) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveApplicationWillTerminateNotification) name:UIApplicationWillTerminateNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoConcurrentCountChangedNotification:) name:MEGACameraUploadPhotoConcurrentCountChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoConcurrentCountChangedNotification:) name:MEGACameraUploadVideoConcurrentCountChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification:) name:kReachabilityChangedNotification object:nil];
@@ -333,7 +334,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)startCameraUploadWithRequestingMediaInfo {
     MEGALogDebug(@"[Camera Upload] request media info for upload");
     
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
@@ -506,7 +507,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
                 MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
                 [[FIRCrashlytics crashlytics] recordError:error];
                 
-                if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+                if (!CameraUploadManager.isCameraUploadEnabled) {
                     return;
                 }
                 
@@ -787,6 +788,11 @@ static const NSUInteger VideoUploadBatchCount = 1;
             }
         }
     }
+}
+
+- (void)didReceiveApplicationWillTerminateNotification {
+    MEGALogDebug(@"[Camera Upload] app will terminate");
+    [self cancelAllPendingOperations];
 }
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
