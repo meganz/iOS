@@ -20,7 +20,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callManagerUserCase = MockCallManagerUseCase()
         let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: call, callsUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, hasUserLoggedIn: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController()), expectedCommands: [])
-        XCTAssert(router.showEndMeetingOptions_calledTimes == 1)
+        XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
     }
     
     func testAction_hangCall_attendeeIsParticipantOrModerator() {
