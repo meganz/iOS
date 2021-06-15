@@ -62,7 +62,7 @@ extension CallsCollectionView: UICollectionViewDelegateFlowLayout {
         
         switch layoutMode {
         case .grid:
-            if UIDevice.current.orientation.isPortrait {
+            if UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat {
                 switch callParticipants.count {
                 case 1:
                     return collectionView.frame.size

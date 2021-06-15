@@ -93,6 +93,10 @@ final class MeetingFloatingPanelViewController: UIViewController {
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - Dispatch action
     func executeCommand(_ command: MeetingFloatingPanelViewModel.Command) {
         switch command {
