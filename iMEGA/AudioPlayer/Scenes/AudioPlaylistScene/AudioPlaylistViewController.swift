@@ -57,6 +57,7 @@ final class AudioPlaylistViewController: UIViewController {
                 }
                 
                 updateAppearance()
+                tableView.reloadData()
             }
         }
     }
@@ -131,22 +132,31 @@ final class AudioPlaylistViewController: UIViewController {
         view.backgroundColor = .mnz_backgroundElevated(traitCollection)
         
         closeButton.setTitle(NSLocalizedString("close", comment: "Title for close button"), for: .normal)
-        closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         
         removeButton.setTitle(NSLocalizedString("remove", comment: "Title for remove button"), for: .normal)
+        
+        
+        
+        toolbarView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
+        
+        style(with: traitCollection)
+    }
+    
+    private func style(with trait: UITraitCollection) {
+        closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
+        removeButton.titleLabel?.adjustsFontForContentSizeCategory = true
         removeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         
         toolbarView.backgroundColor = .clear
+        
         if #available(iOS 13.0, *) {
             toolbarBlurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
         } else {
             toolbarBlurView.effect = UIBlurEffect(style: .extraLight)
         }
-        toolbarView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
         
         titleLabel.textColor = UIColor.mnz_label()
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        titleLabel.lineBreakMode = .byTruncatingMiddle
         
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
     }
