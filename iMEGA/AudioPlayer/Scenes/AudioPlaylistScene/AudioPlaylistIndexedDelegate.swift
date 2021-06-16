@@ -40,10 +40,6 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate {
         delegate?.didDeselect(item: item)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        60.0
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PlaylistHeaderFooterView") as? PlaylistHeaderFooterView else { return nil}
         header.backgroundView = UIView()
@@ -53,10 +49,6 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate {
             NSLocalizedString("Next", comment: "Section header of Audio Player playlist that contains next tracks"))
 
         return header
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        48.0
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
