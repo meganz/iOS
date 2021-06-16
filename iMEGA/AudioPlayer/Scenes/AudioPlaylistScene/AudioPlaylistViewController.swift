@@ -101,9 +101,16 @@ final class AudioPlaylistViewController: UIViewController {
         }
     }
     
-    private func updateDataSource(_ currentTrack: AudioPlayerItem, _ queueTracks: [AudioPlayerItem]?) {
+    private func updateDataSource(_ currentTrack: AudioPlayerItem, _ queueTracks: [AudioPlayerItem]?, _ selectedIndexPaths: [IndexPath]?) {
         playlistSource = AudioPlaylistIndexedSource(currentTrack: currentTrack, queue: queueTracks, delegate: self)
+        
+        tableView.beginUpdates()
         tableView.reloadData()
+        tableView.endUpdates()
+        
+        selectedIndexPaths?.forEach {
+            tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
+        }
     }
     
     private func reload(_ item: AudioPlayerItem) {
@@ -179,8 +186,8 @@ final class AudioPlaylistViewController: UIViewController {
     // MARK: - Execute command
     func executeCommand(_ command: AudioPlaylistViewModel.Command) {
         switch command {
-        case .reloadTracks(let currentTrack, let queueTracks):
-            updateDataSource(currentTrack, queueTracks)
+        case .reloadTracks(let currentTrack, let queueTracks, let selectedIndexPaths):
+            updateDataSource(currentTrack, queueTracks, selectedIndexPaths)
         case .reload(let item):
             reload(item)
         case .title(let title):
