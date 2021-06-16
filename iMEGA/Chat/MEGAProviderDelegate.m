@@ -298,8 +298,6 @@
 }
 
 - (void)provider:(CXProvider *)provider performAnswerCallAction:(CXAnswerCallAction *)action {
-    uint64_t callId = [self.megaCallManager callIdForUUID:action.callUUID];
-    
     uint64_t chatid = [self.megaCallManager chatIdForUUID:action.callUUID];
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatid];
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatid];
@@ -341,7 +339,9 @@
     
     if (action.callUUID) {
         if (call) {
-            [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
+            if (!call.isRinging) {
+                [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
+            }
         } else {
             self.endCallWhenConnect = YES;
             self.muteAudioWhenConnect = self.answerCallWhenConnect = NO;
