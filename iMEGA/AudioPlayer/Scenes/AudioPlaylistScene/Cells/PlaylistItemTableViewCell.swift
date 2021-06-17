@@ -3,7 +3,7 @@ import UIKit
 final class PlaylistItemTableViewCell: UITableViewCell {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: MEGALabel!
     @IBOutlet weak var artistLabel: UILabel!
 
     var item: AudioPlayerItem?
@@ -14,12 +14,13 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         thumbnailImageView.image = nil
     }
     
-    // MARK: - Public functions
-    func configure(item: AudioPlayerItem?) {
-        self.item = item
-        titleLabel.text = item?.name
-        artistLabel.text = item?.artist ?? ""
-        
+    // MARK: - Private functions
+    private func style(with trait: UITraitCollection) {
+        titleLabel.textColor = UIColor.mnz_label()
+        artistLabel.textColor = UIColor.mnz_subtitles(for: trait)
+    }
+    
+    private func configureThumbnail(_ item: AudioPlayerItem?) {
         if let image = item?.artwork {
             thumbnailImageView.image = image
         } else if let node = item?.node {
@@ -37,11 +38,22 @@ final class PlaylistItemTableViewCell: UITableViewCell {
             } else {
                 thumbnailImageView.mnz_image(for: node)
             }
-           
+            
         } else {
             thumbnailImageView.image = UIImage(named: "defaultArtwork")
         }
         
         thumbnailImageView.layer.cornerRadius = 8.0
+    }
+    
+    // MARK: - Internal functions
+    func configure(item: AudioPlayerItem?) {
+        style(with: traitCollection)
+        
+        self.item = item
+        titleLabel.text = item?.name
+        artistLabel.text = item?.artist ?? ""
+        
+        configureThumbnail(item)
     }
 }

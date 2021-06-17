@@ -37,7 +37,7 @@ private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
         case .warning:
             let textColorStyle = colorStyleFactory.textColor(.warning).asTextColorStyle
             return  { attributes in
-                textStyleFactory.textStyle(of: .warning)
+                textStyleFactory.textStyle(of: .captionSemibold)
                     .applied(on: textColorStyle
                         .applied(on: attributes)
                 )
