@@ -59,7 +59,7 @@
     } else {
         MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. Hang the call", [MEGASdk base64HandleForUserHandle:callId]);
         [self printAllCalls];
-        [MEGASdkManager.sharedMEGAChatSdk hangChatCall:chatId];
+//        [MEGASdkManager.sharedMEGAChatSdk hangChatCall:chatId];
     }
 }
 
