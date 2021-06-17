@@ -89,7 +89,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
             if isVideoEnabled ?? false {
                 checkForVideoPermission {
-                    self.turnCamera(on: true)
+                    self.turnCamera(on: true, selectFrontCameraByDefault: true)
                 }
             }
             
@@ -122,7 +122,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
         case .turnCamera(let on):
             checkForVideoPermission {
-                self.turnCamera(on: on)
+                self.turnCamera(on: on, selectFrontCameraByDefault: true)
             }
         case .switchCamera(let backCameraOn):
             checkForVideoPermission {
@@ -234,14 +234,19 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         return true
     }
     
-    private func turnCamera(on: Bool, completion: (() -> Void)? = nil) {
+    private func turnCamera(on: Bool, selectFrontCameraByDefault: Bool = false, completion: (() -> Void)? = nil) {
         if on {
             localVideoUseCase.enableLocalVideo(for: chatRoom.chatId) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    self.invokeCommand?(.cameraTurnedOn(on: on))
-                    self.invokeCommand?(.updatedCameraPosition(position: self.isBackCameraSelected() ? .back : .front))
+                    if self.isBackCameraSelected() && selectFrontCameraByDefault {
+                        self.switchCamera(backCameraOn: false)
+                        self.invokeCommand?(.cameraTurnedOn(on: on))
+                    } else {
+                        self.invokeCommand?(.cameraTurnedOn(on: on))
+                        self.invokeCommand?(.updatedCameraPosition(position: self.isBackCameraSelected() ? .back : .front))
+                    }
                     completion?()
                 case .failure(_):
                     //TODO: show error local video HUD
