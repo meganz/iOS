@@ -859,8 +859,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
             
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"meetings.alert.leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if ([MEGASdkManager sharedMEGAChatSdk].myEmail == nil || [MEGASdkManager sharedMEGAChatSdk].myEmail.mnz_isEmpty) {
+                [[[JoinMegaRouter alloc] initWithPresenter:UIApplication.mnz_visibleViewController] start];
+            }
         }]];
         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     }

@@ -150,39 +150,46 @@
     self.activeCallImageView.hidden = YES;
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:chatListItem.chatId];
-        if (call.status == MEGAChatCallStatusUserNoPresent) {
-            self.activeCallImageView.hidden = NO;
-        } else {
-            BOOL is1on1AndThereAreNoNewMessages = !chatListItem.isGroup && self.unreadView.hidden;
-            BOOL isGroupAndThereAreNoNewMessages = chatListItem.isGroup  && chatListItem.lastMessageType == MEGAChatMessageTypeCallStarted;
-            if (is1on1AndThereAreNoNewMessages || isGroupAndThereAreNoNewMessages) {
-                switch (call.status) {
-                    case MEGAChatCallStatusInProgress:
-                    case MEGAChatCallStatusDestroyed:
-                    case MEGAChatCallStatusTerminatingUserParticipation:
-                        self.onCallDuration.hidden = NO;
-                        self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
-                        self.chatLastMessage.text = [self.chatLastMessage.text stringByAppendingString:@" •"];
-                        break;
-                        
-                    case MEGAChatCallStatusUserNoPresent:
-                        self.activeCallImageView.hidden = NO;
+        BOOL is1on1AndThereAreNoNewMessages = !chatListItem.isGroup && self.unreadView.hidden;
+        BOOL isGroupAndThereAreNoNewMessages = chatListItem.isGroup  && chatListItem.lastMessageType == MEGAChatMessageTypeCallStarted;
+        if (is1on1AndThereAreNoNewMessages || isGroupAndThereAreNoNewMessages) {
+            switch (call.status) {
+                case MEGAChatCallStatusInProgress:
+                    self.onCallDuration.hidden = NO;
+                    self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+                    self.chatLastMessage.text = [self.chatLastMessage.text stringByAppendingString:@" •"];
+                    self.activeCallImageView.hidden = NO;
+                    break;
+                    
+                case MEGAChatCallStatusUserNoPresent:
+                    self.activeCallImageView.hidden = NO;
+                    if (call.isRinging) {
                         self.chatLastMessage.text = NSLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
-                        break;
-                        
-                    default:
+                    } else {
+                        self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+                    }
+                    break;
+                    
+                case MEGAChatCallStatusInitial:
+                case MEGAChatCallStatusConnecting:
+                case MEGAChatCallStatusJoining:
+                    if (!call.isRinging) {
                         self.chatLastMessage.text = NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
-                        break;
-                }
-                
-                if (!self.timer.valid && call.status == MEGAChatCallStatusInProgress) {
-                    self.initDuration = call.duration;
-                    self.baseDate = [NSDate date];
-                    self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-                    [self updateDuration];
-                    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
-                    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-                }
+                    }
+                    break;
+
+                    
+                default:
+                    break;
+            }
+            
+            if (!self.timer.valid && call.status == MEGAChatCallStatusInProgress) {
+                self.initDuration = call.duration;
+                self.baseDate = [NSDate date];
+                self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+                [self updateDuration];
+                self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
             }
         }
         self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];

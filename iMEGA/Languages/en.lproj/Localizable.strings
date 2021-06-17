@@ -1987,7 +1987,7 @@
 /* Join MEGA Title */
 "Do More With MEGA"="Do More With MEGA";
 /* Join MEGA subtitle */
-"Sign up for a free account and get up to 50GB of storage"="Sign up for a free account and get up to 50GB of storage";
+"Sign up for a free account and get up to 20GB of storage"="Sign up for a free account and get up to 20GB of storage";
 /* paragraph 1 for Mega decription. */
 "Meeting.CreateAccount.Paragraph.1"="Top level encryption and up to 16TB to store all your your files and keep them safe.";
 /* paragraph 2 for Mega decription. */
@@ -2022,8 +2022,6 @@
 "%1$d items"="%1$d items";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Meeting Ended";
-/* Meeting ended Alert button -- Leave. */
-"meetings.alert.leave"="Leave";
 /* Meeting ended Alert button -- View Meeting Chat history. */
 "meetings.alert.meetingchat"="View Meeting Chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2614,6 +2612,10 @@
 "My Account"="My Account";
 /* Contacts selection screen header: Invite contacts to meetings */
 "Invite Participants" = "Invite Participants";
+/* Meetings: Floating panel participants count header */
+"Participants (%d)" = "Participants (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator*/
+"MODERATOR"="MODERATOR";
 /* Text for title for favourite nodes */
 "Favourites"="Favourites";
 /* Text describing that there is not any node marked as favourite */
@@ -2664,3 +2666,11 @@
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="Waiting for others to join...";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="You are the only one here...";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="Invalid Meeting URL";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="Unable to join the meeting. Please try again.";

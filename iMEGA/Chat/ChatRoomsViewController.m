@@ -893,19 +893,12 @@
 }
 
 - (void)manageCallIndicators {
-    BOOL microphoneMuted = NO;
-    BOOL videoEnabled = NO;
-    if (self.chatRoomOnGoingCall.isGroup) {
-        microphoneMuted = ![NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalAudio"];
-        videoEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"groupCallLocalVideo"];
-    } else {
-        microphoneMuted = [NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalAudio"];
-        videoEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalVideo"];
-    }
-    self.topBannerMicrophoneMutedImageView.hidden = !microphoneMuted;
-    self.topBannerCameraEnabledImageView.hidden = !videoEnabled;
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoomOnGoingCall.chatId];
 
-    if (microphoneMuted || videoEnabled) {
+    self.topBannerMicrophoneMutedImageView.hidden = call.hasLocalAudio;
+    self.topBannerCameraEnabledImageView.hidden = !call.hasLocalVideo;
+
+    if (!call.hasLocalAudio || call.hasLocalVideo) {
         self.topBannerLabel.text = [self.topBannerLabel.text stringByAppendingString:@" •"];
     }
 }
@@ -1552,30 +1545,26 @@
     [self customNavigationBarLabel];
 }
 
+- (void)updateCallStatus:(MEGAChatCall *)call {
+    if (!self.chatRoomOnGoingCall) {
+        self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+    }
+    NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
+    if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    [self showTopBanner];
+    [self configureTopBannerForInProgressCall:call];
+}
+
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
 
     switch (call.status) {
-        case MEGAChatCallStatusUserNoPresent:
-        case MEGAChatCallStatusInProgress: {
-            NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
-            if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            }
-            break;
-        }
-            
-//        case MEGAChatCallStatusHasLocalStream:
-//            if (!self.chatRoomOnGoingCall) {
-//                self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
-//            }
-//            break;
-            
-        case MEGAChatCallStatusJoining:
-            [self showTopBanner];
-            [self configureTopBannerForInProgressCall:call];
+        case MEGAChatCallStatusInProgress:
+            [self updateCallStatus:call];
             break;
             
 //        case MEGAChatCallStatusReconnecting:
