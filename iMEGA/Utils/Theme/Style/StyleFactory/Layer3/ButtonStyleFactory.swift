@@ -3,7 +3,8 @@ import Foundation
 extension InterfaceStyle {
 
     var buttonStyle: ButtonStyleFactory {
-        return ButtonStyleFactoryImpl(colorFactory: colorFactory)
+        return ButtonStyleFactoryImpl(colorFactory: colorFactory,
+                                      textStyleFactory: textStyleFactory)
     }
 }
 
@@ -20,6 +21,7 @@ protocol ButtonStyleFactory {
 private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
 
     let colorFactory: ColorFactory
+    let textStyleFactory: TextStyleFactory
 
     func styler(of buttonStyle: MEGAButtonStyle) -> ButtonStyler {
 
@@ -64,14 +66,14 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
         switch buttonStyle {
         case .segmentTitleButton:
             return ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .titleMedium),
-                .highlighted: TextStyle(font: .title),
-                .selected: TextStyle(font: .title),
+                .normal: textStyleFactory.textStyle(of: .subheadlineBold),
+                .highlighted: textStyleFactory.textStyle(of: .headlineBold),
+                .selected: textStyleFactory.textStyle(of: .headlineBold),
             ])
         case .searchControllerCancel:
             return ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .body),
-                .selected: TextStyle(font: .body),
+                .normal: textStyleFactory.textStyle(of: .body),
+                .selected: textStyleFactory.textStyle(of: .body),
             ])
         }
     }

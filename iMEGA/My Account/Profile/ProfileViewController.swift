@@ -38,7 +38,7 @@ enum SessionSectionRow: Int {
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
 
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameLabel: MEGALabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
@@ -577,7 +577,7 @@ extension ProfileViewController: UITableViewDelegate {
         case .profile:
             switch rowsForProfileSection()[indexPath.row] {
             case .changeName:
-                let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
+                let changeNameNavigationController = UIStoryboard.init(name: "ChangeName", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
                 navigationController?.present(changeNameNavigationController, animated: true)
             case .changePhoto:
                 guard let cell = tableView.cellForRow(at: indexPath) else {

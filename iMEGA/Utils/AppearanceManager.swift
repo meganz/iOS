@@ -21,8 +21,6 @@ class AppearanceManager: NSObject {
         
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.mnz_label()
         
-        let barButtonItemFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: barButtonItemFont], for: .normal)
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         UITextField.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
@@ -115,9 +113,6 @@ class AppearanceManager: NSObject {
             navigationBarAppearance.configureWithOpaqueBackground()
             navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             
-            let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
-            navigationBarAppearance.titleTextAttributes = [.font: navigationBarFont]
-            
             navigationBarAppearance.shadowImage = nil
             navigationBarAppearance.shadowColor = nil
             
@@ -134,9 +129,6 @@ class AppearanceManager: NSObject {
         } else {
             UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
             UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            
-            let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
-            UINavigationBar.appearance().titleTextAttributes = [.font: navigationBarFont]
             
             UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
             UINavigationBar.appearance().shadowImage = UIImage()

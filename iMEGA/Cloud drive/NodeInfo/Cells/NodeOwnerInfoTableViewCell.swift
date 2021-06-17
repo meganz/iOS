@@ -1,15 +1,14 @@
 import UIKit
 
 class NodeOwnerInfoTableViewCell: UITableViewCell {
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var nameLabel: MEGALabel!
+    @IBOutlet weak var emailLabel: MEGALabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var onlineStatusView: RoundedView!
 
     func configure(user: MEGAUser) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         emailLabel.textColor = UIColor.mnz_label()
-        emailLabel.font = UIFont.preferredFont(style: .caption1, weight: .regular)
         emailLabel.text = user.email
         
         nameLabel.attributedText = createOwnerAttributedString(string: String(format: NSLocalizedString("cloudDrive.nodeInfo.owner", comment: "Show the node owner's name"), user.mnz_displayName),
