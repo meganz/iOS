@@ -2022,8 +2022,6 @@
 "%1$d items"="%1$d items";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Meeting Ended";
-/* Meeting ended Alert button -- Leave. */
-"meetings.alert.leave"="Leave";
 /* Meeting ended Alert button -- View Meeting Chat history. */
 "meetings.alert.meetingchat"="View Meeting Chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */

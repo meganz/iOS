@@ -1027,7 +1027,7 @@ class ChatViewController: MessagesViewController {
             return
         }
         
-        if call.numParticipants >= 20 {
+        if call.sessionsClientId.size >= 20 {
             SVProgressHUD.showError(withStatus: NSLocalizedString("Error. No more participants are allowed in this group call.", comment: "Message show when a call cannot be established because there are too many participants in the group call"))
         } else if call.isRinging || call.status == .userNoPresent {
             answerCall(isVideoEnabled: videoCall)

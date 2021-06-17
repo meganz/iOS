@@ -279,7 +279,7 @@
     
     NSString *badgeValue;
     self.phoneBadgeImageView.hidden = YES;
-    if (MEGAReachabilityManager.isReachable && numCalls) {
+    if (MEGAReachabilityManager.isReachable && numCalls > 0) {
         MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
         self.phoneBadgeImageView.hidden = (chatRoomIDsWithCallInProgress.size > 0);
         
@@ -374,7 +374,8 @@
             break;
             
         case MEGAChatCallStatusDestroyed:
-            self.phoneBadgeImageView.hidden = ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0);
+        case MEGAChatCallStatusTerminatingUserParticipation:
+            self.phoneBadgeImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] mnz_existsActiveCall];
             break;
             
         default:

@@ -12,11 +12,11 @@ extension JoinMegaRouting {
     }
 }
 
-class JoinMegaRouter: JoinMegaRouting {
+@objc class JoinMegaRouter: NSObject, JoinMegaRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     
-    init(presenter: UIViewController) {
+    @objc init(presenter: UIViewController) {
         self.presenter = presenter
     }
     
@@ -28,7 +28,7 @@ class JoinMegaRouter: JoinMegaRouting {
         return vc
     }
     
-    func start() {
+    @objc func start() {
         let nav = MEGANavigationController(rootViewController: build())
         nav.addRightCancelButton()
         presenter?.present(nav, animated: true)

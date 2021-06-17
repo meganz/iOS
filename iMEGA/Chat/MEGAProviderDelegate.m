@@ -339,7 +339,8 @@
     
     if (action.callUUID) {
         if (call) {
-            if (!call.isRinging) {
+            if (call.status != MEGAChatCallStatusInitial
+                && call.status != MEGAChatCallStatusUserNoPresent) {
                 [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
             }
         } else {
