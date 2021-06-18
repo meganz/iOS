@@ -102,7 +102,8 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func dismissCall(completion: (() -> Void)?) {
-        if let call = callsUseCase.call(for: call.callId) {
+
+        if let call = callsUseCase.call(for: call.chatId) {
             if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
                let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
                 MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
