@@ -24,6 +24,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
     private var call: CallEntity
+    private let isAnsweredFromCallKit: Bool
 
     init(router: MeetingContainerRouting,
          chatRoom: ChatRoomEntity,
@@ -32,7 +33,8 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callManagerUseCase: CallManagerUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
-         authUseCase: AuthUseCaseProtocol) {
+         authUseCase: AuthUseCaseProtocol,
+         isAnsweredFromCallKit: Bool) {
         self.router = router
         self.chatRoom = chatRoom
         self.call = call
@@ -41,6 +43,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.callManagerUseCase = callManagerUseCase
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
+        self.isAnsweredFromCallKit = isAnsweredFromCallKit
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -48,8 +51,10 @@ final class MeetingContainerViewModel: ViewModelType {
     func dispatch(_ action: MeetingContainerAction) {
         switch action {
         case .onViewReady:
-            callManagerUseCase.addCall(call)
-            callManagerUseCase.startCall(call)
+            if !isAnsweredFromCallKit {
+                callManagerUseCase.addCall(call)
+                callManagerUseCase.startCall(call)
+            }
             router.showMeetingUI(containerViewModel: self)
         case.hangCall(let presenter):
             hangCall(presenter: presenter)
@@ -97,8 +102,18 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func dismissCall(completion: (() -> Void)?) {
-        callsUseCase.hangCall(for: call.callId)
-        callManagerUseCase.endCall(call)
+        if let call = callsUseCase.call(for: call.callId) {
+            if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
+               let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+                MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
+            } else {
+                MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
+            }
+
+            callsUseCase.hangCall(for: call.callId)
+            callManagerUseCase.endCall(call)
+        }
+       
         router.dismiss(completion: completion)
     }
     

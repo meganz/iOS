@@ -76,7 +76,7 @@
     } else {
         self.callId = @(callId);
         self.chatId = @(chatId);
-        self. answerCallWhenConnect = self.muteAudioWhenConnect = NO;
+        self.answerCallWhenConnect = self.muteAudioWhenConnect = NO;
         NSUUID *uuid = [self.megaCallManager uuidForChatId:chatId callId:callId];
         if (chatRoom) {
             [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]
@@ -301,27 +301,14 @@
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
     
     if (action.callUUID) {
-        if (@available(iOS 14.0, *)) {
-            if (call.status != MEGAChatCallStatusUserNoPresent) {
-                [action fulfill];
-                return;
-            }
-        }
-        
-
         if (call == nil) {
             self.answerCallWhenConnect = YES;
+            MEGALogDebug(@"[CallKit] Provider perform Wait for state online to answer call for chat id: %@, uuid: %@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId], action.callUUID);
+            [action fulfill];
+        } else {
+            [self answerCallForChatRoom:chatRoom call:call action:action];
         }
         
-        MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
-            if (error.type == MEGAChatErrorTypeOk) {
-                [self answerWithCall:call chatRoom:chatRoom presenter:UIApplication.mnz_presentingViewController];
-            }
-        }];
-        
-        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:chatid enableVideo:call.hasLocalVideo enableAudio:call.hasLocalAudio delegate:answerCallRequestDelegate];
-
-        [action fulfill];
         [self disablePasscodeIfNeeded];
     } else {
         [action fail];
@@ -338,7 +325,7 @@
         if (call) {
             if (call.status != MEGAChatCallStatusInitial
                 && call.status != MEGAChatCallStatusUserNoPresent) {
-                [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
+                [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.callId];
             }
         } else {
             self.muteAudioWhenConnect = self.answerCallWhenConnect = NO;
@@ -430,11 +417,11 @@
             
         case MEGAChatCallStatusJoining:
             self.outgoingCall = NO;
-            if (@available(iOS 14.0, *)) {
-                if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
-                    [self.megaCallManager answerCall:call];
-                }
-            }
+//            if (@available(iOS 14.0, *)) {
+//                if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
+//                    [self.megaCallManager answerCall:call];
+//                }
+//            }
             break;
             
         case MEGAChatCallStatusInProgress: {
@@ -495,12 +482,13 @@
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     if (self.chatId.unsignedLongLongValue == chatId && newState == MEGAChatConnectionOnline && self.callId) {
-        MEGAChatCall *call = [api chatCallForCallId:self.callId.unsignedLongLongValue];
+        MEGAChatCall *call = [api chatCallForChatId:self.chatId.unsignedLongLongValue];
         if (call) {
-            if (call.status == MEGAChatCallStatusUserNoPresent && call.isRinging) {
+            if (call.status == MEGAChatCallStatusUserNoPresent) {
                 if (self.shouldAnswerCallWhenConnect) {
-                    MEGALogDebug(@"[CallKit] Answer call when connect %@", call);
-                    [api answerChatCall:call.chatId enableVideo:NO];
+                    MEGALogDebug(@"[CallKit] Online now for call %@, ready to answer", call);
+                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+                    [self answerCallForChatRoom:chatRoom call:call action:nil];
                     self.answerCallWhenConnect = NO;
                 }
                 
@@ -520,6 +508,21 @@
         self.chatId = nil;
         self.callId = nil;
     }
+}
+
+- (void)answerCallForChatRoom:(MEGAChatRoom *)chatRoom call:(MEGAChatCall *)call action:(CXAnswerCallAction *)action {
+    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+        if (error.type == MEGAChatErrorTypeOk) {
+            [self answerWithCall:call chatRoom:chatRoom presenter:UIApplication.mnz_presentingViewController];
+        }
+        
+        MEGALogDebug(@"[CallKit] answered %@ call %@",error, call);
+        [action fulfill];
+    }];
+    
+    MEGALogWarning(@"[CallKit] Answering call for chat id %@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId]);
+    [MEGASdkManager.sharedMEGAChatSdk answerChatCall:chatRoom.chatId enableVideo:call.hasLocalVideo enableAudio:YES delegate:answerCallRequestDelegate];
+
 }
 
 @end
