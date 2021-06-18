@@ -5,7 +5,8 @@ extension MEGAProviderDelegate {
             presenter: presenter,
             chatRoom: ChatRoomEntity(with: chatRoom),
             call: CallEntity(with: call),
-            isVideoEnabled: false
+            isVideoEnabled: call.hasLocalVideo,
+            isAnsweredFromCallKit: true
         ).start()
     }
 }

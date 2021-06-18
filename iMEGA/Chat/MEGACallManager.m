@@ -74,9 +74,10 @@
     } else {
         MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. %@ the call", [MEGASdk base64HandleForUserHandle:callId], muted ? @"Mute" : @"Unmute");
         [self printAllCalls];
-        if (muted) {
+        MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
+        if (muted && call.hasLocalAudio) {
             [MEGASdkManager.sharedMEGAChatSdk disableAudioForChat:chatId];
-        } else {
+        } else if (!call.hasLocalAudio) {
             [MEGASdkManager.sharedMEGAChatSdk enableAudioForChat:chatId];
         }
     }

@@ -20,16 +20,41 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
     private let isVideoEnabled: Bool
-    
+    private let isAnsweredFromCallKit: Bool
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
+    private var appBecomeActiveObserver: NSObjectProtocol?
+    private weak var containerViewModel: MeetingContainerViewModel?
     
-    init(presenter: UIViewController, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
+    init(presenter: UIViewController, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isAnsweredFromCallKit: Bool = false) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
         self.isVideoEnabled = isVideoEnabled
+        self.isAnsweredFromCallKit = isAnsweredFromCallKit
+        
+        // While the application becomes active, if the floating panel is not shown to the user. Show it.
+        self.appBecomeActiveObserver = NotificationCenter.default.addObserver(
+            forName: UIApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: OperationQueue.main
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            
+            if let baseViewController = self.baseViewController,
+               !baseViewController.navigationBar.isHidden,
+               baseViewController.presentedViewController == nil,
+               let containerViewModel = self.containerViewModel {
+                self.showFloatingPanel(containerViewModel: containerViewModel)
+            }
+        }
+    }
+    
+    deinit {
+        if let appBecomeActiveObserver = appBecomeActiveObserver {
+            NotificationCenter.default.removeObserver(appBecomeActiveObserver)
+        }
     }
     
     func build() -> UIViewController {
@@ -45,9 +70,11 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),
-                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk())))
+                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk())),
+                                                  isAnsweredFromCallKit: isAnsweredFromCallKit)
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
+        containerViewModel = viewModel
         return vc
     }
     

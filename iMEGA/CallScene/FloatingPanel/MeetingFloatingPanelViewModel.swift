@@ -95,6 +95,16 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             
             dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? false)))
         case .hangCall(let presenter):
+            if let call = call {
+                if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
+                   let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+                    MEGALogDebug("Meeting: Floating panel - Hang call for call id \(callId) and chat id \(chatId)")
+                } else {
+                    MEGALogDebug("Meeting: Floating panel - Hang call - cannot get the call id and chat id string")
+                }
+            } else {
+                MEGALogDebug("Meeting: Hang call - no call found")
+            }
             containerViewModel?.dispatch(.hangCall(presenter: presenter))
         case .shareLink(let presenter, let sender):
             containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
@@ -288,7 +298,9 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func attendeeLeft(attendee: CallParticipantEntity) {
-        if let index = callParticipants.firstIndex(of: attendee) {
+        if call == nil {
+            containerViewModel?.dispatch(.dismissCall(completion: nil))
+        } else if let index = callParticipants.firstIndex(of: attendee) {
             callParticipants.remove(at: index)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
