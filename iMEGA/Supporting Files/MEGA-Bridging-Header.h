@@ -112,8 +112,6 @@
 #import "GroupChatDetailsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "ContactsViewController.h"
-#import "GroupCallViewController.h"
-#import "CallViewController.h"
 #import "LoginViewController.h"
 #import "SelectableTableViewCell.h"
 #import <PureLayout/PureLayout.h>
