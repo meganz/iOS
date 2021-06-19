@@ -5,8 +5,8 @@ struct ItemGroup<Item> {
 
     var itemCount: Int { items.count }
 
-    func item(at index: Int) -> Item {
-        return items[index]
+    func item(at index: Int) -> Item? {
+        return items[safe: index]
     }
 }
 

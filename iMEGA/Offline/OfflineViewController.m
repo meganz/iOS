@@ -278,13 +278,11 @@ static NSString *kisDirectory = @"kisDirectory";
     self.viewModePreference = ViewModePreferenceList;
     
     self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
-    [self addChildViewController:self.offlineTableView];
-    self.offlineTableView.view.frame = self.containerView.bounds;
-    [self.containerView addSubview:self.offlineTableView.view];
-    [self.offlineTableView didMoveToParentViewController:self];
-    
     self.offlineTableView.offline = self;
-
+   
+    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineTableView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
+    [self add:bannerContainerVC container:self.containerView animate:NO];
+    
     self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.offlineTableView.tableView.emptyDataSetDelegate = self;
     self.offlineTableView.tableView.emptyDataSetSource = self;
@@ -305,10 +303,9 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
     self.offlineCollectionView.offline = self;
-    [self addChildViewController:self.offlineCollectionView];
-    self.offlineCollectionView.view.frame = self.containerView.bounds;
-    [self.containerView addSubview:self.offlineCollectionView.view];
-    [self.offlineCollectionView didMoveToParentViewController:self];
+    
+    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineCollectionView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
+    [self add:bannerContainerVC container:self.containerView animate:NO];
     
     self.offlineCollectionView.collectionView.emptyDataSetDelegate = self;
     self.offlineCollectionView.collectionView.emptyDataSetSource = self;
@@ -367,7 +364,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (!fileName.mnz_isMultimediaPathExtension) {
+                if (![self shouldSkipQLPreviewForFile:fileName]) {
                     offsetIndex++;
                 }
             }
@@ -416,7 +413,7 @@ static NSString *kisDirectory = @"kisDirectory";
                         offsetIndex++;
                         [self.offlineFiles addObject:[fileURL path]];                        
                     }
-                } else {
+                } else if (![self shouldSkipQLPreviewForFile:fileName]) {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
                 }
@@ -434,6 +431,9 @@ static NSString *kisDirectory = @"kisDirectory";
     [self reloadData];
 }
 
+- (BOOL)shouldSkipQLPreviewForFile:(NSString *)fileName {
+    return fileName.mnz_isMultimediaPathExtension || fileName.mnz_isEditableTextFilePathExtension || [fileName.pathExtension isEqualToString:@"pdf"];
+}
 
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName {
     
@@ -871,10 +871,21 @@ static NSString *kisDirectory = @"kisDirectory";
                 }
             }
         } else {
-            [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
+            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+            if (previewController == nil) {
+                return;
+            }
+            [self presentViewController:previewController animated:YES completion:nil];
         }
-    } else {
+        
+    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || self.previewDocumentPath.mnz_isEditableTextFilePathExtension){
         [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
+    } else {
+        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+        if (previewController == nil) {
+            return;
+        }
+        [self presentViewController:previewController animated:YES completion:nil];
     }
 }
 
@@ -887,6 +898,11 @@ static NSString *kisDirectory = @"kisDirectory";
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
+        UITabBar *tabBar = self.tabBarController.tabBar;
+        if (tabBar == nil) {
+            return;
+        }
+        
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.toolbar.items = @[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem];
@@ -896,11 +912,11 @@ static NSString *kisDirectory = @"kisDirectory";
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
             
-            NSLayoutAnchor *bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             
-            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:tabBar.trailingAnchor constant:0],
                                                       [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
             
             [UIView animateWithDuration:0.33f animations:^ {

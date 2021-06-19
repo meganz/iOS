@@ -16,7 +16,7 @@ extension TableDataSourceConfigurationFactory {
                 }, numberOfRows: { section -> Int in
                     items.count
                 }, itemAtIndexPath: { indexPath in
-                    return items[indexPath.row]
+                    return items[safe: indexPath.row]
                 }, headerTitle: { section -> String? in
                     nil
                 }
@@ -33,13 +33,14 @@ extension TableDataSourceConfigurationFactory where CellItem: Comparable {
                 return TableDataSourceConfiguration<CellItem>(
                     numberOfSections: { () -> Int in
                         1
-                }, numberOfRows: { section -> Int in
-                    sortedItems.count
-                }, itemAtIndexPath: { indexPath in
-                    return sortedItems[indexPath.row]
-                }, headerTitle: { section -> String? in
-                    nil
-                })
+                    }, numberOfRows: { section -> Int in
+                        sortedItems.count
+                    }, itemAtIndexPath: { indexPath in
+                        return sortedItems[safe: indexPath.row]
+                    }, headerTitle: { section -> String? in
+                        nil
+                    }
+                )
             }
         }
     }
@@ -54,11 +55,11 @@ extension TableDataSourceConfigurationFactory where CellItem: Aggregatable {
                     numberOfSections: { () -> Int in
                         aggregatedItems.count
                     }, numberOfRows: { section -> Int in
-                        aggregatedItems[section].itemCount
+                        aggregatedItems[safe: section]?.itemCount ?? 0
                     }, itemAtIndexPath: { indexPath in
-                        aggregatedItems[indexPath.section].item(at: indexPath.row)
+                        aggregatedItems[safe: indexPath.section]?.item(at: indexPath.row)
                     }, headerTitle: { section -> String? in
-                        aggregatedItems[section].title
+                        aggregatedItems[safe: section]?.title
                     }
                 )
             }

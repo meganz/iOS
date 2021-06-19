@@ -63,15 +63,15 @@ PODS:
   - InputBarAccessoryView/Core (5.3.1)
   - ISEmojiView (0.2.6)
   - "Keyboard+LayoutGuide (1.6.0)"
-  - libwebp (1.1.0):
-    - libwebp/demux (= 1.1.0)
-    - libwebp/mux (= 1.1.0)
-    - libwebp/webp (= 1.1.0)
-  - libwebp/demux (1.1.0):
+  - libwebp (1.2.0):
+    - libwebp/demux (= 1.2.0)
+    - libwebp/mux (= 1.2.0)
+    - libwebp/webp (= 1.2.0)
+  - libwebp/demux (1.2.0):
     - libwebp/webp
-  - libwebp/mux (1.1.0):
+  - libwebp/mux (1.2.0):
     - libwebp/demux
-  - libwebp/webp (1.1.0)
+  - libwebp/webp (1.2.0)
   - MessageKit (3.6.0):
     - InputBarAccessoryView (~> 5.3.1)
   - nanopb (2.30906.0):
@@ -83,8 +83,8 @@ PODS:
   - PinLayout (1.9.3)
   - PromisesObjC (1.2.12)
   - PureLayout (3.1.8)
-  - SDWebImage/Core (5.10.2)
-  - SDWebImageWebPCoder (0.8.1):
+  - SDWebImage/Core (5.11.1)
+  - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - YYCategories (1.0.4):
@@ -189,15 +189,15 @@ SPEC CHECKSUMS:
   InputBarAccessoryView: 1f75d8c9f75e5e57f3ffac36ed58635a8005e0bc
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   "Keyboard+LayoutGuide": db44b1764e2bb5d9824cc9cea9d9006cd4442045
-  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
+  libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   MessageKit: a8efaf55b021672b19ffdd5a85ce1c2f3b53058e
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PinLayout: 4d8733121f8687edcc8f00c19bf1379d12808767
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   PureLayout: a4afb3d79dd958564ce33d22c89f407280d8e6a8
-  SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
-  SDWebImageWebPCoder: fac2821bf5a6642a73979d0962dbed5eac45a605
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
 PODFILE CHECKSUM: 398a309e10829da060ef643460c1663fca8976a9

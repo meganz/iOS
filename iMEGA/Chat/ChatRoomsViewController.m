@@ -2,7 +2,6 @@
 
 #import <Contacts/Contacts.h>
 
-#import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -495,9 +494,9 @@
     MEGAChatListItem *chatListItem = nil;
     if (indexPath) {
         if (self.searchController.isActive) {
-            chatListItem = [self.searchChatListItemArray objectAtIndex:indexPath.row];
+            chatListItem = [self.searchChatListItemArray objectOrNilAtIndex:indexPath.row];
         } else {
-            chatListItem = [self.chatListItemArray objectAtIndex:indexPath.row];
+            chatListItem = [self.chatListItemArray objectOrNilAtIndex:indexPath.row];
         }
     }
     return chatListItem;
@@ -647,9 +646,6 @@
 }
 
 - (void)changeToOnlineStatus:(MEGAChatStatus)chatStatus {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    
     if (chatStatus != [[MEGASdkManager sharedMEGAChatSdk] onlineStatus]) {
         [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:chatStatus];
     }
@@ -724,7 +720,8 @@
 }
 
 - (void)createChatRoomWithUserAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self.searchUsersWithoutChatArray objectOrNilAtIndex:indexPath.row];
+    if (user == nil) { return; }
     
     [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
         ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
@@ -764,7 +761,8 @@
 
 - (UITableViewCell *)userCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
-    MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self.searchUsersWithoutChatArray objectOrNilAtIndex:indexPath.row];
+    if (user == nil) { return cell; }
     [cell configureCellForUser:user];
     return cell;
 }
@@ -1521,9 +1519,6 @@
     if (inProgress) {
         return;
     }
-    
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-    [SVProgressHUD dismiss];
     
     if (userHandle == api.myUserHandle) {
         [self customNavigationBarLabel];

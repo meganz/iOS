@@ -17,10 +17,6 @@ final class PlaylistHeaderFooterView: UITableViewHeaderFooterView {
         updateAppearance()
     }
     
-    func configure(title: String) {
-        typeLabel.text = title
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -31,13 +27,19 @@ final class PlaylistHeaderFooterView: UITableViewHeaderFooterView {
         }
     }
     
-    //MARK: - Private
+    func configure(title: String) {
+        typeLabel.text = title
+    }
+    
+    // MARK: - Private functions
     private func updateAppearance() {
+        style(with: traitCollection)
+        
         contentView.backgroundColor = .mnz_backgroundElevated(traitCollection)
-        
-        typeLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        typeLabel.textColor = .mnz_green00A886()
-        
         separatorView.backgroundColor = UIColor.mnz_gray3C3C43().withAlphaComponent(0.29)
+    }
+    
+    private func style(with trait: UITraitCollection) {
+        typeLabel.textColor = .mnz_green00A886()
     }
 }

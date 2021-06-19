@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ReactionCollectionViewCellDelegate: class {
+protocol ReactionCollectionViewCellDelegate: AnyObject {
     func emojiTapped(_ emoji: String)
     func emojiLongPressed(_ emoji: String, sender: UIView)
 }

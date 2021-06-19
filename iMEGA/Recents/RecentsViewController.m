@@ -22,7 +22,7 @@
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
-@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol, TextFileEditable>
+@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol, TextFileEditable, RecentsPreferenceProtocol>
 
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
 
@@ -58,12 +58,14 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
     self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     
+    RecentsPreferenceManager.delegate = self;
     [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
 }
 
 - (void)removeFromParentViewController {
     [super removeFromParentViewController];
     
+    RecentsPreferenceManager.delegate = nil;
     [MEGASdkManager.sharedMEGASdk removeMEGADelegate:self];
 }
 
@@ -104,11 +106,11 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.recentActionBucketArray.count;
+    return RecentsPreferenceManager.showRecents ? self.recentActionBucketArray.count : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.recentActionBucketArray.count > 0 ? 1 : 0;
+    return RecentsPreferenceManager.showRecents ? (self.recentActionBucketArray.count > 0 ? 1 : 0) : 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -279,8 +281,11 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 #pragma mark - DZNEmptyDataSetSource
 
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
-    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initForHomeWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.descriptionButton addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    [emptyStateView.descriptionButton setTitle:NSLocalizedString(@"recents.emptyState.activityHidden.button", @"Title of the button show in Recents on the empty state when the recent activity is hidden") forState:UIControlStateNormal];
+    emptyStateView.descriptionButton.hidden = RecentsPreferenceManager.showRecents;
     
     return emptyStateView;
 }
@@ -288,22 +293,34 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 #pragma mark - Empty State
 
 - (NSString *)titleForEmptyState {
-    NSString *text = (MEGAReachabilityManager.isReachable) ? NSLocalizedString(@"No recent activity", @"Message shown when the user has not recent activity in their account.") : NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+    NSString *text;
+    if (RecentsPreferenceManager.showRecents) {
+        text = (MEGAReachabilityManager.isReachable) ? NSLocalizedString(@"No recent activity", @"Message shown when the user has not recent activity in their account.") : NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+    } else {
+        text = NSLocalizedString(@"recents.emptyState.activityHidden.title", @"Title show in Recents on the empty state when the recent activity is hidden");
+    }
     
     return text;
 }
 
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
-    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+    if (RecentsPreferenceManager.showRecents) {
+        if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        }
     }
     
     return text;
 }
 
 - (UIImage *)imageForEmptyState {
-    UIImage *image = (MEGAReachabilityManager.isReachable) ? [UIImage imageNamed:@"recentsEmptyState"] : [UIImage imageNamed:@"noInternetEmptyState"];
+    UIImage *image;
+    if (RecentsPreferenceManager.showRecents) {
+        image = (MEGAReachabilityManager.isReachable) ? [UIImage imageNamed:@"recentsEmptyState"] : [UIImage imageNamed:@"noInternetEmptyState"];
+    } else {
+        image = [UIImage imageNamed:@"recentsEmptyState"];
+    }
     
     return image;
 }
@@ -318,8 +335,14 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (void)buttonTouchUpInsideEmptyState {
-    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+    if (RecentsPreferenceManager.showRecents) {
+        if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        }
+    } else {
+        [RecentsPreferenceManager setShowRecents:YES];
+        [self.tableView reloadEmptyDataSet];
+        [self.tableView reloadData];
     }
 }
 
@@ -357,6 +380,12 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
 - (void)updateContentView:(CGFloat)height {
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+}
+
+#pragma mark - RecentsPreferenceProtocol
+
+- (void)recentsPreferenceChanged {
+    [self.tableView reloadData];
 }
 
 @end

@@ -25,6 +25,7 @@
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path;
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path;
 - (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node;
+- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node context:(NSManagedObjectContext *)context;
 - (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle;
 - (void)removeOfflineNode:(nonnull MOOfflineNode *)offlineNode;
 - (void)removeAllOfflineNodes;

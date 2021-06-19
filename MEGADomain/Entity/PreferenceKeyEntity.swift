@@ -9,4 +9,6 @@ enum PreferenceKeyEntity: String {
     case timesTurnOnNotificationsShowed
     case launchTabSelected
     case launchTabSuggested
+    case offlineLogOutWarningDismissed
+    case showRecents
 }

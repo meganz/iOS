@@ -12,6 +12,9 @@ final class NodeActionViewControllerGenericDelegate:
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         guard let viewController = viewController else { return }
         switch action {
+        case .editTextFile:
+            showEditTextFile(for: node)
+            
         case .download:
             if let progressImage = UIImage(named: "hudDownload") {
                 SVProgressHUD.show(
@@ -96,6 +99,12 @@ final class NodeActionViewControllerGenericDelegate:
             node.mnz_labelActionSheet(in: viewController)
         default:
             break
+        }
+    }
+    
+    private func showEditTextFile(for node: MEGANode) {
+        if let vc = (viewController as? MEGANavigationController)?.viewControllers.last {
+            node.mnz_editTextFile(in: vc)
         }
     }
 

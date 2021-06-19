@@ -2,7 +2,7 @@
 
 import UIKit
 
-protocol MessageInputBarDelegate: class {
+protocol MessageInputBarDelegate: AnyObject {
     func tappedAddButton(_ button: UIButton)
     func tappedSendButton(withText text: String)
     func tappedVoiceButton()

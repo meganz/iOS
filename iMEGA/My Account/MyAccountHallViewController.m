@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet MEGALabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
 
@@ -420,19 +420,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     [cell.sectionLabel sizeToFit];
     
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat heightForRow;
-    if (indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-        heightForRow = 0.0f;
-    } else if (indexPath.row == MyAccountUsage && indexPath.section == MyAccountSectionMEGA && MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-        heightForRow = 94;
-    } else {
-        heightForRow = 60;
-    }
-    
-    return heightForRow;
 }
 
 #pragma mark - UITableViewDelegate

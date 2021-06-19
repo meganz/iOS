@@ -58,6 +58,11 @@ extern NSString * const MEGACameraUploadCompleteNotification;
 
 extern NSString * const MEGAAudioPlayerShouldUpdateContainerNotification;
 
+#pragma mark - Recents notification keys
+
+extern NSString * const MEGAHomeChangedHeightNotification;
+extern NSString * const MEGABannerChangedHomeHeightNotification;
+
 #pragma mark - camera upload notification keys
 
 extern NSString * const MEGAPhotoConcurrentCountUserInfoKey;

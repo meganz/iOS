@@ -396,8 +396,7 @@
         [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
     }
     
-    [MEGASdkManager localLogout];
-    [MEGASdkManager deleteChatSdk];
+    [MEGASdkManager localLogoutAndCleanUp];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -1074,9 +1073,6 @@
         customModalAlertVC.viewTitle = title;
         customModalAlertVC.detail = detail;
         customModalAlertVC.firstButtonTitle = NSLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
-        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-            customModalAlertVC.secondButtonTitle = NSLocalizedString(@"getBonus", @"Button title to see the available bonus");
-        }
         customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
@@ -1094,16 +1090,6 @@
         customModalAlertVC.dismissCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
-            }];
-        };
-        
-        customModalAlertVC.secondCompletion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:^{
-                self.upgradeVCPresented = NO;
-                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
-                achievementsVC.enableCloseBarButton = YES;
-                UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-                [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
             }];
         };
         
@@ -1530,12 +1516,20 @@
                 
             case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
-                
-                NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                NSString *detail = NSLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
-                UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                if ([api isForeignNode:request.parentHandle]) {
+                    if (![UIApplication.mnz_presentingViewController isKindOfClass:UIAlertController.class]) {
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"dialog.shareOwnerStorageQuota.message", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+                        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+                    }
+                } else {
+                    [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
+                    
+                    NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                    NSString *detail = NSLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
+                    UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+                    [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                }
                 
                 break;
             }
@@ -1885,7 +1879,9 @@
 
 - (void)onTransferTemporaryError:(MEGASdk *)sdk transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     MEGALogDebug(@"onTransferTemporaryError %td", error.type)
-    [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
+    if (!transfer.isForeignOverquota) {
+        [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
+    }
 }
 
 - (void)onTransferFinish:(MEGASdk *)sdk transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1929,7 +1925,9 @@
         switch (error.type) {
             case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota:
-                [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
+                if (!transfer.isForeignOverquota) {
+                    [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
+                }
                 break;
             case MEGAErrorTypeApiEBusinessPastDue:
                 [self presentAccountExpiredAlertIfNeeded];

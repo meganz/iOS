@@ -1468,7 +1468,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
-        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController] start];
+        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
     }]];
     
     if ([self numberOfRows]) {
@@ -1895,6 +1895,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
+        case MegaNodeActionTypeEditTextFile: {
+            [node mnz_editTextFileInViewController:self];
+            break;
+        }
+
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             if ([node mnz_downloadNode]) {

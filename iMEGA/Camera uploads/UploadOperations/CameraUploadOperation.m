@@ -78,7 +78,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     [self beginBackgroundTask];
     
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
@@ -330,7 +330,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
     
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     

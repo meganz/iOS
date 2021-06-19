@@ -51,7 +51,7 @@ struct ContactOnMega: Codable {
         //Get all outgoing contact request emails
         let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk().outgoingContactRequests()
         for i in 0 ..< outgoingContactRequestList.size.intValue {
-            contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail.lowercased() ?? "")
+            contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail?.lowercased() ?? "")
         }
 
         //Get all visible contacts emails

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Banner Container View Controller-->
+        <scene sceneID="QgS-dL-JF0">
+            <objects>
+                <viewController storyboardIdentifier="BannerContainerID" id="8da-UV-A6A" customClass="BannerContainerViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="h00-8x-woC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lq6-eM-uZr">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Osi-p2-OId">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="F6D-9M-u40">
+                                                <rect key="frame" x="24" y="0.0" width="385" height="50"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewo-rJ-P9N">
+                                                        <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruQ-wi-V6P">
+                                                        <rect key="frame" x="335" y="0.0" width="50" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="XQX-UA-JHV"/>
+                                                            <constraint firstAttribute="width" secondItem="ruQ-wi-V6P" secondAttribute="height" multiplier="1:1" id="bxY-dg-oKc"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="bannerButtonAction:" destination="8da-UV-A6A" eventType="touchUpInside" id="cip-3j-1QZ"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="f4P-XX-tIq"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="F6D-9M-u40" firstAttribute="leading" secondItem="Osi-p2-OId" secondAttribute="leading" constant="24" id="JO8-Kh-pa2"/>
+                                            <constraint firstAttribute="height" constant="50" id="Xd5-by-0NU"/>
+                                            <constraint firstItem="F6D-9M-u40" firstAttribute="centerY" secondItem="Osi-p2-OId" secondAttribute="centerY" id="noW-J8-rMy"/>
+                                            <constraint firstAttribute="trailing" secondItem="F6D-9M-u40" secondAttribute="trailing" constant="5" id="nwh-rH-hEy"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fW8-rl-ucb">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="768"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kfH-1L-K30"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="kfH-1L-K30" firstAttribute="trailing" secondItem="lq6-eM-uZr" secondAttribute="trailing" id="8jd-6K-yCn"/>
+                            <constraint firstItem="lq6-eM-uZr" firstAttribute="leading" secondItem="kfH-1L-K30" secondAttribute="leading" id="Irf-E3-ikj"/>
+                            <constraint firstItem="kfH-1L-K30" firstAttribute="bottom" secondItem="lq6-eM-uZr" secondAttribute="bottom" id="M9t-xx-1B7"/>
+                            <constraint firstItem="lq6-eM-uZr" firstAttribute="top" secondItem="kfH-1L-K30" secondAttribute="top" id="zU9-YK-CmV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bannerActionButton" destination="ruQ-wi-V6P" id="nvJ-Gd-wgw"/>
+                        <outlet property="bannerContainerView" destination="Osi-p2-OId" id="V9l-zQ-Mjm"/>
+                        <outlet property="bannerMessageLabel" destination="ewo-rJ-P9N" id="nbT-MJ-eeM"/>
+                        <outlet property="contentContainerView" destination="fW8-rl-ucb" id="D8s-IQ-X7c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3PQ-W6-Yot" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-146" y="-228"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

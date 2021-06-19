@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol AddToChatMenuItemsViewDelegate: class {
+protocol AddToChatMenuItemsViewDelegate: AnyObject {
     func didTap(menu: AddToChatMenu)
     func shouldDisable(menu: AddToChatMenu) -> Bool
 }

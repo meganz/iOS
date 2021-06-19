@@ -8,11 +8,11 @@ final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var imageViewContainerView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var dataStackView: UIStackView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var currentTimeLabel: UILabel!
-    @IBOutlet weak var remainingTimeLabel: UILabel!
+    @IBOutlet weak var titleLabel: MEGALabel!
+    @IBOutlet weak var subtitleLabel: MEGALabel!
+    @IBOutlet weak var detailLabel: MEGALabel!
+    @IBOutlet weak var currentTimeLabel: MEGALabel!
+    @IBOutlet weak var remainingTimeLabel: MEGALabel!
     @IBOutlet weak var timeSliderView: MEGASlider! {
         didSet {
             timeSliderView.minimumValue = 0
@@ -247,24 +247,19 @@ final class AudioPlayerViewController: UIViewController {
             updateCloseButtonState()
         }
         
+        style(with: traitCollection)
+        imageView.applyShadow(in: imageViewContainerView, alpha: 0.24, x: 0, y: 1.5, blur: 16, spread: 0)
+    }
+    
+    private func style(with trait: UITraitCollection) {
         titleLabel.textColor = UIColor.mnz_label()
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        
         subtitleLabel.textColor = UIColor.mnz_label()
-        subtitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        
         detailLabel.textColor = UIColor.mnz_label()
-        detailLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        
-        currentTimeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        currentTimeLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        
-        remainingTimeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        remainingTimeLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        
+        currentTimeLabel.textColor = UIColor.mnz_secondaryGray(for: trait)
+        remainingTimeLabel.textColor = UIColor.mnz_secondaryGray(for: trait)
         timeSliderView.tintColor = UIColor.mnz_gray848484()
         
-        imageView.applyShadow(in: imageViewContainerView, alpha: 0.24, x: 0, y: 1.5, blur: 16, spread: 0)
+        closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
     }
     
     // MARK: - UI actions

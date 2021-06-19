@@ -819,5 +819,25 @@ extension UIColor {
     @objc class func mnz_whiteEFEFEF() -> UIColor {
         return UIColor.init(red: 239.0/255.0, green:  239.0/255.0, blue:  239.0/255.0, alpha: 1.0)
     }
+    
+    // MARK: Yellow
+    
+    @objc class func mnz_yellowFED429() -> UIColor {
+        return UIColor.init(red: 254.0/255.0, green:  212.0/255.0, blue:  41.0/255.0, alpha: 0.22)
+    }
+    
+    @objc class func mnz_yellow9D8319() -> UIColor {
+        return UIColor.init(red: 157.0/255.0, green:  131.0/255.0, blue:  25.0/255.0, alpha: 1.0)
+    }
+    
+    @objc class func mnz_yellowF8D552() -> UIColor {
+        return UIColor.init(red: 248.0/255.0, green:  213.0/255.0, blue:  82.0/255.0, alpha: 1.0)
+    }
+    
+    // MARK: Brown
+    
+    @objc class func mnz_Brown544b27() -> UIColor {
+        return UIColor.init(red: 84.0/255.0, green:  75.0/255.0, blue:  39.0/255.0, alpha: 1.0)
+    }
 }
 

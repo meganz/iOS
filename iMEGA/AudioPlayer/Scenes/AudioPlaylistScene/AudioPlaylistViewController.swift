@@ -47,11 +47,6 @@ final class AudioPlaylistViewController: UIViewController {
         playlistDelegate = AudioPlaylistIndexedDelegate(delegate: self, traitCollection: traitCollection)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-      super.viewWillTransition(to: size, with: coordinator)
-      tableView.reloadData()
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -62,6 +57,7 @@ final class AudioPlaylistViewController: UIViewController {
                 }
                 
                 updateAppearance()
+                tableView.reloadData()
             }
         }
     }
@@ -105,16 +101,31 @@ final class AudioPlaylistViewController: UIViewController {
         }
     }
     
-    private func updateDataSource(_ currentTrack: AudioPlayerItem, _ queueTracks: [AudioPlayerItem]?) {
+    private func updateDataSource(_ currentTrack: AudioPlayerItem, _ queueTracks: [AudioPlayerItem]?, _ selectedIndexPaths: [IndexPath]?) {
         playlistSource = AudioPlaylistIndexedSource(currentTrack: currentTrack, queue: queueTracks, delegate: self)
+        
+        tableView.beginUpdates()
         tableView.reloadData()
+        tableView.endUpdates()
+        
+        selectedIndexPaths?.forEach {
+            tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
+        }
     }
     
     private func reload(_ item: AudioPlayerItem) {
         guard let playlistSource = playlistSource, let indexPaths = playlistSource.indexPathsOf(item: item) else { return }
+        let selectedIndexPaths = tableView.indexPathsForSelectedRows
+        
+        tableView.beginUpdates()
         tableView.reloadRows(at: indexPaths, with: .none)
+        tableView.endUpdates()
+        
+        Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))).forEach {
+            tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
+        }
     }
-    
+
     private func enableUserInteraction() {
         tableView.isUserInteractionEnabled = true
     }
@@ -128,22 +139,31 @@ final class AudioPlaylistViewController: UIViewController {
         view.backgroundColor = .mnz_backgroundElevated(traitCollection)
         
         closeButton.setTitle(NSLocalizedString("close", comment: "Title for close button"), for: .normal)
-        closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         
         removeButton.setTitle(NSLocalizedString("remove", comment: "Title for remove button"), for: .normal)
+        
+        
+        
+        toolbarView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
+        
+        style(with: traitCollection)
+    }
+    
+    private func style(with trait: UITraitCollection) {
+        closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
+        removeButton.titleLabel?.adjustsFontForContentSizeCategory = true
         removeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         
         toolbarView.backgroundColor = .clear
+        
         if #available(iOS 13.0, *) {
             toolbarBlurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
         } else {
             toolbarBlurView.effect = UIBlurEffect(style: .extraLight)
         }
-        toolbarView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
         
         titleLabel.textColor = UIColor.mnz_label()
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        titleLabel.lineBreakMode = .byTruncatingMiddle
         
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
     }
@@ -166,8 +186,8 @@ final class AudioPlaylistViewController: UIViewController {
     // MARK: - Execute command
     func executeCommand(_ command: AudioPlaylistViewModel.Command) {
         switch command {
-        case .reloadTracks(let currentTrack, let queueTracks):
-            updateDataSource(currentTrack, queueTracks)
+        case .reloadTracks(let currentTrack, let queueTracks, let selectedIndexPaths):
+            updateDataSource(currentTrack, queueTracks, selectedIndexPaths)
         case .reload(let item):
             reload(item)
         case .title(let title):

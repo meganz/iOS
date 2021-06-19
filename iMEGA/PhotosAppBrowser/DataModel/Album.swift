@@ -11,7 +11,12 @@ protocol AlbumDelegate: AnyObject {
 
 final class Album: NSObject {
     let title: String
-    private var fetchResult: PHFetchResult<PHAsset>
+    private var fetchResult: PHFetchResult<PHAsset> {
+        didSet {
+            allAssets = (0..<fetchResult.count).map { fetchResult.object(at: $0) }
+        }
+    }
+    private(set) var allAssets: [PHAsset] = []
     typealias UpdatedFetchResultsHandler = ((Album) -> Void)
     private let updatedFetchResultsHandler: UpdatedFetchResultsHandler
 
@@ -22,6 +27,7 @@ final class Album: NSObject {
     init(title: String, fetchResult: PHFetchResult<PHAsset>, updatedFetchResultsHandler: @escaping UpdatedFetchResultsHandler) {
         self.title = title
         self.fetchResult = fetchResult
+        self.allAssets = (0..<fetchResult.count).map { fetchResult.object(at: $0) }
         self.updatedFetchResultsHandler = updatedFetchResultsHandler
         super.init()
         PHPhotoLibrary.shared().register(self)
@@ -67,6 +73,7 @@ extension Album: PHPhotoLibraryChangeObserver {
             guard let self = self else { return }
             
             if let changeDetails = changeInstance.changeDetails(for: self.fetchResult) {
+                let previousPhotosCount = self.fetchResult.count
                 self.fetchResult = changeDetails.fetchResultAfterChanges
                 self.updatedFetchResultsHandler(self)
                 
@@ -78,9 +85,13 @@ extension Album: PHPhotoLibraryChangeObserver {
                     let insertedIndexPaths = changeDetails.insertedIndexes?.indexPaths(withSection: 0)
                     let changedIndexPaths = changeDetails.changedIndexes?.indexPaths(withSection: 0)
                     
-                    self.delegate?.didChange(removedIndexPaths: removedIndexPaths,
-                                             insertedIndexPaths: insertedIndexPaths,
-                                             changedIndexPaths: changedIndexPaths)
+                    if let lastIndex = removedIndexPaths?.last?.item, lastIndex >= previousPhotosCount {
+                        self.delegate?.didResetFetchResult()
+                    } else {
+                        self.delegate?.didChange(removedIndexPaths: removedIndexPaths,
+                                                 insertedIndexPaths: insertedIndexPaths,
+                                                 changedIndexPaths: changedIndexPaths)
+                    }
                 }
             }
         }

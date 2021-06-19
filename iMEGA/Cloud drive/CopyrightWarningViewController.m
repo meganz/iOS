@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *copyrightWarningLabel;
 @property (weak, nonatomic) IBOutlet UILabel *copyrightMessageLabel;
 
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *disagreeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *agreeBarButtonItem;
 
@@ -37,6 +36,10 @@
     self.disagreeBarButtonItem.title = NSLocalizedString(@"disagree", @"button caption text that the user clicks when he disagrees");
     
     [self updateAppearance];
+    
+    UIBarButtonItem *flexibleBarButtonItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [self.navigationController setToolbarItems:@[self.disagreeBarButtonItem, flexibleBarButtonItem, self.agreeBarButtonItem] animated:YES];
+    [self.navigationController setToolbarHidden:NO];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -44,14 +47,6 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            #ifdef MNZ_SHARE_EXTENSION
-            [ExtensionAppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            #elif MNZ_PICKER_EXTENSION
-            
-            #else
-            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            #endif
-            
             [self updateAppearance];
         }
     }

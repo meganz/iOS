@@ -1,7 +1,7 @@
 
 import PanModal
 
-protocol ReactedEmojisUsersListViewControllerDelegate: class {
+protocol ReactedEmojisUsersListViewControllerDelegate: AnyObject {
     func didSelectUserhandle(_ userhandle: UInt64)
 }
 

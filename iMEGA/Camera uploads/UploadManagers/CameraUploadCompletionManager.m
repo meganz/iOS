@@ -164,7 +164,7 @@
 #pragma mark - update status
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status {
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
@@ -174,7 +174,7 @@
             return;
         }
         
-        if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+        if (!CameraUploadManager.isCameraUploadEnabled) {
             return;
         }
         

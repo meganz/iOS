@@ -184,7 +184,7 @@
             if (expired) {
                 dispatch_semaphore_signal(semaphore);
                 [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
-                [MEGASdkManager localLogout];
+                [MEGASdkManager localLogoutAndCleanUp];
                 if (self.pendingAssets > self.unsupportedAssets) {
                     [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
                 } else {
@@ -358,7 +358,7 @@
         self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
     } completion:^(BOOL finished) {
         [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
-        [MEGASdkManager localLogout];
+        [MEGASdkManager localLogoutAndCleanUp];
         if (completion) {
             completion();
         }

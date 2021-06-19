@@ -43,7 +43,7 @@ extension NodeEntity {
 
             // MARK: - Files
 
-            size                               : node.size.decimalValue,
+            size                               : node.size.uint64Value,
             createTime                         : node.creationTime,
             modificationTime                   : node.modificationTime,
 

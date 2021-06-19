@@ -84,7 +84,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.messagesCollectionView.reloadSections([index])
             }, completion: { _ in
                 if index == self.messages.count - 1 {
-                    self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                    self.chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
                 }
             })
         }
@@ -197,7 +197,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
                 chatViewController?.messagesCollectionView.reloadData()
                 chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
-                chatViewController?.messagesCollectionView.scrollToBottom(animated: false)
+                chatViewController?.messagesCollectionView.scrollToLastItem(animated: false)
 
                 return
             }
@@ -277,7 +277,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                             chatViewController?.messagesCollectionView.reloadSections([index])
                         }, completion: { _ in
                             if index == self.messages.count - 1 {
-                                self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                                self.chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
                             }
                         })
                     }
@@ -341,7 +341,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                         chatViewController?.messagesCollectionView.performBatchUpdates({
                             chatViewController?.messagesCollectionView.reloadSections([index])
                             if isLastSectionVisible() {
-                                chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                                chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
                             }
                         }, completion: nil)
                     }
@@ -351,6 +351,18 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                         chatViewController?.messagesCollectionView.performBatchUpdates({
                             chatViewController?.messagesCollectionView.deleteSections([index])
                         }, completion: nil)
+                        
+                        let unreadNotiMessageIndex = chatMessages.firstIndex { $0 is ChatNotificationMessage }
+                        if let unreadNotiMessageIndex = unreadNotiMessageIndex,
+                           let notificationMessage = chatMessages[unreadNotiMessageIndex] as? ChatNotificationMessage,
+                           case let .unreadMessage(count) = notificationMessage.type {
+                            if unreadNotiMessageIndex < index {
+                                chatMessages[unreadNotiMessageIndex] = ChatNotificationMessage(type: .unreadMessage(count - 1))
+                                chatViewController?.messagesCollectionView.performBatchUpdates({
+                                    chatViewController?.messagesCollectionView.reloadSections([unreadNotiMessageIndex])
+                                }, completion: nil)
+                            }
+                        }
                     }
                 }
             }
@@ -399,7 +411,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.messagesCollectionView.reloadSections([index])
             }, completion: { _ in
                 if index == self.messages.count - 1 {
-                    self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                    self.chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
                 }
             })
         }
@@ -443,13 +455,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     
 
     func updateUnreadMessagesLabel(unreads: Int) {
-        let index = messages.firstIndex { object -> Bool in
-            guard object is ChatNotificationMessage else {
-                return false
-            }
-
-            return true
-        }
+        let index = messages.firstIndex { $0 is ChatNotificationMessage }
         if let index = index {
             if unreads == 0 {
                 chatMessages.remove(at: index)
@@ -481,12 +487,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         let lastSectionVisible = isLastSectionVisible()
         let unreads = MEGASdkManager.sharedMEGAChatSdk().myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
 
-        let index = chatMessages.firstIndex { object -> Bool in
-            guard object is ChatNotificationMessage else {
-                return false
-            }
-            return true
-        }
+        let index = chatMessages.firstIndex { $0 is ChatNotificationMessage }
 
         if let index = index,
             let notificationMessage = chatMessages[index] as? ChatNotificationMessage,
@@ -507,7 +508,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             if chatViewController?.keyboardVisible ?? false {
                 chatViewController?.additionalBottomInset = 0
             }
-            messagesCollectionView.scrollToBottom(animated: true)
+            messagesCollectionView.scrollToLastItem(animated: true)
             return
         }
         
@@ -527,11 +528,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             if chatViewController.keyboardVisible {
                 chatViewController.additionalBottomInset = 0
             }
-            chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+            chatViewController.messagesCollectionView.scrollToLastItem(animated: true)
             return
         }
         chatViewController.messagesCollectionView.reloadData()
-        chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+        chatViewController.messagesCollectionView.scrollToLastItem(animated: true)
     }
 
     // MARK: - Private methods
