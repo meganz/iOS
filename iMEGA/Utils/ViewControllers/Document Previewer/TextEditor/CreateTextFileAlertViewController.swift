@@ -1,12 +1,7 @@
 final class CreateTextFileAlertViewController: UIAlertController {
     var viewModel: CreateTextFileAlertViewModel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configView()
-    }
-    
-    private func configView() {
+    func configView() {
         title = TextEditorL10n.textFile
         addTextField { (textField) in
             textField.text = ".txt"

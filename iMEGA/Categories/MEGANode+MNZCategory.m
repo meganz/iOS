@@ -93,7 +93,7 @@
     }
 }
 
-- (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink {
+- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
     if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
@@ -117,7 +117,7 @@
     return [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:nil];
 }
 
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *_Nullable)viewController {
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *)viewController {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
@@ -148,12 +148,13 @@
                 
                 return previewController;
             }
-        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
-            NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:nil error:nil];
+        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && self.name.mnz_isEditableTextFilePathExtension) {
+            NSStringEncoding encode;
+            NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:&encode error:nil];
             if (textContent != nil) {
-                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent];
+                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent size: self.size.unsignedIntValue encode:encode];
                 NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView nodeEntity:nodeEntity presenter:nil] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView nodeEntity:nodeEntity presenter:viewController.navigationController] build];
             }
         }
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -178,10 +179,10 @@
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && (self.name.mnz_isEditableTextFilePathExtension || self.name.pathExtension.length == 0)) {
-                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name];
+            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && self.name.mnz_isEditableTextFilePathExtension) {
+                TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
                 NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad nodeEntity:nodeEntity presenter:nil] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad nodeEntity:nodeEntity presenter:viewController.navigationController] build];
             }
             
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -224,6 +225,18 @@
 }
 
 #pragma mark - Actions
+
+- (void)mnz_editTextFileInViewController:(UIViewController *)viewController {
+    MEGANavigationController *nav = (MEGANavigationController *)[self mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:viewController];
+    if (nav.viewControllers.lastObject.class == TextEditorViewController.class) {
+        TextEditorViewController *tevc = nav.viewControllers.lastObject;
+        [tevc editAfterOpen];
+    } else {
+        PreviewDocumentViewController *pdvc = nav.viewControllers.lastObject;
+        pdvc.showUnknownEncodeHud = YES;
+    }
+    [viewController.navigationController presentViewController:nav animated:YES completion:nil];
+}
 
 - (BOOL)mnz_downloadNode {
     return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];

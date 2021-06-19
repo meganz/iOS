@@ -1,7 +1,6 @@
 import Foundation
 
 @objc final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
-    
     @objc static var shared = AudioPlayerManager()
     
     private var player: AudioPlayer?
@@ -296,6 +295,10 @@ import Foundation
     
     func resetAudioPlayerConfiguration() {
         player?.resetAudioPlayerConfiguration()
+    }
+    
+    func resetCurrentItem() {
+        player?.resetCurrentItem()
     }
     
     private func isFolderSDKLogoutRequired() -> Bool {

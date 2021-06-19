@@ -38,7 +38,7 @@ enum SessionSectionRow: Int {
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
 
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameLabel: MEGALabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
@@ -51,6 +51,9 @@ enum SessionSectionRow: Int {
     private var avatarCollapsedPosition: CGFloat = 0.0
     
     private var twoFactorAuthStatus:TwoFactorAuthStatus = .unknown
+    
+    @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
+    private var offlineLogOutWarningDismissed: Bool
     
     // MARK: - Lifecycle
     
@@ -81,6 +84,8 @@ enum SessionSectionRow: Int {
         MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.add(self)
 
         updateAppearance()
+        
+        $offlineLogOutWarningDismissed.useCase = PreferenceUseCase.default
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -309,17 +314,9 @@ enum SessionSectionRow: Int {
                     return
                 }
                 
-                var rowToReload: Int = 0
-                let rowsForProfileSectionArray = rowsForProfileSection()
-                if changeType == .email {
-                    rowToReload = rowsForProfileSectionArray.firstIndex(of: .changeEmail) ?? 0
-                } else if changeType == .password {
-                    rowToReload = rowsForProfileSectionArray.firstIndex(of: .changePassword) ?? 0
-                }
-                
                 MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
                     self.twoFactorAuthStatus = request.flag ? .enabled : .disabled
-                    self.tableView.reloadRows(at: [IndexPath(row: rowToReload, section: ProfileTableViewSection.profile.rawValue)], with: .automatic)
+                    self.tableView.reloadData()
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
                     let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
                     navigationController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: "Button title to cancel something"))
@@ -327,7 +324,7 @@ enum SessionSectionRow: Int {
                     self.present(navigationController, animated: true, completion: nil)
                 }))
                 twoFactorAuthStatus = .querying
-                tableView.reloadRows(at: [IndexPath(row: rowToReload, section: ProfileTableViewSection.profile.rawValue)], with: .automatic)
+                tableView.reloadData()
             case .querying:
                 return
             case .disabled, .enabled:
@@ -580,7 +577,7 @@ extension ProfileViewController: UITableViewDelegate {
         case .profile:
             switch rowsForProfileSection()[indexPath.row] {
             case .changeName:
-                let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
+                let changeNameNavigationController = UIStoryboard.init(name: "ChangeName", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
                 navigationController?.present(changeNameNavigationController, animated: true)
             case .changePhoto:
                 guard let cell = tableView.cellForRow(at: indexPath) else {
@@ -622,6 +619,7 @@ extension ProfileViewController: UITableViewDelegate {
                         return
                     }
                     MEGASdkManager.sharedMEGASdk().shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
+                    offlineLogOutWarningDismissed = false
                 }
             }
         }

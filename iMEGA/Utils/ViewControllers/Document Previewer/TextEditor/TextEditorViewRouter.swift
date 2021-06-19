@@ -23,6 +23,16 @@ final class TextEditorViewRouter: NSObject {
         self.parentHandle = nodeEntity?.parentHandle
         self.presenter = presenter
     }
+    
+    convenience init(
+        textFile: TextFile,
+        textEditorMode: TextEditorMode,
+        parentHandle: MEGAHandle? = nil,
+        presenter: UIViewController
+    ) {
+        self.init(textFile: textFile, textEditorMode: textEditorMode, nodeEntity: nil, presenter: presenter)
+        self.parentHandle = parentHandle
+    }
 }
 
 extension TextEditorViewRouter: TextEditorViewRouting {
@@ -98,13 +108,19 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
-    func showPreviewDocVC(fromFilePath path: String) {
+    func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool) {
         let nc = UIStoryboard(name: "DocumentPreviewer", bundle: nil).instantiateViewController(withIdentifier: "previewDocumentNavigationID") as? MEGANavigationController
         let previewVC = nc?.viewControllers.first as? PreviewDocumentViewController
         previewVC?.filePath = path
+        previewVC?.showUnknownEncodeHud = showUneditableError
+        if let nodeHandle = nodeHandle {
+            previewVC?.nodeHandle = nodeHandle
+        }
         nc?.modalPresentationStyle = .fullScreen
         guard let navigationController = nc else { return }
-        presenter?.present(navigationController, animated: true, completion: nil)
+        baseViewController?.dismiss(animated: true, completion: {
+            self.presenter?.present(navigationController, animated: true, completion: nil)
+        })
     }
 }
 

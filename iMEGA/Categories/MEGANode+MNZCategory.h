@@ -7,13 +7,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *_Nullable)viewController;
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink;
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink inViewController:(UIViewController *_Nullable)viewController;
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
 
 #pragma mark - Actions
 
+- (void)mnz_editTextFileInViewController:(UIViewController *)viewController;
 - (BOOL)mnz_downloadNode;
 - (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api;
 - (BOOL)mnz_downloadNodeTopPriority;

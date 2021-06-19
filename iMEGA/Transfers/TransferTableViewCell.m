@@ -274,9 +274,13 @@
             self.arrowImageView.image = UIImage.mnz_errorTransferImage;
             self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             NSString *transferFailed = NSLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
-            MEGAError *error = self.transfer.lastErrorExtended;
-
-            NSString *errorString = [MEGAError errorStringWithErrorCode:error.type context:(self.transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
+            NSString *errorString;
+            if (self.transfer.isForeignOverquota) {
+                errorString = NSLocalizedString(@"transfer.cell.shareOwnerStorageQuota.infoLabel", @"A message shown when uploading to an incoming share and the owner’s account is over its storage quota.");
+            } else {
+                MEGAError *error = self.transfer.lastErrorExtended;
+                errorString = [MEGAError errorStringWithErrorCode:error.type context:(self.transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
+            }
             
             NSAttributedString *status = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ %@", transferFailed, NSLocalizedString(errorString, nil)] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];

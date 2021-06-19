@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol EmojiCarousalViewDelegate: class {
+protocol EmojiCarousalViewDelegate: AnyObject {
     func numberOfEmojis() -> Int
     func emojiAtIndex(_ index: Int) -> String
     func numberOfUsersReacted(toEmoji emoji: String) -> Int

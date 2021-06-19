@@ -1,17 +1,18 @@
 enum TextEditorViewAction: ActionType {
     case setUpView
-    case saveText(_ content: String)
+    case saveText(content: String)
     case renameFile
-    case renameFileTo(_ newInputName: String)
+    case renameFileTo(newInputName: String)
     case uploadFile
     case dismissTextEditorVC
     case editFile
     case showActions(sender: Any)
-    case cancelText(_ content: String)
+    case cancelText(content: String)
     case cancel
     case downloadToOffline
     case importNode
     case share(sender: Any)
+    case editAfterOpen
 }
 
 @objc enum TextEditorMode: Int, CaseIterable {
@@ -26,14 +27,14 @@ protocol TextEditorViewRouting: Routing {
     func dismissTextEditorVC()
     func dismissBrowserVC()
     func showActions(sender button: Any)
-    func showPreviewDocVC(fromFilePath path: String)
+    func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool)
     func importNode(nodeHandle: MEGAHandle?)
     func share(nodeHandle: MEGAHandle?, sender button: Any)
 }
 
 final class TextEditorViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(_ textEditorModel: TextEditorModel)
+        case configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool)
         case setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel)
         case setupLoadViews
         case showDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel)
@@ -42,7 +43,7 @@ final class TextEditorViewModel: ViewModelType {
         case startLoading
         case editFile
         case updateProgressView(progress: Float)
-        case showError(_ error: String)
+        case showError(message: String)
         case downloadToOffline
         case startDownload(status: String)
         case showDiscardChangeAlert
@@ -57,6 +58,8 @@ final class TextEditorViewModel: ViewModelType {
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadFileUseCase: DownloadFileUseCaseProtocol
     private var nodeActionUseCase: NodeActionUseCaseProtocol
+    private var shouldEditAfterOpen: Bool = false
+    private var showErrorWhenToSetupView: Command?
     
     init(
         router: TextEditorViewRouting,
@@ -81,23 +84,25 @@ final class TextEditorViewModel: ViewModelType {
     func dispatch(_ action: TextEditorViewAction) {
         switch action {
         case .setUpView:
-            setupView()
+            setupView(shallUpdateContent: true)
         case .saveText(let content):
-            saveText(content)
+            saveText(content: content)
         case .renameFile:
             invokeCommand?(.showRenameAlert(makeTextEditorRenameAlertModel()))
         case .renameFileTo(let newInputName):
-            renameFileTo(newInputName)
+            renameFileTo(newInputName: newInputName)
         case .uploadFile:
             uploadFile()
         case .dismissTextEditorVC:
             router.dismissTextEditorVC()
         case .editFile:
-            textEditorMode = .edit
+            editFile(shallUpdateContent: false)
+        case .editAfterOpen:
+            editAfterOpen()
         case .showActions(sender: let button):
             router.showActions(sender: button)
         case .cancelText(let content):
-            cancelText(content)
+            cancelText(content: content)
         case .cancel:
             cancel()
         case .downloadToOffline:
@@ -107,29 +112,39 @@ final class TextEditorViewModel: ViewModelType {
         case .share(sender: let button):
             router.share(nodeHandle: nodeHandle, sender: button)
         }
+        
     }
     
     //MARK: - Private functions
-    private func setupView() {
+    private func setupView(shallUpdateContent:Bool) {
         if textEditorMode == .load {
             invokeCommand?(.setupLoadViews)
-            invokeCommand?(.configView(makeTextEditorModel()))
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false))
             invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
             downloadToTempFolder()
         } else {
-            invokeCommand?(.configView(makeTextEditorModel()))
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent))
             invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
+        }
+        
+        if let command = showErrorWhenToSetupView {
+            invokeCommand?(command)
+            showErrorWhenToSetupView = nil
         }
     }
     
-    private func saveText(_ content: String) {
+    private func saveText(content: String) {
         textFile.content = content
         if textEditorMode == .edit {
             invokeCommand?(.startLoading)
             uploadFile()
         } else if textEditorMode == .create {
-            router.chooseParentNode { (parentHandle) in
-                self.uploadTo(parentHandle)
+            if let parentHandle = parentHandle {
+                uploadTo(parentHandle)
+            } else {
+                router.chooseParentNode { (parentHandle) in
+                    self.uploadTo(parentHandle)
+                }
             }
         }
     }
@@ -144,7 +159,7 @@ final class TextEditorViewModel: ViewModelType {
         )
     }
     
-    private func renameFileTo(_ newInputName: String) {
+    private func renameFileTo(newInputName: String) {
         textFile.fileName = newInputName
         guard let parentHandle = parentHandle else { return }
         uploadTo(parentHandle)
@@ -156,7 +171,7 @@ final class TextEditorViewModel: ViewModelType {
         let content = textFile.content
         let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
         do {
-            try content.write(toFile: tempPath, atomically: true, encoding: .utf8)
+            try content.write(toFile: tempPath, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
             uploadFileUseCase.uploadFile(withLocalPath: tempPath, toParent: parentHandle) { (result) in
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
@@ -164,12 +179,11 @@ final class TextEditorViewModel: ViewModelType {
                 
                 switch result {
                 case .failure(_):
-                    self.invokeCommand?(.showError(TextEditorL10n.transferError + " " + TextEditorL10n.upload))
+                    self.invokeCommand?(.showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.upload))
                 case .success(_):
                     if self.textEditorMode == .edit {
                         self.textEditorMode = .view
-                        self.invokeCommand?(.configView(self.makeTextEditorModel()))
-                        self.invokeCommand?(.setupNavbarItems(self.makeNavbarItemsModel()))
+                        self.setupView(shallUpdateContent: false)
                     }
                 }
             }
@@ -181,7 +195,28 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
-    private func cancelText(_ content: String) {
+    private func editFile(shallUpdateContent: Bool) {
+        if textFile.size < TextFile.maxEditableFileSize {
+            textEditorMode = .edit
+            setupView(shallUpdateContent: shallUpdateContent)
+        } else {
+            if invokeCommand != nil {
+                invokeCommand?(.showError(message: TextEditorL10n.uneditableLargeFileMessage))
+            } else {
+                showErrorWhenToSetupView = .showError(message: TextEditorL10n.uneditableLargeFileMessage)
+            }
+        }
+    }
+    
+    private func editAfterOpen() {
+        if textEditorMode == .view {
+            editFile(shallUpdateContent: true)
+        } else if textEditorMode == .load {
+            shouldEditAfterOpen = true
+        }
+    }
+    
+    private func cancelText(content: String) {
         if content != textFile.content {
             invokeCommand?(.showDiscardChangeAlert)
         } else {
@@ -194,8 +229,7 @@ final class TextEditorViewModel: ViewModelType {
             router.dismissTextEditorVC()
         } else if textEditorMode == .edit{
             textEditorMode = .view
-            invokeCommand?(.configView(makeTextEditorModel()))
-            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
+            self.setupView(shallUpdateContent: true)
         }
     }
     
@@ -216,17 +250,22 @@ final class TextEditorViewModel: ViewModelType {
         } completion: { (result) in
             switch result {
             case .failure(_):
-                self.invokeCommand?(.showError(TextEditorL10n.transferError + " " + TextEditorL10n.download))
+                self.invokeCommand?(.showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.download))
             case .success(let transferEntity):
                 guard let path = transferEntity.path else { return }
                 do {
-                    self.textFile.content = try String(contentsOfFile: path)
-                    self.textEditorMode = .view
-                    self.invokeCommand?(.configView(self.makeTextEditorModel()))
-                    self.invokeCommand?(.setupNavbarItems(self.makeNavbarItemsModel()))
+                    var encode: String.Encoding = .utf8
+                    self.textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)
+                    self.textFile.encode = encode.rawValue
+                    if self.shouldEditAfterOpen {
+                        self.editFile(shallUpdateContent: true)
+                        self.shouldEditAfterOpen = false
+                    } else {
+                        self.textEditorMode = .view
+                        self.setupView(shallUpdateContent: true)
+                    }
                 } catch {
-                    self.router.dismissTextEditorVC()
-                    self.router.showPreviewDocVC(fromFilePath: path)
+                    self.router.showPreviewDocVC(fromFilePath: path, showUneditableError: self.shouldEditAfterOpen)
                 }
             }
         }

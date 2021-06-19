@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol VoiceClipInputBarDelegate: class {
+protocol VoiceClipInputBarDelegate: AnyObject {
     func removeVoiceClipView(withClipPath path: String?)
     func voiceRecordingStarted()
     func voiceRecordingEnded()

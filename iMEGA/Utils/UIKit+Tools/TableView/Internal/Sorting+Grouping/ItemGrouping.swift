@@ -10,5 +10,5 @@ protocol ItemGrouping {
 
     var key: AnyHashable? { get }
     
-    func item(at index: Int) -> Item
+    func item(at index: Int) -> Item?
 }

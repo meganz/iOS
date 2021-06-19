@@ -212,7 +212,9 @@
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
     
-    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+    });
 #endif
 }
 

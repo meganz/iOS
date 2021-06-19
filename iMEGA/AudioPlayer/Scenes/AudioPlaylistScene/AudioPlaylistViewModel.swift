@@ -17,7 +17,7 @@ protocol AudioPlaylistViewRouting: Routing {
 final class AudioPlaylistViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case title(title: String)
-        case reloadTracks(currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?)
+        case reloadTracks(currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, selectedIndexPaths: [IndexPath]?)
         case reload(item: AudioPlayerItem)
         case deselectAll
         case showToolbar
@@ -51,7 +51,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     private func initScreen() {
         playerHandler?.addPlayer(listener: self)
         guard let handler = playerHandler, !handler.isPlayerEmpty(), let currentItem = handler.playerCurrentItem() else { return }
-        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: handler.playerQueueItems()))
+        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: handler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
         invokeCommand?(.title(title: parentNode?.name ?? ""))
     }
 
@@ -82,6 +82,17 @@ final class AudioPlaylistViewModel: ViewModelType {
         invokeCommand?(.hideToolbar)
     }
     
+    private func selectedIndexPaths() -> [IndexPath]? {
+        guard let handler = playerHandler else { return nil }
+        return Array(Set(handler.playerQueueItems() ?? [])
+                        .intersection(Set(selectedItems ?? []))).compactMap {
+            if let ind = handler.playerQueueItems()?.firstIndex(of: $0) {
+                return IndexPath(row: ind, section: 1)
+            }
+            return nil
+        }
+    }
+    
     // MARK: - Dispatch action
     func dispatch(_ action: AudioPlaylistAction) {
         switch action {
@@ -110,7 +121,8 @@ final class AudioPlaylistViewModel: ViewModelType {
 extension AudioPlaylistViewModel: AudioPlayerObserversProtocol {
     func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?) {
         guard let handler = playerHandler, let currentItem = handler.playerCurrentItem() else { return }
-        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: handler.playerQueueItems()))
+        
+        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: handler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
     }
 
     func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {

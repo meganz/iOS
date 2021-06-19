@@ -173,7 +173,11 @@ final class HomeViewController: UIViewController {
     private func toggleBannerCollectionView(isOn: Bool) {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.2, options: [], animations:  {
             self.bannerCollectionView.isHidden = !isOn
-        }, completion: nil)
+        }) { _ in
+            if !RecentsPreferenceManager.showRecents() {
+                NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGABannerChangedHomeHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue : isOn])
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -396,12 +400,17 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
         self.constraintToBottomPosition.isActive = false
         self.constraintToTopPosition.isActive = true
         self.view.layoutIfNeeded()
+        
+        NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGAHomeChangedHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue : false])
     }
 
     func animateToBottomPosition() {
         self.constraintToBottomPosition.isActive = true
         self.constraintToTopPosition.isActive = false
         self.view.layoutIfNeeded()
+        
+        let notificationName = bannerCollectionView.isHidden ? NSNotification.Name.MEGAHomeChangedHeight.rawValue : NSNotification.Name.MEGABannerChangedHomeHeight.rawValue
+        NotificationCenter.default.post(name: NSNotification.Name.init(notificationName), object: nil, userInfo: [notificationName : slidePanelAnimator.isInTopDockingPosition()])
     }
 }
 
@@ -504,7 +513,7 @@ extension HomeViewController: HomeRouting {
 
 // MARK: - RecentNodeActionDelegate
 
-extension HomeViewController: RecentNodeActionDelegate {
+extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
     func showSelectedNode(in viewController: UIViewController?) {
         guard let controller = viewController else { return }
@@ -515,18 +524,21 @@ extension HomeViewController: RecentNodeActionDelegate {
         let selectionAction: (MEGANode, MegaNodeActionType) -> Void = { [router, weak self] node, action in
             guard let self = self else { return }
             switch action {
+            
+            case .editTextFile:
+                router?.didTap(on: .editTextFile(node))
 
-            // MARK: - Info
+            // MARK: Info
             case .info:
                 router?.didTap(on: .fileInfo(node))
 
-            // MARK: - Links
+            // MARK: Links
             case .manageLink, .getLink:
                 router?.didTap(on: .linkManagement(node))
             case .removeLink:
                 router?.didTap(on: .removeLink(node))
 
-            // MARK: - Copy & Move & Delete
+            // MARK: Copy & Move & Delete
             case .moveToRubbishBin:
                 router?.didTap(on: .delete(node))
             case .copy:
@@ -536,7 +548,7 @@ extension HomeViewController: RecentNodeActionDelegate {
             case .restore:
                 node.mnz_restore()
 
-            // MARK: - Save && Download
+            // MARK: Save && Download
             case .saveToPhotos:
                 self.recentsViewModel.inputs.saveToPhotoAlbum(of: node)
             case .download:
@@ -546,11 +558,11 @@ extension HomeViewController: RecentNodeActionDelegate {
                 )
                 node.mnz_downloadNode()
 
-            // MARK: - Rename
+            // MARK: Rename
             case .rename:
                 node.mnz_renameNode(in: self)
 
-            // MARK: - Share
+            // MARK: Share
             case .share:
                 router?.didTap(on: .share(node, sender))
             case .shareFolder:
@@ -560,11 +572,11 @@ extension HomeViewController: RecentNodeActionDelegate {
             case .leaveSharing:
                 node.mnz_leaveSharing(in: self)
 
-            // MARK: - Send to chat
+            // MARK: Send to chat
             case .sendToChat:
                 node.mnz_sendToChat(in: self)
 
-            // MARK: - Favourite
+            // MARK: Favourite
             case .favourite:
                 self.recentsViewModel.inputs.toggleFavourite(of: node)
 

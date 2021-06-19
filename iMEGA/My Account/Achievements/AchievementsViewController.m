@@ -25,17 +25,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *unlockedBonusesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unlockedStorageQuotaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *storageQuotaLabel;
-@property (weak, nonatomic) IBOutlet UIView *unlockedBonusesCentralSeparatorView;
-@property (weak, nonatomic) IBOutlet UILabel *unlockedTransferQuotaLabel;
-@property (weak, nonatomic) IBOutlet UILabel *transferQuotaLabel;
 @property (weak, nonatomic) IBOutlet UIView *unlockedBonusesBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) MEGAAchievementsDetails *achievementsDetails;
-@property (nonatomic) NSMutableArray *achievementsIndexesMutableArray;
-
-@property (nonatomic, getter=haveReferralBonuses) BOOL referralBonuses;
+@property (nonatomic) NSMutableDictionary *achievementsIndexesMutableDictionary;
+@property (nonatomic) NSMutableArray<NSNumber *> *displayOrderMutableArray;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
@@ -57,7 +53,7 @@
     
     self.navigationItem.title = NSLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     
-    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
+    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"account.achievement.referral.title", nil);
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
@@ -65,7 +61,6 @@
     
     self.unlockedBonusesLabel.text = NSLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = NSLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
-    self.transferQuotaLabel.text = NSLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
     
     [[MEGASdkManager sharedMEGASdk] getAccountAchievementsWithDelegate:self];
     
@@ -103,11 +98,8 @@
     
     self.unlockedBonusesView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
-    self.unlockedBonusesCentralSeparatorView.backgroundColor = self.unlockedBonusesTopSeparatorView.backgroundColor = self.unlockedBonusesBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.unlockedBonusesTopSeparatorView.backgroundColor = self.unlockedBonusesBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.unlockedStorageQuotaLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
-    self.unlockedTransferQuotaLabel.textColor = UIColor.systemGreenColor;
-    
-    self.storageQuotaLabel.textColor = self.transferQuotaLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
 }
 
 - (NSMutableAttributedString *)textForUnlockedBonuses:(long long)quota {
@@ -144,31 +136,25 @@
     return firstPartMutableAttributedString;
 }
 
-- (void)setStorageAndTransferQuotaRewardsForCell:(AchievementsTableViewCell *)cell forIndex:(NSInteger)index {
+- (void)setStorageQuotaRewardsForCell:(AchievementsTableViewCell *)cell forIndex:(NSInteger)index {
     long long classStorageReward = 0;
-    long long classTransferReward = 0;
     if (index == -1) {
         classStorageReward = self.achievementsDetails.currentStorageReferrals;
-        classTransferReward = self.achievementsDetails.currentTransferReferrals;
     } else {
         NSInteger awardId = [self.achievementsDetails awardIdAtIndex:index];
         classStorageReward = [self.achievementsDetails rewardStorageByAwardId:awardId];
-        classTransferReward = [self.achievementsDetails rewardTransferByAwardId:awardId];
     }
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
     cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
-    
-    cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : UIColor.systemGreenColor);
-    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
-- (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath {
+- (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath achievementClass:(MEGAAchievement)achievementClass {
     AchievementsDetailsViewController *achievementsDetailsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsDetailsViewControllerID"];
     achievementsDetailsVC.achievementsDetails = self.achievementsDetails;
-    NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
-    NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
-    achievementsDetailsVC.index = index.unsignedIntegerValue;
+    NSNumber *index = [self.achievementsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
+    achievementsDetailsVC.completedAchievementIndex = index;
+    achievementsDetailsVC.achievementClass = achievementClass;
     
     [self.navigationController pushViewController:achievementsDetailsVC animated:YES];
 }
@@ -187,64 +173,64 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
-    
-    return numberOfStaticCells + self.achievementsIndexesMutableArray.count;
+    return self.displayOrderMutableArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier;
-    if (indexPath.row == 0) {
-        identifier = self.haveReferralBonuses ? @"AchievementsTableViewCellID" : @"AchievementsWithSubtitleTableViewCellID";
-    } else {
-        identifier = @"AchievementsWithSubtitleTableViewCellID";
-    }
-    
+    MEGAAchievement achievementClass = [[self.displayOrderMutableArray objectOrNilAtIndex:indexPath.row] unsignedIntegerValue];
+    NSString *identifier = achievementClass == MEGAAchievementInvite ? @"AchievementsTableViewCellID" : @"AchievementsWithSubtitleTableViewCellID";
     AchievementsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    
-    if (indexPath.row == 0 && self.haveReferralBonuses) {
+
+    switch (achievementClass) {
+        case MEGAAchievementInvite: {
+            cell.titleLabel.text = NSLocalizedString(@"account.achievement.referralBonus.title", nil);
+            break;
+        }
+            
+        case MEGAAchievementWelcome: {
+            cell.titleLabel.text = NSLocalizedString(@"account.achievement.registration.title", nil);
+            break;
+        }
+            
+        case MEGAAchievementDesktopInstall: {
+            cell.titleLabel.text = NSLocalizedString(@"account.achievement.desktopApp.title", nil);
+            break;
+        }
+            
+        case MEGAAchievementMobileInstall: {
+            cell.titleLabel.text = NSLocalizedString(@"account.achievement.mobileApp.title", nil);
+            break;
+        }
+            
+        case MEGAAchievementAddPhone: {
+            cell.titleLabel.text = NSLocalizedString(@"Add Phone Number", nil);
+            break;
+        }
+            
+        default:
+            break;
+    }
+    if (achievementClass == MEGAAchievementInvite) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        cell.titleLabel.text = NSLocalizedString(@"referralBonuses", @"achievement type");
-        
-        [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
+        [self setStorageQuotaRewardsForCell:cell forIndex:-1];
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
         
-        NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
-        NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
-        MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:index.unsignedIntegerValue];
-        
-        [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:index.integerValue];
-        
-        switch (achievementClass) {
-            case MEGAAchievementWelcome: {
-                cell.titleLabel.text = NSLocalizedString(@"registrationBonus", @"achievement type");
-                break;
-            }
-                
-            case MEGAAchievementDesktopInstall: {
-                cell.titleLabel.text = NSLocalizedString(@"installMEGASync", @"");
-                break;
-            }
-                
-            case MEGAAchievementMobileInstall: {
-                cell.titleLabel.text = NSLocalizedString(@"installOurMobileApp", @"");
-                break;
-            }
-                
-            case MEGAAchievementAddPhone: {
-                cell.titleLabel.text = NSLocalizedString(@"Add Phone Number", nil);
-                break;
-            }
-                
-            default:
-                break;
+        NSNumber *index = [self.achievementsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
+        if (index != nil) {
+            [self setStorageQuotaRewardsForCell:cell forIndex:index.integerValue];
+            NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
+            cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? NSLocalizedString(@"Expired", nil) : [NSString stringWithFormat:NSLocalizedString(@"account.achievement.complete.valid.cell.subtitle", nil), [NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
+            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        } else {
+            NSString *storageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
+            
+            cell.storageQuotaRewardLabel.text = storageString;
+            cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
+            
+            cell.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.incomplete.subtitle", nil), storageString];
+            cell.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         }
-        
-        NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
-        cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? NSLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [NSLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
-        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
     return cell;
@@ -253,20 +239,16 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 0: {
-            if (self.haveReferralBonuses) {
-                ReferralBonusesTableViewController *referralBonusesTVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"ReferralBonusesTableViewControllerID"];
-                referralBonusesTVC.achievementsDetails = self.achievementsDetails;
-                [self.navigationController pushViewController:referralBonusesTVC animated:YES];
-            } else {
-                [self pushAchievementsDetailsWithIndexPath:indexPath];
-            }
+    MEGAAchievement achievementClass = [[self.displayOrderMutableArray objectOrNilAtIndex:indexPath.row] unsignedIntegerValue];
+    switch (achievementClass) {
+        case MEGAAchievementInvite: {
+            ReferralBonusesTableViewController *referralBonusesTVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"ReferralBonusesTableViewControllerID"];
+            referralBonusesTVC.achievementsDetails = self.achievementsDetails;
+            [self.navigationController pushViewController:referralBonusesTVC animated:YES];
             break;
         }
-            
         default: {
-            [self pushAchievementsDetailsWithIndexPath:indexPath];
+            [self pushAchievementsDetailsWithIndexPath:indexPath achievementClass:achievementClass];
             break;
         }
     }
@@ -283,27 +265,39 @@
         }
         
         self.achievementsDetails = request.megaAchievementsDetails;
-        
-        self.achievementsIndexesMutableArray = [[NSMutableArray alloc] init];
+        bool hasReferralBonuses = NO;
+        bool hasWelcomeBonuses = NO;
+        self.achievementsIndexesMutableDictionary = [[NSMutableDictionary alloc] init];
         NSUInteger awardsCount = self.achievementsDetails.awardsCount;
         for (NSUInteger i = 0; i < awardsCount; i++) {
             MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:i];
             if (achievementClass == MEGAAchievementInvite) {
-                self.referralBonuses = YES;
+                hasReferralBonuses = YES;
             } else {
-                [self.achievementsIndexesMutableArray addObject:[NSNumber numberWithInteger:i]];
+                if (achievementClass == MEGAAchievementWelcome) {
+                    hasWelcomeBonuses = YES;
+                }
+                [self.achievementsIndexesMutableDictionary setObject:[NSNumber numberWithInteger:i] forKey:[NSNumber numberWithInteger:achievementClass]];
             }
         }
         
+        self.displayOrderMutableArray = [[NSMutableArray alloc] init];
+        if (hasReferralBonuses) {
+            [self.displayOrderMutableArray addObject:[NSNumber numberWithInt:MEGAAchievementInvite]];
+        }
+        if (hasWelcomeBonuses) {
+            [self.displayOrderMutableArray addObject:[NSNumber numberWithInt:MEGAAchievementWelcome]];
+        }
+        [self.displayOrderMutableArray addObjectsFromArray:@[
+            [NSNumber numberWithInt:MEGAAchievementDesktopInstall],
+            [NSNumber numberWithInt:MEGAAchievementMobileInstall],
+            [NSNumber numberWithInt:MEGAAchievementAddPhone]
+        ]];
+        
         NSString *inviteStorageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
-        NSString *inviteTransferString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classTransferForClassId:MEGAAchievementInvite]];
-        NSString *inviteFriendsAndGetForEachReferral = NSLocalizedString(@"inviteFriendsAndGetForEachReferral", @"title of the introduction for the achievements screen");
-        inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%1$s" withString:inviteStorageString];
-        inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%2$s" withString:inviteTransferString];
-        self.inviteYourFriendsSubtitleLabel.text = inviteFriendsAndGetForEachReferral;
+        self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.referral.subtitle", nil), inviteStorageString];
         
         self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
-        self.unlockedTransferQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentTransfer];
         
         [self.inviteYourFriendsSubtitleLabel sizeToFit];
         

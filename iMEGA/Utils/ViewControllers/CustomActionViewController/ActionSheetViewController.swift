@@ -51,7 +51,7 @@ class ActionSheetViewController: UIViewController {
     }
     
     func configurePresentationStyle(from sender: Any) {
-        if UIDevice.current.iPadDevice && (sender is UIBarButtonItem || sender is UIView) {
+        if UIDevice.current.iPadDevice && !UIApplication.shared.isSplitOrSlideOver && (sender is UIBarButtonItem || sender is UIView) {
             modalPresentationStyle = .popover
             popoverPresentationController?.delegate = self
             popoverPresentationController?.permittedArrowDirections = .any
@@ -191,7 +191,8 @@ extension ActionSheetViewController {
         indicator.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat(6))
 
         titleLabel.text = headerTitle
-        titleLabel.font = .boldSystemFont(ofSize: 15)
+        titleLabel.font = .preferredFont(forTextStyle: .subheadline)
+        titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.sizeToFit()
         headerView?.addSubview(titleLabel)
         titleLabel.autoCenterInSuperview()
@@ -319,10 +320,6 @@ extension ActionSheetViewController: UITableViewDataSource {
 
             return cell
         }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

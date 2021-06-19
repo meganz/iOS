@@ -1,6 +1,6 @@
 import MessageKit
 
-protocol MessageReactionReusableViewDelegate: class {
+protocol MessageReactionReusableViewDelegate: AnyObject {
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView)
     func addMorePressed(chatMessage: ChatMessage, sender: UIView)
 }

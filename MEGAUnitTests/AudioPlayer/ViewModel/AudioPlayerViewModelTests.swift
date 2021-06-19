@@ -12,13 +12,15 @@ final class AudioPlayerViewModelTests: XCTestCase {
                                               router: router,
                                               playerHandler: playerHandler,
                                               nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
-                                              streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()))
+                                              streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
+                                              dispatchQueue: MockDispatchQueue())
     
     lazy var offlineViewModel = AudioPlayerViewModel(selectedFile: "file_path",
                                                      filePaths: nil,
                                                      router: router,
                                                      playerHandler: playerHandler,
-                                                     offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()))
+                                                     offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
+                                                     dispatchQueue: MockDispatchQueue())
     
     func testPlaybackActions() {
         test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.showLoading(true),

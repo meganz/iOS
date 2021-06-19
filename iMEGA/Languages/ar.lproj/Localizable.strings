@@ -1,9 +1,9 @@
 /* Button title to cancel something */
 "cancel"="الغاء";
 /* Button title to accept something */
-"ok"="حسنا";
+"ok"="حسناً";
 /* Button title to clear something */
-"clear"="تنظيف ذاكرة التخزين المؤقت";
+"clear"="مسح";
 /*  */
 "yes"="نعم";
 /*  */
@@ -13,7 +13,7 @@
 /*  */
 "error"="خطأ";
 /*  */
-"name"="الإسم";
+"name"="الاسم";
 /* Caption of a button to edit the files that are selected */
 "edit"="تعديل";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -21,45 +21,45 @@
 /*  */
 "passcode"="رمز المرور";
 /* "Size" of the file or folder you are sharing */
-"size"="الحجم";
+"size"="حجم";
 /* Quality title, used in changing the export quality of scaned doc */
 "Quality"="جودة";
 /*  */
-"folder"="المجلد";
+"folder"="مجلد";
 /* Error message shown when there's no camera available on the device */
-"noCamera"="لا يوجد كاميرا متاحة";
+"noCamera"="الكاميرا غير متاحة";
 /* Alert title to attract attention */
 "attention"="تنبيه";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="يرجى إعطاء تطبيق MEGA إذن للوصول إلى الكاميرا في إعداداتك";
+"cameraPermissions"="يرجى إعطاء تطبيق ميغا MEGA إذن الوصول إلى الكاميرا في إعدادات جهازك";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="الرجاء منح تطبيق MEGA بالإذن لاستخدام  المايكروفون في إعدادات جهازك";
+"microphonePermissions"="يرجى إعطاء تطبيق ميغا MEGA إذن الوصول إلى المايكروفون في إعدادات جهازك";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="يرجى إعطاء تطبيق MEGA إذن الوصول إلى مكتبة الصور في إعدادات";
+"photoLibraryPermissions"="يرجى إعطاء تطبيق ميغا MEGA إذن الوصول إلى مكتبة الصور في الإعدادات";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="تم تفعيل حسابك بالفعل. يُرجى تسجيل الدخول.";
 /*  */
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="رابط التأكيد خاصتك لم يعد صالحاً. قد يكون حسابك مفعلاً مسبقاً أو قد تكون قد ألغيت تسجيل حسابك.";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="رابط غير موجود";
+"linkNotValid"="رابط غير صالح";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="تم إنهاء الحساب الذي أنشأ هذا الرابط بسبب انتهاكات متعددة ل [A]شروط  الخدمة[/A]";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="تم إنهاء الحساب الذي أنشأ هذا الرابط بسبب انتهاكات متعددة [A]لشروط  الخدمة[/A]";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="للوصول إلى هذا المجلد / الملف، ستحتاج إلى مفتاح فك التشفير الخاص به. إذا لم يكن لديك المفتاح، فيرجى الاتصال بمنشئ الرابط.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="مفتاح التشفير";
+"decryptionKey"="مفتاح فك التشفير";
 /* Button title to try to decrypt the link */
 "decrypt"="فك التشفير";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="مفتاح فك التشفير غير موجود";
+"decryptionKeyNotValid"="مفتاح فك التشفير غير صالح";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
-"To access this link, you will need its password."="للوصول إلى هذا الرابط،تحتاج إلي كلمه السر الخاص به.";
+"To access this link, you will need its password."="للوصول إلى هذا الرابط، ستحتاج كلمة المرور الخاص به.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="إذا كنت لاتمتلك كلمة المرور، تواصل مع منشئ الرابط.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="ادخل كلمه السر";
+"Enter the password"="أدخل كلمة المرور";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="تم تسجيل الخروج";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -453,9 +453,9 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="أدخل الاسم الجديد";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="Rename File %@ ?";
+"rename_file_alert_title"="أعد تسمية الملفّ %@ ؟";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="استبدال";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="نقل إلى سلة المحذوفات";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -942,12 +942,10 @@
 "profile"="الملف الشخصي";
 /* Title of the Achievements section */
 "achievementsTitle"="الإنجازات";
-/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="ادع أصدقائك واحصل على ترقيات";
-/* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="ادع اصدقائك";
-/* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="احصل %1$s من المساحة و %2$s من عمليات النقل لكل دعوة";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referral.title"="ادع اصدقائك";
+/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
+"account.achievement.referral.subtitle"="%@ من مساحة التخزين عن كل إحالة. \nصالحة لمدة 365 يوم.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الهاتف أو أدخل عناوين بريد إلكتروني متعددة";
 /*  */
@@ -966,28 +964,36 @@
 "storageQuota"="مساحة التخزين المتاحة";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="حصة النقل";
-/* achievement type */
-"registrationBonus"="مكافآت التسجيل";
-/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="لقد تلقيت %1 مساحة تخزين كمكافأة تسجيل مجانية.";
-/* achievement type */
-"referralBonuses"="علاوات الإحالة";
-/*  */
-"installMEGASync"="تثبيت MEGAsync";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="لقد تلقيت %1 مساحة تخزين و%2 حصة نقل لتثبيتك MEGAsync.";
-/*  */
-"installOurMobileApp"="حمل تطبيقاتنا للجوال";
-/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="لقد تلقيت %1 مساحة تخزين و %2 حصة نقل لتنزيل تطبيقنا على جوالك .";
-/*  */
-"xDaysLeft"="%1 أيام متبقية";
-/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(الإضافة تنتهي في [S]%1[/S]  %2)";
+/* Cell title shown on the achievements view for registration achievement */
+"account.achievement.registration.title"="مكافآت التسجيل";
+/* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
+"account.achievement.registration.explanation.label"="لقد تلقيت %@ من مساحة تخزين كمكافأة تسجيل مجانية.";
+/* Cell title shown on the achievements view for referral achievement */
+"account.achievement.referralBonus.title"="مكافآت الإحالة";
+/* Cell title shown on the achievements view for install MEGA desktop app achievement */
+"account.achievement.desktopApp.title"="قم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي";
+/* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.complete.explaination.label"="لقد تلقيت %@ من مساحة التخزين لتثبيتك تطبيق ميغا للحاسوب المكتبي MEGA desktop.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
+"account.achievement.desktopApp.incomplete.explaination.label"="عند تثبيتك لتطبيق ميغا للحاسوب المكتبي MEGA desktop، ستحصل على %@ من مساحة التخزين المجانية الصالحة لمدة 365 يومًا. يتوفر تطبيق ميغا للحاسوب المكتبي MEGA desktop لأنظمة التشغيل ويندوز Windows و ماك macOS ومعظم إصدارات لينوكس Linux.";
+/* Cell title shown on the achievements view for install MEGA mobile app achievement */
+"account.achievement.mobileApp.title"="تثبيت تطبيق ميغا للهاتف المحمول MEGA mobile";
+/* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لتثبيتك تطبيق ميغا للهاتف المحمول MEGA mobile.";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
+"account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا للهاتف المحمول MEGA mobile، تحصل على %@ من مساحة التخزين المجانية الصالحة لمدة 365 يومًا. تطبيق ميغا للهاتف المحمول MEGA mobile متاح لأنظمة أي او اس iOS و اندرويد Android و ويندوز Windows Phone.";
+/* Subtitle of the incomplete achievement, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle"="%@ من مساحة التخزين. صالحة لمدة 365 يوماً.";
+/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
+"account.achievement.complete.valid.cell.subtitle"="%@ يوم/أيام متبقية";
+/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
+"account.achievement.complete.valid.detail.subtitle"="المكافأة تنتهي في %@ يوم/أيام";
 /* Add Phone Number title */
 "Add Phone Number"="أضف رقم هاتف";
-/* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="لقد حصلت على %1$s من مساحة تخزين و %2$s من حجم التراسل المتاح  للتحقق من رقم هاتفك.";
+/* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لقيامك بإضافة رقم هاتفك.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="عند إضافة رقم هاتفك تحصل على %@ من مساحة التخزين المجانية صالحة لمدة 365 يومًا.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="احصل على %@ مجاناً عند إضافة رقم هاتفك. هذا يسهل العثور عليك من قبل جهات الاتصال الخاصة بك على ميغا MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1004,8 +1010,6 @@
 "months"="شهور";
 /*  */
 "days"="أيام";
-/* Label to show that an error related with expiration occurs during a SDK operation. */
-"expired"="انتهت";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="الخروج";
 /* String shown when you are logging out of your account. */
@@ -1095,7 +1099,9 @@
 /* "Yearly" subscriptions */
 "yearly"="سنويًا";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="هذا العنصر غير متوفر للشراء من داخل التطبيق في متجر التطبيقات حاليا، الرجاء المحاولة لاحقا.";
+"inAppPurchase.error.alert.title.notAvailable"="هذا عنصر In-App Purchase غير متوفر للشراء داخل التطبيق في متجر تطبيقات آبل App Store في الوقت الحالي. يرجى التحقق من إعدادات الدفع للهوية التعريفية آبل Apple ID الخاص بك.";
+/* Button that redirect you to the main page of your Account in the App Store */
+"inAppPurchase.error.alert.primaryButtonTitle"="إعدادات متجر تطبيقات App Store";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="شكرا";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1440,26 +1446,10 @@
 "HTTP error"="خطأ بروتوكول HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
-/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="تقدم MEGA تخزين سحابي مشفر من طرف المستخدم باستخدام متصفح الانترنت وتطبيقات الموبايل. بخلاف خدمات التخزين السحابي الاخرى، معطياتك ستكون مشفرة وأجهزتك الشخصية ستكون الوحيدة القادرة على فك هذا التشفير حصرا، ونحن لن نكون قادرين على فك هذا التشفير.";
-/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="ارفع الملفات الخاصة بك من الهاتف الذكي أو الكمبيوتر اللوحي، ثم ابحث، أو خزن، أو حمل، أو شاهد، أو اعرض، أو شارك، أو أعد تسمية أو احذف الملفات الخاصة بك في أي وقت، من أي جهاز وفي أي مكان. شارك مجلداتك مع جهات اتصالك وشاهد تحديثاتهم مباشرة وقت التحديث.";
-/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="تعني عملية التشفير أنه يتعذر علينا الدخول إلى كلمة المرور أو إعادة تعيينها، لذا يجب عليك تذكرها (إلا إذا كان لديك مفتاح الاستعادة كنسخة احتياطية) أو ستفقد إمكانية الدخول إلى الملفات المخزنة.";
-/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="تسمح محادثة الفيديو المشفرة من طرف إلى طرف من ميغا MEGA بالخصوصية الكاملة، وهي متاحة من خلال المتصفح منذ عام 2016. وقد تم توسيعها لتشمل تطبيق الهاتف المحمول الخاص بنا، مع إمكانية الوصول إلى سجل المحادثة عبر أجهزة متعددة. يمكن للمستخدمين أيضًا إضافة ملفات بسهولة إلى المحادثة من سواقة ميغا السحابية MEGA  Cloud Drive الخاصة بهم.";
-/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="تقدم MEGA مساحة تخزين مجانية بحجم 50 غيغا بايت لكل المشتركين بلاضافة الى مكافات على الانجازات. بالاضافة الى باقات مأجورة بمساحات تخزين اكبر.";
-/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="اشتراك Pro Lite برو لايت: 4.99 يورو (4.99 دولارًا أمريكيًا) شهريًا أو 49.99 يورو (49.99 دولارًا أمريكيًا) سنويًا يمنحك 400 غيغابايت من مساحة التخزين و 1 تيرابايت من حجم التراسل المتاح شهريًا.\nاشتراك Pro I برو 1: 9.99 يورو (9.99 دولارًا أمريكيًا) شهريًا أو 99.99 يورو (99.99 دولارًا أمريكيًا) سنويًا يمنحك 2 تيرابايت من مساحة التخزين و 2 تيرابايت من حجم التراسل المتاح شهريًا. \nاشتراك Pro II برو 2: 19.99 يورو (19.99 دولارًا أمريكيًا) شهريًا أو 199.99 يورو (199.99 دولارًا أمريكيًا) سنويًا يمنحك مساحة تخزين تبلغ 8 تيرابايت من مساحة التخزين و 8 تيرابايت من حجم التراسل المتاح شهريًا.\n اشتراك Pro III برو 3: 29.99 يورو (29.99 دولارًا أمريكيًا) شهريًا أو 299.99 يورو (299.99 دولارًا أمريكيًا) سنويًا يمنحك 16 تيرابايت من مساحة التخزين و 16 تيرابايت من حجم التراسل المتاح شهريًا.";
-/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="لمزيد من المعلومات يرجى زيارة موقعنا الالكتروني: https://mega.nz \n شروط استخدام الخدمة: https://mega.nz/terms \n سياسة الخصوصية: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="جار الاتصال";
 /* notification subtitle of incoming calls */
 "Incoming call"="مكالمة واردة";
-/* Button title to see the available bonus */
-"getBonus"="احصل على علاوة";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="جودة الفيديوهات المرفعة الى المحادثة";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -1724,6 +1714,10 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="نحن نرغب بارسال اخطارات اليك حتى تتمكن من استقبال الرسائل على جهازك بشكل فوري.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="السماح بالوصول";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"settings.section.security"="أمن";
+/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
+"settings.section.termsAndPolicies"="الشروط والسياسات";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="إدارة الملف";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1974,6 +1968,10 @@
 "New Group Chat"="مجموعة محادثة جديدة";
 /* Title for the recents section. */
 "Recents"="مؤخراً";
+/* Title show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.title"="التفاعل مؤخراً مخفي";
+/* Title of the button show in Recents on the empty state when the recent activity is hidden */
+"recents.emptyState.activityHidden.button"="اعرض التفاعل";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 صورة";
 /* Multiple videos title shown in recents section of web client. */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="جهات الاتصال على ميغا MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="مرحبا! احصل على محادثات آمنة على ميغا MEGA معي واحصل على مساحة تخزين تصل إلى 50 غيغابايت.";
+"contact.invite.message"="لديك طلب لمحادثة ميغا MEGA الآمنة في انتظارك. قم بتسجيل حساب على ميغا MEGA واحصل على 20 جيجابايت من مساحة التخزين المجانية مدى الحياة.";
 /* Destination folder name of chat files */
 "My chat files"="ملفات المحادثة الخاصة بي";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2140,8 +2138,6 @@
 "Remove Nickname"="أزالة الاسم مستعار";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="الاسم المستعار / اللقب";
-/* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="ليس من الممكن الحصول على محتوى هذا الملف، حيث إنه غير مشفر في UTF-8 أو ISO/IEC 8859-1.";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="متأخر بالدفع";
 /* Business account status */
@@ -2254,6 +2250,10 @@
 "Default Tab"="التبويب الرئيسي";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="شكل الفرز والعرض";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
+"settings.userInterface.hideRecentActivity"="إخفاء التفاعل مؤخراً";
+/* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
+"settings.userInterface.hideRecentActivity.footer"="إخفاء التفاعل مؤخراً في قسم الصفحة الرئيسية";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="الإفتراضي";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2600,15 +2600,33 @@
 "The device does not have enough space for MEGA to run properly."="لا يحتوي الجهاز على مساحة كافية لتشغيل ميغا MEGA بشكل صحيح.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="قم بتحرير بعض المساحة عن طريق حذف التطبيقات التي لم تعد تستخدمها أو حذف ملفات الفيديو الكبيرة في معرض الصور الخاص بك. يمكنك إدارة مساحة التخزين الخاص بك في %@";
-/* Title of the Settings section where you can configure security details of your MEGA account */
-"settings.section.security"="Security";
-/* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Terms and Policies";
-/* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
-"settings.section.userInterface"="واجهة المستخدم";
+/* The title of Turn on Notifications view */
+"dialog.turnOnNotifications.label.title"="تفعيل الإشعارات";
+/* The description of Turn on Notifications view */
+"dialog.turnOnNotifications.label.description"="بهذه الطريقة ستتمكن من مشاهدة الرسائل الجديدة فورياً على جهازك فوراً.";
+/* First step to turn on notifications */
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> افتح <b>الإعدادت</b>";
+/* Second step to turn on notifications */
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> انقر <b>الإشعارات</b>";
+/* Third step to turn on notifications */
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> قم بتشغيل <b> السماح للإشعارات</b>";
+/* Title of the button to open Settings */
+"dialog.turnOnNotifications.button.primary"="أفتح الإعدادات";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Change Launch Tab";
+"Change Launch Tab"="تغيير صفحة التشغيل";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="يمكنك الآن تحديد القسم الذي يفتحه التطبيق عند الإطلاق. اختر الخيار الذي يناسب احتياجاتك بشكل أفضل، سواء كان المحادثة أو السواقة السحابية أو الصفحة الرئيسية.";
 /* Dialog button text for the change launch tab screen */
-"Change Setting"="Change Setting";
+"Change Setting"="تغيير الإعدادات";
+/* Offline log out warning message */
+"offline.logOut.warning.message"="سيتم حذف المحتوى الخاص بك من هذا الجهاز عند تسجيل الخروج.";
+/* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="صاحب المشاركة تجاوز مساحة التخزين المتاحة له.";
+/* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
+"dialog.shareOwnerStorageQuota.message"="لا يمكن إرسال الملف لأن المستخدم المستهدف قد تجاوز حصة التخزين المتاحة له.";
+/* Hud info message when edit large text file. */
+"general.textEditor.hud.uneditableLargeFile"="الملف كبير جدًا ولا يمكن تعديله.";
+/* Hud info message when read unknown encode file. */
+"general.textEditor.hud.unknownEncode"="تعذر تحرير الملف لأن ترميز محتوى غير معروف.";
+/* Show the node owner's name. The %@ is the owner's name */
+"cloudDrive.nodeInfo.owner"="%@ (المالك)";

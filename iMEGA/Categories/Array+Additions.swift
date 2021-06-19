@@ -31,3 +31,9 @@ extension Array {
         insert(remove(at: index), at: newIndex)
     }
 }
+
+extension Array where Element: Hashable {
+    func removeDuplicates() -> [Element] {
+        NSOrderedSet(array: self).array as? [Element] ?? []
+    }
+}

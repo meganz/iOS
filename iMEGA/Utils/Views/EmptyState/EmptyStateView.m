@@ -15,9 +15,14 @@
 
 @property (nullable, weak, nonatomic) IBOutlet UIImageView *imageView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYDefaultConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYHomeConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYHomePlusBannerConstraint;
+
 @property (nullable, weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nullable, weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (nullable, weak, nonatomic) IBOutlet UIView *bottomView;
+
+@property (nullable, weak, nonatomic) IBOutlet UIView *audioPlayerShownView;
 
 @end
 
@@ -59,6 +64,16 @@
     return self;
 }
 
+- (UIView *)initForHomeWithImage:(nullable UIImage *)image title:(nullable NSString *)title description:(nullable NSString *)description buttonTitle:(nullable NSString *)buttonTitle {
+
+    self = [self initWithImage:image title:title description:description buttonTitle:buttonTitle];
+    
+    [NSLayoutConstraint deactivateConstraints:@[self.imageViewYDefaultConstraint]];
+    [NSLayoutConstraint activateConstraints:@[self.imageViewYHomeConstraint]];
+    
+    return self;
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -78,6 +93,9 @@
       
 #ifdef MAIN_APP_TARGET
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(bottomViewVisibility) name:MEGAAudioPlayerShouldUpdateContainerNotification object:nil];
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(homeChangedHeight:) name:MEGAHomeChangedHeightNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(bannerChangedHomeHeight:) name:MEGABannerChangedHomeHeightNotification object:nil];
 #endif
 }
 
@@ -91,6 +109,7 @@
 
 - (void)updateAppearance {
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    [self.descriptionButton setTintColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     
     [self.button mnz_setupPrimary:self.traitCollection];
     [self bottomViewVisibility];
@@ -98,8 +117,32 @@
 
 - (void)bottomViewVisibility {
 #ifdef MAIN_APP_TARGET
-    self.bottomView.hidden = ![AudioPlayerManager.shared isPlayerAlive];
+    self.audioPlayerShownView.hidden = ![AudioPlayerManager.shared isPlayerAlive];
 #endif
 }
+
+#ifdef MAIN_APP_TARGET
+- (void)homeChangedHeight:(NSNotification *)notification {
+    BOOL homeChangedHeight = [[notification.userInfo objectForKey:notification.name] boolValue];
+    if (homeChangedHeight) {
+        [NSLayoutConstraint deactivateConstraints:@[self.imageViewYDefaultConstraint, self.imageViewYHomePlusBannerConstraint]];
+        [NSLayoutConstraint activateConstraints:@[self.imageViewYHomeConstraint]];
+    } else {
+        [NSLayoutConstraint deactivateConstraints:@[self.imageViewYHomeConstraint, self.imageViewYHomePlusBannerConstraint]];
+        [NSLayoutConstraint activateConstraints:@[self.imageViewYDefaultConstraint]];
+    }
+}
+
+- (void)bannerChangedHomeHeight:(NSNotification *)notification {
+    BOOL bannerChangedHomeHeight = [[notification.userInfo objectForKey:notification.name] boolValue];
+    if (bannerChangedHomeHeight) {
+        [NSLayoutConstraint deactivateConstraints:@[self.imageViewYDefaultConstraint, self.imageViewYHomeConstraint]];
+        [NSLayoutConstraint activateConstraints:@[self.imageViewYHomePlusBannerConstraint]];
+    } else {
+        [NSLayoutConstraint deactivateConstraints:@[self.imageViewYDefaultConstraint, self.imageViewYHomePlusBannerConstraint]];
+        [NSLayoutConstraint activateConstraints:@[self.imageViewYHomeConstraint]];
+    }
+}
+#endif
 
 @end

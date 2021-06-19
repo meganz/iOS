@@ -130,7 +130,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
                     
                     self?.invokeCommand?(.configHistoryRetentionSection(self!.historyRetentionOption, self!.historyRetentionValue))
                     
-                    self!.historyRetentionOptionSelected = .disabled
+                    self?.historyRetentionOptionSelected = .disabled
                     
                 case .failure(_): break
                     

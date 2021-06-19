@@ -152,13 +152,25 @@ final class MiniPlayerViewModel: ViewModelType {
     }
 
     private func preparePlayer() {
+        invokeCommand?(.showLoading(!playerHandler.isPlayerPaused()))
+        
         if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
             streamingInfoUseCase?.startServer()
         }
         if let node = node {
-            initialize(with: node)
+            if let currentItem = playerHandler.playerCurrentItem(), currentItem.node == node {
+                configurePlayer()
+                playerHandler.resetCurrentItem()
+            } else {
+                initialize(with: node)
+            }
         } else if let offlineFilePaths = filePaths {
-            initialize(with: offlineFilePaths)
+            if let currentItem = playerHandler.playerCurrentItem(), currentItem.url.path == fileLink {
+                configurePlayer()
+                playerHandler.resetCurrentItem()
+            } else {
+                initialize(with: offlineFilePaths)
+            }
         }
     }
     
@@ -229,7 +241,13 @@ final class MiniPlayerViewModel: ViewModelType {
     func dispatch(_ action: MiniPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            shouldInitializePlayer ? preparePlayer() : configurePlayer()
+            if shouldInitializePlayer {
+                DispatchQueue.global(qos: .userInteractive).async {
+                    self.preparePlayer()
+                }
+            } else {
+                configurePlayer()
+            }
         case .onPlayPause:
             playerHandler.playerTogglePlay()
         case .playItem(let item):

@@ -138,4 +138,5 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func remoteCommandEnabled(_ enabled: Bool) {}
     func resetAudioPlayerConfiguration() {}
     func playerTracksContains(url: URL) -> Bool { true }
+    func resetCurrentItem() {}
 }

@@ -30,9 +30,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
+    self.navigationItem.title = NSLocalizedString(@"account.achievement.referral.title", nil);
     
-    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
+    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"account.achievement.referral.title", nil);
     self.inviteYourFriendsSubtitleLabel.text = self.inviteYourFriendsSubtitleString;
     
     [self.inviteButton setTitle:NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.") forState:UIControlStateNormal];

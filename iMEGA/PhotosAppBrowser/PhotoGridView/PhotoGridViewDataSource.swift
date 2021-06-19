@@ -32,7 +32,7 @@ class PhotoGridViewDataSource: NSObject {
     }
     
     func updateCollectionCell(atIndexPath indexPath: IndexPath, selectedIndex: Int?) {
-        let collectionCell = collectionView.cellForItem(at: indexPath) as! PhotoGridViewCell
+        guard let collectionCell = collectionView.cellForItem(at: indexPath) as? PhotoGridViewCell else { return }
         collectionCell.selectedIndex = selectedIndex
     }
     
@@ -93,5 +93,3 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
         return cell
     }
 }
-
-

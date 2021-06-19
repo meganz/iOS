@@ -68,6 +68,11 @@ NSString * const MEGANodeHandleKey = @"nz.mega.nodeHandleKey";
 
 NSString * const MEGAAudioPlayerShouldUpdateContainerNotification = @"nz.mega.audioplayer.updateContainerView";
 
+#pragma mark - Home notification keys
+
+NSString * const MEGAHomeChangedHeightNotification = @"nz.mega.home.changedHeight";
+NSString * const MEGABannerChangedHomeHeightNotification = @"nz.mega.home.bannerChangedHeight";
+
 #pragma mark - camera upload constants
 
 NSString * const MEGACameraUploadsNodeName = @"Camera Uploads";

@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *clearRubbishBinLabel;
 @property (weak, nonatomic) IBOutlet UILabel *clearRubbishBinDetailLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *clearRubbishBinAI;
 
 @property (weak, nonatomic) IBOutlet UILabel *rubbishBinCleaningSchedulerLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *rubbishBinCleaningSchedulerSwitch;
@@ -86,6 +87,8 @@
 }
 
 - (void)updateClearRubbishBinDetailLabel {
+    [self.clearRubbishBinAI stopAnimating];
+    self.clearRubbishBinDetailLabel.hidden = NO;
     NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
     NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
     self.clearRubbishBinDetailLabel.text = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
@@ -161,9 +164,15 @@
                 UIAlertController *emptyRubbishBinAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    self.clearRubbishBinDetailLabel.hidden = YES;
+                    [self.clearRubbishBinAI startAnimating];
                     [[MEGASdkManager sharedMEGASdk] cleanRubbishBinWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
                         if (error.type == MEGAErrorTypeApiOk) {
-                            [self updateClearRubbishBinDetailLabel];
+                            [MEGASdkManager.sharedMEGASdk catchupWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                                if (error.type == MEGAErrorTypeApiOk) {
+                                    [self updateClearRubbishBinDetailLabel];
+                                }
+                            }]];
                         }
                     }]];
                 }]];

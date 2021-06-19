@@ -8,6 +8,8 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     private lazy var headerImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return imageView
     }()
     
@@ -33,7 +35,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     
     private lazy var openSettingsImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -48,6 +50,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     
     private lazy var tapNotificationsImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -62,6 +65,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     
     private lazy var turnOnAllowNotificationsImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -125,37 +129,29 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     private func setupViews() {
         view.addSubview(headerImageView)
         
-        [headerImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 83),
-         headerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-         headerImageView.heightAnchor.constraint(equalToConstant: 80),
-         headerImageView.widthAnchor.constraint(equalToConstant: 85)].activate()
+        [headerImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.size.height * 0.05),
+         headerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)].activate()
         
         let stepOneStack = UIStackView(arrangedSubviews: [openSettingsImageView, openSettingsLabel])
         stepOneStack.axis = .horizontal
         stepOneStack.alignment = .center
+        stepOneStack.distribution = .fillProportionally
         stepOneStack.translatesAutoresizingMaskIntoConstraints = false
         stepOneStack.spacing = 16
-        
-        [openSettingsImageView.heightAnchor.constraint(equalToConstant: 30),
-         openSettingsImageView.widthAnchor.constraint(equalToConstant: 30)].activate()
         
         let stepTwoStack = UIStackView(arrangedSubviews: [tapNotificationsImageView, tapNotificationsLabel])
         stepTwoStack.axis = .horizontal
         stepTwoStack.alignment = .center
+        stepTwoStack.distribution = .fillProportionally
         stepTwoStack.translatesAutoresizingMaskIntoConstraints = false
         stepTwoStack.spacing = 16
-        
-        [tapNotificationsImageView.heightAnchor.constraint(equalToConstant: 30),
-         tapNotificationsImageView.widthAnchor.constraint(equalToConstant: 30)].activate()
         
         let stepThreeStack = UIStackView(arrangedSubviews: [turnOnAllowNotificationsImageView, turnOnAllowNotificationsLabel])
         stepThreeStack.axis = .horizontal
         stepThreeStack.alignment = .center
+        stepThreeStack.distribution = .fillProportionally
         stepThreeStack.translatesAutoresizingMaskIntoConstraints = false
         stepThreeStack.spacing = 16
-        
-        [turnOnAllowNotificationsImageView.heightAnchor.constraint(equalToConstant: 30),
-         turnOnAllowNotificationsImageView.widthAnchor.constraint(equalToConstant: 30)].activate()
         
         let stepsStack = UIStackView(arrangedSubviews: [stepOneStack, stepTwoStack, stepThreeStack])
         stepsStack.axis = .vertical
