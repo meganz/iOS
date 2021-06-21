@@ -59,7 +59,7 @@ final class MeetingCreatingViewModel: ViewModelType {
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = false
-    private var isMicrophoneEnabled = true
+    private var isMicrophoneEnabled = false
     private var cameraType = MeetingCameraType.back
     
     private var chatId: UInt64?
@@ -86,7 +86,8 @@ final class MeetingCreatingViewModel: ViewModelType {
     func dispatch(_ action: MeetingCreatingViewAction) {
         switch action {
         case .onViewReady:
-
+            checkForAudioPermissionAndUpdateUI()
+            
             switch type {
             case .join, .guestJoin:
                 guard let link = link else {
@@ -257,6 +258,13 @@ final class MeetingCreatingViewModel: ViewModelType {
             } else {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
             }
+        }
+    }
+    
+    private func checkForAudioPermissionAndUpdateUI() {
+        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
+            self.isMicrophoneEnabled = granted
+            self.invokeCommand?(.updateMicrophoneButton(enabled: self.isMicrophoneEnabled))
         }
     }
     
