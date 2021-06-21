@@ -5,7 +5,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     private let chatSdk = MEGASdkManager.sharedMEGAChatSdk()
     private let sdk = MEGASdkManager.sharedMEGASdk()
     private var chatResultDelegate: MEGAChatResultDelegate?
-    private var chatOnlineStateListener: ChatOnlineStateListener?
+    private var callAvailabilityListener: CallAvailabilityListener?
     
     func setChatVideoInDevices(device: String) {
         chatSdk.setChatVideoInDevices(device)
@@ -68,18 +68,36 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     }
 
     func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
-        if chatSdk.chatConnectionState(chatId) == .online {
-            answerCall(forChatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
-        } else {
-            MEGALogDebug("Create meeting: wait for chat connection to be online for chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
-            chatOnlineStateListener = ChatOnlineStateListener(chatId: chatId, sdk: chatSdk) { [weak self] chatId in
-                guard let self = self else { return }
-                
-                MEGALogDebug("Create meeting: state is online now for chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") so answering the call")
-                self.answerCall(forChatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
-                self.chatOnlineStateListener = nil
+        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
+            guard let self = self, let megaChatRoom = self.chatSdk.chatRoom(forChatId: request.chatHandle) else {
+                MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
+                completion(.failure(.generic))
+                return
             }
+
+            let chatRoom = ChatRoomEntity(with: megaChatRoom)
+            MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
+            
+            if self.chatSdk.chatConnectionState(chatId) == .online
+                && self.chatSdk.chatCall(forChatId: chatId) != nil  {
+                self.answerCall(for: chatRoom, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+            } else {
+                MEGALogDebug("Create meeting: wait for chat connection to be online and call is available for chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
+                self.callAvailabilityListener = CallAvailabilityListener(
+                    chatId: chatId,
+                    sdk: self.chatSdk
+                ) { chatId in
+
+                    self.callAvailabilityListener = nil
+                    MEGALogDebug("Create meeting: state is online now and call is available for chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") so answering the call")
+                    self.answerCall(for: chatRoom, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+                }
+            }
+            
         }
+        
+        MEGALogDebug("Create meeting: Autojoin public chat with chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
+        chatSdk.autojoinPublicChat(chatId, delegate: delegate)
     }
     
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
@@ -176,41 +194,33 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         }))
     }
     
-    private func answerCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
-        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
-            guard let chatroom = self?.chatSdk.chatRoom(forChatId: request.chatHandle) else {
-                MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
-                completion(.failure(.generic))
-                return
-            }
-
-            MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
-            self?.chatSdk.answerChatCall(chatroom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: MEGAChatAnswerCallRequestDelegate { [weak self] (chatError) in
-                if chatError?.type == .MEGAChatErrorTypeOk {
-                    guard (self?.chatSdk.chatCall(forChatId: request.chatHandle)) != nil else {
-                        MEGALogDebug("Create meeting: not able to find call with chat id \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
-                        completion(.failure(.generic))
-                        return
-                    }
-                    
-                    MEGALogDebug("Create meeting: success to answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
-                    completion(.success(ChatRoomEntity(with: chatroom)))
-                } else {
-                    MEGALogDebug("Create meeting: failed to answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
+    private func answerCall(for chatRoom: ChatRoomEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+        MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
+        chatSdk.answerChatCall(chatRoom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: MEGAChatAnswerCallRequestDelegate { [weak self] (chatError) in
+            guard let self = self else { return }
+            
+            if chatError?.type == .MEGAChatErrorTypeOk {
+                guard self.chatSdk.chatCall(forChatId: chatRoom.chatId) != nil else {
+                    MEGALogDebug("Create meeting: not able to find call with chat id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
                     completion(.failure(.generic))
+                    return
                 }
-            })
-        }
-        
-        chatSdk.autojoinPublicChat(chatId, delegate: delegate)
+                
+                MEGALogDebug("Create meeting: success to answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
+                completion(.success(chatRoom))
+            } else {
+                MEGALogDebug("Create meeting: failed to answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
+                completion(.failure(.generic))
+            }
+        })
     }
 }
 
-
-final fileprivate class ChatOnlineStateListener: NSObject {
+/// The responsibility of this class is to wait until the call object is available and call the completion handler.
+final fileprivate class CallAvailabilityListener: NSObject {
     private let chatId: UInt64
     typealias Completion = (_ chatId: UInt64) -> Void
-    private let completion: Completion
+    private var completion: Completion?
     private let sdk: MEGAChatSdk
     
     init(chatId: UInt64,
@@ -220,23 +230,50 @@ final fileprivate class ChatOnlineStateListener: NSObject {
         self.sdk = sdk
         self.completion = completion
         super.init()
-        sdk.add(self)
-        if sdk.chatConnectionState(chatId) == .online {
+        sdk.add(self as MEGAChatDelegate)
+        sdk.add(self as MEGAChatCallDelegate)
+        if sdk.chatConnectionState(chatId) == .online
+            && sdk.chatCall(forChatId: chatId) != nil  {
             completion(chatId)
+            self.completion = nil
         }
     }
     
-    deinit {
-        sdk.remove(self)
+    func removeListeners() {
+        sdk.remove(self as MEGAChatDelegate)
+        sdk.remove(self as MEGAChatCallDelegate)
     }
 }
 
-extension ChatOnlineStateListener: MEGAChatDelegate {
-    func onChatConnectionStateUpdate(_ api: MEGAChatSdk!, chatId: UInt64, newState: Int32) {
-        if (self.chatId == chatId
-                && newState == MEGAChatConnection.online.rawValue
-                && api.chatCall(forChatId: chatId) != nil) {
+extension CallAvailabilityListener: MEGAChatCallDelegate {
+    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+        if call.chatId == chatId,
+           sdk.chatConnectionState(chatId) == .online,
+           let completion = completion {
+            MEGALogDebug("Create meeting: onChatCallUpdate + online triggered for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
+            if let call = call {
+                MEGALogDebug("Create meeting: call object is \(call)")
+            }
+            
+            removeListeners()
             completion(chatId)
+            self.completion = nil
+        }
+    }
+}
+
+extension CallAvailabilityListener: MEGAChatDelegate {
+    func onChatConnectionStateUpdate(_ api: MEGAChatSdk!, chatId: UInt64, newState: Int32) {
+        if self.chatId == chatId,
+           newState == MEGAChatConnection.online.rawValue,
+           api.chatCall(forChatId: chatId) != nil,
+           let completion = completion {
+            
+            MEGALogDebug("Create meeting: chat state changed to online now and calling completion")
+            removeListeners()
+            completion(chatId)
+            self.completion = nil
+            
         } else if (self.chatId == chatId) {
             if let call = api.chatCall(forChatId: chatId) {
                 MEGALogDebug("Create meeting: new state is \(newState) and call \(call)")
