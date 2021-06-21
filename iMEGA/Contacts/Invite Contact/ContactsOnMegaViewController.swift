@@ -105,7 +105,7 @@ import UIKit
     
     private func showSearch() {
         let shouldSearchBarBeHidden = inviteContactView.isHidden || contacts().count == 0 || CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized
-        searchFixedView.isHidden = true
+        searchFixedView?.isHidden = true
         navigationItem.searchController = shouldSearchBarBeHidden ? nil : searchController
     }
     

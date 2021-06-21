@@ -1570,7 +1570,9 @@
             // self.topBannerCameraEnabledImageView.hidden = YES;
 //            break;
             
-        case MEGAChatCallStatusDestroyed: {
+        case MEGAChatCallStatusDestroyed:
+        case MEGAChatCallStatusTerminatingUserParticipation:
+        case MEGAChatCallStatusUserNoPresent: {
             self.chatRoomOnGoingCall = nil;
             NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
             if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
