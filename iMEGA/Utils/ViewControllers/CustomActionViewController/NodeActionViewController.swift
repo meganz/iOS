@@ -177,7 +177,7 @@ class NodeActionViewController: ActionSheetViewController {
         titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -10)
         titleLabel.text = node.name
-        titleLabel.font = .preferredFont(forTextStyle: .subheadline)
+        titleLabel.font = .preferredFont(style: .subheadline, weight: .medium)
         titleLabel.adjustsFontForContentSizeCategory = true
         
         headerView?.addSubview(subtitleLabel)
