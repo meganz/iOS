@@ -67,11 +67,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7fy-Dd-TmU">
                                 <rect key="frame" x="62" y="10" width="73" height="21.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgB-Vi-qLn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgB-Vi-qLn" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="21.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ljP-fz-APh">
                                         <rect key="frame" x="29" y="0.0" width="12" height="21.5"/>
@@ -218,6 +222,11 @@
             <point key="canvasLocation" x="-643" y="123"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="AgB-Vi-qLn">
+            <size key="intrinsicContentSize" width="25" height="14.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="downloaded" width="12" height="12"/>
         <image name="favouriteSmall" width="12.5" height="12"/>

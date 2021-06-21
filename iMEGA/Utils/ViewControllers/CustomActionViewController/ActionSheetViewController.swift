@@ -190,7 +190,7 @@ extension ActionSheetViewController {
         indicator.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat(6))
 
         titleLabel.text = headerTitle
-        titleLabel.font = .preferredFont(forTextStyle: .subheadline)
+        titleLabel.font = .preferredFont(style: .subheadline, weight: .medium)
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.sizeToFit()
         headerView?.addSubview(titleLabel)
