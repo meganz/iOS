@@ -11,6 +11,7 @@ protocol AlbumDelegate: AnyObject {
 
 final class Album: NSObject {
     let title: String
+    let subType: PHAssetCollectionSubtype
     private var fetchResult: PHFetchResult<PHAsset> {
         didSet {
             allAssets = (0..<fetchResult.count).map { fetchResult.object(at: $0) }
@@ -24,8 +25,9 @@ final class Album: NSObject {
     
     // MARK:- Initializer.
 
-    init(title: String, fetchResult: PHFetchResult<PHAsset>, updatedFetchResultsHandler: @escaping UpdatedFetchResultsHandler) {
+    init(title: String, subType: PHAssetCollectionSubtype, fetchResult: PHFetchResult<PHAsset>, updatedFetchResultsHandler: @escaping UpdatedFetchResultsHandler) {
         self.title = title
+        self.subType = subType
         self.fetchResult = fetchResult
         self.allAssets = (0..<fetchResult.count).map { fetchResult.object(at: $0) }
         self.updatedFetchResultsHandler = updatedFetchResultsHandler

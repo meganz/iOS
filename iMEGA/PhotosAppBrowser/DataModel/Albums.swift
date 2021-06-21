@@ -79,7 +79,7 @@ extension Albums {
             let fetchResult = PHAsset.fetchAssets(in: collection, options: self.fetchOptions)
             
             if let title = collection.localizedTitle {
-                let album = Album(title: title, fetchResult: fetchResult) { [weak self] album in
+                let album = Album(title: title, subType: collection.assetCollectionSubtype, fetchResult: fetchResult) { [weak self] album in
                     self?.updated(album: album)
                 }
                 

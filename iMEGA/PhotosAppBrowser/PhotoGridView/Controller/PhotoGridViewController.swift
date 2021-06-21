@@ -6,6 +6,7 @@ final class PhotoGridViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var sendBarButton: UIBarButtonItem?
+    private var allBarButton: UIBarButtonItem?
     
     private var dataSource: PhotoGridViewDataSource?
     @available(iOS 13.0, *)
@@ -64,7 +65,7 @@ final class PhotoGridViewController: UIViewController {
         album.delegate = self
         
         if #available(iOS 13.0, *) {
-            diffableDataSource?.reload(assets: album.allAssets)
+            diffableDataSource?.load(assets: album.allAssets)
         }
     }
     
@@ -115,14 +116,9 @@ final class PhotoGridViewController: UIViewController {
             assetsCount = dataSource?.selectedAssets.count ?? 0
         }
         
-        if assetsCount > 0 {
-            sendBarButton?.title = String(format: selectionActionText, assetsCount)
-        }
-        
-        if navigationController?.topViewController == self {
-            navigationController?.setToolbarHidden(assetsCount == 0,
-                                                   animated: true)
-        }
+        sendBarButton?.title = assetsCount > 0 ? String(format: selectionActionText, assetsCount) : selectionActionDisabledText
+        sendBarButton?.isEnabled = assetsCount > 0
+        navigationController?.setToolbarHidden(false, animated: true)
     }
     
     private func updateView() {
@@ -181,7 +177,33 @@ final class PhotoGridViewController: UIViewController {
     private func addToolbar() {
         sendBarButton = UIBarButtonItem(title: selectionActionDisabledText, style: .plain, target: self, action: #selector(sendButtonTapped))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        toolbarItems = [spacer, sendBarButton!]
+        
+        if album.subType != .smartAlbumUserLibrary {
+            allBarButton = UIBarButtonItem(image: UIImage(named: "selectAll"), style: .plain, target: self, action: #selector(allButtonTapped))
+            toolbarItems = [allBarButton!, spacer, sendBarButton!]
+        } else {
+            toolbarItems = [spacer, sendBarButton!]
+        }
+    }
+    
+    @objc private func allButtonTapped() {
+        let assetsCount: Int
+        if #available(iOS 13.0, *) {
+            assetsCount = diffableDataSource?.selectedAssets.count ?? 0
+        } else {
+            assetsCount = dataSource?.selectedAssets.count ?? 0
+        }
+        
+        let selectedAssets = assetsCount == collectionView.numberOfItems(inSection: 0) ? [] : album.allAssets
+        
+        if #available(iOS 13.0, *) {
+            diffableDataSource?.selectedAssets = selectedAssets
+            diffableDataSource?.reload(assets: album.allAssets)
+        } else {
+            dataSource?.selectedAssets = selectedAssets
+            collectionView.reloadData()
+        }
+        updateBottomView()
     }
 }
 
@@ -189,7 +211,7 @@ extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
     func selected(assets: [PHAsset]) {
         if #available(iOS 13.0, *) {
             diffableDataSource?.selectedAssets = assets
-            diffableDataSource?.reload(assets: album.allAssets)
+            diffableDataSource?.load(assets: album.allAssets)
         } else {
             dataSource?.selectedAssets = assets
             collectionView.reloadData()
@@ -252,7 +274,7 @@ extension PhotoGridViewController: UIAdaptivePresentationControllerDelegate {
 extension PhotoGridViewController: AlbumDelegate {
     func didResetFetchResult() {
         if #available(iOS 13.0, *) {
-            diffableDataSource?.reload(assets: album.allAssets)
+            diffableDataSource?.load(assets: album.allAssets)
         } else {
             collectionView.reloadData()
         }
@@ -262,7 +284,7 @@ extension PhotoGridViewController: AlbumDelegate {
                    insertedIndexPaths: [IndexPath]?,
                    changedIndexPaths: [IndexPath]?) {
         if #available(iOS 13.0, *) {
-            diffableDataSource?.reload(assets: album.allAssets)
+            diffableDataSource?.load(assets: album.allAssets)
             updateBottomView()
             return
         } else {
