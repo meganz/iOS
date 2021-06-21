@@ -213,6 +213,9 @@ final class MeetingCreatingViewModel: ViewModelType {
                     self.router.dismiss()
                     return
                 }
+                
+                // Making sure the chatlink is created when meeting is created so that the other participant can share.
+                self.meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
                 self.router.dismiss()
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled)
             case .failure(_):

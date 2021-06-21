@@ -25,11 +25,13 @@ struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
     }
     
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkError>) -> Void) {
-        if chatRoom.isPublicChat {
-            chatRoomRepo.queryChatLink(forChatId: chatRoom.chatId, completion: completion)
-        } else {
-            chatRoomRepo.createPublicLink(forChatId: chatRoom.chatId, completion: completion)
+        guard chatRoom.isMeeting || chatRoom.isPublicChat || chatRoom.isGroup else {
+            // Not allowed to create/query chat link
+            completion(.failure(.creatingChatLinkNotAllowed))
+            return
         }
+        
+        chatRoomRepo.queryChatLink(forChatId: chatRoom.chatId, completion: completion)
     }
     
     func userDisplayName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void) {

@@ -39,6 +39,10 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         return CallEntity(with: call)
     }
     
+    func createChatLink(forChatId chatId: UInt64) {
+        chatSdk.createChatLink(chatId)
+    }
+    
     func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
         
         let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in

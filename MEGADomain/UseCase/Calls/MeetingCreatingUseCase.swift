@@ -11,6 +11,7 @@ protocol MeetingCreatingUseCaseProtocol {
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate)
     func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void)
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void)
+    func createChatLink(forChatId chatId: UInt64)
 }
 
 // MARK: - Use case implementation -
@@ -58,6 +59,10 @@ struct MeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     
     func getCall(forChatId chatId: UInt64) -> CallEntity? {
         repository.getCall(forChatId: chatId)
+    }
+    
+    func createChatLink(forChatId chatId: UInt64) {
+        repository.createChatLink(forChatId: chatId)
     }
     
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate) {
