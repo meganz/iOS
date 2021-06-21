@@ -861,7 +861,7 @@ static MEGAIndexer *indexer;
 
 + (void)deleteMasterKey {
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", NSLocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")]];
     [[NSFileManager defaultManager] mnz_removeItemAtPath:masterKeyFilePath];
 }
 
@@ -890,11 +890,11 @@ static MEGAIndexer *indexer;
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion {
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", NSLocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")]];
     
     BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
     if (success) {
-        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:NSLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:NSLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
         [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] masterKeyExported];
             [viewController dismissViewControllerAnimated:YES completion:^{
