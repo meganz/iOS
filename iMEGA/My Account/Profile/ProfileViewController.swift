@@ -38,7 +38,7 @@ enum SessionSectionRow: Int {
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
 
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameLabel: MEGALabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
@@ -417,7 +417,7 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch tableViewSections()[section] {
         case .security:
-            return NSLocalizedString("masterKey", comment: "Title for the MEGA Recovery Key")
+            return NSLocalizedString("recoveryKey", comment: "Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.")
         case .plan:
             return NSLocalizedString("Plan", comment: "Title of the section about the plan in the storage tab in My Account Section")
         default:
@@ -497,7 +497,7 @@ extension ProfileViewController: UITableViewDataSource {
         case .security:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
             cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_tertiaryBackgroundGrouped(traitCollection)
-            cell.recoveryKeyLabel.text = NSLocalizedString("masterKey", comment: "Title for the MEGA Recovery Key")+".txt"
+            cell.recoveryKeyLabel.text = NSLocalizedString("general.security.recoveryKeyFile", comment: "Title for the MEGA Recovery Key")+".txt"
             cell.backupRecoveryKeyLabel.text = NSLocalizedString("backupRecoveryKey", comment: "Label for recovery key button")
             cell.backupRecoveryKeyLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
             return cell
@@ -577,7 +577,7 @@ extension ProfileViewController: UITableViewDelegate {
         case .profile:
             switch rowsForProfileSection()[indexPath.row] {
             case .changeName:
-                let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
+                let changeNameNavigationController = UIStoryboard.init(name: "ChangeName", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameNavigationControllerID")
                 navigationController?.present(changeNameNavigationController, animated: true)
             case .changePhoto:
                 guard let cell = tableView.cellForRow(at: indexPath) else {

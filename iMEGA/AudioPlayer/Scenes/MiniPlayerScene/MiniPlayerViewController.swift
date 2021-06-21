@@ -59,6 +59,7 @@ final class MiniPlayerViewController: UIViewController {
                 }
                 
                 updateAppearance()
+                collectionView.reloadData()
             }
         }
     }

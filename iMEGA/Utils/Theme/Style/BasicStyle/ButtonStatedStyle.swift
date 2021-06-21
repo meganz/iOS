@@ -47,7 +47,7 @@ extension ButtonStatedStyle where T == TextStyle {
         } else if !button.isEnabled {
             textColor = stated[.disabled]
         }
-        button.titleLabel?.font = (textColor ?? stated[.normal])?.font.uiFont
+        button.titleLabel?.font = (textColor ?? stated[.normal])?.font.value
         return button
     }
 }
