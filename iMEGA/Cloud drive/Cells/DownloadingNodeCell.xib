@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="downloadingNodeCell" rowHeight="60" id="Let-Hc-WAe" customClass="NodeTableViewCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="downloadingNodeCell" id="Let-Hc-WAe" customClass="NodeTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Let-Hc-WAe" id="ddZ-2b-DI1">
@@ -19,30 +19,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvI-GL-N00">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="DAP-wt-uy0" userLabel="Arrow Image View">
-                                <rect key="frame" x="62" y="35" width="11" height="11"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="11" id="Ioi-ab-14V"/>
-                                    <constraint firstAttribute="width" constant="11" id="UVs-DG-71E"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="hJG-bM-I9k">
-                                <rect key="frame" x="81" y="33" width="44" height="14.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="b5H-sM-qLn" userLabel="Arrow Image View">
-                                <rect key="frame" x="133" y="35" width="11" height="11"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="11" id="MTH-XK-zMw"/>
-                                    <constraint firstAttribute="height" constant="11" id="hXi-Rj-S5P"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UI3-Mw-4mK" userLabel="Info Button">
                                 <rect key="frame" x="329" y="8" width="46" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="uMJ-Ob-hzX"/>
                                     <constraint firstAttribute="width" constant="46" id="wnd-DR-pbS"/>
                                 </constraints>
                                 <state key="normal" image="cancel"/>
@@ -76,47 +55,66 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="M8e-CK-IiW" firstAttribute="centerX" secondItem="cmI-pY-rca" secondAttribute="centerX" id="4cg-F3-KLc"/>
-                                    <constraint firstAttribute="height" constant="40" id="Q0K-vV-iHZ"/>
                                     <constraint firstItem="iwu-dT-aLC" firstAttribute="centerX" secondItem="cmI-pY-rca" secondAttribute="centerX" id="Ta1-sA-SDb"/>
                                     <constraint firstItem="M8e-CK-IiW" firstAttribute="centerY" secondItem="cmI-pY-rca" secondAttribute="centerY" id="f96-Bw-Iwk"/>
                                     <constraint firstAttribute="width" constant="40" id="lav-LG-Tcg"/>
                                     <constraint firstItem="iwu-dT-aLC" firstAttribute="centerY" secondItem="cmI-pY-rca" secondAttribute="centerY" id="rc1-f5-JcD"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GiK-Fk-Iw7">
-                                <rect key="frame" x="62" y="12" width="31" height="18"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="EmS-36-9tQ">
+                                <rect key="frame" x="62" y="10" width="68.5" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GiK-Fk-Iw7" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="14.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="EY8-zf-we0">
+                                        <rect key="frame" x="0.0" y="17.5" width="68.5" height="22.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="DAP-wt-uy0" userLabel="Arrow Image View">
+                                                <rect key="frame" x="0.0" y="5.5" width="12" height="12"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJG-bM-I9k">
+                                                <rect key="frame" x="14" y="4.5" width="40.5" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="b5H-sM-qLn" userLabel="Arrow Image View">
+                                                <rect key="frame" x="56.5" y="5.5" width="12" height="12"/>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="UI3-Mw-4mK" secondAttribute="bottom" constant="8" id="4QY-61-sar"/>
                             <constraint firstAttribute="trailing" secondItem="UI3-Mw-4mK" secondAttribute="trailing" id="7my-yd-IKd"/>
-                            <constraint firstItem="hJG-bM-I9k" firstAttribute="top" secondItem="GiK-Fk-Iw7" secondAttribute="bottom" constant="3" id="9Ve-0b-NYN"/>
-                            <constraint firstItem="GiK-Fk-Iw7" firstAttribute="top" secondItem="cmI-pY-rca" secondAttribute="top" constant="2" id="9dq-3g-vSi"/>
-                            <constraint firstItem="hJG-bM-I9k" firstAttribute="leading" secondItem="DAP-wt-uy0" secondAttribute="trailing" constant="8" id="Ea0-qy-Rqc"/>
-                            <constraint firstItem="cmI-pY-rca" firstAttribute="centerY" secondItem="yvI-GL-N00" secondAttribute="centerY" id="GhY-7R-foM"/>
-                            <constraint firstAttribute="height" constant="60" id="MKb-aJ-UGf"/>
-                            <constraint firstItem="DAP-wt-uy0" firstAttribute="centerY" secondItem="hJG-bM-I9k" secondAttribute="centerY" id="MOs-WZ-ARg"/>
-                            <constraint firstItem="DAP-wt-uy0" firstAttribute="leading" secondItem="cmI-pY-rca" secondAttribute="trailing" constant="10" id="QZd-t2-5pU"/>
+                            <constraint firstItem="EmS-36-9tQ" firstAttribute="top" secondItem="cmI-pY-rca" secondAttribute="top" id="CqB-bE-q1m"/>
+                            <constraint firstItem="UI3-Mw-4mK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EmS-36-9tQ" secondAttribute="trailing" constant="5" id="G4K-Tx-xA7"/>
+                            <constraint firstItem="EmS-36-9tQ" firstAttribute="leading" secondItem="cmI-pY-rca" secondAttribute="trailing" constant="10" id="KhP-HW-8Js"/>
+                            <constraint firstItem="cmI-pY-rca" firstAttribute="top" secondItem="yvI-GL-N00" secondAttribute="top" constant="10" id="L23-oG-b1M"/>
+                            <constraint firstItem="UI3-Mw-4mK" firstAttribute="top" secondItem="yvI-GL-N00" secondAttribute="top" constant="8" id="Mek-t5-lAh"/>
                             <constraint firstItem="cmI-pY-rca" firstAttribute="leading" secondItem="yvI-GL-N00" secondAttribute="leading" constant="12" id="SXq-9E-6Rp"/>
-                            <constraint firstItem="UI3-Mw-4mK" firstAttribute="centerY" secondItem="yvI-GL-N00" secondAttribute="centerY" id="dbX-7V-BIQ"/>
-                            <constraint firstItem="UI3-Mw-4mK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GiK-Fk-Iw7" secondAttribute="trailing" constant="10" id="fln-er-1zc"/>
-                            <constraint firstItem="GiK-Fk-Iw7" firstAttribute="leading" secondItem="cmI-pY-rca" secondAttribute="trailing" constant="10" id="q2g-Yl-NaG"/>
-                            <constraint firstItem="b5H-sM-qLn" firstAttribute="leading" secondItem="hJG-bM-I9k" secondAttribute="trailing" constant="8" id="tyL-ie-TNY"/>
-                            <constraint firstItem="UI3-Mw-4mK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="b5H-sM-qLn" secondAttribute="trailing" constant="10" id="uTU-eX-ZkK"/>
-                            <constraint firstItem="b5H-sM-qLn" firstAttribute="centerY" secondItem="hJG-bM-I9k" secondAttribute="centerY" id="xa7-Pm-mPp"/>
+                            <constraint firstItem="EmS-36-9tQ" firstAttribute="bottom" secondItem="cmI-pY-rca" secondAttribute="bottom" id="rHt-A8-Yfu"/>
+                            <constraint firstAttribute="bottom" secondItem="cmI-pY-rca" secondAttribute="bottom" constant="10" id="xyO-pT-pWp"/>
                         </constraints>
                     </view>
                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sF2-iE-K9y">
-                        <rect key="frame" x="0.0" y="58" width="375" height="2"/>
+                        <rect key="frame" x="0.0" y="56" width="375" height="4"/>
                         <color key="tintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </progressView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="sF2-iE-K9y" firstAttribute="leading" secondItem="ddZ-2b-DI1" secondAttribute="leading" id="2WI-Vu-gpw"/>
-                    <constraint firstItem="sF2-iE-K9y" firstAttribute="top" secondItem="ddZ-2b-DI1" secondAttribute="top" constant="58" id="6gH-aO-6lL"/>
                     <constraint firstItem="yvI-GL-N00" firstAttribute="top" secondItem="ddZ-2b-DI1" secondAttribute="top" id="A8c-xK-0iz"/>
                     <constraint firstItem="yvI-GL-N00" firstAttribute="leading" secondItem="ddZ-2b-DI1" secondAttribute="leading" id="BnB-bi-wZT"/>
                     <constraint firstAttribute="bottom" secondItem="yvI-GL-N00" secondAttribute="bottom" id="ISV-or-vvh"/>
@@ -139,6 +137,11 @@
             <point key="canvasLocation" x="-127" y="95"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="GiK-Fk-Iw7">
+            <size key="intrinsicContentSize" width="25" height="14.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="cancel" width="46" height="44"/>
         <image name="downloadQueued" width="12" height="12"/>

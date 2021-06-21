@@ -435,7 +435,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             update(tracks: items)
         }
         
-        notify([aboutCurrentItemAndQueue, aboutTheEndOfBlockingAction])
+        notify([aboutTheEndOfBlockingAction])
     }
     
     func reset(item: AudioPlayerItem) {

@@ -45,13 +45,13 @@ final class OverDiskQuotaViewController: UIViewController {
                 message = suggestingContactSupport(from: overDiskQuotaData)
             }
 
-            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadline2)]
+            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadlineMedium)]
             return message.attributedString(with: styleMarks, attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
         }
 
         func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
             let formattedTitleMessage = titleMessage(for: overDiskQuotaData.deadline)
-            let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized(.caption1)]
+            let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized(.captionSemibold)]
             return formattedTitleMessage.attributedString(
                 with: styleMarks,
                 attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory

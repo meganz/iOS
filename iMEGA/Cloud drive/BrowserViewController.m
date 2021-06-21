@@ -82,6 +82,8 @@
     }
     
     self.navigationController.presentationController.delegate = self;
+    self.cloudDriveButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.incomingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -171,7 +173,6 @@
             [self setupDefaultElements];
             
             self.toolBarCopyBarButtonItem.title = NSLocalizedString(@"copy", @"List option shown on the details of a file or folder");
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
         }
@@ -180,7 +181,6 @@
             [self setupDefaultElements];
             
             self.toolBarMoveBarButtonItem.title = NSLocalizedString(@"move", @"Title for the action that allows you to move a file or folder");
-            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarMoveBarButtonItem]];
             break;
         }
@@ -190,7 +190,6 @@
             [self setupDefaultElements];
             
             self.toolBarCopyBarButtonItem.title = NSLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]}  forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
         }
@@ -199,7 +198,6 @@
             [self setupDefaultElements];
             
             self.toolBarSaveInMegaBarButtonItem.title = NSLocalizedString(@"upload", nil);
-            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
             break;
         }
@@ -213,8 +211,6 @@
                 self.navigationItem.rightBarButtonItem = nil;
             }
             self.toolBarSaveInMegaBarButtonItem.title = self.browserAction == BrowserActionNewFileSave ? NSLocalizedString(@"save", nil) : NSLocalizedString(@"upload", nil);
-
-            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
             break;
         }
@@ -223,7 +219,6 @@
             [self setupDefaultElements];
             
             self.toolbarSendBarButtonItem.title = NSLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
-            [self.toolbarSendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
              [self setToolbarItems:@[flexibleItem, self.toolbarSendBarButtonItem]];
             
             if (self.isParentBrowser) {
@@ -248,7 +243,6 @@
             [self setupDefaultElements];
             self.toolBarSelectBarButtonItem.enabled = self.isChildBrowser && self.parentNode.handle != MEGASdkManager.sharedMEGASdk.rootNode.handle;
             self.toolBarSelectBarButtonItem.title = NSLocalizedString(@"Select Folder", nil);
-            [self.toolBarSelectBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSelectBarButtonItem]];
 
             break;
@@ -275,7 +269,6 @@
                                                              action:@selector(cancel:)];
     self.navigationItem.rightBarButtonItem = self.cancelBarButtonItem;
     self.toolBarNewFolderBarButtonItem.title = NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
-    [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
 }
 
 - (void)reloadUI {
@@ -537,12 +530,12 @@
 - (void)updateSelector {
     self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
-    self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
+    self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightSemibold] : [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
     [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.cloudDriveButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
     self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
     
-    self.incomingButton.titleLabel.font = self.incomingButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
+    self.incomingButton.titleLabel.font = self.incomingButton.selected ? [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightSemibold] : [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
     [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.incomingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
     self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;

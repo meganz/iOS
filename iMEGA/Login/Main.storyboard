@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -481,7 +481,7 @@
             <objects>
                 <viewController storyboardIdentifier="ConfirmAccountViewControllerID" id="Q0l-3c-nfd" customClass="ConfirmAccountViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tEv-K7-MM9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQu-15-Np8">
@@ -602,6 +602,7 @@
                         <outlet property="emailInputView" destination="61x-Df-ghm" id="ers-4h-54w"/>
                         <outlet property="logoImageView" destination="GSl-YH-DKg" id="z0B-8h-a5t"/>
                         <outlet property="passwordView" destination="w6i-73-vzN" id="RJk-Qn-QAN"/>
+                        <outlet property="scrollView" destination="hQu-15-Np8" id="iMF-Hb-8fP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Nc-bt-Dyi" userLabel="First Responder" sceneMemberID="firstResponder"/>
