@@ -194,10 +194,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func checkForAudioPermission(onSuccess completionBlock: @escaping () -> Void) {
         devicePermissionUseCase.getAudioAuthorizationStatus { [self] granted in
-            if granted {
-                completionBlock()
-            } else {
-                router.showAudioPermissionError()
+            DispatchQueue.main.async {
+                if granted {
+                    completionBlock()
+                } else {
+                    router.showAudioPermissionError()
+                }
             }
         }
     }
