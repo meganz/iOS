@@ -70,6 +70,10 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     func addChatLocalVideo(delegate: MEGAChatVideoDelegate) {
        chatSdk.addChatLocalVideo(123, delegate: delegate)
     }
+    
+    func removeChatLocalVideo(delegate: MEGAChatVideoDelegate) {
+        chatSdk.removeChatLocalVideo(123, delegate: delegate)
+    }
 
     func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
         let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
