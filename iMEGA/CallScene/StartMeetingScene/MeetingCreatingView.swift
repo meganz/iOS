@@ -19,7 +19,6 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         localVideoImageView.isHidden = true
         localVideoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
         localVideoImageView.contentMode = .scaleAspectFill
-        viewModel.dispatch(.addChatLocalVideo(delegate: localVideoImageView))
         return localVideoImageView
     }()
     
@@ -278,7 +277,14 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         case .updateVideoButton(enabled: let isSelected):
             enableDisableVideoButton.isSelected = isSelected
             avatarImageView.isHidden = isSelected
+            
+            if isSelected {
+                viewModel.dispatch(.addChatLocalVideo(delegate: localVideoImageView))
+            } else if !localVideoImageView.isHidden {
+                viewModel.dispatch(.removeChatLocalVideo(delegate: localVideoImageView))
+            }
             localVideoImageView.isHidden = !isSelected
+
             
         case .updateSpeakerButton(enabled: let isSelected):
             enableDisableSpeakerButton.isSelected = isSelected
@@ -324,6 +330,11 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             enableDisableVideoButton.isUserInteractionEnabled = true
             enableDisableSpeakerButton.isUserInteractionEnabled = true
             muteUnmuteMicrophoneButton.isUserInteractionEnabled = true
+            
+        case .removeChatLocalVideo:
+            if !localVideoImageView.isHidden {
+                viewModel.dispatch(.removeChatLocalVideo(delegate: localVideoImageView))
+            }
         }
     }
     

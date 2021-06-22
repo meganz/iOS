@@ -4,6 +4,7 @@ enum MeetingCreatingViewAction: ActionType {
     case onViewReady
 
     case addChatLocalVideo(delegate: MEGAChatVideoDelegate)
+    case removeChatLocalVideo(delegate: MEGAChatVideoDelegate)
     case didTapMicroPhoneButton
     case didTapVideoButton
     case didTapSpeakerButton
@@ -40,7 +41,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         case updateCameraSwitchType(type: MeetingCameraType)
         case loadingStartMeeting
         case loadingEndMeeting
-
+        case removeChatLocalVideo
     }
     
     // MARK: - Private properties
@@ -140,6 +141,8 @@ final class MeetingCreatingViewModel: ViewModelType {
             invokeCommand?(.updateCameraSwitchType(type: cameraType))
         case .addChatLocalVideo(let delegate):
             meetingUseCase.addChatLocalVideo(delegate: delegate)
+        case .removeChatLocalVideo(let delegate):
+            meetingUseCase.removeChatLocalVideo(delegate: delegate)
         case .updateFirstName(let name):
             firstName = name
         case .updateLastName(let name):
@@ -181,7 +184,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 self.joinChatCall(chatId: chatId)
                 
             case .failure(_):
-                self.router.dismiss()
+                self.dismiss()
             }
         }
     }
@@ -193,13 +196,13 @@ final class MeetingCreatingViewModel: ViewModelType {
             case .success(let chatRoom):
                 guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
                     MEGALogError("Can not join meeting, not call found for chat")
-                    self.router.dismiss()
+                    self.dismiss()
                     return
                 }
                 self.router.dismiss()
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled)
             case .failure(_):
-                self.router.dismiss()
+                self.dismiss()
             }
         }
     }
@@ -211,16 +214,16 @@ final class MeetingCreatingViewModel: ViewModelType {
             case .success(let chatRoom):
                 guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
                     MEGALogError("Can not start meeting, not call found for chat")
-                    self.router.dismiss()
+                    self.dismiss()
                     return
                 }
                 
                 // Making sure the chatlink is created when meeting is created so that the other participant can share.
                 self.meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
-                self.router.dismiss()
+                self.dismiss()
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled)
             case .failure(_):
-                self.router.dismiss()
+                self.dismiss()
             }
         }
     }
@@ -286,8 +289,13 @@ final class MeetingCreatingViewModel: ViewModelType {
                 )
                 self.chatId = chatRoom.chatId
             case .failure(_):
-                self.router.dismiss()
+                self.dismiss()
             }
         }
+    }
+    
+    private func dismiss() {
+        invokeCommand?(.removeChatLocalVideo)
+        self.router.dismiss()
     }
 }
