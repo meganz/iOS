@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "History.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "revert.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "HistoryDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "History@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "HistoryDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "History@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "HistoryDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "revertDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

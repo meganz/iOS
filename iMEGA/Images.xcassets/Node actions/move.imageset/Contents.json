@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Move.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "move.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "MoveDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Move@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "MoveDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Move@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "MoveDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "moveDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "setNickname.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "setNicknameDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

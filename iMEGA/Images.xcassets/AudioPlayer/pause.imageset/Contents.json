@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "pause.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "pauseDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "sendChat.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "sendChatDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "icon-achievements.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "icon-achievements.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "icon-achievementsDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "icon-achievements@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "icon-achievementsDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "icon-achievements@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "icon-achievementsDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "icon-achievementsDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
