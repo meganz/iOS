@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "leaveGroup.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "leaveGroup.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "leaveGroupDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "leaveGroup@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "leaveGroupDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "leaveGroup@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "leaveGroupDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "leaveGroupDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "addContact.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "addContact.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "addContactDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "addContact@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "addContactDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "addContact@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "addContactDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "addContactDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

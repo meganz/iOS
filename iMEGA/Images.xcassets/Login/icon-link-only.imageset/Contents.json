@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "passwordCreateAccount.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "passwordDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

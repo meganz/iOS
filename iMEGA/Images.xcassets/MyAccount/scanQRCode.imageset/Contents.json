@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "scanQRCode.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "scanQRCode.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "scanQRCodeDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "scanQRCode@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "scanQRCodeDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "scanQRCode@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "scanQRCodeDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "scanQRCodeDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

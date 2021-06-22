@@ -137,7 +137,7 @@ extension NodeAction {
     }
     
     class func viewInFolderAction() -> NodeAction {
-        return NodeAction(title: NSLocalizedString("View in Folder", comment: "Button title which, if tapped, will trigger the action of opening a folder containg this file"), detail: nil, image: UIImage(named: "searchThin"), type: .viewInFolder)
+        return NodeAction(title: NSLocalizedString("View in Folder", comment: "Button title which, if tapped, will trigger the action of opening a folder containg this file"), detail: nil, image: UIImage(named: "search"), type: .viewInFolder)
     }
     
     class func clearAction() -> NodeAction {

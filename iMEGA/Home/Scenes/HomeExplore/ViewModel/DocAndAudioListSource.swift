@@ -160,7 +160,7 @@ extension DocAndAudioListSource {
             
             if let base64Handle = node.base64Handle,
                Helper.downloadingNodes()[base64Handle] == nil {
-                let downloadAction = contextualAction(withImageName: "infoDownload", backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
+                let downloadAction = contextualAction(withImageName: "offline", backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
                     self?.download(node: node)
                 }
                 actions += [downloadAction]
