@@ -33,6 +33,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="0p6-LK-Svz"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="aO3-Cf-k7R"/>
                             <constraint firstAttribute="width" secondItem="bCB-Uy-AiA" secondAttribute="height" id="apY-36-0Lc"/>
                         </constraints>
                     </view>

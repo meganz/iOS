@@ -2,6 +2,16 @@
 import UIKit
 import Photos
 
+enum PhotoLibrarySelectionSource {
+    case chat
+    case other
+}
+
+enum PhotoAlbumItemsPerRowCount: Int {
+    case chat = 3
+    case other = 5
+}
+
 final class PhotoGridViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -16,7 +26,7 @@ final class PhotoGridViewController: UIViewController {
             selectedAssets: []
         ) { [weak self] asset, indexPath, cellSize, touchPoint in
             guard let self = self else { return }
-            self.didSelect(asset: asset, indexPath: indexPath, cellSize: cellSize, touchPoint: touchPoint)
+            self.tapAsset(asset: asset, indexPath: indexPath, cellSize: cellSize, touchPoint: touchPoint)
         }
     }()
     private var delegate: PhotoGridViewDelegate?
@@ -26,17 +36,20 @@ final class PhotoGridViewController: UIViewController {
     
     private let selectionActionText: String
     private let selectionActionDisabledText: String
+    private let source: PhotoLibrarySelectionSource
     
     // MARK:- Initializers.
     
     init(album: Album,
          selectionActionText: String,
          selectionActionDisabledText: String,
-         completionBlock: @escaping AlbumsTableViewController.CompletionBlock) {
+         completionBlock: @escaping AlbumsTableViewController.CompletionBlock,
+         source: PhotoLibrarySelectionSource) {
         self.album = album
         self.completionBlock = completionBlock
         self.selectionActionText = selectionActionText
         self.selectionActionDisabledText = selectionActionDisabledText
+        self.source = source
         super.init(nibName: "PhotoGridViewController", bundle: Bundle.main)
     }
     
@@ -51,6 +64,7 @@ final class PhotoGridViewController: UIViewController {
         title = album.title
         collectionView?.register(PhotoGridViewCell.nib,
                                  forCellWithReuseIdentifier: PhotoGridViewCell.reuseIdentifier)
+        collectionView.allowsMultipleSelection = true
         updateView()
         addToolbar()
         addRightCancelBarButtonItem()
@@ -133,7 +147,7 @@ final class PhotoGridViewController: UIViewController {
                 selectedAssets: []
             ) { [weak self] asset, indexPath, cellSize, touchPoint in
                 guard let self = self else { return }
-                self.didSelect(asset: asset, indexPath: indexPath, cellSize: cellSize, touchPoint: touchPoint)
+                self.tapAsset(asset: asset, indexPath: indexPath, cellSize: cellSize, touchPoint: touchPoint)
             }
             collectionView.dataSource = dataSource
         }
@@ -143,32 +157,54 @@ final class PhotoGridViewController: UIViewController {
                 return 1
             }
             
-            var cellsPerRow = 3
+            var cellsPerRow = PhotoAlbumItemsPerRowCount.other.rawValue
+            if weakSelf.source == .chat {
+                cellsPerRow = PhotoAlbumItemsPerRowCount.chat.rawValue
+            }
             
-            switch (weakSelf.traitCollection.horizontalSizeClass,
-                    weakSelf.traitCollection.verticalSizeClass) {
-            case (.regular, .regular):
-                cellsPerRow = 5
-            default:
-                cellsPerRow = 3
+            if (weakSelf.traitCollection.horizontalSizeClass == .regular &&
+                    weakSelf.traitCollection.verticalSizeClass == .regular) {
+                cellsPerRow = PhotoAlbumItemsPerRowCount.other.rawValue
             }
             
             return cellsPerRow
         }
         
+        delegate?.isMultiSelectionEnabled = { [weak self] isEnabled in
+            guard let self = self else { return }
+            if #available(iOS 13.0, *) {
+                self.diffableDataSource?.isMultipleSelectionEnabled = isEnabled
+            } else {
+                self.dataSource?.isMultipleSelectionEnabled = isEnabled
+            }
+        }
+        
+        delegate?.updateBottomView = { [weak self] in
+            guard let self = self else { return }
+            self.updateBottomView()
+        }
+        
         collectionView.delegate = delegate
     }
     
-    private func didSelect(asset: PHAsset, indexPath: IndexPath, cellSize: CGSize, touchPoint: CGPoint) {
-        if touchPoint.x >= (cellSize.width / 2.0)
-            && touchPoint.y <= (cellSize.height / 2.0) {
-            if #available(iOS 13.0, *) {
-                diffableDataSource?.didSelect(asset: asset)
+    private func didSelect(asset: PHAsset, indexPath: IndexPath) {
+        if #available(iOS 13.0, *) {
+            diffableDataSource?.didSelect(asset: asset)
+        } else {
+            dataSource?.didSelect(asset: asset, atIndexPath: indexPath)
+        }
+    }
+    
+    private func tapAsset(asset: PHAsset, indexPath: IndexPath, cellSize: CGSize, touchPoint: CGPoint) {
+        if source == .chat {
+            if touchPoint.x >= (cellSize.width / 2.0)
+                && touchPoint.y <= (cellSize.height / 2.0) {
+                didSelect(asset: asset, indexPath: indexPath)
             } else {
-                dataSource?.didSelect(asset: asset, atIndexPath: indexPath)
+                showDetail(indexPath: indexPath)
             }
         } else {
-            showDetail(indexPath: indexPath)
+            didSelect(asset: asset, indexPath: indexPath)
         }
         
         updateBottomView()

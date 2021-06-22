@@ -2,22 +2,12 @@ import UIKit
 import Photos
 
 @available(iOS 13.0, *)
-final class PhotoGridViewDiffableDataSource {
+final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
     private enum Section {
         case main
     }
     
-    private weak var collectionView: UICollectionView?
-    typealias SelectionHandler = (PHAsset, IndexPath, CGSize, CGPoint) -> Void
-    private let selectionHandler: SelectionHandler
     private var dataSource: UICollectionViewDiffableDataSource<Section, PHAsset>?
-    var selectedAssets: [PHAsset]
-
-    init(collectionView: UICollectionView, selectedAssets: [PHAsset], selectionHandler: @escaping SelectionHandler) {
-        self.collectionView = collectionView
-        self.selectedAssets = selectedAssets
-        self.selectionHandler = selectionHandler
-    }
     
     func load(assets: [PHAsset]) {
         selectedAssets = selectedAssets.reduce(into: []) { result, asset in
@@ -58,6 +48,10 @@ final class PhotoGridViewDiffableDataSource {
                     return
                 }
                 self.selectionHandler(selectedAsset, indexPath, size, point)
+            }
+            
+            cell.panSelectionHandler = { [weak self] isSelected, asset in
+                self?.handlePanSelection(isSelected: isSelected, asset: asset)
             }
             
             cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
