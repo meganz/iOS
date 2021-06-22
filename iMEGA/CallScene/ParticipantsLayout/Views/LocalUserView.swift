@@ -13,7 +13,8 @@ let fixedMargin: CGFloat = 16.0
 class LocalUserView: UIView {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var videoImageView: UIImageView!
-    
+    @IBOutlet private weak var mutedImageView: UIImageView!
+
     private lazy var blurEffectView : UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurEffectView.frame = bounds
@@ -31,7 +32,7 @@ class LocalUserView: UIView {
         videoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
         avatarImageView.mnz_setImage(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
         
-        positionView(by: CGPoint(x: frame.size.width, y: 0))
+        positionView(by: CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: false)
     }
     
     func switchVideo() {
@@ -50,6 +51,10 @@ class LocalUserView: UIView {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             self?.blurEffectView.removeFromSuperview()
         }
+    }
+    
+    public func localAudio(enabled: Bool) {
+        mutedImageView.isHidden = enabled
     }
     
     //MARK: - Private
@@ -78,27 +83,31 @@ class LocalUserView: UIView {
         positionView(by: location)
     }
     
-    func positionView(by center: CGPoint) {
-        UIView.beginAnimations("Dragging", context: nil)
+    func positionView(by center: CGPoint, animated: Bool = true) {
+        if animated {
+            UIView.beginAnimations("Dragging", context: nil)
 
-        guard let superview = superview else { return }
-        if center.x > superview.frame.size.width / 2 {
-            if center.y > superview.frame.size.height / 2 {
-                corner = .bottomRight
+            guard let superview = superview else { return }
+            if center.x > superview.frame.size.width / 2 {
+                if center.y > superview.frame.size.height / 2 {
+                    corner = .bottomRight
+                } else {
+                    corner = .topRight
+                }
             } else {
-                corner = .topRight
+                if center.y > superview.frame.size.height / 2 {
+                    corner = .bottomLeft
+                } else {
+                    corner = .topLeft
+                }
             }
+            let point = startingPoint()
+            self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
+            UIView.commitAnimations()
         } else {
-            if center.y > superview.frame.size.height / 2 {
-                corner = .bottomLeft
-            } else {
-                corner = .topLeft
-            }
+            let point = startingPoint()
+            self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
         }
-        
-        let point = startingPoint()
-        self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
-        UIView.commitAnimations()
     }
     
     func startingPoint() -> CGPoint {
