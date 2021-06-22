@@ -56,6 +56,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case showNoOneElseHereMessage
         case showWaitingForOthersMessage
         case hideEmptyRoomMessage
+        case updateHasLocalAudio(Bool)
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -494,6 +495,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             localVideoEnabled = video
             invokeCommand?(.switchLocalVideo)
         }
+        invokeCommand?(.updateHasLocalAudio(audio))
     }
     
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) { }

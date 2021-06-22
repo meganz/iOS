@@ -58,7 +58,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         
         navigationItem.titleView = titleView
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapBackgroundView)))
-
+        
         viewModel.dispatch(.onViewReady)
     }
     
@@ -152,6 +152,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showWaitingForOthersMessageView()
         case .hideEmptyRoomMessage:
             removeEmptyRoomMessageView()
+        case .updateHasLocalAudio(let audio):
+            localUserView.localAudio(enabled: audio)
         }
     }
     
