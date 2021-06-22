@@ -139,8 +139,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showNotification(message: NSLocalizedString("online", comment: ""), color: UIColor.systemGreen)
         case .updatedCameraPosition(let position):
             localUserView.transformLocalVideo(for: position)
-        case .showRenameAlert(let title):
-            showRenameAlert(title: title)
+        case .showRenameAlert(let title, let isMeeting):
+            showRenameAlert(title: title, isMeeting: isMeeting)
         case .enableRenameButton(let enabled):
             guard let renameAlertController = presentedViewController as? UIAlertController, let enableButton = renameAlertController.actions.last else {
                 return
@@ -216,8 +216,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
     }
     
-    func showRenameAlert(title: String) {
-        let renameAlertController = UIAlertController(title: NSLocalizedString("calls.action.rename", comment: ""), message: NSLocalizedString("renameNodeMessage", comment: "Hint text to suggest that the user have to write the new name for the file or folder"), preferredStyle: .alert)
+    func showRenameAlert(title: String, isMeeting: Bool) {
+        let actionTitle = isMeeting ? NSLocalizedString("meetings.action.rename", comment: "") : NSLocalizedString("renameGroup", comment: "")
+        let renameAlertController = UIAlertController(title: actionTitle, message: NSLocalizedString("renameNodeMessage", comment: "Hint text to suggest that the user have to write the new name for the file or folder"), preferredStyle: .alert)
 
         renameAlertController.addTextField { textField in
             textField.text = title

@@ -51,7 +51,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case reconnecting
         case reconnected
         case updatedCameraPosition(position: CameraPosition)
-        case showRenameAlert(title: String)
+        case showRenameAlert(title: String, isMeeting: Bool)
         case enableRenameButton(Bool)
         case showNoOneElseHereMessage
         case showWaitingForOthersMessage
@@ -243,7 +243,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             remoteVideoUseCase.addRemoteVideoListener(self)
             if callParticipants.isEmpty && !call.clientSessions.isEmpty {
                 callsUseCase.createActiveSessions()
-            } else {
+            } else if chatRoom.isMeeting{
                 invokeCommand?(.showWaitingForOthersMessage)
             }
             localAvFlagsUpdated(video: initialVideoCall, audio: true)
@@ -268,7 +268,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(.toggleLayoutButton)
             }
         case .showRenameChatAlert:
-            invokeCommand?(.showRenameAlert(title: chatRoom.title ?? ""))
+            invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.isMeeting))
         case .setNewTitle(let newTitle):
             chatRoomUseCase.renameChatRoom(chatId: chatRoom.chatId, title: newTitle) { [weak self] result in
                 switch result {
@@ -373,7 +373,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             
-            if callParticipants.isEmpty {
+            if callParticipants.isEmpty && chatRoom.isMeeting {
                 invokeCommand?(.showNoOneElseHereMessage)
             }
             
