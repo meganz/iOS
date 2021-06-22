@@ -46,6 +46,7 @@
 		0D877F68261BCE1800A3698C /* TextEditorViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D877F67261BCE1800A3698C /* TextEditorViewRouter.swift */; };
 		0D877F72261BCE8A00A3698C /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D877F71261BCE8A00A3698C /* TextEditorViewModel.swift */; };
 		0D877F7C261BD23700A3698C /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D877F7B261BD23700A3698C /* TextEditorViewController.swift */; };
+		0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */; };
 		0D8D4D1325B7C57500C7B7FE /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */; };
 		0D8DD97725B513830084FE6F /* FolderContentStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8DD97625B513830084FE6F /* FolderContentStat.swift */; };
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
@@ -2060,6 +2061,7 @@
 		0D877F67261BCE1800A3698C /* TextEditorViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewRouter.swift; sourceTree = "<group>"; };
 		0D877F71261BCE8A00A3698C /* TextEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		0D877F7B261BD23700A3698C /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
+		0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewBaseDataSource.swift; sourceTree = "<group>"; };
 		0D8D4D1225B7C57500C7B7FE /* FileManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Additions.swift"; sourceTree = "<group>"; };
 		0D8DD97625B513830084FE6F /* FolderContentStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContentStat.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
@@ -8810,6 +8812,7 @@
 				BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */,
 				BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */,
 				BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */,
+				0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */,
 				BFAB111223CEA5C300BCE72D /* Controller */,
 				BFAB111523CEA5C300BCE72D /* Cell */,
 				BFAB110F23CEA5C300BCE72D /* FlowLayout */,
@@ -11120,6 +11123,7 @@
 				8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */,
 				5B5512DE25DB0EA00010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
+				0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */,
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
 				BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */,

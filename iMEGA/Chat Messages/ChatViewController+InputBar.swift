@@ -643,7 +643,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                                                                     
                                                                     self.startUpload(assets: assets)
         }
-        
+        albumTableViewController.source = .chat
         let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
         present(viewController: navigationController)
     }
