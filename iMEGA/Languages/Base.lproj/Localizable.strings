@@ -1753,9 +1753,9 @@
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call"="%@ joined the call";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call"="%@ left the call";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
 /* Message shown in a chat room when there is an active call */
