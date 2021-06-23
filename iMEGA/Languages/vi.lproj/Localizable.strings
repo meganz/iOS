@@ -744,8 +744,6 @@
 "View Source Code"="Xem Mã Nguồn";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Thỏa Thuận";
-/* Title for the MEGA Recovery Key */
-"masterKey"="Mã Phục Hồi";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi Mật Khẩu";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Đã xuất Mã Phục Hồi";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Mã Phục Hồi đã được lưu vào mục Ngoại Tuyến với tên RecoveryKey.txt. Ghi chú: tệp tin sẽ bị xóa một khi bạn đăng xuất, xin chuyển tệp tin tới một chỗ khác an toàn hơn.";
+"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Trong điện thoại";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="Tệp tin không thể chỉnh sửa được do lỗi không xác định được từ việc mã hóa.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Chủ sở hữu)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MAPHUCHOI-MEGA";

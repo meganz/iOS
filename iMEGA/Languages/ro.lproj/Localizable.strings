@@ -744,8 +744,6 @@
 "View Source Code"="Vezi codul sursă";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Confirmări";
-/* Title for the MEGA Recovery Key */
-"masterKey"="Cheie de recuperare";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Modifică parola";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Cheie de recuperare exportată";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Cheia de recuperare a fost exportată în secțiunea Offline ca RecoveryKey.txt. Notă: Aceasta va fi ștearsă dacă te deconectezi, te rugăm să o stochezi într-un loc sigur.";
+"masterKeyExported_alertMessage"="Cheia de recuperare a fost exportată în secțiunea Offline ca MEGA-CHEIEDERECUPERARE.txt. Notă: Aceasta va fi ștearsă dacă te deconectezi, te rugăm să o stochezi într-un loc sigur.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Pe dispozitiv";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Owner)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-CHEIEDERECUPERARE";

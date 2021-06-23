@@ -744,8 +744,6 @@
 "View Source Code"="ดูซอร์สโค้ด";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="กิตติกรรมประกาศ";
-/* Title for the MEGA Recovery Key */
-"masterKey"="คีย์สำหรับกู้คืน";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="เปลี่ยนรหัสผ่าน";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="ส่งออกคีย์การกู้คืนแล้ว";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="คีย์การกู้คืนถูกส่งออกไปยังส่วนออฟไลน์เป็น RecoveryKey.txt หมายเหตุ: จะถูกลบออกถ้าคุณออกจากระบบ กรุณาเก็บไว้ในที่ปลอดภัย";
+"masterKeyExported_alertMessage"="คีย์การกู้คืนได้ถูกส่งออกไปยังส่วนออฟไลน์ในชื่อ MEGA-คีย์การกู้คืน.txt เรียบร้อยแล้ว หมายเหตุ: ไฟล์จะถูกลบออก หากคุณออกจากระบบ ขอให้คุณเก็บไว้ในที่ปลอดภัยทันที";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="บนอุปกรณ์ของคุณ";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="ไม่สามารถแก้ไขไฟล์ได้ เนื่องจากมีการเข้ารหัสเนื้อหาที่ไม่รู้จัก";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (เจ้าของ)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-คีย์การกู้คืน";
