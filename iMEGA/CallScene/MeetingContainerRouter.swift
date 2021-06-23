@@ -7,6 +7,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool, containerViewModel: MeetingContainerViewModel)
     func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, completion: UIActivityViewController.CompletionWithItemsHandler?)
     func renameChat()
+    func showShareMeetingError()
 }
 
 extension MeetingContainerRouting {
@@ -101,6 +102,21 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func dismiss(completion: (() -> Void)?) {
         floatingPanelRouter?.dismiss(animated: false)
         baseViewController?.dismiss(animated: false, completion: completion)
+    }
+    
+    func showShareMeetingError() {
+        let customModalAlertViewController = CustomModalAlertViewController()
+        customModalAlertViewController.image = UIImage(named: "chatLinkCreation")
+        customModalAlertViewController.viewTitle = chatRoom.title
+        customModalAlertViewController.firstButtonTitle = NSLocalizedString("close", comment: "")
+        customModalAlertViewController.link = NSLocalizedString(chatRoom.isMeeting ? "meetings.sharelink.Error" : "No chat link available.", comment: "")
+        customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
+            customModalAlertViewController?.dismiss(animated: true, completion: nil)
+        }
+        if #available(iOS 13.0, *) {
+            customModalAlertViewController.overrideUserInterfaceStyle = .dark
+        }
+        UIApplication.mnz_presentingViewController().present(customModalAlertViewController, animated: true)
     }
     
     func toggleFloatingPanel(containerViewModel: MeetingContainerViewModel) {

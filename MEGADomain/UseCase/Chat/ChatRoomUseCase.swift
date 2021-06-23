@@ -31,7 +31,18 @@ struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
             return
         }
         
-        chatRoomRepo.queryChatLink(forChatId: chatRoom.chatId, completion: completion)
+        if chatRoom.ownPrivilege == .moderator {
+            chatRoomRepo.queryChatLink(forChatId: chatRoom.chatId) { result in
+                // If the user is a moderator and the link is not generated yet. Generate the link.
+                if case let .failure(error) = result, error == .resourceNotFound {
+                    chatRoomRepo.createPublicLink(forChatId: chatRoom.chatId, completion: completion)
+                } else {
+                    completion(result)
+                }
+            }
+        } else {
+            chatRoomRepo.queryChatLink(forChatId: chatRoom.chatId, completion: completion)
+        }
     }
     
     func userDisplayName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void) {
