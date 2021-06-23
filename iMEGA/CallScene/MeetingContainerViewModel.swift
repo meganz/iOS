@@ -73,7 +73,7 @@ final class MeetingContainerViewModel: ViewModelType {
                 case .success(let link):
                     self?.router.shareLink(presenter: presenter, sender: sender, link: link, completion: completion)
                 case .failure(_):
-                    MEGALogDebug("Could not get the chat link")
+                    self?.router.showShareMeetingError()
                 }
             }
         case .renameChat:

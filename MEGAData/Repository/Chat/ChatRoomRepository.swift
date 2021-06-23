@@ -39,17 +39,21 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     func queryChatLink(forChatId chatId: UInt64, completion: @escaping (Result<String, ChatLinkError>) -> Void) {
-        let publicChatLinkCreationDelegate = MEGAChatGenericRequestDelegate { (request, error) in
-            guard error.type == .MEGAChatErrorTypeOk else {
-                if error.type == .MEGAChatErrorTypeNoEnt {
-                    createPublicLink(forChatId: chatId, completion: completion)
+        let publicChatLinkCreationDelegate = ChatRequestListener { (request, error) in
+            guard let error = error, error.type == .MEGAChatErrorTypeOk else {
+                if let error = error, error.type == .MEGAChatErrorTypeNoEnt {
+                    completion(.failure(.resourceNotFound))
                 } else {
                     completion(.failure(.generic))
                 }
                 return
             }
             
-            completion(.success(request.text))
+            if let request = request {
+                completion(.success(request.text))
+            } else {
+                completion(.failure(.noRequestObjectFound))
+            }
         }
         
         sdk.queryChatLink(chatId, delegate: publicChatLinkCreationDelegate)
@@ -84,5 +88,19 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
             
             completion(.success(request.text))
         })
+    }
+}
+
+fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
+    typealias Completion = (_ request: MEGAChatRequest?, _ error: MEGAChatError?) -> Void
+    private let completion: Completion
+    
+    init(completion: @escaping Completion) {
+        self.completion = completion
+        super.init()
+    }
+    
+    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+        completion(request, error)
     }
 }

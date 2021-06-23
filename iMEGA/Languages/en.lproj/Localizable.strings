@@ -2674,3 +2674,5 @@
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Owner)";
+/* Message shown when the meeting link cannot be generated*/
+"meetings.sharelink.Error" = "No meeting link available";

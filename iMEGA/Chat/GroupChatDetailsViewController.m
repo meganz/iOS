@@ -274,11 +274,18 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 }
 
 - (void)presentNoChatLinkAvailable {
+    NSString *descriptionText = nil;
+    if (self.chatRoom.isMeeting) {
+        descriptionText = NSLocalizedString(@"meetings.sharelink.Error", @"");
+    } else {
+        descriptionText = NSLocalizedString(@"No chat link available.", @"In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say \"not link available\" and not auto create it.");
+    }
+    
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
     customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.firstButtonTitle = NSLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
-    customModalAlertVC.link = NSLocalizedString(@"No chat link available.", @"In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say \"not link available\" and not auto create it.");
+    customModalAlertVC.link = descriptionText;
     __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
     customModalAlertVC.firstCompletion = ^{
         [weakCustom dismissViewControllerAnimated:YES completion:nil];
