@@ -31,13 +31,12 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
         let destinationURLPath = appGroupFilePathUseCase.cachedThumbnailImageURL(forNode: base64Handle).path
         if let image = fetchImage(fromPath: destinationURLPath) {
             completion(.success(image))
-            return
+        } else {
+            if let image = getAvatarImage(withUserHandle: handle, name: name, size: size) {
+                completion(.success(image))
+            }
         }
 
-        if let image = getAvatarImage(withUserHandle: handle, name: name, size: size) {
-            completion(.success(image))
-        }
-        
         userImageRepo.loadUserImage(withUserHandle: base64Handle,
                                     destinationPath: destinationURLPath,
                                     completion: completion)
@@ -71,7 +70,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
                              font: UIFont.systemFont(ofSize: size.width/2.0))
         
         if let imageData = image?.jpegData(compressionQuality: 0.8) {
-            try? imageData.write(to: destinationURL)
+            try? imageData.write(to: destinationURL, options: .atomic)
         }
 
         return image
