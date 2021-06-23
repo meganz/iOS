@@ -809,6 +809,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:NSLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+            } else if (error.type == MEGAChatErrorTypeArgs)  {
+                [SVProgressHUD dismiss];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"meetings.joinMeeting.header", @"") message:NSLocalizedString(@"meetings.joinMeeting.description", @"") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
