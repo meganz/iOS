@@ -59,6 +59,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         navigationItem.titleView = titleView
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapBackgroundView)))
         
+        viewModel.dispatch(.onViewLoaded)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         viewModel.dispatch(.onViewReady)
     }
     
@@ -99,6 +104,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             self.isUserAGuest = isUserAGuest
             configureNavigationBar(title, subtitle)
             callsCollectionView.configure(with: self)
+        case .configLocalUserView:
             localUserView.configure()
         case .switchMenusVisibility:
             statusBarHidden.toggle()
