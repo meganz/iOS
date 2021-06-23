@@ -512,38 +512,6 @@ extension NodeInfoViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension NodeInfoViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch sections()[indexPath.section] {
-        case .details:
-            return 33
-        case .link, .versions, .removeSharing:
-            return 44
-        case .sharing, .pendingSharing:
-            return 60
-        case .info:
-            switch infoRows()[indexPath.row] {
-            case .preview:
-                return 230
-            case .owner:
-                return UITableView.automaticDimension
-            }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch sections()[section] {
-        case .details, .link, .versions, .sharing, .pendingSharing:
-            return 52
-        case .removeSharing:
-            return 38
-        case .info:
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 2
-    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableCell(withIdentifier: "nodeInfoTableHeader") as? NodeInfoHeaderTableViewCell else {
