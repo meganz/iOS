@@ -1,18 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "versioned.pdf",
+      "idiom" : "universal"
     },
     {
-      "filename" : "Versioned@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Versioned@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "versionedDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
