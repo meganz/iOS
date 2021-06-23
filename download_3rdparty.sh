@@ -6,8 +6,8 @@ if ! type "megacmd" > /dev/null; then
 	exit 1
 fi
 
-file="dE0iDSJB"
-key="hlSuLOVnwlrJSjFIg59KxynbhxselFPDlgeW-g7hC_I"
+file="9JkihTSQ"
+key="os6Y7slroj3lUeYgzec5VdAP6PjzTzu1oa-bq8yzcAw"
 fileUrl="https://mega.nz/#!${file}!${key}"
 filePath="./download_3rdparty/${file}"
 
