@@ -82,7 +82,7 @@
                         <constraint firstItem="w6k-iw-iFa" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.2" id="f7y-wY-eW4"/>
                     </constraints>
                 </stackView>
-                <view contentMode="scaleToFill" id="zKP-u0-Mn5" customClass="LocalUserView" customModule="MEGA" customModuleProvider="target">
+                <view hidden="YES" contentMode="scaleToFill" id="zKP-u0-Mn5" customClass="LocalUserView" customModule="MEGA" customModuleProvider="target">
                     <rect key="frame" x="16" y="104" width="75" height="134"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>

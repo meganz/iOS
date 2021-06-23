@@ -5,6 +5,7 @@ protocol MeetingParticipantsLayoutRouting: Routing {
 }
 
 enum CallViewAction: ActionType {
+    case onViewLoaded
     case onViewReady
     case tapOnView
     case tapOnLayoutModeButton
@@ -34,6 +35,7 @@ private enum CallViewModelConstant {
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, subtitle: String, isUserAGuest: Bool)
+        case configLocalUserView
         case switchMenusVisibility
         case toggleLayoutButton
         case switchLayoutMode(layout: CallLayoutMode, participantsCount: Int)
@@ -224,7 +226,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     // MARK: - Dispatch action
     func dispatch(_ action: CallViewAction) {
         switch action {
-        case .onViewReady:
+        case .onViewLoaded:
             if chatRoom.isMeeting {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
@@ -247,6 +249,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(.showWaitingForOthersMessage)
             }
             localAvFlagsUpdated(video: initialVideoCall, audio: true)
+        case .onViewReady:
+            invokeCommand?(.configLocalUserView)
         case .tapOnView:
             invokeCommand?(.switchMenusVisibility)
             containerViewModel?.dispatch(.changeMenuVisibility)
