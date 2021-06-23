@@ -62,19 +62,19 @@ struct MeetingParticipantViewModel: ViewModelType {
             case .success(let name):
                 invokeCommand?(.updateName(name: name, isMe: isMe))
                 completion(name)
-            case .failure(_):
-                break
+            case .failure(let error):
+                MEGALogDebug("ChatRoom: failed to get the user display name for \(participant.participantId) - \(error)")
             }
         }
     }
 
     private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String, size: CGSize) {
-        userImageUseCase.fetchUserAvatar(withUserHandle: attendee.participantId, name: name, size: size) { result in
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name, size: size) { result in
             switch result {
             case .success(let image):
                 invokeCommand?(.updateAvatarImage(image: image))
-            case .failure(_):
-                break
+            case .failure(let error):
+                MEGALogDebug("ChatRoom: failed to fetch avatar for \(participant.participantId) - \(error)")
             }
         }
     }
