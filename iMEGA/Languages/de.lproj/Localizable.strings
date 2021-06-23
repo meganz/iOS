@@ -744,8 +744,6 @@
 "View Source Code"="Quellcode anzeigen";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Danksagungen";
-/* Title for the MEGA Recovery Key */
-"masterKey"="Rettungsschlüssel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Passwort ändern";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Rettungsschlüssel exportiert";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Ihr Rettungsschlüssel wurde im Offlinebereich unter RecoveryKey.txt abgelegt. Achtung: Er wird gelöscht, sobald Sie sich ausloggen - speichern Sie ihn bitte an einem sicheren Ort.";
+"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2059,7 +2057,7 @@
 /*  */
 "Administrator"="Administrator";
 /* Business user role */
-"User"="User";
+"User"="Benutzer";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Owner)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-RETTUNGSSCHLUESSEL";

@@ -744,8 +744,6 @@
 "View Source Code"="Bron Code Weergeven";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Dankwoord";
-/* Title for the MEGA Recovery Key */
-"masterKey"="Herstel Sleutel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Wijzig Wachtwoord";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Herstelsleutel geëxporteerd";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="De Herstelsleutel is geëxporteerd naar het Offline gedeelte als RecoveryKey.txt. Opmerking: het zal worden verwijderd als u uitlogt, bewaar het alstublieft op een veilige plaats.";
+"masterKeyExported_alertMessage"="De Herstelsleutel is geëxporteerd naar de Offline sectie als MEGA-HERSTELSLEUTEL.txt. Opmerking: Het wordt verwijderd als u uitlogt, bewaar het op een veilige plaats.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Op uw apparaat";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="Bestand kon niet gewijzigd worden door onbekende inhoud codering.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Eigenaar)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-HERSTELSLEUTEL";

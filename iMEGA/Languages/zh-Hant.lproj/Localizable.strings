@@ -744,8 +744,6 @@
 "View Source Code"="查看原始碼";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
-/* Title for the MEGA Recovery Key */
-"masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="更改密碼";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="已匯出還原金鑰";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="還原金鑰已以RecoveryKey.txt匯出至離線存取區裡。注意：您登出後它將會被刪除，請將其存放於安全之處。";
+"masterKeyExported_alertMessage"="還原金鑰已以 MEGA-RECOVERYKEY.txt 匯出至離線存取區。注意：您登出後它將會被刪除，請將其存放於安全之處。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="在您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -1655,7 +1653,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="已停用雙重驗證";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="請掃描或複製種子到您的身份驗證程式中。請務必將此種子備份於安全之處，以防設備遺失所帶來的風險。";
+"scanOrCopyTheSeed"="請掃描或複製種子密鑰到您的身份驗證程式中。請務必將此種子密鑰備份於安全之處，以防設備遺失所帶來的風險。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="您的驗證裝置不見了？";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="由於未知的內容編碼，無法編輯檔案。";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@（擁有者）";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA－還原金鑰";

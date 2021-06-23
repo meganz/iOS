@@ -744,8 +744,6 @@
 "View Source Code"="الاطلاع على الرماز المصدري";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="شكر وتقدير";
-/* Title for the MEGA Recovery Key */
-"masterKey"="مفتاح الإستعادة";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="تغيير كلمة المرور";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="تم تصدير مفتاح الاستعادة";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="تم تصدير مفتاح الاستعادة إلى قسم \"بدون اتصال\" كـ RecoveryKey.txt . ملاحظة: سيتم حذفه إذا قمت بتسجيل الخروج، يرجى تخزينها في مكان آمن .";
+"masterKeyExported_alertMessage"="تم تصدير \"مفتاح الاستعادة\" إلى قسم \"غير متصل بالانترنت\" كـ MEGA-RECOVERYKEY.txt. ملاحظة: سيتم حذفه إذا قمت بتسجيل الخروج، يرجى تخزينه في مكان آمن.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="على جهازك";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="تعذر تحرير الملف لأن ترميز محتوى غير معروف.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (المالك)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="ميغا MEGA-مفتاح الإستعادة";

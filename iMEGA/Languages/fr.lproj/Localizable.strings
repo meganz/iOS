@@ -643,9 +643,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Politique des témoins de navigation";
+"Cookie Policy"="Politique des témoins de connexion";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Paramètres des Témoins de navigation";
+"Cookie Settings"="Paramètres des Témoins de connexion";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Conditions générales d’utilisation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -744,8 +744,6 @@
 "View Source Code"="Visualiser le code source";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Mentions";
-/* Title for the MEGA Recovery Key */
-"masterKey"="Clé de récupération";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Changer le mot de passe";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="La clé de récupération a été exportée";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous RecoveryKey.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
+"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous MEGA-CLÉdeRÉCUPÉRATION.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sur votre appareil";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -907,7 +905,7 @@
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Tester la version bêta";
 /* Title to rate the app */
-"rateUsLabel"="Évaluez-nous";
+"rateUsLabel"="Nous évaluer";
 /* Title of the Transfers section */
 "transfers"="Transferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -2541,9 +2539,9 @@
 /* Cookie dialog header */
 "Before You Continue"="Avant que vous ne poursuiviez";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Nous utilisons la mémoire locale et des technologies semblables (« cookies ») pour vous fournir nos services, améliorer votre expérience d’utilisation de nos services et personnaliser les publicités que vous voyez, dont celles provenant de tiers. Acceptez dès le début de votre visite notre utilisation de Témoins ou personnalisez les Témoins dans les paramètres des Témoins de navigation. Apprenez-en davantage dans notre [A]Politique sur les Témoins de navigation[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Nous utilisons la mémoire locale et des technologies semblables (« cookies ») pour vous fournir nos services, améliorer votre expérience d’utilisation de nos services et personnaliser les publicités que vous voyez, dont celles provenant de tiers. Acceptez dès le début de votre visite notre utilisation de Témoins ou personnalisez les Témoins dans les paramètres des Témoins de connexion. Apprenez-en davantage dans notre [A]Politique sur les Témoins de connexion[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Accepter les Témoins de navigation";
+"Accept Cookies"="Accepter les Témoins de connexion";
 /* Cookie settings dialog text. */
 "Essential Cookies"="Témoins essentiels";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2561,7 +2559,7 @@
 /* Cookie settings dialog text. */
 "Advertising Cookies"="Témoins publicitaires";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Ils sont utilisés par nous et par nos partenaires publicitaires approuvés afin de personnaliser les publicités que vous voyez dans nos services et sur d’autres sites Web, d’après votre historique de navigation. Le refus de ces Témoins signifierait que nous pourrions afficher des publicités moins pertinentes.";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Ils sont utilisés par nous et par nos partenaires publicitaires approuvés afin de personnaliser les publicités que vous voyez dans nos services et sur d’autres sites Web, d’après votre historique de connexion. Le refus de ces Témoins signifierait que nous pourrions afficher des publicités moins pertinentes.";
 /* Cookie settings dialog text. */
 "Third Party Cookies"="Témoins tiers";
 /* Cookie settings dialog text. */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="Le fichier n’a pas pu être modifié en raison d’un encodage de contenu inconnu.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (propriétaire)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-CLÉdeRÉCUPÉRATION";
