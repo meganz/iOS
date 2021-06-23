@@ -68,7 +68,7 @@
     BOOL isDirectory;
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
-        if (uploadInfo) {
+        if (uploadInfo.mediaUpload) {
             [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
                 if (error || cameraUploadNode == nil) {
                     MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@ %@", localIdentifier, error);
