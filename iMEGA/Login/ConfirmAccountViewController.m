@@ -149,7 +149,6 @@
         [self.passwordView setErrorState:NO];
     } else {
         [self.passwordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.passwordView.passwordTextField becomeFirstResponder];
     }
     
     return validPassword;
