@@ -1073,7 +1073,8 @@
             NSString *title = NSLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
             NSString *detail = NSLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
             UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
-            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            NSString *base64handle = [MEGASdk base64HandleForUserHandle:sdk.myUser.handle];
+            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:base64handle image:image];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
         }
     }
@@ -1086,18 +1087,23 @@
             NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
             NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
             UIImage *image = [sdk mnz_accountDetails].storageMax.longLongValue > [sdk mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
         }
     }
 }
 
-- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
+- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail monospaceDetail:(NSString *)monospaceDetail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.image = image;
         customModalAlertVC.viewTitle = title;
-        customModalAlertVC.detail = detail;
+        if (monospaceDetail) {
+            customModalAlertVC.detail = [NSString stringWithFormat:@"%@ (ID: %@)", detail, monospaceDetail];
+            customModalAlertVC.monospaceDetail = monospaceDetail;
+        } else {
+            customModalAlertVC.detail = detail;
+        }
         customModalAlertVC.firstButtonTitle = NSLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
         customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
@@ -1459,7 +1465,7 @@
                     alreadyPresented = YES;
                     NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                     UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                    [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
                 }
             }
             break;
@@ -1554,7 +1560,7 @@
                     NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                     NSString *detail = NSLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
                     UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                    [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
                 }
                 
                 break;
