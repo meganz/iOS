@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSNumber *chatId;
 @property (getter=shouldAnswerCallWhenConnect) BOOL answerCallWhenConnect;
 @property (getter=shouldMuteAudioWhenConnect) BOOL muteAudioWhenConnect;
+@property (getter=shouldEndCallWhenConnect) BOOL endCallWhenConnect;
 
 @property (nonatomic, strong) NSMutableDictionary <NSNumber *, MEGAChatCall *> *endedCalls;
 
@@ -76,7 +77,7 @@
     } else {
         self.callId = @(callId);
         self.chatId = @(chatId);
-        self.answerCallWhenConnect = self.muteAudioWhenConnect = NO;
+        self.endCallWhenConnect = self.answerCallWhenConnect = self.muteAudioWhenConnect = NO;
         NSUUID *uuid = [self.megaCallManager uuidForChatId:chatId callId:callId];
         if (chatRoom) {
             [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]
@@ -167,13 +168,13 @@
 }
 
 - (void)updateCall:(MEGAChatCall *)call {
-//    if (self.shouldEndCallWhenConnect) return;
+    if (self.shouldEndCallWhenConnect) return;
     
-//    MEGALogDebug(@"[CallKit] Update call %@, video %@", call, call.hasVideoInitialCall ? @"YES" : @"NO");
+    MEGALogDebug(@"[CallKit] Update call %@, video %@", call, call.hasLocalVideo ? @"YES" : @"NO");
     
-//    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
-//    CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasVideoInitialCall];
-//    [self.provider reportCallWithUUID:call.uuid updated:update];
+    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+    CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasLocalVideo];
+    [self.provider reportCallWithUUID:call.uuid updated:update];
 }
 
 - (void)reportNewIncomingCallWithValue:(NSString *)value
@@ -328,6 +329,7 @@
                 [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.callId];
             }
         } else {
+            self.endCallWhenConnect = YES;
             self.muteAudioWhenConnect = self.answerCallWhenConnect = NO;
         }
         [action fulfill];
