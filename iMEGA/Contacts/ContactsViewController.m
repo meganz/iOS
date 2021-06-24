@@ -1581,7 +1581,10 @@
         }
         return headerView;
     }
-    if (section == 0 && (self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith)) {
+    if (section == 0
+        && (self.contactsMode == ContactsModeChatCreateGroup
+            || self.contactsMode == ContactsModeShareFoldersWith
+            || self.contactsMode == ContactsModeInviteParticipants)) {
         headerView.titleLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         headerView.backgroundColorView.backgroundColor = UIColor.mnz_background;
         headerView.topSeparatorView.hidden = YES;
@@ -1646,15 +1649,15 @@
         }
         
         case ContactsModeChatAddParticipant:
-        case ContactsModeChatAttachParticipant:
-        case ContactsModeInviteParticipants: {
+        case ContactsModeChatAttachParticipant: {
             if (section == 1) {
                 heightForHeader = 35.0f;
             }
             break;
         }
             
-        case ContactsModeChatCreateGroup: {
+        case ContactsModeChatCreateGroup:
+        case ContactsModeInviteParticipants: {
             if (section == 0) {
                 heightForHeader = 25.0f;
             } else if (section == 1) {
