@@ -19,12 +19,11 @@ extension ChatViewController {
     }
 
     var shouldDisableAudioVideoCall: Bool {
-        let chatConnection = MEGASdkManager.sharedMEGAChatSdk().chatConnectionState(chatRoom.chatId)
-
         return chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
-            || chatConnection != .online
+            || MEGASdkManager.sharedMEGAChatSdk().chatConnectionState(chatRoom.chatId) != .online
             || !MEGAReachabilityManager.isReachable()
             || MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+            || MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) != nil
             || isVoiceRecordingInProgress
     }
 
