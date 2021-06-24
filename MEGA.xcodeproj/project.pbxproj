@@ -246,6 +246,14 @@
 		5B3740C8241FAA8700BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689AE2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift */; };
 		5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
+		5B3B0D1E2684B8F200479A68 /* altIconMinimal@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D182684B8F000479A68 /* altIconMinimal@2x~ipad.png */; };
+		5B3B0D1F2684B8F200479A68 /* defaultIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D1B2684B8F100479A68 /* defaultIcon@2x~ipad.png */; };
+		5B3B0D202684B8F200479A68 /* altIconDay@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D1C2684B8F100479A68 /* altIconDay@2x~ipad.png */; };
+		5B3B0D212684B8F200479A68 /* altIconNight@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D1D2684B8F200479A68 /* altIconNight@2x~ipad.png */; };
+		5B3B0D262684B91B00479A68 /* altIconMinimal@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D222684B91900479A68 /* altIconMinimal@3x~ipad.png */; };
+		5B3B0D272684B91B00479A68 /* altIconDay@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D232684B91A00479A68 /* altIconDay@3x~ipad.png */; };
+		5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D242684B91A00479A68 /* altIconNight@3x~ipad.png */; };
+		5B3B0D292684B91B00479A68 /* defaultIcon@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D252684B91B00479A68 /* defaultIcon@3x~ipad.png */; };
 		5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C3FF8241952D1003B1650 /* ViewModePreference.swift */; };
 		5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */; };
 		5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */; };
@@ -2352,6 +2360,14 @@
 		5B3740CC2421600B00BA75EA /* MEGACD 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 5.xcdatamodel"; sourceTree = "<group>"; };
 		5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedContactsViewController.h; path = Chat/ChatAttachedContactsViewController.h; sourceTree = "<group>"; };
 		5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedContactsViewController.m; path = Chat/ChatAttachedContactsViewController.m; sourceTree = "<group>"; };
+		5B3B0D182684B8F000479A68 /* altIconMinimal@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconMinimal@2x~ipad.png"; sourceTree = "<group>"; };
+		5B3B0D1B2684B8F100479A68 /* defaultIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultIcon@2x~ipad.png"; sourceTree = "<group>"; };
+		5B3B0D1C2684B8F100479A68 /* altIconDay@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconDay@2x~ipad.png"; sourceTree = "<group>"; };
+		5B3B0D1D2684B8F200479A68 /* altIconNight@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconNight@2x~ipad.png"; sourceTree = "<group>"; };
+		5B3B0D222684B91900479A68 /* altIconMinimal@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconMinimal@3x~ipad.png"; sourceTree = "<group>"; };
+		5B3B0D232684B91A00479A68 /* altIconDay@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconDay@3x~ipad.png"; sourceTree = "<group>"; };
+		5B3B0D242684B91A00479A68 /* altIconNight@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconNight@3x~ipad.png"; sourceTree = "<group>"; };
+		5B3B0D252684B91B00479A68 /* defaultIcon@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultIcon@3x~ipad.png"; sourceTree = "<group>"; };
 		5B3C3FF8241952D1003B1650 /* ViewModePreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModePreference.swift; sourceTree = "<group>"; };
 		5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsDetailsViewController.m; sourceTree = "<group>"; };
 		5B40AB311F7A512E0034C3B3 /* AchievementsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsDetailsViewController.h; sourceTree = "<group>"; };
@@ -5525,13 +5541,21 @@
 			isa = PBXGroup;
 			children = (
 				5B72739D240D4310005816AB /* defaultIcon@2x.png */,
+				5B3B0D1B2684B8F100479A68 /* defaultIcon@2x~ipad.png */,
 				5B72739C240D430F005816AB /* defaultIcon@3x.png */,
-				5B727398240D3465005816AB /* altIconDay@3x.png */,
-				5B727396240D3465005816AB /* altIconMinimal@3x.png */,
-				5B727397240D3465005816AB /* altIconNight@3x.png */,
+				5B3B0D252684B91B00479A68 /* defaultIcon@3x~ipad.png */,
 				5B727392240D32F9005816AB /* altIconDay@2x.png */,
+				5B3B0D1C2684B8F100479A68 /* altIconDay@2x~ipad.png */,
+				5B727398240D3465005816AB /* altIconDay@3x.png */,
+				5B3B0D232684B91A00479A68 /* altIconDay@3x~ipad.png */,
 				5B727390240D32F8005816AB /* altIconMinimal@2x.png */,
+				5B3B0D182684B8F000479A68 /* altIconMinimal@2x~ipad.png */,
+				5B727396240D3465005816AB /* altIconMinimal@3x.png */,
+				5B3B0D222684B91900479A68 /* altIconMinimal@3x~ipad.png */,
 				5B727391240D32F9005816AB /* altIconNight@2x.png */,
+				5B3B0D1D2684B8F200479A68 /* altIconNight@2x~ipad.png */,
+				5B727397240D3465005816AB /* altIconNight@3x.png */,
+				5B3B0D242684B91A00479A68 /* altIconNight@3x~ipad.png */,
 			);
 			name = "App Icons";
 			sourceTree = "<group>";
@@ -9742,14 +9766,17 @@
 				BF7EBD2F244E916F0015255F /* AddToChatViewController.xib in Resources */,
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
 				BFB463FC243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib in Resources */,
+				5B3B0D1F2684B8F200479A68 /* defaultIcon@2x~ipad.png in Resources */,
 				BF99A3D524A994CB0035A183 /* MessageOptionItemTableCell.xib in Resources */,
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				5DD6B16D24D67E8500F14515 /* SlidePanelView.xib in Resources */,
 				5B727393240D32F9005816AB /* altIconMinimal@2x.png in Resources */,
 				A88E7FEB2549FD8A001B0A66 /* RecentsTableViewHeaderView.xib in Resources */,
+				5B3B0D262684B91B00479A68 /* altIconMinimal@3x~ipad.png in Resources */,
 				B695B60B264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,
 				BFAB114F23CEA5C300BCE72D /* AlbumsTableViewController.xib in Resources */,
+				5B3B0D272684B91B00479A68 /* altIconDay@3x~ipad.png in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */,
 				BFAB113B23CEA5C300BCE72D /* PhotoGridViewController.xib in Resources */,
@@ -9790,6 +9817,7 @@
 				7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */,
 				83B0B461242CC24E00468191 /* ChatSharedItems.storyboard in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
+				5B3B0D212684B8F200479A68 /* altIconNight@2x~ipad.png in Resources */,
 				C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
 				B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */,
@@ -9797,6 +9825,7 @@
 				5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				BFAB114923CEA5C300BCE72D /* PhotoCarouselCell.xib in Resources */,
+				5B3B0D292684B91B00479A68 /* defaultIcon@3x~ipad.png in Resources */,
 				BF99A3F324AC43F70035A183 /* emojis_v3.json in Resources */,
 				83C570E622E5BFCF00216896 /* PhoneNumberMetadata.json in Resources */,
 				BF7EBD35244FA92B0015255F /* AddToChatCameraCollectionCell.xib in Resources */,
@@ -9805,6 +9834,7 @@
 				837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */,
 				BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
+				5B3B0D1E2684B8F200479A68 /* altIconMinimal@2x~ipad.png in Resources */,
 				5B727395240D32F9005816AB /* altIconDay@2x.png in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
 				5B92CEE72423E9F100FE1BCC /* UpgradeAccount.storyboard in Resources */,
@@ -9813,6 +9843,7 @@
 				BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */,
 				5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */,
 				BFAFB199252C0A33003ADFE3 /* DownloadingNodeCell.xib in Resources */,
+				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
 				83C570E722E5BFCF00216896 /* README.md in Resources */,
@@ -9823,6 +9854,7 @@
 				83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */,
 				5D038F092511D5AF00DAA2E6 /* HomeSearchResultViewController.xib in Resources */,
 				2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */,
+				5B3B0D202684B8F200479A68 /* altIconDay@2x~ipad.png in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */,
