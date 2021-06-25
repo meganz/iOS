@@ -59,7 +59,7 @@ class JoinMegaView: UIView {
         
         containerView.flex.backgroundColor(.mnz_background()).alignItems(.center).marginTop(28).define { flex in
             // video view
-            flex.addItem(introducationImage).marginTop(20).size(CGSize(width: 256, height: 205))
+            flex.addItem(introducationImage).marginTop(20).width(68%).aspectRatio(1.25)
             
             flex.addItem(title).marginTop(28)
             
