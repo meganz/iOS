@@ -1,18 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "outgoingSegmentControler.pdf",
+      "idiom" : "universal"
     },
     {
-      "filename" : "outgoingSegmentControler@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "outgoingSegmentControler@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "outgoingSegmentControlerDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

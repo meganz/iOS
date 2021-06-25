@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDc-Jv-Ltn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDc-Jv-Ltn">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,7 +44,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GetLinkInfoTableViewCell" rowHeight="60" id="GTL-RU-0LD" customClass="GetLinkInfoTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GTL-RU-0LD" id="gPt-eh-z56">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -102,7 +102,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GetLinkSwitchOptionTableViewCell" rowHeight="44" id="gDP-WK-755" customClass="GetLinkSwitchOptionTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="88" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="84.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gDP-WK-755" id="9MV-dt-VqW">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -173,7 +173,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GetLinkDetailTableViewCell" rowHeight="44" id="5T7-je-eaT" customClass="GetLinkDetailTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="132" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="128.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5T7-je-eaT" id="NYC-zB-jae">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -238,7 +238,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GetLinkDatePickerTableViewCell" rowHeight="160" id="mbL-lK-GRh" customClass="GetLinkDatePickerTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="176" width="414" height="160"/>
+                                        <rect key="frame" x="0.0" y="172.5" width="414" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mbL-lK-GRh" id="BpH-6O-PPE">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
@@ -264,7 +264,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GetLinkStringTableViewCell" rowHeight="44" id="dWi-Ba-X8o" customClass="GetLinkStringTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="336" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="332.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dWi-Ba-X8o" id="q5D-yq-sjJ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -312,7 +312,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GetLinkPasswordTableViewCell" rowHeight="44" id="uNE-R6-QgM" customClass="GetLinkPasswordTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="380" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="376.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uNE-R6-QgM" id="OfS-bb-7Qy">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -325,7 +325,7 @@
                                                         <constraint firstAttribute="width" constant="622" id="bAh-U7-X9n"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="passwordGetLink"/>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="padlock"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="newPassword"/>
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
@@ -702,8 +702,8 @@
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
         <image name="link" width="28" height="28"/>
-        <image name="linked" width="24" height="24"/>
-        <image name="passwordGetLink" width="24" height="24"/>
+        <image name="linked" width="12" height="12"/>
+        <image name="padlock" width="28" height="28"/>
         <image name="photoshop" width="72" height="72"/>
         <image name="proLabel" width="23.5" height="13"/>
         <systemColor name="secondaryLabelColor">

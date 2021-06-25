@@ -107,7 +107,7 @@
                                                     <constraint firstAttribute="width" constant="622" id="CnO-WG-FFi"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-only"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="padlock"/>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="passwordPlaceholder"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <variation key="default">
@@ -527,7 +527,7 @@
                                             <constraint firstAttribute="width" constant="622" id="eXM-ON-4d5"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-only"/>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="padlock"/>
                                             <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="passwordPlaceholder"/>
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
@@ -757,12 +757,12 @@
         <image name="checkBox" width="24" height="24"/>
         <image name="checkBoxSelected" width="72" height="72"/>
         <image name="icon-key-only" width="24" height="24"/>
-        <image name="icon-link-only" width="24.666666030883789" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
         <image name="littleQuestionMark" width="12" height="12"/>
-        <image name="mail" width="24" height="24"/>
+        <image name="mail" width="28" height="28"/>
         <image name="mailBig" width="124" height="96"/>
         <image name="megaThePrivacyCompanyLogo" width="170" height="54"/>
         <image name="name" width="24" height="24"/>
+        <image name="padlock" width="28" height="28"/>
     </resources>
 </document>

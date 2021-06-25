@@ -243,7 +243,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
+    cell.avatarImageView.image = [UIImage imageNamed:@"rename"];
     cell.nameLabel.text = self.userNickname.length == 0 ? NSLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") : NSLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
     cell.nameLabel.textColor = UIColor.mnz_label;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
