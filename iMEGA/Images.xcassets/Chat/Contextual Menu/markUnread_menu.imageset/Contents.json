@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "markUnread.pdf",
+      "filename" : "markRead.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "markUnreadDark.pdf",
+      "filename" : "markReadDark.pdf",
       "idiom" : "universal"
     }
   ],

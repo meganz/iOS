@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "linksSegmentControler.pdf",
+      "filename" : "enterEmail.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,15 +11,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "linksSegmentControlerDark.pdf",
+      "filename" : "enterEmailDark.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

@@ -831,7 +831,7 @@
         [actions addObject:muteAction];
     }
     
-    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"infomation_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"info"] style:UIAlertActionStyleDefault actionHandler:^{
         [self presentGroupOrContactDetailsForChatListItem:chatListItem];
     }];
     [actions addObject:infoAction];
@@ -1177,14 +1177,14 @@
                 [menus addObject:muteAction];
             }
 
-            UIAction *infoAction = [UIAction actionWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"infomation_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            UIAction *infoAction = [UIAction actionWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"info"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
             [menus addObject:infoAction];
             
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault: {
-                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[[UIImage imageNamed:@"archiveChat_menu"] imageByTintColor:UIColor.whiteColor] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                         [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
                     }];
                     [menus addObject:archiveChatAction];
