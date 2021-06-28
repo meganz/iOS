@@ -27,7 +27,7 @@ class MeetingCreatingViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "backArrow"),
+            title: NSLocalizedString("close", comment: ""),
             style: .plain,
             target: self,
             action: #selector(dissmissVC(_:))
