@@ -143,7 +143,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, completion: UIActivityViewController.CompletionWithItemsHandler?) {
-        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: nil)
+        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: [SendToChatActivity(text: link)])
         if let barButtonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
         } else if let buttonSender = sender as? UIButton {
