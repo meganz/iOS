@@ -70,30 +70,27 @@ final class CallParticipantEntity: Equatable {
 extension CallParticipantEntity {
     convenience init(session: ChatSessionEntity, chatId: MEGAHandle) {
         var attendeeType: AttendeeType = .guest
+        var isInContactList = false
+        let email = MEGASdkManager.sharedMEGAChatSdk().contacEmail(byHandle: session.peerId)
         
-        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) {
-            switch chatRoom.peerPrivilege(byHandle: session.peerId) {
-            case MEGAChatRoomPrivilege.moderator.rawValue:
-                attendeeType = .moderator
-            case MEGAChatRoomPrivilege.standard.rawValue:
-                attendeeType = .participant
-            default:
-                attendeeType = .guest
+        if email != nil {
+            if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) {
+                switch chatRoom.peerPrivilege(byHandle: session.peerId) {
+                case MEGAChatRoomPrivilege.moderator.rawValue:
+                    attendeeType = .moderator
+                default:
+                    attendeeType = .participant
+                }
             }
+            
+            isInContactList = MEGASdkManager.sharedMEGASdk().visibleContacts().contains(where: { $0.handle == session.peerId })
         }
-        
-        if MEGASdkManager.sharedMEGAChatSdk().contacEmail(byHandle: session.peerId) == nil {
-            attendeeType = .guest
-        }
-        
-        let contactList = MEGASdkManager.sharedMEGASdk().contacts()
-        let isInContactList = (0..<contactList.size.intValue).compactMap(contactList.user(at:)).contains(where: { $0.handle == session.peerId })
         
         self.init(chatId: chatId,
                   participantId: session.peerId,
                   clientId: session.clientId,
                   networkQuality: 0,
-                  email: MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: session.peerId),
+                  email: email,
                   attendeeType: attendeeType,
                   isInContactList: isInContactList,
                   video: session.hasVideo ? .on : .off,
