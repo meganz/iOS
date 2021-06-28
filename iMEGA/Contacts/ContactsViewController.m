@@ -999,8 +999,11 @@
 }
 
 - (void)newMeeting {
-    MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self type:MeetingConfigurationTypeStart link:nil];
-    [router start];
+    __weak typeof(UIViewController) *weakPresentingViewController = self.presentingViewController;
+    [self dismissViewControllerAnimated:YES completion:^{
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:weakPresentingViewController type:MeetingConfigurationTypeStart link:nil];
+        [router start];
+    }];
 }
 
 - (void)joinMeeting {
