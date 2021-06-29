@@ -144,3 +144,4 @@
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "PhotosViewController.h"
 #import "SharedItemsViewController.h"
+#import "MOUploadTransfer+CoreDataProperties.h"
