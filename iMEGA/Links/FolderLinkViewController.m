@@ -56,6 +56,9 @@
 
 @property (nonatomic, assign) ViewModePreference viewModePreference;
 
+@property (nonatomic, strong) MEGAGenericRequestDelegate* requestDelegate;
+@property (nonatomic, strong) GlobalDelegate* globalDelegate;
+
 @end
 
 @implementation FolderLinkViewController
@@ -64,8 +67,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [MEGASdkManager.sharedMEGASdkFolder addMEGAGlobalDelegate:self];
-    [MEGASdkManager.sharedMEGASdkFolder addMEGARequestDelegate:self];
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
@@ -104,8 +105,6 @@
     self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
-        [MEGASdkManager.sharedMEGASdkFolder loginToFolderLink:self.publicLinkString];
-
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
         
         [self setActionButtonsEnabled:NO];
@@ -124,14 +123,26 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    MEGASdk *sdkFolder = MEGASdkManager.sharedMEGASdkFolder;
+    [sdkFolder addMEGAGlobalDelegate:self.globalDelegate];
+    [sdkFolder addMEGARequestDelegate:self.requestDelegate];
+    
+    if (!self.loginDone && self.isFolderRootNode) {
+        [sdkFolder loginToFolderLink:self.publicLinkString];
+    }
+    
     self.navigationController.toolbarHidden = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    [sdkFolder retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    MEGASdk *sdkFolder = MEGASdkManager.sharedMEGASdkFolder;
+    [sdkFolder removeMEGAGlobalDelegate:self.globalDelegate];
+    [sdkFolder removeMEGARequestDelegate:self.requestDelegate];
     
     [AudioPlayerManager.shared removeDelegate:self];
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
@@ -450,6 +461,29 @@
     
     ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
     [self presentViewController:sortByActionSheet animated:YES completion:nil];
+}
+
+- (GlobalDelegate *)globalDelegate {
+    if (_globalDelegate == nil) {
+        __weak __typeof__(self) weakSelf = self;
+        _globalDelegate = [GlobalDelegate.alloc initOnNodesUpdateCompletion:^(MEGANodeList * _Nullable nodeList) {
+            [weakSelf onNodesUpdate:MEGASdkManager.sharedMEGASdkFolder nodeList:nodeList];
+        }];
+    }
+    return _globalDelegate;
+}
+
+- (MEGAGenericRequestDelegate *)requestDelegate {
+    if (_requestDelegate == nil) {
+        __weak __typeof__(self) weakSelf = self;
+        MEGASdk *sdkFolder = MEGASdkManager.sharedMEGASdkFolder;
+        _requestDelegate = [MEGAGenericRequestDelegate.alloc initWithStart:^(MEGARequest * _Nonnull request) {
+            [weakSelf onRequestStart:sdkFolder request:request];
+        } completion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            [weakSelf onRequestFinish:sdkFolder request:request error:error];
+        }];
+    }
+    return _requestDelegate;
 }
 
 #pragma mark - Layout
