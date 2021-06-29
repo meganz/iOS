@@ -310,6 +310,7 @@
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
+            [SVProgressHUD dismissWithDelay:1.0];
             NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
             NSString *temporaryFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:temporaryPath];
             if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
@@ -1037,6 +1038,7 @@
             } else {
                 [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
             }
+            [SVProgressHUD dismissWithDelay:1.0];
         }];
     }
 }
@@ -1049,6 +1051,7 @@
         [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
         [NSFileManager.defaultManager mnz_removeItemAtPath:videoPath];
     }
+    [SVProgressHUD dismissWithDelay:1.0];
 }
 
 @end
