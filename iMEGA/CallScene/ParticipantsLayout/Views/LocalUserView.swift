@@ -27,41 +27,6 @@ class LocalUserView: UIView {
     var offset: CGPoint = .zero
     var corner: Corner = .topRight
     
-    //MARK: - Public
-    func configure() {
-        if !isHidden {
-            return
-        }
-        videoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
-        avatarImageView.mnz_setImage(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
-        
-        positionView(by: CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: false)
-        isHidden = false
-    }
-    
-    func switchVideo() {
-        videoImageView.isHidden = !videoImageView.isHidden
-    }
-    
-    func frameData(width: Int, height: Int, buffer: Data!) {
-        videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
-    }
-    
-    public func transformLocalVideo(for position: CameraPosition) {
-        addSubview(blurEffectView)
-        
-        videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            self?.blurEffectView.removeFromSuperview()
-        }
-    }
-    
-    public func localAudio(enabled: Bool) {
-        mutedImageView.isHidden = enabled
-    }
-    
-    //MARK: - Private
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -85,6 +50,40 @@ class LocalUserView: UIView {
         }
         let location = touch.location(in: superview)
         positionView(by: location)
+    }
+
+    //MARK: - Public
+    func configure() {
+        if !isHidden {
+            return
+        }
+        videoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
+        avatarImageView.mnz_setImage(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
+        
+        positionView(by: CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: false)
+        isHidden = false
+    }
+    
+    func switchVideo() {
+        videoImageView.isHidden = !videoImageView.isHidden
+    }
+    
+    func frameData(width: Int, height: Int, buffer: Data!) {
+        videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
+    }
+    
+    func transformLocalVideo(for position: CameraPosition) {
+        addSubview(blurEffectView)
+        
+        videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            self?.blurEffectView.removeFromSuperview()
+        }
+    }
+    
+    public func localAudio(enabled: Bool) {
+        mutedImageView.isHidden = enabled
     }
     
     func positionView(by center: CGPoint, animated: Bool = true) {
@@ -114,7 +113,13 @@ class LocalUserView: UIView {
         }
     }
     
-    func startingPoint() -> CGPoint {
+    func repositionView() {
+        let point = startingPoint()
+        self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
+    }
+    
+    //MARK: - Private
+    private func startingPoint() -> CGPoint {
         var x: CGFloat = 0.0
         var y: CGFloat = 0.0
         var iPhoneXOffset: CGFloat = 0.0

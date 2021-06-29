@@ -78,7 +78,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         coordinator.animate(alongsideTransition: { _ in
             self.callsCollectionView.collectionViewLayout.invalidateLayout()
-            self.localUserView.positionView(by: self.localUserView.center)
+            self.localUserView.repositionView()
             self.emptyMeetingMessageView?.invalidateIntrinsicContentSize()
         })
     }
