@@ -160,42 +160,41 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                 
                 if let node = node,
                     (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                    let attachments = messages.filter { (message) -> Bool in
-                        guard let localChatMessage = message as? ChatMessage else {
-                            return false
+                    var mediaNodesArrayIndex = 0
+                    var foundIndex: Int?
+                    let mediaNodesArray = messages.compactMap { message -> MEGANode? in
+                        guard let localChatMessage = message as? ChatMessage,
+                              localChatMessage.message.type == .attachment,
+                              localChatMessage.message.nodeList.size.intValue > 0,
+                              let node = localChatMessage.message.nodeList.node(at: 0),
+                              (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) else {
+                            return nil
                         }
                         
-                        return localChatMessage.message.type == .attachment
-                    }
-                    
-                    var mediaNodesArray = [MEGANode]()
-                    
-                    attachments.forEach { (message) in
-                        guard let localChatMessage = message as? ChatMessage else {
-                            return
-                        }
-                        
-                        var tempNode = localChatMessage.message.nodeList.node(at: 0)
                         if chatRoom.isPreview {
-                            tempNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(tempNode!, cauth: chatRoom.authorizationToken)
-                        }
-                        if let tempNode = tempNode,
-                           (tempNode.name.mnz_isImagePathExtension || tempNode.name.mnz_isVideoPathExtension) {
-                            mediaNodesArray.append(tempNode)
-                        }
-                    }
-                    let idx = attachments.firstIndex { message -> Bool in
-                        guard let localChatMessage = message as? ChatMessage else {
-                            return false
+                            if let authorizedNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
+                                if localChatMessage == chatMessage {
+                                    foundIndex = mediaNodesArrayIndex
+                                }
+                                mediaNodesArrayIndex += 1
+                                return authorizedNode
+                            } else {
+                                return nil
+                            }
                         }
                         
-                        return localChatMessage == chatMessage
+                        if localChatMessage == chatMessage {
+                            foundIndex = mediaNodesArrayIndex
+                        }
+                        mediaNodesArrayIndex += 1
+                        return node
                     }
+                    
                     let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes:  NSMutableArray(array: mediaNodesArray),
                                                                                      api: MEGASdkManager.sharedMEGASdk(),
                                                                                      displayMode: .chatAttachment,
                                                                                      presenting: nil,
-                                                                                     preferredIndex: UInt(idx ?? 0))
+                                                                                     preferredIndex: UInt(foundIndex ?? 0))
                     photoBrowserVC?.delegate = self
                     present(viewController: photoBrowserVC!)
                 } else {
