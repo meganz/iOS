@@ -7,6 +7,7 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
     @IBOutlet private weak var dontShowAgainButton: UIButton!
     @IBOutlet private weak var addPhoneNumberTitle: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var descriptionActivityIndicator: UIActivityIndicatorView!
     
     // MARK: - Internal properties
     var viewModel: AddPhoneNumberViewModel!
@@ -60,7 +61,9 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
         case .configView(let hideDontShowAgain):
             dontShowAgainButton.isHidden = hideDontShowAgain
         case .showAchievementStorage(let storage):
+            descriptionLabel.isHidden = false
             descriptionLabel.text = storage
+            descriptionActivityIndicator.stopAnimating()
         case .loadAchievementError(let message):
             descriptionLabel.text = message
         }
