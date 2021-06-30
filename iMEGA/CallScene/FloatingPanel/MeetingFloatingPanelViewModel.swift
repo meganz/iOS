@@ -89,7 +89,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
             if isVideoEnabled ?? false {
                 checkForVideoPermission {
-                    self.turnCamera(on: true, selectFrontCameraByDefault: true)
+                    self.turnCamera(on: true)
                 }
             }
             
@@ -132,7 +132,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
         case .turnCamera(let on):
             checkForVideoPermission {
-                self.turnCamera(on: on, selectFrontCameraByDefault: true)
+                self.turnCamera(on: on)
             }
         case .switchCamera(let backCameraOn):
             checkForVideoPermission {
@@ -246,24 +246,16 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         return true
     }
     
-    private func turnCamera(on: Bool, selectFrontCameraByDefault: Bool = false, completion: (() -> Void)? = nil) {
+    private func turnCamera(on: Bool, completion: (() -> Void)? = nil) {
         if on {
             localVideoUseCase.enableLocalVideo(for: chatRoom.chatId) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    if self.isBackCameraSelected() && selectFrontCameraByDefault {
-                        self.switchCamera(backCameraOn: false)
-                        self.invokeCommand?(.cameraTurnedOn(on: on))
-                    } else {
-                        self.invokeCommand?(.cameraTurnedOn(on: on))
-                        self.invokeCommand?(.updatedCameraPosition(position: self.isBackCameraSelected() ? .back : .front))
-                    }
+                    self.invokeCommand?(.cameraTurnedOn(on: on))
                     completion?()
                 case .failure(_):
-                    //TODO: show error local video HUD
                     MEGALogDebug("Error enabling local video")
-                    break
                 }
             }
         } else {

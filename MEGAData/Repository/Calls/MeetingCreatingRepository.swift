@@ -7,22 +7,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     private var chatResultDelegate: MEGAChatResultDelegate?
     private var callAvailabilityListener: CallAvailabilityListener?
     private var chatOnlineListener: ChatOnlineListener?
-
-    func setChatVideoInDevices(device: String) {
-        chatSdk.setChatVideoInDevices(device)
-    }
-    
-    func openVideoDevice() {
-        chatSdk.openVideoDevice()
-    }
-    
-    func videoDevices() -> [String] {
-        chatSdk.chatVideoInDevices()?.toArray() ?? []
-    }
-    
-    func releaseDevice() {
-        chatSdk.releaseVideoDevice()
-    }
     
     func getUsername() -> String {
         let user = MEGAStore.shareInstance().fetchUser(withEmail: sdk.myEmail)
@@ -77,14 +61,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         }
         
         chatSdk.createMeeting(withTitle: meetingName, delegate: delegate)
-    }
-
-    func addChatLocalVideo(delegate: MEGAChatVideoDelegate) {
-       chatSdk.addChatLocalVideo(123, delegate: delegate)
-    }
-    
-    func removeChatLocalVideo(delegate: MEGAChatVideoDelegate) {
-        chatSdk.removeChatLocalVideo(123, delegate: delegate)
     }
 
     func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {

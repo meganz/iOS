@@ -53,11 +53,11 @@ class LocalUserView: UIView {
     }
 
     //MARK: - Public
-    func configure() {
+    func configure(for position: CameraPosition) {
         if !isHidden {
             return
         }
-        videoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
+        videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
         avatarImageView.mnz_setImage(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
         
         positionView(by: CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: false)

@@ -6,6 +6,8 @@ protocol CallsLocalVideoUseCaseProtocol {
     func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol)
     func videoDeviceSelected() -> String?
     func selectCamera(withLocalizedName localizedName: String)
+    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
 }
 
 protocol CallsLocalVideoCallbacksUseCaseProtocol {
@@ -46,6 +48,14 @@ final class CallsLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
     
     func selectCamera(withLocalizedName localizedName: String) {
         repository.selectCamera(withLocalizedName: localizedName)
+    }
+    
+    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        repository.openVideoDevice(completion: completion)
+    }
+    
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        repository.releaseVideoDevice(completion: completion)
     }
 }
 

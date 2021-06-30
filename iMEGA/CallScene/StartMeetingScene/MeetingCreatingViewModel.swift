@@ -2,9 +2,6 @@ import Foundation
 
 enum MeetingCreatingViewAction: ActionType {
     case onViewReady
-
-    case addChatLocalVideo(delegate: MEGAChatVideoDelegate)
-    case removeChatLocalVideo(delegate: MEGAChatVideoDelegate)
     case didTapMicroPhoneButton
     case didTapVideoButton
     case didTapSpeakerButton
@@ -14,12 +11,6 @@ enum MeetingCreatingViewAction: ActionType {
     case updateMeetingName(String)
     case updateFirstName(String)
     case updateLastName(String)
-
-}
-
-enum MeetingCameraType: Int {
-    case back
-    case front
 }
 
 @objc
@@ -33,15 +24,13 @@ final class MeetingCreatingViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, subtitle: String, type: MeetingConfigurationType, isMicrophoneEnabled: Bool)
         case updateMeetingName(String)
-        
         case updateVideoButton(enabled: Bool)
         case updateSpeakerButton(enabled: Bool)
         case updateMicrophoneButton(enabled: Bool)
-
-        case updateCameraSwitchType(type: MeetingCameraType)
+        case updateCameraPosition(position: CameraPosition)
         case loadingStartMeeting
         case loadingEndMeeting
-        case removeChatLocalVideo
+        case localVideoFrame(width: Int, height: Int, buffer: Data!)
     }
     
     // MARK: - Private properties
@@ -50,18 +39,20 @@ final class MeetingCreatingViewModel: ViewModelType {
     private var firstName = ""
     private var lastName = ""
 
-    private let videoDevices: [String]
     private let type: MeetingConfigurationType
     private let link: String?
     
     private let meetingUseCase: MeetingCreatingUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let callsUseCase: CallsUseCaseProtocol
+    private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
+    private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
+    private let devicePermissionUseCase: DevicePermissionCheckingProtocol
+    private let chatRoomUseCase: ChatRoomUseCaseProtocol
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = false
     private var isMicrophoneEnabled = false
-    private var cameraType = MeetingCameraType.back
     
     private var chatId: UInt64?
     // MARK: - Internal properties
@@ -73,6 +64,10 @@ final class MeetingCreatingViewModel: ViewModelType {
          meetingUseCase: MeetingCreatingUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          callsUseCase: CallsUseCaseProtocol,
+         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
+         captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
+         devicePermissionUseCase: DevicePermissionCheckingProtocol,
+         chatRoomUseCase: ChatRoomUseCaseProtocol,
          link: String?) {
         self.router = router
         self.type = type
@@ -80,7 +75,10 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.link = link
         self.callsUseCase = callsUseCase
         self.audioSessionUseCase = audioSessionUseCase
-        videoDevices = meetingUseCase.videoDevices()
+        self.localVideoUseCase = localVideoUseCase
+        self.captureDeviceUseCase = captureDeviceUseCase
+        self.devicePermissionUseCase = devicePermissionUseCase
+        self.chatRoomUseCase = chatRoomUseCase
     }
     
     // MARK: - Dispatch action
@@ -88,7 +86,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             checkForAudioPermissionAndUpdateUI()
-            
+            selectFrontCameraIfNeeded()
             switch type {
             case .join, .guestJoin:
                 guard let link = link else {
@@ -106,14 +104,30 @@ final class MeetingCreatingViewModel: ViewModelType {
             }
 
         case .didTapMicroPhoneButton:
-            didTapMicroPhoneButton()
+            checkForAudioPermission {
+                self.isMicrophoneEnabled = !self.isMicrophoneEnabled
+                self.invokeCommand?(.updateMicrophoneButton(enabled: self.isMicrophoneEnabled))
+            }
         case .didTapVideoButton:
-            didTapVideoButton()
+            checkForVideoPermission {
+                self.isVideoEnabled = !self.isVideoEnabled
+                if self.isVideoEnabled {
+                    self.localVideoUseCase.openVideoDevice { result in
+                        self.localVideoUseCase.addLocalVideo(for: 123, callbacksDelegate: self)
+                    }
+                } else {
+                    self.localVideoUseCase.releaseVideoDevice { result in
+                        self.localVideoUseCase.removeLocalVideo(for: 123, callbacksDelegate: self)
+                    }
+                }
+                self.invokeCommand?(.updateVideoButton(enabled: self.isVideoEnabled))
+            }
         case .didTapSpeakerButton:
             isSpeakerEnabled = !isSpeakerEnabled
             invokeCommand?(.updateSpeakerButton(enabled: isSpeakerEnabled))
             updateSpeaker()
         case .didTapStartMeetingButton:
+            disableLocalVideoIfNeeded()
             switch type {
             case .start:
                 startChatCall()
@@ -130,19 +144,14 @@ final class MeetingCreatingViewModel: ViewModelType {
             }
             invokeCommand?(.loadingStartMeeting)
         case .didTapCloseButton:
-            meetingUseCase.releaseDevice()
-            router.dismiss()
+            localVideoUseCase.releaseVideoDevice { _ in
+                self.dismiss()
+            }
         case .updateMeetingName(let name):
             meetingName = name
             invokeCommand?(.updateMeetingName(meetingName))    
         case .didTapSwitchCameraButton:
-            cameraType = (cameraType == .back) ? .front : .back
-            meetingUseCase.setChatVideoInDevices(type: cameraType)
-            invokeCommand?(.updateCameraSwitchType(type: cameraType))
-        case .addChatLocalVideo(let delegate):
-            meetingUseCase.addChatLocalVideo(delegate: delegate)
-        case .removeChatLocalVideo(let delegate):
-            meetingUseCase.removeChatLocalVideo(delegate: delegate)
+            switchCamera()
         case .updateFirstName(let name):
             firstName = name
         case .updateLastName(let name):
@@ -228,46 +237,36 @@ final class MeetingCreatingViewModel: ViewModelType {
         }
     }
     
-    private func didTapVideoButton() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
-            if granted {
-                DevicePermissionsHelper.videoPermission { (videoPermission) in
-                    if videoPermission {
-                        self.isVideoEnabled = !self.isVideoEnabled
-                        if self.isVideoEnabled {
-                            self.meetingUseCase.setChatVideoInDevices(type: .front)
-                            self.meetingUseCase.openVideoDevice()
-                        } else {
-                            self.meetingUseCase.releaseDevice()
-                        }
-                        self.invokeCommand?(.updateVideoButton(enabled: self.isVideoEnabled))
-
-                    } else {
-                        DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
-                    }
+    private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
+        devicePermissionUseCase.getVideoAuthorizationStatus { [self] granted in
+            DispatchQueue.main.async {
+                if granted {
+                    completionBlock()
+                } else {
+                    router.showVideoPermissionError()
                 }
-                
-            } else {
-                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
             }
         }
     }
     
-    private func didTapMicroPhoneButton() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
-            if granted {
-                self.isMicrophoneEnabled = !self.isMicrophoneEnabled
-                self.invokeCommand?(.updateMicrophoneButton(enabled: self.isMicrophoneEnabled))
-            } else {
-                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+    private func checkForAudioPermission(onSuccess completionBlock: @escaping () -> Void) {
+        devicePermissionUseCase.getAudioAuthorizationStatus { [self] granted in
+            DispatchQueue.main.async {
+                if granted {
+                    completionBlock()
+                } else {
+                    router.showAudioPermissionError()
+                }
             }
         }
     }
     
     private func checkForAudioPermissionAndUpdateUI() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
-            self.isMicrophoneEnabled = granted
-            self.invokeCommand?(.updateMicrophoneButton(enabled: self.isMicrophoneEnabled))
+        devicePermissionUseCase.getAudioAuthorizationStatus { [self] granted in
+            DispatchQueue.main.async {
+                self.isMicrophoneEnabled = granted
+                self.invokeCommand?(.updateMicrophoneButton(enabled: self.isMicrophoneEnabled))
+            }
         }
     }
     
@@ -295,7 +294,49 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func dismiss() {
-        invokeCommand?(.removeChatLocalVideo)
-        self.router.dismiss()
+        disableLocalVideoIfNeeded()
+        router.dismiss()
+    }
+    
+    private func selectFrontCameraIfNeeded() {
+        if isBackCameraSelected() {
+            guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .front) else {
+                return
+            }
+            localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
+        }
+    }
+    
+    private func isBackCameraSelected() -> Bool {
+        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .back),
+              localVideoUseCase.videoDeviceSelected() == selectCameraLocalizedString else {
+            return false
+        }
+        
+        return true
+    }
+    
+    private func switchCamera() {
+        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: isBackCameraSelected() ? .front : .back),
+              localVideoUseCase.videoDeviceSelected() != selectCameraLocalizedString else {
+            return
+        }
+        localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
+    }
+    
+    private func disableLocalVideoIfNeeded() {
+        if isVideoEnabled {
+            localVideoUseCase.removeLocalVideo(for: 123, callbacksDelegate: self)
+        }
+    }
+}
+
+extension MeetingCreatingViewModel: CallsLocalVideoCallbacksUseCaseProtocol {
+    func localVideoFrameData(width: Int, height: Int, buffer: Data!) {
+        invokeCommand?(.localVideoFrame(width: width, height: height, buffer: buffer))
+    }
+    
+    func localVideoChangedCameraPosition() {
+        invokeCommand?(.updateCameraPosition(position: isBackCameraSelected() ? .back : .front))
     }
 }
