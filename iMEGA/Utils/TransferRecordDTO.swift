@@ -1,6 +1,6 @@
 
 
-@objc class UploadTransferEntity: NSObject {
+@objc class TransferRecordDTO: NSObject {
     @objc let localIdentifier: String
     @objc let parentNodeHandle: NSNumber
     
