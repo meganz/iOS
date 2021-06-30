@@ -64,12 +64,18 @@
     if ([[Helper downloadingNodes] objectForKey:node.base64Handle]) {
         self.infoLabel.text = NSLocalizedString(@"queued", @"Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download");
         self.downloadingArrowImageView.hidden = self.cancelButton.hidden = self.downloadProgressView.hidden = NO;
+        
         self.moreButton.hidden = YES;
     } else {
         isDownloaded = (node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
         
         self.downloadingArrowImageView.hidden =  self.cancelButton.hidden = self.downloadProgressView.hidden = YES;
+        
         self.moreButton.hidden = NO;
+    }
+    
+    if (self.downloadingArrowView != nil) {
+        self.downloadingArrowView.hidden = self.downloadingArrowImageView.isHidden;
     }
     
     self.favouriteView.hidden = !node.isFavourite;
@@ -79,6 +85,9 @@
         self.labelImageView.image = [UIImage imageNamed:labelString];
     }
     self.downloadedImageView.hidden = !isDownloaded;
+    if (self.downloadedView != nil) {
+        self.downloadedView.hidden = self.downloadedImageView.isHidden;
+    }
     self.linkView.hidden = !node.isExported;
     
     if (node.hasThumbnail) {
