@@ -218,7 +218,6 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     }
     
     @objc func didTapStartMeetingButton() {
-        
         viewModel.dispatch(.didTapStartMeetingButton)
     }
     
@@ -262,12 +261,9 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 meetingNameInputTextfield.flex.display(.flex)
                 
             case .start:
-                
                 firstNameTextfield.flex.display(.none)
                 lastNameTextfield.flex.display(.none)
-
                 meetingNameInputTextfield.flex.display(.flex)
-
             }
             
             containerView.flex.layout()
@@ -277,29 +273,13 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         case .updateVideoButton(enabled: let isSelected):
             enableDisableVideoButton.isSelected = isSelected
             avatarImageView.isHidden = isSelected
-            
-            if isSelected {
-                viewModel.dispatch(.addChatLocalVideo(delegate: localVideoImageView))
-            } else if !localVideoImageView.isHidden {
-                viewModel.dispatch(.removeChatLocalVideo(delegate: localVideoImageView))
-            }
             localVideoImageView.isHidden = !isSelected
-
-            
         case .updateSpeakerButton(enabled: let isSelected):
             enableDisableSpeakerButton.isSelected = isSelected
-        case .updateCameraSwitchType(type: let type):
-            switch type {
-            case .front:
-                switchCameraButton.isSelected = true
-            case .back:
-                switchCameraButton.isSelected = false
-
-            }
-            
+        case .updateCameraPosition(let position):
+            switchCameraButton.isSelected = position == .front ? false : true
         case .updateMicrophoneButton(enabled: let isSelected):
             muteUnmuteMicrophoneButton.isSelected = isSelected
-
         case .loadingStartMeeting:
             startMeetingButton.flex.display(.none)
             loadingIndicator.flex.display(.flex)
@@ -330,12 +310,13 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             enableDisableVideoButton.isUserInteractionEnabled = true
             enableDisableSpeakerButton.isUserInteractionEnabled = true
             muteUnmuteMicrophoneButton.isUserInteractionEnabled = true
-            
-        case .removeChatLocalVideo:
-            if !localVideoImageView.isHidden {
-                viewModel.dispatch(.removeChatLocalVideo(delegate: localVideoImageView))
-            }
+        case .localVideoFrame(width: let width, height: let height, buffer: let buffer):
+            guestVideoFrame(width: width, height: height, buffer: buffer)
         }
+    }
+    
+    private func guestVideoFrame(width: Int, height: Int, buffer: Data!) {
+        localVideoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
     }
     
     private func updateJoinMeetingButton() {

@@ -4,6 +4,8 @@ protocol MeetingCreatingViewRouting: Routing {
     func dismiss()
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool)
     func openChatRoom(withChatId chatId: UInt64)
+    func showVideoPermissionError()
+    func showAudioPermissionError()
 }
 
 class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
@@ -27,6 +29,10 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository()),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository:audioSessionRepository),
             callsUseCase: CallsUseCase(repository: CallsRepository()),
+            localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
+            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
+            devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()), userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
             link: link)
         let vc = MeetingCreatingViewController(viewModel: vm)
         baseViewController = vc
@@ -62,4 +68,11 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
         MeetingContainerRouter(presenter: viewControllerToPresent, chatRoom: chatRoom, call: call, isVideoEnabled: isVideoEnabled).start()
     }
     
+    func showVideoPermissionError() {
+        DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+    }
+    
+    func showAudioPermissionError() {
+        DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+    }
 }

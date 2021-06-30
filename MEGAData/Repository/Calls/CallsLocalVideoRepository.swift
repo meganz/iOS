@@ -43,6 +43,28 @@ final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtoc
     func selectCamera(withLocalizedName localizedName: String) {
         chatSdk.setChatVideoInDevices(localizedName)
     }
+    
+    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        chatSdk.openVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { request, error in
+            if error.type == .MEGAChatErrorTypeOk {
+                completion(.success)
+            } else {
+                completion(.failure(.chatLocalVideoNotEnabled))
+            }
+        }))
+    }
+    
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        chatSdk.releaseVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { request, error in
+            if error.type == .MEGAChatErrorTypeOk {
+                if error.type == .MEGAChatErrorTypeOk {
+                    completion(.success)
+                } else {
+                    completion(.failure(.chatLocalVideoNotDisabled))
+                }
+            }
+        }))
+    }
 }
 
 extension CallsLocalVideoRepository: MEGAChatVideoDelegate {
@@ -53,7 +75,7 @@ extension CallsLocalVideoRepository: MEGAChatVideoDelegate {
 
 extension CallsLocalVideoRepository: MEGAChatRequestDelegate {
     func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
-        if request.type == .changeVideoStream || request.type == .disableAudioVideoCall {
+        if request.type == .changeVideoStream {
             localVideoCallbacksDelegate?.localVideoChangedCameraPosition()
         }
     }

@@ -104,8 +104,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             self.isUserAGuest = isUserAGuest
             configureNavigationBar(title, subtitle)
             callsCollectionView.configure(with: self)
-        case .configLocalUserView:
-            localUserView.configure()
+        case .configLocalUserView(let position):
+            localUserView.configure(for: position)
         case .switchMenusVisibility:
             statusBarHidden.toggle()
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)

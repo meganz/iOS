@@ -35,7 +35,7 @@ private enum CallViewModelConstant {
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, subtitle: String, isUserAGuest: Bool)
-        case configLocalUserView
+        case configLocalUserView(position: CameraPosition)
         case switchMenusVisibility
         case toggleLayoutButton
         case switchLayoutMode(layout: CallLayoutMode, participantsCount: Int)
@@ -223,6 +223,19 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
+    private func selectFrontCameraIfNeeded() {
+        if isBackCameraSelected() {
+            guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .front) else {
+                return
+            }
+            localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
+        }
+    }
+    
+    private func isActiveCall() -> Bool {
+        callParticipants.isEmpty && !call.clientSessions.isEmpty
+    }
+    
     // MARK: - Dispatch action
     func dispatch(_ action: CallViewAction) {
         switch action {
@@ -243,14 +256,17 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             remoteVideoUseCase.addRemoteVideoListener(self)
-            if callParticipants.isEmpty && !call.clientSessions.isEmpty {
+            if isActiveCall() {
                 callsUseCase.createActiveSessions()
-            } else if chatRoom.isMeeting{
-                invokeCommand?(.showWaitingForOthersMessage)
+            } else {
+                selectFrontCameraIfNeeded()
+                if chatRoom.isMeeting {
+                    invokeCommand?(.showWaitingForOthersMessage)
+                }
             }
-            localAvFlagsUpdated(video: initialVideoCall, audio: true)
+            localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         case .onViewReady:
-            invokeCommand?(.configLocalUserView)
+            invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
         case .tapOnView:
             invokeCommand?(.switchMenusVisibility)
             containerViewModel?.dispatch(.changeMenuVisibility)
