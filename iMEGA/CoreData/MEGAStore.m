@@ -504,17 +504,17 @@
     }];
 }
 
-- (NSArray<UploadTransferEntity *> *)fetchUploadTransfers {
+- (NSArray<TransferRecordDTO *> *)fetchUploadTransfers {
     NSManagedObjectContext *context = self.stack.newBackgroundContext;
     
-    NSMutableArray<UploadTransferEntity *> *uploadTransfers = NSMutableArray.array;
+    NSMutableArray<TransferRecordDTO *> *uploadTransfers = NSMutableArray.array;
     [context performBlockAndWait:^{
         NSError *error;
         NSArray<MOUploadTransfer *> *result = [context executeFetchRequest:MOUploadTransfer.fetchRequest error:&error];
         for (MOUploadTransfer *transfer in result) {
-            UploadTransferEntity *uploadTransferEntity = [transfer toUploadTransferEntity];
-            if (uploadTransferEntity) {
-                [uploadTransfers addObject:uploadTransferEntity];
+            TransferRecordDTO *transferRecordDTO = [transfer toUploadTransferEntity];
+            if (transferRecordDTO) {
+                [uploadTransfers addObject:transferRecordDTO];
             }
         }
     }];

@@ -379,11 +379,11 @@ static MEGAIndexer *indexer;
     return uploadingNodes;
 }
 
-+ (void)startUploadTransferWithUploadTransfer:(UploadTransferEntity *)uploadTransferEntity {
-    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransferEntity.localIdentifier]
++ (void)startUploadTransferWithTransferRecordDTO:(TransferRecordDTO *)transferRecordDTO {
+    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[transferRecordDTO.localIdentifier]
                                                       options:nil].firstObject;
     
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransferEntity.parentNodeHandle.unsignedLongLongValue];
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transferRecordDTO.parentNodeHandle.unsignedLongLongValue];
     
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent.mnz_fileNameWithLowercaseExtension;
@@ -392,7 +392,7 @@ static MEGAIndexer *indexer;
         NSString *appData = [NSString new];
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
-        appData = [appData mnz_appDataToLocalIdentifier:uploadTransferEntity.localIdentifier];
+        appData = [appData mnz_appDataToLocalIdentifier:transferRecordDTO.localIdentifier];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
@@ -407,21 +407,21 @@ static MEGAIndexer *indexer;
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:NO];
         }
         
-        if (uploadTransferEntity.localIdentifier) {
-            [[Helper uploadingNodes] addObject:uploadTransferEntity.localIdentifier];
+        if (transferRecordDTO.localIdentifier) {
+            [[Helper uploadingNodes] addObject:transferRecordDTO.localIdentifier];
         }
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:uploadTransferEntity.localIdentifier];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:uploadTransferEntity.localIdentifier];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", NSLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:uploadTransferEntity.localIdentifier];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
         [Helper startPendingUploadTransferIfNeeded];
     }];
     
@@ -443,9 +443,9 @@ static MEGAIndexer *indexer;
     }
     
     if (allUploadTransfersPaused) {
-        UploadTransferEntity *queuedUploadTransfer = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
-        if (queuedUploadTransfer != nil) {
-            [self startUploadTransferWithUploadTransfer:queuedUploadTransfer];
+        TransferRecordDTO *transferRecordDTO = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
+        if (transferRecordDTO != nil) {
+            [self startUploadTransferWithTransferRecordDTO:transferRecordDTO];
         }
     }
 }

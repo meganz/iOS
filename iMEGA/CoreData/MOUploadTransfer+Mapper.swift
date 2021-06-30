@@ -1,8 +1,8 @@
 
 extension MOUploadTransfer {
-    @objc func toUploadTransferEntity() -> UploadTransferEntity? {
+    @objc func toUploadTransferEntity() -> TransferRecordDTO? {
         if let localIdentifier = localIdentifier, let parentNodeHandle = parentNodeHandle {
-            return UploadTransferEntity(localIdentifier: localIdentifier,
+            return TransferRecordDTO(localIdentifier: localIdentifier,
                                         parentNodeHandle: parentNodeHandle)
         }
         
