@@ -109,7 +109,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .switchMenusVisibility:
             statusBarHidden.toggle()
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
-            callsCollectionView.collectionViewLayout.invalidateLayout()
+            DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(UINavigationController.hideShowBarDuration)) { [weak self] in
+                self?.callsCollectionView.collectionViewLayout.invalidateLayout()
+            }
             localUserView.positionView(by: localUserView.center)
             forceDarkNavigationUI()
         case .toggleLayoutButton:
