@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 @property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *downloadingArrowImageView;
+@property (weak, nonatomic) IBOutlet UIView *downloadingArrowView;
 
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
@@ -51,6 +52,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 @property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
+@property (weak, nonatomic) IBOutlet UIView *downloadedView;
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) MEGARecentActionBucket *recentActionBucket;
