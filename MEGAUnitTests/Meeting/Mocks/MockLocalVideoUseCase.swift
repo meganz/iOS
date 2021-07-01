@@ -2,10 +2,14 @@
 
 class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
     var enableDisableVideoCompletion: Result<Void, CallsErrorEntity> = .success(())
+    var releaseDeviceResult: Result<Void, CallsErrorEntity> = .success(())
     var videoDeviceSelectedString: String?
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0
     var selectedCamera_calledTimes = 0
+    var openDevice_calledTimes = 0
+    var releaseVideoDevice_calledTimes = 0
+    
 
     func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
         completion(enableDisableVideoCompletion)
@@ -29,5 +33,14 @@ class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
     
     func selectCamera(withLocalizedName localizedName: String) {
         selectedCamera_calledTimes += 1
+    }
+    
+    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        openDevice_calledTimes += 1
+    }
+    
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+        releaseVideoDevice_calledTimes += 1
+        completion(releaseDeviceResult)
     }
 }

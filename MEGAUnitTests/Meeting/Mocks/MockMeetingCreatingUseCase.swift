@@ -4,27 +4,11 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     var chatCallCompletion: Result<ChatRoomEntity, CallsErrorEntity>?
     var requestCompletion: Result<MEGARequest, MEGASDKErrorType>?
     var createEpehemeralAccountCompletion: Result<Void, MEGASDKErrorType>?
+    var joinCallCompletion: Result<ChatRoomEntity, CallsErrorEntity> = .failure(.generic)
 
-    var setChatVideoInDevices_CalledTimes = 0
-    var openVideo_calledTimes = 0
-    var releaseDevice_CalledTimes = 0
+    var createChatLink_calledTimes = 0
     var addChatLocalVideo_CalledTimes = 0
     
-    func setChatVideoInDevices(type: MeetingCameraType) {
-        setChatVideoInDevices_CalledTimes += 1
-    }
-    
-    func openVideoDevice() {
-        openVideo_calledTimes += 1
-    }
-    
-    func releaseDevice() {
-        releaseDevice_CalledTimes += 1
-    }
-    
-    func videoDevices() -> [String] {
-        []
-    }
     
     func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
         if let completionBlock = chatCallCompletion {
@@ -66,5 +50,13 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         if let completionBlock = createEpehemeralAccountCompletion {
             completion(completionBlock)
         }
+    }
+    
+    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+        completion(joinCallCompletion)
+    }
+    
+    func createChatLink(forChatId chatId: UInt64) {
+        createChatLink_calledTimes += 1
     }
 }

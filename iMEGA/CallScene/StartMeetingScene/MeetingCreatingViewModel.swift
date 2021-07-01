@@ -1,4 +1,3 @@
-import Foundation
 
 enum MeetingCreatingViewAction: ActionType {
     case onViewReady
@@ -11,6 +10,7 @@ enum MeetingCreatingViewAction: ActionType {
     case updateMeetingName(String)
     case updateFirstName(String)
     case updateLastName(String)
+    case loadAvatarImage(CGSize)
 }
 
 @objc
@@ -24,6 +24,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, subtitle: String, type: MeetingConfigurationType, isMicrophoneEnabled: Bool)
         case updateMeetingName(String)
+        case updateAvatarImage(UIImage)
         case updateVideoButton(enabled: Bool)
         case updateSpeakerButton(enabled: Bool)
         case updateMicrophoneButton(enabled: Bool)
@@ -49,6 +50,8 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let userImageUseCase: UserImageUseCaseProtocol
+    private let userUseCase: UserUseCaseProtocol
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = false
@@ -69,6 +72,8 @@ final class MeetingCreatingViewModel: ViewModelType {
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         userImageUseCase: UserImageUseCaseProtocol,
+         userUseCase: UserUseCaseProtocol,
          link: String?,
          userHandle: UInt64) {
         self.router = router
@@ -81,6 +86,8 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.userImageUseCase = userImageUseCase
+        self.userUseCase = userUseCase
         self.userHandle = userHandle
     }
     
@@ -159,6 +166,22 @@ final class MeetingCreatingViewModel: ViewModelType {
             firstName = name
         case .updateLastName(let name):
             lastName = name
+        case .loadAvatarImage(let size):
+            guard let myHandle = userUseCase.myHandle else {
+                return
+            }
+            
+            userImageUseCase.fetchUserAvatar(withUserHandle: myHandle,
+                                             name: meetingUseCase.getUsername(),
+                                             size: size) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                    case .success(let image):
+                        self.invokeCommand?(.updateAvatarImage(image))
+                    default:
+                        break
+                }
+            }
         }
     }
     
