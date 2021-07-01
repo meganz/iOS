@@ -371,7 +371,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .turnCamera(on: true),
              expectedCommands: [
                 .cameraTurnedOn(on: true),
-                .updatedCameraPosition(position: .front)
              ])
 
     }

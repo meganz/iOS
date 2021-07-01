@@ -90,6 +90,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var showOptionsMenu_calledTimes = 0
     var shareLink_calledTimes = 0
     var renameChat_calledTimes = 0
+    var showMeetingError_calledTimes = 0
 
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
@@ -118,6 +119,10 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func renameChat() {
         renameChat_calledTimes += 1
+    }
+    
+    func showShareMeetingError() {
+        showMeetingError_calledTimes += 1
     }
 }
 

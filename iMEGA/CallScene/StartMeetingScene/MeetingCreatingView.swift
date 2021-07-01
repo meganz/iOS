@@ -242,14 +242,12 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 lastNameTextfield.flex.display(.flex)
 
                 meetingNameInputTextfield.flex.display(.none)
-                
-                avatarImageView.image =  UIImage(forName: AvatarProperties.initials,
-                                                 size: AvatarProperties.size,
-                                                 backgroundColor: AvatarProperties.backgroundColor,
-                                                 backgroundGradientColor: AvatarProperties.backgroundGradientColor,
-                                                 textColor: AvatarProperties.textColor,
-                                                 font: AvatarProperties.font)
-          
+                avatarImageView.image = UIImage(forName: AvatarProperties.initials,
+                                                size: AvatarProperties.size,
+                                                backgroundColor: AvatarProperties.backgroundColor,
+                                                backgroundGradientColor: AvatarProperties.backgroundGradientColor,
+                                                textColor: AvatarProperties.textColor,
+                                                font: AvatarProperties.font)
             case .join:
                 meetingNameInputTextfield.isHidden = true
                 vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
@@ -259,17 +257,21 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 lastNameTextfield.flex.display(.none)
 
                 meetingNameInputTextfield.flex.display(.flex)
+                viewModel.dispatch(.loadAvatarImage(AvatarProperties.size))
                 
             case .start:
                 firstNameTextfield.flex.display(.none)
                 lastNameTextfield.flex.display(.none)
                 meetingNameInputTextfield.flex.display(.flex)
+                viewModel.dispatch(.loadAvatarImage(AvatarProperties.size))
             }
             
             containerView.flex.layout()
 
         case .updateMeetingName(let name):
             vc.title = name.isEmpty ? meetingNameInputTextfield.placeholder : name
+        case .updateAvatarImage(let image):
+            avatarImageView.image = image
         case .updateVideoButton(enabled: let isSelected):
             enableDisableVideoButton.isSelected = isSelected
             avatarImageView.isHidden = isSelected

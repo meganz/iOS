@@ -24,6 +24,11 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     
     @objc func build() -> UIViewController {
         let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance())
+        let userImageUseCase = UserImageUseCase(
+            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
+            appGroupFilePathUseCase: MEGAAppGroupFilePathUseCase(fileManager: FileManager.default)
+        )
 
         let vm = MeetingCreatingViewModel(
             router: self,
@@ -34,7 +39,10 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()), userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+                                             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
+            userImageUseCase: userImageUseCase,
+            userUseCase: UserUseCase(repo: .live),
             link: link,
             userHandle: userHandle)
         let vc = MeetingCreatingViewController(viewModel: vm)
