@@ -31,7 +31,7 @@ class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
             return
         }
         
-        let router = MeetingCreatingViewRouter(viewControllerToPresent: viewControllerToPresent, type: isGuest ? .guestJoin : .join, link: link)
+        let router = MeetingCreatingViewRouter(viewControllerToPresent: viewControllerToPresent, type: isGuest ? .guestJoin : .join, link: link, userhandle: 0)
         router.start()
     }
 }

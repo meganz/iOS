@@ -52,7 +52,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         chatSdk.createMeeting(withTitle: meetingName, delegate: delegate)
     }
 
-    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
         let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
             guard let self = self, let megaChatRoom = self.chatSdk.chatRoom(forChatId: request.chatHandle) else {
                 MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
@@ -65,8 +65,15 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             self.answerCall(for: chatRoom, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
         }
         
-        MEGALogDebug("Create meeting: Autojoin public chat with chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
-        chatSdk.autojoinPublicChat(chatId, delegate: delegate)
+        if let megaChatRoom = self.chatSdk.chatRoom(forChatId: chatId),
+           !megaChatRoom.isPreview,
+           !megaChatRoom.isActive {            
+            chatSdk.autorejoinPublicChat(chatId, publicHandle: userHandle, delegate: delegate)
+        } else {
+            MEGALogDebug("Create meeting: Autojoin public chat with chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
+            chatSdk.autojoinPublicChat(chatId, delegate: delegate)
+        }
+        
     }
     
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
