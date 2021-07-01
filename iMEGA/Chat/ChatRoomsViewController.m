@@ -236,15 +236,6 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-        if (self.searchController.active) {
-            if (UIDevice.currentDevice.iPad) {
-                if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetFrameForSearchController:self.searchController];
-                }
-            } else {
-                [Helper resetFrameForSearchController:self.searchController];
-            }
-        }
     } completion:nil];
 }
 

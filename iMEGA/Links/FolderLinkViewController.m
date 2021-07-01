@@ -69,6 +69,7 @@
     [super viewDidLoad];
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
 
     self.definesPresentationContext = YES;
@@ -165,16 +166,6 @@
         if (self.isFetchNodesDone) {
             [self setNavigationBarTitleLabel];
             [self.flTableView.tableView reloadEmptyDataSet];
-        }
-        
-        if (self.searchController.active) {
-            if (UIDevice.currentDevice.iPad) {
-                if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetFrameForSearchController:self.searchController];
-                }
-            } else {
-                [Helper resetFrameForSearchController:self.searchController];
-            }
         }
     } completion:nil];
 }
@@ -812,14 +803,6 @@
         self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
     }
     [self reloadData];
-}
-
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-        [Helper resetFrameForSearchController:searchController];
-    }
 }
 
 #pragma mark - UILongPressGestureRecognizer

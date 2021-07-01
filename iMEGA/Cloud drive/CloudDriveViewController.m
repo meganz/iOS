@@ -1679,14 +1679,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    if (UIDevice.currentDevice.iPhoneDevice && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
-        [Helper resetFrameForSearchController:searchController];
-    }
-}
-
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
