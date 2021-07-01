@@ -833,7 +833,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     // "It's a meeting, open join call"
     MEGAHandleList *list = request.megaHandleList;
     if (list.size > 0 && [list megaHandleAtIndex:0] != 0) {
-        [MEGALinkManager createMeetingAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+        [self createMeetingAndShow:request.chatHandle userhandle:request.userHandle publicChatLink:chatLinkUrl];
         [SVProgressHUD dismiss];
     } else {
         //  meeing ended
@@ -873,7 +873,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
 }
 
-+ (void)createMeetingAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink {
++ (void)createMeetingAndShow:(uint64_t)chatId userhandle:(uint64_t)userHandle publicChatLink:(NSURL *)publicChatLink {
     
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
@@ -887,8 +887,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
         mainTBC.selectedIndex = TabTypeChat;
         MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:mainTBC
-                                                                                                          type: isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin
-                                                                                                          link:publicChatLink.absoluteString];
+                                                                                                          type:isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin
+                                                                                                          link:publicChatLink.absoluteString
+                                                                                                    userhandle:userHandle];
         if (mainTBC.presentedViewController) {
             [mainTBC dismissViewControllerAnimated:NO completion:^{
                 [router start];
@@ -899,7 +900,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     } else {
         MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:UIApplication.mnz_visibleViewController
                                                                                                           type:isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin
-                                                                                                          link:publicChatLink.absoluteString];
+                                                                                                          link:publicChatLink.absoluteString
+                                                                                                    userhandle:userHandle];
         [router start];
   }
 }

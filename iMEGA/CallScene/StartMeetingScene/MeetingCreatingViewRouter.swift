@@ -13,11 +13,13 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     private weak var viewControllerToPresent: UIViewController?
     private let type: MeetingConfigurationType
     private let link: String?
+    private let userHandle: UInt64
     
-    @objc init(viewControllerToPresent: UIViewController, type: MeetingConfigurationType, link: String?) {
+    @objc init(viewControllerToPresent: UIViewController, type: MeetingConfigurationType, link: String?, userhandle: UInt64) {
         self.viewControllerToPresent = viewControllerToPresent
         self.type = type
         self.link = link
+        self.userHandle = userhandle
     }
     
     @objc func build() -> UIViewController {
@@ -33,7 +35,8 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()), userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
-            link: link)
+            link: link,
+            userHandle: userHandle)
         let vc = MeetingCreatingViewController(viewModel: vm)
         baseViewController = vc
         return vc

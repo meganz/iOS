@@ -1011,7 +1011,7 @@
 
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"New Meeting", nil) detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         @strongify(self)
-        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self type:MeetingConfigurationTypeStart link:nil];
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self type:MeetingConfigurationTypeStart link:nil userhandle:0];
         [router start];
     }]];
     

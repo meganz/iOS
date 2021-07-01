@@ -53,6 +53,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private var isVideoEnabled = false
     private var isSpeakerEnabled = false
     private var isMicrophoneEnabled = false
+    private var userHandle: UInt64
     
     private var chatId: UInt64?
     // MARK: - Internal properties
@@ -68,7 +69,8 @@ final class MeetingCreatingViewModel: ViewModelType {
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
-         link: String?) {
+         link: String?,
+         userHandle: UInt64) {
         self.router = router
         self.type = type
         self.meetingUseCase = meetingUseCase
@@ -79,6 +81,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.userHandle = userHandle
     }
     
     // MARK: - Dispatch action
@@ -199,7 +202,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func joinChatCall(chatId: UInt64) {
-        meetingUseCase.joinChatCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled) { [weak self] in
+        meetingUseCase.joinChatCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled, userHandle: userHandle) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):

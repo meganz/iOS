@@ -1001,7 +1001,7 @@
 - (void)newMeeting {
     __weak typeof(UIViewController) *weakPresentingViewController = self.presentingViewController;
     [self dismissViewControllerAnimated:YES completion:^{
-        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:weakPresentingViewController type:MeetingConfigurationTypeStart link:nil];
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:weakPresentingViewController type:MeetingConfigurationTypeStart link:nil userhandle:0];
         [router start];
     }];
 }
