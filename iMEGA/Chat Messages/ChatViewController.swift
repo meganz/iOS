@@ -41,6 +41,7 @@ class ChatViewController: MessagesViewController {
     var keyboardVisible = false
     var richLinkWarningCounterValue: UInt = 0
     var isVoiceRecordingInProgress = false
+    var shouldDisableAudioVideoCalling = false
     var unreadNewMessagesCount = 0 {
         didSet {
             chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
@@ -981,7 +982,10 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startOutGoingCall(isVideoEnabled: Bool) {
-        let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
+        let startCallDelegate: MEGAChatRequestDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
+            self?.shouldDisableAudioVideoCalling = false
+            self?.updateRightBarButtons()
+            
             guard let self = self,
                   let error = error, error.type == .MEGAChatErrorTypeOk else {
                 MEGALogDebug("Cannot start a call")
@@ -991,16 +995,24 @@ class ChatViewController: MessagesViewController {
             self.startMeetingUI(isVideoEnabled: isVideoEnabled)
         }
         
-        MEGASdkManager.sharedMEGAChatSdk().startChatCall(chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: startCallDelegate)
+        shouldDisableAudioVideoCalling = true
+        updateRightBarButtons()
+        CallActionManager.shared.startCall(chatId: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: startCallDelegate)
     }
     
     private func answerCall(isVideoEnabled: Bool) {
-        let delegate = MEGAChatAnswerCallRequestDelegate { error in
+        let delegate: MEGAChatRequestDelegate = MEGAChatAnswerCallRequestDelegate { error in
+            self.shouldDisableAudioVideoCalling = false
+            self.updateRightBarButtons()
+
             if error?.type == .MEGAChatErrorTypeOk {
                 self.startMeetingUI(isVideoEnabled: isVideoEnabled)
             }
         }
-        MEGASdkManager.sharedMEGAChatSdk().answerChatCall(chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: delegate)
+        
+        shouldDisableAudioVideoCalling = true
+        updateRightBarButtons()
+        CallActionManager.shared.answerCall(chatId: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: delegate)
     }
     
     private func joinActiveCall(isVideoEnabled: Bool) {

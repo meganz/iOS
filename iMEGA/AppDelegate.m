@@ -940,7 +940,7 @@
         self.chatRoom = nil;
     }];
     
-    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:YES delegate:requestDelegate];
+    [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:YES delegate:requestDelegate];
 }
 
 - (void)presentInviteContactCustomAlertViewController {

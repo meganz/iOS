@@ -19,7 +19,8 @@ extension ChatViewController {
     }
 
     var shouldDisableAudioVideoCall: Bool {
-        return chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
+        return shouldDisableAudioVideoCalling
+            || chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
             || MEGASdkManager.sharedMEGAChatSdk().chatConnectionState(chatRoom.chatId) != .online
             || !MEGAReachabilityManager.isReachable()
             || MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall

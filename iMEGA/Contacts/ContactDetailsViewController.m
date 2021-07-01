@@ -572,7 +572,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                 [self joinMeetingWithChatRoom:chatRoom isVideoEnabled:videoCall];
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk startChatCall:chatRoom.chatId enableVideo:videoCall enableAudio:YES delegate:startCallDelegate];
+        
+        [[CallActionManager shared] startCallWithChatId:chatRoom.chatId enableVideo:videoCall enableAudio:YES delegate:startCallDelegate];
     }
 }
 
