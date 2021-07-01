@@ -2676,3 +2676,7 @@
 "cloudDrive.nodeInfo.owner"="%@ (Owner)";
 /* Message shown when the meeting link cannot be generated*/
 "meetings.sharelink.Error" = "No meeting link available";
+/* Button text to join a meeting for the logged in user*/
+"meetings.link.loggedInUser.joinButtonText" = "Join Meeting";
+/* Button text to join a meeting for the logged in user*/
+"meetings.link.guest.joinButtonText" = "Join as Guest";

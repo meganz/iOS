@@ -169,7 +169,7 @@
             self.avatarImageView.image = [UIImage imageNamed:@"newMeeting"];
             break;
         case ContactsStartConversationJoinMeeting:
-            self.nameLabel.text = NSLocalizedString(@"Join Meeting", @"Text button for joining a Meeting.");
+            self.nameLabel.text = NSLocalizedString(@"meetings.link.loggedInUser.joinButtonText", @"Text button for joining a Meeting.");
             self.avatarImageView.image = [UIImage imageNamed:@"joinMeeting"];
             break;
     }

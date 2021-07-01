@@ -234,7 +234,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             case .guestJoin:
                 meetingNameInputTextfield.isHidden = true
                 vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
-                startMeetingButton.setTitle(NSLocalizedString("Join Meeting", comment: ""), for: .normal)
+                startMeetingButton.setTitle(NSLocalizedString("meetings.link.guest.joinButtonText", comment: ""), for: .normal)
                 startMeetingButton.isEnabled = false
                 startMeetingButton.alpha = 0.5
                 
@@ -251,7 +251,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             case .join:
                 meetingNameInputTextfield.isHidden = true
                 vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
-                startMeetingButton.setTitle(NSLocalizedString("Join Meeting", comment: ""), for: .normal)
+                startMeetingButton.setTitle(NSLocalizedString("meetings.link.loggedInUser.joinButtonText", comment: ""), for: .normal)
                 
                 firstNameTextfield.flex.display(.none)
                 lastNameTextfield.flex.display(.none)

@@ -1015,7 +1015,7 @@
         [router start];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Join Meeting", nil) detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"meetings.link.loggedInUser.joinButtonText", nil) detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         @strongify(self)
         EnterMeetingLinkRouter *router = [[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO];
         self.enterMeetingLinkObject = [router start];
