@@ -86,6 +86,7 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
 
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
@@ -161,15 +162,6 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.offlineTableView.tableView reloadEmptyDataSet];
-        if (self.searchController.active) {
-            if (UIDevice.currentDevice.iPad) {
-                if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetFrameForSearchController:self.searchController];
-                }
-            } else {
-                [Helper resetFrameForSearchController:self.searchController];
-            }
-        }
     } completion:nil];
 }
 
@@ -1130,14 +1122,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     [self reloadData];
-}
-
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-        [Helper resetFrameForSearchController:searchController];
-    }
 }
 
 #pragma mark - UILongPressGestureRecognizer
