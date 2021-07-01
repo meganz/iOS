@@ -1671,6 +1671,7 @@
 		BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1589232436A27A007AF9EC /* MessageInputBar.swift */; };
 		BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1589252436A296007AF9EC /* MessageInputBar.xib */; };
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
+		BF22BFC9268D366E00460DB3 /* CallActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFC8268D366D00460DB3 /* CallActionManager.swift */; };
 		BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */; };
 		BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */; };
 		BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF6B243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift */; };
@@ -3865,6 +3866,7 @@
 		BF1589232436A27A007AF9EC /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		BF1589252436A296007AF9EC /* MessageInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputBar.xib; sourceTree = "<group>"; };
 		BF15894B2436EB8D007AF9EC /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
+		BF22BFC8268D366D00460DB3 /* CallActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionManager.swift; sourceTree = "<group>"; };
 		BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatMessage+Additions.swift"; sourceTree = "<group>"; };
 		BF33EF6B243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageSizeCalculator+AccessoryView.swift"; sourceTree = "<group>"; };
@@ -5161,6 +5163,7 @@
 				0D30D86125BFA14A00C26367 /* Tab.swift */,
 				B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */,
 				C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */,
+				BF22BFC8268D366D00460DB3 /* CallActionManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -11762,6 +11765,7 @@
 				BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */,
 				0D30D86225BFA14A00C26367 /* Tab.swift in Sources */,
 				BFF0ECCA262D1F2500FAEFF9 /* MEGAProviderDelegate+Additions.swift in Sources */,
+				BF22BFC9268D366E00460DB3 /* CallActionManager.swift in Sources */,
 				0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */,
