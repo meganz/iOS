@@ -228,7 +228,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             configurationType = type
             meetingNameInputTextfield.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.2)])
             meetingNameInputTextfield.isEnabled = type == .start
-            muteUnmuteMicrophoneButton.isSelected = isMicrophoneEnabled
+            muteUnmuteMicrophoneButton.isSelected = !isMicrophoneEnabled
 
             switch type {
             case .guestJoin:
@@ -281,7 +281,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         case .updateCameraPosition(let position):
             switchCameraButton.isSelected = position == .front ? false : true
         case .updateMicrophoneButton(enabled: let isSelected):
-            muteUnmuteMicrophoneButton.isSelected = isSelected
+            muteUnmuteMicrophoneButton.isSelected = !isSelected
         case .loadingStartMeeting:
             startMeetingButton.flex.display(.none)
             loadingIndicator.flex.display(.flex)

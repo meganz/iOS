@@ -110,7 +110,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
                 participant.audio = muted ? .off : .on
                 participantsTableView.reloadData()
             }
-            muteQuickActionView.isSelected = !muted
+            muteQuickActionView.isSelected = muted
         case .updatedCameraPosition(let position):
             updatedCameraPosition(position)
         case .cameraTurnedOn(let on):
@@ -150,7 +150,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     }
     
     @IBAction func toggleMuteTapped(_ sender: UIButton) {
-        viewModel.dispatch(.muteUnmuteCall(mute: muteQuickActionView.isSelected))
+        viewModel.dispatch(.muteUnmuteCall(mute: !muteQuickActionView.isSelected))
     }
     
     @IBAction func switchSpeakersTapped(_ sender: UIButton) {

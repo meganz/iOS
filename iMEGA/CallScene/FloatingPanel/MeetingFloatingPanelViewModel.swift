@@ -76,6 +76,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     func dispatch(_ action: MeetingFloatingPanelAction) {
         switch action {
         case .onViewReady:
+            audioSessionUseCase.configureAudioSession()
             audioSessionUseCase.routeChanged { [weak self] routeChangedReason in
                 guard let self = self else { return }
                 self.sessionRouteChanged(routeChangedReason: routeChangedReason)
@@ -94,6 +95,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             
             dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? false)))
+            updateSpeakerInfo()
         case .hangCall(let presenter):
             if let call = call {
                 if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
