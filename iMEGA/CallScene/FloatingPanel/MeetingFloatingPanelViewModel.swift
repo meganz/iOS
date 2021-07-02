@@ -332,4 +332,5 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
     func connecting() {   }
     func inProgress() {    }
     func localAvFlagsUpdated(video: Bool, audio: Bool) {    }
+    func chatTitleChanged(chatRoom: ChatRoomEntity) {   }
 }
