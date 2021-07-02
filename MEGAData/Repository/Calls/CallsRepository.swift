@@ -213,13 +213,21 @@ extension CallsRepository: MEGAChatCallDelegate {
 extension CallsRepository: MEGAChatDelegate {
     func onChatListItemUpdate(_ api: MEGAChatSdk!, item: MEGAChatListItem!) {
         guard let chatId = call?.chatId,
-              item.chatId == chatId,
-              item.hasChanged(for: .ownPrivilege),
-              let updatedPrivilage = ChatRoomEntity.Privilege(rawValue: item.ownPrivilege.rawValue),
-              let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
+              item.chatId == chatId else {
             return
         }
         
-        callbacksDelegate?.ownPrivilegeChanged(to: updatedPrivilage, in: ChatRoomEntity(with: chatRoom))
+        switch item.changes {
+        case .ownPrivilege:
+            guard let updatedPrivilage = ChatRoomEntity.Privilege(rawValue: item.ownPrivilege.rawValue), let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
+                return
+            }
+            callbacksDelegate?.ownPrivilegeChanged(to: updatedPrivilage, in: ChatRoomEntity(with: chatRoom))
+        case .title:
+            guard let chatRoom = chatSdk.chatRoom(forChatId: item.chatId) else { return }
+            callbacksDelegate?.chatTitleChanged(chatRoom: ChatRoomEntity(with: chatRoom))
+        default:
+            break
+        }
     }
 }

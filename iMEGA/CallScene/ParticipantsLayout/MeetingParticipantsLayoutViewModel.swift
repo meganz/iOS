@@ -34,7 +34,7 @@ private enum CallViewModelConstant {
 
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(title: String, subtitle: String, isUserAGuest: Bool)
+        case configView(title: String, subtitle: String, isUserAGuest: Bool, isOneToOne: Bool)
         case configLocalUserView(position: CameraPosition)
         case switchMenusVisibility
         case toggleLayoutButton
@@ -244,14 +244,16 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: "",
-                                isUserAGuest: userUseCase.isGuestAccount)
+                                isUserAGuest: userUseCase.isGuestAccount,
+                                isOneToOne: !chatRoom.isGroup)
                 )
                 initTimerIfNeeded(with: Int(call.duration))
             } else {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: initialSubtitle(),
-                                isUserAGuest: userUseCase.isGuestAccount)
+                                isUserAGuest: userUseCase.isGuestAccount,
+                                isOneToOne: !chatRoom.isGroup)
                 )
             }
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
@@ -519,6 +521,11 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) { }
+    
+    func chatTitleChanged(chatRoom: ChatRoomEntity) {
+        guard let title = chatRoom.title else { return }
+        invokeCommand?(.updateName(title))
+    }
 }
 
 extension MeetingParticipantsLayoutViewModel: CallsLocalVideoCallbacksUseCaseProtocol {
