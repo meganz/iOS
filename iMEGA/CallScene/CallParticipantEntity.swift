@@ -71,7 +71,7 @@ extension CallParticipantEntity {
     convenience init(session: ChatSessionEntity, chatId: MEGAHandle) {
         var attendeeType: AttendeeType = .guest
         var isInContactList = false
-        let email = MEGASdkManager.sharedMEGAChatSdk().contacEmail(byHandle: session.peerId)
+        let email = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: session.peerId)
         
         if email != nil {
             if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) {

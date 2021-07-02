@@ -30,6 +30,15 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         removeObservers()
     }
     
+    func configureAudioSession() {
+        do {
+            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [])
+            try audioSession.setActive(true)
+        } catch (let error) {
+            MEGALogError("[AudioPlayer] AVAudioSession Error: \(error.localizedDescription)")
+        }
+    }
+    
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
         do {
             try audioSession.overrideOutputAudioPort(.speaker)

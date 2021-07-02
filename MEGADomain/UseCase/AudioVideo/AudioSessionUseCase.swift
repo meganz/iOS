@@ -2,6 +2,7 @@
 protocol AudioSessionUseCaseProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
+    func configureAudioSession()
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
     func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
     func isOutputFrom(port: AudioPort) -> Bool
@@ -21,6 +22,10 @@ final class AudioSessionUseCase : AudioSessionUseCaseProtocol {
     
     init(audioSessionRepository: AudioSessionRepositoryProtocol) {
         self.audioSessionRepository = audioSessionRepository
+    }
+    
+    func configureAudioSession() {
+        audioSessionRepository.configureAudioSession()
     }
     
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
