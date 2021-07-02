@@ -123,6 +123,8 @@ class GetLinkViewController: UIViewController {
         if isMovingFromParent && !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
             removeDelegates()
         }
+        
+        NotificationCenter.default.post(name: Notification.Name.MEGAShareCreated, object: nil)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

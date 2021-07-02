@@ -1,5 +1,5 @@
 extension NodeEntity {
-    @objc convenience init(node: MEGANode) {
+    init(node: MEGANode) {
         self.init(
             // MARK: - Types
             
@@ -9,15 +9,15 @@ extension NodeEntity {
             // MARK: - Identification
             
             name                               : node.name,
-            tag                                : node.tag,
             fingerprint                        : node.fingerprint,
+            tag                                : node.tag,
             
             // MARK: - Handles
             
             handle                             : node.handle,
             base64Handle                       : node.base64Handle,
-            ownerHandle                        : node.owner,
             restoreParentHandle                : node.restoreHandle,
+            ownerHandle                        : node.owner,
             parentHandle                       : node.parentHandle,
             
             // MARK: - Attributes

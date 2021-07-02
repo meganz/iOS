@@ -198,9 +198,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 
     [self encourageToUpgrade];
-    
-    [self requestReview];
-    
+
     [AudioPlayerManager.shared addDelegate:self];
 }
 
@@ -1206,32 +1204,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
             alreadyPresented = YES;
         }
-    }
-}
-
-- (void)requestReview {
-    static BOOL alreadyPresented = NO;
-    if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-        alreadyPresented = YES;
-        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-        NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
-        if (rateUsDate) {
-            NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
-                                                              fromDate:rateUsDate
-                                                                toDate:[NSDate date]
-                                                               options:NSCalendarWrapComponents].weekOfYear;
-            if (weeks < 17) {
-                return;
-            }
-        } else {
-            NSTimeInterval sixteenWeeksAgo = -16 * 7 * 24 * 60 * 60;
-            rateUsDate = [NSDate dateWithTimeIntervalSinceNow:sixteenWeeksAgo];
-            [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
-            return;
-        }
-        [SKStoreReviewController requestReview];
-        rateUsDate = [NSDate date];
-        [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
     }
 }
 
