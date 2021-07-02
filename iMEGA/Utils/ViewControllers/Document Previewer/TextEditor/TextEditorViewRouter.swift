@@ -11,7 +11,19 @@ final class TextEditorViewRouter: NSObject {
     private var nodeHandle: MEGAHandle?
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     
-    @objc init(
+    @objc convenience init(
+        textFile: TextFile,
+        textEditorMode: TextEditorMode,
+        node: MEGANode? = nil,
+        presenter: UIViewController? = nil
+    ) {
+        self.init(textFile: textFile,
+                  textEditorMode: textEditorMode,
+                  nodeEntity: node.map { NodeEntity(node: $0) },
+                  presenter: presenter)
+    }
+    
+    init(
         textFile: TextFile,
         textEditorMode: TextEditorMode,
         nodeEntity: NodeEntity? = nil,

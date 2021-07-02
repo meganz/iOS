@@ -153,8 +153,7 @@
             NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:&encode error:nil];
             if (textContent != nil) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent size: self.size.unsignedIntValue encode:encode];
-                NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView nodeEntity:nodeEntity presenter:viewController.navigationController] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView node:self presenter:viewController.navigationController] build];
             }
         }
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -181,8 +180,7 @@
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
             if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && self.name.mnz_isEditableTextFilePathExtension) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
-                NodeEntity *nodeEntity = [[NodeEntity alloc] initWithNode:self];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad nodeEntity:nodeEntity presenter:viewController.navigationController] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad node:self presenter:viewController.navigationController] build];
             }
             
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];

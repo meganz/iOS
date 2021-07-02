@@ -35,10 +35,13 @@ NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFr
 NSString * const MEGAPasscodeViewControllerWillCloseNotification = @"nz.mega.passcodeViewControllerWillClose";
 NSString * const MEGAAudioPlayerInterruptionNotification = @"nz.mega.audioPlayerInterruption";
 NSString * const MEGASQLiteDiskFullNotification = @"nz.mega.sqliteDiskFull";
+NSString * const MEGATransferFinishedNotification = @"nz.mega.transferFinished";
+NSString * const MEGAShareCreatedNotification = @"nz.mega.ShareCreated";
 
 #pragma mark - global notification keys
 
 NSString * const MEGAStorageEventStateUserInfoKey = @"nz.mega.event.storage.stateKey";
+NSString * const MEGATransferUserInfoKey = @"nz.mega.transferKey";
 
 #pragma mark - camera upload notifications
 

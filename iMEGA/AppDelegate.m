@@ -108,6 +108,8 @@
 
 @property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
 
+@property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
+
 @end
 
 @implementation AppDelegate
@@ -301,6 +303,8 @@
         [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
+    
+    [self.ratingRequestMonitor startMonitoring];
     
     return YES;
 }
@@ -610,6 +614,14 @@
     }
     
     return _quickAccessWidgetManager;
+}
+
+- (RatingRequestMonitor *)ratingRequestMonitor {
+    if (_ratingRequestMonitor == nil) {
+        _ratingRequestMonitor = [[RatingRequestMonitor alloc] initWithSdk:MEGASdkManager.sharedMEGASdk];
+    }
+    
+    return _ratingRequestMonitor;
 }
 
 #pragma mark - Private
@@ -1805,6 +1817,13 @@
             break;
         }
             
+        case MEGARequestTypeShare: {
+            if (request.access != MEGANodeAccessLevelAccessUnknown) {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAShareCreatedNotification object:nil];
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -1990,6 +2009,8 @@
         
         [transfer mnz_setNodeCoordinates];
     }
+    
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferFinishedNotification object:nil userInfo:@{MEGATransferUserInfoKey : transfer}];
 }
 
 #pragma mark - MEGAApplicationDelegate
