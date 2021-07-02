@@ -9,26 +9,34 @@ protocol CallManagerUseCaseProtocol {
 // MARK: - Use case implementation -
 struct CallManagerUseCase: CallManagerUseCaseProtocol {
     
-    let megaCallManager: MEGACallManager
-
-    init(megaCallManager: MEGACallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager!) {
-        self.megaCallManager = megaCallManager
+    private var megaCallManager: MEGACallManager? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              let callManager = appDelegate.megaCallManager else {
+            return nil
+        }
+        
+        return callManager
     }
-
+    
     func addCall(_ call: CallEntity) {
-        megaCallManager.addCall(withCallId: call.callId, uuid: call.uuid)
+        MEGALogDebug("CallManagerUseCase: Add call called")
+        megaCallManager?.addCall(withCallId: call.callId, uuid: call.uuid)
     }
     
     func startCall(_ call: CallEntity) {
-        megaCallManager.startCall(withChatId: call.chatId)
+        MEGALogDebug("CallManagerUseCase: Start call called")
+        megaCallManager?.startCall(withChatId: call.chatId)
     }
     
     func endCall(_ call: CallEntity) {
-        megaCallManager.endCall(withCallId: call.callId, chatId: call.chatId)
-        megaCallManager.removeCall(by: call.uuid)
+        MEGALogDebug("CallManagerUseCase: End call called")
+        let manager = megaCallManager
+        manager?.endCall(withCallId: call.callId, chatId: call.chatId)
+        manager?.removeCall(by: call.uuid)
     }
     
     func muteUnmuteCall(_ call: CallEntity, muted: Bool) {
-        megaCallManager.muteUnmuteCall(withCallId: call.callId, chatId: call.chatId, muted: muted)
+        MEGALogDebug("CallManagerUseCase: mute call called")
+        megaCallManager?.muteUnmuteCall(withCallId: call.callId, chatId: call.chatId, muted: muted)
     }
 }
