@@ -100,10 +100,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Execute command
     func executeCommand(_ command: MeetingParticipantsLayoutViewModel.Command) {
         switch command {
-        case .configView(let title, let subtitle, let isUserAGuest):
+        case .configView(let title, let subtitle, let isUserAGuest, let isOneToOne):
             self.isUserAGuest = isUserAGuest
             configureNavigationBar(title, subtitle)
             callsCollectionView.configure(with: self)
+            if isOneToOne {
+                navigationItem.rightBarButtonItems = nil
+            }
         case .configLocalUserView(let position):
             localUserView.configure(for: position)
         case .switchMenusVisibility:
