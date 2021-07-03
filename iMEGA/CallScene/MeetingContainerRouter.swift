@@ -34,7 +34,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
          chatRoom: ChatRoomEntity,
          call: CallEntity,
          isVideoEnabled: Bool,
-         isSpeakerEnabled: Bool = false,
+         isSpeakerEnabled: Bool,
          isAnsweredFromCallKit: Bool = false) {
         self.presenter = presenter
         self.chatRoom = chatRoom
