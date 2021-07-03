@@ -34,10 +34,6 @@ class MeetingCreatingViewController: UIViewController {
         )
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     override func loadView() {
         view = MeetingCreatingView(viewModel: viewModel, vc: self)
     }

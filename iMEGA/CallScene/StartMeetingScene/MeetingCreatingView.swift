@@ -233,7 +233,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             switch type {
             case .guestJoin:
                 meetingNameInputTextfield.isHidden = true
-                vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
+                setNavigationTitle(title, subtitle: subtitle)
                 startMeetingButton.setTitle(NSLocalizedString("meetings.link.guest.joinButtonText", comment: ""), for: .normal)
                 startMeetingButton.isEnabled = false
                 startMeetingButton.alpha = 0.5
@@ -250,7 +250,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                                                 font: AvatarProperties.font)
             case .join:
                 meetingNameInputTextfield.isHidden = true
-                vc.navigationItem.titleView = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
+                setNavigationTitle(title, subtitle: subtitle)
                 startMeetingButton.setTitle(NSLocalizedString("meetings.link.loggedInUser.joinButtonText", comment: ""), for: .normal)
                 
                 firstNameTextfield.flex.display(.none)
@@ -315,6 +315,12 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         case .localVideoFrame(width: let width, height: let height, buffer: let buffer):
             guestVideoFrame(width: width, height: height, buffer: buffer)
         }
+    }
+    
+    private func setNavigationTitle(_ title: String, subtitle: String) {
+        let titleViewLabel = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
+        titleViewLabel.lineBreakMode = .byTruncatingTail
+        vc.navigationItem.titleView = titleViewLabel
     }
     
     private func guestVideoFrame(width: Int, height: Int, buffer: Data!) {
