@@ -1,7 +1,7 @@
 
 extension CallEntity {
     init(with call: MEGAChatCall) {
-        self.status = CallStatusType(rawValue: call.status.rawValue)
+        self.status = call.toStatus()
         self.chatId = call.chatId
         self.callId = call.callId
         self.changeTye = ChangeType(rawValue: call.changes.rawValue)
@@ -24,5 +24,30 @@ extension CallEntity {
             
         self.participants = (0..<call.participants.size).map { call.participants.megaHandle(at: $0) }
         self.uuid = call.uuid
+    }
+}
+
+extension MEGAChatCall {
+    func toStatus() -> CallEntity.CallStatusType {
+        switch status {
+        case .undefined:
+            return .undefined
+        case .initial:
+            return .initial
+        case .userNoPresent:
+            return .userNoPresent
+        case .connecting:
+            return .connecting
+        case .joining:
+            return .joining
+        case .inProgress:
+            return .inProgress
+        case .terminatingUserParticipation:
+            return .userNoPresent
+        case .destroyed:
+            return .destroyed
+        @unknown default:
+            return .undefined
+        }
     }
 }

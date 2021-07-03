@@ -40,7 +40,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
-    private var isSpeakerEnabled = false
+    private var isSpeakerEnabled: Bool {
+        didSet {
+            containerViewModel?.dispatch(.speakerEnabled(isSpeakerEnabled))
+        }
+    }
     private var isVideoEnabled: Bool? {
         return call?.hasLocalVideo
     }
@@ -52,6 +56,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     init(router: MeetingFloatingPanelRouting,
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
+         isSpeakerEnabled: Bool,
          callManagerUseCase: CallManagerUseCaseProtocol,
          callsUseCase: CallsUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
@@ -67,6 +72,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.devicePermissionUseCase = devicePermissionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
+        self.isSpeakerEnabled = isSpeakerEnabled
     }
     
     deinit {
@@ -76,7 +82,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     func dispatch(_ action: MeetingFloatingPanelAction) {
         switch action {
         case .onViewReady:
-            audioSessionUseCase.configureAudioSession()
             audioSessionUseCase.routeChanged { [weak self] routeChangedReason in
                 guard let self = self else { return }
                 self.sessionRouteChanged(routeChangedReason: routeChangedReason)
@@ -95,7 +100,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             
             dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? false)))
-            updateSpeakerInfo()
+            configureSpeaker()
         case .hangCall(let presenter):
             if let call = call {
                 if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
@@ -159,8 +164,17 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     //MARK:- Private methods
+    private func configureSpeaker() {
+        if isSpeakerEnabled && audioSessionUseCase.currentSelectedAudioPort != .builtInSpeaker {
+            enableSpeaker()
+        } else if !isSpeakerEnabled && audioSessionUseCase.currentSelectedAudioPort == .builtInSpeaker {
+            disableLoudSpeaker()
+        } else {
+            updateSpeakerInfo()
+        }
+    }
     
-    private func enableLoudSpeaker() {
+    private func enableLoudSpeaker(completion: (() -> Void)? = nil) {
         audioSessionUseCase.enableLoudSpeaker { result in
             switch result {
             case .success(_):
@@ -212,16 +226,22 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
         guard let call = call else { return }
+        MEGALogDebug("Meetings: session route changed with \(routeChangedReason) and call \(call)")
         switch routeChangedReason {
         case .override where audioSessionUseCase.isOutputFrom(port: .builtInReceiver) && isSpeakerEnabled,
-             .categoryChange where (call.status == .reconnecting || call.status == .inProgress) && isSpeakerEnabled:
-            invokeCommand?(.enabledLoudSpeaker(enabled: true))
-            enableLoudSpeaker()
+             .categoryChange where (call.status == .connecting || call.status == .inProgress) && isSpeakerEnabled:
+            MEGALogDebug("Meetings: enabling loud speaker without user intervention")
+            enableSpeaker()
         default:
-            break;
+            updateSpeakerInfo()
         }
-        
-        updateSpeakerInfo()
+    }
+    
+    private func enableSpeaker() {
+        invokeCommand?(.enabledLoudSpeaker(enabled: true))
+        enableLoudSpeaker {
+            self.updateSpeakerInfo()
+        }
     }
     
     private func updateSpeakerInfo() {

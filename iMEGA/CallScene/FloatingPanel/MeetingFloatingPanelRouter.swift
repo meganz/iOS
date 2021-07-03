@@ -29,12 +29,14 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private weak var presenter: UINavigationController?
     private weak var containerViewModel: MeetingContainerViewModel?
     private let chatRoom: ChatRoomEntity
+    private let isSpeakerEnabled: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     
-    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity) {
+    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
+        self.isSpeakerEnabled = isSpeakerEnabled
     }
     
     func build() -> UIViewController {
@@ -46,6 +48,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let viewModel = MeetingFloatingPanelViewModel(router: self,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
+                                                      isSpeakerEnabled: isSpeakerEnabled,
                                                       callManagerUseCase: CallManagerUseCase(),
                                                       callsUseCase: CallsUseCase(repository: CallsRepository()),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),

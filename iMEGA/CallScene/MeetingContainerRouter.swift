@@ -8,6 +8,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, completion: UIActivityViewController.CompletionWithItemsHandler?)
     func renameChat()
     func showShareMeetingError()
+    func enableSpeaker(_ enable: Bool)
 }
 
 extension MeetingContainerRouting {
@@ -21,6 +22,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
     private let isVideoEnabled: Bool
+    private var isSpeakerEnabled: Bool
     private let isAnsweredFromCallKit: Bool
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
@@ -28,11 +30,17 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private var appBecomeActiveObserver: NSObjectProtocol?
     private weak var containerViewModel: MeetingContainerViewModel?
     
-    init(presenter: UIViewController, chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isAnsweredFromCallKit: Bool = false) {
+    init(presenter: UIViewController,
+         chatRoom: ChatRoomEntity,
+         call: CallEntity,
+         isVideoEnabled: Bool,
+         isSpeakerEnabled: Bool = false,
+         isAnsweredFromCallKit: Bool = false) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
         self.isVideoEnabled = isVideoEnabled
+        self.isSpeakerEnabled = isSpeakerEnabled
         self.isAnsweredFromCallKit = isAnsweredFromCallKit
         
         // While the application becomes active, if the floating panel is not shown to the user. Show it.
@@ -169,6 +177,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         meetingParticipantsRouter?.showRenameChatAlert()
     }
     
+    func enableSpeaker(_ enable: Bool) {
+        isSpeakerEnabled = enable
+    }
+    
     //MARK:- Private methods.
     private func showCallViewRouter(containerViewModel: MeetingContainerViewModel) {
         guard let baseViewController = baseViewController else { return }
@@ -185,7 +197,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         guard let baseViewController = baseViewController else { return }
         let floatingPanelRouter = MeetingFloatingPanelRouter(presenter: baseViewController,
                                                              containerViewModel: containerViewModel,
-                                                             chatRoom: chatRoom)
+                                                             chatRoom: chatRoom,
+                                                             isSpeakerEnabled: isSpeakerEnabled)
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
     }

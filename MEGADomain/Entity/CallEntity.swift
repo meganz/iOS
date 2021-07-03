@@ -1,18 +1,15 @@
 
 
 struct CallEntity {
-    enum CallStatusType: Int {
-        case undefined = -1
+    enum CallStatusType {
+        case undefined
         case initial
-        case hasLocalStream
-        case requestSent
-        case statusRingIn
+        case userNoPresent
+        case connecting
         case joining
         case inProgress
         case terminatingUserParticipation
-        case statusDestroyed
-        case userNoPresent
-        case reconnecting
+        case destroyed
     }
     
     enum SessionStatusType: Int {

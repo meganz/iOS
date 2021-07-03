@@ -2,7 +2,7 @@ import Foundation
 
 protocol MeetingCreatingViewRouting: Routing {
     func dismiss()
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool)
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isSpeakerEnabled: Bool)
     func openChatRoom(withChatId chatId: UInt64)
     func showVideoPermissionError()
     func showAudioPermissionError()
@@ -72,11 +72,15 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
                            animated: true)
     }
 
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
      guard let viewControllerToPresent = viewControllerToPresent else {
             return
         }
-        MeetingContainerRouter(presenter: viewControllerToPresent, chatRoom: chatRoom, call: call, isVideoEnabled: isVideoEnabled).start()
+        MeetingContainerRouter(presenter: viewControllerToPresent,
+                               chatRoom: chatRoom,
+                               call: call,
+                               isVideoEnabled: isVideoEnabled,
+                               isSpeakerEnabled: isSpeakerEnabled).start()
     }
     
     func showVideoPermissionError() {
