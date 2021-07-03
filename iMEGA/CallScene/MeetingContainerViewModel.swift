@@ -10,6 +10,7 @@ enum MeetingContainerAction: ActionType {
     case renameChat
     case dismissCall(completion: (() -> Void)?)
     case endGuestUserCall(completion: (() -> Void)?)
+    case speakerEnabled(_ enabled: Bool)
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -89,6 +90,8 @@ final class MeetingContainerViewModel: ViewModelType {
                 guard let completion = completion else { return }
                 completion()
             }
+        case .speakerEnabled(let speakerEnabled):
+            router.enableSpeaker(speakerEnabled)
         }
     }
     

@@ -30,16 +30,8 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         removeObservers()
     }
     
-    func configureAudioSession() {
-        do {
-            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [])
-            try audioSession.setActive(true)
-        } catch (let error) {
-            MEGALogError("[AudioPlayer] AVAudioSession Error: \(error.localizedDescription)")
-        }
-    }
-    
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+        MEGALogDebug("AudioSession: enabling loud speaker")
         do {
             try audioSession.overrideOutputAudioPort(.speaker)
             completion(.success(()))
@@ -50,6 +42,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     }
     
     func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+        MEGALogDebug("AudioSession: disable loud speaker")
         do {
             try audioSession.overrideOutputAudioPort(.none)
             completion(.success(()))
@@ -81,10 +74,13 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     }
     
     @objc private func sessionRouteChanged(notification: NSNotification) {
-        guard let routeChangeReason = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt else {
+        guard let userInfo = notification.userInfo,
+              let routeChangeReason = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt else {
             return
         }
         
+        MEGALogDebug("AudioSession: session route changed with info \(userInfo)")
+
         switch routeChangeReason {
         case AVAudioSession.RouteChangeReason.override.rawValue:
             routeChanged?(.override)

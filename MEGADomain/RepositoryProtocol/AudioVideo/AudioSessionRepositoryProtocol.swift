@@ -15,7 +15,6 @@ enum AudioPort {
 protocol AudioSessionRepositoryProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
-    func configureAudioSession()
     var routeChanged: ((AudioSessionRouteChangedReason) -> Void)? { get set }
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
     func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
