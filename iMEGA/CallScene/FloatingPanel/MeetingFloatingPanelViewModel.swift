@@ -166,10 +166,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     //MARK:- Private methods
     private func configureSpeaker() {
         if isSpeakerEnabled && audioSessionUseCase.currentSelectedAudioPort != .builtInSpeaker {
+            MEGALogDebug("Meetings: configure enable loud speaker")
             enableSpeaker()
         } else if !isSpeakerEnabled && audioSessionUseCase.currentSelectedAudioPort == .builtInSpeaker {
+            MEGALogDebug("Meetings: configure disable loud speaker")
             disableLoudSpeaker()
         } else {
+            MEGALogDebug("Meetings: configure update speaker info")
             updateSpeakerInfo()
         }
     }
@@ -226,15 +229,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
         guard let call = call else { return }
-        MEGALogDebug("Meetings: session route changed with \(routeChangedReason) and call \(call)")
-        switch routeChangedReason {
-        case .override where audioSessionUseCase.isOutputFrom(port: .builtInReceiver) && isSpeakerEnabled,
-             .categoryChange where (call.status == .connecting || call.status == .inProgress) && isSpeakerEnabled:
-            MEGALogDebug("Meetings: enabling loud speaker without user intervention")
-            enableSpeaker()
-        default:
-            updateSpeakerInfo()
-        }
+        MEGALogDebug("Meetings: session route changed with \(routeChangedReason) , current port \(audioSessionUseCase.currentSelectedAudioPort) and call \(call)")
+        isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
+        updateSpeakerInfo()
     }
     
     private func enableSpeaker() {
@@ -245,8 +242,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func updateSpeakerInfo() {
-        invokeCommand?(.updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort,
-                                                  bluetoothAudioRouteAvailable:  audioSessionUseCase.isBluetoothAudioRouteAvailable))
+        let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
+        let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
+        MEGALogDebug("Meetings: updating speaker info with selected port \(currentSelectedPort) bluetooth available \(isBluetoothAvailable)")
+        invokeCommand?(
+            .updatedAudioPortSelection(audioPort: currentSelectedPort,
+                                       bluetoothAudioRouteAvailable: isBluetoothAvailable)
+        )
     }
     
     private func switchCamera(backCameraOn: Bool) {

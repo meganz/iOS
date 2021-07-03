@@ -992,7 +992,7 @@ class ChatViewController: MessagesViewController {
                 return
             }
             
-            self.startMeetingUI(isVideoEnabled: isVideoEnabled)
+            self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: false)
         }
         
         shouldDisableAudioVideoCalling = true
@@ -1006,7 +1006,7 @@ class ChatViewController: MessagesViewController {
             self.updateRightBarButtons()
 
             if error?.type == .MEGAChatErrorTypeOk {
-                self.startMeetingUI(isVideoEnabled: isVideoEnabled)
+                self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: false)
             }
         }
         
@@ -1022,17 +1022,22 @@ class ChatViewController: MessagesViewController {
         if activeCall.status == .userNoPresent {
             startOutGoingCall(isVideoEnabled: isVideoEnabled)
         } else {
-            startMeetingUI(isVideoEnabled: isVideoEnabled)
+            let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
+            startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: isSpeakerEnabled)
         }
     }
     
-    private func startMeetingUI(isVideoEnabled: Bool) {
+    private func startMeetingUI(isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         
         let callEntity = CallEntity(with: call)
         let chatRoomEntity = ChatRoomEntity(with: chatRoom)
         
-        MeetingContainerRouter(presenter: self, chatRoom: chatRoomEntity, call: callEntity, isVideoEnabled: isVideoEnabled).start()
+        MeetingContainerRouter(presenter: self,
+                               chatRoom: chatRoomEntity,
+                               call: callEntity,
+                               isVideoEnabled: isVideoEnabled,
+                               isSpeakerEnabled: isSpeakerEnabled).start()
     }
 
     func openCallViewWithVideo(videoCall: Bool) {

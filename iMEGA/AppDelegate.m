@@ -466,7 +466,11 @@
                         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
                         if (call.status == MEGAChatCallStatusInProgress) {
                             MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                            [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isVideoEnabled:self.isVideoCall];
+                            BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
+                            [self performCallWithPresenter:UIApplication.mnz_presentingViewController
+                                                  chatRoom:self.chatRoom
+                                            isVideoEnabled:self.isVideoCall
+                                          isSpeakerEnabled:isSpeakerEnabled];
                             self.chatRoom = nil;
                         } else {
                             MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
@@ -512,7 +516,8 @@
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
                     MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                    [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isVideoEnabled:self.isVideoCall];
+                    BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
+                    [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isVideoEnabled:self.isVideoCall isSpeakerEnabled:isSpeakerEnabled];
                     self.chatRoom = nil;
                 } else {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
@@ -935,7 +940,10 @@
 - (void)performCall {
     MEGAChatStartCallRequestDelegate *requestDelegate = [MEGAChatStartCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
         if (error.type == MEGAErrorTypeApiOk) {
-            [self performCallWithPresenter:self.mainTBC chatRoom:self.chatRoom isVideoEnabled:self.videoCall];
+            [self performCallWithPresenter:self.mainTBC
+                                  chatRoom:self.chatRoom
+                            isVideoEnabled:self.videoCall
+                          isSpeakerEnabled:NO];
         }
         self.chatRoom = nil;
     }];
