@@ -338,7 +338,9 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             return
         }
         
-        startMeetingButton.isEnabled = !firstName.isEmpty && !lastname.isEmpty
+        let trimmedFirstName = firstName.trimmingCharacters(in: .whitespaces)
+        let trimmedLastName = lastname.trimmingCharacters(in: .whitespaces)
+        startMeetingButton.isEnabled = !trimmedFirstName.isEmpty && !trimmedLastName.isEmpty
         startMeetingButton.alpha = startMeetingButton.isEnabled ? 1.0 : 0.5
     }
 }
