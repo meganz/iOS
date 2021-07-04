@@ -18,6 +18,10 @@ struct MeetingParticipantViewModel: ViewModelType {
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
     
     private var shouldHideContextMenu: Bool {
+        if userUseCase.isGuestAccount {
+            return true
+        }
+        
         return isMe || attendee.attendeeType == .guest
     }
     
