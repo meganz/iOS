@@ -259,10 +259,6 @@
 - (IBAction)thirdButtonTapped:(UIButton *)sender {
     switch (self.type) {
         case OnboardingTypeDefault: {
-            if ([[MEGASdkManager sharedMEGAChatSdk] initState] != MEGAChatInitNotDone) {
-                MEGALogDebug(@"The chat sdk init state is %ld", (long)[[MEGASdkManager sharedMEGAChatSdk] initState]);
-                [MEGASdkManager.sharedMEGAChatSdk logout];
-            }
             EnterMeetingLinkRouter *router = [[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:YES];
             self.enterMeetingLinkObject = [router start];
             break;

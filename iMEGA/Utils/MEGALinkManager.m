@@ -881,7 +881,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         return;
     }
     
-    BOOL isLoggedIn = MEGASdkManager.sharedMEGASdk.isLoggedIn;
+    // If the application was deleted when the user is logged and then reinstalled.
+    // The sdk says the user is logged in but the session is cleared.
+    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    BOOL isLoggedIn = MEGASdkManager.sharedMEGASdk.isLoggedIn && sessionV3 != nil && !sessionV3.mnz_isEmpty;
+    
     if ([rootViewController isKindOfClass:MainTabBarController.class]) {
    
         MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
