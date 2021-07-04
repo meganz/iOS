@@ -270,6 +270,9 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
 
         case .updateMeetingName(let name):
             vc.title = name.isEmpty ? meetingNameInputTextfield.placeholder : name
+            if meetingNameInputTextfield.text != name {
+                meetingNameInputTextfield.text = name
+            }
         case .updateAvatarImage(let image):
             avatarImageView.image = image
         case .updateVideoButton(enabled: let isSelected):
