@@ -43,9 +43,8 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
     }
     
     private func getAvatarImage(withUserHandle handle: UInt64, name: String, size: CGSize) -> UIImage? {
-        guard let base64Handle = MEGASdk.base64Handle(forHandle: handle),
-              let avatarColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle),
-              let secondaryColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
+        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
+              let avatarBackgroundColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return nil
         }
         
@@ -61,11 +60,9 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
             initials = (name as NSString).mnz_initialForAvatar()
         }
         
-        
         let image =  UIImage(forName: initials,
                              size: size,
-                             backgroundColor: UIColor.mnz_(fromHexString: avatarColor),
-                             backgroundGradientColor: UIColor.mnz_(fromHexString: secondaryColor),
+                             backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundColor),
                              textColor: .white,
                              font: UIFont.systemFont(ofSize: size.width/2.0))
         
