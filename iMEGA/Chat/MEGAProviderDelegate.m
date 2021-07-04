@@ -60,6 +60,9 @@
 }
 
 - (void)invalidateProvider {
+    self.megaCallManager = nil;
+    [MEGASdkManager.sharedMEGAChatSdk removeChatCallDelegate:self];
+    [MEGASdkManager.sharedMEGAChatSdk removeChatDelegate:self];
     [self.provider invalidate];
 }
 

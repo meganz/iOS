@@ -138,7 +138,7 @@
 #pragma mark - Private
 
 - (void)printAllCalls {
-    MEGALogDebug(@"[CallKit] All calls: %tu", self.callsDictionary.count);
+    MEGALogDebug(@"[CallKit] All calls: %tu call manager: %@", self.callsDictionary.count, self);
     for (MEGAChatCall *call in self.callsDictionary) {
         MEGALogDebug(@"[CallKit] call %@", call);
     }
