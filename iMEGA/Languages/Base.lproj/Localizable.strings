@@ -1976,14 +1976,6 @@
 "Do More With MEGA"="Do More With MEGA";
 /* Join MEGA subtitle */
 "Sign up for a free account and get up to 20GB of storage"="Sign up for a free account and get up to 20GB of storage";
-/* paragraph 1 for Mega decription. */
-"Meeting.CreateAccount.Paragraph.1"="Top level encryption and up to 16TB to store all your your files and keep them safe.";
-/* paragraph 2 for Mega decription. */
-"Meeting.CreateAccount.Paragraph.2"="Your files are safe with us behind a well oiled encryption machine where only you can access your files.";
-/* paragraph 3 for Mega decription. */
-"Meeting.CreateAccount.Paragraph.3"="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
-/* paragraph 4 for Mega decription. */
-"Meeting.CreateAccount.Paragraph.4"="Camera Uploads is an essential feature for any mobile device and we got you covered.";
 /* Title for the recents section. */
 "Recents"="Recents";
 /* Title show in Recents on the empty state when the recent activity is hidden */
@@ -2680,3 +2672,11 @@
 "meetings.link.loggedInUser.joinButtonText" = "Join Meeting";
 /* Button text to join a meeting for the logged in user*/
 "meetings.link.guest.joinButtonText" = "Join as Guest";
+/* Guest user join Mega: paragraph 1 title*/
+"meetings.joinMega.paragraph1.title"= "Your Privacy Matters";
+/* Guest user join Mega: paragraph 1 description*/
+"meetings.joinMega.paragraph1.description"= "Join the largest secure cloud storage and collaboration platform in the world.";
+/* Guest user join Mega: paragraph 2 title*/
+"meetings.joinMega.paragraph2.title"= "Get 20 GB for free";
+/* Guest user join Mega: paragraph 2 description*/
+"meetings.joinMega.paragraph2.description"= "Sign up now and enjoy advanced collaboration features for free.";

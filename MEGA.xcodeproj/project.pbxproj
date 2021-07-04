@@ -100,7 +100,6 @@
 		2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */; };
 		2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */; };
 		2F879C592629261A00D2FA78 /* JoinMegaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F879C582629261A00D2FA78 /* JoinMegaViewController.swift */; };
-		2F879C63262926B900D2FA78 /* JoinMegaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F879C62262926B900D2FA78 /* JoinMegaView.swift */; };
 		2F879C6D2629291C00D2FA78 /* JoinMegaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F879C6C2629291C00D2FA78 /* JoinMegaRouter.swift */; };
 		2F9E1E2B24A5A8FE00F53FBD /* ReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */; };
 		2F9E1E2C24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */; };
@@ -1851,6 +1850,7 @@
 		BFAD51182607F2B600DFBD1B /* UserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD51172607F2B600DFBD1B /* UserUseCase.swift */; };
 		BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */; };
 		BFAD513E260BE26C00DFBD1B /* MeetingParticpiantInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD513D260BE26B00DFBD1B /* MeetingParticpiantInfoViewModel.swift */; };
+		BFAD882926911E7200CA592F /* JoinMegaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAD882826911E7100CA592F /* JoinMegaViewController.xib */; };
 		BFAFAF0F2519595300C92887 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFAF0D2519595300C92887 /* HomeViewController.xib */; };
 		BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFAF0E2519595300C92887 /* HomeViewController.swift */; };
 		BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFAF1625195B2000C92887 /* SlidePanelAnimationController.swift */; };
@@ -2240,7 +2240,6 @@
 		2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEditCollectionOverlayView.swift; sourceTree = "<group>"; };
 		2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageEditCollectionOverlayView.xib; sourceTree = "<group>"; };
 		2F879C582629261A00D2FA78 /* JoinMegaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaViewController.swift; sourceTree = "<group>"; };
-		2F879C62262926B900D2FA78 /* JoinMegaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaView.swift; sourceTree = "<group>"; };
 		2F879C6C2629291C00D2FA78 /* JoinMegaRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaRouter.swift; sourceTree = "<group>"; };
 		2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -4042,6 +4041,7 @@
 		BFAD51172607F2B600DFBD1B /* UserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCase.swift; sourceTree = "<group>"; };
 		BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewRouter.swift; sourceTree = "<group>"; };
 		BFAD513D260BE26B00DFBD1B /* MeetingParticpiantInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewModel.swift; sourceTree = "<group>"; };
+		BFAD882826911E7100CA592F /* JoinMegaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinMegaViewController.xib; sourceTree = "<group>"; };
 		BFAFAF0D2519595300C92887 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		BFAFAF0E2519595300C92887 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BFAFAF1625195B2000C92887 /* SlidePanelAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SlidePanelAnimationController.swift; path = iMEGA/Home/Scenes/SlidePanelAnimationController.swift; sourceTree = SOURCE_ROOT; };
@@ -4810,8 +4810,8 @@
 			isa = PBXGroup;
 			children = (
 				2F879C582629261A00D2FA78 /* JoinMegaViewController.swift */,
+				BFAD882826911E7100CA592F /* JoinMegaViewController.xib */,
 				2F879C6C2629291C00D2FA78 /* JoinMegaRouter.swift */,
-				2F879C62262926B900D2FA78 /* JoinMegaView.swift */,
 				2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */,
 			);
 			path = JoinMegaScene;
@@ -10398,6 +10398,7 @@
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
 				83C570E722E5BFCF00216896 /* README.md in Resources */,
+				BFAD882926911E7200CA592F /* JoinMegaViewController.xib in Resources */,
 				5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
@@ -11909,7 +11910,6 @@
 				2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */,
 				0D0B54C72629068E00E9BB16 /* CreateTextFileAlertViewModel.swift in Sources */,
 				BF5E3495255C8FD10055395E /* FilesExplorerViewController.swift in Sources */,
-				2F879C63262926B900D2FA78 /* JoinMegaView.swift in Sources */,
 				A80B66F525E80D2000486EC5 /* RecentActionBucketEntity.swift in Sources */,
 				BFCEE8B425102D9600D43448 /* IndexSet+Additions.swift in Sources */,
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
