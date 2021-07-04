@@ -43,13 +43,19 @@ class MeetingQuickActionView: UIView {
         }
     }
     
+    var disabled: Bool = false {
+        didSet {
+            updateUI()
+        }
+    }
+    
     private func updateUI() {
         guard let properties = properties else {
             return
         }
         
-        circularView.backgroundColor = isSelected ? properties.backgroundColor.selected : properties.backgroundColor.normal
-        iconImageView.tintColor = isSelected ? properties.iconTintColor.selected : properties.iconTintColor.normal
+        circularView.backgroundColor = !disabled && isSelected ? properties.backgroundColor.selected : properties.backgroundColor.normal
+        iconImageView.tintColor = !disabled && isSelected ? properties.iconTintColor.selected : disabled ? properties.iconTintColor.normal.withAlphaComponent(0.25) : properties.iconTintColor.normal
     }
 }
 

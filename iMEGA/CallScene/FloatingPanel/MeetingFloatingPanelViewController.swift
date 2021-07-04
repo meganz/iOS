@@ -60,6 +60,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         endQuickActionView.name = NSLocalizedString("Leave", comment: "")
         updateInTheMeetingLabel()
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
+        flipQuickActionView.disabled = true
         
         let quickActionProperties = MeetingQuickActionView.Properties(
             iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: .black),
@@ -120,6 +121,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
                 participantsTableView.reloadData()
             }
             cameraQuickActionView.isSelected = on
+            flipQuickActionView.disabled = !on
         case .reloadParticpantsList(let participants):
             callParticipants = participants
             participantsTableView?.reloadData()
@@ -159,6 +161,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     }
     
     @IBAction func switchCameraTapped(_ sender: UIButton) {
+        guard !flipQuickActionView.disabled else { return }
         viewModel.dispatch(.switchCamera(backCameraOn: !flipQuickActionView.isSelected))
     }
     
