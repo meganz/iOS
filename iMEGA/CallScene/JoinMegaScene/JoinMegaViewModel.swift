@@ -2,6 +2,7 @@ import Foundation
 
 enum JoinMegaViewAction: ActionType {
     case didCreateAccountButton
+    case didTapCloseButton
 }
 
 struct JoinMegaViewModel: ViewModelType {
@@ -23,6 +24,8 @@ struct JoinMegaViewModel: ViewModelType {
         switch action {
         case .didCreateAccountButton:
             router.createAccount()
+        case .didTapCloseButton:
+            router.dismiss()
         }
     }
     
