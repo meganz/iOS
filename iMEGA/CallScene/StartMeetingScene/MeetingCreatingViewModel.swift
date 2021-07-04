@@ -62,6 +62,10 @@ final class MeetingCreatingViewModel: ViewModelType {
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
+    private var defaultMeetingName: String {
+        return String(format: NSLocalizedString("%@ Meeting", comment: "Meeting Title"), meetingUseCase.getUsername())
+    }
+    
     // MARK: - Init
     init(router: MeetingCreatingViewRouting,
          type: MeetingConfigurationType,
@@ -104,7 +108,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 }
                 checkChatLink(link: link)
             case .start:
-                meetingName = String(format: NSLocalizedString("%@ Meeting", comment: "Meeting Title"), meetingUseCase.getUsername())
+                meetingName = defaultMeetingName
                 invokeCommand?(
                     .configView(title: meetingName,
                                 subtitle: "",
@@ -243,6 +247,10 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func startChatCall() {
+        if meetingName.isEmpty || meetingName.trimmingCharacters(in: .whitespaces).isEmpty {
+            dispatch(.updateMeetingName(defaultMeetingName))
+        }
+        
         meetingUseCase.startChatCall(meetingName: meetingName, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled) { [weak self] in
             guard let self = self else { return }
             switch $0 {
