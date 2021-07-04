@@ -5,7 +5,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func toggleFloatingPanel(containerViewModel: MeetingContainerViewModel)
     func showEndMeetingOptions(presenter: UIViewController, meetingContainerViewModel: MeetingContainerViewModel)
     func showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool, containerViewModel: MeetingContainerViewModel)
-    func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, completion: UIActivityViewController.CompletionWithItemsHandler?)
+    func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?)
     func renameChat()
     func showShareMeetingError()
     func enableSpeaker(_ enable: Bool)
@@ -150,8 +150,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         optionsMenuRouter.start()
     }
     
-    func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, completion: UIActivityViewController.CompletionWithItemsHandler?) {
-        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: [SendToChatActivity(text: link)])
+    func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
+        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
         if let barButtonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
         } else if let buttonSender = sender as? UIButton {

@@ -3,7 +3,6 @@ import PanModal
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     var viewModel: MeetingFloatingPanelViewModel? { get }
     func dismiss(animated: Bool)
-    func shareLink(presenter: UIViewController, sender: UIButton, link: String)
     func inviteParticipants(
         presenter: UIViewController,
         excludeParticpants: [UInt64]?,
@@ -81,16 +80,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func dismiss(animated: Bool) {
         baseViewController?.dismiss(animated: animated)
-    }
-    
-    func shareLink(presenter: UIViewController, sender: UIButton, link: String) {
-        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = sender
-        activityViewController.popoverPresentationController?.sourceRect = sender.frame
-        if #available(iOS 13.0, *) {
-            activityViewController.overrideUserInterfaceStyle = .dark
-        }
-        presenter.present(activityViewController, animated: true)
     }
     
     func inviteParticipants(

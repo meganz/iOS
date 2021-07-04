@@ -70,11 +70,16 @@ final class MeetingContainerViewModel: ViewModelType {
             router.toggleFloatingPanel(containerViewModel: self)
         case .shareLink(let presenter, let sender, let completion):
             chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success(let link):
-                    self?.router.shareLink(presenter: presenter, sender: sender, link: link, completion: completion)
+                    self.router.shareLink(presenter: presenter,
+                                          sender: sender,
+                                          link: link,
+                                          isGuestAccount: self.userUseCase.isGuestAccount,
+                                          completion: completion)
                 case .failure(_):
-                    self?.router.showShareMeetingError()
+                    self.router.showShareMeetingError()
                 }
             }
         case .renameChat:
