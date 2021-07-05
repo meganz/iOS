@@ -242,10 +242,7 @@ final class TextEditorViewModel: ViewModelType {
     private func downloadToTempFolder() {
         guard let nodeHandle = nodeHandle else { return }
         downloadFileUseCase.downloadToTempFolder(nodeHandle: nodeHandle) { (transferEntity) in
-            guard let transferredBytes = transferEntity.transferredBytes,
-                  let totalBytes = transferEntity.totalBytes
-            else { return }
-            let percentage = transferredBytes / totalBytes
+            let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
             self.invokeCommand?(.updateProgressView(progress: percentage))
         } completion: { (result) in
             switch result {

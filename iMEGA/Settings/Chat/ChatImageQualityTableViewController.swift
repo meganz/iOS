@@ -71,4 +71,8 @@ class ChatImageQualityTableViewController: UITableViewController {
         UserDefaults.standard.set(indexPath.row, forKey: "chatImageQuality")
         tableView.reloadData()
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
 }

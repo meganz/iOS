@@ -25,6 +25,7 @@ final class DefaultTabTableViewController: UITableViewController {
             cell.imageView?.image = tab.icon?.byTintColor(UIColor.mnz_primaryGray(for: traitCollection))
             let title = tab.title
             cell.textLabel?.text = NSLocalizedString(title, comment: title)
+            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         }
         cell.accessoryView = UIImageView(image: UIImage(named: "turquoise_checkmark"))
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
