@@ -673,9 +673,9 @@
                                                                         <constraint firstAttribute="height" constant="44" id="HdA-qF-Ubp"/>
                                                                         <constraint firstAttribute="width" constant="46" id="fAi-pe-qUF"/>
                                                                     </constraints>
-                                                                    <state key="normal" image="more"/>
-                                                                    <state key="selected" image="moreSelected"/>
-                                                                    <state key="highlighted" image="moreSelected"/>
+                                                                    <state key="normal" image="moreList"/>
+                                                                    <state key="selected" image="moreList"/>
+                                                                    <state key="highlighted" image="moreList"/>
                                                                     <connections>
                                                                         <action selector="infoTouchUpInside:" destination="vaV-Wj-jKy" eventType="touchUpInside" id="01k-04-4bS"/>
                                                                     </connections>
@@ -892,8 +892,7 @@
         <image name="history" width="28" height="28"/>
         <image name="hudSharedFolder" width="28" height="28"/>
         <image name="linked" width="12" height="12"/>
-        <image name="more" width="28" height="28.5"/>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreList" width="28" height="28"/>
         <image name="readPermissions" width="24" height="24"/>
         <image name="selectAll" width="28" height="28"/>
         <image name="versioned" width="12" height="12"/>

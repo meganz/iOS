@@ -97,7 +97,7 @@
     self.navigationItem.title = NSLocalizedString(@"folderLink", nil);
     
     self.moreBarButtonItem.title = nil;
-    self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
+    self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
     self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
 
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
@@ -587,7 +587,7 @@
         [self.navigationItem setLeftBarButtonItem:self.selectAllBarButtonItem];
     } else {
         self.moreBarButtonItem.title = nil;
-        self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
+        self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
 
         [self setAllNodesSelected:NO];
         self.selectedNodesArray = nil;
