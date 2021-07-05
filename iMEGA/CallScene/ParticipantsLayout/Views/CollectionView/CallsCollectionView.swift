@@ -15,6 +15,7 @@ class CallsCollectionView: UICollectionView {
         delegate = self
         self.scrollDelegate = scrollDelegate
         register(CallParticipantCell.nib, forCellWithReuseIdentifier: CallParticipantCell.reuseIdentifier)
+        backgroundColor = .black
     }
     
     func addedParticipant(in participants: [CallParticipantEntity]) {
