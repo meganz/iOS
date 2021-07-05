@@ -7,6 +7,14 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         self.sdk = sdk
     }
     
+    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity? {
+        if let megaChatRoom = sdk.chatRoom(forChatId: chatId) {
+            return ChatRoomEntity(with: megaChatRoom)
+        }
+        
+        return nil
+    }
+    
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         if let megaChatRoom = sdk.chatRoom(byUser: userHandle) {
             return ChatRoomEntity(with: megaChatRoom)

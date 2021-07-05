@@ -1,5 +1,6 @@
 
 protocol ChatRoomUseCaseProtocol {
+    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity?
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity?
     func createChatRoom(forUserHandle userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, Error>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkError>) -> Void)
@@ -14,6 +15,10 @@ struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
     init(chatRoomRepo: ChatRoomRepositoryProtocol, userStoreRepo: UserStoreRepositoryProtocol) {
         self.chatRoomRepo = chatRoomRepo
         self.userStoreRepo = userStoreRepo
+    }
+    
+    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity? {
+        chatRoomRepo.chatRoom(forChatId: chatId)
     }
     
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {

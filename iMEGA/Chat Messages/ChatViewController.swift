@@ -58,7 +58,7 @@ class ChatViewController: MessagesViewController {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-        button.setTitle(NSLocalizedString("Join Call", comment: ""), for: .normal)
+        button.setTitle(chatRoom.isGroup ? NSLocalizedString("Join Call", comment: "") : NSLocalizedString("Tap to return to call", comment: ""), for: .normal)
         button.layer.cornerRadius = 20
         button.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
         return button
@@ -671,7 +671,7 @@ class ChatViewController: MessagesViewController {
     private func configureJoinCallButton() {
         view.addSubview(joinCallButton)
         joinCallButton.autoSetDimension(.height, toSize: 40)
-        joinCallButton.autoSetDimension(.width, toSize: 120, relation: .greaterThanOrEqual)
+        joinCallButton.autoSetDimension(.width, toSize: (joinCallButton.titleLabel?.intrinsicContentSize.width ?? 120) + 30, relation: .greaterThanOrEqual)
         joinCallButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -30).isActive = true
         joinCallButton.addTarget(self, action: #selector(didTapJoinCall), for: .touchUpInside)
         joinCallButton.autoAlignAxis(toSuperviewAxis: .vertical)
