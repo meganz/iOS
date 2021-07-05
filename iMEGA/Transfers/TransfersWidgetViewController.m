@@ -561,7 +561,9 @@ static TransfersWidgetViewController* instance = nil;
 - (void)handleCoreDataChangeNotification:(NSNotification *)notification {
     for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSInvalidatedAllObjectsKey]) {
         if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
-            [self reloadView];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self reloadView];
+            });
             return;
         }
     }
@@ -603,7 +605,9 @@ static TransfersWidgetViewController* instance = nil;
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (indexPath) {
         [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
     }
 }
 
