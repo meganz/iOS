@@ -45,7 +45,7 @@
                         <outlet property="toolbar" destination="e3i-Bd-kAN" id="E6b-k9-wcd"/>
                     </connections>
                 </viewController>
-                <barButtonItem image="moreSelected" width="22" style="plain" id="LK7-dJ-cZu" userLabel="More Bar Button Item">
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="LK7-dJ-cZu" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="moreAction:" destination="cPA-hf-QcT" id="Cd1-7X-WzH"/>
                     </connections>
@@ -145,9 +145,9 @@
                                                                 <constraint firstAttribute="height" constant="44" id="Cj0-77-a36"/>
                                                                 <constraint firstAttribute="width" constant="46" id="Wwa-A7-SoR"/>
                                                             </constraints>
-                                                            <state key="normal" image="more"/>
-                                                            <state key="selected" image="moreSelected"/>
-                                                            <state key="highlighted" image="moreSelected"/>
+                                                            <state key="normal" image="moreList"/>
+                                                            <state key="selected" image="moreList"/>
+                                                            <state key="highlighted" image="moreList"/>
                                                             <connections>
                                                                 <action selector="moreButtonTouchUpInside:" destination="Wdx-Jz-JkM" eventType="touchUpInside" id="EEG-Vx-Mc6"/>
                                                             </connections>
@@ -268,9 +268,9 @@
                                                         <constraint firstAttribute="width" constant="24" id="0uJ-MQ-kbj"/>
                                                         <constraint firstAttribute="height" constant="24" id="hCu-e4-XfN"/>
                                                     </constraints>
-                                                    <state key="normal" image="more"/>
-                                                    <state key="selected" image="moreSelected"/>
-                                                    <state key="highlighted" image="moreSelected"/>
+                                                    <state key="normal" image="moreGrid"/>
+                                                    <state key="selected" image="moreGrid"/>
+                                                    <state key="highlighted" image="moreGrid"/>
                                                     <connections>
                                                         <action selector="infoTouchUpInside:" destination="lcV-hf-vWE" eventType="touchUpInside" id="lfg-V5-ezi"/>
                                                     </connections>
@@ -377,9 +377,9 @@
                                                         <constraint firstAttribute="width" constant="24" id="pSW-5o-MDI"/>
                                                         <constraint firstAttribute="height" constant="24" id="qNq-xX-I1Q"/>
                                                     </constraints>
-                                                    <state key="normal" image="more"/>
-                                                    <state key="selected" image="moreSelected"/>
-                                                    <state key="highlighted" image="moreSelected"/>
+                                                    <state key="normal" image="moreList"/>
+                                                    <state key="selected" image="moreList"/>
+                                                    <state key="highlighted" image="moreList"/>
                                                     <connections>
                                                         <action selector="infoTouchUpInside:" destination="lcV-hf-vWE" eventType="touchUpInside" id="kA2-hu-edR"/>
                                                     </connections>
@@ -497,10 +497,11 @@
     </scenes>
     <resources>
         <image name="checkBoxUnselected" width="24" height="24"/>
-        <image name="more" width="28" height="28.5"/>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreGrid" width="24" height="24"/>
+        <image name="moreList" width="28" height="28"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
-        <image name="selectAll" width="22" height="22"/>
+        <image name="selectAll" width="28" height="28"/>
         <image name="share" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">

@@ -36,7 +36,7 @@ final class TextEditorViewModelTests: XCTestCase {
             if textEditorMode == .view {
                 navbarItemsModel = TextEditorNavbarItemsModel (
                     leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-                    rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+                    rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
                     textEditorMode: textEditorMode
                 )
             } else {
@@ -103,7 +103,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsViewModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
         
@@ -291,7 +291,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
         
@@ -894,7 +894,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
         

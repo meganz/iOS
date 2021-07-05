@@ -254,9 +254,9 @@
                                                                 <constraint firstAttribute="height" constant="44" id="Wiq-DO-W4C"/>
                                                                 <constraint firstAttribute="width" constant="46" id="lE0-XQ-EY2"/>
                                                             </constraints>
-                                                            <state key="normal" image="more"/>
-                                                            <state key="selected" image="moreSelected"/>
-                                                            <state key="highlighted" image="moreSelected"/>
+                                                            <state key="normal" image="moreList"/>
+                                                            <state key="selected" image="moreList"/>
+                                                            <state key="highlighted" image="moreList"/>
                                                             <connections>
                                                                 <action selector="infoTouchUpInside:" destination="Jj4-Va-dMO" eventType="touchUpInside" id="Rsd-fg-hAE"/>
                                                             </connections>
@@ -510,9 +510,8 @@
         <image name="cancel" width="46" height="44"/>
         <image name="cancelTransfers" width="22" height="22"/>
         <image name="downloaded" width="12" height="12"/>
+        <image name="moreList" width="28" height="28"/>
         <image name="downloading" width="12" height="12"/>
-        <image name="more" width="28" height="28.5"/>
-        <image name="moreSelected" width="28" height="28"/>
         <image name="pauseTransfers" width="28" height="28"/>
         <image name="resumeTransfers" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>

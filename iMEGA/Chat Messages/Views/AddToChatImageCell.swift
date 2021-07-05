@@ -29,7 +29,7 @@ class AddToChatImageCell: UICollectionViewCell {
                 foregroundImageView.image = sendImage
             } else {
                 foregoundLabel.text = NSLocalizedString("more", comment: "")
-                let moreImage = UIImage(named: "moreSelected")?.withRenderingMode(.alwaysTemplate)
+                let moreImage = UIImage(named: "moreGrid")?.withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = moreImage
                 selectionBackgroundView.isHidden = true
                 foregroundView.isHidden = false
