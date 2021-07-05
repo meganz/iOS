@@ -1,6 +1,7 @@
 
 
 protocol ChatRoomRepositoryProtocol {
+    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity?
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity?
     func createChatRoom(forUserHandle userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, Error>) -> Void)
     func createPublicLink(forChatId chatId: UInt64, completion: @escaping (Result<String, ChatLinkError>) -> Void)
