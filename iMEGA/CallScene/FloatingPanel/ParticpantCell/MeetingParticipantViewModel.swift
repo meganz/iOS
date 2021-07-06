@@ -47,7 +47,7 @@ struct MeetingParticipantViewModel: ViewModelType {
         switch action {
         case .onViewReady(let imageSize):
             invokeCommand?(
-                .configView(isModerator: attendee.attendeeType == .moderator,
+                .configView(isModerator: attendee.attendeeType == .moderator && (chatRoomUseCase.chatRoom(forChatId: attendee.chatId)?.isGroup ?? false),
                             isMicMuted: attendee.audio == .off,
                             isVideoOn: attendee.video == .on,
                             shouldHideContextMenu: shouldHideContextMenu)
