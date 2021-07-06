@@ -40,4 +40,8 @@ class MeetingOptionsMenuViewController: ActionSheetViewController, ViewType {
             self.actions = actions
         }
     }
+    
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        viewModel?.dispatch(.dismiss)
+    }
 }
