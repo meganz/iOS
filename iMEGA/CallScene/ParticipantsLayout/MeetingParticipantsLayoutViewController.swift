@@ -50,6 +50,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .dark
+        } else {
+            navigationController?.navigationBar.barTintColor = .black
+            navigationController?.navigationBar.tintColor = .white
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         }
         
         viewModel.invokeCommand = { [weak self] in
