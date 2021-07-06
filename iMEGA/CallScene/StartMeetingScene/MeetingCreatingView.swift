@@ -43,11 +43,29 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         button.isSelected = true
         return button
     }()
-    private lazy var enableDisableSpeakerButton: UIButton  = {
+    private lazy var speakerQuickActionView: MeetingSpeakerQuickActionView  = {
+        let circularView = CircularView()
+        let iconImageView = UIImageView()
+        
         let button = UIButton()
-        button.setImage(UIImage(named: "speakerOff"), for: .normal)
-        button.setImage(UIImage(named: "speakerOn"), for: .selected)
-        return button
+        button.setTitle(nil, for: .normal)
+        button.addTarget(self, action: #selector(MeetingCreatingView.didTapSpeakerButton), for: .touchUpInside)
+
+        
+        let speakerView = MeetingSpeakerQuickActionView(circularView: circularView,
+                                                        iconImageView: iconImageView,
+                                                        nameLabel: nil,
+                                                        button: button)
+        speakerView.addSubviewSquared(circularView)
+        speakerView.addSubviewCentered(iconImageView)
+        speakerView.addSubviewSquared(button)
+        
+        speakerView.properties = MeetingQuickActionView.Properties(
+            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: .black),
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: .mnz_gray474747(), selected: .white)
+        )
+        
+        return speakerView
     }()
     private lazy var switchCameraButton: UIButton  = {
         let button = UIButton()
@@ -135,9 +153,9 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 
                 // 4 buttons
                 flex.addItem().direction(.row).justifyContent(.center).paddingBottom(16).define { flex in
-                    flex.addItem(enableDisableVideoButton).paddingHorizontal(18)
-                    flex.addItem(muteUnmuteMicrophoneButton).paddingHorizontal(18)
-                    flex.addItem(enableDisableSpeakerButton).paddingHorizontal(18)
+                    flex.addItem(enableDisableVideoButton).height(60).width(60)
+                    flex.addItem(muteUnmuteMicrophoneButton).height(60).width(60).marginLeft(36)
+                    flex.addItem(speakerQuickActionView).height(60).width(60).marginLeft(36)
                     flex.addItem(switchCameraButton).paddingHorizontal(18).display(.none)
                 }
                 
@@ -167,7 +185,6 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
 
         enableDisableVideoButton.addTarget(self, action: #selector(MeetingCreatingView.didTapVideoButton), for: .touchUpInside)
         muteUnmuteMicrophoneButton.addTarget(self, action: #selector(MeetingCreatingView.didTapMicroPhoneButton), for: .touchUpInside)
-        enableDisableSpeakerButton.addTarget(self, action: #selector(MeetingCreatingView.didTapSpeakerButton), for: .touchUpInside)
         switchCameraButton.addTarget(self, action: #selector(MeetingCreatingView.didTapSwitchCameraButton), for: .touchUpInside)
         startMeetingButton.addTarget(self, action: #selector(MeetingCreatingView.didTapStartMeetingButton), for: .touchUpInside)
 
@@ -279,8 +296,6 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             enableDisableVideoButton.isSelected = isSelected
             avatarImageView.isHidden = isSelected
             localVideoImageView.isHidden = !isSelected
-        case .updateSpeakerButton(enabled: let isSelected):
-            enableDisableSpeakerButton.isSelected = isSelected
         case .updateCameraPosition(let position):
             switchCameraButton.isSelected = position == .front ? false : true
         case .updateMicrophoneButton(enabled: let isSelected):
@@ -297,7 +312,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             meetingNameInputTextfield.isEnabled = false
             
             enableDisableVideoButton.isUserInteractionEnabled = false
-            enableDisableSpeakerButton.isUserInteractionEnabled = false
+            speakerQuickActionView.isUserInteractionEnabled = false
             muteUnmuteMicrophoneButton.isUserInteractionEnabled = false
             
             resignFirstResponder()
@@ -313,11 +328,24 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             meetingNameInputTextfield.isEnabled = true
             
             enableDisableVideoButton.isUserInteractionEnabled = true
-            enableDisableSpeakerButton.isUserInteractionEnabled = true
+            speakerQuickActionView.isUserInteractionEnabled = true
             muteUnmuteMicrophoneButton.isUserInteractionEnabled = true
         case .localVideoFrame(width: let width, height: let height, buffer: let buffer):
             guestVideoFrame(width: width, height: height, buffer: buffer)
+        case .enabledLoudSpeaker(let enabled):
+            speakerQuickActionView.isSelected = enabled
+        case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
+            selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
         }
+    }
+    
+    private func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
+        if isBluetoothRouteAvailable {
+            speakerQuickActionView.addRoutingView()
+        } else {
+            speakerQuickActionView.removeRoutingView()
+        }
+        speakerQuickActionView.selectedAudioPortUpdated(selectedAudioPort, isBluetoothRouteAvailable: isBluetoothRouteAvailable)
     }
     
     private func setNavigationTitle(_ title: String, subtitle: String) {
@@ -342,5 +370,35 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         let trimmedLastName = lastname.trimmingCharacters(in: .whitespaces)
         startMeetingButton.isEnabled = !trimmedFirstName.isEmpty && !trimmedLastName.isEmpty
         startMeetingButton.alpha = startMeetingButton.isEnabled ? 1.0 : 0.5
+    }
+}
+
+fileprivate extension UIView {
+    func addSubviewSquared(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        
+        let widthEqualAnchor = widthAnchor.constraint(equalTo: view.widthAnchor)
+        widthEqualAnchor.priority = .defaultHigh
+        
+        let heightEqualAnchor = heightAnchor.constraint(equalTo: view.heightAnchor)
+        heightEqualAnchor.priority = .defaultHigh
+        
+        [
+            centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            view.widthAnchor.constraint(equalTo: view.heightAnchor),
+            widthAnchor.constraint(greaterThanOrEqualTo: view.widthAnchor, multiplier: 1.0),
+            heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor, multiplier: 1.0),
+            widthEqualAnchor,
+            heightEqualAnchor
+        ].activate()
+    }
+    
+    func addSubviewCentered(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        [centerXAnchor.constraint(equalTo: view.centerXAnchor),
+         centerYAnchor.constraint(equalTo: view.centerYAnchor)].activate()
     }
 }

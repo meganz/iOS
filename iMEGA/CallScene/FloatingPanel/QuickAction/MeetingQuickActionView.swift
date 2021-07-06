@@ -60,6 +60,16 @@ class MeetingQuickActionView: UIView {
 }
 
 final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
+    
+    convenience init(circularView: CircularView?, iconImageView: UIImageView?, nameLabel: UILabel?, button: UIButton?) {
+        self.init()
+        self.circularView = circularView
+        self.iconImageView = iconImageView
+        self.iconImageView.image = UIImage(named: "speakerMeetingAction")
+        self.iconImageView.contentMode = .scaleAspectFit
+        self.nameLabel = nameLabel
+        self.button = button
+    }
         
     func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
         switch selectedAudioPort {
@@ -85,8 +95,7 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
         let routerPickerView = AVRoutePickerView()
         routerPickerView.tintColor = .clear
         routerPickerView.activeTintColor = .clear
-
-        fillSubview(routerPickerView)
+        wrap(routerPickerView)
     }
     
     func removeRoutingView() {
@@ -95,17 +104,5 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
         }
         
         routePickerView.removeFromSuperview()
-    }
-    
-    private func fillSubview(_ subview: UIView) {
-        addSubview(subview)
-
-        subview.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            subview.heightAnchor.constraint(equalTo: heightAnchor),
-            subview.widthAnchor.constraint(equalTo: widthAnchor),
-            subview.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subview.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
     }
 }
