@@ -528,6 +528,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) { }
     
     func chatTitleChanged(chatRoom: ChatRoomEntity) {
+        self.chatRoom = chatRoom
         guard let title = chatRoom.title else { return }
         invokeCommand?(.updateName(title))
     }
