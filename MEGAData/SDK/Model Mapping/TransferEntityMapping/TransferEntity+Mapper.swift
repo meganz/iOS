@@ -9,8 +9,8 @@ extension TransferEntity {
         // MARK: - Attributes
         
         self.startTime = transfer.startTime
-        self.transferredBytes = transfer.transferredBytes.floatValue
-        self.totalBytes = transfer.totalBytes.floatValue
+        self.transferredBytes = transfer.transferredBytes?.intValue ?? 0
+        self.totalBytes = transfer.totalBytes?.intValue ?? 0
         self.path = transfer.path
         self.parentPath = transfer.parentPath
         self.nodeHandle = transfer.nodeHandle
@@ -21,7 +21,7 @@ extension TransferEntity {
         self.numRetry = transfer.numRetry
         self.maxRetries = transfer.maxRetries
         self.tag = transfer.tag
-        self.speed = transfer.speed.intValue
+        self.speed = transfer.speed?.intValue ?? 0
         self.deltaSize = transfer.deltaSize.intValue
         self.updateTime = transfer.updateTime
         if let node = transfer.publicNode {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -43,9 +43,9 @@
                             <constraint firstAttribute="height" constant="24" id="ODK-kr-opr"/>
                             <constraint firstAttribute="width" constant="24" id="W3k-qw-2P8"/>
                         </constraints>
-                        <state key="normal" image="more"/>
-                        <state key="selected" image="moreSelected"/>
-                        <state key="highlighted" image="moreSelected"/>
+                        <state key="normal" image="moreGrid"/>
+                        <state key="selected" image="moreGrid"/>
+                        <state key="highlighted" image="moreGrid"/>
                         <connections>
                             <action selector="moreButtonTapped:" destination="nGy-SY-aBl" eventType="touchUpInside" id="Kiz-Bz-euK"/>
                         </connections>
@@ -142,8 +142,7 @@
     </objects>
     <resources>
         <image name="checkBoxUnselected" width="24" height="24"/>
-        <image name="more" width="28" height="28.5"/>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreGrid" width="24" height="24"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

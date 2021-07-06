@@ -36,7 +36,7 @@ final class TextEditorViewModelTests: XCTestCase {
             if textEditorMode == .view {
                 navbarItemsModel = TextEditorNavbarItemsModel (
                     leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-                    rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+                    rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
                     textEditorMode: textEditorMode
                 )
             } else {
@@ -103,7 +103,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsViewModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
         
@@ -119,10 +119,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeHandle: mockNodeHandle
         )
 
-        guard let transferredBytes = transferEntity.transferredBytes,
-              let totalBytes = transferEntity.totalBytes
-        else { return }
-        let percentage = transferredBytes / totalBytes
+        let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
 
         let content = "test"
         do {
@@ -187,10 +184,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeHandle: mockNodeHandle
         )
 
-        guard let transferredBytes = transferEntity.transferredBytes,
-              let totalBytes = transferEntity.totalBytes
-        else { return }
-        let percentage = transferredBytes / totalBytes
+        let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
 
         test(viewModel: viewModel,
              action: .setUpView,
@@ -244,10 +238,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeHandle: mockNodeHandle
         )
 
-        guard let transferredBytes = transferEntity.transferredBytes,
-              let totalBytes = transferEntity.totalBytes
-        else { return }
-        let percentage = transferredBytes / totalBytes
+        let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
 
         test(viewModel: viewModel,
              action: .setUpView,
@@ -300,7 +291,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
         
@@ -903,7 +894,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreSelected"),
+            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
         
@@ -1002,7 +993,7 @@ final class TextEditorViewModelTests: XCTestCase {
             numRetry: 1,
             maxRetries: 1,
             tag: 1,
-            speed: nil,
+            speed: 0,
             deltaSize: nil,
             updateTime: nil,
             publicNode: nil,

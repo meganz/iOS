@@ -332,7 +332,7 @@
                 
                 [self setTableViewEditing:NO animated:YES];
             }];
-            downloadAction.image = [UIImage imageNamed:@"offline"];
+            downloadAction.image = [[UIImage imageNamed:@"offline"] imageByTintColor:UIColor.whiteColor];
             downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction, downloadAction]];

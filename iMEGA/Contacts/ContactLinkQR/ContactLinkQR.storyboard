@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,7 +73,7 @@
                                     <constraint firstAttribute="height" constant="24" id="chP-XE-zpU"/>
                                     <constraint firstAttribute="width" constant="24" id="nxE-5y-FeU"/>
                                 </constraints>
-                                <state key="normal" image="more"/>
+                                <state key="normal" image="moreNavigationBar"/>
                                 <connections>
                                     <action selector="moreButtonTapped:" destination="lRr-EZ-fCk" eventType="touchUpInside" id="C71-0d-7pu"/>
                                 </connections>
@@ -108,7 +108,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7t-aZ-ziV">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7t-aZ-ziV">
                                 <rect key="frame" x="63" y="743" width="288" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="afg-xo-jFM"/>
@@ -145,6 +145,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="jGe-rF-yWn"/>
                         <constraints>
                             <constraint firstItem="vid-Qw-MNw" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="0ZP-Um-xo4"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="138-1C-49b"/>
@@ -180,7 +181,6 @@
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="centerX" secondItem="jGe-rF-yWn" secondAttribute="centerX" id="zDi-CW-7ig"/>
                             <constraint firstItem="jGe-rF-yWn" firstAttribute="bottom" secondItem="0up-4b-k8w" secondAttribute="bottom" constant="131" id="zyt-lI-5oJ"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="jGe-rF-yWn"/>
                     </view>
                     <connections>
                         <outlet property="avatarBackgroundView" destination="hsA-XJ-oTk" id="2Qm-fi-d8Z"/>
@@ -208,6 +208,6 @@
     </scenes>
     <resources>
         <image name="backArrow" width="13" height="21"/>
-        <image name="more" width="28" height="28.5"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
     </resources>
 </document>

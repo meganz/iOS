@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "padlock.pdf",
+      "filename" : "password.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "padlockDark.pdf",
+      "filename" : "passwordDark.pdf",
       "idiom" : "universal"
     }
   ],

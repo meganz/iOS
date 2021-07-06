@@ -236,15 +236,6 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-        if (self.searchController.active) {
-            if (UIDevice.currentDevice.iPad) {
-                if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetFrameForSearchController:self.searchController];
-                }
-            } else {
-                [Helper resetFrameForSearchController:self.searchController];
-            }
-        }
     } completion:nil];
 }
 
@@ -1312,13 +1303,13 @@
             UIContextualAction *archiveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
             }];
-            archiveAction.image = [UIImage imageNamed:@"archiveChat"];
+            archiveAction.image = [[UIImage imageNamed:@"archiveChat"] imageByTintColor:UIColor.whiteColor];
             archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             UIContextualAction *infoAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 [self showOptionsForChatAtIndexPath:indexPath];
             }];
-            infoAction.image = [UIImage imageNamed:@"moreSelected"];
+            infoAction.image = [[UIImage imageNamed:@"moreList"] imageByTintColor:UIColor.whiteColor];
             infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
             
             return [UISwipeActionsConfiguration configurationWithActions:@[archiveAction, infoAction]];

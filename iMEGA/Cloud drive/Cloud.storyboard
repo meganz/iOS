@@ -112,9 +112,9 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="46" id="tY8-f0-BUC"/>
                                                             </constraints>
-                                                            <state key="normal" image="more"/>
-                                                            <state key="selected" image="moreSelected"/>
-                                                            <state key="highlighted" image="moreSelected"/>
+                                                            <state key="normal" image="moreList"/>
+                                                            <state key="selected" image="moreList"/>
+                                                            <state key="highlighted" image="moreList"/>
                                                             <connections>
                                                                 <action selector="infoTouchUpInside:" destination="GQa-hI-CnY" eventType="touchUpInside" id="Ejq-Vf-UB9"/>
                                                             </connections>
@@ -702,7 +702,7 @@
                         <action selector="editTapped:" destination="MwH-YC-3hO" id="H7S-a5-7Tg"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" width="22" style="plain" id="TfH-jP-898" userLabel="More Minimized Bar Button Item">
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="TfH-jP-898" userLabel="More Minimized Bar Button Item">
                     <connections>
                         <action selector="moreMinimizedAction:" destination="MwH-YC-3hO" id="4Dd-LR-xOs"/>
                     </connections>
@@ -717,7 +717,7 @@
                         <action selector="selectAllAction:" destination="MwH-YC-3hO" id="UVu-sE-Ne4"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" width="22" style="plain" id="xmA-ZO-bvH" userLabel="More Bar Button Item">
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="xmA-ZO-bvH" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="moreAction:" destination="MwH-YC-3hO" id="5dm-9a-qDF"/>
                     </connections>
@@ -1026,9 +1026,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                                         <constraint firstAttribute="height" constant="24" id="6Ww-20-pQ6"/>
                                                         <constraint firstAttribute="width" constant="24" id="lt7-B2-ILt"/>
                                                     </constraints>
-                                                    <state key="normal" image="more"/>
-                                                    <state key="selected" image="moreSelected"/>
-                                                    <state key="highlighted" image="moreSelected"/>
+                                                    <state key="normal" image="moreGrid"/>
+                                                    <state key="selected" image="moreGrid"/>
+                                                    <state key="highlighted" image="moreGrid"/>
                                                     <connections>
                                                         <action selector="infoTouchUpInside:" destination="lUk-gT-Jy3" eventType="touchUpInside" id="hSY-K3-Z27"/>
                                                     </connections>
@@ -1149,9 +1149,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                                         <constraint firstAttribute="width" constant="24" id="1GT-gG-NbK"/>
                                                         <constraint firstAttribute="height" constant="24" id="Qsp-0l-RVP"/>
                                                     </constraints>
-                                                    <state key="normal" image="more"/>
-                                                    <state key="selected" image="moreSelected"/>
-                                                    <state key="highlighted" image="moreSelected"/>
+                                                    <state key="normal" image="moreList"/>
+                                                    <state key="selected" image="moreList"/>
+                                                    <state key="highlighted" image="moreList"/>
                                                     <connections>
                                                         <action selector="infoTouchUpInside:" destination="lUk-gT-Jy3" eventType="touchUpInside" id="SbC-ZS-3f4"/>
                                                     </connections>
@@ -1271,8 +1271,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="downloaded" width="12" height="12"/>
         <image name="favouriteSmall" width="12.5" height="12"/>
         <image name="linked" width="12" height="12"/>
-        <image name="more" width="28" height="28.5"/>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreGrid" width="24" height="24"/>
+        <image name="moreList" width="28" height="28"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="move" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
         <image name="readPermissions" width="24" height="24"/>

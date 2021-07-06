@@ -45,24 +45,24 @@
                                 <inset key="separatorInset" minX="110" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="trackCell" id="0HM-6I-7Wu" customClass="PlaylistItemTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="896" height="171.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="896" height="173.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0HM-6I-7Wu" id="jJS-th-AcV">
-                                            <rect key="frame" x="44" y="0.0" width="808" height="171.5"/>
+                                            <rect key="frame" x="44" y="0.0" width="808" height="173.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9nH-Mm-CMX">
-                                                    <rect key="frame" x="18" y="66" width="40" height="40"/>
+                                                    <rect key="frame" x="18" y="67" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="9nH-Mm-CMX" secondAttribute="height" multiplier="1:1" id="BEe-G9-eKj"/>
                                                         <constraint firstAttribute="height" constant="40" id="TJK-Al-luf"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="4Mf-jY-cec">
-                                                    <rect key="frame" x="68" y="12" width="730" height="147.5"/>
+                                                    <rect key="frame" x="68" y="12" width="730" height="149.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sH-gw-fBp" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="74"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="75"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -72,7 +72,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nu5-we-luX">
-                                                            <rect key="frame" x="0.0" y="74" width="50" height="73.5"/>
+                                                            <rect key="frame" x="0.0" y="75" width="50" height="74.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -646,7 +646,7 @@
                                     <constraint firstAttribute="height" constant="45" id="0lG-wo-50n"/>
                                     <constraint firstAttribute="width" secondItem="9bQ-Op-Qcm" secondAttribute="height" multiplier="1:1" id="h5V-Bb-UjV"/>
                                 </constraints>
-                                <state key="normal" image="moreOptions"/>
+                                <state key="normal" image="moreNavigationBar"/>
                                 <connections>
                                     <action selector="moreButtonPressed:" destination="lET-6j-KAM" eventType="touchUpInside" id="5ph-1J-QFP"/>
                                 </connections>
@@ -708,8 +708,7 @@
                                 <exclude reference="L9r-hl-ohL"/>
                                 <exclude reference="c3z-8D-s5c"/>
                                 <exclude reference="lpm-te-e3H"/>
-                                <exclude reference="WOv-MX-Q4Y"/>
-                                <exclude reference="kSI-EF-j8Y"/>
+                                <exclude reference="eNP-PG-M3e"/>
                                 <exclude reference="H6I-Dg-Ilp"/>
                                 <exclude reference="KR1-Y4-a45"/>
                                 <exclude reference="MeA-ba-7YW"/>
@@ -717,7 +716,8 @@
                                 <exclude reference="lvY-bn-GgQ"/>
                                 <exclude reference="g2y-ew-2bM"/>
                                 <exclude reference="ujh-ed-uvh"/>
-                                <exclude reference="eNP-PG-M3e"/>
+                                <exclude reference="WOv-MX-Q4Y"/>
+                                <exclude reference="kSI-EF-j8Y"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -728,8 +728,7 @@
                                 <include reference="c3z-8D-s5c"/>
                                 <exclude reference="lpm-te-e3H"/>
                                 <exclude reference="yAU-uZ-gKh"/>
-                                <include reference="WOv-MX-Q4Y"/>
-                                <include reference="kSI-EF-j8Y"/>
+                                <include reference="eNP-PG-M3e"/>
                                 <exclude reference="4oj-t9-lLZ"/>
                                 <exclude reference="7kC-AZ-7hY"/>
                                 <exclude reference="H6I-Dg-Ilp"/>
@@ -740,7 +739,8 @@
                                 <include reference="lvY-bn-GgQ"/>
                                 <exclude reference="Tmt-W0-6uM"/>
                                 <include reference="g2y-ew-2bM"/>
-                                <include reference="eNP-PG-M3e"/>
+                                <include reference="WOv-MX-Q4Y"/>
+                                <include reference="kSI-EF-j8Y"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -799,8 +799,8 @@
         <image name="goForward15" width="28" height="28"/>
         <image name="miniplayerClose" width="28" height="28"/>
         <image name="miniplayerPause" width="28" height="28"/>
-        <image name="moreOptions" width="28" height="28"/>
-        <image name="play" width="40" height="40"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
+        <image name="play" width="28" height="28"/>
         <image name="repeatAudio" width="28" height="28"/>
         <image name="shuffleAudio" width="28" height="28"/>
         <image name="viewPlaylist" width="28" height="28"/>
