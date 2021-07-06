@@ -71,7 +71,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mutedChat" translatesAutoresizingMaskIntoConstraints="NO" id="9Bu-tm-jlh">
-                                                                            <rect key="frame" x="74" y="0.0" width="0.0" height="24"/>
+                                                                            <rect key="frame" x="74" y="-2" width="0.0" height="28"/>
                                                                         </imageView>
                                                                         <view contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="0ef-yO-BBV">
                                                                             <rect key="frame" x="76" y="0.0" width="243" height="24"/>
@@ -437,7 +437,7 @@
                     <navigationItem key="navigationItem" id="p5b-7o-fgJ">
                         <barButtonItem key="backBarButtonItem" title=" " id="1Ub-kM-Jrr"/>
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="moreSelected" id="8yY-z6-rqz">
+                            <barButtonItem title="Item" image="moreNavigationBar" id="8yY-z6-rqz">
                                 <connections>
                                     <action selector="optionsTapped:" destination="Li1-XI-VLz" id="aB2-1V-dni"/>
                                 </connections>
@@ -1037,7 +1037,7 @@
                                 </connections>
                             </collectionView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="fAr-Ud-Er3">
-                                <rect key="frame" x="188.66666666666666" y="381.66666666666669" width="37" height="37"/>
+                                <rect key="frame" x="188.66666666666666" y="349.66666666666669" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                             <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQT-6z-YPf">
@@ -2372,8 +2372,8 @@
         <image name="locationPin" width="40" height="40"/>
         <image name="micOff" width="60" height="60"/>
         <image name="micOn" width="60" height="60"/>
-        <image name="moreSelected" width="28" height="28"/>
-        <image name="mutedChat" width="24" height="24"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
+        <image name="mutedChat" width="28" height="28"/>
         <image name="onACall" width="10" height="10"/>
         <image name="privateChat" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>
@@ -2382,7 +2382,7 @@
         <image name="remote_mic_mute" width="22" height="22"/>
         <image name="rotateOFF" width="60" height="60"/>
         <image name="rotateON" width="60" height="60"/>
-        <image name="selectAll" width="22" height="22"/>
+        <image name="selectAll" width="28" height="28"/>
         <image name="sendThisLocation" width="40" height="40"/>
         <image name="speakerOff" width="60" height="60"/>
         <image name="speakerOn" width="60" height="60"/>

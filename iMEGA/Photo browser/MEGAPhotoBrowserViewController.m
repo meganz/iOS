@@ -513,6 +513,8 @@ static const CGFloat GapBetweenPages = 10.0;
                 NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+                } else if ([MEGAReachabilityManager isReachableViaWiFi] && node.name.mnz_isImagePathExtension) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
                 } else if (node.hasPreview) {
                     [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 } else {

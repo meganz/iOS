@@ -54,7 +54,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.cancelBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
-    self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
+    self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
     self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     

@@ -138,7 +138,16 @@ static TransfersWidgetViewController* instance = nil;
             [self reloadView];
             [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         }
+        
+        if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+            [self setSelectorsFonts];
+        }
     }
+}
+
+- (void)setSelectorsFonts {
+    [self.inProgressButton.titleLabel setFont:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleSubheadline weight:UIFontWeightMedium]];
+    [self.completedButton.titleLabel setFont:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleSubheadline weight:UIFontWeightMedium]];
 }
 
 - (void)updateSelector {
@@ -146,10 +155,14 @@ static TransfersWidgetViewController* instance = nil;
     
     [self.inProgressButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.inProgressButton setTitleColor:[UIColor mnz_redForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
+    
     self.allLineView.backgroundColor = self.inProgressButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
     
     [self.completedButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.completedButton setTitleColor:[UIColor mnz_redForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
+    
+    [self setSelectorsFonts];
+    
     self.completedLineView.backgroundColor = self.completedButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
     
     switch (self.transfersSelected) {

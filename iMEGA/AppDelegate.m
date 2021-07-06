@@ -67,6 +67,12 @@
 
 #import "MEGA-Swift.h"
 
+typedef NS_ENUM(NSInteger, MEGANotificationType) {
+    MEGANotificationTypeShareFolder = 1,
+    MEGANotificationTypeChatMessage = 2,
+    MEGANotificationTypeContactRequest = 3
+};
+
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
@@ -80,7 +86,7 @@
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
-@property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
+@property (nonatomic) MEGANotificationType megatype; //1 share folder, 2 new message, 3 contact request
 
 @property (strong, nonatomic) MEGAChatRoom *chatRoom;
 @property (nonatomic, getter=isVideoCall) BOOL videoCall;
@@ -107,6 +113,8 @@
 @property (nonatomic) NSNumber *openChatLater;
 
 @property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
+
+@property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
 
 @end
 
@@ -154,7 +162,7 @@
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
-        _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
+        _megatype = (MEGANotificationType)[[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] integerValue];
     }
     
     SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
@@ -301,6 +309,8 @@
         [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
+    
+    [self.ratingRequestMonitor startMonitoring];
     
     return YES;
 }
@@ -612,6 +622,14 @@
     return _quickAccessWidgetManager;
 }
 
+- (RatingRequestMonitor *)ratingRequestMonitor {
+    if (_ratingRequestMonitor == nil) {
+        _ratingRequestMonitor = [[RatingRequestMonitor alloc] initWithSdk:MEGASdkManager.sharedMEGASdk];
+    }
+    
+    return _ratingRequestMonitor;
+}
+
 #pragma mark - Private
 
 - (void)beginBackgroundTaskWithName:(NSString *)name {
@@ -814,15 +832,15 @@
 - (void)openTabBasedOnNotificationMegatype {
     NSUInteger tabTag = 0;
     switch (self.megatype) {
-        case 1:
+        case MEGANotificationTypeShareFolder:
             tabTag = TabTypeSharedItems;
             break;
             
-        case 2:
+        case MEGANotificationTypeChatMessage:
             tabTag = TabTypeChat;
             break;
             
-        case 3:
+        case MEGANotificationTypeContactRequest:
             tabTag = TabTypeHome;
             break;
             
@@ -831,7 +849,7 @@
     }
     
     self.mainTBC.selectedIndex = tabTag;
-    if (self.megatype == 3) {
+    if (self.megatype == MEGANotificationTypeContactRequest) {
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         [navigationController pushViewController:contactsVC animated:NO];
@@ -1288,10 +1306,14 @@
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"userNotificationCenter didReceiveNotificationResponse %@", response);
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
+    self.megatype = (MEGANotificationType)[response.notification.request.content.userInfo[@"megatype"] integerValue];
     
     if (self.mainTBC) {
-        [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
-    } else {
+        [self openTabBasedOnNotificationMegatype];
+        if (self.megatype == MEGANotificationTypeChatMessage){
+            [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
+        }
+    } else if (self.megatype == MEGANotificationTypeChatMessage){
         self.openChatLater = response.notification.request.content.userInfo[@"chatId"];
     }
     
@@ -1811,6 +1833,13 @@
             break;
         }
             
+        case MEGARequestTypeShare: {
+            if (request.access != MEGANodeAccessLevelAccessUnknown) {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAShareCreatedNotification object:nil];
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -1996,6 +2025,8 @@
         
         [transfer mnz_setNodeCoordinates];
     }
+    
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferFinishedNotification object:nil userInfo:@{MEGATransferUserInfoKey : transfer}];
 }
 
 #pragma mark - MEGAApplicationDelegate

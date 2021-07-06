@@ -672,7 +672,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
+        self.editBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];

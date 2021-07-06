@@ -41,16 +41,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQ5-04-k4z">
-                                <rect key="frame" x="0.0" y="44" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="aED-R9-RNX">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jG1-zV-rlv">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="138" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7H-d7-rZL">
-                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="44"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" image="incomingSegmentControler"/>
                                                         <state key="selected">
@@ -61,13 +61,13 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incoming" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeD-FR-O0m">
-                                                        <rect key="frame" x="0.0" y="25" width="200" height="12"/>
+                                                        <rect key="frame" x="0.0" y="25" width="138" height="12"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sda-hY-kL3">
-                                                        <rect key="frame" x="0.0" y="43" width="200" height="1"/>
+                                                        <rect key="frame" x="0.0" y="43" width="138" height="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="GCM-NW-gf5"/>
                                                         </constraints>
@@ -87,10 +87,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i0g-8u-weC">
-                                                <rect key="frame" x="200" y="0.0" width="200" height="44"/>
+                                                <rect key="frame" x="138" y="0.0" width="138" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrF-Sh-NQN">
-                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="44"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" image="outgoingSegmentControler"/>
                                                         <state key="selected">
@@ -101,13 +101,13 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outgoing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BdG-cC-WBf">
-                                                        <rect key="frame" x="0.0" y="25" width="200" height="12"/>
+                                                        <rect key="frame" x="0.0" y="25" width="138" height="12"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7So-eg-Rwh">
-                                                        <rect key="frame" x="0.0" y="43" width="200" height="1"/>
+                                                        <rect key="frame" x="0.0" y="43" width="138" height="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="Qie-hd-HOg"/>
                                                         </constraints>
@@ -127,10 +127,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nI0-PD-DCd">
-                                                <rect key="frame" x="400" y="0.0" width="200" height="44"/>
+                                                <rect key="frame" x="276" y="0.0" width="138" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHD-aL-jy5">
-                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="44"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" image="linksSegmentControler"/>
                                                         <state key="selected">
@@ -141,13 +141,13 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Links" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eL3-U7-wf3">
-                                                        <rect key="frame" x="0.0" y="25" width="200" height="12"/>
+                                                        <rect key="frame" x="0.0" y="25" width="138" height="12"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9uF-Cm-O0m">
-                                                        <rect key="frame" x="0.0" y="43" width="200" height="1"/>
+                                                        <rect key="frame" x="0.0" y="43" width="138" height="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="hZk-d8-BeY"/>
                                                         </constraints>
@@ -178,18 +178,18 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-wE-0j5">
-                                <rect key="frame" x="0.0" y="88" width="600" height="512"/>
+                                <rect key="frame" x="0.0" y="132" width="414" height="730"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sharedItemsTableViewCell" rowHeight="60" id="SaV-xG-Opx" customClass="SharedItemsTableViewCell">
-                                        <rect key="frame" x="0.0" y="24.5" width="600" height="60"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SaV-xG-Opx" id="gwY-ut-l2M">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezv-Ua-cSf" userLabel="Main View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d1A-d3-Oot">
                                                             <rect key="frame" x="10" y="10" width="40" height="40.5"/>
@@ -213,7 +213,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kGf-9q-GJz" userLabel="Permissions Button">
-                                                            <rect key="frame" x="504" y="7" width="46" height="46"/>
+                                                            <rect key="frame" x="312" y="7" width="46" height="46"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="46" id="T6U-hC-sm9"/>
                                                                 <constraint firstAttribute="height" constant="46" id="yy1-8j-byg"/>
@@ -224,12 +224,12 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V39-yb-rzt" userLabel="Info Button">
-                                                            <rect key="frame" x="554" y="8" width="46" height="44"/>
+                                                            <rect key="frame" x="362" y="8" width="46" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="46" id="7Gi-3P-zPH"/>
                                                                 <constraint firstAttribute="height" constant="44" id="LDg-dE-nbg"/>
                                                             </constraints>
-                                                            <state key="normal" image="more"/>
+                                                            <state key="normal" image="moreList"/>
                                                             <connections>
                                                                 <action selector="infoTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="93d-dk-EKl"/>
                                                             </connections>
@@ -324,24 +324,24 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationLevel="1" indentationWidth="60" shouldIndentWhileEditing="NO" reuseIdentifier="nodeCell" rowHeight="60" id="kaG-HS-c3J" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="84.5" width="600" height="60"/>
+                                        <rect key="frame" x="0.0" y="84.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="kaG-HS-c3J" id="Rsx-Ay-bqc">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="awD-CO-svf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2b-Xc-xcs" userLabel="Info Button">
-                                                            <rect key="frame" x="548" y="8" width="46" height="44"/>
+                                                            <rect key="frame" x="362" y="8" width="46" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="44" id="H1E-rH-uAf"/>
                                                                 <constraint firstAttribute="width" constant="46" id="J6U-Al-2mi"/>
                                                             </constraints>
-                                                            <state key="normal" image="more"/>
-                                                            <state key="selected" image="moreSelected"/>
-                                                            <state key="highlighted" image="moreSelected"/>
+                                                            <state key="normal" image="moreList"/>
+                                                            <state key="selected" image="moreList"/>
+                                                            <state key="highlighted" image="moreList"/>
                                                             <connections>
                                                                 <action selector="infoTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="wvK-Az-kmd"/>
                                                             </connections>
@@ -537,7 +537,7 @@
                         <action selector="selectAllAction:" destination="2AR-na-hSZ" id="Nrq-Bj-fhr"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" width="22" style="plain" id="5z2-p0-4RD" userLabel="Edit Bar Button Item">
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="5z2-p0-4RD" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="2AR-na-hSZ" id="un2-ST-0gb"/>
                     </connections>
@@ -594,8 +594,8 @@
         <image name="incomingSegmentControler" width="24" height="24"/>
         <image name="leaveShare" width="28" height="28"/>
         <image name="linksSegmentControler" width="24" height="24"/>
-        <image name="more" width="28" height="28.5"/>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreList" width="28" height="28"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
         <image name="outgoingSegmentControler" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>

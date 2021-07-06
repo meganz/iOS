@@ -127,7 +127,7 @@ extension TextEditorViewController: ViewType {
                 action: #selector(closeTapped)
             )
             navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: navbarItemsModel.rightItem?.imageName ?? "moreSelected"),
+                image: UIImage(named: navbarItemsModel.rightItem?.imageName ?? "moreNavigationBar"),
                 style: .plain,
                 target: self,
                 action: #selector(moreTapped(button:))

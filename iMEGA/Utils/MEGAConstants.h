@@ -34,10 +34,13 @@ extern NSString * const MEGAOpenChatRoomFromPushNotification;
 extern NSString * const MEGAPasscodeViewControllerWillCloseNotification;
 extern NSString * const MEGAAudioPlayerInterruptionNotification;
 extern NSString * const MEGASQLiteDiskFullNotification;
+extern NSString * const MEGATransferFinishedNotification;
+extern NSString * const MEGAShareCreatedNotification;
 
 #pragma mark - global notification keys
 
 extern NSString * const MEGAStorageEventStateUserInfoKey;
+extern NSString * const MEGATransferUserInfoKey;
 
 #pragma mark - camera upload notifications
 
