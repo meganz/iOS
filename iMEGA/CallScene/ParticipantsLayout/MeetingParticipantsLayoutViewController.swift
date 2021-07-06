@@ -274,7 +274,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         if !(isUserAGuest ?? false) {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(self.didTapOptionsButton)),
+        navigationItem.rightBarButtonItems = [optionsMenuButton,
                                               layoutModeBarButton]
     }
     

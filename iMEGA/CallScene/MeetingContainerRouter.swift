@@ -145,8 +145,11 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                          isMyselfModerator: Bool,
                          containerViewModel: MeetingContainerViewModel) {
                 
-        let optionsMenuRouter = MeetingOptionsMenuRouter(presenter: presenter, sender: sender, isMyselfModerator: isMyselfModerator, chatRoom: chatRoom, containerViewModel: containerViewModel)
-        
+        let optionsMenuRouter = MeetingOptionsMenuRouter(presenter: presenter,
+                                                         sender: sender,
+                                                         isMyselfModerator: isMyselfModerator,
+                                                         chatRoom: chatRoom,
+                                                         containerViewModel: containerViewModel)
         optionsMenuRouter.start()
     }
     
