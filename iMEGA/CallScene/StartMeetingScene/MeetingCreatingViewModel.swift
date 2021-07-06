@@ -26,12 +26,13 @@ final class MeetingCreatingViewModel: ViewModelType {
         case updateMeetingName(String)
         case updateAvatarImage(UIImage)
         case updateVideoButton(enabled: Bool)
-        case updateSpeakerButton(enabled: Bool)
         case updateMicrophoneButton(enabled: Bool)
         case updateCameraPosition(position: CameraPosition)
         case loadingStartMeeting
         case loadingEndMeeting
         case localVideoFrame(width: Int, height: Int, buffer: Data!)
+        case enabledLoudSpeaker(enabled: Bool)
+        case updatedAudioPortSelection(audioPort: AudioPort,bluetoothAudioRouteAvailable: Bool)
     }
     
     // MARK: - Private properties
@@ -54,7 +55,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let userUseCase: UserUseCaseProtocol
 
     private var isVideoEnabled = false
-    private var isSpeakerEnabled = false
+    private var isSpeakerEnabled = true
     private var isMicrophoneEnabled = false
     private var userHandle: UInt64
     
@@ -99,7 +100,18 @@ final class MeetingCreatingViewModel: ViewModelType {
     func dispatch(_ action: MeetingCreatingViewAction) {
         switch action {
         case .onViewReady:
-            checkForAudioPermissionAndUpdateUI()
+            audioSessionUseCase.configureAudioSession()
+            audioSessionUseCase.routeChanged { [weak self] routeChangedReason in
+                guard let self = self else { return }
+                self.sessionRouteChanged(routeChangedReason: routeChangedReason)
+            }
+            if audioSessionUseCase.isBluetoothAudioRouteAvailable {
+                isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
+                updateSpeakerInfo()
+            } else {
+                enableLoudSpeaker(enabled: isSpeakerEnabled)
+            }
+            devicePermissionUseCase.getAudioAuthorizationStatus{ _ in  }
             selectFrontCameraIfNeeded()
             switch type {
             case .join, .guestJoin:
@@ -138,8 +150,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             }
         case .didTapSpeakerButton:
             isSpeakerEnabled = !isSpeakerEnabled
-            invokeCommand?(.updateSpeakerButton(enabled: isSpeakerEnabled))
-            updateSpeaker()
+            enableLoudSpeaker(enabled: isSpeakerEnabled)
         case .didTapStartMeetingButton:
             disableLocalVideoIfNeeded()
             switch type {
@@ -189,20 +200,22 @@ final class MeetingCreatingViewModel: ViewModelType {
         }
     }
     
-    private func updateSpeaker() {
-        if isSpeakerEnabled {
-            audioSessionUseCase.enableLoudSpeaker { result in
+    private func enableLoudSpeaker(enabled: Bool) {
+        if enabled {
+            audioSessionUseCase.enableLoudSpeaker { [weak self] result in
                 switch result {
                 case .success(_):
+                    self?.invokeCommand?(.enabledLoudSpeaker(enabled: true))
                     MEGALogDebug("Create Meeting: Loud speaker enabled")
                 case .failure(_):
                     MEGALogDebug("Create Meeting: Failed to enable loud speaker")
                 }
             }
         } else {
-            audioSessionUseCase.disableLoudSpeaker { result in
+            audioSessionUseCase.disableLoudSpeaker { [weak self] result in
                 switch result {
                 case .success(_):
+                    self?.invokeCommand?(.enabledLoudSpeaker(enabled: false))
                     MEGALogDebug("Create Meeting: Loud speaker disabled")
                 case .failure(_):
                     MEGALogDebug("Create Meeting: Failed to disable loud speaker")
@@ -295,15 +308,6 @@ final class MeetingCreatingViewModel: ViewModelType {
         }
     }
     
-    private func checkForAudioPermissionAndUpdateUI() {
-        devicePermissionUseCase.getAudioAuthorizationStatus { [self] granted in
-            DispatchQueue.main.async {
-                self.isMicrophoneEnabled = granted
-                self.invokeCommand?(.updateMicrophoneButton(enabled: self.isMicrophoneEnabled))
-            }
-        }
-    }
-    
     private func checkChatLink(link: String) {
         invokeCommand?(.loadingStartMeeting)
         
@@ -362,6 +366,22 @@ final class MeetingCreatingViewModel: ViewModelType {
         if isVideoEnabled {
             localVideoUseCase.removeLocalVideo(for: 123, callbacksDelegate: self)
         }
+    }
+    
+    private func updateSpeakerInfo() {
+        let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
+        let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
+        MEGALogDebug("Create meeting: updating speaker info with selected port \(currentSelectedPort) bluetooth available \(isBluetoothAvailable)")
+        invokeCommand?(
+            .updatedAudioPortSelection(audioPort: currentSelectedPort,
+                                       bluetoothAudioRouteAvailable: isBluetoothAvailable)
+        )
+    }
+    
+    private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
+        MEGALogDebug("Create meeting: session route changed with \(routeChangedReason) , current port \(audioSessionUseCase.currentSelectedAudioPort)")
+        isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
+        updateSpeakerInfo()
     }
 }
 

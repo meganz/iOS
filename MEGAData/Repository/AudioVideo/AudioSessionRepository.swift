@@ -13,11 +13,12 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             return .unknown
         }
         
+        MEGALogDebug("AudioSession: current selected audio port is \(portType)")
         switch portType {
         case .builtInReceiver: return .builtInReceiver
         case .builtInSpeaker: return .builtInSpeaker
         case .headphones: return .headphones
-        default: return .unknown
+        default: return .other
         }
     }
 
@@ -29,6 +30,16 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     deinit {
         removeObservers()
     }
+    
+    func configureAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch (let error) {
+            MEGALogError("[AudioPlayer] AVAudioSession Error: \(error.localizedDescription)")
+        }
+    }
+    
     
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
         MEGALogDebug("AudioSession: enabling loud speaker")
@@ -75,21 +86,17 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     @objc private func sessionRouteChanged(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
-              let routeChangeReason = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt else {
+              let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+              let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
             return
         }
         
-        MEGALogDebug("AudioSession: session route changed with info \(userInfo)")
-
-        switch routeChangeReason {
-        case AVAudioSession.RouteChangeReason.override.rawValue:
-            routeChanged?(.override)
-            
-        case AVAudioSession.RouteChangeReason.categoryChange.rawValue:
-            routeChanged?(.categoryChange)
-            
-        default:
-            routeChanged?(.generic)
+        MEGALogDebug("AudioSession: session route changed \(notification) with current selected port \(currentSelectedAudioPort)")
+        
+        if let handler = routeChanged, let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
+            handler(audioSessionRouteChangeReason)
+        } else {
+            MEGALogDebug("Either the handler is nil or the audioSessionRouteChangeReason is nil")
         }
     }
 }
@@ -105,6 +112,22 @@ extension AudioPort {
             return .headphones
         default:
             return nil
+        }
+    }
+}
+
+extension AVAudioSession.RouteChangeReason {
+    func toAudioSessionRouteChangedReason() -> AudioSessionRouteChangedReason? {
+        switch self {
+        case .unknown: return .unknown
+        case .newDeviceAvailable: return .newDeviceAvailable
+        case .oldDeviceUnavailable: return .oldDeviceUnavailable
+        case .categoryChange: return .categoryChange
+        case .override: return .override
+        case .wakeFromSleep: return .wakeFromSleep
+        case .noSuitableRouteForCategory: return .noSuitableRouteForCategory
+        case .routeConfigurationChange: return .routeConfigurationChange
+        @unknown default: return nil
         }
     }
 }
