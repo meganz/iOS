@@ -1,6 +1,7 @@
 
 protocol CallsCollectionViewScrollDelegate: AnyObject {
     func collectionViewDidChangeOffset(to page: Int)
+    func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath)
 }
 
 class CallsCollectionView: UICollectionView {
@@ -42,6 +43,18 @@ class CallsCollectionView: UICollectionView {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         scrollDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)))
     }
+    
+    func configurePinnedCell(at indexPath: IndexPath?) {
+        visibleCells.forEach { cell in
+            cell.borderWidth = 0
+        }
+        
+        guard let indexPath = indexPath, let pinnedCell = cellForItem(at: indexPath) else {
+            return
+        }
+        pinnedCell.borderWidth = 1
+        pinnedCell.borderColor = .systemYellow
+    }
 }
 
 extension CallsCollectionView: UICollectionViewDataSource {
@@ -55,6 +68,15 @@ extension CallsCollectionView: UICollectionViewDataSource {
         }
         cell.configure(for: callParticipants[indexPath.item], in: layoutMode)
         return cell
+    }
+}
+
+extension CallsCollectionView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard layoutMode == .speaker, let selectedParticipant = callParticipants[safe: indexPath.item] else {
+            return
+        }
+        scrollDelegate?.collectionViewDidSelectParticipant(participant:selectedParticipant, at: indexPath)
     }
 }
 
