@@ -61,7 +61,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         
         navigationItem.titleView = titleView
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapBackgroundView)))
         
         viewModel.dispatch(.onViewLoaded)
     }
@@ -169,6 +168,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             removeEmptyRoomMessageView()
         case .updateHasLocalAudio(let audio):
             localUserView.localAudio(enabled: audio)
+        case .selectPinnedCellAt(let indexPath):
+            callsCollectionView.configurePinnedCell(at: indexPath)
         }
     }
     
@@ -185,8 +186,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         viewModel.dispatch(.tapOnOptionsMenuButton(presenter: navigationController ?? self, sender: optionsMenuButton))
     }
     
-    @objc func didTapBackgroundView() {
-        viewModel.dispatch(.tapOnView)
+    @IBAction func didTapBagkgroundView(_ sender: UITapGestureRecognizer) {
+        let yPosition = sender.location(in: callsCollectionView).y
+        viewModel.dispatch(.tapOnView(onParticipant: yPosition > 0 && yPosition < callsCollectionView.frame.height))
     }
     
     //MARK: - Private
@@ -196,7 +198,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .grid:
             layoutModeBarButton.image = UIImage(named: "speakerView")
         case .speaker:
-            layoutModeBarButton.image = UIImage(named: "thumbnailsThin")
+            layoutModeBarButton.image = UIImage(named: "galleryView")
         }
         speakerViews.forEach { $0.isHidden = mode == .grid }
         pageControl.isHidden = mode == .speaker
@@ -322,5 +324,9 @@ extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate 
 extension MeetingParticipantsLayoutViewController: CallsCollectionViewScrollDelegate {
     func collectionViewDidChangeOffset(to page: Int) {
         pageControl.currentPage = page
+    }
+    
+    func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath) {
+        viewModel.dispatch(.tapParticipantToPinAsSpeaker(participant, indexPath))
     }
 }
