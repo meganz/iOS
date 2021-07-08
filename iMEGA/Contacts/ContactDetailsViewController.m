@@ -573,7 +573,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             }
         }];
         
-        [[CallActionManager shared] startCallWithChatId:chatRoom.chatId enableVideo:videoCall enableAudio:YES delegate:startCallDelegate];
+        [[CallActionManager shared] startCallWithChatId:chatRoom.chatId
+                                            enableVideo:videoCall
+                                            enableAudio:!self.chatRoom.isMeeting
+                                               delegate:startCallDelegate];
     }
 }
 

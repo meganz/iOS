@@ -526,7 +526,10 @@
     }];
     
     MEGALogWarning(@"[CallKit] Answering call for chat id %@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId]);
-    [[CallActionManager shared] answerCallWithChatId:chatRoom.chatId enableVideo:call.hasLocalVideo enableAudio:YES delegate:answerCallRequestDelegate];
+    [[CallActionManager shared] answerCallWithChatId:chatRoom.chatId
+                                         enableVideo:call.hasLocalVideo
+                                         enableAudio:!chatRoom.isMeeting
+                                            delegate:answerCallRequestDelegate];
 }
 
 @end
