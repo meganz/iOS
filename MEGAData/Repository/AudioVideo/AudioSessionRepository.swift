@@ -13,7 +13,6 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             return .unknown
         }
         
-        MEGALogDebug("AudioSession: current selected audio port is \(portType)")
         switch portType {
         case .builtInReceiver: return .builtInReceiver
         case .builtInSpeaker: return .builtInSpeaker
@@ -92,11 +91,28 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
         
         MEGALogDebug("AudioSession: session route changed \(notification) with current selected port \(currentSelectedAudioPort)")
+            
+        // Enabling webrtc audio changes the audio output from speaker to inbuilt receiver.
+        // So we need to revert back to original settings.
+        let currentAudioPort = currentSelectedAudioPort
+        if reason == .categoryChange,
+           let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription,
+           let previousAudioPort = previousRoute.outputs.first?.toAudioPort(),
+           CallActionManager.shared.didEnableWebrtcAudioNow,
+           previousAudioPort == .builtInSpeaker,
+           currentAudioPort == .builtInReceiver {
+            MEGALogDebug("AudioSession: The route is changed is because of the webrtc audio")
+            CallActionManager.shared.didEnableWebrtcAudioNow = false
+            enableLoudSpeaker { _ in }
+            return
+        } else if CallActionManager.shared.didEnableWebrtcAudioNow {
+            CallActionManager.shared.didEnableWebrtcAudioNow = false
+        }
         
         if let handler = routeChanged, let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
             handler(audioSessionRouteChangeReason)
         } else {
-            MEGALogDebug("Either the handler is nil or the audioSessionRouteChangeReason is nil")
+            MEGALogDebug("AudioSession: Either the handler is nil or the audioSessionRouteChangeReason is nil")
         }
     }
 }
@@ -128,6 +144,21 @@ extension AVAudioSession.RouteChangeReason {
         case .noSuitableRouteForCategory: return .noSuitableRouteForCategory
         case .routeConfigurationChange: return .routeConfigurationChange
         @unknown default: return nil
+        }
+    }
+}
+
+extension AVAudioSessionPortDescription {
+    func toAudioPort() -> AudioPort {
+        switch self.portType {
+        case .builtInSpeaker:
+            return .builtInSpeaker
+        case .builtInReceiver:
+            return .builtInReceiver
+        case .headphones:
+            return .headphones
+        default:
+            return .other
         }
     }
 }

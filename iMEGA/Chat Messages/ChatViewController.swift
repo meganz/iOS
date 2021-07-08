@@ -997,7 +997,10 @@ class ChatViewController: MessagesViewController {
         
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
-        CallActionManager.shared.startCall(chatId: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: startCallDelegate)
+        CallActionManager.shared.startCall(chatId:chatRoom.chatId,
+                                           enableVideo:isVideoEnabled,
+                                           enableAudio:!chatRoom.isMeeting,
+                                           delegate:startCallDelegate)
     }
     
     private func answerCall(isVideoEnabled: Bool) {
@@ -1012,7 +1015,10 @@ class ChatViewController: MessagesViewController {
         
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
-        CallActionManager.shared.answerCall(chatId: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: true, delegate: delegate)
+        CallActionManager.shared.answerCall(chatId:chatRoom.chatId,
+                                            enableVideo:isVideoEnabled,
+                                            enableAudio:!chatRoom.isMeeting,
+                                            delegate:delegate)
     }
     
     private func joinActiveCall(isVideoEnabled: Bool) {

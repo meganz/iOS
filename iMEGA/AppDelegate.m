@@ -948,7 +948,10 @@
         self.chatRoom = nil;
     }];
     
-    [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId enableVideo:self.videoCall enableAudio:YES delegate:requestDelegate];
+    [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId
+                                        enableVideo:self.videoCall
+                                        enableAudio:!self.chatRoom.isMeeting
+                                           delegate:requestDelegate];
 }
 
 - (void)presentInviteContactCustomAlertViewController {
