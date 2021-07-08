@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Configure audio session for calls. Category: play and record, mode: voice chat.
 - (void)mnz_configureAVSessionForCall;
 
+/// Activates the audio session
+- (void)mnz_activate;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -943,11 +943,14 @@
             [self performCallWithPresenter:self.mainTBC
                                   chatRoom:self.chatRoom
                             isVideoEnabled:self.videoCall
-                          isSpeakerEnabled:NO];
+                          isSpeakerEnabled:self.chatRoom.isMeeting];
         }
         self.chatRoom = nil;
     }];
     
+    [[AVAudioSession sharedInstance] mnz_configureAVSessionForCall];
+    [[AVAudioSession sharedInstance] mnz_activate];
+    [[AVAudioSession sharedInstance] mnz_setSpeakerEnabled:self.chatRoom.isMeeting];
     [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId
                                         enableVideo:self.videoCall
                                         enableAudio:!self.chatRoom.isMeeting

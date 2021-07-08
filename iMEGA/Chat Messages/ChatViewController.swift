@@ -992,11 +992,14 @@ class ChatViewController: MessagesViewController {
                 return
             }
             
-            self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: false)
+            self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: self.chatRoom.isMeeting)
         }
         
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
+        AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
+        AVAudioSession.sharedInstance().mnz_activate()
+        AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(chatRoom.isMeeting)
         CallActionManager.shared.startCall(chatId:chatRoom.chatId,
                                            enableVideo:isVideoEnabled,
                                            enableAudio:!chatRoom.isMeeting,
@@ -1015,6 +1018,10 @@ class ChatViewController: MessagesViewController {
         
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
+        
+        AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
+        AVAudioSession.sharedInstance().mnz_activate()
+        AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(chatRoom.isMeeting)
         CallActionManager.shared.answerCall(chatId:chatRoom.chatId,
                                             enableVideo:isVideoEnabled,
                                             enableAudio:!chatRoom.isMeeting,

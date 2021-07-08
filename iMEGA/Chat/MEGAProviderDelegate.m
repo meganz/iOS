@@ -21,6 +21,8 @@
 @property (strong, nonatomic) AVAudioPlayer *player;
 
 @property (getter=isOutgoingCall) BOOL outgoingCall;
+@property (getter=isCallKitAnsweredCall) BOOL callKitAnsweredCall;
+@property (nonatomic, strong) NSNumber *answeredChatId;
 
 @property (nonatomic, strong) NSNumber *callId;
 @property (nonatomic, strong) NSNumber *chatId;
@@ -371,6 +373,16 @@
 - (void)provider:(CXProvider *)provider didActivateAudioSession:(AVAudioSession *)audioSession {
     MEGALogDebug(@"[CallKit] Provider did activate audio session");
     
+    if (self.isCallKitAnsweredCall) {
+        self.callKitAnsweredCall = NO;
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.answeredChatId.unsignedLongLongValue];
+        MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatRoom.chatId];
+        if (chatCall != nil) {
+            MEGALogDebug(@"[CallKit] Loud speaker is %d", chatRoom.isMeeting);
+            [audioSession mnz_setSpeakerEnabled:chatRoom.isMeeting];
+        }
+    }
+    
     if (self.isOutgoingCall) {
         NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
@@ -526,6 +538,9 @@
     }];
     
     MEGALogWarning(@"[CallKit] Answering call for chat id %@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId]);
+    self.callKitAnsweredCall = YES;
+    self.answeredChatId = @(chatRoom.chatId);
+    [[AVAudioSession sharedInstance] mnz_setSpeakerEnabled:chatRoom.isMeeting];
     [[CallActionManager shared] answerCallWithChatId:chatRoom.chatId
                                          enableVideo:call.hasLocalVideo
                                          enableAudio:!chatRoom.isMeeting

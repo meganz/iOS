@@ -131,4 +131,13 @@
     }
 }
 
+- (void)mnz_activate {
+    NSError *error;
+    [AVAudioSession.sharedInstance setActive:YES error:&error];
+    if (error) {
+        MEGALogError(@"[AVAudioSession] set active error: %@", error);
+        error = nil;
+    }
+}
+
 @end

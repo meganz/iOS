@@ -100,7 +100,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             
             dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? false)))
-            configureSpeaker()
+            updateSpeakerInfo()
         case .hangCall(let presenter):
             if let call = call {
                 if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
@@ -164,19 +164,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     //MARK:- Private methods
-    private func configureSpeaker() {
-        if isSpeakerEnabled && audioSessionUseCase.currentSelectedAudioPort != .builtInSpeaker {
-            MEGALogDebug("Meetings: configure enable loud speaker")
-            enableSpeaker()
-        } else if !isSpeakerEnabled && audioSessionUseCase.currentSelectedAudioPort == .builtInSpeaker {
-            MEGALogDebug("Meetings: configure disable loud speaker")
-            disableLoudSpeaker()
-        } else {
-            MEGALogDebug("Meetings: configure update speaker info")
-            updateSpeakerInfo()
-        }
-    }
-    
     private func enableLoudSpeaker(completion: (() -> Void)? = nil) {
         audioSessionUseCase.enableLoudSpeaker { result in
             switch result {
