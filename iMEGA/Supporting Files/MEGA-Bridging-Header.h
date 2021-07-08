@@ -153,5 +153,4 @@
 #import "PhotosViewController.h"
 #import "SharedItemsViewController.h"
 #import "RTCAudioSession.h"
-#import "RTCAudioSessionConfiguration.h"
 
