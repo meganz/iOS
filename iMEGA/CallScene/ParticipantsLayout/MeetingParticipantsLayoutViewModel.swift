@@ -7,7 +7,7 @@ protocol MeetingParticipantsLayoutRouting: Routing {
 enum CallViewAction: ActionType {
     case onViewLoaded
     case onViewReady
-    case tapOnView(onParticipant: Bool)
+    case tapOnView(onParticipantsView: Bool)
     case tapOnLayoutModeButton
     case tapOnOptionsMenuButton(presenter: UIViewController, sender: UIBarButtonItem)
     case tapOnBackButton
@@ -61,6 +61,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case hideEmptyRoomMessage
         case updateHasLocalAudio(Bool)
         case selectPinnedCellAt(IndexPath?)
+        case shouldHideSpeakerView(Bool)
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -279,8 +280,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         case .onViewReady:
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
-        case .tapOnView(let onParticipant):
-            if onParticipant && layoutMode == .speaker {
+        case .tapOnView(let onParticipantsView):
+            if onParticipantsView && layoutMode == .speaker && !callParticipants.isEmpty {
                 return
             }
             invokeCommand?(.switchMenusVisibility)
@@ -326,10 +327,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func tappedParticipant(_ participant: CallParticipantEntity, at indexPath: IndexPath) {
         if !isSpeakerParticipantPinned || (isSpeakerParticipantPinned && speakerParticipant != participant) {
             speakerParticipant?.speakerVideoDataDelegate = nil
+            speakerParticipant?.isSpeakerPinned = false
             isSpeakerParticipantPinned = true
+            participant.isSpeakerPinned = true
             speakerParticipant = participant
             invokeCommand?(.selectPinnedCellAt(indexPath))
         } else {
+            participant.isSpeakerPinned = false
             isSpeakerParticipantPinned = false
             invokeCommand?(.selectPinnedCellAt(nil))
         }
@@ -405,6 +409,10 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             }
             self?.callParticipants.append(attendee)
             self?.invokeCommand?(.insertParticipant(self?.callParticipants ?? []))
+            if self?.callParticipants.count == 1 && self?.layoutMode == .speaker {
+                self?.invokeCommand?(.shouldHideSpeakerView(false))
+                self?.speakerParticipant = self?.callParticipants.first
+            }
             if self?.layoutMode == .grid {
                 self?.invokeCommand?(.updatePageControl(self?.callParticipants.count ?? 0))
             }
@@ -422,8 +430,13 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             
-            if callParticipants.isEmpty && chatRoom.isMeeting {
-                invokeCommand?(.showNoOneElseHereMessage)
+            if callParticipants.isEmpty {
+                if chatRoom.isMeeting {
+                    invokeCommand?(.showNoOneElseHereMessage)
+                }
+                if layoutMode == .speaker {
+                    invokeCommand?(.shouldHideSpeakerView(true))
+                }
             }
             
             if layoutMode == .grid {

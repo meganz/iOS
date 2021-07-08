@@ -34,7 +34,8 @@ final class CallParticipantEntity: Equatable {
     var videoResolution: CallParticipantVideoResolution
     weak var videoDataDelegate: CallParticipantVideoDelegate?
     weak var speakerVideoDataDelegate: CallParticipantVideoDelegate?
-    
+    var isSpeakerPinned: Bool = false
+
     init(chatId: MEGAHandle,
          participantId: MEGAHandle,
          clientId: MEGAHandle,
