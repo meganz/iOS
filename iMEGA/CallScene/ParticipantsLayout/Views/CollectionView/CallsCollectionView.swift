@@ -47,6 +47,7 @@ class CallsCollectionView: UICollectionView {
     func configurePinnedCell(at indexPath: IndexPath?) {
         visibleCells.forEach { cell in
             cell.borderWidth = 0
+            cell.borderColor = .clear
         }
         
         guard let indexPath = indexPath, let pinnedCell = cellForItem(at: indexPath) else {
