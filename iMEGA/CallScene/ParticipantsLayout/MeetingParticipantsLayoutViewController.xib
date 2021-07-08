@@ -81,6 +81,9 @@
                         <constraint firstItem="cBL-OH-Rsv" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.4" id="azD-Ck-dbP"/>
                         <constraint firstItem="w6k-iw-iFa" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.2" id="f7y-wY-eW4"/>
                     </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="WAH-dH-DYg" appends="YES" id="92l-gZ-x0L"/>
+                    </connections>
                 </stackView>
                 <view hidden="YES" contentMode="scaleToFill" id="zKP-u0-Mn5" customClass="LocalUserView" customModule="MEGA" customModuleProvider="target">
                     <rect key="frame" x="16" y="104" width="75" height="134"/>
@@ -146,6 +149,12 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-209" y="-522"/>
         </view>
+        <tapGestureRecognizer cancelsTouchesInView="NO" id="WAH-dH-DYg">
+            <connections>
+                <action selector="didTapBagkgroundView:" destination="-1" id="QaQ-hP-QAS"/>
+                <outlet property="delegate" destination="-1" id="S8i-DC-l9a"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="userMutedBig" width="25" height="24"/>

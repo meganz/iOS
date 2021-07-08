@@ -7,7 +7,7 @@ protocol MeetingParticipantsLayoutRouting: Routing {
 enum CallViewAction: ActionType {
     case onViewLoaded
     case onViewReady
-    case tapOnView
+    case tapOnView(onParticipant: Bool)
     case tapOnLayoutModeButton
     case tapOnOptionsMenuButton(presenter: UIViewController, sender: UIBarButtonItem)
     case tapOnBackButton
@@ -16,6 +16,7 @@ enum CallViewAction: ActionType {
     case setNewTitle(String)
     case discardChangeTitle
     case renameTitleDidChange(String)
+    case tapParticipantToPinAsSpeaker(CallParticipantEntity, IndexPath)
 }
 
 enum CallLayoutMode {
@@ -59,6 +60,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case showWaitingForOthersMessage
         case hideEmptyRoomMessage
         case updateHasLocalAudio(Bool)
+        case selectPinnedCellAt(IndexPath?)
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -68,7 +70,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var timer: Timer?
     private var callDurationInfo: CallDurationInfo?
     private var callParticipants = [CallParticipantEntity]()
-    private var speakerParticipant: CallParticipantEntity?
+    private var speakerParticipant: CallParticipantEntity? {
+        didSet(newValue) {
+            invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
+        }
+    }
+    private var isSpeakerParticipantPinned: Bool = false
     internal var layoutMode: CallLayoutMode = .grid
     private var localVideoEnabled: Bool = false
     private var reconnecting: Bool = false
@@ -139,7 +146,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         if speakerParticipant == nil {
             speakerParticipant = callParticipants.first
         }
-        invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
     }
     
     private func updateParticipant(_ participant: CallParticipantEntity) {
@@ -150,7 +156,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             return
         }
         speakerParticipant = participant
-        invokeCommand?(.updateSpeakerViewFor(currentSpeaker))
     }
     
     private func enableRemoteVideo(for participant: CallParticipantEntity) {
@@ -274,7 +279,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         case .onViewReady:
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
-        case .tapOnView:
+        case .tapOnView(let onParticipant):
+            if onParticipant && layoutMode == .speaker {
+                return
+            }
             invokeCommand?(.switchMenusVisibility)
             containerViewModel?.dispatch(.changeMenuVisibility)
         case .tapOnLayoutModeButton:
@@ -310,6 +318,20 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             containerViewModel?.dispatch(.changeMenuVisibility)
         case .renameTitleDidChange(let newTitle):
             invokeCommand?(.enableRenameButton(chatRoom.title != newTitle && !newTitle.isEmpty))
+        case .tapParticipantToPinAsSpeaker(let participant, let indexPath):
+            tappedParticipant(participant, at: indexPath)
+        }
+    }
+    
+    private func tappedParticipant(_ participant: CallParticipantEntity, at indexPath: IndexPath) {
+        if !isSpeakerParticipantPinned || (isSpeakerParticipantPinned && speakerParticipant != participant) {
+            speakerParticipant?.speakerVideoDataDelegate = nil
+            isSpeakerParticipantPinned = true
+            speakerParticipant = participant
+            invokeCommand?(.selectPinnedCellAt(indexPath))
+        } else {
+            isSpeakerParticipantPinned = false
+            invokeCommand?(.selectPinnedCellAt(nil))
         }
     }
     
@@ -411,8 +433,8 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             guard let currentSpeaker = speakerParticipant, currentSpeaker == attendee else {
                 return
             }
+            isSpeakerParticipantPinned = false
             speakerParticipant = callParticipants.first
-            invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
         } else {
             MEGALogError("Error removing participant from call")
         }
@@ -449,6 +471,9 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func audioLevel(for attendee: CallParticipantEntity) {
+        if isSpeakerParticipantPinned {
+            return
+        }
         guard let participantWithAudio = callParticipants.filter({$0 == attendee}).first else {
             MEGALogError("Error getting participant with audio")
             return
@@ -457,7 +482,6 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             if currentSpeaker != participantWithAudio {
                 currentSpeaker.speakerVideoDataDelegate = nil
                 speakerParticipant = participantWithAudio
-                invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
                 if layoutMode == .speaker {
                     if currentSpeaker.video == .on && currentSpeaker.videoResolution == .high {
                         switchVideoResolutionHighToLow(for: [currentSpeaker.clientId], in: chatRoom.chatId)
@@ -469,7 +493,6 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             }
         } else {
             speakerParticipant = participantWithAudio
-            invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
             if layoutMode == .speaker && participantWithAudio.video == .on && participantWithAudio.videoResolution == .low {
                 switchVideoResolutionLowToHigh(for: [participantWithAudio.clientId], in: chatRoom.chatId)
             }
@@ -479,9 +502,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     func callTerminated() {
         callsUseCase.stopListeningForCall()
         timer?.invalidate()
-        //Play hang out sound
         router.dismissAndShowPasscodeIfNeeded()
-        //delete call flags?
     }
     
     func participantAdded(with handle: MEGAHandle) {
