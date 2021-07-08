@@ -329,8 +329,9 @@
     
     if (action.callUUID) {
         if (call) {
-            if (call.status != MEGAChatCallStatusInitial
-                && call.status != MEGAChatCallStatusUserNoPresent) {
+            MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+            if ((call.status != MEGAChatCallStatusInitial && call.status != MEGAChatCallStatusUserNoPresent)
+                || (!chatRoom.isGroup && !chatRoom.isMeeting && !chatRoom.isPublicChat && !chatRoom.isPreview)) {
                 [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.callId];
             }
         } else {
