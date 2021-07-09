@@ -12,6 +12,7 @@ protocol CallsUseCaseProtocol {
     func addPeer(toCall call: CallEntity, peerId: UInt64)
     func removePeer(fromCall call: CallEntity, peerId: UInt64)
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64)
+    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64)
 }
 
 protocol CallsCallbacksUseCaseProtocol: AnyObject {
@@ -87,6 +88,10 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
     
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
         repository.makePeerAModerator(inCall: call, peerId: peerId)
+    }
+    
+    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
+        repository.removePeerAsModerator(inCall: call, peerId: peerId)
     }
 }
 

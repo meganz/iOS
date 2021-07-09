@@ -126,6 +126,10 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
         chatSdk.updateChatPermissions(call.chatId, userHandle: peerId, privilege: MEGAChatRoomPrivilege.moderator.rawValue)
     }
+    
+    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
+        chatSdk.updateChatPermissions(call.chatId, userHandle: peerId, privilege: MEGAChatRoomPrivilege.standard.rawValue)
+    }
 }
 
 extension CallsRepository: MEGAChatCallDelegate {

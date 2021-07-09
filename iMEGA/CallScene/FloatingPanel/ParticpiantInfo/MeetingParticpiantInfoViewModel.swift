@@ -6,6 +6,7 @@ enum MeetingParticpiantInfoAction: ActionType {
     case sendMessage
     case addToContact
     case makeModerator
+    case removeModerator
 }
 
 struct MeetingParticpiantInfoViewModel: ViewModelType {
@@ -53,27 +54,31 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
             addToContact()
         case .makeModerator:
             router.updateAttendeeAsModerator()
+        case .removeModerator:
+            router.updateAttendeeAsParticipant()
         }
     }
     
     // MARK: - Private methods.
     
     private func actions() -> [ActionSheetAction] {
-        var actions = [infoAction()]
-        
-        switch attendee.attendeeType {
-        case .moderator:
-            actions.append(attendee.isInContactList ? sendMessageAction() : addContactAction())
-        case .participant:
-            actions.append(attendee.isInContactList ? sendMessageAction() : addContactAction())
-            if isMyselfModerator {
-                actions.append(makeModeratorAction())
+        if isMyselfModerator {
+            if !attendee.isModerator && attendee.isInContactList {
+                return [infoAction(), sendMessageAction(), makeModeratorAction()]
+            } else if !attendee.isModerator && !attendee.isInContactList {
+                return [makeModeratorAction()]
+            } else if attendee.isModerator && attendee.isInContactList {
+                return [infoAction(), sendMessageAction(), removeModeratorAction()]
+            } else if attendee.isModerator && !attendee.isInContactList {
+                return [removeModeratorAction()]
+            } else {
+                MEGALogDebug("I am a moderator and the attendee is moderator \(attendee.isModerator) and in contact list \(attendee.isInContactList)")
             }
-        default:
-            break
+        } else {
+            return [infoAction(), sendMessageAction()]
         }
         
-        return actions
+        return []
     }
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
@@ -148,6 +153,15 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
                           image: UIImage(named: "moderatorMeetings"),
                           style: .default) {
             dispatch(.makeModerator)
+        }
+    }
+    
+    private func removeModeratorAction() -> ActionSheetAction {
+        ActionSheetAction(title: NSLocalizedString("Remove Moderator", comment: ""),
+                          detail: nil,
+                          image: UIImage(named: "moderatorMeetings"),
+                          style: .default) {
+            dispatch(.removeModerator)
         }
     }
     
