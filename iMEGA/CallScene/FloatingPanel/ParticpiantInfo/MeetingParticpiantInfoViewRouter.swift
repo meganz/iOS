@@ -6,6 +6,7 @@ protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInviteSuccess(email: String)
     func showInviteError(_ error: InviteError, email: String)
     func updateAttendeeAsModerator()
+    func updateAttendeeAsParticipant()
 }
 
 struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
@@ -73,7 +74,11 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     }
     
     func updateAttendeeAsModerator() {
-        meetingFloatingPanelModel?.dispatch(.changeModeratorTo(participant: attendee))
+        meetingFloatingPanelModel?.dispatch(.makeModerator(participant: attendee))
+    }
+    
+    func updateAttendeeAsParticipant() {
+        meetingFloatingPanelModel?.dispatch(.removeModerator(participant: attendee))
     }
     
     func openChatRoom(withChatId chatId: UInt64) {

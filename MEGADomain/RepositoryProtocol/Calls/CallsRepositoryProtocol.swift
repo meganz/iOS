@@ -11,6 +11,7 @@ protocol CallsRepositoryProtocol {
     func addPeer(toCall call: CallEntity, peerId: UInt64)
     func removePeer(fromCall call: CallEntity, peerId: UInt64)
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64)
+    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64)
     func createActiveSessions()
 }
 

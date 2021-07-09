@@ -10,7 +10,8 @@ enum MeetingFloatingPanelAction: ActionType {
     case switchCamera(backCameraOn: Bool)
     case enableLoudSpeaker
     case disableLoudSpeaker
-    case changeModeratorTo(participant: CallParticipantEntity)
+    case makeModerator(participant: CallParticipantEntity)
+    case removeModerator(participant: CallParticipantEntity)
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -155,11 +156,17 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             enableLoudSpeaker()
         case .disableLoudSpeaker:
             disableLoudSpeaker()
-        case .changeModeratorTo(let newModerator):
+        case .makeModerator(let participant):
             guard let call = call else { return }
-            newModerator.attendeeType = .moderator
-            callsUseCase.makePeerAModerator(inCall: call, peerId: newModerator.participantId)
+            participant.isModerator = true
+            callsUseCase.makePeerAModerator(inCall: call, peerId: participant.participantId)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        case .removeModerator(let participant):
+            guard let call = call else { return }
+            participant.isModerator = false
+            callsUseCase.removePeerAsModerator(inCall: call, peerId: participant.participantId)
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+
         }
     }
     
@@ -323,12 +330,7 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
         guard let attendee = callParticipants.first else { return }
-        switch privilege {
-        case .moderator:
-            attendee.attendeeType = .moderator
-        default:
-            attendee.attendeeType = .participant
-        }
+        attendee.isModerator = privilege == .moderator
         invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
                                    isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                    isVideoEnabled: isVideoEnabled ?? false,
