@@ -3,7 +3,7 @@ extension ChatRoomEntity {
         self.chatId = chatRoom.chatId
         self.ownPrivilege = Privilege(rawValue: chatRoom.ownPrivilege.rawValue) ?? .unknown
         self.changeType = ChangeType(rawValue: chatRoom.changes.rawValue)
-
+        
         self.peerCount = chatRoom.peerCount
         self.authorizationToken = chatRoom.authorizationToken
         self.title = chatRoom.title
@@ -11,13 +11,19 @@ extension ChatRoomEntity {
         self.userTypingHandle = chatRoom.userTypingHandle
         self.retentionTime = chatRoom.retentionTime
         self.creationTimeStamp = chatRoom.creationTimeStamp
-    
-        self.isGroup = chatRoom.isGroup
+        
         self.hasCustomTitle = chatRoom.hasCustomTitle
         self.isPublicChat = chatRoom.isPublicChat
         self.isPreview = chatRoom.isPreview
         self.isactive = chatRoom.isActive
         self.isArchived = chatRoom.isArchived
-        self.isMeeting = chatRoom.isMeeting
+        
+        if chatRoom.isGroup {
+            self.chatType = .group
+        } else if chatRoom.isMeeting {
+            self.chatType = .meeting
+        } else {
+            self.chatType = .oneToOne
+        }
     }
 }

@@ -46,8 +46,13 @@ struct MeetingParticipantViewModel: ViewModelType {
     func dispatch(_ action: MeetingParticipantViewAction) {
         switch action {
         case .onViewReady(let imageSize):
+            var shouldShowModerator = false
+            if let chatRoom = chatRoomUseCase.chatRoom(forChatId: attendee.chatId), chatRoom.chatType != .oneToOne {
+                shouldShowModerator = true
+            }
+            
             invokeCommand?(
-                .configView(isModerator: attendee.attendeeType == .moderator && (chatRoomUseCase.chatRoom(forChatId: attendee.chatId)?.isGroup ?? false),
+                .configView(isModerator: attendee.attendeeType == .moderator && shouldShowModerator,
                             isMicMuted: attendee.audio == .off,
                             isVideoOn: attendee.video == .on,
                             shouldHideContextMenu: shouldHideContextMenu)

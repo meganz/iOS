@@ -30,7 +30,7 @@ struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
     }
     
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkError>) -> Void) {
-        guard chatRoom.isMeeting || chatRoom.isPublicChat || chatRoom.isGroup else {
+        guard chatRoom.chatType != .oneToOne else {
             // Not allowed to create/query chat link
             completion(.failure(.creatingChatLinkNotAllowed))
             return

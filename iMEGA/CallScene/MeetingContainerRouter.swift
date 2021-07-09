@@ -117,7 +117,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         customModalAlertViewController.image = UIImage(named: "chatLinkCreation")
         customModalAlertViewController.viewTitle = chatRoom.title
         customModalAlertViewController.firstButtonTitle = NSLocalizedString("close", comment: "")
-        customModalAlertViewController.link = NSLocalizedString(chatRoom.isMeeting ? "meetings.sharelink.Error" : "No chat link available.", comment: "")
+        customModalAlertViewController.link = NSLocalizedString(chatRoom.chatType == .meeting ? "meetings.sharelink.Error" : "No chat link available.", comment: "")
         customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
             customModalAlertViewController?.dismiss(animated: true, completion: nil)
         }

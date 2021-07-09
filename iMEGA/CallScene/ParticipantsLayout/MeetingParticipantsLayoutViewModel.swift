@@ -250,12 +250,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 return
             }
             call = updatedCall
-            if chatRoom.isMeeting {
+            if chatRoom.chatType == .meeting {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: "",
                                 isUserAGuest: userUseCase.isGuestAccount,
-                                isOneToOne: !chatRoom.isGroup)
+                                isOneToOne: false)
                 )
                 initTimerIfNeeded(with: Int(call.duration))
             } else {
@@ -263,7 +263,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: initialSubtitle(),
                                 isUserAGuest: userUseCase.isGuestAccount,
-                                isOneToOne: !chatRoom.isGroup)
+                                isOneToOne: chatRoom.chatType == .oneToOne)
                 )
             }
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
@@ -272,7 +272,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 callsUseCase.createActiveSessions()
             } else {
                 selectFrontCameraIfNeeded()
-                if chatRoom.isMeeting {
+                if chatRoom.chatType == .meeting {
                     invokeCommand?(.showWaitingForOthersMessage)
                 }
             }
@@ -303,7 +303,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(.toggleLayoutButton)
             }
         case .showRenameChatAlert:
-            invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.isMeeting))
+            invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.chatType == .meeting))
         case .setNewTitle(let newTitle):
             chatRoomUseCase.renameChatRoom(chatId: chatRoom.chatId, title: newTitle) { [weak self] result in
                 switch result {
@@ -422,7 +422,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             
-            if callParticipants.isEmpty && chatRoom.isMeeting {
+            if callParticipants.isEmpty && chatRoom.chatType == .meeting {
                 invokeCommand?(.showNoOneElseHereMessage)
             }
             

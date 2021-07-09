@@ -89,7 +89,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             populateParticipants()
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
-                                       isOneToOneMeeting: !chatRoom.isGroup,
+                                       isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                        isVideoEnabled: isVideoEnabled ?? false,
                                        cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
@@ -330,7 +330,7 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
             attendee.attendeeType = .participant
         }
         invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
-                                   isOneToOneMeeting: !chatRoom.isGroup,
+                                   isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                    isVideoEnabled: isVideoEnabled ?? false,
                                    cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
