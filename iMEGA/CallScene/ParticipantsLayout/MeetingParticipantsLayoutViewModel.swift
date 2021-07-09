@@ -62,6 +62,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updateHasLocalAudio(Bool)
         case selectPinnedCellAt(IndexPath?)
         case shouldHideSpeakerView(Bool)
+        case ownPrivilegeChangedToModerator
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -559,7 +560,11 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
         invokeCommand?(.updateHasLocalAudio(audio))
     }
     
-    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) { }
+    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+        if privilege == .moderator {
+            invokeCommand?(.ownPrivilegeChangedToModerator)
+        }
+    }
     
     func chatTitleChanged(chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
