@@ -430,18 +430,13 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             
-<<<<<<< HEAD
-            if callParticipants.isEmpty && chatRoom.chatType == .meeting {
-                invokeCommand?(.showNoOneElseHereMessage)
-=======
             if callParticipants.isEmpty {
-                if chatRoom.isMeeting {
+                if chatRoom.chatType == .meeting {
                     invokeCommand?(.showNoOneElseHereMessage)
                 }
                 if layoutMode == .speaker {
                     invokeCommand?(.shouldHideSpeakerView(true))
                 }
->>>>>>> 24071a51fd9a8e51dd85bd4fe89a4e08ae68c0e9
             }
             
             if layoutMode == .grid {
