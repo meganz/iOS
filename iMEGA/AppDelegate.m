@@ -36,6 +36,7 @@
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
+#import "ContactRequestsViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "GroupCallViewController.h"
 #import "LaunchViewController.h"
@@ -851,8 +852,8 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
     self.mainTBC.selectedIndex = tabTag;
     if (self.megatype == MEGANotificationTypeContactRequest) {
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
-        ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-        [navigationController pushViewController:contactsVC animated:NO];
+        ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+        [navigationController pushViewController:contactRequestsVC animated:NO];
     }
 }
 
