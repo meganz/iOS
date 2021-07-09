@@ -18,10 +18,10 @@ extension ChatRoomEntity {
         self.isactive = chatRoom.isActive
         self.isArchived = chatRoom.isArchived
         
-        if chatRoom.isGroup {
-            self.chatType = .group
-        } else if chatRoom.isMeeting {
+        if chatRoom.isMeeting {
             self.chatType = .meeting
+        } else if chatRoom.isGroup {
+            self.chatType = .group
         } else {
             self.chatType = .oneToOne
         }
