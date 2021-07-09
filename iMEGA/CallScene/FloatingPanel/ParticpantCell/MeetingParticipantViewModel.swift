@@ -22,11 +22,15 @@ struct MeetingParticipantViewModel: ViewModelType {
             return true
         }
         
-        return isMe || (!attendee.isModerator && !attendee.isInContactList)
+        return isMe || (!attendee.isModerator && !attendee.isInContactList) || isOneToOneChat
     }
     
     private var isMe: Bool {
         return userUseCase.myHandle == attendee.participantId
+    }
+    
+    private var isOneToOneChat: Bool {
+        return chatRoomUseCase.chatRoom(forChatId: attendee.chatId)?.chatType == .oneToOne
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -46,13 +50,10 @@ struct MeetingParticipantViewModel: ViewModelType {
     func dispatch(_ action: MeetingParticipantViewAction) {
         switch action {
         case .onViewReady(let imageSize):
-            var isNotOneToOneCall = false
-            if let chatRoom = chatRoomUseCase.chatRoom(forChatId: attendee.chatId), chatRoom.chatType != .oneToOne {
-                isNotOneToOneCall = true
-            }
+            
             
             invokeCommand?(
-                .configView(isModerator: attendee.isModerator && isNotOneToOneCall,
+                .configView(isModerator: attendee.isModerator && !isOneToOneChat,
                             isMicMuted: attendee.audio == .off,
                             isVideoOn: attendee.video == .on,
                             shouldHideContextMenu: shouldHideContextMenu)
