@@ -1,4 +1,10 @@
 struct ChatRoomEntity {
+    enum ChatType {
+        case oneToOne
+        case group
+        case meeting
+    }
+    
     enum ChangeType: Int {
         case status           = 0x01
         case unreadCount      = 0x02
@@ -35,11 +41,10 @@ struct ChatRoomEntity {
     let retentionTime: UInt
     let creationTimeStamp: UInt64
     
-    let isGroup: Bool
     let hasCustomTitle: Bool
     let isPublicChat: Bool
     let isPreview: Bool
     let isactive: Bool
     let isArchived: Bool
-    let isMeeting: Bool
+    let chatType: ChatType
 }

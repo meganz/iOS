@@ -10,6 +10,10 @@ extension MEGAChatRoom {
         return MEGASdkManager.sharedMEGAChatSdk().userOnlineStatus(peerHandle(at: 0))
     }
     
+    @objc var isOneToOne: Bool {
+        return !isGroup && !isMeeting
+    }
+    
     var participantNames: String {
         return (0..<peerCount).reduce("") { (result, index) in
             let userHandle = peerHandle(at: index)
