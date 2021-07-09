@@ -23,6 +23,14 @@ class CallParticipantCell: UICollectionViewCell {
                 videoImageView.isHidden = true
             }
         }
+        
+        if layoutMode == .speaker && participant.isSpeakerPinned {
+            borderWidth = 1
+            borderColor = .systemYellow
+        } else {
+            borderWidth = 0
+            borderColor = .clear
+        }
     }
 }
 
