@@ -8,6 +8,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     @IBOutlet private weak var speakerAvatarImageView: UIImageView!
     @IBOutlet private weak var speakerRemoteVideoImageView: UIImageView!
+    @IBOutlet private weak var speakerMutedImageView: UIImageView!
+    @IBOutlet private weak var speakerNameLabel: UILabel!
     @IBOutlet private var speakerViews: Array<UIView>!
     @IBOutlet private weak var pageControl: UIPageControl!
     
@@ -170,6 +172,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             localUserView.localAudio(enabled: audio)
         case .selectPinnedCellAt(let indexPath):
             callsCollectionView.configurePinnedCell(at: indexPath)
+        case .shouldHideSpeakerView(let hidden):
+            speakerViews.forEach { $0.isHidden = hidden}
         }
     }
     
@@ -188,7 +192,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     @IBAction func didTapBagkgroundView(_ sender: UITapGestureRecognizer) {
         let yPosition = sender.location(in: callsCollectionView).y
-        viewModel.dispatch(.tapOnView(onParticipant: yPosition > 0 && yPosition < callsCollectionView.frame.height))
+        viewModel.dispatch(.tapOnView(onParticipantsView: yPosition > 0 && yPosition < callsCollectionView.frame.height))
     }
     
     //MARK: - Private
@@ -200,7 +204,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .speaker:
             layoutModeBarButton.image = UIImage(named: "galleryView")
         }
-        speakerViews.forEach { $0.isHidden = mode == .grid }
+        speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker
         callsCollectionView.changeLayoutMode(mode)
     }
@@ -212,6 +216,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         speaker.speakerVideoDataDelegate = self
         speakerAvatarImageView.mnz_setImage(forUserHandle: speaker.participantId, name: speaker.name)
         speakerRemoteVideoImageView.isHidden = speaker.video != .on
+        speakerMutedImageView.isHidden = speaker.audio == .on
+        speakerNameLabel.text = speaker.name
     }
     
     private func showNotification(message: String, color: UIColor) {
