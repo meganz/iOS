@@ -100,7 +100,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 }
             }
             
-            dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? false)))
+            dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? true)))
             updateSpeakerInfo()
         case .hangCall(let presenter):
             if let call = call {
@@ -131,12 +131,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                    meetingFloatingPanelModel: self)
 
         case .muteUnmuteCall(let muted):
-            checkForAudioPermission {
-                guard let call = self.call else { return }
-                self.callManagerUseCase.muteUnmuteCall( call, muted: muted)
-                DispatchQueue.main.async {
-                    self.invokeCommand?(.microphoneMuted(muted: muted))
-                }
+            guard let call = self.call else { return }
+            checkForAudioPermission(forCall: call) { granted in
+                let microphoneMuted = granted ? muted : true
+                self.callManagerUseCase.muteUnmuteCall(call, muted: microphoneMuted)
+                self.invokeCommand?(.microphoneMuted(muted: microphoneMuted))
             }
         case .turnCamera(let on):
             checkForVideoPermission {
@@ -205,12 +204,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    private func checkForAudioPermission(onSuccess completionBlock: @escaping () -> Void) {
+    private func checkForAudioPermission(forCall call: CallEntity, completionBlock: @escaping (Bool) -> Void) {
         devicePermissionUseCase.getAudioAuthorizationStatus { [self] granted in
             DispatchQueue.main.async {
-                if granted {
-                    completionBlock()
-                } else {
+                completionBlock(granted)
+                if !granted {
                     router.showAudioPermissionError()
                 }
             }
