@@ -147,19 +147,19 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         containerView.flex.backgroundColor(#colorLiteral(red: 0.2, green: 0.1843137255, blue: 0.1843137255, alpha: 1)).alignItems(.center).justifyContent(.end).define { flex in
             // video view
             flex.addItem(localVideoImageView).position(.absolute).all(0)
-            flex.addItem().grow(1).shrink(1).justifyContent(.end).alignItems(.center).define { flex in
+            flex.addItem().grow(1).shrink(1).justifyContent(.center).alignItems(.center).define { flex in
                 // avatar View
-                flex.addItem(avatarImageView).position(.absolute).size(AvatarProperties.size).top(50%).marginTop(-40)
-                
-                // 4 buttons
-                flex.addItem().direction(.row).justifyContent(.center).paddingBottom(16).define { flex in
-                    flex.addItem(enableDisableVideoButton).height(60).width(60)
-                    flex.addItem(muteUnmuteMicrophoneButton).height(60).width(60).marginLeft(36)
-                    flex.addItem(speakerQuickActionView).height(60).width(60).marginLeft(36)
-                    flex.addItem(switchCameraButton).paddingHorizontal(18).display(.none)
-                }
-                
+                flex.addItem(avatarImageView).size(AvatarProperties.size)
             }
+            
+            // 4 buttons
+            flex.addItem().direction(.row).justifyContent(.center).paddingBottom(16).define { flex in
+                flex.addItem(enableDisableVideoButton).height(60).width(60)
+                flex.addItem(muteUnmuteMicrophoneButton).height(60).width(60).marginLeft(36)
+                flex.addItem(speakerQuickActionView).height(60).width(60).marginLeft(36)
+                flex.addItem(switchCameraButton).paddingHorizontal(18).display(.none)
+            }
+            
             // control area
             flex.addItem().width(100%).paddingHorizontal(43).backgroundColor(.black).justifyContent(.center).define({ flex in
                 // control panel
