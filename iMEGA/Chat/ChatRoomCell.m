@@ -151,8 +151,7 @@
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:chatListItem.chatId];
         BOOL is1on1AndThereAreNoNewMessages = !chatListItem.isGroup && self.unreadView.hidden;
-        BOOL isGroupAndThereAreNoNewMessages = chatListItem.isGroup  && chatListItem.lastMessageType == MEGAChatMessageTypeCallStarted;
-        if (is1on1AndThereAreNoNewMessages || isGroupAndThereAreNoNewMessages) {
+        if (is1on1AndThereAreNoNewMessages || chatListItem.isGroup) {
             switch (call.status) {
                 case MEGAChatCallStatusInProgress:
                     self.onCallDuration.hidden = NO;
