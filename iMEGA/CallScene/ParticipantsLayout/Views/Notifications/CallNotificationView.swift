@@ -1,31 +1,39 @@
 
-import UIKit
 import Foundation
 
 class CallNotificationView: UIView {
     @IBOutlet weak var notificationLabel: UILabel!
 
     private let minWidth: CGFloat = 160.0
-    private let maxWidth: CGFloat = UIScreen.main.bounds.size.width - 32
+    private var maxWidth: CGFloat {
+        get {
+            return UIScreen.main.bounds.size.width - defaultMargin
+        }
+    }
     private let notificationHeight: CGFloat = 44
     private let defaultMargin: CGFloat = 32
     
     override var intrinsicContentSize: CGSize {
-        let labelWidth = notificationLabel.intrinsicContentSize.width
-        if labelWidth + defaultMargin < minWidth {
+        let labelWidth = notificationLabel.intrinsicContentSize.width + defaultMargin
+        if labelWidth < minWidth {
             return CGSize(width: minWidth, height: notificationHeight)
-        } else if notificationLabel.intrinsicContentSize.width + defaultMargin > maxWidth {
+        } else if labelWidth > maxWidth {
             return CGSize(width: maxWidth, height: notificationHeight)
         } else {
-            return CGSize(width: labelWidth + defaultMargin, height: notificationHeight)
+            return CGSize(width: labelWidth, height: notificationHeight)
         }
     }
     
     func show(message: String, backgroundColor: UIColor, autoFadeOut: Bool) {
+        translatesAutoresizingMaskIntoConstraints = false
+        guard let superview = superview else {
+            return
+        }
         self.notificationLabel.text = message
         self.backgroundColor = backgroundColor
-        self.center = CGPoint(x: UIScreen.main.bounds.size.width / 2, y: -(frame.size.height / 2))
-        invalidateIntrinsicContentSize()
+        centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
+        heightAnchor.constraint(equalToConstant: notificationHeight).isActive = true
+        topAnchor.constraint(equalTo: superview.topAnchor, constant: -frame.size.height).isActive = true
         
         fadeIn()
         
