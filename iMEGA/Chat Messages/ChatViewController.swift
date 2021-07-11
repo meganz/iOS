@@ -58,7 +58,7 @@ class ChatViewController: MessagesViewController {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-        button.setTitle(chatRoom.isGroup ? NSLocalizedString("Join Call", comment: "") : NSLocalizedString("Tap to return to call", comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("Tap to return to call", comment: ""), for: .normal)
         button.layer.cornerRadius = 20
         button.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
         return button

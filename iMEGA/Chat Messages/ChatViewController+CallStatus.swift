@@ -12,10 +12,16 @@ extension ChatViewController {
             return
         }
         
-        showJoinButton()
+        showJoinButton(
+            hasUserJoinedCall: call.status == .connecting || call.status == .joining || call.status == .inProgress
+        )
     }
     
-    private func showJoinButton() {
+    private func showJoinButton(hasUserJoinedCall: Bool) {
+        joinCallButton.setTitle(
+            NSLocalizedString(hasUserJoinedCall ? "Tap to return to call" : "Join Call", comment: ""),
+            for: .normal
+        )
         joinCallButton.isHidden = false
     }
     
@@ -43,7 +49,7 @@ extension ChatViewController: MEGAChatCallDelegate {
         
         switch call.status {
         case .userNoPresent, .inProgress:
-            showJoinButton()
+            showJoinButton(hasUserJoinedCall: call.status == .inProgress)
             configureNavigationBar()
         case .destroyed, .terminatingUserParticipation:
             configureNavigationBar()
