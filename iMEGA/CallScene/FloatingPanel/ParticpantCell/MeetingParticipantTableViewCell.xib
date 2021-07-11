@@ -37,7 +37,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="uWd-E2-uzf">
-                        <rect key="frame" x="61" y="14" width="118" height="32"/>
+                        <rect key="frame" x="61" y="14" width="117" height="32"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJh-um-uRA">
                                 <rect key="frame" x="0.0" y="0.0" width="41" height="18"/>
@@ -60,13 +60,13 @@
                             <constraint firstAttribute="height" constant="28" id="t9I-PT-DR2"/>
                         </constraints>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal" image="more"/>
+                        <state key="normal" image="moreList"/>
                         <connections>
                             <action selector="contextMenuTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jMu-aL-q37"/>
                         </connections>
                     </button>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jmz-NY-5vL">
-                        <rect key="frame" x="187" y="8" width="68" height="44"/>
+                        <rect key="frame" x="186" y="8" width="68" height="44"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pa4-k0-jv7">
                                 <rect key="frame" x="0.0" y="0.0" width="34" height="44"/>
@@ -91,7 +91,7 @@
                     <constraint firstItem="jmz-NY-5vL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CRq-sy-iXT"/>
                     <constraint firstItem="mmU-eC-HYF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="I4u-DJ-O6I"/>
                     <constraint firstAttribute="trailing" secondItem="i4p-fs-7UR" secondAttribute="trailing" constant="11" id="JDl-2J-qMa"/>
-                    <constraint firstItem="i4p-fs-7UR" firstAttribute="leading" secondItem="jmz-NY-5vL" secondAttribute="trailing" constant="26" id="PGi-9x-st8"/>
+                    <constraint firstItem="i4p-fs-7UR" firstAttribute="leading" secondItem="jmz-NY-5vL" secondAttribute="trailing" constant="27" id="PGi-9x-st8"/>
                     <constraint firstItem="uWd-E2-uzf" firstAttribute="leading" secondItem="pSo-rM-USx" secondAttribute="trailing" constant="9" id="VXa-5M-Z1W"/>
                     <constraint firstItem="i4p-fs-7UR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="aM8-RE-21C"/>
                     <constraint firstItem="jmz-NY-5vL" firstAttribute="leading" secondItem="uWd-E2-uzf" secondAttribute="trailing" constant="8" id="chA-p7-Knj"/>
@@ -116,7 +116,7 @@
     <resources>
         <image name="callSlots" width="24" height="24"/>
         <image name="icon-contacts" width="24" height="24"/>
-        <image name="more" width="28" height="28.5"/>
+        <image name="moreList" width="28" height="28"/>
         <image name="userMicOn" width="24" height="24"/>
         <image name="userMutedMeetings" width="24" height="24"/>
         <image name="videoOff" width="24" height="24"/>
