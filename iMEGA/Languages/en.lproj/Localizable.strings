@@ -2680,3 +2680,5 @@
 "meetings.joinMega.paragraph2.title"= "Get 20 GB for free";
 /* Guest user join Mega: paragraph 2 description*/
 "meetings.joinMega.paragraph2.description"= "Sign up now and enjoy advanced collaboration features for free.";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="You are the new call moderator";

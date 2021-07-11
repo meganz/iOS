@@ -173,7 +173,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .selectPinnedCellAt(let indexPath):
             callsCollectionView.configurePinnedCell(at: indexPath)
         case .shouldHideSpeakerView(let hidden):
-            speakerViews.forEach { $0.isHidden = hidden}
+            speakerViews.forEach { $0.isHidden = hidden }
+        case .ownPrivilegeChangedToModerator:
+            showNotification(message: NSLocalizedString("meetings.notifications.moderatorPrivilege", comment: "Message shown when the user privilege is changed to moderator"), color: UIColor.mnz_turquoise(for: traitCollection))
         }
     }
     
