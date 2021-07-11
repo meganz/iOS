@@ -154,3 +154,4 @@
 #import "SharedItemsViewController.h"
 #import "RTCAudioSession.h"
 
+#import "MOUploadTransfer+CoreDataProperties.h"

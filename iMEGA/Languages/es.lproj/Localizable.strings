@@ -744,8 +744,6 @@
 "View Source Code"="Ver código fuente";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimientos";
-/* Title for the MEGA Recovery Key */
-"masterKey"="Clave de recuperación";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambiar contraseña";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Clave de recuperación guardada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Se ha guardado la Clave de recuperación en la sección Sin conexión como RecoveryKey.txt. Aviso: si te desconectas se eliminará, por favor guárdala en un lugar seguro.";
+"masterKeyExported_alertMessage"="Se ha guardado la Clave de recuperación en la sección Sin conexión como MEGA-CLAVEDERECUPERACION.txt. Aviso: si te desconectas se eliminará, por favor guárdala en un lugar seguro.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="En el dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="El archivo no se ha podido editar debido a una codificación de contenido desconocida.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Propietario)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-CLAVEDERECUPERACION";

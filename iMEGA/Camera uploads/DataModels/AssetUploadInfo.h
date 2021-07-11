@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) NSString *uploadURLString;
 
-@property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
+@property (nullable, strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
 @property (strong, nonatomic) MEGANode *parentNode;
 
 - (instancetype)initWithAsset:(PHAsset *)asset savedIdentifier:(NSString *)savedIdentifier parentNode:(MEGANode *)parentNode;

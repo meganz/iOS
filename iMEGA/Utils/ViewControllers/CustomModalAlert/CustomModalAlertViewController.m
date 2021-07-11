@@ -74,6 +74,16 @@
         
         [detailAttributedString endEditing];
         self.detailLabel.attributedText = detailAttributedString;
+    } else if (self.monospaceDetail) {
+        NSRange monospaceRange = [self.detail rangeOfString:self.monospaceDetail];
+        
+        NSMutableAttributedString *detailAttributedString = [[NSMutableAttributedString alloc] initWithString:self.detail];
+        
+        [detailAttributedString beginEditing];
+        [detailAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Menlo" size:14.0f] range:monospaceRange];
+        
+        [detailAttributedString endEditing];
+        self.detailLabel.attributedText = detailAttributedString;
     } else {
         self.detailLabel.text = self.detail;
     }

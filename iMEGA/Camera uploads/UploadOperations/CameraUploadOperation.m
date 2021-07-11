@@ -160,7 +160,13 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    self.uploadInfo.mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
+    MEGABackgroundMediaUpload *mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
+    if (mediaUpload == nil) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
+        return;
+    }
+    
+    self.uploadInfo.mediaUpload = mediaUpload;
     
     CLLocation *assetLocation = self.uploadInfo.asset.location;
     if (assetLocation) {

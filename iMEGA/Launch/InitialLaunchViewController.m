@@ -26,6 +26,9 @@
     self.descriptionLabel.text = NSLocalizedString(@"To fully take advantage of your MEGA account we need to ask you some permissions.", @"Detailed explanation of why the user should give some permissions to MEGA");
     [self.setupButton setTitle:NSLocalizedString(@"Setup MEGA", @"Button which triggers the initial setup") forState:UIControlStateNormal];
     [self.skipButton setTitle:NSLocalizedString(@"skipButton", @"Button title that skips the current action") forState:UIControlStateNormal];
+    
+    self.setupButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.skipButton.titleLabel.adjustsFontForContentSizeCategory = YES;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

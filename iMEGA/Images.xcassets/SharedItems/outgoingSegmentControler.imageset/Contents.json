@@ -1,24 +1,23 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "outgoingSegmentControler.png",
-      "scale" : "1x"
+      "filename" : "outgoingSegmentControler.pdf",
+      "idiom" : "universal"
     },
     {
-      "idiom" : "universal",
-      "filename" : "outgoingSegmentControler@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "outgoingSegmentControler@3x.png",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "outgoingSegmentControlerDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   },
   "properties" : {
     "template-rendering-intent" : "template"

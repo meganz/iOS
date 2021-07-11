@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "PurpleSmall.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "PurpleSmallDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

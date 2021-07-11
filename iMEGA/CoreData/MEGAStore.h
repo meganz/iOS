@@ -10,6 +10,8 @@
 #import "MOOfflineFolderLayout+CoreDataProperties.h"
 #import "MEGACoreDataStack.h"
 
+@class TransferRecordDTO;
+
 @interface MEGAStore : NSObject
 
 #pragma mark - store stack
@@ -61,8 +63,7 @@
 - (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle;
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer;
 - (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
-- (NSArray<MOUploadTransfer *> *)fetchUploadTransfers;
-- (MOUploadTransfer *)fetchUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
+- (NSArray<TransferRecordDTO *> *)fetchUploadTransfers;
 - (void)removeAllUploadTransfers;
 
 #pragma mark - MOMessage entity

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                             </view>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VYB-69-jRQ">
-                                <rect key="frame" x="132" y="403" width="150" height="2"/>
+                                <rect key="frame" x="132" y="402" width="150" height="4"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="aBH-9X-cH8"/>
                                 </constraints>
@@ -37,7 +38,7 @@
                             </imageView>
                             <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xcl-UM-x0L">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="thC-Io-eKf">
                                     <size key="itemSize" width="140" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -79,6 +80,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="g6N-nT-s3x"/>
                         <constraints>
                             <constraint firstItem="xcl-UM-x0L" firstAttribute="leading" secondItem="g6N-nT-s3x" secondAttribute="leading" id="0fg-dh-ZAZ"/>
                             <constraint firstItem="g6N-nT-s3x" firstAttribute="bottom" secondItem="xcl-UM-x0L" secondAttribute="bottom" id="Ho9-OL-4UD"/>
@@ -95,7 +97,6 @@
                             <constraint firstItem="g6N-nT-s3x" firstAttribute="centerX" secondItem="PvF-fF-Mki" secondAttribute="centerX" id="u6s-6v-pC4"/>
                             <constraint firstItem="VYB-69-jRQ" firstAttribute="centerX" secondItem="PvF-fF-Mki" secondAttribute="centerX" id="z3W-Fw-gSY"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="g6N-nT-s3x"/>
                     </view>
                     <navigationItem key="navigationItem" id="HWB-rp-yxf">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="uL1-bJ-jlX">
@@ -140,7 +141,7 @@
                         <action selector="shareAction:" destination="zUo-yM-mbH" id="b1e-qb-pHG"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" style="plain" id="R1j-r6-Sll" userLabel="More Bar Button Item">
+                <barButtonItem image="moreNavigationBar" style="plain" id="R1j-r6-Sll" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="actionsTapped:" destination="zUo-yM-mbH" id="M4Z-Io-Yhl"/>
                     </connections>
@@ -168,17 +169,17 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fWH-c4-xB0">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchItemCell" rowHeight="170" id="9Sh-2k-8S9">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="170"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="170"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Sh-2k-8S9" id="Qp7-0r-KCn">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="170"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUv-Ua-VsV">
-                                                    <rect key="frame" x="378" y="11" width="16" height="21"/>
+                                                    <rect key="frame" x="394" y="11" width="0.0" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="3de-65-1Dh"/>
                                                     </constraints>
@@ -210,13 +211,13 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="kPg-mY-vod"/>
                         <constraints>
                             <constraint firstItem="kPg-mY-vod" firstAttribute="trailing" secondItem="fWH-c4-xB0" secondAttribute="trailing" id="8h8-E6-Heu"/>
                             <constraint firstAttribute="bottom" secondItem="fWH-c4-xB0" secondAttribute="bottom" id="eQy-GT-21H"/>
                             <constraint firstItem="fWH-c4-xB0" firstAttribute="top" secondItem="kPg-mY-vod" secondAttribute="top" id="gfQ-yO-ARy"/>
                             <constraint firstItem="fWH-c4-xB0" firstAttribute="leading" secondItem="kPg-mY-vod" secondAttribute="leading" id="ymU-fw-BHH"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="kPg-mY-vod"/>
                     </view>
                     <navigationItem key="navigationItem" id="Bt9-70-QgM"/>
                     <connections>
@@ -273,11 +274,13 @@
     </scenes>
     <resources>
         <image name="import" width="28" height="28"/>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
-        <image name="openWith" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
         <image name="share" width="28" height="28"/>
         <image name="thumbnailsThin" width="28" height="28"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

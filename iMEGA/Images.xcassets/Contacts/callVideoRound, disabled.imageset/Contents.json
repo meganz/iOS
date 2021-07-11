@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "callVideoRoundDisabled.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "callVideoRoundDarkDisabled.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

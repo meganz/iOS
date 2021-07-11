@@ -28,4 +28,9 @@
     return [UIFont systemFontOfSize:self.pointSize weight:weight];
 }
 
++ (UIFont *)mnz_preferredFontWithStyle:(UIFontTextStyle)style weight:(UIFontWeight)weight {
+    UIFont *font = [UIFont preferredFontForTextStyle:style];
+    return [UIFont systemFontOfSize:font.pointSize weight:weight];
+}
+
 @end

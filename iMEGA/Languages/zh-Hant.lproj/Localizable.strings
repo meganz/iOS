@@ -269,9 +269,9 @@
 /* Button title to 'Save' the selected option */
 "save"="儲存";
 /* Sort by option (1/6). This one orders the files alphabethically */
-"nameAscending"="名字（升冪）";
+"nameAscending"="名稱（升冪）";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="名字（降冪）";
+"nameDescending"="名稱（降冪）";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
 "largest"="由大到小";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
@@ -744,8 +744,6 @@
 "View Source Code"="查看原始碼";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
-/* Title for the MEGA Recovery Key */
-"masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="更改密碼";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="已匯出還原金鑰";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="還原金鑰已以RecoveryKey.txt匯出至離線存取區裡。注意：您登出後它將會被刪除，請將其存放於安全之處。";
+"masterKeyExported_alertMessage"="還原金鑰已以 MEGA-RECOVERYKEY.txt 匯出至離線存取區。注意：您登出後它將會被刪除，請將其存放於安全之處。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="在您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -975,7 +973,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="您已經安裝MEGA桌面應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="當您安裝MEGA桌面應用程式時，您可獲得%@的免費儲存空間，有效期為 365天。 MEGA桌面應用程式可在Windows、macOS和大多數Linux發行版使用。";
+"account.achievement.desktopApp.incomplete.explaination.label"="當您安裝MEGA桌面應用程式時，您可獲得%@的免費儲存空間，有效期為 365天。MEGA桌面應用程式可在Windows、macOS和大多數Linux發行版使用。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="安裝MEGA手機應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1171,9 +1169,9 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]將聊天室名稱變更為 “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="新增參與者…";
+"addParticipant"="新增與會者…";
 /* Menu item to add participants to a chat */
-"addParticipants"="新增參與者";
+"addParticipants"="新增與會者";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="狀態";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -1265,13 +1263,13 @@
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="離開群組";
 /* Label to describe the section where you can see the participants of a group chat */
-"participants"="參與者";
+"participants"="與會者";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
 "moderator"="共同管理";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準模式";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="移除此位參與者";
+"removeParticipant"="移除此位與會者";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="正與…對話";
 /* Explanation when loading voice message error */
@@ -1655,7 +1653,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="已停用雙重驗證";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="請掃描或複製種子到您的身份驗證程式中。請務必將此種子備份於安全之處，以防設備遺失所帶來的風險。";
+"scanOrCopyTheSeed"="請掃描或複製種子密鑰到您的身份驗證程式中。請務必將此種子密鑰備份於安全之處，以防設備遺失所帶來的風險。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="您的驗證裝置不見了？";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
@@ -1783,9 +1781,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="取得對話連結";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="加密金鑰輪替更安全一些，但是不允許您建立對話連結，而且新參與者將看不到舊的訊息。";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="加密金鑰輪替更安全一些，但是不允許您建立對話連結，而且新的與會者將看不到舊的訊息。";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="與超過100位參與者的對話無法使用加密金鑰輪替功能。";
+"Key rotation is disabled for conversations with more than 100 participants."="與超過100位與會者的對話無法使用加密金鑰輪替功能。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="您必須為該群組命名，才能建立對話連結。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1805,11 +1803,11 @@
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@已加入群組對話。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="您無法加入此通話，因為它已達到參與人數上限。";
+"Error. No more participants are allowed in this group call."="您無法加入此通話，因為它已達到與會人數上限。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="由於此通話已達到視訊參與人數上限，因此您無法開啟視訊。";
+"Error. No more video are allowed in this group call."="由於此通話已達到視訊與會人數上限，因此您無法開啟視訊。";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="由於參與者人數超過上限，因此無法發起通話。";
+"Unable to start a call because the participants limit was exceeded."="由於與會者人數超過上限，因此無法發起通話。";
 /* Label shown while joining a public chat */
 "Joining..."="正在加入…";
 /* Label shown while leaving a public chat */
@@ -1935,9 +1933,9 @@
 /* Text shown in location-type messages */
 "Pinned Location"="固定位置";
 /* Plural of participant. 2 participants */
-"%d participants"="%d位參與者";
+"%d participants"="%d位與會者";
 /* Singular of participant. 1 participant */
-"%d participant"="%d位參與者";
+"%d participant"="%d位與會者";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 滑動以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="由於未知的內容編碼，無法編輯檔案。";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@（擁有者）";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA－還原金鑰";

@@ -187,7 +187,9 @@ final class AudioPlayerViewModel: ViewModelType {
     private func initialize(with node: MEGANode) {
         if fileLink != nil {
             guard let track = streamingInfoUseCase?.info(from: node) else {
-                router.dismiss()
+                DispatchQueue.main.async { [weak self] in
+                    self?.router.dismiss()
+                }
                 return
             }
             
@@ -199,7 +201,9 @@ final class AudioPlayerViewModel: ViewModelType {
                   let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
                 
                 guard let track = streamingInfoUseCase?.info(from: node) else {
-                    router.dismiss()
+                    DispatchQueue.main.async { [weak self] in
+                        self?.router.dismiss()
+                    }
                     return
                 }
                 
@@ -220,7 +224,9 @@ final class AudioPlayerViewModel: ViewModelType {
               let currentTrack = files.first(where: { $0.url.path == currentFilePath }) else {
             invokeCommand?(.configureOfflinePlayer)
             self.reloadNodeInfoWithCurrentItem()
-            router.dismiss()
+            DispatchQueue.main.async { [weak self] in
+                self?.router.dismiss()
+            }
             return
         }
         

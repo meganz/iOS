@@ -1,19 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "chatroomLoadingIPX, portrait.png",
       "idiom" : "universal",
-      "resizing" : {
-        "cap-insets" : {
-          "left" : 107,
-          "right" : 202
-        },
-        "center" : {
-          "mode" : "tile",
-          "width" : 1
-        },
-        "mode" : "3-part-horizontal"
-      },
       "scale" : "1x"
     },
     {
@@ -23,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "chatroomLoadingIPX, portraitDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -82,19 +69,7 @@
       "scale" : "3x"
     },
     {
-      "filename" : "chatroomLoadingiPadPro, landscape.png",
       "idiom" : "universal",
-      "resizing" : {
-        "cap-insets" : {
-          "left" : 295,
-          "right" : 271
-        },
-        "center" : {
-          "mode" : "tile",
-          "width" : 1
-        },
-        "mode" : "3-part-horizontal"
-      },
       "scale" : "1x",
       "width-class" : "regular"
     },
@@ -105,7 +80,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "chatroomLoadingiPadPro, landscape Dark.png",
       "idiom" : "universal",
       "scale" : "1x",
       "width-class" : "regular"

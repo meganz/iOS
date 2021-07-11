@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "gridThin.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "gridView.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "gridThinDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "gridThin@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "gridThinDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "gridThin@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "gridThinDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "gridViewDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -2,13 +2,9 @@
 import UIKit
 import Photos
 
-class PhotoGridViewDataSource: NSObject {
-    let album: Album
-    let collectionView: UICollectionView
-    var selectedAssets: [PHAsset]
-    typealias SelectionHandler = (PHAsset, IndexPath, CGSize, CGPoint) -> Void
-    private let selectionHandler: SelectionHandler
-    
+class PhotoGridViewDataSource: PhotoGridViewBaseDataSource {
+    var album: Album
+
     // MARK:- Initializer.
 
     init(album: Album,
@@ -16,9 +12,7 @@ class PhotoGridViewDataSource: NSObject {
          selectedAssets: [PHAsset],
          selectionHandler: @escaping SelectionHandler) {
         self.album = album
-        self.collectionView = collectionView
-        self.selectedAssets = selectedAssets
-        self.selectionHandler = selectionHandler
+        super.init(collectionView: collectionView, selectedAssets: selectedAssets, selectionHandler: selectionHandler)
     }
     
     // MARK:- Interface methods.
@@ -32,7 +26,7 @@ class PhotoGridViewDataSource: NSObject {
     }
     
     func updateCollectionCell(atIndexPath indexPath: IndexPath, selectedIndex: Int?) {
-        guard let collectionCell = collectionView.cellForItem(at: indexPath) as? PhotoGridViewCell else { return }
+        guard let collectionCell = collectionView?.cellForItem(at: indexPath) as? PhotoGridViewCell else { return }
         collectionCell.selectedIndex = selectedIndex
     }
     
@@ -46,19 +40,7 @@ class PhotoGridViewDataSource: NSObject {
     private func remove(asset: PHAsset, atIndex index: Int, selectedIndexPath: IndexPath) {
         selectedAssets.remove(at: index)
         updateCollectionCell(atIndexPath: selectedIndexPath, selectedIndex: nil)
-        
-        let totalCount = selectedAssets.count
-        (index..<totalCount).forEach { index in
-            let toUpdatAsset = selectedAssets[index]
-            if let visibleCells = collectionView.visibleCells as? [PhotoGridViewCell] {
-                visibleCells.forEach { cell in
-                    if let asset = cell.asset,
-                        asset == toUpdatAsset {
-                        cell.selectedIndex = index
-                    }
-                }
-            }
-        }
+        updateSelectedAssetsIndex(fromIndex: index)
     }
 }
 
@@ -87,6 +69,10 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
                 return
             }
             self.selectionHandler(selectedAsset, IndexPath(item: self.album.index(asset: asset), section: 0), size, point)
+        }
+        
+        cell.panSelectionHandler = { [weak self] isSelected, asset in
+            self?.handlePanSelection(isSelected: isSelected, asset: asset)
         }
         
         cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil

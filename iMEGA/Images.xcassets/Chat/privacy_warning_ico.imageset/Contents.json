@@ -2,23 +2,22 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "iOS_rich_link.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "universal",
       "filename" : "iOS_rich_link@2X.png",
+      "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "idiom" : "universal",
       "filename" : "iOS_rich_link@3X.png",
+      "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   },
   "properties" : {
     "preserves-vector-representation" : true

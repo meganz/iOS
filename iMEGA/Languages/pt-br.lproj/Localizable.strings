@@ -744,8 +744,6 @@
 "View Source Code"="Ver o código-fonte";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimentos";
-/* Title for the MEGA Recovery Key */
-"masterKey"="Chave de recuperação";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Alterar senha";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="A chave de recuperação foi exportada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="A chave de recuperação foi exportada para a seção offline como RecoveryKey.txt. Aviso: ela será apagada se você fizer logout. Por favor, guarde-a em um lugar seguro.";
+"masterKeyExported_alertMessage"="A chave de recuperação foi exportada para a seção offline como MEGA-CHAVEDERECUPERACAO.txt. Aviso: ela será deletada se você fizer logout. Por favor, guarde-a em um lugar seguro.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="No seu aparelho";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -945,7 +943,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Convide os seus amigos";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="Obtenha %@ de armazenamento por cada indicação. \nVálido por 365 dias.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selecione entre os seus contatos ou digite vários emails";
 /*  */
@@ -967,33 +965,33 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bônus de cadastro";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="You have received %@ storage space as your free registration bonus.";
+"account.achievement.registration.explanation.label"="Você recebeu %@ de espaço de armazenamento como bônus por criar uma conta.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bônus de indicação";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install the MEGA desktop app";
+"account.achievement.desktopApp.title"="Instalar o aplicativo do MEGA para desktop";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA desktop app.";
+"account.achievement.desktopApp.complete.explaination.label"="Você recebeu %@ de espaço de armazenamento por instalar o aplicativo do MEGA para desktop.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Ao instalar o aplicativo para desktop do MEGA, você recebe grátis %@ de espaço de armazenamento, válidos por 365 dias. O aplicativo para desktop do MEGA está disponível para Windows, macOS e a maioria das distribuições Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install the MEGA mobile app";
+"account.achievement.mobileApp.title"="Instalar o aplicativo do MEGA para dispositivos móveis";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
+"account.achievement.mobileApp.complete.explaination.label"="Você recebeu %@ de espaço de armazenamento por instalar o aplicativo do MEGA para dispositivos móveis.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS, Android and Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Ao instalar o nosso aplicativo para dispositivos móveis, você recebe grátis %@ de espaço de armazenamento, válidos por 365 dias. Oferecemos aplicativos para dispositivos móveis com iOS, Android e Windows Phone.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
-"account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
+"account.achievement.incomplete.subtitle"="Obtenha %@ de armazenamento. Válido por 365 dias.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@ days left";
+"account.achievement.complete.valid.cell.subtitle"="%@ dias restantes";
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
+"account.achievement.complete.valid.detail.subtitle"="O bônus expira em %@ dias.";
 /* Add Phone Number title */
 "Add Phone Number"="Adicionar número de telefone";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
+"account.achievement.phoneNumber.complete.explaination.label"="Você recebeu %@ de espaço de armazenamento por verificar o seu número de telefone.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Ao verificar o seu número de telefone, você vai obter %@ de espaço de armazenamento gratuito, válidos por 365 dias.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtenha %@ grátis ao adicionar o seu número de telefone, e assim os seus contatos o encontrarão com mais facilidade.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1099,9 +1097,9 @@
 /* "Yearly" subscriptions */
 "yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="This In-App Purchase item is not available in the App Store at this time. Please verify payment settings for your Apple ID.";
+"inAppPurchase.error.alert.title.notAvailable"="Esta compra pelo aplicativo não está disponível na App Store neste momento. Por favor, verifique as configurações de pagamento do seu Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
-"inAppPurchase.error.alert.primaryButtonTitle"="App Store Settings";
+"inAppPurchase.error.alert.primaryButtonTitle"="Configurações da App Store";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Obrigado";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1717,7 +1715,7 @@
 /* Title of the Settings section where you can configure security details of your MEGA account */
 "settings.section.security"="Segurança";
 /* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Terms and Policies";
+"settings.section.termsAndPolicies"="Termos e Políticas";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gerenciamento de arquivos";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1969,9 +1967,9 @@
 /* Title for the recents section. */
 "Recents"="Atividades recentes";
 /* Title show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.title"="Recent Activity Hidden";
+"recents.emptyState.activityHidden.title"="Atividade recente oculta";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="Show Activity";
+"recents.emptyState.activityHidden.button"="Mostrar atividade";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 imagens";
 /* Multiple videos title shown in recents section of web client. */
@@ -2047,7 +2045,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTATOS COM CONTA NO MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Você recebeu uma solicitação do chat seguro do MEGA Cadastre uma conta no MEGA e obtenha 20 GB de armazenamento vitalício grátis.";
 /* Destination folder name of chat files */
 "My chat files"="Arquivos dos meus chats";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2603,30 +2601,32 @@
 /* The title of Turn on Notifications view */
 "dialog.turnOnNotifications.label.title"="Ativar as notificações";
 /* The description of Turn on Notifications view */
-"dialog.turnOnNotifications.label.description"="This way, you will see new messages on your device instantly.";
+"dialog.turnOnNotifications.label.description"="Dessa forma, você verá imediatamente as novas mensagens no seu dispositivo.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Open <b>Settings</b>";
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Abrir as <b>Configurações</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tap <b>Notifications</b>";
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tocar em <b>Notificações</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Turn on <b>Allow Notifications</b>";
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Ativar a opção <b>Permitir notificações</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Acessar as configurações";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Change Launch Tab";
+"Change Launch Tab"="Alterar a aba predeterminada";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Agora você pode selecionar em qual área o aplicativo abre ao acessá-lo. Escolha aquela que melhor se adapta às suas necessidades, seja o Chat, a Nuvem de arquivos ou a página de Início.";
 /* Dialog button text for the change launch tab screen */
-"Change Setting"="Change Setting";
+"Change Setting"="Alterar as configurações";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Your content will be deleted from this device when you log out.";
+"offline.logOut.warning.message"="O seu conteúdo será deletado deste dispositivo quando você fizer logout.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="O proprietário da pasta compartilhada excedeu a cota de armazenamento disponível";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
 "dialog.shareOwnerStorageQuota.message"="Não foi possível enviar o arquivo porque destinatário ultrapassou o seu limite de armazenamento.";
 /* Hud info message when edit large text file. */
-"general.textEditor.hud.uneditableLargeFile"="File is too large and cannot be edited.";
+"general.textEditor.hud.uneditableLargeFile"="O arquivo é muito grande e não pode ser editado.";
 /* Hud info message when read unknown encode file. */
-"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+"general.textEditor.hud.unknownEncode"="Não foi possível editar o arquivo devido à uma codificação de conteúdo desconhecida.";
 /* Show the node owner's name. The %@ is the owner's name */
-"cloudDrive.nodeInfo.owner"="%@ (Owner)";
+"cloudDrive.nodeInfo.owner"="%@ (Proprietário)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-CHAVEDERECUPERACAO";

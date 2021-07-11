@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +22,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="60" id="pNm-oN-god" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pNm-oN-god" id="BKV-y9-Eh3">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -188,7 +188,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactPermissionsNameTableViewCellID" rowHeight="60" id="QVJ-Tw-apZ" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="88" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="84.333333969116211" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QVJ-Tw-apZ" id="gcm-Tm-g4F">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -690,7 +690,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IncomingContactRequestsCell" rowHeight="60" id="RdV-I9-QYo" customClass="ContactRequestsTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RdV-I9-QYo" id="epL-9F-fbD">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -1203,7 +1203,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactDetailsNotificationsTypeID" rowHeight="44" id="kF4-hM-JWG" userLabel="Notifications Table View Cell" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="143.33333206176758" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="137" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kF4-hM-JWG" id="MB7-dT-WLD">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1265,7 +1265,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactDetailsDefaultTypeID" rowHeight="44" id="SUf-DR-7PK" userLabel="Send Message Table View Cell" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="187.33333206176758" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="181" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SUf-DR-7PK" id="xLS-bg-sXA">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1313,10 +1313,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ContactDetailsPermissionsTypeID" rowHeight="44" id="bSz-e2-MvM" userLabel="Send Message Table View Cell" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="231.33333206176758" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="225" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bSz-e2-MvM" id="d7H-iQ-Neb">
-                                            <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fJk-mb-0sx">
@@ -1336,7 +1336,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ay2-EJ-Him">
-                                                    <rect key="frame" x="333" y="12.333333333333334" width="39.666666666666686" height="19.333333333333329"/>
+                                                    <rect key="frame" x="334.66666666666669" y="12.333333333333334" width="39.666666666666686" height="19.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1370,7 +1370,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactDetailsSharedFolderTypeID" rowHeight="60" id="jX1-Hc-Geh" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="275.33333206176758" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="269" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jX1-Hc-Geh" id="Pz9-XN-YhC">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -1409,7 +1409,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="AZh-ad-vZs"/>
                                                     </constraints>
-                                                    <state key="normal" image="more"/>
+                                                    <state key="normal" image="moreList"/>
                                                     <connections>
                                                         <action selector="infoTouchUpInside:" destination="GvV-J1-s0U" eventType="touchUpInside" id="pBK-f4-8EW"/>
                                                     </connections>
@@ -1945,10 +1945,10 @@
         <image name="info" width="28" height="28"/>
         <image name="makeCallRound" width="37" height="37"/>
         <image name="makeCallRound, disabled" width="37" height="37"/>
-        <image name="more" width="28" height="28.666666030883789"/>
+        <image name="moreList" width="28" height="28"/>
         <image name="readPermissions" width="24" height="24"/>
         <image name="readWritePermissions" width="24" height="24"/>
-        <image name="selectAll" width="22" height="22"/>
+        <image name="selectAll" width="28" height="28"/>
         <image name="sendMessageRound" width="37" height="37"/>
         <image name="sendMessageRound, disabled" width="37" height="37"/>
         <systemColor name="groupTableViewBackgroundColor">

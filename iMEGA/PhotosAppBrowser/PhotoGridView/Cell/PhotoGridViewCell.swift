@@ -16,6 +16,7 @@ final class PhotoGridViewCell: UICollectionViewCell {
 
     var asset: PHAsset?
     var tapHandler: ((PhotoGridViewCell, CGSize, CGPoint) -> Void)?
+    var panSelectionHandler: ((Bool, PHAsset) -> Int?)?
     var assetDownloader: AssetDownloader?
     var selectedIndex: Int? {
         didSet {
@@ -95,4 +96,13 @@ final class PhotoGridViewCell: UICollectionViewCell {
             layoutIfNeeded()
         }
     }
+    
+    override var isSelected: Bool {
+        didSet {
+            if let selectedHandler = panSelectionHandler, let asset = asset {
+                selectedIndex = selectedHandler(isSelected, asset)
+            }
+        }
+    }
+    
 }

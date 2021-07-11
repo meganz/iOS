@@ -235,15 +235,6 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-        if (self.searchController.active) {
-            if (UIDevice.currentDevice.iPad) {
-                if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetFrameForSearchController:self.searchController];
-                }
-            } else {
-                [Helper resetFrameForSearchController:self.searchController];
-            }
-        }
     } completion:nil];
 }
 
@@ -830,7 +821,7 @@
         [actions addObject:muteAction];
     }
     
-    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"infomation_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"info"] style:UIAlertActionStyleDefault actionHandler:^{
         [self presentGroupOrContactDetailsForChatListItem:chatListItem];
     }];
     [actions addObject:infoAction];
@@ -1169,14 +1160,14 @@
                 [menus addObject:muteAction];
             }
 
-            UIAction *infoAction = [UIAction actionWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"infomation_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            UIAction *infoAction = [UIAction actionWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"info"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
             [menus addObject:infoAction];
             
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault: {
-                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[[UIImage imageNamed:@"archiveChat_menu"] imageByTintColor:UIColor.whiteColor] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                         [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
                     }];
                     [menus addObject:archiveChatAction];
@@ -1304,13 +1295,13 @@
             UIContextualAction *archiveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
             }];
-            archiveAction.image = [UIImage imageNamed:@"archiveChat"];
+            archiveAction.image = [[UIImage imageNamed:@"archiveChat"] imageByTintColor:UIColor.whiteColor];
             archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             UIContextualAction *infoAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 [self showOptionsForChatAtIndexPath:indexPath];
             }];
-            infoAction.image = [UIImage imageNamed:@"moreSelected"];
+            infoAction.image = [[UIImage imageNamed:@"moreList"] imageByTintColor:UIColor.whiteColor];
             infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
             
             return [UISwipeActionsConfiguration configurationWithActions:@[archiveAction, infoAction]];

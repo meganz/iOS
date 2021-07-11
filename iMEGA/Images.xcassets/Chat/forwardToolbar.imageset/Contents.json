@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "forwardToolbar.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "forwardToolbar.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "forwardToolbarDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "forwardToolbar@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "forwardToolbarDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "forwardToolbar@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "forwardToolbarDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "forwardToolbarDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

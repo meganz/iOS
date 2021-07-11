@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -55,7 +55,7 @@
                         <action selector="cancelAction:" destination="9ZV-tM-uu1" id="mFb-4W-tZ3"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" width="22" style="plain" id="wnU-Yc-6PL" userLabel="Edit Bar Button Item">
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="wnU-Yc-6PL" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="moreAction:" destination="9ZV-tM-uu1" id="AGk-71-4oM"/>
                     </connections>
@@ -251,7 +251,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hiR-ab-EWR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="moreSelected" width="22" style="plain" id="kO4-pI-oRB" userLabel="More Bar Button Item">
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="kO4-pI-oRB" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="moreAction:" destination="2U9-0D-RuC" id="Z0w-nd-EPC"/>
                     </connections>
@@ -314,7 +314,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nodeCell" id="Gk7-Rk-8lJ" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Gk7-Rk-8lJ" id="6Jf-qO-SJ3">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -377,9 +377,9 @@
                                                                         <constraint firstAttribute="height" constant="44" id="Fwp-5z-E0r"/>
                                                                         <constraint firstAttribute="width" constant="46" id="iwm-NS-HTU"/>
                                                                     </constraints>
-                                                                    <state key="normal" image="more"/>
-                                                                    <state key="selected" image="moreSelected"/>
-                                                                    <state key="highlighted" image="moreSelected"/>
+                                                                    <state key="normal" image="moreList"/>
+                                                                    <state key="selected" image="moreList"/>
+                                                                    <state key="highlighted" image="moreList"/>
                                                                     <connections>
                                                                         <action selector="nodeActionsTapped:" destination="JHt-Kc-I1Z" eventType="touchUpInside" id="3It-oE-TWb"/>
                                                                     </connections>
@@ -428,7 +428,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="downloadingNodeCell" id="ilx-XE-Mhg" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="88" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="84.333333969116211" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="ilx-XE-Mhg" id="Y9y-lM-6af">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -634,9 +634,9 @@
                                                         <constraint firstAttribute="width" constant="24" id="mbI-Gg-Oxo"/>
                                                         <constraint firstAttribute="height" constant="24" id="nqY-pi-kz6"/>
                                                     </constraints>
-                                                    <state key="normal" image="more"/>
-                                                    <state key="selected" image="moreSelected"/>
-                                                    <state key="highlighted" image="moreSelected"/>
+                                                    <state key="normal" image="moreGrid"/>
+                                                    <state key="selected" image="moreGrid"/>
+                                                    <state key="highlighted" image="moreGrid"/>
                                                     <connections>
                                                         <action selector="nodeActionsTapped:" destination="PTB-3G-3qq" eventType="touchUpInside" id="luJ-Qx-DCU"/>
                                                     </connections>
@@ -747,9 +747,9 @@
                                                         <constraint firstAttribute="height" constant="24" id="FCO-Ag-1nz"/>
                                                         <constraint firstAttribute="width" constant="24" id="mr6-ks-Uhu"/>
                                                     </constraints>
-                                                    <state key="normal" image="more"/>
-                                                    <state key="selected" image="moreSelected"/>
-                                                    <state key="highlighted" image="moreSelected"/>
+                                                    <state key="normal" image="moreList"/>
+                                                    <state key="selected" image="moreList"/>
+                                                    <state key="highlighted" image="moreList"/>
                                                     <connections>
                                                         <action selector="nodeActionsTapped:" destination="PTB-3G-3qq" eventType="touchUpInside" id="LBL-sf-WeN"/>
                                                     </connections>
@@ -848,10 +848,11 @@
         <image name="cancel" width="46" height="44"/>
         <image name="checkBoxUnselected" width="24" height="24"/>
         <image name="import" width="28" height="28"/>
-        <image name="more" width="28" height="28.666666030883789"/>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreGrid" width="24" height="24"/>
+        <image name="moreList" width="28" height="28"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
-        <image name="selectAll" width="22" height="22"/>
+        <image name="selectAll" width="28" height="28"/>
         <image name="sendMessage" width="28" height="28"/>
         <image name="share" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>

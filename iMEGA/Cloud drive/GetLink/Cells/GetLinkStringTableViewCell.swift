@@ -14,7 +14,7 @@ class GetLinkStringTableViewCell: UITableViewCell {
     
     func configureKeyCell(key: String) {
         nameLabel.text = key
-        leftImageView.image = UIImage(named: "keyGetLink")
+        leftImageView.image = UIImage(named: "icon-key-only")
         rightImageView.isHidden = true
     }
 }
