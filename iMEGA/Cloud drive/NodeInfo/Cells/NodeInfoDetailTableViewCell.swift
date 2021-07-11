@@ -1,12 +1,12 @@
 import UIKit
 
 class NodeInfoDetailTableViewCell: UITableViewCell {
-    @IBOutlet weak var keyLabel: UILabel!
-    @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var keyLabel: MEGALabel!
+    @IBOutlet weak var valueLabel: MEGALabel!
     
     func configure(forNode node: MEGANode, rowType: DetailsSectionRow, folderInfo: MEGAFolderInfo?) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-
+    
         valueLabel.textColor = UIColor.mnz_label()
 
         switch rowType {
@@ -59,4 +59,6 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
             valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.publicLinkCreationTime ?? Date())
         }
     }
+    
+    
 }

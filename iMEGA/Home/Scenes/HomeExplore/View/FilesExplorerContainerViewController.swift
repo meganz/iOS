@@ -13,7 +13,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     private let viewPreference: ViewPreference
     
     private lazy var selectAllBarButtonItem = UIBarButtonItem(
-        image: UIImage(named: "moreSelected"),
+        image: UIImage(named: "moreList"),
         style: .plain,
         target: self, action: #selector(moreButtonItemSelected(_:))
     )

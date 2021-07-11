@@ -64,11 +64,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="EmS-36-9tQ">
                                 <rect key="frame" x="62" y="10" width="68.5" height="40"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GiK-Fk-Iw7">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GiK-Fk-Iw7" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="14.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="EY8-zf-we0">
                                         <rect key="frame" x="0.0" y="17.5" width="68.5" height="22.5"/>
@@ -133,6 +137,11 @@
             <point key="canvasLocation" x="-127" y="95"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="GiK-Fk-Iw7">
+            <size key="intrinsicContentSize" width="25" height="14.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="cancel" width="46" height="44"/>
         <image name="downloadQueued" width="12" height="12"/>

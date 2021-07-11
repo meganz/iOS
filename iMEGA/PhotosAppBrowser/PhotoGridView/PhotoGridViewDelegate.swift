@@ -4,6 +4,9 @@ import UIKit
 class PhotoGridViewDelegate: NSObject {
     private let collectionView: UICollectionView
     private let cellsPerRow: () -> Int
+    var isMultiSelectionEnabled: ((Bool) -> Void)?
+    var updateBottomView: (() -> Void)?
+    private var selecting: Bool = true
     
     // MARK:- Initializer.
     
@@ -38,6 +41,20 @@ extension PhotoGridViewDelegate: UICollectionViewDelegate {
         if let cell = cell as? PhotoGridViewCell {
             cell.didEndDisplaying()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        isMultiSelectionEnabled?(true)
+    }
+    
+    func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
+        isMultiSelectionEnabled?(false)
+        updateBottomView?()
     }
 }
 

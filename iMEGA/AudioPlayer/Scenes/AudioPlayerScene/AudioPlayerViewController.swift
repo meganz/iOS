@@ -32,6 +32,7 @@ final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var gotoplaylistButton: UIButton!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var separatorView: UIView!
     
     private var toolbarConfigurator: AudioPlayerFileToolbarConfigurator?
     private var shadowLayer: CAShapeLayer?
@@ -239,12 +240,15 @@ final class AudioPlayerViewController: UIViewController {
         if viewModel.playerType == .fileLink {
             bottomView.backgroundColor = .mnz_Elevated(traitCollection)
             view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-            bottomView.layer.addBorder(edge: .top, color: UIColor.mnz_grayBABABC(), thickness: 0.5)
+            separatorView.isHidden = false
+            separatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         } else {
             view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+            bottomView.backgroundColor = .clear
             viewModel.dispatch(.refreshRepeatStatus)
             viewModel.dispatch(.refreshShuffleStatus)
             updateCloseButtonState()
+            separatorView.isHidden = true
         }
         
         style(with: traitCollection)

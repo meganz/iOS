@@ -37,6 +37,9 @@
     
     [self updateAppearance];
     
+    self.primaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.secondaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    
     switch (self.type) {
         case OnboardingTypeDefault:
             [self.pageControl addTarget:self action:@selector(pageControlValueChanged) forControlEvents:UIControlEventValueChanged];

@@ -13,6 +13,7 @@
 
 @property (nonatomic) NSString *detail;
 @property (nonatomic) NSString *boldInDetail;
+@property (nonatomic) NSString *monospaceDetail;
 @property (nonatomic) NSAttributedString *detailAttributed;
 @property (nonatomic) UITapGestureRecognizer *detailTapGestureRecognizer;
 

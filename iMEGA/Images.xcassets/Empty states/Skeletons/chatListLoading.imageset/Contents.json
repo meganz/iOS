@@ -1,19 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "chatListLoadingIPX, portrait.png",
       "idiom" : "universal",
-      "resizing" : {
-        "cap-insets" : {
-          "left" : 248,
-          "right" : 53
-        },
-        "center" : {
-          "mode" : "tile",
-          "width" : 74
-        },
-        "mode" : "3-part-horizontal"
-      },
       "scale" : "1x"
     },
     {
@@ -23,7 +11,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "chatListLoadingIPX, portrait dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -82,7 +69,6 @@
       "scale" : "3x"
     },
     {
-      "filename" : "chatListLoadingiPadPro, landscape.png",
       "idiom" : "universal",
       "scale" : "1x",
       "width-class" : "regular"
@@ -94,7 +80,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "chatListLoadingiPadPro, landscape dark.png",
       "idiom" : "universal",
       "scale" : "1x",
       "width-class" : "regular"

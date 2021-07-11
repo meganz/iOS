@@ -1,23 +1,22 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "Versioned.png",
-      "scale" : "1x"
+      "filename" : "versioned.pdf",
+      "idiom" : "universal"
     },
     {
-      "idiom" : "universal",
-      "filename" : "Versioned@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "Versioned@3x.png",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "versionedDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -3,6 +3,18 @@
 #import "NSString+MNZCategory.h"
 #import "CoreDataErrorHandler.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#elif MNZ_NOTIFICATION_EXTENSION
+#import "MEGANotifications-Swift.h"
+#elif MNZ_WIDGET_EXTENSION
+#import "MEGAWidgetExtension-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @interface MEGAStore ()
 
 @property (strong, nonatomic) MEGACoreDataStack *stack;
@@ -463,47 +475,58 @@
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer {
     if (uploadTransfer) {
         [self.managedObjectContext performBlockAndWait:^{
-            [self.managedObjectContext deleteObject:uploadTransfer];
-            
+            [self deleteUploadTransfer:uploadTransfer withContext:self.managedObjectContext];
             MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
-            
-            [self saveContext:self.managedObjectContext];
         }];
     }
 }
 
-- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
-    MOUploadTransfer *uploadTransfer = [self fetchUploadTransferWithLocalIdentifier:localIdentifier];
-    
-    [self deleteUploadTransfer:uploadTransfer];
+- (void)deleteUploadTransfer:(nonnull MOUploadTransfer *)uploadTransfer withContext:(nonnull NSManagedObjectContext *)context {
+    [context deleteObject:uploadTransfer];
+    [self saveContext:context];
 }
 
-- (NSArray<MOUploadTransfer *> *)fetchUploadTransfers {
-    NSFetchRequest *request = [MOUploadTransfer fetchRequest];
-    
-    NSError *error;
-    
-    return [self.managedObjectContext executeFetchRequest:request error:&error];
+
+- (void)deleteUploadTransferWithLocalIdentifier:(nonnull NSString *)localIdentifier {
+    NSManagedObjectContext *context = self.stack.newBackgroundContext;
+    [context performBlockAndWait:^{
+        NSFetchRequest *request = [MOUploadTransfer fetchRequest];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];
+        request.predicate = predicate;
+        
+        NSError *error;
+        NSArray *array = [context executeFetchRequest:request error:&error];
+                
+        if (array.firstObject) {
+            [self deleteUploadTransfer:array.firstObject withContext:context];
+        }
+    }];
 }
 
-- (MOUploadTransfer *)fetchUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
-    NSFetchRequest *request = [MOUploadTransfer fetchRequest];
+- (NSArray<TransferRecordDTO *> *)fetchUploadTransfers {
+    NSManagedObjectContext *context = self.stack.newBackgroundContext;
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];
-    request.predicate = predicate;
+    NSMutableArray<TransferRecordDTO *> *uploadTransfers = NSMutableArray.array;
+    [context performBlockAndWait:^{
+        NSError *error;
+        NSArray<MOUploadTransfer *> *result = [context executeFetchRequest:MOUploadTransfer.fetchRequest error:&error];
+        for (MOUploadTransfer *transfer in result) {
+            TransferRecordDTO *transferRecordDTO = [transfer toUploadTransferEntity];
+            if (transferRecordDTO) {
+                [uploadTransfers addObject:transferRecordDTO];
+            }
+        }
+    }];
     
-    NSError *error;
-    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
-    
-    return array.firstObject;
+    return uploadTransfers;
 }
 
 - (void)removeAllUploadTransfers {
-    NSArray<MOUploadTransfer *> *uploadTransfers = [self fetchUploadTransfers];
-    for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
-        [self.managedObjectContext deleteObject:uploadTransfer];
-    }
-    
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:MOUploadTransfer.fetchRequest];
+
+    NSError *deleteError = nil;
+    [self.managedObjectContext executeRequest:delete error:&deleteError];
     [self saveContext:self.managedObjectContext];
 }
 

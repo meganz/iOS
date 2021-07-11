@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "sendLocation.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "sendLocation.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "sendLocationDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "sendLocation@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "sendLocationDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "sendLocation@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "sendLocationDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "sendLocationDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

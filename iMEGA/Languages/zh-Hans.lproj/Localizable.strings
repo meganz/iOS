@@ -744,8 +744,6 @@
 "View Source Code"="查看源代码";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感谢";
-/* Title for the MEGA Recovery Key */
-"masterKey"="恢复密钥";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="更改密码";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="恢复秘钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="还原金钥已以RecoveryKey.txt(还原金钥文字档)汇出至离线模式中。注意：您登出后它将会被删除，请将其存放于安全之处。";
+"masterKeyExported_alertMessage"="恢复密钥已导出到您的离线，文件名为MEGA-RECOVERYKEY.txt。注意：登出账户后，您的离线文件会被删除，请妥善保管。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="于您的设备上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="由于未知的内容编码，文件无法编辑。";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@（创建者）";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-恢复密钥";

@@ -178,7 +178,9 @@ final class MiniPlayerViewModel: ViewModelType {
         playerHandler.addPlayer(listener: self)
         
         guard !playerHandler.isPlayerEmpty(), let currentItem = playerHandler.playerCurrentItem() else {
-            router.dismiss()
+            DispatchQueue.main.async { [weak self] in
+                self?.router.dismiss()
+            }
             return
         }
         invokeCommand?(.initTracks(currentItem: currentItem, queue: playerHandler.playerPlaylistItems(), loopMode: playerHandler.currentRepeatMode() == .loop))

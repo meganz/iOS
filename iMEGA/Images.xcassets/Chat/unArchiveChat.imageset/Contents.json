@@ -1,19 +1,18 @@
 {
   "images" : [
     {
-      "filename" : "unArchiveChat.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "unArchiveChat.pdf",
+      "idiom" : "universal"
     },
     {
-      "filename" : "unArchiveChat@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "unArchiveChat@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "unArchiveChatDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -8,6 +8,7 @@ final class AlbumsTableViewController: UITableViewController {
     private let selectionActionText: String
     private let selectionActionDisabledText: String
     private let completionBlock: AlbumsTableViewController.CompletionBlock
+    var source: PhotoLibrarySelectionSource = .other
     
     typealias CompletionBlock = ([PHAsset]) -> Void
     
@@ -68,7 +69,8 @@ final class AlbumsTableViewController: UITableViewController {
         let gridViewController = PhotoGridViewController(album: album,
                                                          selectionActionText: selectionActionText,
                                                          selectionActionDisabledText: selectionActionDisabledText,
-                                                         completionBlock: completionBlock)
+                                                         completionBlock: completionBlock,
+                                                         source: source)
         navigationController?.pushViewController(gridViewController, animated: true)
     }
     

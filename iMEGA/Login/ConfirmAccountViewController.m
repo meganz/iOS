@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 @property (weak, nonatomic) IBOutlet UIButton *confirmAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -67,6 +68,8 @@
     
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -146,7 +149,6 @@
         [self.passwordView setErrorState:NO];
     } else {
         [self.passwordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.passwordView.passwordTextField becomeFirstResponder];
     }
     
     return validPassword;
@@ -168,6 +170,38 @@
     
     [self.confirmAccountButton mnz_setupPrimary:self.traitCollection];
     [self.cancelButton mnz_setupCancel:self.traitCollection];
+}
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary *info = aNotification.userInfo;
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height;
+    CGRect activeTextFieldFrame = self.passwordView.passwordTextField.frame;
+    if (!CGRectContainsPoint(viewFrame, activeTextFieldFrame.origin)) {
+        [self.scrollView scrollRectToVisible:activeTextFieldFrame animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 #pragma mark - UIResponder

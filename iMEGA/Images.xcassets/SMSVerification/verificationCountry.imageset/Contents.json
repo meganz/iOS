@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "countryPhoneNumber.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "country.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "countryPhoneNumberDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "countryPhoneNumber@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "countryPhoneNumberDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "countryPhoneNumber@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "countryPhoneNumberDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "countryDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

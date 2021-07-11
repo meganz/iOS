@@ -57,7 +57,7 @@ final class AudioPlaylistViewController: UIViewController {
                 }
                 
                 updateAppearance()
-                tableView.reloadData()
+                reloadData()
             }
         }
     }
@@ -113,15 +113,24 @@ final class AudioPlaylistViewController: UIViewController {
         }
     }
     
-    private func reload(_ item: AudioPlayerItem) {
-        guard let playlistSource = playlistSource, let indexPaths = playlistSource.indexPathsOf(item: item) else { return }
+    private func reloadData(item: AudioPlayerItem? = nil) {
+        guard let playlistSource = playlistSource else { return }
+        var indexPaths: [IndexPath] = []
+        
+        if let item = item {
+            indexPaths = playlistSource.indexPathsOf(item: item) ?? []
+        }
+            
         let selectedIndexPaths = tableView.indexPathsForSelectedRows
         
         tableView.beginUpdates()
-        tableView.reloadRows(at: indexPaths, with: .none)
+        item != nil ? tableView.reloadRows(at: indexPaths, with: .none) : tableView.reloadData()
         tableView.endUpdates()
         
-        Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))).forEach {
+        let indexesToReload = item != nil ?
+            Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))) : selectedIndexPaths
+        
+        indexesToReload?.forEach {
             tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
         }
     }
@@ -189,7 +198,7 @@ final class AudioPlaylistViewController: UIViewController {
         case .reloadTracks(let currentTrack, let queueTracks, let selectedIndexPaths):
             updateDataSource(currentTrack, queueTracks, selectedIndexPaths)
         case .reload(let item):
-            reload(item)
+            reloadData(item: item)
         case .title(let title):
             titleLabel.text = title
         case .deselectAll:

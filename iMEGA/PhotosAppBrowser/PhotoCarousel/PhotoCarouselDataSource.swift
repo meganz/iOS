@@ -17,12 +17,12 @@ final class PhotoCarouselDataSource: PhotoGridViewDataSource {
     }
     
     override func updateCollectionCell(atIndexPath indexPath: IndexPath, selectedIndex: Int?) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCarouselCell else { return }
+        guard let cell = collectionView?.cellForItem(at: indexPath) as? PhotoCarouselCell else { return }
         cell.selectedIndex = selectedIndex
     }
     
     func asset(atIndexPath indexPath: IndexPath) -> PHAsset? {
-        if let cell = collectionView.cellForItem(at: indexPath) as? PhotoCarouselCell {
+        if let cell = collectionView?.cellForItem(at: indexPath) as? PhotoCarouselCell {
             return cell.asset
         }
         

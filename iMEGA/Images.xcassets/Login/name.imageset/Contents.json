@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "profileCreateAccount.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "profile.pdf",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -12,41 +11,8 @@
           "value" : "dark"
         }
       ],
-      "filename" : "profileCreateAccountDark.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "profileCreateAccount@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "profileCreateAccountDark@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "profileCreateAccount@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "profileCreateAccountDark@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "profileDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

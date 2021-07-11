@@ -744,8 +744,6 @@
 "View Source Code"="ソースコードを見る";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="謝辞";
-/* Title for the MEGA Recovery Key */
-"masterKey"="回復キー";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="パスワードの変更";
 /* Advising the user to keep the user's master key safe. */
@@ -757,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="回復キーがエクスポートされました";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="回復キーは、RecoveryKey.txtとしてオフラインセクションにエクスポートされました。注意：ログアウトすると削除されますので、安全な場所に保管してください。";
+"masterKeyExported_alertMessage"="回復キーは、MEGA-RECOVERYKEY.txtとしてオフラインセクションにエクスポートされました。注意：ログアウトすると削除されますので、安全な場所に保管してください。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="ご自分のデバイス";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -2630,3 +2628,5 @@
 "general.textEditor.hud.unknownEncode"="コンテンツのエンコーディングが不明なため、ファイルを編集できませんでした。";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@さん（所有者）";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-回復キー";

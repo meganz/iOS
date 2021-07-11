@@ -379,11 +379,11 @@ static MEGAIndexer *indexer;
     return uploadingNodes;
 }
 
-+ (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
-    NSString *localIdentifier = uploadTransfer.localIdentifier;
-    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil].firstObject;
++ (void)startUploadTransferWithTransferRecordDTO:(TransferRecordDTO *)transferRecordDTO {
+    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[transferRecordDTO.localIdentifier]
+                                                      options:nil].firstObject;
     
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transferRecordDTO.parentNodeHandle.unsignedLongLongValue];
     
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent.mnz_fileNameWithLowercaseExtension;
@@ -392,7 +392,7 @@ static MEGAIndexer *indexer;
         NSString *appData = [NSString new];
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
-        appData = [appData mnz_appDataToLocalIdentifier:localIdentifier];
+        appData = [appData mnz_appDataToLocalIdentifier:transferRecordDTO.localIdentifier];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
@@ -407,21 +407,21 @@ static MEGAIndexer *indexer;
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:NO];
         }
         
-        if (localIdentifier) {
-            [[Helper uploadingNodes] addObject:localIdentifier];
+        if (transferRecordDTO.localIdentifier) {
+            [[Helper uploadingNodes] addObject:transferRecordDTO.localIdentifier];
         }
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", NSLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
         [Helper startPendingUploadTransferIfNeeded];
     }];
     
@@ -443,9 +443,9 @@ static MEGAIndexer *indexer;
     }
     
     if (allUploadTransfersPaused) {
-        NSArray<MOUploadTransfer *> *queuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-        if (queuedUploadTransfers.count) {
-            [Helper startUploadTransfer:queuedUploadTransfers.firstObject];
+        TransferRecordDTO *transferRecordDTO = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
+        if (transferRecordDTO != nil) {
+            [self startUploadTransferWithTransferRecordDTO:transferRecordDTO];
         }
     }
 }
@@ -872,7 +872,7 @@ static MEGAIndexer *indexer;
 
 + (void)deleteMasterKey {
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", NSLocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")]];
     [[NSFileManager defaultManager] mnz_removeItemAtPath:masterKeyFilePath];
 }
 
@@ -901,11 +901,11 @@ static MEGAIndexer *indexer;
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion {
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", NSLocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")]];
     
     BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
     if (success) {
-        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:NSLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:NSLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
         [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] masterKeyExported];
             [viewController dismissViewControllerAnimated:YES completion:^{

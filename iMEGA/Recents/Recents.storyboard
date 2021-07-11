@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +22,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="RecentsSharedNodeTVC" rowHeight="80" id="7lu-V0-Yni" userLabel="Shared Item Node Cell" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7lu-V0-Yni" id="4Of-Gr-ZlQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -132,7 +132,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="60" id="IqW-aw-hVx"/>
                                                                     </constraints>
-                                                                    <state key="normal" image="recentsMore"/>
+                                                                    <state key="normal" image="moreList"/>
                                                                     <connections>
                                                                         <action selector="infoTouchUpInside:" destination="06W-yf-S0P" eventType="touchUpInside" id="Hxj-Jw-weG"/>
                                                                     </connections>
@@ -198,7 +198,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="RecentsSharedMediaTVC" rowHeight="198" id="FdC-Hq-L89" userLabel="Shared Item Media Cell" customClass="ThumbnailViewerTableViewCell">
-                                        <rect key="frame" x="0.0" y="108" width="414" height="198"/>
+                                        <rect key="frame" x="0.0" y="104.33333396911621" width="414" height="198"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FdC-Hq-L89" id="xEC-9J-DkW">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="198"/>
@@ -451,7 +451,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecentsNodeTVC" rowHeight="60" id="uUf-ky-Ri5" userLabel="Node Cell" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="306" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="302.33333396911621" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uUf-ky-Ri5" id="PAz-eB-4XC">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -555,9 +555,9 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="60" id="zwS-3J-w5n"/>
                                                                     </constraints>
-                                                                    <state key="normal" image="recentsMore"/>
-                                                                    <state key="selected" image="moreSelected"/>
-                                                                    <state key="highlighted" image="moreSelected"/>
+                                                                    <state key="normal" image="moreList"/>
+                                                                    <state key="selected" image="moreList"/>
+                                                                    <state key="highlighted" image="moreList"/>
                                                                     <connections>
                                                                         <action selector="infoTouchUpInside:" destination="06W-yf-S0P" eventType="touchUpInside" id="Ipc-3N-4EV"/>
                                                                     </connections>
@@ -622,7 +622,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecentsMediaTVC" rowHeight="178" id="bdW-9M-ETI" userLabel="Media Cell" customClass="ThumbnailViewerTableViewCell">
-                                        <rect key="frame" x="0.0" y="366" width="414" height="178"/>
+                                        <rect key="frame" x="0.0" y="362.33333396911621" width="414" height="178"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bdW-9M-ETI" id="ziK-t8-Rnx">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="178"/>
@@ -899,9 +899,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="moreSelected" width="28" height="28"/>
+        <image name="moreList" width="28" height="28"/>
         <image name="recentUpload" width="12" height="12"/>
-        <image name="recentsMore" width="28" height="28"/>
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">

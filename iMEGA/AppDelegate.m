@@ -65,6 +65,12 @@
 
 #import "MEGA-Swift.h"
 
+typedef NS_ENUM(NSInteger, MEGANotificationType) {
+    MEGANotificationTypeShareFolder = 1,
+    MEGANotificationTypeChatMessage = 2,
+    MEGANotificationTypeContactRequest = 3
+};
+
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
@@ -78,7 +84,7 @@
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
-@property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
+@property (nonatomic) MEGANotificationType megatype; //1 share folder, 2 new message, 3 contact request
 
 @property (strong, nonatomic) MEGAChatRoom *chatRoom;
 @property (nonatomic, getter=isVideoCall) BOOL videoCall;
@@ -105,6 +111,8 @@
 @property (nonatomic) NSNumber *openChatLater;
 
 @property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
+
+@property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
 
 @end
 
@@ -153,7 +161,7 @@
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
-        _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
+        _megatype = (MEGANotificationType)[[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] integerValue];
     }
     
     SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
@@ -300,6 +308,8 @@
         [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
+    
+    [self.ratingRequestMonitor startMonitoring];
     
     return YES;
 }
@@ -600,6 +610,14 @@
     return _quickAccessWidgetManager;
 }
 
+- (RatingRequestMonitor *)ratingRequestMonitor {
+    if (_ratingRequestMonitor == nil) {
+        _ratingRequestMonitor = [[RatingRequestMonitor alloc] initWithSdk:MEGASdkManager.sharedMEGASdk];
+    }
+    
+    return _ratingRequestMonitor;
+}
+
 #pragma mark - Private
 
 - (void)beginBackgroundTaskWithName:(NSString *)name {
@@ -806,15 +824,15 @@
 - (void)openTabBasedOnNotificationMegatype {
     NSUInteger tabTag = 0;
     switch (self.megatype) {
-        case 1:
+        case MEGANotificationTypeShareFolder:
             tabTag = TabTypeSharedItems;
             break;
             
-        case 2:
+        case MEGANotificationTypeChatMessage:
             tabTag = TabTypeChat;
             break;
             
-        case 3:
+        case MEGANotificationTypeContactRequest:
             tabTag = TabTypeHome;
             break;
             
@@ -823,7 +841,7 @@
     }
     
     self.mainTBC.selectedIndex = tabTag;
-    if (self.megatype == 3) {
+    if (self.megatype == MEGANotificationTypeContactRequest) {
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         [navigationController pushViewController:contactsVC animated:NO];
@@ -1061,7 +1079,8 @@
             NSString *title = NSLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
             NSString *detail = NSLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
             UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
-            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            NSString *base64handle = [MEGASdk base64HandleForUserHandle:sdk.myUser.handle];
+            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:base64handle image:image];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
         }
     }
@@ -1074,18 +1093,23 @@
             NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
             NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
             UIImage *image = [sdk mnz_accountDetails].storageMax.longLongValue > [sdk mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
         }
     }
 }
 
-- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
+- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail monospaceDetail:(NSString *)monospaceDetail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.image = image;
         customModalAlertVC.viewTitle = title;
-        customModalAlertVC.detail = detail;
+        if (monospaceDetail) {
+            customModalAlertVC.detail = [NSString stringWithFormat:@"%@ (ID: %@)", detail, monospaceDetail];
+            customModalAlertVC.monospaceDetail = monospaceDetail;
+        } else {
+            customModalAlertVC.detail = detail;
+        }
         customModalAlertVC.firstButtonTitle = NSLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
         customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
@@ -1270,10 +1294,14 @@
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"userNotificationCenter didReceiveNotificationResponse %@", response);
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
+    self.megatype = (MEGANotificationType)[response.notification.request.content.userInfo[@"megatype"] integerValue];
     
     if (self.mainTBC) {
-        [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
-    } else {
+        [self openTabBasedOnNotificationMegatype];
+        if (self.megatype == MEGANotificationTypeChatMessage){
+            [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
+        }
+    } else if (self.megatype == MEGANotificationTypeChatMessage){
         self.openChatLater = response.notification.request.content.userInfo[@"chatId"];
     }
     
@@ -1447,7 +1475,7 @@
                     alreadyPresented = YES;
                     NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                     UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                    [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
                 }
             }
             break;
@@ -1542,7 +1570,7 @@
                     NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                     NSString *detail = NSLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
                     UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                    [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
                 }
                 
                 break;
@@ -1802,6 +1830,13 @@
             break;
         }
             
+        case MEGARequestTypeShare: {
+            if (request.access != MEGANodeAccessLevelAccessUnknown) {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAShareCreatedNotification object:nil];
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -1987,6 +2022,8 @@
         
         [transfer mnz_setNodeCoordinates];
     }
+    
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferFinishedNotification object:nil userInfo:@{MEGATransferUserInfoKey : transfer}];
 }
 
 #pragma mark - MEGAApplicationDelegate

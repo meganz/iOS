@@ -2,24 +2,14 @@ import UIKit
 import Photos
 
 @available(iOS 13.0, *)
-final class PhotoGridViewDiffableDataSource {
+final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
     private enum Section {
         case main
     }
     
-    private weak var collectionView: UICollectionView?
-    typealias SelectionHandler = (PHAsset, IndexPath, CGSize, CGPoint) -> Void
-    private let selectionHandler: SelectionHandler
     private var dataSource: UICollectionViewDiffableDataSource<Section, PHAsset>?
-    var selectedAssets: [PHAsset]
-
-    init(collectionView: UICollectionView, selectedAssets: [PHAsset], selectionHandler: @escaping SelectionHandler) {
-        self.collectionView = collectionView
-        self.selectedAssets = selectedAssets
-        self.selectionHandler = selectionHandler
-    }
     
-    func reload(assets: [PHAsset]) {
+    func load(assets: [PHAsset]) {
         selectedAssets = selectedAssets.reduce(into: []) { result, asset in
             if assets.contains(asset) {
                 result.append(asset)
@@ -31,6 +21,12 @@ final class PhotoGridViewDiffableDataSource {
         snapshot.appendItems(assets)
         snapshot.reloadItems(selectedAssets)
         dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func reload(assets: [PHAsset]) {
+        guard var newSnapshot = dataSource?.snapshot() else { return }
+        newSnapshot.reloadItems(assets)
+        dataSource?.apply(newSnapshot)
     }
     
     func configureDataSource() {
@@ -54,6 +50,10 @@ final class PhotoGridViewDiffableDataSource {
                 self.selectionHandler(selectedAsset, indexPath, size, point)
             }
             
+            cell.panSelectionHandler = { [weak self] isSelected, asset in
+                self?.handlePanSelection(isSelected: isSelected, asset: asset)
+            }
+            
             cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
             return cell
         }
@@ -69,8 +69,6 @@ final class PhotoGridViewDiffableDataSource {
             reloadAssets = [asset]
         }
         
-        guard var newSnapshot = dataSource?.snapshot() else { return }
-        newSnapshot.reloadItems(reloadAssets)
-        dataSource?.apply(newSnapshot)
+        reload(assets: reloadAssets)
     }
 }
