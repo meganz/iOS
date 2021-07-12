@@ -275,11 +275,11 @@
                                                 <constraint firstAttribute="bottom" secondItem="xc9-7t-FN7" secondAttribute="bottom" constant="12" id="hBh-L2-gS6"/>
                                                 <constraint firstItem="Hj9-IR-99g" firstAttribute="leading" secondItem="TR8-Ck-H55" secondAttribute="leading" id="iG0-tP-2q9"/>
                                                 <constraint firstItem="UFk-6I-Pd0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xc9-7t-FN7" secondAttribute="trailing" constant="5" id="uQH-e3-4EO"/>
+                                                <constraint firstItem="I0f-v7-OXa" firstAttribute="leading" secondItem="TR8-Ck-H55" secondAttribute="leading" constant="10" id="wl4-wM-g7t"/>
                                                 <constraint firstItem="UFk-6I-Pd0" firstAttribute="centerY" secondItem="TR8-Ck-H55" secondAttribute="centerY" id="y7u-sw-Rmb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
-                                            <constraint firstItem="I0f-v7-OXa" firstAttribute="leading" secondItem="jDf-g3-SgE" secondAttribute="leading" constant="10" id="BDT-Et-eh0"/>
                                             <constraint firstAttribute="bottom" secondItem="Hj9-IR-99g" secondAttribute="bottom" id="Jh0-n5-4Ry"/>
                                             <constraint firstItem="I0f-v7-OXa" firstAttribute="centerY" secondItem="jDf-g3-SgE" secondAttribute="centerY" id="fcf-sn-fiN"/>
                                         </constraints>
@@ -412,7 +412,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="9wC-lz-S3g" secondAttribute="bottom" id="Zof-nO-fap"/>
                                                 <constraint firstAttribute="centerY" secondItem="5kh-H5-05W" secondAttribute="centerY" id="cVd-KL-LVC"/>
                                                 <constraint firstItem="CSM-Ms-Xl7" firstAttribute="top" secondItem="WJr-Ju-WxO" secondAttribute="top" constant="12" id="nLp-Ag-cTh"/>
-                                                <constraint firstItem="5kh-H5-05W" firstAttribute="leading" secondItem="WJr-Ju-WxO" secondAttribute="leading" constant="10" id="tkx-Bc-Gqi"/>
+                                                <constraint firstItem="5kh-H5-05W" firstAttribute="leading" secondItem="WJr-Ju-WxO" secondAttribute="leading" constant="10" id="o7F-Hz-qAA"/>
                                                 <constraint firstAttribute="trailing" secondItem="NeU-5k-1l1" secondAttribute="trailing" constant="34" id="xIJ-cf-JlE"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -510,8 +510,8 @@
         <image name="cancel" width="46" height="44"/>
         <image name="cancelTransfers" width="22" height="22"/>
         <image name="downloaded" width="12" height="12"/>
-        <image name="moreList" width="28" height="28"/>
         <image name="downloading" width="12" height="12"/>
+        <image name="moreList" width="28" height="28"/>
         <image name="pauseTransfers" width="28" height="28"/>
         <image name="resumeTransfers" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
