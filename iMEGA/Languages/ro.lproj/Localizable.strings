@@ -137,7 +137,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Această adresă de e-mail a înregistrat deja un cont cu MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
-"awaitingEmailConfirmation"="Se așteaptă confirmarea e-mailului.";
+"awaitingEmailConfirmation"="În așteptarea confirmării e-mailului.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Te rugăm să introduci parola pentru a confirma contul";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
@@ -975,7 +975,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install the MEGA mobile app";
+"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mesaj vocal";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Această acțiune nu poate fi finalizată, deoarece îți va depăși limita actuală de stocare";
+"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Încărcarea(ările) nu poate(pot) continua deoarece contul tău este plin";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Ieri";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Trimite această locație";
+"Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Setări pentru hartă";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Deși MEGA nu îți poate accesa datele, administratorul contului tău business poate controla și vedea încărcările cameră din contul tău de utilizator";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
 /*  */
 "Something went wrong"="Ceva a mers prost";
 /* Title of the "Links" Shared Items. */
 "Links"="Linkuri";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="Niciun link public";
+"No Public Links"="No public links";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gestionează partajarea";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Include etichetele locațiilor";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Dacă aceasta este activată, vei încărca informații despre locul în care au fost făcute fotografiile și videoclipurile, așa că ai grijă când le împărtășești.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken. Be aware of this and take care when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Trimite (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */

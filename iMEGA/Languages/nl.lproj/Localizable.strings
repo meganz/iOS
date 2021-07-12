@@ -975,7 +975,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Wanneer u de MEGA desktop applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. De MEGA desktop applicatie is beschikbaar voor Windows, MacOS en de meeste Linux distributies.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Installeer de MEGA mobiele applicatie";
+"account.achievement.mobileApp.title"="Installeer de MEGA Mobile Applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA mobiele applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Spraakbericht";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Deze actie kan niet worden voltooid omdat het u over de huidige opslaglimiet brengt.";
+"This action can not be completed as it would take you over your current storage limit"="Deze actie kan niet worden voltooid omdat het u over uw huidige opslag limiet brengt.";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Uw upload(s) kunnen niet doorgaan omdat uw account vol is";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Gisteren";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Verstuur Deze Locatie";
+"Send This Location"="Deze locatie versturen";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Map instellingen";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]. U kunt alleen door uw gegevens bladeren.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Hoewel MEGA geen toegang heeft tot uw gegevens, heeft uw zakelijke accountbeheerder de mogelijkheid om de Camera-Uploads in uw gebruikersaccount te beheren en te bekijken";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA heeft geen toegang tot uw gegevens. Uw zakelijke accountbeheerder heeft echter wel toegang tot uw camera-uploads.";
 /*  */
 "Something went wrong"="Er is iets fout gegaan";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="Geen Publieke Links";
+"No Public Links"="Geen publieke links";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Delen beheren";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Locatie Tags Toevoegen";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Indien ingeschakeld, upload u informatie over waar uw foto's en video's zijn gemaakt, dus wees voorzichtig wanneer u ze deelt.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Indien ingeschakeld, upload u informatie over waar uw foto's en video's zijn gemaakt. Wees u hiervan bewust en wees voorzichtig bij het delen ervan.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Versturen (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
