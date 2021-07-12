@@ -16,7 +16,7 @@ enum MeetingFloatingPanelAction: ActionType {
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(isUserAModerator: Bool,
+        case configView(canInviteParticipants: Bool,
                         isOneToOneMeeting: Bool,
                         isVideoEnabled: Bool,
                         cameraPosition: CameraPosition?)
@@ -39,6 +39,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
+    private let userUseCase: UserUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var isSpeakerEnabled: Bool {
@@ -63,7 +64,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: CallsLocalVideoUseCaseProtocol) {
+         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
+         userUseCase: UserUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
@@ -74,6 +76,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.isSpeakerEnabled = isSpeakerEnabled
+        self.userUseCase = userUseCase
     }
     
     deinit {
@@ -89,7 +92,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             populateParticipants()
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
-            invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
+            invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuestAccount,
                                        isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                        isVideoEnabled: isVideoEnabled ?? false,
                                        cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
@@ -329,7 +332,7 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
         self.chatRoom = chatRoom
         guard let attendee = callParticipants.first else { return }
         attendee.isModerator = privilege == .moderator
-        invokeCommand?(.configView(isUserAModerator: isMyselfAModerator,
+        invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuestAccount,
                                    isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                    isVideoEnabled: isVideoEnabled ?? false,
                                    cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
