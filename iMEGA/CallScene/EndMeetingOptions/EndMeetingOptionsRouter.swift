@@ -22,8 +22,11 @@ final class EndMeetingOptionsRouter: EndMeetingOptionsRouting {
     
     func start() {
         guard let viewController = build() as? PanModalPresentable & UIViewController else { return }
+        viewController.modalPresentationStyle = .custom
+        viewController.modalPresentationCapturesStatusBarAppearance = true
+        viewController.transitioningDelegate = PanModalPresentationDelegate.default
         baseViewController = viewController
-        presenter?.presentPanModal(viewController)
+        presenter?.present(viewController, animated: true)
     }
     
     func dismiss(completion: @escaping () -> Void) {
