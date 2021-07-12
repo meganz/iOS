@@ -38,7 +38,12 @@ class ContactsGroupsViewController: UIViewController {
                 updateAppearance()
             }
         }
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            updateFontSizes()
+        }
     }
+    
     
     //MARK: - Private
     
@@ -47,6 +52,10 @@ class ContactsGroupsViewController: UIViewController {
         separatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.reloadData()
+    }
+    
+    private func updateFontSizes() {
+        newGroupChatLabel.font = UIFont.mnz_preferredFont(withStyle: .subheadline, weight: .medium)
     }
 
     func fetchGroupChatsList() {
