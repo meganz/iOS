@@ -101,8 +101,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     // MARK: - Dispatch action
     func executeCommand(_ command: MeetingFloatingPanelViewModel.Command) {
         switch command {
-        case .configView(let isUserAModerator, let isOneToOneMeeting, let isVideoEnabled, let cameraPosition):
-            updateUI(isMyselfAModerator: isUserAModerator, isOneToOneMeeting: isOneToOneMeeting, isVideoEnabled: isVideoEnabled, cameraPosition: cameraPosition)
+        case .configView(let canInviteParticipants, let isOneToOneMeeting, let isVideoEnabled, let cameraPosition):
+            updateUI(canInviteParticipants: canInviteParticipants, isOneToOneMeeting: isOneToOneMeeting, isVideoEnabled: isVideoEnabled, cameraPosition: cameraPosition)
         case .enabledLoudSpeaker(let enabled):
             speakerQuickActionView?.isSelected = enabled
         case .microphoneMuted(let muted):
@@ -181,7 +181,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         speakerQuickActionView?.selectedAudioPortUpdated(selectedAudioPort, isBluetoothRouteAvailable: isBluetoothRouteAvailable)
     }
     
-    private func updateUI(isMyselfAModerator: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPosition?) {
+    private func updateUI(canInviteParticipants: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPosition?) {
         cameraQuickActionView.isSelected = isVideoEnabled
         if let cameraPosition = cameraPosition {
             flipQuickActionView.isSelected = cameraPosition == .back
@@ -190,9 +190,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
         if isOneToOneMeeting {
             optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
             optionsStackViewHeightConstraint.constant = 0.0
-        } else if !isMyselfAModerator && inviteParticpicantsView.superview != nil {
+        } else if !canInviteParticipants && inviteParticpicantsView.superview != nil {
             inviteParticpicantsView.removeFromSuperview()
-        } else if isMyselfAModerator && inviteParticpicantsView.superview == nil {
+        } else if canInviteParticipants && inviteParticpicantsView.superview == nil {
             optionsStackView.addArrangedSubview(inviteParticpicantsView)
         }
     }

@@ -53,7 +53,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-                                                      localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()))
+                                                      localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
+                                                      userUseCase: UserUseCase(repo: .live))
         
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
