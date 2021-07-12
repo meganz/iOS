@@ -170,6 +170,7 @@ class CookieSettingsTableViewController: UITableViewController {
         
         thirdPartyCookiesMoreInformationButton.setTitle(NSLocalizedString("More Information", comment: "Cookie settings dialog link label. Should be same as in “24659” string."), for: .normal)
         thirdPartyCookiesMoreInformationButton.setTitleColor(.mnz_turquoise(for: traitCollection), for: .normal)
+        thirdPartyCookiesMoreInformationButton.titleLabel?.adjustsFontForContentSizeCategory = true
         
         configToolbar()
         
