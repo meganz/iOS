@@ -22,7 +22,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
                                                style: .plain,
                                                target: self,
                                                action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton))
-    lazy private var optionsMenuButton = UIBarButtonItem(image: UIImage(named: "more"),
+    lazy private var optionsMenuButton = UIBarButtonItem(image: UIImage(named: "moreGrid"),
                                                      style: .plain,
                                                      target: self,
                                                      action: #selector(MeetingParticipantsLayoutViewController.didTapOptionsButton))
