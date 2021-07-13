@@ -180,6 +180,10 @@ extension CallsRepository: MEGAChatCallDelegate {
             callbacksDelegate?.localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         }
         
+        if call.hasChanged(for: .networkQuality) {
+            callbacksDelegate?.networkQuality()
+        }
+        
         switch call.status {
         case .undefined:
             break

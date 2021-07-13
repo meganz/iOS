@@ -29,6 +29,7 @@ protocol CallsCallbacksUseCaseProtocol: AnyObject {
     func inProgress()
     func localAvFlagsUpdated(video: Bool, audio: Bool)
     func chatTitleChanged(chatRoom: ChatRoomEntity)
+    func networkQuality()
 }
 
 final class CallsUseCase: NSObject, CallsUseCaseProtocol {
@@ -151,5 +152,9 @@ extension CallsUseCase: CallsCallbacksRepositoryProtocol {
     
     func chatTitleChanged(chatRoom: ChatRoomEntity) {
         callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom)
+    }
+    
+    func networkQuality() {
+        callbacksDelegate?.networkQuality()
     }
 }

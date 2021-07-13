@@ -176,6 +176,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             speakerViews.forEach { $0.isHidden = hidden }
         case .ownPrivilegeChangedToModerator:
             showNotification(message: NSLocalizedString("meetings.notifications.moderatorPrivilege", comment: "Message shown when the user privilege is changed to moderator"), color: UIColor.mnz_turquoise(for: traitCollection))
+        case .lowNetworkQuality:
+            showNotification(message: NSLocalizedString("Poor connection.", comment: "Message to inform the local user is having a bad quality network with someone in the current group call"), color: UIColor.systemOrange)
         }
     }
     
