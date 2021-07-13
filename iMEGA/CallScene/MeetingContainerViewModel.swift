@@ -1,7 +1,7 @@
 
 enum MeetingContainerAction: ActionType {
     case onViewReady
-    case hangCall(presenter: UIViewController)
+    case hangCall(presenter: UIViewController, sender: UIButton)
     case tapOnBackButton
     case changeMenuVisibility
     case showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool)
@@ -57,8 +57,8 @@ final class MeetingContainerViewModel: ViewModelType {
                 callManagerUseCase.startCall(call)
             }
             router.showMeetingUI(containerViewModel: self)
-        case.hangCall(let presenter):
-            hangCall(presenter: presenter)
+        case.hangCall(let presenter, let sender):
+            hangCall(presenter: presenter, sender: sender)
         case .tapOnBackButton:
             router.dismiss(completion: nil)
         case .changeMenuVisibility:
@@ -101,16 +101,17 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     
-    private func hangCall(presenter: UIViewController) {
+    private func hangCall(presenter: UIViewController, sender: UIButton) {
         if !userUseCase.isGuestAccount {
             dismissCall(completion: nil)
         } else {
-            router.showEndMeetingOptions(presenter: presenter, meetingContainerViewModel: self)
+            router.showEndMeetingOptions(presenter: presenter,
+                                         meetingContainerViewModel: self,
+                                         sender: sender)
         }
     }
     
     private func dismissCall(completion: (() -> Void)?) {
-
         if let call = callsUseCase.call(for: call.chatId) {
             if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
                let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
