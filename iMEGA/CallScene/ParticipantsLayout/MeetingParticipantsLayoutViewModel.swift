@@ -63,6 +63,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case selectPinnedCellAt(IndexPath?)
         case shouldHideSpeakerView(Bool)
         case ownPrivilegeChangedToModerator
+        case lowNetworkQuality
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -570,6 +571,10 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
         self.chatRoom = chatRoom
         guard let title = chatRoom.title else { return }
         invokeCommand?(.updateName(title))
+    }
+    
+    func networkQuality() {
+        invokeCommand?(.lowNetworkQuality)
     }
 }
 
