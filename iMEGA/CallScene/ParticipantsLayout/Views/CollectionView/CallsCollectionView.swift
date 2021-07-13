@@ -21,6 +21,11 @@ class CallsCollectionView: UICollectionView {
     
     func addedParticipant(in participants: [CallParticipantEntity]) {
         callParticipants = participants
+        guard participants.count == (numberOfItems(inSection: 0) + 1) else {
+            reloadData()
+            MEGALogDebug("CallsCollectionView: Add particpant count reload called instead of insert")
+            return
+        }
         insertItems(at: [IndexPath(item: callParticipants.count - 1, section: 0)])
     }
     
