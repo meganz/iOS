@@ -768,32 +768,8 @@
 }
 
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode {
-    NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localPath];
-    MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerprint parent:parentNode];
-    if (remoteNode) {
-        if (remoteNode.parentHandle == parentNode.handle) {
-            // The file is already in the folder, nothing to do.
-            if (self.users || self.chats) {
-                [self performAttachNodeHandle:remoteNode.handle];
-            } else {
-                self.alreadyInDestinationAssets++;
-                [self onePendingLess];
-            }
-        } else {
-            if ([remoteNode.name isEqualToString:localPath.lastPathComponent]) {
-                // The file is already in MEGA, in other folder, has to be copied to this folder.
-                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode delegate:self];
-            } else {
-                // The file is already in MEGA, in other folder with different name, has to be copied to this folder and renamed.
-                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode newName:localPath.lastPathComponent delegate:self];
-            }
-        }
-        [NSFileManager.defaultManager mnz_removeItemAtPath:localPath];
-    } else {
-        // The file is not in MEGA.
-        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:NO delegate:self];
-    }
+    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:NO delegate:self];
 }
 
 - (void)onePendingLess {
