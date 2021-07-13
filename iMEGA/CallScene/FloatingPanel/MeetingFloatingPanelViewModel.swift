@@ -1,7 +1,7 @@
 
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
-    case hangCall(presenter: UIViewController)
+    case hangCall(presenter: UIViewController, sender: UIButton)
     case shareLink(presenter: UIViewController, sender: UIButton)
     case inviteParticipants(presenter: UIViewController)
     case onContextMenuTap(presenter: UIViewController, sender: UIButton, attendee: CallParticipantEntity)
@@ -105,7 +105,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             
             dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? true)))
             updateSpeakerInfo()
-        case .hangCall(let presenter):
+        case .hangCall(let presenter, let sender):
             if let call = call {
                 if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
                    let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
@@ -116,7 +116,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             } else {
                 MEGALogDebug("Meeting: Hang call - no call found")
             }
-            containerViewModel?.dispatch(.hangCall(presenter: presenter))
+            containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
         case .shareLink(let presenter, let sender):
             containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
         case .inviteParticipants(let presenter):

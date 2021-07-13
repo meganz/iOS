@@ -134,7 +134,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func hangCall(_ sender: UIButton) {
-        viewModel.dispatch(.hangCall(presenter: self))
+        viewModel.dispatch(.hangCall(presenter: self, sender: sender))
     }
     
     @IBAction func shareLink(_ sender: UIButton) {

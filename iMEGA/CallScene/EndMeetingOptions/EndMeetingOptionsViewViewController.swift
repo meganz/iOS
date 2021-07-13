@@ -4,6 +4,10 @@ import PanModal
 class EndMeetingOptionsViewViewController: UIViewController {
     private let viewModel: EndMeetingOptionsViewModel
     
+    private struct Constants {
+        static let popoverSize = CGSize(width: 400, height: 200)
+    }
+    
     @IBOutlet weak var leaveButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
@@ -18,6 +22,7 @@ class EndMeetingOptionsViewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        preferredContentSize = Constants.popoverSize
         leaveButton.setTitle(NSLocalizedString("leave", comment: ""), for: .normal)
         cancelButton.setTitle(NSLocalizedString("cancel", comment: ""), for: .normal)
     }
