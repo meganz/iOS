@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Please check your email and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Your account has been blocked. Please contact support@mega.nz";
+"accountBlocked"="Your account was terminated due to a breach of MEGA's Terms of Service including, but not limited to, clause 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Enter a valid email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
