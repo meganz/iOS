@@ -12,6 +12,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var speakerNameLabel: UILabel!
     @IBOutlet private var speakerViews: Array<UIView>!
     @IBOutlet private weak var pageControl: UIPageControl!
+    @IBOutlet private weak var stackViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var stackViewTopConstraint: NSLayoutConstraint!
     
     private var reconncectingNotificationView: CallNotificationView?
     
@@ -50,6 +52,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        stackViewTopConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.top
+        stackViewBottomConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.bottom
+        
+        navigationController?.navigationBar.isTranslucent = true
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .dark
         } else {
@@ -82,7 +88,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             }
         }
         coordinator.animate(alongsideTransition: { _ in
-            self.callsCollectionView.collectionViewLayout.invalidateLayout()
             self.localUserView.repositionView()
             self.emptyMeetingMessageView?.invalidateIntrinsicContentSize()
         })
@@ -117,10 +122,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .switchMenusVisibility:
             statusBarHidden.toggle()
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(UINavigationController.hideShowBarDuration)) { [weak self] in
-                self?.callsCollectionView.collectionViewLayout.invalidateLayout()
-            }
-            localUserView.positionView(by: localUserView.center)
+            localUserView.updateOffsetWithNavigation(hidden: statusBarHidden)
             forceDarkNavigationUI()
         case .toggleLayoutButton:
             layoutModeBarButton.isEnabled.toggle()
@@ -209,7 +211,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             layoutModeBarButton.image = UIImage(named: "galleryView")
         }
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
-        pageControl.isHidden = mode == .speaker
+        pageControl.isHidden = mode == .speaker || participantsCount <= 6
         callsCollectionView.changeLayoutMode(mode)
     }
     
@@ -234,12 +236,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         pageControl.numberOfPages = Int(ceil(Double(participantsCount) / 6.0))
         if pageControl.isHidden && participantsCount > 6 {
             pageControl.isHidden = false
-            callsCollectionView.collectionViewLayout.invalidateLayout()
-            callsCollectionView.layoutIfNeeded()
         } else if !pageControl.isHidden && participantsCount <= 6 {
             pageControl.isHidden = true
-            callsCollectionView.collectionViewLayout.invalidateLayout()
-            callsCollectionView.layoutIfNeeded()
         }
     }
     
