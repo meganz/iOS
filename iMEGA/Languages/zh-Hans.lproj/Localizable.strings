@@ -75,9 +75,9 @@
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="无法连接MEGA。请检查您的连接或稍后再试。";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="请求太多。请稍候。";
+"tooManyRequest"="请求过多。请稍候。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="请登入您的账号。";
+"pleaseLogInToYourAccount"="请登录您的帐户。";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="您必须登入以完成您的电子邮件地址变更作业。请您使用目前的电子邮件地址重新登入，然后再次点击您的确认链接。";
 /* Button title which triggers the action to login in your MEGA account */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="当前您的帐户已被[B]禁用[/B]。您只能浏览数据。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA无法访问您的数据，而您的企业帐户管理员可以查看并删除您的相机上传文件。";
 /*  */
 "Something went wrong"="出错了";
 /* Title of the "Links" Shared Items. */
 "Links"="链接";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No public links";
+"No Public Links"="无公共链接";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="管理共享";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非活跃聊天";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="设置昵称";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="编辑昵称";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="删除昵称";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="别名/昵称";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="逾期支付";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="包含位置标签";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken. Be aware of this and take care when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="发送(%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
