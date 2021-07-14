@@ -433,7 +433,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             
             if callParticipants.isEmpty {
-                if chatRoom.chatType == .meeting {
+                if chatRoom.chatType == .meeting && !reconnecting {
                     invokeCommand?(.showNoOneElseHereMessage)
                 }
                 if layoutMode == .speaker {
@@ -538,6 +538,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
         if !reconnecting {
             reconnecting = true
             invokeCommand?(.reconnecting)
+            invokeCommand?(.hideEmptyRoomMessage)
         }
     }
     
@@ -545,6 +546,9 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
         if reconnecting {
             invokeCommand?(.reconnected)
             reconnecting = false
+            if callParticipants.isEmpty {
+                invokeCommand?(.showNoOneElseHereMessage)
+            }
         }
     }
     
