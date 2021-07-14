@@ -566,9 +566,10 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
-        if privilege == .moderator {
+        if self.chatRoom.ownPrivilege != chatRoom.ownPrivilege && privilege == .moderator {
             invokeCommand?(.ownPrivilegeChangedToModerator)
         }
+        self.chatRoom = chatRoom
     }
     
     func chatTitleChanged(chatRoom: ChatRoomEntity) {
