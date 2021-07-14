@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Hier";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send this location";
+"Send This Location"="Envoyer cette position";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Paramètres de la carte";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Votre compte est actuellement [B]désactivé[/B]. Vous ne pouvez que parcourir vos données.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ne peut pas accéder à vos données. Cependant, l’administrateur de votre compte d’entreprise peut accéder à vos Téléversements de l’appareil photo.";
 /*  */
 "Something went wrong"="Quelque chose a mal tourné";
 /* Title of the "Links" Shared Items. */
 "Links"="Liens";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No public links";
+"No Public Links"="Il n’y a aucun lien public";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gérer le partage";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="La conversation est inactive";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Définir un pseudonyme";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Modifier le pseudonyme";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Supprimer le pseudonyme";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/pseudonyme";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Le paiement est en retard";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Inclure des géomarques";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken. Be aware of this and take care when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Si cette option est activée, des renseignements sur le lieu seront ajoutés à vos photos. Veuillez donc faire preuve de prudence en les partageant.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Envoyer (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
