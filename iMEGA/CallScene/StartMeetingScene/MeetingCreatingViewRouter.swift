@@ -64,7 +64,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     
     // MARK: - UI Actions
     func dismiss() {
-        baseViewController?.dismiss(animated: false, completion: nil)
+        baseViewController?.dismiss(animated: true, completion: nil)
     }
     
     func openChatRoom(withChatId chatId: UInt64) {

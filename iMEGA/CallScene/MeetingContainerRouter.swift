@@ -110,8 +110,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func dismiss(completion: (() -> Void)?) {
-        floatingPanelRouter?.dismiss(animated: false)
-        baseViewController?.dismiss(animated: false, completion: completion)
+        floatingPanelRouter?.dismiss(animated: true)
+        baseViewController?.dismiss(animated: true, completion: completion)
     }
     
     func showShareMeetingError() {

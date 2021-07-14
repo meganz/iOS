@@ -24,8 +24,9 @@ class LocalUserView: UIView {
         return blurEffectView
     }()
 
-    var offset: CGPoint = .zero
-    var corner: Corner = .topRight
+    private var offset: CGPoint = .zero
+    private var corner: Corner = .topRight
+    private var navigationHidden: Bool = false
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
@@ -82,11 +83,22 @@ class LocalUserView: UIView {
         }
     }
     
-    public func localAudio(enabled: Bool) {
+    func localAudio(enabled: Bool) {
         mutedImageView.isHidden = enabled
     }
     
-    func positionView(by center: CGPoint, animated: Bool = true) {
+    func repositionView() {
+        let point = startingPoint()
+        self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
+    }
+    
+    func updateOffsetWithNavigation(hidden: Bool) {
+        navigationHidden = hidden
+        positionView(by: center)
+    }
+    
+    //MARK: - Private
+    private func positionView(by center: CGPoint, animated: Bool = true) {
         if animated {
             UIView.beginAnimations("Dragging", context: nil)
 
@@ -113,12 +125,6 @@ class LocalUserView: UIView {
         }
     }
     
-    func repositionView() {
-        let point = startingPoint()
-        self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
-    }
-    
-    //MARK: - Private
     private func startingPoint() -> CGPoint {
         var x: CGFloat = 0.0
         var y: CGFloat = 0.0
@@ -132,16 +138,16 @@ class LocalUserView: UIView {
         switch corner {
         case .topLeft:
             x = fixedMargin + iPhoneXOffset
-            y = fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top
+            y = fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top + (navigationHidden ? 0 : 44)
         case .topRight:
             x = superview.frame.size.width - frame.size.width - fixedMargin - iPhoneXOffset
-            y = fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top
+            y = fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top  + (navigationHidden ? 0 : 44)
         case .bottomLeft:
             x = fixedMargin + iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom
+            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - fixedMargin
         case .bottomRight:
             x = superview.frame.size.width - frame.size.width - fixedMargin - iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom
+            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - fixedMargin
         }
         
         return CGPoint(x: x, y: y)
