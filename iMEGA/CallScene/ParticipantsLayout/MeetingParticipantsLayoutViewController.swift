@@ -160,8 +160,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .reconnected:
             removeReconnectingNotification()
             showNotification(message: NSLocalizedString("online", comment: ""), color: UIColor.systemGreen)
-        case .updatedCameraPosition(let position):
+        case .updateCameraPositionTo(let position):
+            localUserView.addBlurEffect()
             localUserView.transformLocalVideo(for: position)
+        case .updatedCameraPosition:
+            localUserView.removeBlurEffect()
         case .showRenameAlert(let title, let isMeeting):
             showRenameAlert(title: title, isMeeting: isMeeting)
         case .enableRenameButton(let enabled):
