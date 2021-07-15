@@ -146,15 +146,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 self.turnCamera(on: on)
             }
         case .switchCamera(let backCameraOn):
-            checkForVideoPermission {
-                if self.isVideoEnabled == true {
-                    self.switchCamera(backCameraOn: backCameraOn)
-                } else {
-                    self.turnCamera(on: true) {
-                        self.switchCamera(backCameraOn: backCameraOn)
-                    }
-                }
-            }
+            switchCamera(backCameraOn: backCameraOn)
         case .enableLoudSpeaker:
             enableLoudSpeaker()
         case .disableLoudSpeaker:
