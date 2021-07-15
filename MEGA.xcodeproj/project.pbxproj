@@ -661,7 +661,6 @@
 		7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
 		7794AEF7231E75650039C1D2 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
 		7794AEF8231E757E0039C1D2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
-		7794AEF9231E75A80039C1D2 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		7794AEFA231E76270039C1D2 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		7794AEFB231E76740039C1D2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		7794AEFC231E76900039C1D2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
@@ -844,7 +843,6 @@
 		835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2801A824455A4900C160D0 /* libMEGASDK.a */; };
 		835EE3B32582430700D8E3B8 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		835EE3BC2582445D00D8E3B8 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		835EE3BD2582445D00D8E3B8 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		835EE3BE2582445D00D8E3B8 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		835EE3C7258244D100D8E3B8 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
 		835EE3C82582450E00D8E3B8 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
@@ -1138,7 +1136,6 @@
 		949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */; };
 		94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C231F0E464C000331E6 /* libKarere.a */; };
 		94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C241F0E464C000331E6 /* libMEGASDK.a */; };
-		94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
 		94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
@@ -1316,9 +1313,6 @@
 		A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
-		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
-		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
-		A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
@@ -4156,7 +4150,6 @@
 				A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
-				A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				4D0B2F71E80816B269390FE4 /* Pods_iMEGA_MEGA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4165,7 +4158,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7794AEF9231E75A80039C1D2 /* libcares.a in Frameworks */,
 				7794AEF1231E6D3E0039C1D2 /* libcryptopp.a in Frameworks */,
 				77AEB94523CDBC560047CEBF /* libvideocapture_objc.a in Frameworks */,
 				7794AEF7231E75650039C1D2 /* libcurl.a in Frameworks */,
@@ -4231,7 +4223,6 @@
 				835EE3C82582450E00D8E3B8 /* libsodium.a in Frameworks */,
 				835EE3C7258244D100D8E3B8 /* libmediainfo.a in Frameworks */,
 				835EE3BC2582445D00D8E3B8 /* libcurl.a in Frameworks */,
-				835EE3BD2582445D00D8E3B8 /* libcares.a in Frameworks */,
 				835EE3BE2582445D00D8E3B8 /* libcryptopp.a in Frameworks */,
 				835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */,
 				83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */,
@@ -4286,7 +4277,6 @@
 				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
 				A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */,
-				A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */,
@@ -4321,7 +4311,6 @@
 				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
 				A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */,
-				A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
 				942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */,
 				942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */,
@@ -4346,7 +4335,6 @@
 				A82A38D3200D32EB00883533 /* libzen.a in Frameworks */,
 				A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */,
 				A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */,
-				94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */,
 				94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */,
 				A811DCC22476C51C002FCD98 /* Photos.framework in Frameworks */,
 				94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */,

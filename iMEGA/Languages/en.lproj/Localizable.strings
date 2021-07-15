@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Please check your email and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Your account has been blocked. Please contact support@mega.nz";
+"accountBlocked"="Your account was terminated due to a breach of MEGA's Terms of Service including, but not limited to, clause 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Enter a valid email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -858,18 +858,16 @@
 "startNewAccount"="Start new account";
 /*  */
 "yourAccounHasBeenParked"="Your old account has been parked successfully. You can now log into your new account.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="Current email address";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="New email";
+"newEmail"="New email address";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirm email";
-/* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirm new email";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Change Email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="The new and the old email must not match";
-/* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Emails do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="You have already requested a confirmation link for that email address.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
