@@ -238,6 +238,13 @@ final class MeetingCreatingViewModel: ViewModelType {
             case .failure(_):
                 self.dismiss()
             }
+        } karereInitCompletion: {
+            if self.isVideoEnabled {
+                self.localVideoUseCase.openVideoDevice { _ in
+                    self.selectFrontCameraIfNeeded()
+                    self.localVideoUseCase.addLocalVideo(for: 123, callbacksDelegate: self)
+                }
+            }
         }
     }
     
