@@ -1675,35 +1675,27 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         
         NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localFilePath];
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
+        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:NO];
         
-        // If file doesn't exist in MEGA then upload it
-        if (node == nil) {
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"uploadStarted_Message", nil)];
+        if (node.parentHandle == self.parentNode.handle) {
+            [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];
             
-            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:NO];
-        } else {
-            if (node.parentHandle == self.parentNode.handle) {
-                [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];
-                
-                NSString *alertMessage = NSLocalizedString(@"fileExistAlertController_Message", nil);
-                
-                NSString *localNameString = [NSString stringWithFormat:@"%@", [url lastPathComponent]];
-                NSString *megaNameString = [NSString stringWithFormat:@"%@", node.name];
-                alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:localNameString];
-                alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[B]" withString:megaNameString];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *alertController = [UIAlertController
-                                                          alertControllerWithTitle:nil
-                                                          message:alertMessage
-                                                          preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
-                    [self presentViewController:alertController animated:YES completion:nil];
-                });
-            } else {
-                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode newName:url.lastPathComponent];
-            }
+            NSString *alertMessage = NSLocalizedString(@"fileExistAlertController_Message", nil);
+            
+            NSString *localNameString = [NSString stringWithFormat:@"%@", [url lastPathComponent]];
+            NSString *megaNameString = [NSString stringWithFormat:@"%@", node.name];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:localNameString];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[B]" withString:megaNameString];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController *alertController = [UIAlertController
+                                                      alertControllerWithTitle:nil
+                                                      message:alertMessage
+                                                      preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            });
         }
     }
 }

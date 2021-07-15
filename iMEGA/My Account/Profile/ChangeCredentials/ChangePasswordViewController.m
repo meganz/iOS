@@ -19,7 +19,6 @@
 typedef NS_ENUM(NSUInteger, TextFieldTag) {
     CurrentEmailTextFieldTag = 0,
     NewEmailTextFieldTag,
-    ConfirmEmailTextFieldTag,
     CurrentPasswordTextFieldTag,
     NewPasswordTextFieldTag,
     ConfirmPasswordTextFieldTag
@@ -31,7 +30,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 
 @property (weak, nonatomic) IBOutlet InputView *currentEmailInputView;
 @property (weak, nonatomic) IBOutlet InputView *theNewEmailInputView;
-@property (weak, nonatomic) IBOutlet InputView *confirmEmailInputView;
 
 @property (weak, nonatomic) IBOutlet PasswordView *currentPasswordView;
 @property (weak, nonatomic) IBOutlet PasswordView *theNewPasswordView;
@@ -80,7 +78,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         case ChangeTypeEmail: {
             self.navigationItem.title = NSLocalizedString(@"Change Email", @"The title of the alert dialog to change the email associated to an account.");
             self.theNewPasswordView.hidden = self.confirmPasswordView.hidden = YES;
-            self.currentEmailInputView.hidden = self.theNewEmailInputView.hidden = self.confirmEmailInputView.hidden = NO;
+            self.currentEmailInputView.hidden = self.theNewEmailInputView.hidden = NO;
             
             self.currentEmailInputView.inputTextField.text = [MEGASdkManager sharedMEGASdk].myEmail;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
@@ -89,12 +87,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             self.theNewEmailInputView.inputTextField.delegate = self;
             self.theNewEmailInputView.inputTextField.tag = NewEmailTextFieldTag;
             self.theNewEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
-
-            self.confirmEmailInputView.inputTextField.delegate = self;
-            self.confirmEmailInputView.inputTextField.tag = ConfirmEmailTextFieldTag;
-            self.confirmEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
             self.theNewEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-            self.confirmEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
             
             [self.theNewEmailInputView.inputTextField becomeFirstResponder];
             
@@ -177,10 +170,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             break;
             
         case ChangeTypeEmail:
-            self.currentEmailInputView.backgroundColor = self.theNewEmailInputView.backgroundColor = self.confirmEmailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.currentEmailInputView.backgroundColor = self.theNewEmailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
             [self.currentEmailInputView updateAppearance];
             [self.theNewEmailInputView updateAppearance];
-            [self.confirmEmailInputView updateAppearance];
             break;
             
         case ChangeTypeResetPassword:
@@ -219,14 +211,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         case ChangeTypeEmail:
             if (![self validateEmail]) {
                 [self.theNewEmailInputView.inputTextField becomeFirstResponder];
-                
-                valid = NO;
-            }
-            
-            if (![self validateConfirmEmail]) {
-                if (valid) {
-                    [self.confirmEmailInputView.inputTextField becomeFirstResponder];
-                }
                 
                 valid = NO;
             }
@@ -274,17 +258,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     }
 }
 
-- (BOOL)validateConfirmEmail {
-    self.confirmEmailInputView.inputTextField.text = self.confirmEmailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
-    if ([self.confirmEmailInputView.inputTextField.text isEqualToString:self.theNewEmailInputView.inputTextField.text]) {
-        [self.confirmEmailInputView setErrorState:NO withText:NSLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.")];
-        return YES;
-    } else {
-        [self.confirmEmailInputView setErrorState:YES withText:NSLocalizedString(@"emailsDoNotMatch", @"Error message shown when you have not written the same email")];
-        return NO;
-    }
-}
-
 - (void)emailHasChanged {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"emailHasChanged" object:nil];
     [self.navigationController popViewControllerAnimated:YES];
@@ -293,7 +266,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 - (void)processStarted {
     [self.currentEmailInputView.inputTextField resignFirstResponder];
     [self.theNewEmailInputView.inputTextField resignFirstResponder];
-    [self.confirmEmailInputView.inputTextField resignFirstResponder];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"processStarted" object:nil];
     
@@ -412,10 +384,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             self.activeInputView = self.theNewEmailInputView;
             break;
             
-        case ConfirmEmailTextFieldTag:
-            self.activeInputView = self.confirmEmailInputView;
-            break;
-            
         case CurrentPasswordTextFieldTag:
             self.activePasswordView = self.currentPasswordView;
             self.currentPasswordView.toggleSecureButton.hidden = NO;
@@ -445,10 +413,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             [self validateEmail];
             break;
             
-        case ConfirmEmailTextFieldTag:
-            [self validateConfirmEmail];
-            break;
-            
         case NewPasswordTextFieldTag:
             self.theNewPasswordView.passwordTextField.secureTextEntry = YES;
             [self.theNewPasswordView configureSecureTextEntry];
@@ -472,11 +436,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     switch (textField.tag) {
         case 1:
             [self.theNewEmailInputView setErrorState:NO withText:NSLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
-            
-            break;
-            
-        case 2:
-            [self.confirmEmailInputView setErrorState:NO withText:NSLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.")];
             
             break;
             
@@ -517,11 +476,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             break;
             
         case NewEmailTextFieldTag:
-            [self.confirmEmailInputView.inputTextField becomeFirstResponder];
-            break;
-            
-        case ConfirmEmailTextFieldTag:
-            [self.confirmEmailInputView.inputTextField resignFirstResponder];
+            [self.theNewEmailInputView.inputTextField becomeFirstResponder];
             break;
             
         case CurrentPasswordTextFieldTag:
@@ -642,7 +597,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                     }]];
                     [self presentViewController:alertController animated:YES completion:nil];
                     
-                    self.theNewEmailInputView.inputTextField.text = self.confirmEmailInputView.inputTextField.text = @"";
+                    self.theNewEmailInputView.inputTextField.text = @"";
                 }
                 break;
             }
