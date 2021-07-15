@@ -55,7 +55,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case participantRemoved(String)
         case reconnecting
         case reconnected
-        case updatedCameraPosition(position: CameraPosition)
+        case updateCameraPositionTo(position: CameraPosition)
+        case updatedCameraPosition
         case showRenameAlert(title: String, isMeeting: Bool)
         case enableRenameButton(Bool)
         case showNoOneElseHereMessage
@@ -86,6 +87,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     internal var layoutMode: CallLayoutMode = .grid
     private var localVideoEnabled: Bool = false
     private var reconnecting: Bool = false
+    private var switchingCamera: Bool = false
     private weak var containerViewModel: MeetingContainerViewModel?
 
     private let callsUseCase: CallsUseCaseProtocol
@@ -596,10 +598,16 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
 extension MeetingParticipantsLayoutViewModel: CallsLocalVideoCallbacksUseCaseProtocol {
     func localVideoFrameData(width: Int, height: Int, buffer: Data!) {
         invokeCommand?(.localVideoFrame(width, height, buffer))
+        
+        if switchingCamera {
+            switchingCamera = false
+            invokeCommand?(.updatedCameraPosition)
+        }
     }
     
     func localVideoChangedCameraPosition() {
-        invokeCommand?(.updatedCameraPosition(position: isBackCameraSelected() ? .back : .front))
+        switchingCamera = true
+        invokeCommand?(.updateCameraPositionTo(position: isBackCameraSelected() ? .back : .front))
     }
 }
 
