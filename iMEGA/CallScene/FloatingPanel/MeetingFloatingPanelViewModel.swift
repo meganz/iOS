@@ -124,6 +124,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             router.inviteParticipants(presenter: presenter,
                                       excludeParticpants: participantsIDs) { [weak self] userHandles in
                 guard let self = self, let call = self.call else { return }
+                self.containerViewModel?.dispatch(.onAddingParticipant)
                 userHandles.forEach { self.callsUseCase.addPeer(toCall: call, peerId: $0) }
             }
         case .onContextMenuTap(let presenter, let sender, let attendee):

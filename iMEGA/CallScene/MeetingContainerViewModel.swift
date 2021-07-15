@@ -11,6 +11,7 @@ enum MeetingContainerAction: ActionType {
     case dismissCall(completion: (() -> Void)?)
     case endGuestUserCall(completion: (() -> Void)?)
     case speakerEnabled(_ enabled: Bool)
+    case onAddingParticipant
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -97,6 +98,10 @@ final class MeetingContainerViewModel: ViewModelType {
             }
         case .speakerEnabled(let speakerEnabled):
             router.enableSpeaker(speakerEnabled)
+        case .onAddingParticipant:
+            if (chatRoomUseCase.chatRoom(forChatId: call.chatId)?.peerCount ?? 0) == 0 {
+                router.didAddFirstParticipant()
+            }
         }
     }
     

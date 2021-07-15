@@ -2,6 +2,7 @@
 protocol MeetingParticipantsLayoutRouting: Routing {
     func dismissAndShowPasscodeIfNeeded()
     func showRenameChatAlert()
+    func didAddFirstParticipant()
 }
 
 enum CallViewAction: ActionType {
@@ -13,6 +14,7 @@ enum CallViewAction: ActionType {
     case tapOnBackButton
     case switchIphoneOrientation(_ orientation: DeviceOrientation)
     case showRenameChatAlert
+    case didAddFirstParticipant
     case setNewTitle(String)
     case discardChangeTitle
     case renameTitleDidChange(String)
@@ -59,6 +61,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case showNoOneElseHereMessage
         case showWaitingForOthersMessage
         case hideEmptyRoomMessage
+        case startCompatibilityWarningViewTimer
+        case removeCompatibilityWarningView
         case updateHasLocalAudio(Bool)
         case selectPinnedCellAt(IndexPath?)
         case shouldHideSpeakerView(Bool)
@@ -278,6 +282,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 if chatRoom.chatType == .meeting {
                     invokeCommand?(.showWaitingForOthersMessage)
                 }
+                if chatRoom.peerCount > 0 {
+                    invokeCommand?(.startCompatibilityWarningViewTimer)
+                }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         case .onViewReady:
@@ -323,6 +330,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.enableRenameButton(chatRoom.title != newTitle && !newTitle.isEmpty))
         case .tapParticipantToPinAsSpeaker(let participant, let indexPath):
             tappedParticipant(participant, at: indexPath)
+        case .didAddFirstParticipant:
+            invokeCommand?(.startCompatibilityWarningViewTimer)
         }
     }
     
@@ -404,6 +413,7 @@ struct CallDurationInfo {
 extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     func attendeeJoined(attendee: CallParticipantEntity) {
         initTimerIfNeeded(with: Int(call.duration))
+        invokeCommand?(.removeCompatibilityWarningView)
         participantName(for: attendee.participantId) { [weak self] in
             attendee.name = $0
             if attendee.video == .on {

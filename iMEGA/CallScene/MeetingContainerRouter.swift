@@ -11,6 +11,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func renameChat()
     func showShareMeetingError()
     func enableSpeaker(_ enable: Bool)
+    func didAddFirstParticipant()
 }
 
 extension MeetingContainerRouting {
@@ -190,6 +191,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func enableSpeaker(_ enable: Bool) {
         isSpeakerEnabled = enable
+    }
+    
+    func didAddFirstParticipant() {
+        meetingParticipantsRouter?.didAddFirstParticipant()
     }
     
     //MARK:- Private methods.
