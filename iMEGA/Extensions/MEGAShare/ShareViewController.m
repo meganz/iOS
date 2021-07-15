@@ -159,6 +159,12 @@
     [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self.logoutDelegate];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [self resetSdks];
+}
+
 - (void)willResignActive {
     if (self.session) {
         if (self.privacyView == nil) {
@@ -185,8 +191,7 @@
         [[NSProcessInfo processInfo] performExpiringActivityWithReason:@"Share Extension activity in progress" usingBlock:^(BOOL expired) {
             if (expired) {
                 dispatch_semaphore_signal(semaphore);
-                [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
-                [MEGASdkManager localLogout];
+                [self resetSdks];
                 if (self.pendingAssets > self.unsupportedAssets) {
                     [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
                 } else {
@@ -241,6 +246,11 @@
             [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         }
     }
+}
+
+- (void)resetSdks {
+    [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
+    [MEGASdkManager localLogout];
 }
 
 #pragma mark - Login and Setup
@@ -359,8 +369,7 @@
                      animations:^{
         self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
     } completion:^(BOOL finished) {
-        [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
-        [MEGASdkManager localLogout];
+        [self resetSdks];
         if (completion) {
             completion();
         }
