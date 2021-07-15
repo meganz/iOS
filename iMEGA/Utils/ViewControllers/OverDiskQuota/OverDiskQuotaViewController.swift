@@ -24,25 +24,40 @@ final class OverDiskQuotaViewController: UIViewController {
         // MARK: - Properties
 
         private let overDiskQuotaData: OverDiskQuotaInternal
+        private let isFinalWarning: Bool
 
         // MARK: - Lifecycles
 
         fileprivate init(_ overDiskQuotaData: OverDiskQuotaInternal) {
             self.overDiskQuotaData = overDiskQuotaData
+            isFinalWarning = Calendar.current.dateComponents([.day], from: Date(), to: overDiskQuotaData.deadline).day ?? 0 < 1
         }
 
         // MARK: - Exposed Methods
 
         var titleMessage: String {
-            NSLocalizedString("Your Data is at Risk!", comment: "Warning title message tells user data in danger.")
+            isFinalWarning
+                ? NSLocalizedString("dialog.storage.paywall.final.title", comment: "")
+                : NSLocalizedString("dialog.storage.paywall.notFinal.title", comment: "")
         }
 
         func overDiskQuotaMessage(with traitCollection: UITraitCollection) -> NSAttributedString {
             var message: String
-            if let plan = overDiskQuotaData.plan {
-                message = suggestingMEGAPlan(from: overDiskQuotaData, withPlanName: plan)
+            
+            if isFinalWarning {
+                message = NSLocalizedString("dialog.storage.paywall.final.detail", comment: "")
             } else {
-                message = suggestingContactSupport(from: overDiskQuotaData)
+                var warningPeriod = ""
+                if let firstWarningDate = overDiskQuotaData.warningDates.first {
+                    warningPeriod = daysBetweenLocalized(from: firstWarningDate, to: Date())
+                }
+                message = String(
+                    format: NSLocalizedString("dialog.storage.paywall.notFinal.detail", comment: ""),
+                    warningPeriod,
+                    overDiskQuotaData.email,
+                    overDiskQuotaData.formattedWarningDates(with: dateFormatter),
+                    overDiskQuotaData.takingUpStorage(with: byteCountFormatter)
+                )
             }
 
             let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadlineMedium)]
@@ -50,7 +65,7 @@ final class OverDiskQuotaViewController: UIViewController {
         }
 
         func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
-            let formattedTitleMessage = titleMessage(for: overDiskQuotaData.deadline)
+            let formattedTitleMessage = warningMessage(for: overDiskQuotaData.deadline)
             let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized(.captionSemibold)]
             return formattedTitleMessage.attributedString(
                 with: styleMarks,
@@ -60,54 +75,22 @@ final class OverDiskQuotaViewController: UIViewController {
 
         // MARK: - Privates
 
-        private func daysLeftLocalized(from startDate: Date, to endDate: Date) -> String {
+        private func daysBetweenLocalized(from startDate: Date, to endDate: Date) -> String {
             let dateComponentsFormatter = DateComponentsFormatter()
             dateComponentsFormatter.allowedUnits = .day
             dateComponentsFormatter.unitsStyle = .short
             return dateComponentsFormatter.string(from: startDate, to: endDate)!
         }
 
-        private func titleMessage(for deadline: Date) -> String {
-            let daysLeft = daysDistance(from: Date(), endDate: deadline)
-            switch daysLeft {
-            case 0..<1: return
-                NSLocalizedString(
-                    "<body><warn>You must act immediately to save your data.</warn><body>",
-                    comment: "<body><warn>You must act immediately to save your data.</warn><body>"
+        private func warningMessage(for deadline: Date) -> String {
+            if isFinalWarning {
+                return NSLocalizedString("dialog.storage.paywall.final.warning", comment: "")
+            } else {
+                return String(
+                    format:NSLocalizedString("dialog.storage.paywall.notFinal.warning", comment: ""),
+                    daysBetweenLocalized(from: Date(), to: deadline)
                 )
-            default:
-                let warningTitleMessage = NSLocalizedString(
-                    "<body>You have <warn>%@</warn> left to upgrade.</body>",
-                    comment: "Warning message to tell user time left to upgrade subscription."
-                )
-                let formattedTitleMessage = String(format: warningTitleMessage,
-                                                   daysLeftLocalized(from: Date(), to: deadline))
-                return formattedTitleMessage
             }
-        }
-
-        private func daysDistance(from startDate: Date, endDate: Date) -> Int {
-            let calendar = Calendar.current
-            return calendar.dateComponents([.day], from: startDate, to: endDate).day!
-        }
-
-        private func suggestingMEGAPlan(from overDiskQuotaData: OverDiskQuotaInternal, withPlanName plan: String) -> String {
-            let localisedWarning = NSLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>", comment: "")
-            return String(format: localisedWarning,
-                          overDiskQuotaData.email,
-                          overDiskQuotaData.formattedWarningDates(with: dateFormatter),
-                          overDiskQuotaData.numberOfFiles(with: numberFormatter),
-                          overDiskQuotaData.takingUpStorage(with: byteCountFormatter),
-                          plan)
-        }
-
-        private func suggestingContactSupport(from overDiskQuotaData: OverDiskQuotaInternal) -> String {
-            let localisedWarning = NSLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>", comment: "")
-            return String(format: localisedWarning,
-                          overDiskQuotaData.email,
-                          overDiskQuotaData.formattedWarningDates(with: dateFormatter),
-                          overDiskQuotaData.numberOfFiles(with: numberFormatter),
-                          overDiskQuotaData.takingUpStorage(with: byteCountFormatter))
         }
     }
 
@@ -123,7 +106,7 @@ final class OverDiskQuotaViewController: UIViewController {
     @IBOutlet private var upgradeButton: UIButton!
     @IBOutlet private var dismissButton: UIButton!
 
-    @IBOutlet weak var warningView: OverDisckQuotaWarningView!
+    @IBOutlet weak var warningView: OverDiskQuotaWarningView!
 
     // MARK: - In / Out properties
 
@@ -189,7 +172,7 @@ final class OverDiskQuotaViewController: UIViewController {
         backgroundStyler(contentView)
     }
 
-    private func setupWarningView(_ warningView: OverDisckQuotaWarningView, with text: NSAttributedString) {
+    private func setupWarningView(_ warningView: OverDiskQuotaWarningView, with text: NSAttributedString) {
         warningView.updateTitle(with: text)
     }
 
@@ -198,9 +181,13 @@ final class OverDiskQuotaViewController: UIViewController {
         let alwyasBrightTextStyle = trait.alwaysBrightLabelStyler(of: .headline)
         alwyasBrightTextStyle(storageFullLabel)
     }
+    
+    private func setupTitleLabel(_ titleLabel: UILabel, withTitle title: NSAttributedString) {
+        titleLabel.attributedText = title
+    }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
-        titleLabel.text = NSLocalizedString("Your Data is at Risk!", comment: "Warning title message tells user data in danger.")
+        titleLabel.text = overDiskQuotaAdvicer.titleMessage
         let style = traitCollection.styler(of: .headline)
         style(titleLabel)
     }
@@ -264,13 +251,10 @@ final class OverDiskQuotaViewController: UIViewController {
 fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 
     func formattedWarningDates(with formatter: DateFormatting) -> String {
-        warningDates.reduce("") { (result, date) in
-            result + (formatter.localisedString(from: date) + ", ")
+        let localizedDates = warningDates.map { date in
+            formatter.localisedString(from: date)
         }
-    }
-
-    func numberOfFiles(with formatter: NumberFormatter) -> String {
-        formatter.string(from: NSNumber(value: numberOfFilesOnCloud)) ?? "\(numberOfFilesOnCloud)"
+        return localizedDates.joined(separator: ", ")
     }
 
     func takingUpStorage(with formatter: ByteCountFormatter) -> String {
