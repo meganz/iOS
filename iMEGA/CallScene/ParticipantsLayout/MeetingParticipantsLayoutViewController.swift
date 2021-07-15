@@ -56,10 +56,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         stackViewTopConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.top
         stackViewBottomConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.bottom
         
-        navigationController?.navigationBar.isTranslucent = true
         if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.isTranslucent = true
             overrideUserInterfaceStyle = .dark
         } else {
+            navigationController?.navigationBar.isTranslucent = false
             navigationController?.navigationBar.barTintColor = .black
             navigationController?.navigationBar.tintColor = .white
             navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
