@@ -74,13 +74,7 @@ class LocalUserView: UIView {
     }
     
     func transformLocalVideo(for position: CameraPosition) {
-        addSubview(blurEffectView)
-        
         videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            self?.blurEffectView.removeFromSuperview()
-        }
     }
     
     func localAudio(enabled: Bool) {
@@ -95,6 +89,14 @@ class LocalUserView: UIView {
     func updateOffsetWithNavigation(hidden: Bool) {
         navigationHidden = hidden
         positionView(by: center)
+    }
+    
+    func addBlurEffect() {
+        addSubview(blurEffectView)
+    }
+    
+    func removeBlurEffect() {
+        blurEffectView.removeFromSuperview()
     }
     
     //MARK: - Private

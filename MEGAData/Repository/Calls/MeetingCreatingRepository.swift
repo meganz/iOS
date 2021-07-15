@@ -102,12 +102,13 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         }))
     }
     
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void, karereInitCompletion: @escaping () -> Void) {
         MEGALogDebug("Create meeting: Now logging out of anonymous account")
         chatSdk.logout(with: MEGAChatResultRequestDelegate(completion: { (result) in
             switch result {
             case .success(_):
                 self.chatSdk.initKarere(withSid: nil)
+                karereInitCompletion()
                 MEGALogDebug("Create meeting: Now creating ephemeral account plus plus with firstname - \(firstName) and lastname - \(lastName)")
                 self.sdk.createEphemeralAccountPlusPlus(withFirstname: firstName, lastname: lastName, delegate: MEGAResultRequestDelegate { (result) in
                     switch result {

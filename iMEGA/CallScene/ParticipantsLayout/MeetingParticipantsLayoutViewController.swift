@@ -56,10 +56,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         stackViewTopConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.top
         stackViewBottomConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.bottom
         
-        navigationController?.navigationBar.isTranslucent = true
         if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.isTranslucent = true
             overrideUserInterfaceStyle = .dark
         } else {
+            navigationController?.navigationBar.isTranslucent = false
             navigationController?.navigationBar.barTintColor = .black
             navigationController?.navigationBar.tintColor = .white
             navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -160,8 +161,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .reconnected:
             removeReconnectingNotification()
             showNotification(message: NSLocalizedString("online", comment: ""), color: UIColor.systemGreen)
-        case .updatedCameraPosition(let position):
+        case .updateCameraPositionTo(let position):
+            localUserView.addBlurEffect()
             localUserView.transformLocalVideo(for: position)
+        case .updatedCameraPosition:
+            localUserView.removeBlurEffect()
         case .showRenameAlert(let title, let isMeeting):
             showRenameAlert(title: title, isMeeting: isMeeting)
         case .enableRenameButton(let enabled):
