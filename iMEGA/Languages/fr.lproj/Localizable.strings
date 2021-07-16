@@ -135,7 +135,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Vous devez attester que vous comprenez le danger que représente la perte de votre mot de passe";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Un compte MEGA a déjà été créé avec cette adresse courriel";
+"emailAlreadyRegistered"="Un compte MEGA a déjà été créé avec cette adresse courriel";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="En attente de la confirmation par courriel.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -877,7 +877,7 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Veuillez saisir votre mot de passe pour confirmer votre adresse courriel";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est : [X]";
+"congratulationsNewEmailAddress"="Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est : [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Fermer les autres sessions";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -1047,9 +1047,9 @@
 /*  */
 "chooseYourAccountType"="Choisissez votre type de compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
+"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
+"cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Espace de stockage";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1117,7 +1117,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Soit la demande a été annulée, soit l’achat préalable n’a pas pu être restauré. Veuillez réessayer ultérieurement ou contacter ios@mega.nz.";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="Passer à un compte Pro";
+"Upgrade to Pro"="Passer à un compte Pro";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Accédez aux fonctions propres aux comptes Pro telles que la protection par mot de passe et les dates d’expiration pour les fichiers publics.";
 /* Alert title shown when the DEBUG mode is enabled */
@@ -1357,7 +1357,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MESSAGES NON LUS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
+"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrez MEGA et connectez-vous afin de poursuivre";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1693,7 +1693,7 @@
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurer MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Pour profiter pleinement de votre compte MEGA, nous devons vous demander quelques autorisations.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Pour profiter pleinement de votre compte MEGA, nous devons vous demander quelques autorisations.";
 /* Message warning the user about the risk of not setting up permissions */
 "The MEGA app may not work as expected without the required permissions. Are you sure?"="L’appli MEGA pourrait ne pas fonctionner comme prévu sans les autorisations nécessaires. Êtes-vous certain ?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
@@ -2083,7 +2083,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Votre compte est actuellement [B]désactivé[/B]. Vous ne pouvez que parcourir vos données.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Bien que MEGA ne puisse pas accéder à vos données, l’administrateur de votre compte d’entreprise a la possibilité de contrôler et de visualiser les téléversements de l’appareil photo dans votre compte utilisateur";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ne peut pas accéder à vos données. Cependant, l’administrateur de votre compte d’entreprise peut accéder à vos Téléversements de l’appareil photo.";
 /*  */
 "Something went wrong"="Quelque chose a mal tourné";
 /* Title of the "Links" Shared Items. */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="La conversation est inactive";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Définir un pseudonyme";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Modifier le pseudonyme";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Supprimer le pseudonyme";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/pseudonyme";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Le paiement est en retard";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Inclure des géomarques";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Si cette option est activée, vous téléverserez des renseignements sur le lieu où vos photos et vidéos ont été prises. Veuillez donc faire preuve de prudence en les partageant.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Si cette option est activée, des renseignements sur le lieu seront ajoutés à vos photos. Veuillez donc faire preuve de prudence en les partageant.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Envoyer (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2173,7 +2173,7 @@
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Le code est erroné. Veuillez essayer et envoyer de nouveau.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
-"This number is already associated with a Mega account"="Ce numéro est déjà associé à un compte MEGA.";
+"This number is already associated with a Mega account"="Ce numéro est déjà associé à un compte MEGA.";
 /* Country label for a button, title, etc. */
 "Country"="Pays";
 /* Error message that will show to user its account is already verified */
@@ -2199,9 +2199,9 @@
 /* Title of a helping view about locked accounts */
 "Locked Accounts"="Comptes verrouillés";
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
-"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Il est possible que vous utilisiez le même mot de passe pour votre compte MEGA que pour d’autres services et qu’au moins l’un de ses services ait souffert d’une atteinte à la protection des données.";
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Il est possible que vous utilisiez le même mot de passe pour votre compte MEGA que pour d’autres services et qu’au moins l’un de ses services ait souffert d’une atteinte à la protection des données.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Votre mot de passe a été divulgué et est maintenant utilisé par des personnes malveillantes pour se connecter à vos comptes dont, mais sans s’y limiter, à votre compte MEGA.";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Votre mot de passe a été divulgué et est maintenant utilisé par des personnes malveillantes pour se connecter à vos comptes dont, mais sans s’y limiter, à votre compte MEGA.";
 /* Label indicating transfer over quota. */
 "Transfer over quota"="Le quota de transfert est dépassé";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */

@@ -975,7 +975,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Ao instalar o aplicativo para desktop do MEGA, você recebe grátis %@ de espaço de armazenamento, válidos por 365 dias. O aplicativo para desktop do MEGA está disponível para Windows, macOS e a maioria das distribuições Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Instalar o aplicativo do MEGA para dispositivos móveis";
+"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Você recebeu %@ de espaço de armazenamento por instalar o aplicativo do MEGA para dispositivos móveis.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mensagem de voz";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Esta ação não pode ser concluída, pois ultrapassaria o seu limite de armazenamento atual.";
+"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque a sua conta está cheia";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Ontem";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Enviar esta localização";
+"Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Configurações de mapa";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="A sua conta [B]expirou[/B]. Somente é possível visualizar os seus dados.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Embora o MEGA não tenha acesso a seus dados, os administradores de sua conta Business podem controlar e visualizar os Uploads da câmera na sua conta de usuário";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
 /*  */
 "Something went wrong"="Algo deu errado";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="Não há links públicos";
+"No Public Links"="No public links";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gerenciar pasta compartilhada";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inativo";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Definir apelido";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Editar apelido";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Deletar apelido";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Apelido";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pagamento atrasado";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Incluir etiquetas de localização";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Ao ativar, você fará o upload de informações sobre onde as suas fotos foram tiradas e os seus vídeos foram gravados; portanto, tenha cuidado ao compartilhar.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */

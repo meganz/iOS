@@ -319,7 +319,7 @@
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="已使用名稱[B]上傳[A]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d個檔案已被上傳到這個資料夾";
+"filesAlreadyExistMessage"="%d個檔案已被上傳到這個資料夾。";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="已開始上傳";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
@@ -329,7 +329,7 @@
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="儲存為可離線存取";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="這個收件夾僅保留給Apple使用";
+"folderInboxError"="這個收件夾僅保留給Apple使用。";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="儲存圖片";
 /* Title shown under the action that allows you to get a link to file or folder */
@@ -481,7 +481,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="資料夾已共享";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="已成功分享 %d 資料夾.";
+"sharedFolders_success"="已成功分享 %d 資料夾。";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="匯入雲端硬碟";
 /* Message shown when a file has been imported */
@@ -727,9 +727,9 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="上傳共享相簿";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="您裝置的相片程式的共享相簿將會被上傳";
+"Shared Albums from your device's Photos app will be uploaded."="您裝置的相片程式的共享相簿將會被上傳。";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="您裝置的相片程式的共享相簿將不會被上傳";
+"Shared Albums from your device's Photos app will not be uploaded."="您裝置的相片程式的共享相簿將不會被上傳。";
 /* Title of the switch to config whether to upload synced albums */
 "Upload Albums Synced from iTunes"="上傳來自iTunes同步的專輯";
 /* Footer description for upload synced albums title */
@@ -779,9 +779,9 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="刪除帳戶";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="您將遺失所有與此帳戶相關的資料，確定要繼續嗎？";
+"youWillLooseAllData"="您將遺失所有與此帳戶相關的資料。確定要繼續嗎？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡 support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡 support@mega.nz。";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="取消連結已失效。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -989,7 +989,7 @@
 /* Add Phone Number title */
 "Add Phone Number"="加入您的手機號碼";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.complete.explaination.label"="您已經加入您的手機號碼而獲得%@儲存空間";
+"account.achievement.phoneNumber.complete.explaination.label"="您已經加入您的手機號碼而獲得%@儲存空間。";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.incomplete.explaination.label"="當您加入您的手機號碼時，您可獲得%@的贈送儲存空間，有效期為365天。";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -1021,7 +1021,7 @@
 /* Button title that allows the user change his name */
 "changeName"="更改名稱";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="您已成功更新您的個人資料";
+"youHaveSuccessfullyChangedYourProfile"="您已成功更新您的個人資料。";
 /* Hint text for the first name (Placeholder) */
 "firstName"="名字";
 /* Hint text for the last name (Placeholder) */
@@ -1579,7 +1579,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="通話失敗";
 /* When an active call of user A with user B had ended */
-"callEnded"="通話結束";
+"callEnded"="通話結束。";
 /* When an active goup call is ended */
 "Group call ended"="群組通話結束";
 /* When an active goup call is ended, shows the duration */
@@ -1819,7 +1819,7 @@
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="頁面檢視";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="連線品質不良";
+"Poor connection."="連線品質不良。";
 /* There are no notifications to display. */
 "No notifications"="沒有新的通知";
 /* The header of a notification related to payments */
@@ -1859,7 +1859,7 @@
 /* notification text */
 "A user has left the shared folder {0}"="用戶已經離開共享資料夾{0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
-"Access to folders was removed."="資料夾存取已移除";
+"Access to folders was removed."="資料夾存取已移除。";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added 1 file"="加入1個檔案";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1881,7 +1881,7 @@
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="已從共享中移除[X]個項目";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
-"Your payment for the %1 plan was received."="已收到您%1方案的付款";
+"Your payment for the %1 plan was received."="已收到您%1方案的付款。";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="您的%1方案付款不成功。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="語音留言";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="因會超出您目前的儲存空間限制，此操作無法完成";
+"This action can not be completed as it would take you over your current storage limit"="因將超出您目前儲存空間限制，此操作無法完成";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="由於您的帳戶已滿，您的上傳（多個）無法繼續";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="昨天";
 /* Title of the button to share a location in a chat */
-"Send This Location"="發送這個位置";
+"Send This Location"="傳送這個位置";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="地圖設定";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2033,7 +2033,7 @@
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="開啟設定";
 /* Text encouraging the user to invite contacts to MEGA */
-"Invite contacts and start chatting securely with MEGA’s encrypted chat."="邀請聯絡人並透過MEGA的加密功能安全的進行對話";
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="邀請聯絡人並透過MEGA的加密功能安全的進行對話。";
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="邀請[X]個聯絡人";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
@@ -2083,7 +2083,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="您的帳戶目前[B]暫停使用[/B]。您只能瀏覽您的資料。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="儘管MEGA無權存取您的資料，但您的商業帳戶管理員是可以控制和檢視您使用者帳戶中的相機上傳。";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA無法存取您的資料。然而，您的商業帳戶管理員可以存取您的相機上傳。";
 /*  */
 "Something went wrong"="出錯了";
 /* Title of the "Links" Shared Items. */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="沒在進行的對話";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="設定暱稱";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="編輯暱稱";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="移除暱稱";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="別名 / 暱稱";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="付款逾期";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="包含位置標籤";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="如果啟用，您將上傳關於相片與影片拍攝位置的資訊，所以共享時請格外小心。";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="傳送 (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2251,7 +2251,7 @@
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="隱藏近期活動";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="隱藏在首頁的近期活動";
+"settings.userInterface.hideRecentActivity.footer"="隱藏在首頁的近期活動。";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="預設";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
@@ -2267,7 +2267,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="應用程式圖示";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
-"Configure default launch section."="設定預設開啟選項";
+"Configure default launch section."="設定預設開啟選項。";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="設定排序順序與預設檢視（列表或縮圖）。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2391,7 +2391,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="設定密碼";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="連結與解密金鑰個別匯出";
+"Export the link and decryption key separately."="連結與解密金鑰個別匯出。";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="瞭解更多";
 /* Text indicating the date until a link will be valid */
@@ -2595,7 +2595,7 @@
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="快速存取離線存取的檔案";
 /* Dialog title for the no enough device storage screen */
-"The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間好讓MEGA正確的運行";
+"The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間好讓MEGA正確的運行。";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="請刪除您沒在使用的應用程式或相簿裡大容量的影片檔案以釋放一些空間。您可以在%@管理您的儲存空間。";
 /* The title of Turn on Notifications view */
@@ -2623,7 +2623,7 @@
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
 "dialog.shareOwnerStorageQuota.message"="檔案無法傳送，因為接收者已超出其空間配額。";
 /* Hud info message when edit large text file. */
-"general.textEditor.hud.uneditableLargeFile"="檔案太大無法編輯";
+"general.textEditor.hud.uneditableLargeFile"="檔案太大無法編輯。";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="由於未知的內容編碼，無法編輯檔案。";
 /* Show the node owner's name. The %@ is the owner's name */

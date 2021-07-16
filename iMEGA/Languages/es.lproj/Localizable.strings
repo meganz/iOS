@@ -175,7 +175,7 @@
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descargar";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
+"folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="La carpeta '%@' no puede ser creada";
 /*  */
@@ -481,7 +481,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Carpeta compartida";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="Se han compartido %d carpetas";
+"sharedFolders_success"="Se han compartido %d carpetas.";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importar a tu Nube";
 /* Message shown when a file has been imported */
@@ -675,7 +675,7 @@
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
 "Photos will be uploaded to Camera Uploads folder."="Las fotos se subirán a la carpeta Camera Uploads.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Las fotos y los videos se subirán a la carpeta Camera Uploads";
+"Photos and videos will be uploaded to Camera Uploads folder."="Las fotos y los videos se subirán a la carpeta Subidas de la cámara.";
 /* Title to show for upload in background */
 "Upload in Background"="Subir en segundo plano";
 /* Title for the location based background upload message */
@@ -975,7 +975,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %@de almacenamiento adicional válido durante 365 días. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Instala la aplicación móvil de MEGA";
+"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@de espacio de almacenamiento por instalar la aplicación móvil de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -985,7 +985,7 @@
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
 "account.achievement.complete.valid.cell.subtitle"="%@ días restantes";
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="El bono caducará en %@ días";
+"account.achievement.complete.valid.detail.subtitle"="El bono caducará en %@ días.";
 /* Add Phone Number title */
 "Add Phone Number"="Añade el número de teléfono";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -1339,7 +1339,7 @@
 /* A button to resend the email confirmation. */
 "resend"="Reenviar";
 /* Error message displayed when trying to invite a contact who is already added. */
-"alreadyAContact"="%s ya es un contacto";
+"alreadyAContact"="%s ya es un contacto.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
 "sentContact"="Contacto enviado: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
@@ -1579,7 +1579,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Llamada fallida";
 /* When an active call of user A with user B had ended */
-"callEnded"="Fin de llamada";
+"callEnded"="Fin de llamada.";
 /* When an active goup call is ended */
 "Group call ended"="Llamada de grupo finalizada";
 /* When an active goup call is ended, shows the duration */
@@ -1795,7 +1795,7 @@
 /* Users previewing a public chat */
 "Observers"="Espectadores";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ ha activado la rotación de la clave de cifrado";
+"%@ enabled Encrypted Key Rotation"="%@ ha activado la rotación de la clave de cifrado.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ ha creado un enlace del chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mensaje de voz";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Esta acción no se puede completar ya que te llevaría por encima de tu límite de almacenamiento actual";
+"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="La subida no puede continuar porque tu cuenta está llena";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Ayer";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Enviar esta ubicación";
+"Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Ajustes del mapa";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tu cuenta está [B]suspendida[/B]. Solo puedes ver tus datos.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Si bien MEGA no tiene acceso a tus datos, el administrador de la cuenta Business puede controlar y ver las Subídas de la cámara en tu cuenta de usuario";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
 /*  */
 "Something went wrong"="Algo ha ido mal";
 /* Title of the "Links" Shared Items. */
 "Links"="Enlaces";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No hay enlaces públicos";
+"No Public Links"="No public links";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Administrar compartido";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inactivo";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Elegir alias";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Editar alias";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Eliminar alias";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pago vencido";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Incluir etiquetas de ubicación";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Si activas esta opción, se subirá información sobre dónde se tomaron tus fotos y vídeos, así que ten cuidado al compartirlos.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2269,7 +2269,7 @@
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
 "Configure default launch section."="Configurar la sección de inicio predeterminada.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configurar las preferencias de ordenado y de vista por defecto (Lista o miniatura)";
+"Configure sorting order and the default view (List or Thumbnail)."="Configurar las preferencias de ordenado y de vista por defecto (lista o miniatura).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="Por carpeta";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
