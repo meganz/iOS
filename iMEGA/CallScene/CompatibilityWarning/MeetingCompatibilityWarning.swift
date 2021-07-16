@@ -30,6 +30,7 @@
             meetingCompatibilityWarningView.alpha = 0.0
         } completion: { _ in
             meetingCompatibilityWarningView.removeFromSuperview()
+            meetingCompatibilityWarningView.alpha = 1.0
             self.meetingCompatibilityWarningView = nil
         }
     }
