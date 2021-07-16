@@ -30,6 +30,8 @@ class CallsCollectionView: UICollectionView {
     }
     
     func deletedParticipant(in participants: [CallParticipantEntity], at index: Int) {
+        let cell = cellForItem(at: IndexPath(item: index, section: 0)) as? CallParticipantCell
+        cell?.videoImageView.image = nil
         callParticipants = participants
         deleteItems(at: [IndexPath(item: index, section: 0)])
     }
