@@ -52,7 +52,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             queue: OperationQueue.main
         ) { [weak self] _ in
             self?.callsCollectionView.layoutIfNeeded()
-            self?.viewModel.dispatch(.appBecomeActive)
+            self?.viewModel.dispatch(.onViewReady)
         }
     }
     
