@@ -47,13 +47,7 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
         
         let meetingContactInfoHeaderView = MeetingContactInfoHeaderView.instanceFromNib
         meetingContactInfoHeaderView.emailLabel.text = email
-        headerView.addSubview(meetingContactInfoHeaderView)
-        
-        meetingContactInfoHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            meetingContactInfoHeaderView.heightAnchor.constraint(equalTo: headerView.heightAnchor),
-            meetingContactInfoHeaderView.widthAnchor.constraint(equalTo: headerView.widthAnchor)
-        ])
+        headerView.wrap(meetingContactInfoHeaderView)
         
         headerView.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: meetingContactInfoHeaderView.bounds.height))
     }
