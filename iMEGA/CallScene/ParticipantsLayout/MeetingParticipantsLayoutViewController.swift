@@ -17,7 +17,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private var reconncectingNotificationView: CallNotificationView?
     private var meetingCompatibilityWarning: MeetingCompatibilityWarning?
-    
+    private var appBecomeActiveObserver: NSObjectProtocol?
+
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
@@ -43,6 +44,16 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         self.viewModel = viewModel
         self.titleView = CallTitleView.instanceFromNib
         super.init(nibName: nil, bundle: nil)
+
+        // When answering with device locked and opening MEGA from CallKit, onViewDidAppear is not called, so it is needed to notify viewModel about view had appeared.
+        self.appBecomeActiveObserver = NotificationCenter.default.addObserver(
+            forName: UIApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: OperationQueue.main
+        ) { [weak self] _ in
+            self?.callsCollectionView.layoutIfNeeded()
+            self?.viewModel.dispatch(.appBecomeActive)
+        }
     }
     
     required init?(coder: NSCoder) {
