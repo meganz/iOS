@@ -361,9 +361,10 @@ extension MeetingParticipantsLayoutViewController: CallsCollectionViewScrollDele
 
 extension MeetingParticipantsLayoutViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-         if touch.view?.isDescendant(of: view) == true {
+        // Avoid detecting the tap gesture when the compatibility popup is shown to the user.
+        if meetingCompatibilityWarning?.meetingCompatibilityWarningView?.superview != nil {
             return false
-         }
-         return true
+        }
+        return true
     }
 }
