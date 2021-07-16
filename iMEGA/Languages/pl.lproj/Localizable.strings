@@ -975,7 +975,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji desktopowej MEGA otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja MEGA jest dostępna dla systemów Windows, macOS i większości dystrybucji Linuksa.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Zainstaluj aplikację mobilną MEGA";
+"account.achievement.mobileApp.title"="Zainstaluj aplikację MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Za instalację aplikacji MEGA mobile otrzymaliście Państwo %@ przestrzeni dyskowej.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Wiadomość głosowa";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Ta operacja nie zostanie zakończona prawidłowo, ponieważ przekroczy dostępny limit pamięci na Twoim koncie.";
+"This action can not be completed as it would take you over your current storage limit"="Ta czynność nie może zostać wykonana, ponieważ spowodowałaby przekroczenie bieżącego limitu pamięci.";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Twoje przesłanie nie może być kontynuowane, ponieważ Twoje konto jest pełne";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -2083,7 +2083,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Twoje konto jest obecnie [B]zawieszone[/B]. Możesz tylko przeglądać swoje dane.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Chociaż MEGA nie ma dostępu do twoich danych, administrator twojego konta biznesowego ma możliwość kontrolowania i przeglądania przesłanych z aparatu na twoim koncie użytkownika";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA nie ma dostępu do Państwa danych. Administrator konta biznesowego ma jednak dostęp do danych Camera Uploads.";
 /*  */
 "Something went wrong"="Wystąpiły problemy";
 /* Title of the "Links" Shared Items. */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Nieaktywny czat";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Ustaw pseudonim";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edytuj nazwę użytkownika";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Usuń nazwę użytkowniika";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias / pseudonim";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Opłata zaległa";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Uwzględnij tagi lokalizacji";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jeśli ta opcja jest włączona, będziesz przesyłać informacje o tym, gdzie zostały zrobione Twoje zdjęcia i filmy, więc zachowaj ostrożność, udostępniając je.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Wyślij (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */

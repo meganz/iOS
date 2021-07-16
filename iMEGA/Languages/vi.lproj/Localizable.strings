@@ -975,7 +975,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Sau khi cài đặt MEGA trên máy tính, bạn sẽ nhận được thêm %@ vào không gian lưu trữ, có hạn sử dụng là 365 ngày. MEGA còn có apps dành cho Windows, macOS và đa số các máy Linux distros.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Cài app MEGA cho di dộng";
+"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho dI động.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Tin nhắn thoại";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Thao tác này không thể hoàn tất bởi vì toàn bộ không gian lưu trữ sẽ bị dùng hết.";
+"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Phiên tải lên không thể tiến hành vì tài khoản đã bị đầy";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Hôm qua";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Gửi Vị Trí Nơi Đây";
+"Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Tùy chỉnh bản đồ";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tài khoản của bạn hiện đang bị [B]đình chỉ[/B]. Bạn chỉ có khả năng xem duyệt dữ liệu của mình.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Mặc dù MEGA không có quyền truy cập vào dữ liệu của bạn, nhưng người quản trị tài khoản doanh nghiệp sẽ có khả năng xem nội dung Camera Uploads có trong tài khoản nhân viên của bạn";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
 /*  */
 "Something went wrong"="Có vấn đề xảy ra";
 /* Title of the "Links" Shared Items. */
 "Links"="Liên Kết";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="Không có Liên Kết Công Khai nào";
+"No Public Links"="No public links";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Quản lý chia sẻ";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Cuộc chát bất hoạt động";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Đặt Tên";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Sửa biệt danh";
+"Edit Nickname"="Edit nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Xóa biệt danh";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Tên hay biệt danh dễ nhớ";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Thánh toán bị quá hạn";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Kèm theo Vị Trí Địa Lý";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Nếu được bật, tất cả các ảnh và videos tải lên sẽ có kèm theo thông tin vị trí địa lý nơi mà ảnh hay videos đã được chụp, nên tự cân nhắc khi chia sẻ.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Gửi (%d) mục";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
