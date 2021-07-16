@@ -10,7 +10,7 @@
     
     private weak var inView: UIView?
     private let bottomPadding: CGFloat
-    private weak var meetingCompatibilityWarningView: MeetingCompatibilityWarningView?
+    private(set) weak var meetingCompatibilityWarningView: MeetingCompatibilityWarningView?
     private var compatibilityWarningViewShowTimer: Timer?
     private let buttonTapHandler: () -> Void
     
@@ -21,12 +21,17 @@
     }
     
     func removeCompatibilityWarningView() {
-        guard let meetingCompatibilityWarningView = meetingCompatibilityWarningView else {
+        guard let meetingCompatibilityWarningView = meetingCompatibilityWarningView,
+              meetingCompatibilityWarningView.superview != nil else {
             return
         }
         
-        meetingCompatibilityWarningView.removeFromSuperview()
-        self.meetingCompatibilityWarningView = nil
+        UIView.animate(withDuration: Constants.animationDuration) {
+            meetingCompatibilityWarningView.alpha = 0.0
+        } completion: { _ in
+            meetingCompatibilityWarningView.removeFromSuperview()
+            self.meetingCompatibilityWarningView = nil
+        }
     }
     
     func startCompatibilityWarningViewTimer() {
