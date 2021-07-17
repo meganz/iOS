@@ -166,25 +166,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     //MARK:- Private methods
-    private func enableLoudSpeaker(completion: (() -> Void)? = nil) {
-        audioSessionUseCase.enableLoudSpeaker { result in
-            switch result {
-            case .success(_):
-                self.isSpeakerEnabled = true
-            case .failure(_):
-                break
-            }
+    private func enableLoudSpeaker() {
+        audioSessionUseCase.enableLoudSpeaker { [weak self] _ in
+            self?.updateSpeakerInfo()
         }
     }
     
     private func disableLoudSpeaker() {
-        audioSessionUseCase.disableLoudSpeaker { result in
-            switch result {
-            case .success(_):
-                self.isSpeakerEnabled = false
-            case .failure(_):
-                break
-            }
+        audioSessionUseCase.disableLoudSpeaker { [weak self] result in
+            self?.updateSpeakerInfo()
         }
     }
     
@@ -221,18 +211,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
         updateSpeakerInfo()
     }
-    
-    private func enableSpeaker() {
-        invokeCommand?(.enabledLoudSpeaker(enabled: true))
-        enableLoudSpeaker {
-            self.updateSpeakerInfo()
-        }
-    }
-    
+        
     private func updateSpeakerInfo() {
         let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
         let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
         MEGALogDebug("Meetings: updating speaker info with selected port \(currentSelectedPort) bluetooth available \(isBluetoothAvailable)")
+        self.isSpeakerEnabled = currentSelectedPort == .builtInSpeaker
         invokeCommand?(
             .updatedAudioPortSelection(audioPort: currentSelectedPort,
                                        bluetoothAudioRouteAvailable: isBluetoothAvailable)
