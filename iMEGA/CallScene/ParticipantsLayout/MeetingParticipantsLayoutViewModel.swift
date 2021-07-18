@@ -284,7 +284,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 if chatRoom.chatType == .meeting {
                     invokeCommand?(.showWaitingForOthersMessage)
                 }
-                if chatRoom.peerCount > 0 {
+                
+                if call.numberOfParticipants < 2 {
                     invokeCommand?(.startCompatibilityWarningViewTimer)
                 }
             }

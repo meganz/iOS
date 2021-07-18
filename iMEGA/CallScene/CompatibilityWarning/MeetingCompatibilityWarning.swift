@@ -73,9 +73,9 @@
         [
             widthAnchor,
             meetingCompatibilityWarningView.centerXAnchor.constraint(equalTo: inView.centerXAnchor),
-            meetingCompatibilityWarningView.leadingAnchor.constraint(greaterThanOrEqualTo: inView.leadingAnchor, constant: Constants.padding),
-            meetingCompatibilityWarningView.trailingAnchor.constraint(lessThanOrEqualTo: inView.trailingAnchor, constant: -Constants.padding),
-            meetingCompatibilityWarningView.bottomAnchor.constraint(equalTo: inView.bottomAnchor, constant: -bottomPadding)
+            meetingCompatibilityWarningView.leadingAnchor.constraint(greaterThanOrEqualTo: inView.safeAreaLayoutGuide.leadingAnchor, constant: Constants.padding),
+            meetingCompatibilityWarningView.trailingAnchor.constraint(lessThanOrEqualTo: inView.safeAreaLayoutGuide.trailingAnchor, constant: -Constants.padding),
+            meetingCompatibilityWarningView.bottomAnchor.constraint(equalTo: inView.safeAreaLayoutGuide.bottomAnchor, constant: -bottomPadding)
         ].activate()
         
         UIView.animate(withDuration: Constants.animationDuration) {
