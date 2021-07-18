@@ -54,8 +54,12 @@ final class MeetingContainerViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             if !isAnsweredFromCallKit {
-                callManagerUseCase.addCall(call)
-                callManagerUseCase.startCall(call)
+                if callManagerUseCase.isCallAlreadyAdded(call) {
+                    callManagerUseCase.answerCall(call)
+                } else {
+                    callManagerUseCase.addCall(call)
+                    callManagerUseCase.startCall(call)
+                }
             }
             router.showMeetingUI(containerViewModel: self)
         case.hangCall(let presenter, let sender):
