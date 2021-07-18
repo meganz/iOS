@@ -203,23 +203,11 @@ final class MeetingCreatingViewModel: ViewModelType {
     private func enableLoudSpeaker(enabled: Bool) {
         if enabled {
             audioSessionUseCase.enableLoudSpeaker { [weak self] result in
-                switch result {
-                case .success(_):
-                    self?.invokeCommand?(.enabledLoudSpeaker(enabled: true))
-                    MEGALogDebug("Create Meeting: Loud speaker enabled")
-                case .failure(_):
-                    MEGALogDebug("Create Meeting: Failed to enable loud speaker")
-                }
+                self?.updateSpeakerInfo()
             }
         } else {
             audioSessionUseCase.disableLoudSpeaker { [weak self] result in
-                switch result {
-                case .success(_):
-                    self?.invokeCommand?(.enabledLoudSpeaker(enabled: false))
-                    MEGALogDebug("Create Meeting: Loud speaker disabled")
-                case .failure(_):
-                    MEGALogDebug("Create Meeting: Failed to disable loud speaker")
-                }
+                self?.updateSpeakerInfo()
             }
         }
     }
@@ -378,6 +366,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private func updateSpeakerInfo() {
         let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
         let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
+        isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
         MEGALogDebug("Create meeting: updating speaker info with selected port \(currentSelectedPort) bluetooth available \(isBluetoothAvailable)")
         invokeCommand?(
             .updatedAudioPortSelection(audioPort: currentSelectedPort,
