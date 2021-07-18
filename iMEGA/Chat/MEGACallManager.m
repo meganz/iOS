@@ -105,7 +105,6 @@
     [self printAllCalls];
 }
 
-
 - (uint64_t)callIdForUUID:(NSUUID *)uuid {
     [self printAllCalls];
     uint64_t callId = [[self.callsDictionary objectForKey:uuid] unsignedLongLongValue];
@@ -133,6 +132,11 @@
 - (void)startCallWithChatId:(MEGAHandle)chatId {
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
     [self startCall:call];
+}
+
+- (void)answerCallWithChatId:(MEGAHandle)chatId {
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
+    [self answerCall:call];
 }
 
 #pragma mark - Private

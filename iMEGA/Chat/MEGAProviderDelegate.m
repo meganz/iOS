@@ -70,9 +70,17 @@
 
 - (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     MEGALogDebug(@"[CallKit] Report incoming call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
-    
+        
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
+    
+    NSUUID *uuid = [self.megaCallManager uuidForChatId:chatId callId:callId];
+    
+    if ([self.megaCallManager callIdForUUID:uuid]) {
+        MEGALogDebug(@"[CallKit] Call has already been reported with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
+        return;
+    }
+
     if (call && chatRoom) {
         [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]
                                   callerName:chatRoom.title
@@ -529,6 +537,11 @@
 }
 
 - (void)answerCallForChatRoom:(MEGAChatRoom *)chatRoom call:(MEGAChatCall *)call action:(CXAnswerCallAction *)action {
+    if (call.status != MEGAChatCallStatusUserNoPresent) {
+        [action fulfill];
+        return;
+    }
+
     MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
         if (error.type == MEGAChatErrorTypeOk) {
             [self answerWithCall:call chatRoom:chatRoom presenter:UIApplication.mnz_presentingViewController];
