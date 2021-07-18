@@ -62,7 +62,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         
         speakerView.properties = MeetingQuickActionView.Properties(
             iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: .black),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: .mnz_gray474747(), selected: .white)
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1), selected: .white)
         )
         
         return speakerView
