@@ -21,6 +21,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         static let iconTintColorSelected = UIColor.black
         static let iconBackgroundColorNormal = #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1)
         static let iconBackgroundColorSelected = UIColor.white
+        static let meetingNameTextColor = UIColor.white.withAlphaComponent(0.2)
     }
        
     private weak var vc: MeetingCreatingViewController!
@@ -266,7 +267,10 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         case .configView(let title, let subtitle, let type, let isMicrophoneEnabled):
             vc.title = title
             configurationType = type
-            meetingNameInputTextfield.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.2)])
+            meetingNameInputTextfield.attributedPlaceholder = NSAttributedString(
+                string: title,
+                attributes: [NSAttributedString.Key.foregroundColor: Constants.meetingNameTextColor]
+            )
             meetingNameInputTextfield.isEnabled = type == .start
             muteUnmuteMicrophoneButton.isSelected = !isMicrophoneEnabled
 
