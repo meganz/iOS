@@ -50,8 +50,9 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         let participantInfoViewController = MeetingParticipantInfoViewController(viewModel: viewModel, sender: sender)
         if #available(iOS 13.0, *) {
             participantInfoViewController.overrideUserInterfaceStyle = .dark
-            participantInfoViewController.popoverPresentationController?.backgroundColor = .clear
         }
+        
+        participantInfoViewController.popoverPresentationController?.backgroundColor = .clear
     
         return participantInfoViewController
     }
