@@ -100,7 +100,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
            let previousAudioPort = previousRoute.outputs.first?.toAudioPort(),
            CallActionManager.shared.didEnableWebrtcAudioNow,
            previousAudioPort == .builtInSpeaker,
-           currentAudioPort == .builtInReceiver {
+           currentAudioPort != .builtInSpeaker {
             MEGALogDebug("AudioSession: The route is changed is because of the webrtc audio")
             CallActionManager.shared.didEnableWebrtcAudioNow = false
             enableLoudSpeaker { _ in }
