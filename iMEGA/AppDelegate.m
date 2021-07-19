@@ -1695,6 +1695,8 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
             if (@available(iOS 14.0, *)) {
                 [QuickAccessWidgetManager reloadAllWidgetsContent];
             }
+            
+            [api setAccountAuth:api.accountAuth];
             break;
         }
             
@@ -1768,6 +1770,8 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
                 if (sessionInvalidateInOtherClient) {
                     [self presentLogoutFromOtherClientAlert];
                 }
+                
+                [api setAccountAuth:nil];
             }
             break;
         }
