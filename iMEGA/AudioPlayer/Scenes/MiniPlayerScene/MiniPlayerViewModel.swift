@@ -37,6 +37,7 @@ final class MiniPlayerViewModel: ViewModelType {
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
+    private let dispatchQueue: DispatchQueueProtocol
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -50,7 +51,8 @@ final class MiniPlayerViewModel: ViewModelType {
          playerHandler: AudioPlayerHandlerProtocol,
          nodeInfoUseCase: NodeInfoUseCaseProtocol?,
          streamingInfoUseCase: StreamingInfoUseCaseProtocol?,
-         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?) {
+         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?,
+         dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
         self.router = router
         self.fileLink = fileLink
         self.filePaths = filePaths
@@ -59,6 +61,7 @@ final class MiniPlayerViewModel: ViewModelType {
         self.nodeInfoUseCase = nodeInfoUseCase
         self.streamingInfoUseCase = streamingInfoUseCase
         self.offlineInfoUseCase = offlineInfoUseCase
+        self.dispatchQueue = dispatchQueue
     }
     
     // MARK: - Init to reset player
@@ -152,8 +155,6 @@ final class MiniPlayerViewModel: ViewModelType {
     }
 
     private func preparePlayer() {
-        invokeCommand?(.showLoading(!playerHandler.isPlayerPaused()))
-        
         if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
             streamingInfoUseCase?.startServer()
         }
@@ -187,7 +188,6 @@ final class MiniPlayerViewModel: ViewModelType {
         if let artworkImage = currentItem.artwork {
             invokeCommand?(.reloadNodeInfo(thumbnail: artworkImage))
         }
-        invokeCommand?(.showLoading(!playerHandler.isPlayerPaused()))
         
         playerHandler.refreshCurrentItemState()
     }
@@ -243,8 +243,9 @@ final class MiniPlayerViewModel: ViewModelType {
     func dispatch(_ action: MiniPlayerAction) {
         switch action {
         case .onViewDidLoad:
+            invokeCommand?(.showLoading(shouldInitializePlayer))
             if shouldInitializePlayer {
-                DispatchQueue.global(qos: .userInteractive).async {
+                dispatchQueue.async(qos: .userInteractive) {
                     self.preparePlayer()
                 }
             } else {

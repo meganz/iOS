@@ -11,7 +11,9 @@ final class AudioPlaylistViewModelTests: XCTestCase {
                                                 playerHandler: playerHandler)
     
     func testAudioPlayerActions() {
-        test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.reloadTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, selectedIndexPaths: nil), .title(title: "")])
+        test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.reloadTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, selectedIndexPaths: []),
+                                                                              .title(title: "")])
+        
         XCTAssertEqual(playerHandler.addPlayerListener_calledTimes, 1)
         
         test(viewModel: viewModel, action: .move(AudioPlayerItem.mockItem, IndexPath(row: 1, section: 0), MovementDirection.up), expectedCommands: [])
