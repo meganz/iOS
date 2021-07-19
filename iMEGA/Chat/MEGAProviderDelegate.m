@@ -136,15 +136,8 @@
             callEndedReason = CXCallEndedReasonUnanswered;
             break;
             
-        case MEGAChatCallTermCodeAnswerElseWhere:
-            callEndedReason = CXCallEndedReasonAnsweredElsewhere;
-            break;
-            
-        case MEGAChatCallTermCodeRejectElseWhere:
-            callEndedReason = CXCallEndedReasonDeclinedElsewhere;
-            break;
-            
         default:
+            callEndedReason = CXCallEndedReasonAnsweredElsewhere;
             break;
     }
     
@@ -437,6 +430,8 @@
                     [self updateCall:call];
                 }
                 [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
+            } else if (call.changes == MEGAChatCallChangeTypeRingingStatus) {
+                [self reportEndCall:call];
             }
             break;
         }
