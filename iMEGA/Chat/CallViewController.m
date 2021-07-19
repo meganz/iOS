@@ -53,6 +53,7 @@
 @property (strong, nonatomic) AVAudioPlayer *player;
 
 @property (assign, nonatomic) NSInteger initDuration;
+@property (strong, nonatomic) CallCompatibilityWarning *callCompatibilityWarning;
 
 @property (assign, nonatomic, getter=isSpeakerEnabled) BOOL speakerEnabled;
 
@@ -81,6 +82,15 @@
     self.localVideoImageView.layer.cornerRadius = 4;
     self.localVideoImageView.corner = CornerTopRight;
     
+    @weakify(self);
+    self.callCompatibilityWarning = [CallCompatibilityWarning.alloc initInView:self.view
+                                                                placeAboveView:self.callControlsView
+                                                                isOneToOneCall:YES
+                                                              buttonTapHandler:^{
+        @strongify(self);
+        [self.callCompatibilityWarning removeCompatibilityWarningView];
+    }];
+                                         
     if (self.callType == CallTypeIncoming) {
         self.call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:self.callId];
         [self answerChatCall];
@@ -96,6 +106,7 @@
                     self.statusCallLabel.text = self.call.status == MEGAChatCallStatusReconnecting ? NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") : NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
                     [self.megaCallManager addCall:self.call];
                     [self.megaCallManager startCall:self.call];
+                    [self.callCompatibilityWarning startCompatibilityWarningViewTimer];
                 } else {
                     MEGALogWarning(@"There is no a call associated with chatroom %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]);
                     [self dismissViewControllerAnimated:YES completion:nil];
@@ -115,6 +126,7 @@
             [self initDurationTimer];
         } else {
             self.statusCallLabel.text = NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            [self.callCompatibilityWarning startCompatibilityWarningViewTimer];
         }
     }
     
@@ -530,6 +542,8 @@
                     [self.player stop];
                     [self initShowHideControls];
                     [self initDurationTimer];
+                    [self.callCompatibilityWarning startCompatibilityWarningViewTimer];
+                    [self.callCompatibilityWarning removeCompatibilityWarningView];
                     self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = YES;
                 }
                 break;
