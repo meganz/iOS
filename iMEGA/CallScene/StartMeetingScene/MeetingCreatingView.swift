@@ -11,7 +11,18 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         static let backgroundColor = UIColor.mnz_(fromHexString: "#FF6F00")
         static let backgroundGradientColor = UIColor.mnz_(fromHexString: "#FFA700")
     }
-   
+    
+    private struct Constants {
+        static let bottomBarText = UIFont.preferredFont(style: .title3, weight: .semibold)
+        static let bottomBarButtonText = UIFont.preferredFont(forTextStyle: .headline)
+        static let backgroundColor = #colorLiteral(red: 0.2, green: 0.1843137255, blue: 0.1843137255, alpha: 1)
+        static let textColor = UIColor.white
+        static let iconTintColorNormal = UIColor.white
+        static let iconTintColorSelected = UIColor.black
+        static let iconBackgroundColorNormal = #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1)
+        static let iconBackgroundColorSelected = UIColor.white
+    }
+       
     private weak var vc: MeetingCreatingViewController!
     private let containerView = UIView()
     private lazy var localVideoImageView: MEGALocalImageView = {
@@ -61,8 +72,10 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         speakerView.addSubviewSquared(button)
         
         speakerView.properties = MeetingQuickActionView.Properties(
-            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: .black),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1), selected: .white)
+            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: Constants.iconTintColorNormal,
+                                                                        selected: Constants.iconTintColorSelected),
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: Constants.iconBackgroundColorNormal,
+                                                                          selected: Constants.iconBackgroundColorSelected)
         )
         
         return speakerView
@@ -78,10 +91,15 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         let input = UITextField()
         input.textAlignment = .center
         input.keyboardAppearance = .dark
-        input.font = .systemFont(ofSize: 20, weight: .semibold)
-        input.textColor = .white
+        input.font = Constants.bottomBarText
+        input.textColor = Constants.textColor
         input.delegate = self
-        input.placeholder = NSLocalizedString("firstName", comment: "")
+        let placeholderText = NSAttributedString(
+            string: NSLocalizedString("firstName", comment: ""),
+            attributes: [NSAttributedString.Key.foregroundColor: Constants.backgroundColor,
+                         NSAttributedString.Key.font: Constants.bottomBarText]
+        )
+        input.attributedPlaceholder = placeholderText
         input.setBlockFor(.editingChanged) { [weak self] textField in
             if let textField = textField as? UITextField, let text = textField.text {
                 self?.viewModel.dispatch(.updateFirstName(text))
@@ -95,10 +113,15 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         let input = UITextField()
         input.textAlignment = .center
         input.keyboardAppearance = .dark
-        input.font = .systemFont(ofSize: 20, weight: .semibold)
-        input.textColor = .white
+        input.font = Constants.bottomBarText
+        input.textColor = Constants.textColor
         input.delegate = self
-        input.placeholder = NSLocalizedString("lastName", comment: "")
+        let placeholderText = NSAttributedString(
+            string: NSLocalizedString("lastName", comment: ""),
+            attributes: [NSAttributedString.Key.foregroundColor: Constants.backgroundColor,
+                         NSAttributedString.Key.font: Constants.bottomBarText]
+        )
+        input.attributedPlaceholder = placeholderText
         input.setBlockFor(.editingChanged) { [weak self] textField in
             if let textField = textField as? UITextField, let text = textField.text {
                 self?.viewModel.dispatch(.updateLastName(text))
@@ -112,8 +135,8 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         let input = UITextField()
         input.textAlignment = .center
         input.keyboardAppearance = .dark
-        input.font = .systemFont(ofSize: 20, weight: .semibold)
-        input.textColor = .white
+        input.font = Constants.bottomBarText
+        input.textColor = Constants.textColor
         input.delegate = self
         input.setBlockFor(.editingChanged) { [weak self] textField in
             if let textField = textField as? UITextField, let text = textField.text {
@@ -126,7 +149,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         let button = UIButton()
         button.setTitle(NSLocalizedString("Start Meeting", comment: ""), for: .normal)
         button.mnz_setupPrimary(traitCollection)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        button.titleLabel?.font = Constants.bottomBarButtonText
         return button
     }()
     
@@ -144,7 +167,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         super.init(frame: .zero)
         self.vc = vc
         self.viewModel = viewModel
-        containerView.flex.backgroundColor(#colorLiteral(red: 0.2, green: 0.1843137255, blue: 0.1843137255, alpha: 1)).alignItems(.center).justifyContent(.end).define { flex in
+        containerView.flex.backgroundColor(Constants.backgroundColor).alignItems(.center).justifyContent(.end).define { flex in
             // video view
             flex.addItem(localVideoImageView).position(.absolute).all(0)
             flex.addItem().grow(1).shrink(1).justifyContent(.center).alignItems(.center).define { flex in
