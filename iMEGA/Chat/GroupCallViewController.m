@@ -86,6 +86,7 @@
 
 @property (nonatomic) NSString *backCamera;
 @property (nonatomic) NSString *frontCamera;
+@property (strong, nonatomic) CallCompatibilityWarning *callCompatibilityWarning;
 
 @end
 
@@ -107,6 +108,15 @@
         self.call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:self.callId];
         [self answerChatCall];
     } else  if (self.callType == CallTypeOutgoing) {
+        @weakify(self);
+        self.callCompatibilityWarning = [CallCompatibilityWarning.alloc initInView:self.view
+                                                                    placeAboveView:self.callControlsView
+                                                                    isOneToOneCall:NO
+                                                                  buttonTapHandler:^{
+            @strongify(self);
+            [self.callCompatibilityWarning removeCompatibilityWarningView];
+        }];
+                                         
         [self startOutgoingCall];
     } else  if (self.callType == CallTypeActive) {
         self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
@@ -865,7 +875,8 @@
             weakSelf.callId = weakSelf.call.callId;
             [weakSelf.megaCallManager addCall:weakSelf.call];
             [weakSelf.megaCallManager startCall:weakSelf.call];
-            
+            [self.callCompatibilityWarning startCompatibilityWarningViewTimer];
+
             [self.collectionView reloadData];
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
             
@@ -1169,7 +1180,9 @@
     switch (call.status) {
             
         case MEGAChatCallStatusInProgress: {
-            
+            [self.callCompatibilityWarning stopCompatibilityWarningViewTimer];
+            [self.callCompatibilityWarning removeCompatibilityWarningView];
+
             if (self.isReconnecting) {
                 self.reconnecting = NO;
                 self.toastView.hidden = YES;
