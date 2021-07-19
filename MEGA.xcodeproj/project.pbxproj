@@ -1681,6 +1681,9 @@
 		BF46B81C25A6B09A008641BB /* PSAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B81B25A6B09A008641BB /* PSAUseCase.swift */; };
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
+		BF4D8D1E269E5C50004C512A /* CallCompatibilityWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D1D269E5C50004C512A /* CallCompatibilityWarningView.swift */; };
+		BF4D8D22269E5C65004C512A /* CallCompatibilityWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF4D8D21269E5C65004C512A /* CallCompatibilityWarningView.xib */; };
+		BF4D8D34269E9724004C512A /* CallCompatibilityWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D33269E9724004C512A /* CallCompatibilityWarning.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */; };
 		BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */; };
@@ -3794,6 +3797,9 @@
 		BF46B81B25A6B09A008641BB /* PSAUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAUseCase.swift; sourceTree = "<group>"; };
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
+		BF4D8D1D269E5C50004C512A /* CallCompatibilityWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompatibilityWarningView.swift; sourceTree = "<group>"; };
+		BF4D8D21269E5C65004C512A /* CallCompatibilityWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CallCompatibilityWarningView.xib; sourceTree = "<group>"; };
+		BF4D8D33269E9724004C512A /* CallCompatibilityWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompatibilityWarning.swift; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
 		BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
 		BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExplorerGridCell.swift; sourceTree = "<group>"; };
@@ -5363,6 +5369,9 @@
 				83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */,
 				83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */,
 				836370362461D2EA00842E38 /* SendLinkToChatsDelegate.swift */,
+				BF4D8D33269E9724004C512A /* CallCompatibilityWarning.swift */,
+				BF4D8D1D269E5C50004C512A /* CallCompatibilityWarningView.swift */,
+				BF4D8D21269E5C65004C512A /* CallCompatibilityWarningView.xib */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -9917,6 +9926,7 @@
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
 				BFAFAF0F2519595300C92887 /* HomeViewController.xib in Resources */,
+				BF4D8D22269E5C65004C512A /* CallCompatibilityWarningView.xib in Resources */,
 				5B72739F240D4310005816AB /* defaultIcon@2x.png in Resources */,
 				7759700C219EBCE700B31671 /* Notifications.storyboard in Resources */,
 				5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */,
@@ -10828,6 +10838,7 @@
 				83113495223900CB00647AB4 /* GradientView.m in Sources */,
 				BF99A3D424A994CB0035A183 /* MessageOptionItemTableCell.swift in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
+				BF4D8D1E269E5C50004C512A /* CallCompatibilityWarningView.swift in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
 				A86B9F852316D6AB00F35E7A /* FLEXKeyboardShortcutManager.m in Sources */,
@@ -10865,6 +10876,7 @@
 				B6F8CDCB262821820074CBBF /* CoreDataErrorHandler.m in Sources */,
 				BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */,
 				A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */,
+				BF4D8D34269E9724004C512A /* CallCompatibilityWarning.swift in Sources */,
 				A86B9F842316D6AB00F35E7A /* FLEXAlert.m in Sources */,
 				5D5DE4F82511F88900F2B4FD /* SearchFileUseCase.swift in Sources */,
 				834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */,
