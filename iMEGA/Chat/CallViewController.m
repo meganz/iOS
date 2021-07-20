@@ -542,7 +542,7 @@
                     [self.player stop];
                     [self initShowHideControls];
                     [self initDurationTimer];
-                    [self.callCompatibilityWarning startCompatibilityWarningViewTimer];
+                    [self.callCompatibilityWarning stopCompatibilityWarningViewTimer];
                     [self.callCompatibilityWarning removeCompatibilityWarningView];
                     self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = YES;
                 }
