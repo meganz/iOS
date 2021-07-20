@@ -58,6 +58,8 @@ class LocalUserView: UIView {
         if !isHidden {
             return
         }
+        
+        layoutToOrientation()
         videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
         avatarImageView.mnz_setImage(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
         
@@ -82,6 +84,7 @@ class LocalUserView: UIView {
     }
     
     func repositionView() {
+        layoutToOrientation()
         let point = startingPoint()
         self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
     }
@@ -155,4 +158,11 @@ class LocalUserView: UIView {
         return CGPoint(x: x, y: y)
     }
     
+    private func layoutToOrientation() {
+        if UIDevice.current.orientation.isLandscape {
+            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: 134, height: 75)
+        } else {
+            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: 75, height: 134)
+        }
+    }
 }
