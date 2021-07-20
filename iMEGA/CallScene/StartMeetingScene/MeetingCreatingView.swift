@@ -378,6 +378,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     private func setNavigationTitle(_ title: String, subtitle: String) {
         let titleViewLabel = Helper.customNavigationBarLabel(withTitle: title, subtitle: subtitle)
         titleViewLabel.lineBreakMode = .byTruncatingTail
+        titleViewLabel.textColor = Constants.textColor
         vc.navigationItem.titleView = titleViewLabel
     }
     
