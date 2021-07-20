@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="활성화되지 않은 대화";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="별명 설정";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="별명 수정";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="별명 삭제";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="별칭 또는 별명";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="결제 기한 초과";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="위치 태그 포함";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="활성화하면, 위치 정보가 사진에 포함됩니다. 공유할 때 주의하세요.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="전송 (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2630,3 +2630,5 @@
 "cloudDrive.nodeInfo.owner"="%@ (소유자)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-복구키";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="MEGAChat을 업그레이드하고 있습니다. 버전 호환성 문제로 통화가 연결되지 않을 수 있습니다.";
