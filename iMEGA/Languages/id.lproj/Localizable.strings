@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Obrolan tidak aktif";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="Setel Nama Panggilan";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="Edit Nama Panggilan";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Hapus Nama Panggilan";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="Alias or Nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pembayaran lewat jatuh tempo";
 /* Business account status */
@@ -2630,3 +2630,5 @@
 "cloudDrive.nodeInfo.owner"="%@ (Owner)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your call might not be connected due to version incompatibility issues.";

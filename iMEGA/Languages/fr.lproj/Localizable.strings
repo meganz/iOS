@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="La conversation est inactive";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="Définir un pseudonyme";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="Modifier le pseudonyme";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Supprimer le pseudonyme";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="Alias ou pseudonyme";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Le paiement est en retard";
 /* Business account status */
@@ -2630,3 +2630,5 @@
 "cloudDrive.nodeInfo.owner"="%@ (propriétaire)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-CLÉdeRÉCUPÉRATION";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="Nous mettons MEGAchat à niveau. Votre appel pourrait ne pas être connecté en raison de problèmes d’incompatibilité des versions.";
