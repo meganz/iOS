@@ -15,6 +15,11 @@ const ALL_RESOURCES_URL = "https://rest.api.transifex.com/resources?filter[proje
 const MAIN_LOCALIZABLE_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2FLocalizable.strings/raw?ref=develop";
 const MAIN_INFOPLIST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2FInfoPlist.strings/raw?ref=develop";
 
+const CHANGELOGS_PATH = "";
+const INFOPLIST_PATH = "../iMEGA/Languages/Base.lproj/InfoPlist.strings";
+const LOCALIZABLE_PATH = "../iMEGA/Languages/Base.lproj/Localizable.strings";
+const LTHPASSCODEVIEWCONTROLLER_PATH = "../iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/LTHPasscodeViewController.strings";
+
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 function getGitLabResourceFile($url){
@@ -25,7 +30,7 @@ function getGitLabResourceFile($url){
     $result = curl_exec($ch);
     if($responseJson = json_decode($result,true) != null){
         if($responseJson['Message'] == "401 Unauthorized"){
-            die("Please enter a valid gitlab token in config\n");
+            die("Please enter a valid gitlab token in config.\n");
         }
         die($responseJson['message']);
     }
@@ -38,101 +43,13 @@ function stripQuotes($text)
     return preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $text);
 }
 
-/*
- * Command line argument parsing
- */
-function arg($x = "", $default = null)
-{
-
-    static $arginfo = [];
-
-    /* helper */
-    $contains = function ($h, $n) {
-        return (false !== strpos($h, $n));
-    };
-    /* helper */
-    $valuesOf = function ($s) {
-        return explode(",", $s);
-    };
-
-    //  called with a multiline string --> parse arguments
-    if ($contains($x, "\n")) {
-
-        //  parse multiline text input
-        $args = $GLOBALS["argv"] ?: [];
-        $rows = preg_split('/\s*\n\s*/', trim($x));
-        $data = $valuesOf("char,word,type,help");
-        foreach ($rows as $row) {
-            list($char, $word, $type, $help) = preg_split('/\s\s+/', $row);
-            $char = trim($char, "-");
-            $word = trim($word, "-");
-            $key = $word ?: $char ?: "";
-            if ($key === "") continue;
-            $arginfo[$key] = compact($data);
-            $arginfo[$key]["value"] = null;
-        }
-
-        $nr = 0;
-        while ($args) {
-
-            $x = array_shift($args);
-            if ($x[0] <> "-") {
-                $arginfo[$nr++]["value"] = $x;
-                continue;
-            }
-            $x = ltrim($x, "-");
-            $v = null;
-            if ($contains($x, "=")) list($x, $v) = explode("=", $x, 2);
-            $k = "";
-            foreach ($arginfo as $k => $arg) if (($arg["char"] == $x) || ($arg["word"] == $x)) break;
-            $t = $arginfo[$k]["type"];
-            switch ($t) {
-                case "bool" :
-                    $v = true;
-                    break;
-                case "str"  :
-                    if (is_null($v)) $v = array_shift($args);
-                    break;
-                case "int"  :
-                    if (is_null($v)) $v = array_shift($args);
-                    $v = intval($v);
-                    break;
-            }
-            $arginfo[$k]["value"] = $v;
-
-        }
-
-        return $arginfo;
-
-    }
-
-    if ($x === "") return $arginfo;
-    if (isset($arginfo[$x]["value"])) return $arginfo[$x]["value"];
-    return $default;
-}
-
-arg("
-        -b  --base           str    Path to base file (Either Base or en file)
-        -f  --force          bool   flag to force push if resource already exists
-    ");
-$arguments = arg();
-$force = arg()['force'];
-$sourceArgument = arg()['base'];
-
-if ($sourceArgument['value'] == null || arg(1)) {
-    echo("-b  --base           str    Path to base file (Either Base or en file)
--f  --force          bool   Optional flag to force push if resource already exists
-    ");
-    die();
-}
-
 /**
  * Create a new resource on Transifex
  *
  * @param $resourceName
  * @param $force
  */
-function createNewResource($resourceName, $force,$isPlural)
+function createNewResource($resourceName,$isPlural)
 {
     $resourceSlug = strtolower($resourceName);
     if($isPlural){
@@ -172,13 +89,22 @@ function createNewResource($resourceName, $force,$isPlural)
     curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/vnd.api+json", "Authorization: Bearer " . TRANSIFEX_API_TOKEN]);
     $result = curl_exec($ch);
     $response = json_decode($result, true);
-    if ($response['errors'][0]['status'] === '409' && $force['value'] == null) {
-        echo $response['errors'][0]['detail'];
-        die();
+    if ($response['errors'][0]['status'] === '409') {
+        do {
+            $cmd = trim(strtolower(readline("\n \n>Resource already exists, do you want to force push?: (y/n)\n")));
+            readline_add_history($cmd);
+            if ($cmd == 'q' || $cmd == 'n') {
+                die();
+            }
+            if($cmd == 'y') {
+                return false;
+            }
+        }while ($cmd != 'q' && $cmd != 'y');
     }
-    echo("Created new Resource: {$resourceName}\n");
+    echo("Created new Resource: {$resourceName}.\n");
     curl_close($ch);
 }
+
 
 /**
  * Check if resource exists
@@ -204,7 +130,7 @@ function getResourceDetails($resourceSlug)
         foreach ($responseJson['errors'] as $error) {
             echo "Error {$error['status']}: {$error['detail']}.\n";
         }
-        die("File name should be the name of the resource (Case Sensitive)\n");
+        die("File name should be the name of the resource (Case Sensitive).\n");
     }
     return true;
 }
@@ -265,7 +191,7 @@ function parseAppleStrings($resourceString): array
         $stringKey = trim(trim($stringKey), ";\"\'");
 
         if (preg_match('/(?<!\\\\)(?:\\\\{2})*\K"/', $stringText) || preg_match('/(?<!\\\\)(?:\\\\{2})*\K"/', $stringKey)) {
-            die("Invalid String Syntax, make sure you are using escape characters for strings\n");
+            die("Invalid String Syntax, make sure you are using escape characters for strings.\n");
         }
 
         $sanitisedStringText = sanitiseSingleResourceString($stringText);
@@ -425,7 +351,7 @@ function addNewSourceFile($stringsToPush, $resourceName,$isPlural)
         sleep(1);
     }
     curl_close($ch);
-    echo "Uploaded source file for resource {$resourceName}\n";
+    echo "Uploaded source file for resource {$resourceName}.\n";
 }
 
 function getDiffOfResource($gitlabArr,$ourStringsArr){
@@ -445,30 +371,65 @@ function getDiffOfResource($gitlabArr,$ourStringsArr){
     }
     return $stringsToPush;
 }
+
+function resourceChooser(): string
+{
+    do{
+        echo "\n1. Changelogs \n2. Localizable \n3. InfoPlist \n4. LTHPasscodeViewController \n5. (q) to quit \n";
+        $cmd = trim(strtolower(readline("\n \n> Which resource would you want to import (Enter the digit):\n")));
+        readline_add_history($cmd);
+        if ($cmd == 'q' || $cmd == '6') {
+            exit;
+        }
+        switch(strtolower($cmd)){
+            case '1' :
+                return CHANGELOGS_PATH;
+            case '2':
+                return LOCALIZABLE_PATH;
+            case '3':
+                return INFOPLIST_PATH;
+            case '4':
+                return LTHPASSCODEVIEWCONTROLLER_PATH;
+            case '5':
+                exit;
+        }
+    }while ($cmd != 'q');
+}
+
+$filePath = resourceChooser();
+
+// changelogs case
+if($filePath == "") {
+    $cmd = readline("\n \n> Please enter Changelogs path: \n");
+    readline_add_history($cmd);
+    $filePath = $cmd;
+}
+
 // check for file existing
-if (!file_exists($sourceArgument['value'])) {
-    echo "Incorrect source file path\n";
+if (!file_exists($filePath)) {
+    echo "Incorrect source file path: $filePath does not exist.\n";
     die();
 }
 
-$fileParts = pathinfo($sourceArgument['value']);
+$fileParts = pathinfo($filePath);
 
 // check for correct extension
 if ($fileParts['extension'] !== "strings" && $fileParts['extension'] !== "stringsdict") {
-    echo "Please use .strings or .stringsdict extension for source file\n";
+    echo "Please use .strings or .stringsdict extension for source file.\n";
     die();
 }
 
- // Push to main resource file directly
- if($fileParts['filename'] == "Changelogs" || $fileParts['filename'] == "LTHPasscodeViewController" ){
-     echo "Updating Main Resource as file is Changelogs/LTHPassCodeViewController and not updated often\n";
-    addNewSourceFile(file_get_contents($sourceArgument['value']), $fileParts['filename'],false);
+// Push to main resource file directly
+if($fileParts['filename'] == "Changelogs" || $fileParts['filename'] == "LTHPasscodeViewController" ){
+    echo "Updating Main Resource as file is Changelogs/LTHPassCodeViewController and not updated often.\n";
+    addNewSourceFile(file_get_contents($filePath), $fileParts['filename'],false);
     die();
 }
 
-$branchName = `git branch --show-current`;
+$branchName = trim(`git branch --show-current`);
+
 if ($branchName == "" || $branchName == null) {
-    die("You are currently not on a branch, please switch to the branch you are working on\n");
+    die("You are currently not on a branch, please switch to the branch you are working on.\n");
 }
 
 echo "Note: You are currently on branch {$branchName}.\n";
@@ -478,18 +439,16 @@ if (in_array(str_replace(PHP_EOL, "", $branchName), ["master", "develop"])) {
 }
 $branchResourceName = $fileParts['filename'] . "-" .  preg_replace("/[^A-Za-z0-9]/", '', $branchName);
 
-
 // get the gitlab strings for comparisons
 
 $stringsToPush = "";
-$ourStrings =  file_get_contents($sourceArgument['value']);
+$ourStrings =  file_get_contents($filePath);
 $gitlabResourceStrings = "";
 if($fileParts['filename'] == "InfoPlist"){
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_INFOPLIST_URL);
 }else if ($fileParts['filename'] == "Localizable"){
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_LOCALIZABLE_URL);
 }
-
 
 // parse
 if($fileParts['extension'] == "strings"){
@@ -504,14 +463,14 @@ if($fileParts['extension'] == "strings"){
 // TODO stringsdict file when they upload to gitlab
 if (getResourceDetails(strtolower($fileParts['filename']))) {
     if ($fileParts['extension'] == "strings") {
-        createNewResource($branchResourceName, $force,false);
+        createNewResource($branchResourceName,false);
         addNewSourceFile($stringsToPush, $branchResourceName,false);
     } else if ($fileParts['extension'] == "stringsdict") {
-        createNewResource($branchResourceName, $force,true);
-        addNewSourceFile($sourceArgument['value'], $branchResourceName,true);
+        createNewResource($branchResourceName,true);
+        addNewSourceFile($filePath, $branchResourceName,true);
     }
 } else {
-    echo "File name should be the name of the resource (Case Sensitive)\n";
+    echo "File name should be the name of the resource (Case Sensitive).\n";
     die();
 }
 ?>
