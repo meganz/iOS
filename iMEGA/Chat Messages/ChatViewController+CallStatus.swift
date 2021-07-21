@@ -1,6 +1,10 @@
 import UIKit
 
 extension ChatViewController {
+    var joinCallString: String {
+        return NSLocalizedString("Join Call", comment: "")
+    }
+    
     func checkIfChatHasActiveCall() {
         guard chatRoom.ownPrivilege == .standard
                 || chatRoom.ownPrivilege == .moderator
@@ -8,27 +12,47 @@ extension ChatViewController {
               let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId),
               call.status != .destroyed,
               call.status != .terminatingUserParticipation else {
-            hideJoinButton()
+            joinCallCleanup()
             return
         }
         
-        showJoinButton(
-            hasUserJoinedCall: call.status == .connecting || call.status == .joining || call.status == .inProgress
-        )
+        onCallUpdate(call)
+    }
+
+    private func initTimerForCall(_ call: MEGAChatCall) {
+        initDuration = TimeInterval(call.duration)
+        if !(timer?.isValid ?? false) {
+            let startTime = Date().timeIntervalSince1970
+            updateJoinCallLabel(withStartTime: startTime)
+            
+            timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
+                guard let self = self, self.chatCall?.status != .connecting else { return }
+                self.updateJoinCallLabel(withStartTime: startTime)
+            }
+            
+            RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
+        }
     }
     
-    private func showJoinButton(hasUserJoinedCall: Bool) {
-        joinCallButton.setTitle(
-            NSLocalizedString(hasUserJoinedCall ? "Tap to return to call" : "Join Call", comment: ""),
-            for: .normal
-        )
+    private func showJoinCall(withTitle title: String) {
+        let spacePadding = "   "
+        joinCallButton.setTitle(spacePadding + title + spacePadding, for: .normal)
         joinCallButton.isHidden = false
     }
     
-    private func hideJoinButton() {
+    private func updateJoinCallLabel(withStartTime startTime: TimeInterval) {
+        guard let initDuration = initDuration else { return }
+        
+        let time = Date().timeIntervalSince1970 - startTime + initDuration
+        let title = String(format: NSLocalizedString("Touch to return to call %@", comment: ""), NSString.mnz_string(fromTimeInterval: time))
+        showJoinCall(withTitle: title)
+    }
+    
+    private func joinCallCleanup() {
+        timer?.invalidate()
         joinCallButton.isHidden = true
     }
-
+        
     @objc func didTapJoinCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { granted in
             if granted {
@@ -39,24 +63,33 @@ extension ChatViewController {
             }
         }
     }
-}
-
-extension ChatViewController: MEGAChatCallDelegate {
-    func onChatCallUpdate(_: MEGAChatSdk!, call: MEGAChatCall!) {
+    
+    private func onCallUpdate(_ call: MEGAChatCall) {
         guard call.chatId == chatRoom.chatId else {
             return
         }
         
+        configureNavigationBar()
+
         switch call.status {
-        case .userNoPresent, .inProgress:
-            showJoinButton(hasUserJoinedCall: call.status == .inProgress)
-            configureNavigationBar()
+        case .initial, .joining, .userNoPresent:
+            showJoinCall(withTitle: joinCallString)
+        case .inProgress:
+            initTimerForCall(call)
+        case .connecting:
+            showJoinCall(withTitle: NSLocalizedString("Reconnecting...", comment: ""))
         case .destroyed, .terminatingUserParticipation:
-            configureNavigationBar()
-            hideJoinButton()
+            joinCallCleanup()
         default:
             return
         }
+        
         chatCall = call
+    }
+}
+
+extension ChatViewController: MEGAChatCallDelegate {
+    func onChatCallUpdate(_: MEGAChatSdk!, call: MEGAChatCall!) {
+        onCallUpdate(call)
     }
 }
