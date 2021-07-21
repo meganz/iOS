@@ -353,7 +353,7 @@ function pollCurlRequest($method, $urls, $headers): array
                     "resource" => $urls[$k]['resource'],
                     "language" => $urls[$k]['language']
                 ];
-                echo "Gather data for Resource: {$urls[$k]['resource']} for Language: {$urls[$k]['language']}\n";
+                echo "Gather data for Resource: {$urls[$k]['resource']} for Language: {$urls[$k]['language']}.\n";
                 continue;
             }
             if (isset($responseJson['errors'])) {
@@ -496,7 +496,7 @@ function sourceLanguageHelper($resource): array
             "language" => "Base"
         ];
     }
-    echo "Obtained Links For Source Files\n";
+    echo "Obtained Links For Source Files.\n";
 
     $sourceLanguages =  pollCurlRequest("GET", $links, APPLICATION_JSON_HEADER);
     $pluralSourceLanguages =  pollCurlRequest("GET", $pluralLinks, APPLICATION_JSON_HEADER);
