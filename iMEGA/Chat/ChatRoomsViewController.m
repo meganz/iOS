@@ -1553,13 +1553,13 @@
             [self updateCallStatus:call];
             break;
             
-//        case MEGAChatCallStatusReconnecting:
-            // self.reconnecting = YES;
-            // self.topBannerLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.");
-            // self.topBannerView.backgroundColor = UIColor.systemOrangeColor;
-            // self.topBannerMicrophoneMutedImageView.hidden = YES;
-            // self.topBannerCameraEnabledImageView.hidden = YES;
-//            break;
+        case MEGAChatCallStatusConnecting:
+            self.reconnecting = YES;
+            self.topBannerLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.");
+            self.topBannerView.backgroundColor = UIColor.systemOrangeColor;
+            self.topBannerMicrophoneMutedImageView.hidden = YES;
+            self.topBannerCameraEnabledImageView.hidden = YES;
+            break;
             
         case MEGAChatCallStatusDestroyed:
         case MEGAChatCallStatusTerminatingUserParticipation:

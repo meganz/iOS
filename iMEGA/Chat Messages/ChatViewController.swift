@@ -50,9 +50,9 @@ class ChatViewController: MessagesViewController {
     
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
-    // topbanner
+    // join call
     var timer: Timer?
-//    var initDuration: TimeInterval?
+    var initDuration: TimeInterval?
 
     lazy var joinCallButton: UIButton = {
         let button = UIButton()
@@ -669,12 +669,16 @@ class ChatViewController: MessagesViewController {
     }
     
     private func configureJoinCallButton() {
-        view.addSubview(joinCallButton)
-        joinCallButton.autoSetDimension(.height, toSize: 40)
-        joinCallButton.autoSetDimension(.width, toSize: (joinCallButton.titleLabel?.intrinsicContentSize.width ?? 120) + 30, relation: .greaterThanOrEqual)
-        joinCallButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -30).isActive = true
         joinCallButton.addTarget(self, action: #selector(didTapJoinCall), for: .touchUpInside)
-        joinCallButton.autoAlignAxis(toSuperviewAxis: .vertical)
+        view.addSubview(joinCallButton)
+        
+        joinCallButton.translatesAutoresizingMaskIntoConstraints = false
+        [
+            joinCallButton.heightAnchor.constraint(equalToConstant: 40.0),
+            joinCallButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -30),
+            joinCallButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ].activate()
+        
         joinCallButton.isHidden = true
     }
     
