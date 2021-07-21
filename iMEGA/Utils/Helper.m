@@ -334,9 +334,9 @@ static MEGAIndexer *indexer;
     NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     if (isTopPriority) {
-        [api startDownloadTopPriorityWithNode:[api authorizeNode:node] localPath:relativeFilePath appData:nil];
+        [MEGASdkManager.sharedMEGASdk startDownloadTopPriorityWithNode:[api authorizeNode:node] localPath:relativeFilePath appData:nil];
     } else {
-        [api startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath];
+        [MEGASdkManager.sharedMEGASdk startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath];
     }
 }
 
