@@ -35,6 +35,8 @@ extension DocScannerFileNameTableCell: UITextFieldDelegate {
         guard let text = textField.text else {
             return
         }
+        let containsInvalidChars = textField.text?.mnz_containsInvalidChars() ?? false
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redError() : UIColor.mnz_label()
         filename = text
         delegate?.filenameChanged(text)
     }

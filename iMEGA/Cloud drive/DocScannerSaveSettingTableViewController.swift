@@ -257,6 +257,14 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             default: break
             }
         } else if indexPath.section == 2 {
+            let containsInvalidChars = fileName.mnz_containsInvalidChars()
+            let empty = fileName.mnz_isEmpty()
+            if containsInvalidChars || empty {
+                let element = self.view.subviews.first(where: { $0 is DocScannerFileNameTableCell })
+                let cell = element as? DocScannerFileNameTableCell
+                cell?.filenameTextField.becomeFirstResponder()
+                return
+            }
             switch indexPath.row {
             case 0:
                 let storyboard = UIStoryboard(name: "Cloud", bundle: Bundle(for: BrowserViewController.self))
@@ -284,10 +292,6 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
 
 extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellDelegate {
     func filenameChanged(_ newFilename: String) {
-        guard !newFilename.isEmpty else {
-            fileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
-            return
-        }
         fileName = newFilename
     }
 }
