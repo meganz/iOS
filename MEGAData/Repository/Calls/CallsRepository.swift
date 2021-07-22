@@ -181,7 +181,9 @@ extension CallsRepository: MEGAChatCallDelegate {
         }
         
         if call.hasChanged(for: .networkQuality) {
-            callbacksDelegate?.networkQuality()
+            if call.networkQuality < 2 {
+                callbacksDelegate?.networkQuality()
+            }
         }
         
         switch call.status {
