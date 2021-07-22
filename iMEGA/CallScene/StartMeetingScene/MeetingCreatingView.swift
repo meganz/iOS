@@ -359,8 +359,6 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             muteUnmuteMicrophoneButton.isUserInteractionEnabled = true
         case .localVideoFrame(width: let width, height: let height, buffer: let buffer):
             guestVideoFrame(width: width, height: height, buffer: buffer)
-        case .enabledLoudSpeaker(let enabled):
-            speakerQuickActionView.isSelected = enabled
         case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
             selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
         }

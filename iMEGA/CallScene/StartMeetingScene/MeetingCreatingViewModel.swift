@@ -31,8 +31,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         case loadingStartMeeting
         case loadingEndMeeting
         case localVideoFrame(width: Int, height: Int, buffer: Data!)
-        case enabledLoudSpeaker(enabled: Bool)
-        case updatedAudioPortSelection(audioPort: AudioPort,bluetoothAudioRouteAvailable: Bool)
+        case updatedAudioPortSelection(audioPort: AudioPort, bluetoothAudioRouteAvailable: Bool)
     }
     
     // MARK: - Private properties

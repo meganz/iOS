@@ -11,6 +11,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         return chatRoomEntity
     }
     
+    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity? {
+        return chatRoomEntity
+    }
+    
     func createChatRoom(forUserHandle userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, Error>) -> Void) {
         if let completionBlock = createChatRoomCompletion {
             completion(completionBlock)
