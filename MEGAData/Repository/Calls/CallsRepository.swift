@@ -199,6 +199,9 @@ extension CallsRepository: MEGAChatCallDelegate {
             }
             
             if call.hasChanged(for: .callComposition) {
+                if call.peeridCallCompositionChange == chatSdk.myUserHandle {
+                    return
+                }
                 switch call.callCompositionChange {
                 case .peerAdded:
                     callbacksDelegate?.participantAdded(with: call.peeridCallCompositionChange)
