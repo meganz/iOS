@@ -5,12 +5,12 @@ final class MeetingCreateViewModelTests: XCTestCase {
     func testAction_onViewReady_createMeeting() {
         let router = MockMeetingCreateRouter()
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
-
+        let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(router: router,
                                                  type: .start,
                                                  meetingUseCase: MockMeetingCreatingUseCase(),
-                                                 audioSessionUseCase: MockAudioSessionUseCase(),
+                                                 audioSessionUseCase: audioSession,
                                                  callsUseCase: MockCallsUseCase(),
                                                  localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -23,6 +23,7 @@ final class MeetingCreateViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
+                .updatedAudioPortSelection(audioPort: audioSession.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSession.isBluetoothAudioRouteAvailable),
                 .configView(title: "test name Meeting", subtitle: "", type: .start, isMicrophoneEnabled: false),
                 .updateMicrophoneButton(enabled: false)
              ])
@@ -31,16 +32,16 @@ final class MeetingCreateViewModelTests: XCTestCase {
     func testAction_onViewReady_joinMeeting() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, isMeeting: true)
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
 
         useCase.chatCallCompletion = .success(chatRoom)
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
-
+        let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(router: router,
                                                  type: .join,
                                                  meetingUseCase: useCase,
-                                                 audioSessionUseCase: MockAudioSessionUseCase(),
+                                                 audioSessionUseCase: audioSession,
                                                  callsUseCase: MockCallsUseCase(),
                                                  localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -54,10 +55,10 @@ final class MeetingCreateViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
+                .updatedAudioPortSelection(audioPort: audioSession.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSession.isBluetoothAudioRouteAvailable),
                 .loadingStartMeeting,
                 .loadingEndMeeting,
-                .configView(title: "test name Meeting", subtitle: "", type: .join, isMicrophoneEnabled: false),
-                .updateMicrophoneButton(enabled: false)
+                .configView(title: "test name Meeting", subtitle: "", type: .join, isMicrophoneEnabled: false)
              ])
     }
     
@@ -65,12 +66,12 @@ final class MeetingCreateViewModelTests: XCTestCase {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
-
+        let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(router: router,
                                                  type: .join,
                                                  meetingUseCase: useCase,
-                                                 audioSessionUseCase: MockAudioSessionUseCase(),
+                                                 audioSessionUseCase: audioSession,
                                                  callsUseCase: MockCallsUseCase(),
                                                  localVideoUseCase: MockCallsLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -83,7 +84,7 @@ final class MeetingCreateViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .didTapSpeakerButton,
              expectedCommands: [
-                .updateSpeakerButton(enabled: true)
+                .updatedAudioPortSelection(audioPort: audioSession.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSession.isBluetoothAudioRouteAvailable)
              ])
     }
     
@@ -114,7 +115,7 @@ final class MeetingCreateViewModelTests: XCTestCase {
     func testAction_joinChatCall() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, isGroup: false, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, isMeeting: true)
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
 
         useCase.chatCallCompletion = .success(chatRoom)
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
@@ -153,7 +154,7 @@ final class MockMeetingCreateRouter: MeetingCreatingViewRouting {
         dismiss_calledTimes += 1
     }
     
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool) {
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
         goToMeetingRoom_calledTimes += 1
     }
     

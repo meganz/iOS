@@ -254,11 +254,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     func dispatch(_ action: CallViewAction) {
         switch action {
         case .onViewLoaded:
-            guard let updatedCall = callsUseCase.call(for: chatRoom.chatId) else {
-                MEGALogError("No call found for chatId: \(chatRoom.chatId)")
-                return
+            if let updatedCall = callsUseCase.call(for: chatRoom.chatId) {
+                call = updatedCall
             }
-            call = updatedCall
             if chatRoom.chatType == .meeting {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",

@@ -7,6 +7,7 @@ final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     var audioPortOutput: AudioPort = .builtInReceiver
     var enableLoudSpeaker_calledTimes = 0
     var disableLoudSpeaker_calledTimes = 0
+    var configureAudioSession_calledTimes = 0
 
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
         enableLoudSpeaker_calledTimes += 1
@@ -21,4 +22,8 @@ final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     }
     
     func routeChanged(handler: ((AudioSessionRouteChangedReason) -> Void)?) { }
+    
+    func configureAudioSession() {
+        configureAudioSession_calledTimes += 1
+    }
 }

@@ -9,7 +9,8 @@ final class MockCallsUseCase: CallsUseCaseProtocol {
     var endCall_CalledTimes = 0
     var addPeer_CalledTimes = 0
     var removePeer_CalledTimes = 0
-    var makePeer_CalledTimes = 0
+    var makePeerAsModerator_CalledTimes = 0
+    var removePeerAsModerator_CalledTimes = 0
     var callEntity: CallEntity?
 
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol) {
@@ -57,6 +58,10 @@ final class MockCallsUseCase: CallsUseCaseProtocol {
     }
     
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
-        makePeer_CalledTimes += 1
+        makePeerAsModerator_CalledTimes += 1
+    }
+    
+    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
+        removePeerAsModerator_CalledTimes += 1
     }
 }
