@@ -10,7 +10,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let viewModel = MeetingParticipantViewModel(attendee: particpant, userImageUseCase: userImageUseCase, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase) { _,_ in }
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero) ,
+             action: .onViewReady,
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
                 .updateName(name: "Test", isMe: true),
@@ -25,7 +25,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let viewModel = MeetingParticipantViewModel(attendee: particpant, userImageUseCase: userImageUseCase, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase) { _,_ in }
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero) ,
+             action: .onViewReady,
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
                 .updateName(name: "Test", isMe: false),
@@ -40,7 +40,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let viewModel = MeetingParticipantViewModel(attendee: particpant, userImageUseCase: userImageUseCase, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase) { _,_ in }
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero) ,
+             action: .onViewReady,
              expectedCommands: [
                 .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
                 .updateName(name: "Test", isMe: false),
@@ -55,7 +55,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let viewModel = MeetingParticipantViewModel(attendee: particpant, userImageUseCase: userImageUseCase, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase) { _,_ in }
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero) ,
+             action: .onViewReady,
              expectedCommands: [
                 .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
                 .updateName(name: "Test", isMe: false),
@@ -70,7 +70,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let viewModel = MeetingParticipantViewModel(attendee: particpant, userImageUseCase: userImageUseCase, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase) { _,_ in }
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero) ,
+             action: .onViewReady,
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: true, isVideoOn: false, shouldHideContextMenu: true),
                 .updateName(name: "Test", isMe: false),
@@ -85,7 +85,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let viewModel = MeetingParticipantViewModel(attendee: particpant, userImageUseCase: userImageUseCase, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase) { _,_ in }
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero) ,
+             action: .onViewReady,
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: true, shouldHideContextMenu: true),
                 .updateName(name: "Test", isMe: false),

@@ -234,7 +234,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             case .success(let image):
                 completion(image)
             case .failure(_):
-                MEGALogDebug("Fetch Avatar for participant \(participant.participantId) and name \(participant.name ?? "No name")")
+                MEGALogError("Error fetching avatar for participant \(participant.participantId)")
             }
         }
     }
