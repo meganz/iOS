@@ -2,7 +2,7 @@
 final class BannerContainerViewController: UIViewController {
     @IBOutlet weak var bannerContainerView: UIView!
     @IBOutlet weak var contentContainerView: UIView!
-    @IBOutlet weak var bannerMessageLabel: UILabel!
+    @IBOutlet weak var bannerMessageLabel: MEGALabel!
     @IBOutlet weak var bannerActionButton: UIButton!
     
     var viewModel: BannerContainerViewModel!
@@ -34,6 +34,10 @@ final class BannerContainerViewController: UIViewController {
                 viewModel.dispatch(.onTraitCollectionDidChange(traitCollection))
             }
         }
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            updateLabelsFontSizes()
+        }
     }
     
     private func configureBannerView(message: String, backgroundColor: UIColor, textColor: UIColor, actionIcon: UIImage?) {
@@ -43,6 +47,10 @@ final class BannerContainerViewController: UIViewController {
         if let actionIcon = actionIcon {
             bannerActionButton.setImage(actionIcon, for: .normal)
         }
+    }
+    
+    private func updateLabelsFontSizes() {
+        bannerMessageLabel.font = UIFont.preferredFont(style: .caption2, weight: .semibold)
     }
     
     private func isBanner(enabled: Bool, animated: Bool) {

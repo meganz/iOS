@@ -16,12 +16,21 @@
 
 #import "NSObject+Debounce.h"
 
+static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLocationLeft";
+
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
 
 @property (nonatomic, strong) PSAViewModel *psaViewModel;
+
+
+@property (nonatomic) NSLayoutConstraint *progressViewWidthConstraint;
+@property (nonatomic) NSLayoutConstraint *progressViewHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *progressViewBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *progressViewLeadingConstraint;
+@property (nonatomic) NSLayoutConstraint *progressViewTraillingConstraint;
 
 @end
 
@@ -58,6 +67,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
 
     [self defineProgressView];
+    [self.progressView addGestureRecognizer:[UIPanGestureRecognizer.alloc initWithTarget:self action:@selector(dragTransferWidget:)]];
     
     [self setBadgeValueForChats];
     [self configurePhoneImageBadge];
@@ -232,17 +242,24 @@
         
         [self.view addSubview:view];
     
+        self.progressViewWidthConstraint = [view.widthAnchor constraintEqualToConstant:70.0];
+        self.progressViewHeightConstraint = [view.heightAnchor constraintEqualToConstant:70.0];
+        self.progressViewBottomConstraint = [view.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-60.0];
+        self.progressViewLeadingConstraint = [view.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:4.0];
+        self.progressViewTraillingConstraint = [view.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-4.0];
+        
+        BOOL transferWidgetLeft = [NSUserDefaults.standardUserDefaults boolForKey:TrasnferWidgetViewLocationLeft];
+        
+        [NSLayoutConstraint activateConstraints:@[
+            self.progressViewWidthConstraint,
+            self.progressViewHeightConstraint,
+            self.progressViewBottomConstraint,
+            transferWidgetLeft ? self.progressViewLeadingConstraint : self.progressViewTraillingConstraint,
+        ]];
+        
         [view addGestureRecognizer:({
             [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapProgressView)];
         })];
-        [view autoSetDimensionsToSize:CGSizeMake(70, 70)];
-        [view autoPinEdgeToSuperviewSafeArea:ALEdgeRight withInset:8];
-        
-        if ([AudioPlayerManager.shared isPlayerAlive]) {
-            [view autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:120];
-        } else {
-            [view autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:60];
-        }
         
         [TransfersWidgetViewController sharedTransferViewController].progressView = view;
         view.hidden = YES;
@@ -254,11 +271,13 @@
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[ProgressIndicatorView class]]) {
             if ([AudioPlayerManager.shared isPlayerAlive]) {
-                [subview autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:120];
+                self.progressViewBottomConstraint.constant = -120.0;
             } else {
-                [subview autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:60];
+                self.progressViewBottomConstraint.constant = -60.0;
             }
-            [subview layoutIfNeeded];
+            [UIView animateWithDuration:0.3 animations:^{
+                [self.view layoutIfNeeded];
+            }];
         }
     }
 }
@@ -350,6 +369,42 @@
     }
     
     [self showPSAViewIfNeeded:self.psaViewModel];
+}
+
+- (void)dragTransferWidget:(UIPanGestureRecognizer *)panGestureRecognizer {
+    UIView *panView = panGestureRecognizer.view;
+    switch (panGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:
+        case UIGestureRecognizerStateChanged: {
+            CGPoint translation = [panGestureRecognizer translationInView:panView];
+            [panGestureRecognizer setTranslation:CGPointZero inView:panView];
+            panView.center = CGPointMake(panView.center.x + translation.x, panView.center.y + translation.y);
+        }
+            break;
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled:
+        {
+            CGPoint location = panView.center;
+            if (location.x > CGRectGetWidth(UIScreen.mainScreen.bounds)/2.f) {
+                self.progressViewLeadingConstraint.active = NO;
+                self.progressViewTraillingConstraint.active = YES;
+                [NSUserDefaults.standardUserDefaults setBool:NO forKey:TrasnferWidgetViewLocationLeft];
+            }
+            else {
+                self.progressViewTraillingConstraint.active = NO;
+                self.progressViewLeadingConstraint.active = YES;
+                [NSUserDefaults.standardUserDefaults setBool:YES forKey:TrasnferWidgetViewLocationLeft];
+            }
+            
+            [self.view setNeedsLayout];
+            [UIView animateWithDuration:0.3 animations:^{
+                [self.view layoutIfNeeded];
+            }];
+        }
+
+        default:
+            break;
+    }
 }
 
 #pragma mark - MEGAChatDelegate

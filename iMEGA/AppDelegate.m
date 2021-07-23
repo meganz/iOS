@@ -1093,7 +1093,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
             NSString *detail = NSLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
             UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
             NSString *base64handle = [MEGASdk base64HandleForUserHandle:sdk.myUser.handle];
-            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:base64handle image:image];
+            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:base64handle image:image hasBonusButton:NO];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
         }
     }
@@ -1113,6 +1113,10 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 }
 
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail monospaceDetail:(NSString *)monospaceDetail image:(UIImage *)image {
+    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:monospaceDetail image:image hasBonusButton:YES];
+}
+
+- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail monospaceDetail:(NSString *)monospaceDetail image:(UIImage *)image hasBonusButton:(BOOL) hasBonusButton {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.image = image;
@@ -1123,9 +1127,9 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
         } else {
             customModalAlertVC.detail = detail;
         }
-        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
-        customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+        
+        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"upgrade", @"");
         customModalAlertVC.firstCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
@@ -1138,6 +1142,20 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
             }];
         };
         
+        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled] && hasBonusButton) {
+            customModalAlertVC.secondButtonTitle = NSLocalizedString(@"getBonus", @"Button title to see the available bonus");
+            customModalAlertVC.secondCompletion = ^{
+                [weakCustom dismissViewControllerAnimated:YES completion:^{
+                    self.upgradeVCPresented = NO;
+                    AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+                    achievementsVC.enableCloseBarButton = YES;
+                    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
+                    [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
+                }];
+            };
+        }
+        
+        customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         customModalAlertVC.dismissCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
@@ -1480,14 +1498,23 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
             } else {
                 static BOOL alreadyPresented = NO;
                 if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
-                    NSString *detail = event.number == StorageStateOrange ? NSLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : NSLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
-                    detail = [detail mnz_removeWebclientFormatters];
-                    NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
-                    NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
-                    detail = [NSString stringWithFormat:detail, maxStorageTB, maxStorage];
+                    NSString *detail;
+                    NSString *title;
+                    UIImage *image;
+                    
+                    if (event.number == StorageStateOrange) {
+                        NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
+                        NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
+                        detail = [NSString stringWithFormat:NSLocalizedString(@"dialog.storage.almostFull.detail", @""), maxStorageTB, maxStorage];
+                        title = NSLocalizedString(@"upgradeAccount", @"");
+                        image = [UIImage imageNamed:@"storage_almost_full"];
+                    } else {
+                        detail = NSLocalizedString(@"dialog.storage.odq.detail", @"");
+                        title = NSLocalizedString(@"dialog.storage.odq.title", @"");
+                        image = [UIImage imageNamed:@"storage_full"];
+                    }
+                    
                     alreadyPresented = YES;
-                    NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                    UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                     [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
                 }
             }
@@ -1668,6 +1695,8 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
             if (@available(iOS 14.0, *)) {
                 [QuickAccessWidgetManager reloadAllWidgetsContent];
             }
+            
+            [api setAccountAuth:api.accountAuth];
             break;
         }
             
@@ -1741,6 +1770,8 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
                 if (sessionInvalidateInOtherClient) {
                     [self presentLogoutFromOtherClientAlert];
                 }
+                
+                [api setAccountAuth:nil];
             }
             break;
         }

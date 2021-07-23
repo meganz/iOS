@@ -1,10 +1,8 @@
 import UIKit
 
-final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
+final class OverDiskQuotaWarningView: UIView, NibOwnerLoadable {
 
     @IBOutlet private var titleLabel: UILabel!
-    
-    @IBOutlet private var detailLabel: UILabel!
     
     @IBOutlet private var containerView: UIView!
 
@@ -46,20 +44,12 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     private func setupTraitCollectionAwareView(with trait: UITraitCollection) {
         trait.backgroundStyler(of: .primary)(self)
         setupContainerView(containerView, with: traitCollection)
-        setupDetailLabel(detailLabel, with: traitCollection)
         setupTitleLabel(titleLabel, with: traitCollection)
     }
 
     private func setupContainerView(_ containerView: UIView, with trait: UITraitCollection) {
         let customeViewStyle = trait.styler(of: MEGACustomViewStyle.warning)
         customeViewStyle(containerView)
-    }
-
-    private func setupDetailLabel(_ detailLabel: UILabel, with trait: UITraitCollection) {
-        let style = trait.styler(of: .note2)
-        style(detailLabel)
-        detailLabel.text = NSLocalizedString("After that, your data is subject to deletion.",
-                                             comment: "Warning message to tell user your data is about to be deleted.")
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {

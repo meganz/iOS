@@ -348,7 +348,7 @@ extension ChatViewController {
             }
             
             self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: "")
-        }, node: nil) { [weak self] error in
+        }) { [weak self] error in
             guard let `self` = self else {
                 return
             }
@@ -385,7 +385,7 @@ extension ChatViewController {
                     self.uploadAsset(withFilePath: filePath, parentNode: resultNode, localIdentifier: assets[index].localIdentifier)
                 }
                 
-            }, nodes:nil) { errors in
+            }) { errors in
                 guard let errors = errors else {
                     return
                 }

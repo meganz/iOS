@@ -353,7 +353,7 @@ function pollCurlRequest($method, $urls, $headers): array
                     "resource" => $urls[$k]['resource'],
                     "language" => $urls[$k]['language']
                 ];
-                echo "Gather data for Resource: {$urls[$k]['resource']} for Language: {$urls[$k]['language']}\n";
+                echo "Gather data for Resource: {$urls[$k]['resource']} for Language: {$urls[$k]['language']}.\n";
                 continue;
             }
             if (isset($responseJson['errors'])) {
@@ -496,7 +496,7 @@ function sourceLanguageHelper($resource): array
             "language" => "Base"
         ];
     }
-    echo "Obtained Links For Source Files\n";
+    echo "Obtained Links For Source Files.\n";
 
     $sourceLanguages =  pollCurlRequest("GET", $links, APPLICATION_JSON_HEADER);
     $pluralSourceLanguages =  pollCurlRequest("GET", $pluralLinks, APPLICATION_JSON_HEADER);
@@ -690,7 +690,7 @@ function getTranslations($resources, $languages)
 
     // Get translations for branched resources
     $translations = translationsHelper($requestParams);
-    echo "Obtained Translations For Branch Resources..\n";
+    echo "Obtained Translations For Branch Resources.\n";
     $origRequestParams = [];
     $originalTranslations = [];
     $originalPluralRequestParams = [];
@@ -904,45 +904,30 @@ foreach($resourceMapping['source'] as $resource){
     $sourceFolderNames[] = [ $resourceName => __DIR__ . "/" . $resourceName];
 }
 
-echo "\nWelcome to iOS Transifex Export \n";
-
-if($trimmedBranchName !== ""){
-    echo "Note: You are currently on branch {$branchName}.\n";
-    do {
-        echo "Would you like to pull (b)ranch or (o)riginal transifex resource files? \n";
-        $cmd = trim(strtolower(readline("\n \n> Command(b/o) or (q) to quit: \n")));
+function resourceChooser($resourceMapping){
+    do{
+        echo "\n1. Changelogs \n2. Localizable \n3. InfoPlist \n4. LTHPasscodeViewController \n5. All \n6. (q) to quit \n";
+        $cmd = trim(strtolower(readline("\n > Which resource would you want to export (Enter the digit):\n")));
         readline_add_history($cmd);
-        if ($cmd == 'q' || $cmd == 'n') {
-            break;
+        if ($cmd == 'q' || $cmd == '6') {
+            exit;
         }
-        if($cmd == 'o') {
-            echo "Exporting Resource Files For Main Resources as Branch Name is Not Valid/Not Existing on Transifex\n";
-            getTranslations($resourceMapping['source'], $languageMapping);
-            getSourceLanguageFile($resourceMapping['source']);
-            break;
-        }
-        if($cmd = 'b'){
-            echo "Exporting Resource Files For Branch {$branchName}\n";
-            getTranslations($resourceMapping[$trimmedBranchName], $languageMapping);
-            getSourceLanguageFile($resourceMapping[$trimmedBranchName]);
-            break;
+        switch(strtolower($cmd)){
+            case '1' :
+                return array($resourceMapping['Changelogs']);
+            case '2':
+                return array($resourceMapping['Localizable']);
+            case '3':
+                return array($resourceMapping['InfoPlist']);
+            case '4':
+                return array($resourceMapping['LTHPasscodeViewController']);
+            case '5':
+                return $resourceMapping;
         }
     }while ($cmd != 'q');
-}else{
-    echo "Note: You are currently not on a branch.\n";
-    echo "Would you like to pull the original resource files from Transifex?\n";
-    do {
-        $cmd = trim(strtolower(readline("\n \n> Command(y/n) or (q) to quit: \n")));
-        readline_add_history($cmd);
-        if ($cmd == 'q' || $cmd == 'n') {
-            break;
-        }
-        if($cmd == 'y') {
-            echo "Exporting Resource Files For Main Resources as Branch Name is Not Valid/Not Existing on Transifex\n";
-            getTranslations($resourceMapping['source'], $languageMapping);
-            getSourceLanguageFile($resourceMapping['source']);
-            break;
-        }
-    }while ($cmd != 'q');
-
 }
+
+echo "\nWelcome to iOS Transifex Export \n";
+$res = resourceChooser($resourceMapping['source']);
+getTranslations($res, $languageMapping);
+getSourceLanguageFile($res);

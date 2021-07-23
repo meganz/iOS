@@ -125,11 +125,7 @@ final class MiniPlayerViewController: UIViewController {
     
     private func refreshStateOfLoadingView(_ enable: Bool) {
         activityIndicatorView.isHidden = !enable
-        if enable {
-            activityIndicatorView.startAnimating()
-        } else {
-            activityIndicatorView.stopAnimating()
-        }
+        enable ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
         playPauseButtonImageView.isHidden = enable
         collectionView.isUserInteractionEnabled = !enable
     }
@@ -163,7 +159,6 @@ final class MiniPlayerViewController: UIViewController {
     func executeCommand(_ command: MiniPlayerViewModel.Command) {
         switch command {
         case .reloadPlayerStatus(let percentage, let isPlaying):
-            if !activityIndicatorView.isHidden && percentage > 0 { refreshStateOfLoadingView(false) }
             updatePlayback(percentage, isPlaying)
         case .reloadNodeInfo(let thumbnail):
             updateCurrent(thumbnail: thumbnail)
