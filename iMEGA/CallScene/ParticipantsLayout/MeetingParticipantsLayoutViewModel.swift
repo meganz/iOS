@@ -7,7 +7,7 @@ protocol MeetingParticipantsLayoutRouting: Routing {
 
 enum CallViewAction: ActionType {
     case onViewLoaded
-    case onViewReady(avatarSize: CGSize)
+    case onViewReady
     case tapOnView(onParticipantsView: Bool)
     case tapOnLayoutModeButton
     case tapOnOptionsMenuButton(presenter: UIViewController, sender: UIBarButtonItem)
@@ -19,8 +19,8 @@ enum CallViewAction: ActionType {
     case discardChangeTitle
     case renameTitleDidChange(String)
     case tapParticipantToPinAsSpeaker(CallParticipantEntity, IndexPath)
-    case fetchAvatar(participant: CallParticipantEntity, size: CGSize)
-    case fetchSpeakerAvatar(size: CGSize)
+    case fetchAvatar(participant: CallParticipantEntity)
+    case fetchSpeakerAvatar
 }
 
 enum CallLayoutMode {
@@ -227,7 +227,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         remoteVideoUseCase.disableRemoteVideo(for: participant)
     }
     
-    private func fetchAvatar(for participant: CallParticipantEntity, size: CGSize, completion: @escaping ((UIImage) -> Void)) {
+    private func fetchAvatar(for participant: CallParticipantEntity, completion: @escaping ((UIImage) -> Void)) {
         userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
                                          name: participant.name ?? "Unknown") { result in
             switch result {
@@ -318,9 +318,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
-        case .onViewReady(let avatarSize):
+        case .onViewReady:
             if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
-                fetchAvatar(for: myself, size: avatarSize) { [weak self] image in
+                fetchAvatar(for: myself) { [weak self] image in
                     self?.invokeCommand?(.updateMyAvatar(image))
                 }
             }
@@ -368,13 +368,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             tappedParticipant(participant, at: indexPath)
         case .didAddFirstParticipant:
             invokeCommand?(.startCompatibilityWarningViewTimer)
-        case .fetchAvatar(let participant, let size):
-            fetchAvatar(for: participant, size: size) { [weak self] image in
+        case .fetchAvatar(let participant):
+            fetchAvatar(for: participant) { [weak self] image in
                 self?.invokeCommand?(.updateAvatar(image, participant))
             }
-        case .fetchSpeakerAvatar(let size):
+        case .fetchSpeakerAvatar:
             guard let speakerParticipant = speakerParticipant else { return }
-            fetchAvatar(for: speakerParticipant, size: size) { [weak self] image in
+            fetchAvatar(for: speakerParticipant) { [weak self] image in
                 self?.invokeCommand?(.updateSpeakerAvatar(image))
             }
         }
