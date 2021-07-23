@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非活跃聊天";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="设置昵称";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="编辑昵称";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="删除昵称";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="别名或昵称";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="逾期支付";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="包含位置标签";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="开启后，您的位置信息将包含在您的图片中。请谨慎选择。";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="发送(%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2630,3 +2630,5 @@
 "cloudDrive.nodeInfo.owner"="%@（创建者）";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-恢复密钥";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="我们正在升级MEGAchat。您的通话可能由于版本不兼容问题导致无法连接。";

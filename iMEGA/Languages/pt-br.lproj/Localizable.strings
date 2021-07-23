@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inativo";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="Definir apelido";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="Editar apelido";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Deletar apelido";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="Alias or Nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pagamento atrasado";
 /* Business account status */
@@ -2603,11 +2603,11 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Dessa forma, você verá imediatamente as novas mensagens no seu dispositivo.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Abrir as <b>Configurações</b>";
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Acesse as <b>Configurações</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tocar em <b>Notificações</b>";
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Toque em <b>Notificações</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Ativar a opção <b>Permitir notificações</b>";
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Ative a opção <b>Permitir notificações</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Acessar as configurações";
 /* Dialog title for the change launch tab screen */
@@ -2630,3 +2630,5 @@
 "cloudDrive.nodeInfo.owner"="%@ (Proprietário)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-CHAVEDERECUPERACAO";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your call might not be connected due to version incompatibility issues.";
