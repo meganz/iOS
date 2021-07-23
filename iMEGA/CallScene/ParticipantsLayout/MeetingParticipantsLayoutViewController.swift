@@ -53,7 +53,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         ) { [weak self] _ in
             guard let self = self else { return }
             self.callsCollectionView.layoutIfNeeded()
-            self.viewModel.dispatch(.onViewReady(avatarSize: self.localUserView.avatarSize))
+            self.viewModel.dispatch(.onViewReady)
         }
     }
     
@@ -89,7 +89,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.dispatch(.onViewReady(avatarSize: localUserView.avatarSize))
+        viewModel.dispatch(.onViewReady)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -252,7 +252,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             return
         }
         speaker.speakerVideoDataDelegate = self
-        viewModel.dispatch(.fetchSpeakerAvatar(size: speakerAvatarImageView.bounds.size))
+        viewModel.dispatch(.fetchSpeakerAvatar)
         speakerRemoteVideoImageView.isHidden = speaker.video != .on
         speakerMutedImageView.isHidden = speaker.audio == .on
         speakerNameLabel.text = speaker.name
@@ -375,8 +375,8 @@ extension MeetingParticipantsLayoutViewController: CallsCollectionViewDelegate {
         viewModel.dispatch(.tapParticipantToPinAsSpeaker(participant, indexPath))
     }
     
-    func fetchAvatar(for participant: CallParticipantEntity, size: CGSize) {
-        viewModel.dispatch(.fetchAvatar(participant: participant, size: size))
+    func fetchAvatar(for participant: CallParticipantEntity) {
+        viewModel.dispatch(.fetchAvatar(participant: participant))
     }
 }
 

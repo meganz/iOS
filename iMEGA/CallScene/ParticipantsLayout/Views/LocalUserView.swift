@@ -28,10 +28,6 @@ class LocalUserView: UIView {
     private var corner: Corner = .topRight
     private var navigationHidden: Bool = false
     
-    var avatarSize: CGSize {
-        return avatarImageView?.bounds.size ?? .zero
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return

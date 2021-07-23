@@ -7,10 +7,6 @@ class CallParticipantCell: UICollectionViewCell {
     
     private(set) var participant: CallParticipantEntity?
     
-    var avatarSize: CGSize {
-        return avatarImageView?.bounds.size ?? .zero
-    }
-    
     func configure(for participant: CallParticipantEntity, in layoutMode: CallLayoutMode) {
         self.participant = participant
         nameLabel.text = participant.name

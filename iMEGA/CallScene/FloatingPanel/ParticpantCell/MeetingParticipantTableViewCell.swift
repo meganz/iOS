@@ -21,7 +21,7 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
             viewModel?.invokeCommand = { [weak self]  in
                 self?.executeCommand($0)
             }
-            viewModel?.dispatch(.onViewReady(imageSize: avatarImageView.bounds.size))
+            viewModel?.dispatch(.onViewReady)
         }
     }
     

@@ -1,6 +1,6 @@
 
 enum MeetingParticipantViewAction: ActionType {
-    case onViewReady(imageSize: CGSize)
+    case onViewReady
     case contextMenuTapped(button: UIButton)
 }
 

@@ -2,7 +2,7 @@
 protocol CallsCollectionViewDelegate: AnyObject {
     func collectionViewDidChangeOffset(to page: Int)
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath)
-    func fetchAvatar(for participant: CallParticipantEntity, size: CGSize)
+    func fetchAvatar(for participant: CallParticipantEntity)
 }
 
 class CallsCollectionView: UICollectionView {
@@ -89,7 +89,7 @@ extension CallsCollectionView: UICollectionViewDataSource {
         }
         
         let participant = callParticipants[indexPath.item]
-        callsCollectionViewDelegate?.fetchAvatar(for: participant, size: cell.avatarSize)
+        callsCollectionViewDelegate?.fetchAvatar(for: participant)
         cell.configure(for: participant, in: layoutMode)
         
         return cell
