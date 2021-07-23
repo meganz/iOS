@@ -1,7 +1,7 @@
 import XCTest
 @testable import MEGA
 
-final class MeetingCreateViewModelTests: XCTestCase {
+final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_onViewReady_createMeeting() {
         let router = MockMeetingCreateRouter()
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)

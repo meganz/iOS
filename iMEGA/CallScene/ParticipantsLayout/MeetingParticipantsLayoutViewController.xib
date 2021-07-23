@@ -46,6 +46,11 @@
                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="DZn-dd-mHW"/>
                                         <constraint firstAttribute="width" constant="80" id="Y2b-m9-jyi"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="40"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fDl-Bh-v8H">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="358"/>

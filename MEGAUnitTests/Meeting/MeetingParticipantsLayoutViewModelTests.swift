@@ -1,7 +1,7 @@
 import XCTest
 @testable import MEGA
 
-class MeetingParticipantsViewModelTests: XCTestCase {
+class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testAction_onViewLoaded() {
         let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
@@ -18,6 +18,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         
@@ -48,6 +49,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         
@@ -77,6 +79,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         
@@ -102,6 +105,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         
@@ -122,6 +126,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         viewModel.layoutMode = .grid
@@ -146,6 +151,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         viewModel.layoutMode = .grid
@@ -170,6 +176,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         test(viewModel: viewModel,
@@ -192,6 +199,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         test(viewModel: viewModel,
@@ -214,6 +222,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         viewModel.layoutMode = .speaker
@@ -238,6 +247,7 @@ class MeetingParticipantsViewModelTests: XCTestCase {
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
                                       userUseCase: MockUserUseCase(handle: 100),
+                                      userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
         
