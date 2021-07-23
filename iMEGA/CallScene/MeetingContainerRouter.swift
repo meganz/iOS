@@ -108,11 +108,13 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showCallViewRouter(containerViewModel: containerViewModel)
         showFloatingPanel(containerViewModel: containerViewModel)
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     func dismiss(completion: (() -> Void)?) {
         floatingPanelRouter?.dismiss(animated: true)
         baseViewController?.dismiss(animated: true, completion: completion)
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     func showShareMeetingError() {
