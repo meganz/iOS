@@ -41,7 +41,7 @@ static const void *base64HandleKey = &base64HandleKey;
         }
     }];
     
-    // "mnz_imageForUserHandle" saves the image to the disk. In case the image already exsists in the path then returns the image.
+    // "mnz_imageForUserHandle" saves the image to the disk. In case the image already exists in the path then returns the image.
     // The problem with passing the image view size is that if the other imageview is using the same method but larger in size.
     // Then the image may look pixelated in the image view. So it is better to use the largest size possible that is used in the application
     // So I think 100 is the good number.
