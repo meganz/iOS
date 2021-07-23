@@ -7,7 +7,7 @@ protocol MeetingParticipantsLayoutRouting: Routing {
 
 enum CallViewAction: ActionType {
     case onViewLoaded
-    case onViewReady
+    case onViewReady(avatarSize: CGSize)
     case tapOnView(onParticipantsView: Bool)
     case tapOnLayoutModeButton
     case tapOnOptionsMenuButton(presenter: UIViewController, sender: UIBarButtonItem)
@@ -19,6 +19,8 @@ enum CallViewAction: ActionType {
     case discardChangeTitle
     case renameTitleDidChange(String)
     case tapParticipantToPinAsSpeaker(CallParticipantEntity, IndexPath)
+    case fetchAvatar(participant: CallParticipantEntity, size: CGSize)
+    case fetchSpeakerAvatar(size: CGSize)
 }
 
 enum CallLayoutMode {
@@ -69,6 +71,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case shouldHideSpeakerView(Bool)
         case ownPrivilegeChangedToModerator
         case lowNetworkQuality
+        case updateAvatar(UIImage, CallParticipantEntity)
+        case updateSpeakerAvatar(UIImage)
+        case updateMyAvatar(UIImage)
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -96,11 +101,23 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
+    private let userImageUseCase: UserImageUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(router: MeetingParticipantsLayoutRouting, containerViewModel: MeetingContainerViewModel, callsUseCase: CallsUseCaseProtocol, captureDeviceUseCase: CaptureDeviceUseCaseProtocol, localVideoUseCase: CallsLocalVideoUseCaseProtocol, remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol, chatRoomUseCase: ChatRoomUseCaseProtocol, userUseCase: UserUseCaseProtocol, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
+    init(router: MeetingParticipantsLayoutRouting,
+         containerViewModel: MeetingContainerViewModel,
+         callsUseCase: CallsUseCaseProtocol,
+         captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
+         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
+         remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol,
+         chatRoomUseCase: ChatRoomUseCaseProtocol,
+         userUseCase: UserUseCaseProtocol,
+         userImageUseCase: UserImageUseCaseProtocol,
+         chatRoom: ChatRoomEntity,
+         call: CallEntity,
+         initialVideoCall: Bool = false) {
         
         self.router = router
         self.containerViewModel = containerViewModel
@@ -110,6 +127,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.remoteVideoUseCase = remoteVideoUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.userUseCase = userUseCase
+        self.userImageUseCase = userImageUseCase
         self.chatRoom = chatRoom
         self.call = call
         self.initialVideoCall = initialVideoCall
@@ -209,6 +227,18 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         remoteVideoUseCase.disableRemoteVideo(for: participant)
     }
     
+    private func fetchAvatar(for participant: CallParticipantEntity, size: CGSize, completion: @escaping ((UIImage) -> Void)) {
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
+                                         name: participant.name ?? "Unknown") { result in
+            switch result {
+            case .success(let image):
+                completion(image)
+            case .failure(_):
+                MEGALogDebug("Fetch Avatar for participant \(participant.participantId) and name \(participant.name ?? "No name")")
+            }
+        }
+    }
+    
     private func participantName(for userHandle: MEGAHandle, completion: @escaping (String) -> Void) {
         chatRoomUseCase.userDisplayName(forPeerId: userHandle, chatId: chatRoom.chatId) { result in
             switch result {
@@ -288,7 +318,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
-        case .onViewReady:
+        case .onViewReady(let avatarSize):
+            if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
+                fetchAvatar(for: myself, size: avatarSize) { [weak self] image in
+                    self?.invokeCommand?(.updateMyAvatar(image))
+                }
+            }
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
         case .tapOnView(let onParticipantsView):
             if onParticipantsView && layoutMode == .speaker && !callParticipants.isEmpty {
@@ -333,6 +368,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             tappedParticipant(participant, at: indexPath)
         case .didAddFirstParticipant:
             invokeCommand?(.startCompatibilityWarningViewTimer)
+        case .fetchAvatar(let participant, let size):
+            fetchAvatar(for: participant, size: size) { [weak self] image in
+                self?.invokeCommand?(.updateAvatar(image, participant))
+            }
+        case .fetchSpeakerAvatar(let size):
+            guard let speakerParticipant = speakerParticipant else { return }
+            fetchAvatar(for: speakerParticipant, size: size) { [weak self] image in
+                self?.invokeCommand?(.updateSpeakerAvatar(image))
+            }
         }
     }
     

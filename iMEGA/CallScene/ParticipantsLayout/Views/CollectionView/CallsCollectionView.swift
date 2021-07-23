@@ -1,20 +1,21 @@
 
-protocol CallsCollectionViewScrollDelegate: AnyObject {
+protocol CallsCollectionViewDelegate: AnyObject {
     func collectionViewDidChangeOffset(to page: Int)
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath)
+    func fetchAvatar(for participant: CallParticipantEntity, size: CGSize)
 }
 
 class CallsCollectionView: UICollectionView {
     private var callParticipants = [CallParticipantEntity]()
     private var layoutMode: CallLayoutMode = .grid
-    private weak var scrollDelegate: CallsCollectionViewScrollDelegate?
-
+    private weak var callsCollectionViewDelegate: CallsCollectionViewDelegate?
+    private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
 
-    func configure(with scrollDelegate: CallsCollectionViewScrollDelegate) {
+    func configure(with callsCollectionViewDelegate: CallsCollectionViewDelegate) {
         dataSource = self
         delegate = self
-        self.scrollDelegate = scrollDelegate
+        self.callsCollectionViewDelegate = callsCollectionViewDelegate
         register(CallParticipantCell.nib, forCellWithReuseIdentifier: CallParticipantCell.reuseIdentifier)
         backgroundColor = .black
     }
@@ -41,6 +42,18 @@ class CallsCollectionView: UICollectionView {
         reloadItems(at: [IndexPath(item: index, section: 0)])
     }
     
+    func updateAvatar(image: UIImage, for participant: CallParticipantEntity) {
+        avatars[participant.participantId] = image
+        guard let index = callParticipants.firstIndex(where: { $0 == participant }),
+              case let indexPath = IndexPath(item: index, section: 0),
+              let cell = cellForItem(at: indexPath) as? CallParticipantCell,
+              cell.participant == participant else {
+            return
+        }
+        
+        cell.setAvatar(image: image)
+    }
+    
     func changeLayoutMode(_ mode: CallLayoutMode) {
         layoutMode = mode
         reloadData()
@@ -48,7 +61,7 @@ class CallsCollectionView: UICollectionView {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        scrollDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)))
+        callsCollectionViewDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)))
     }
     
     func configurePinnedCell(at indexPath: IndexPath?) {
@@ -74,8 +87,17 @@ extension CallsCollectionView: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CallParticipantCell", for: indexPath) as? CallParticipantCell else {
             fatalError("Error dequeueReusableCell CallParticipantCell")
         }
-        cell.configure(for: callParticipants[indexPath.item], in: layoutMode)
+        
+        let participant = callParticipants[indexPath.item]
+        callsCollectionViewDelegate?.fetchAvatar(for: participant, size: cell.avatarSize)
+        cell.configure(for: participant, in: layoutMode)
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? CallParticipantCell, let participant = cell.participant, let image = avatars[participant.participantId] else { return }
+        cell.setAvatar(image: image)
     }
 }
 
@@ -84,7 +106,7 @@ extension CallsCollectionView: UICollectionViewDelegate {
         guard layoutMode == .speaker, let selectedParticipant = callParticipants[safe: indexPath.item] else {
             return
         }
-        scrollDelegate?.collectionViewDidSelectParticipant(participant:selectedParticipant, at: indexPath)
+        callsCollectionViewDelegate?.collectionViewDidSelectParticipant(participant:selectedParticipant, at: indexPath)
     }
 }
 

@@ -1,7 +1,7 @@
 
 
 enum MeetingParticpiantInfoAction: ActionType {
-    case onViewReady(imageSize: CGSize)
+    case onViewReady
     case showInfo
     case sendMessage
     case addToContact
@@ -41,10 +41,10 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     
     func dispatch(_ action: MeetingParticpiantInfoAction) {
         switch action {
-        case .onViewReady(let imageSize):
+        case .onViewReady:
             invokeCommand?(.configView(email: attendee.email, actions: actions()))
             fetchName(forParticipant: attendee) { name in
-                fetchUserAvatar(forParticipant: attendee, name: name, size: imageSize)
+                fetchUserAvatar(forParticipant: attendee, name: name)
             }
         case .showInfo:
             router.showInfo()
@@ -93,8 +93,8 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         }
     }
 
-    private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String, size: CGSize) {
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name, size: size) { result in
+    private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name) { result in
             switch result {
             case .success(let image):
                 invokeCommand?(.updateAvatarImage(image: image))

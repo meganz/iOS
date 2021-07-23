@@ -51,8 +51,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             object: nil,
             queue: OperationQueue.main
         ) { [weak self] _ in
-            self?.callsCollectionView.layoutIfNeeded()
-            self?.viewModel.dispatch(.onViewReady)
+            guard let self = self else { return }
+            self.callsCollectionView.layoutIfNeeded()
+            self.viewModel.dispatch(.onViewReady(avatarSize: self.localUserView.avatarSize))
         }
     }
     
@@ -88,7 +89,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.dispatch(.onViewReady)
+        viewModel.dispatch(.onViewReady(avatarSize: localUserView.avatarSize))
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -205,6 +206,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showNotification(message: NSLocalizedString("meetings.notifications.moderatorPrivilege", comment: "Message shown when the user privilege is changed to moderator"), color: UIColor.mnz_turquoise(for: traitCollection))
         case .lowNetworkQuality:
             showNotification(message: NSLocalizedString("Poor connection.", comment: "Message to inform the local user is having a bad quality network with someone in the current group call"), color: UIColor.systemOrange)
+        case .updateAvatar(let image, let participant):
+            callsCollectionView.updateAvatar(image: image, for: participant)
+        case .updateSpeakerAvatar(let image):
+            speakerAvatarImageView.image = image
+        case .updateMyAvatar(let image):
+            localUserView.updateAvatar(image: image)
         }
     }
     
@@ -245,7 +252,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             return
         }
         speaker.speakerVideoDataDelegate = self
-        speakerAvatarImageView.mnz_setImage(forUserHandle: speaker.participantId, name: speaker.name)
+        viewModel.dispatch(.fetchSpeakerAvatar(size: speakerAvatarImageView.bounds.size))
         speakerRemoteVideoImageView.isHidden = speaker.video != .on
         speakerMutedImageView.isHidden = speaker.audio == .on
         speakerNameLabel.text = speaker.name
@@ -359,13 +366,17 @@ extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate 
     }
 }
 
-extension MeetingParticipantsLayoutViewController: CallsCollectionViewScrollDelegate {
+extension MeetingParticipantsLayoutViewController: CallsCollectionViewDelegate {
     func collectionViewDidChangeOffset(to page: Int) {
         pageControl.currentPage = page
     }
     
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath) {
         viewModel.dispatch(.tapParticipantToPinAsSpeaker(participant, indexPath))
+    }
+    
+    func fetchAvatar(for participant: CallParticipantEntity, size: CGSize) {
+        viewModel.dispatch(.fetchAvatar(participant: participant, size: size))
     }
 }
 

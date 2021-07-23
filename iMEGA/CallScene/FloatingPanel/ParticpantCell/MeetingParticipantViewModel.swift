@@ -57,9 +57,7 @@ struct MeetingParticipantViewModel: ViewModelType {
     
     func dispatch(_ action: MeetingParticipantViewAction) {
         switch action {
-        case .onViewReady(let imageSize):
-            
-            
+        case .onViewReady:
             invokeCommand?(
                 .configView(isModerator: attendee.isModerator && !isOneToOneChat,
                             isMicMuted: attendee.audio == .off,
@@ -67,7 +65,7 @@ struct MeetingParticipantViewModel: ViewModelType {
                             shouldHideContextMenu: shouldHideContextMenu)
             )
             fetchName(forParticipant: attendee) { name in
-                fetchUserAvatar(forParticipant: attendee, name: name, size: imageSize)
+                fetchUserAvatar(forParticipant: attendee, name: name)
             }
         case .contextMenuTapped(let button):
             contextMenuTappedHandler(attendee, button)
@@ -86,8 +84,8 @@ struct MeetingParticipantViewModel: ViewModelType {
         }
     }
 
-    private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String, size: CGSize) {
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name, size: size) { result in
+    private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name) { result in
             switch result {
             case .success(let image):
                 invokeCommand?(.updateAvatarImage(image: image))

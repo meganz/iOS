@@ -301,13 +301,13 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                 lastNameTextfield.flex.display(.none)
 
                 meetingNameInputTextfield.flex.display(.flex)
-                viewModel.dispatch(.loadAvatarImage(AvatarProperties.size))
+                viewModel.dispatch(.loadAvatarImage)
                 
             case .start:
                 firstNameTextfield.flex.display(.none)
                 lastNameTextfield.flex.display(.none)
                 meetingNameInputTextfield.flex.display(.flex)
-                viewModel.dispatch(.loadAvatarImage(AvatarProperties.size))
+                viewModel.dispatch(.loadAvatarImage)
             }
             
             containerView.flex.layout()

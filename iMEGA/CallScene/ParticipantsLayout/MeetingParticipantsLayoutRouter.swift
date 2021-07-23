@@ -21,6 +21,13 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     
     func build() -> UIViewController {
         guard let containerViewModel = containerViewModel else { return UIViewController() }
+        
+        let userImageUseCase = UserImageUseCase(
+            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
+            appGroupFilePathUseCase: MEGAAppGroupFilePathUseCase(fileManager: FileManager.default)
+        )
+        
         let vm = MeetingParticipantsLayoutViewModel(router: self,
                                containerViewModel: containerViewModel,
                                callsUseCase: CallsUseCase(repository: CallsRepository()),
@@ -31,6 +38,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
                                 chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
                                 userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
                                userUseCase: UserUseCase(repo: .live),
+                               userImageUseCase: userImageUseCase,
                                chatRoom: chatRoom,
                                call: call,
                                initialVideoCall: initialVideoCall)

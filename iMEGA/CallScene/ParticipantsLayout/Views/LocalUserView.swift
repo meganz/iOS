@@ -14,7 +14,7 @@ class LocalUserView: UIView {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var videoImageView: UIImageView!
     @IBOutlet private weak var mutedImageView: UIImageView!
-
+    
     private lazy var blurEffectView : UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurEffectView.frame = bounds
@@ -27,6 +27,10 @@ class LocalUserView: UIView {
     private var offset: CGPoint = .zero
     private var corner: Corner = .topRight
     private var navigationHidden: Bool = false
+    
+    var avatarSize: CGSize {
+        return avatarImageView?.bounds.size ?? .zero
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
@@ -61,10 +65,13 @@ class LocalUserView: UIView {
         
         layoutToOrientation()
         videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
-        avatarImageView.mnz_setImage(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
         
         positionView(by: CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: false)
         isHidden = false
+    }
+    
+    func updateAvatar(image: UIImage) {
+        avatarImageView.image = image
     }
     
     func switchVideo() {
