@@ -10,7 +10,7 @@ enum MeetingCreatingViewAction: ActionType {
     case updateMeetingName(String)
     case updateFirstName(String)
     case updateLastName(String)
-    case loadAvatarImage(CGSize)
+    case loadAvatarImage
 }
 
 @objc
@@ -180,14 +180,13 @@ final class MeetingCreatingViewModel: ViewModelType {
             firstName = name
         case .updateLastName(let name):
             lastName = name
-        case .loadAvatarImage(let size):
+        case .loadAvatarImage:
             guard let myHandle = userUseCase.myHandle else {
                 return
             }
             
             userImageUseCase.fetchUserAvatar(withUserHandle: myHandle,
-                                             name: meetingUseCase.getUsername(),
-                                             size: size) { [weak self] result in
+                                             name: meetingUseCase.getUsername()) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                     case .success(let image):

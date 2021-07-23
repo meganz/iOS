@@ -5,8 +5,14 @@ class CallParticipantCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var mutedImageView: UIImageView!
     
+    private(set) var participant: CallParticipantEntity?
+    
+    var avatarSize: CGSize {
+        return avatarImageView?.bounds.size ?? .zero
+    }
+    
     func configure(for participant: CallParticipantEntity, in layoutMode: CallLayoutMode) {
-        avatarImageView.mnz_setImage(forUserHandle: participant.participantId, name: participant.name)
+        self.participant = participant
         nameLabel.text = participant.name
         mutedImageView.isHidden = participant.audio == .on
         nameLabel.superview?.isHidden = layoutMode == .speaker
@@ -31,6 +37,15 @@ class CallParticipantCell: UICollectionViewCell {
             borderWidth = 0
             borderColor = .clear
         }
+    }
+    
+    func setAvatar(image: UIImage) {
+        avatarImageView.image = image
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        participant = nil
     }
 }
 

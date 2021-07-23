@@ -24,8 +24,7 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
         viewModel?.invokeCommand = { [weak self] in
             self?.executeCommand($0)
         }
-        
-        viewModel?.dispatch(.onViewReady(imageSize: CGSize(width: 40, height: 40)))
+        viewModel?.dispatch(.onViewReady)
     }
     
     func executeCommand(_ command: MeetingParticpiantInfoViewModel.Command) {

@@ -134,6 +134,11 @@
                                 <constraint firstAttribute="height" constant="60" id="b76-zh-7Sy"/>
                                 <constraint firstAttribute="width" constant="60" id="jeu-Wh-3Gi"/>
                             </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="30"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </imageView>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1UJ-un-b31" customClass="MEGALocalImageView">
                             <rect key="frame" x="0.0" y="0.0" width="75" height="134"/>

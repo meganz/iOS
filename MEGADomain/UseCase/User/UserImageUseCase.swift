@@ -2,11 +2,14 @@
 protocol UserImageUseCaseProtocol {
     func fetchUserAvatar(withUserHandle handle: UInt64,
                          name: String,
-                         size: CGSize,
                          completion: @escaping (Result<UIImage, UserImageLoadError>) -> Void)
 }
 
 struct UserImageUseCase: UserImageUseCaseProtocol {
+    private struct Constants {
+        static let avatarDefaultSize = CGSize(width: 100.0, height: 100.0)
+    }
+    
     private let userImageRepo: UserImageRepositoryProtocol
     private let userStoreRepo: UserStoreRepositoryProtocol
     private let appGroupFilePathUseCase: MEGAAppGroupFilePathUseCaseProtocol
@@ -21,7 +24,6 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
     
     func fetchUserAvatar(withUserHandle handle: UInt64,
                          name: String,
-                         size: CGSize,
                          completion: @escaping (Result<UIImage, UserImageLoadError>) -> Void) {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
             completion(.failure(.base64EncodingError))
@@ -32,7 +34,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
         if let image = fetchImage(fromPath: destinationURLPath) {
             completion(.success(image))
         } else {
-            if let image = getAvatarImage(withUserHandle: handle, name: name, size: size) {
+            if let image = getAvatarImage(withUserHandle: handle, name: name) {
                 completion(.success(image))
             }
         }
@@ -42,7 +44,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
                                     completion: completion)
     }
     
-    private func getAvatarImage(withUserHandle handle: UInt64, name: String, size: CGSize) -> UIImage? {
+    private func getAvatarImage(withUserHandle handle: UInt64, name: String) -> UIImage? {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
               let avatarBackgroundColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return nil
@@ -60,13 +62,13 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
             initials = (name as NSString).mnz_initialForAvatar()
         }
         
-        let image =  UIImage(forName: initials,
-                             size: size,
-                             backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundColor),
-                             textColor: .white,
-                             font: UIFont.systemFont(ofSize: size.width/2.0))
+        let image = UIImage(forName: initials,
+                            size: Constants.avatarDefaultSize,
+                            backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundColor),
+                            textColor: .white,
+                            font: UIFont.systemFont(ofSize: Constants.avatarDefaultSize.width/2.0))
         
-        if let imageData = image?.jpegData(compressionQuality: 0.8) {
+        if let imageData = image?.jpegData(compressionQuality: 1.0) {
             try? imageData.write(to: destinationURL, options: .atomic)
         }
 
