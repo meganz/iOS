@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Nieaktywny czat";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="Ustaw pseudonim";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="Edytuj nazwę użytkownika";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Usuń nazwę użytkowniika";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="Alias lub pseudonim";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Opłata zaległa";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Uwzględnij tagi lokalizacji";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jeśli funkcja ta jest włączona, informacje o lokalizacji będą dołączane do zdjęć. Zachowaj ostrożność podczas ich udostępniania.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Wyślij (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2630,3 +2630,5 @@
 "cloudDrive.nodeInfo.owner"=" %@(Właściciel)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="Aktualizujemy MEGAchat. Ze względu na niekompatybilność wersji połączenie może nie zostać nawiązane.";

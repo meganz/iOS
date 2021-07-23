@@ -2145,13 +2145,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Inactive chat";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="Set Nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="Edit Nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="Alias or Nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Payment overdue";
 /* Business account status */
@@ -2682,5 +2682,5 @@
 "meetings.notifications.moderatorPrivilege"="You are the new call moderator";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
-/* This message is shown when calling and the receiver is not picking up the call*/
-"calls.incompatibility.warningMessage"="We are upgrading MEGAChat. Your call might not be connected due to version incompatibility issues";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your call might not be connected due to version incompatibility issues.";

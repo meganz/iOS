@@ -2129,13 +2129,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Неактивный чат";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set nickname";
+"Set Nickname"="Задать псевдоним";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit nickname";
+"Edit Nickname"="Изменить псевдоним";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Удалить псевдоним";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or nickname";
+"Alias/ Nickname"="Псевдоним или никнейм";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Платёж просрочен";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Включить метки местоположения";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Если включено, информация о местоположении будет добавлена к вашим фотографиям. Пожалуйста, будьте осторожны, когда делитесь ими.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Отправить (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2630,3 +2630,5 @@
 "cloudDrive.nodeInfo.owner"="%@ (Владелец)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-КЛЮЧ-ВОССТАНОВЛЕНИЯ";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="Мы обновляем MEGAchat. Ваш звонок может не быть соединён из-за несовместимости версий.";
