@@ -139,7 +139,7 @@
 		2FDC6B9A260A9E00005A22B6 /* EnterMeetingLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC6B99260A9DFF005A22B6 /* EnterMeetingLinkViewModel.swift */; };
 		2FDDC6242630DE100060E02A /* JoinMegaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
-		2FE54377264DECBB00FF4955 /* MeetingCreateViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE54376264DECBB00FF4955 /* MeetingCreateViewModelTests.swift */; };
+		2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */; };
 		2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */; };
 		2FEEE9A225FEDE2E0031AB78 /* MeetingCreatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */; };
 		2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */; };
@@ -2314,7 +2314,7 @@
 		2FDDC6232630DE100060E02A /* JoinMegaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMegaViewModel.swift; sourceTree = "<group>"; };
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
-		2FE54376264DECBB00FF4955 /* MeetingCreateViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreateViewModelTests.swift; sourceTree = "<group>"; };
+		2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModelTests.swift; sourceTree = "<group>"; };
 		2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingCreatingUseCase.swift; sourceTree = "<group>"; };
 		2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingView.swift; sourceTree = "<group>"; };
 		2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepLinkingTests.m; sourceTree = "<group>"; };
@@ -9713,7 +9713,7 @@
 			children = (
 				BF8895AA2630F1AB002A18CA /* Mocks */,
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
-				2FE54376264DECBB00FF4955 /* MeetingCreateViewModelTests.swift */,
+				2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
 				BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */,
 				BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */,
@@ -12573,7 +12573,7 @@
 				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
-				2FE54377264DECBB00FF4955 /* MeetingCreateViewModelTests.swift in Sources */,
+				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
 				0D213EF8263B847200B43723 /* MockNodeActionUseCase.swift in Sources */,
 				5B8863232645A9680066778C /* TermsAndPoliciesViewModelTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,

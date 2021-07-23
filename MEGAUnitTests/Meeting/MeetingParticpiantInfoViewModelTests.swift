@@ -16,7 +16,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         isMyselfModerator: true,
                                                         router: router)
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero),
+             action: .onViewReady,
              expectedCommands: [
                 .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), removeModeratorAction()]),
                 .updateName(name: "Test"),
@@ -38,7 +38,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         isMyselfModerator: true,
                                                         router: router)
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero),
+             action: .onViewReady,
              expectedCommands: [
                 .configView(email: "test@email.com", actions: [removeModeratorAction()]),
                 .updateName(name: "Test"),
@@ -60,7 +60,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         router: router)
         
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero),
+             action: .onViewReady,
              expectedCommands: [
                 .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), makeModeratorAction()]),
                 .updateName(name: "Test"),
@@ -82,7 +82,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         router: router)
         
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero),
+             action: .onViewReady,
              expectedCommands: [
                 .configView(email: "test@email.com", actions: [makeModeratorAction()]),
                 .updateName(name: "Test"),
@@ -104,7 +104,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         router: router)
         
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero),
+             action: .onViewReady,
              expectedCommands: [
                 .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction()]),
                 .updateName(name: "Test"),
@@ -125,7 +125,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         isMyselfModerator: false,
                                                         router: router)
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero),
+             action: .onViewReady,
              expectedCommands: [
                 .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction()]),
                 .updateName(name: "Test"),
@@ -147,7 +147,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         router: router)
         
         test(viewModel: viewModel,
-             action: .onViewReady(imageSize: .zero),
+             action: .onViewReady,
              expectedCommands: [
                 .configView(email: "test@email.com", actions: [makeModeratorAction()]),
                 .updateName(name: "Test"),
