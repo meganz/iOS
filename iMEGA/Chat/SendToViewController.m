@@ -271,7 +271,9 @@
 
 - (void)showSuccessMessage {
     NSString *status;
-    if (self.nodes.count == 1) {
+    if (self.nodes == nil) {
+        status = NSLocalizedString(@"Shared successfully", @"Shared successfully");
+    } else if (self.nodes.count == 1) {
         if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
             status = NSLocalizedString(@"fileSentToChat", @"Toast text upon sending a single file to chat");
         } else {
