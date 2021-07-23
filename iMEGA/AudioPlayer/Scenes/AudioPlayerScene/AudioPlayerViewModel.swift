@@ -144,27 +144,26 @@ final class AudioPlayerViewModel: ViewModelType {
             initialize(with: offlineFilePaths)
         }
         playerHandler.addPlayer(listener: self)
-        playerHandler.refreshCurrentItemState()
     }
     
-    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem, currentItemChanges: Bool) {
-        var mutableTracks = tracks
-        mutableTracks.bringToFront(item: currentTrack)
+    private func configurePlayer() {
+        playerHandler.addPlayer(listener: self)
         
-        if !(playerHandler.isPlayerDefined()) {
-            playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil)
-            playerHandler.addPlayer(tracks: mutableTracks)
-        } else {
-            if currentItemChanges {
-                playerHandler.addPlayer(tracks: mutableTracks)
-                
-                if fileLink != nil && playerHandler.isPlayerPlaying() {
-                    playerHandler.playerPause()
-                }
-            } else {
-                self.reloadNodeInfoWithCurrentItem()
+        guard !playerHandler.isPlayerEmpty(),
+              let tracks = playerHandler.currentPlayer()?.tracks,
+              let currentTrack = playerHandler.playerCurrentItem() else {
+            DispatchQueue.main.async { [weak self] in
+                self?.router.dismiss()
             }
+            return
         }
+        
+        reloadNodeInfoWithCurrentItem()
+        
+        configurePlayerType(tracks: tracks, currentTrack: currentTrack)
+    }
+    
+    private func configurePlayerType(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         
         switch playerType {
         case .default, .folderLink:
@@ -176,6 +175,29 @@ final class AudioPlayerViewModel: ViewModelType {
         case .fileLink:
             invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: NSLocalizedString("fileLink", comment: "")))
         }
+    }
+    
+    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem, currentItemChanges: Bool) {
+        var mutableTracks = tracks
+        mutableTracks.bringToFront(item: currentTrack)
+        
+        if !(playerHandler.isPlayerDefined()) {
+            playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil)
+            playerHandler.addPlayer(tracks: mutableTracks)
+        } else {
+            if currentItemChanges {
+                playerHandler.autoPlay(enable: playerType != .fileLink)
+                playerHandler.addPlayer(tracks: mutableTracks)
+                
+                if fileLink != nil && playerHandler.isPlayerPlaying() {
+                    playerHandler.playerPause()
+                }
+            } else {
+                self.reloadNodeInfoWithCurrentItem()
+            }
+        }
+        
+        configurePlayerType(tracks: tracks, currentTrack: currentTrack)
     }
     
     private func updateTracksActionStatus(enabled: Bool) {
@@ -221,7 +243,8 @@ final class AudioPlayerViewModel: ViewModelType {
     private func initialize(with offlineFilePaths: [String]) {
         guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
               let currentFilePath = selectedFilePath,
-              let currentTrack = files.first(where: { $0.url.path == currentFilePath }) else {
+              let currentTrack = files.first(where: { $0.url.path == currentFilePath ||
+                                                $0.url.absoluteString == currentFilePath }) else {
             invokeCommand?(.configureOfflinePlayer)
             self.reloadNodeInfoWithCurrentItem()
             DispatchQueue.main.async { [weak self] in
@@ -241,6 +264,8 @@ final class AudioPlayerViewModel: ViewModelType {
                                        thumbnail: currentItem.artwork,
                                        size: Helper.memoryStyleString(fromByteCount: node?.size?.int64Value ?? Int64(0))))
         
+        playerHandler.refreshCurrentItemState()
+        
         invokeCommand?(.showLoading(false))
     }
 
@@ -248,9 +273,14 @@ final class AudioPlayerViewModel: ViewModelType {
     func dispatch(_ action: AudioPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            invokeCommand?(.showLoading(true))
-            dispatchQueue.async(qos: .userInteractive) {
-                self.preparePlayer()
+            let shouldInitializePlayer = !(playerHandler.isPlayerDefined() && fileLink == nil)
+            invokeCommand?(.showLoading(shouldInitializePlayer))
+            if shouldInitializePlayer {
+                dispatchQueue.async(qos: .userInteractive) {
+                    self.preparePlayer()
+                }
+            } else {
+                configurePlayer()
             }
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
         case .updateCurrentTime(let percentage):
@@ -341,12 +371,7 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
         if fileLink != nil, !isFolderLink {
             invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: node?.size.int64Value ?? Int64(0))))
         } else {
-            invokeCommand?(.showLoading(true))
-            nodeInfoUseCase?.publicNode(fromFileLink: url, completion: { [weak self] node in
-                guard let `self` = self else { return }
-                self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: node?.size.int64Value ?? Int64(0))))
-                self.invokeCommand?(.showLoading(false))
-            })
+            self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: Int64(0))))
         }
     }
     

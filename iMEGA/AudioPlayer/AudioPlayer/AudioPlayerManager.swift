@@ -53,6 +53,18 @@ import Foundation
     }
     
     func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool) {
+        if self.player != nil {
+            player?.close() { [weak self] in
+                MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
+                self?.player = nil
+                self?.configure(player: player, autoPlayEnabled: autoPlayEnabled)
+            }
+        } else {
+            configure(player: player, autoPlayEnabled: autoPlayEnabled)
+        }
+    }
+    
+    private func configure(player: AudioPlayer?, autoPlayEnabled: Bool) {
         self.player = player
         self.player?.isAutoPlayEnabled = autoPlayEnabled
     }

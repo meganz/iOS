@@ -17,7 +17,7 @@ extension AudioPlayer: AudioPlayerMetadataLoaderProtocol {
         AudioPlayerMetadataOperation(item: item, completion: { result in
             switch result {
             case .failure(let error):
-                MEGALogDebug("[AudioPlayer] Metadata Loader error: \(error.localizedDescription)")
+                MEGALogError("[AudioPlayer] Metadata Loader error: \(error.localizedDescription)")
             case .success:
                 if self.queuePlayer?.currentItem == item { self.notify([self.aboutCurrentItem, self.aboutCurrentThumbnail, self.aboutToReloadCurrentItem]) }
                 self.notifyAboutToReload(item: item)
@@ -48,7 +48,7 @@ final class AudioPlayerMetadataOperation: MEGAOperation {
         if let error = error {
             completion(.failure(error))
         } else {
-            completion(Result.success(()))
+            completion(.success(()))
         }
         finish()
     }

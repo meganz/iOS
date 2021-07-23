@@ -5,12 +5,13 @@ extension AudioPlayer {
         audioQueueObserver = queuePlayer?.observe(\.currentItem, options: [.new, .old], changeHandler: audio(player:didChangeItem:))
         audioQueueStatusObserver = queuePlayer?.currentItem?.observe(\.status, options:  [.new, .old], changeHandler: audio(playerItem:didChangeCurrentItemStatus:))
         audioQueueNewItemObserver = queuePlayer?.observe(\.currentItem, options: .initial, changeHandler: audio(player:didStartPlayingCurrentItem:))
-        audioQueueRateObserver = queuePlayer?.observe(\.rate, options: .initial, changeHandler: audio(player:didChangePlayerRate:))
-        audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: audio(player:didChangeTimeControlStatus:))
+        audioQueueRateObserver = queuePlayer?.observe(\.rate, options: .new, changeHandler: audio(player:didChangePlayerRate:))
+        audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: .new, changeHandler: audio(player:didChangeTimeControlStatus:))
         audioQueueWaitingObserver = queuePlayer?.observe(\.reasonForWaitingToPlay, options: [.new, .old], changeHandler: audio(player:reasonForWaitingToPlay:))
         audioQueueBufferEmptyObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferEmpty, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferEmpty:))
         audioQueueBufferAlmostThereObserver = queuePlayer?.currentItem?.observe(\.isPlaybackLikelyToKeepUp, options: [.new], changeHandler: audio(playerItem:isPlaybackLikelyToKeepUp:))
         audioQueueBufferFullObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferFull:))
+        audioQueueLoadedTimeRangesObserver = queuePlayer?.currentItem?.observe(\.loadedTimeRanges, options: .new, changeHandler: audio(playerItem:didLoadedTimeRanges:))
         metadataQueueFinishAllOperationsObserver = opQueue.observe(\.operationCount, options: [.new], changeHandler: operation(queue:didFinished:))
     }
     
@@ -24,6 +25,7 @@ extension AudioPlayer {
         audioQueueBufferEmptyObserver?.invalidate()
         audioQueueBufferAlmostThereObserver?.invalidate()
         audioQueueBufferFullObserver?.invalidate()
+        audioQueueLoadedTimeRangesObserver?.invalidate()
         metadataQueueFinishAllOperationsObserver?.invalidate()
     }
     
@@ -62,12 +64,12 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         case .paused:
             isPaused = true
             invalidateTimer()
-            notify(aboutCurrentState)
+            notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail])
             
         case .playing:
             isPaused = false
             setTimer()
-            notify([aboutCurrentItem, aboutCurrentThumbnail])
+            notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail])
             
         default:
             break
@@ -77,14 +79,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     // listening for change event when player stops playback
     func audio(player: AVQueuePlayer, reasonForWaitingToPlay value: NSKeyValueObservedChange<AVQueuePlayer.WaitingReason?>) {
         // To know the reason for waiting to play you can see it with: player.reasonForWaitingToPlay?.rawValue
-        guard let reasonForWaitingToPlay = player.reasonForWaitingToPlay else { return }
-    
-        switch reasonForWaitingToPlay {
-        case .evaluatingBufferingRate, .noItemToPlay, .toMinimizeStalls:
-            notify(aboutShowingLoadingView)
-        default:
-            break
-        }
+        refreshNowPlayingInfo()
     }
     
     // Listening for current item status change
@@ -98,6 +93,20 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     
     func audio(player: AVQueuePlayer, didChangePlayerRate value: NSKeyValueObservedChange<Float>) {
         refreshNowPlayingInfo()
+        if value.newValue ?? 0.0 > 0 {
+            notify(aboutHidingLoadingView)
+        }
+    }
+    
+    func audio(playerItem: AVPlayerItem, didLoadedTimeRanges value: NSKeyValueObservedChange<[NSValue]>) {
+        guard let timeRanges = value.newValue as? [CMTimeRange],
+              let duration = timeRanges.first?.duration else { return }
+        
+        let timeLoaded = Int(duration.value) / Int(duration.timescale)
+
+        if playerItem.status == .readyToPlay && timeLoaded > 0 {
+            notify([aboutCurrentState, aboutCurrentItem, aboutHidingLoadingView])
+        }
     }
     
     // listening for buffer is empty

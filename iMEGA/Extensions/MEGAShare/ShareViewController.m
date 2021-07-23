@@ -159,13 +159,21 @@
     [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self.logoutDelegate];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [self resetSdks];
+}
+
 - (void)willResignActive {
     if (self.session) {
-        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-        privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-        privacyVC.view.backgroundColor = UIColor.mnz_background;
-        self.privacyView = privacyVC.view;
-        [self.view addSubview:self.privacyView];
+        if (self.privacyView == nil) {
+            UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+            privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+            privacyVC.view.backgroundColor = UIColor.mnz_background;
+            self.privacyView = privacyVC.view;
+            [self.view addSubview:self.privacyView];
+        }
     }
 }
 
@@ -183,8 +191,7 @@
         [[NSProcessInfo processInfo] performExpiringActivityWithReason:@"Share Extension activity in progress" usingBlock:^(BOOL expired) {
             if (expired) {
                 dispatch_semaphore_signal(semaphore);
-                [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
-                [MEGASdkManager localLogout];
+                [self resetSdks];
                 if (self.pendingAssets > self.unsupportedAssets) {
                     [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
                 } else {
@@ -239,6 +246,11 @@
             [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         }
     }
+}
+
+- (void)resetSdks {
+    [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
+    [MEGASdkManager localLogout];
 }
 
 #pragma mark - Login and Setup
@@ -357,8 +369,7 @@
                      animations:^{
         self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
     } completion:^(BOOL finished) {
-        [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
-        [MEGASdkManager localLogout];
+        [self resetSdks];
         if (completion) {
             completion();
         }
@@ -768,32 +779,8 @@
 }
 
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode {
-    NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localPath];
-    MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerprint parent:parentNode];
-    if (remoteNode) {
-        if (remoteNode.parentHandle == parentNode.handle) {
-            // The file is already in the folder, nothing to do.
-            if (self.users || self.chats) {
-                [self performAttachNodeHandle:remoteNode.handle];
-            } else {
-                self.alreadyInDestinationAssets++;
-                [self onePendingLess];
-            }
-        } else {
-            if ([remoteNode.name isEqualToString:localPath.lastPathComponent]) {
-                // The file is already in MEGA, in other folder, has to be copied to this folder.
-                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode delegate:self];
-            } else {
-                // The file is already in MEGA, in other folder with different name, has to be copied to this folder and renamed.
-                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode newName:localPath.lastPathComponent delegate:self];
-            }
-        }
-        [NSFileManager.defaultManager mnz_removeItemAtPath:localPath];
-    } else {
-        // The file is not in MEGA.
-        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:NO delegate:self];
-    }
+    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:NO delegate:self];
 }
 
 - (void)onePendingLess {

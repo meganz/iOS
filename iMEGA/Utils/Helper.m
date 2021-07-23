@@ -411,14 +411,6 @@ static MEGAIndexer *indexer;
             [[Helper uploadingNodes] addObject:transferRecordDTO.localIdentifier];
         }
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
-    } node:^(MEGANode *node) {
-        if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
-            MEGALogDebug(@"The asset exists in MEGA in the parent folder");
-        } else {
-            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
-        }
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
-        [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", NSLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];

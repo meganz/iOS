@@ -22,7 +22,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @property (nonatomic, copy) PHAsset *asset;
 @property (nonatomic, copy) void (^filePath)(NSString *filePath);
-@property (nonatomic, copy) void (^node)(MEGANode *node);
 @property (nonatomic, copy) void (^error)(NSError *error);
 @property (nonatomic, strong) MEGANode *parentNode;
 
@@ -52,13 +51,12 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @implementation MEGAProcessAsset
 
-- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode cameraUploads:(BOOL)cameraUploads filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
+- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode cameraUploads:(BOOL)cameraUploads filePath:(void (^)(NSString *filePath))filePath error:(void (^)(NSError *error))error {
     self = [super init];
     
     if (self) {
         _asset = asset;
         _filePath = filePath;
-        _node = node;
         _error = error;
         _retries = 0;
         _parentNode = parentNode;
@@ -68,32 +66,13 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     return self;
 }
 
-
-- (instancetype)initToShareThroughChatWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
-    self = [super init];
-    
-    if (self) {
-        _asset = asset;
-        _filePath = filePath;
-        _node = node;
-        _error = error;
-        _retries = 0;
-        _shareThroughChat = YES;
-        _parentNode = parentNode;
-        _cameraUploads = NO;
-    }
-    
-    return self;
-}
-
-- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets parentNode:(MEGANode *)parentNode filePaths:(void (^)(NSArray<NSString *> *))filePaths nodes:(void (^)(NSArray<MEGANode *> *))nodes errors:(void (^)(NSArray<NSError *> *))errors {
+- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets parentNode:(MEGANode *)parentNode filePaths:(void (^)(NSArray<NSString *> *))filePaths errors:(void (^)(NSArray<NSError *> *))errors {
     self = [super init];
     
     if (self) {
         _semaphore = dispatch_semaphore_create(0);
         _assets = [[NSMutableArray alloc] initWithArray:assets];
         _filePaths = filePaths;
-        _nodes = nodes;
         _errors = errors;
         _retries = 0;
         _filePathsArray = [[NSMutableArray alloc] init];
@@ -113,13 +92,12 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
 }
 
-- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *))filePath node:(void (^)(MEGANode *))node error:(void (^)(NSError *))error {
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *))filePath error:(void (^)(NSError *))error {
     self = [super init];
     
     if (self) {
         _avAsset = [AVAsset assetWithURL:videoURL];
         _filePath = filePath;
-        _node = node;
         _error = error;
         _retries = 0;
         _shareThroughChat = YES;
@@ -324,28 +302,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                              if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
                                  MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                              }
-
-                             NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
-                             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-                             if (node && !self.shareThroughChat) {
-                                 if (self.node) {
-                                     self.node(node);
-                                 }
-                                 if (self.nodes) {
-                                     [self.nodesArray addObject:node];
-                                     dispatch_semaphore_signal(self.semaphore);
-                                 }
-                                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
-                             } else {
-                                 if (self.filePath) {
-                                     filePath = filePath.mnz_relativeLocalPath;
-                                     self.filePath(filePath);
-                                 }
-                                 if (self.filePaths) {
-                                     filePath = filePath.mnz_relativeLocalPath;
-                                     [self.filePathsArray addObject:filePath];
-                                     dispatch_semaphore_signal(self.semaphore);
-                                 }
+                             
+                             if (self.filePath) {
+                                 filePath = filePath.mnz_relativeLocalPath;
+                                 self.filePath(filePath);
+                             }
+                             if (self.filePaths) {
+                                 filePath = filePath.mnz_relativeLocalPath;
+                                 [self.filePathsArray addObject:filePath];
+                                 dispatch_semaphore_signal(self.semaphore);
                              }
                          } else {
                              MEGALogError(@"[PA] Copy item at path failed with error: %@", error);
@@ -544,49 +509,37 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 - (void)proccessImageData:(NSData *)imageData asset:(PHAsset *)asset withInfo:(NSDictionary *)info {
     if (imageData) {
-        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:asset.creationDate];
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-        if (node && !self.shareThroughChat) {
-            if (self.node) {
-                self.node(node);
-            }
-            if (self.nodes) {
-                [self.nodesArray addObject:node];
-                dispatch_semaphore_signal(self.semaphore);
-            }
-        } else {
-            NSString *filePath = [self filePathWithInfo:info asset:asset];
-            [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
-            long long imageSize = imageData.length;
-            if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
-                NSError *error;
-                if ([imageData writeToFile:filePath options:NSDataWritingFileProtectionNone error:&error]) {
-                    if (asset.creationDate != nil) {
-                        NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
-                        if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                            MEGALogError(@"[PA] Set attributes failed with error: %@", error);
-                        }
+        NSString *filePath = [self filePathWithInfo:info asset:asset];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
+        long long imageSize = imageData.length;
+        if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
+            NSError *error;
+            if ([imageData writeToFile:filePath options:NSDataWritingFileProtectionNone error:&error]) {
+                if (asset.creationDate != nil) {
+                    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
+                    if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                        MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                     }
-                    
-                    if (self.filePath) {
-                        filePath = filePath.mnz_relativeLocalPath;
-                        self.filePath(filePath);
-                    }
-                    if (self.filePaths) {
-                        filePath = filePath.mnz_relativeLocalPath;
-                        [self.filePathsArray addObject:filePath];
-                        dispatch_semaphore_signal(self.semaphore);
-                    }
-                } else {
-                    if (self.error) {
-                        MEGALogError(@"[PA] Write to file failed with error %@", error);
-                        self.error(error);
-                    }
-                    if (self.errors) {
-                        MEGALogDebug(@"[PA] Max attempts reached");
-                        [self.errorsArray addObject:error];
-                        dispatch_semaphore_signal(self.semaphore);
-                    }
+                }
+                
+                if (self.filePath) {
+                    filePath = filePath.mnz_relativeLocalPath;
+                    self.filePath(filePath);
+                }
+                if (self.filePaths) {
+                    filePath = filePath.mnz_relativeLocalPath;
+                    [self.filePathsArray addObject:filePath];
+                    dispatch_semaphore_signal(self.semaphore);
+                }
+            } else {
+                if (self.error) {
+                    MEGALogError(@"[PA] Write to file failed with error %@", error);
+                    self.error(error);
+                }
+                if (self.errors) {
+                    MEGALogDebug(@"[PA] Max attempts reached");
+                    [self.errorsArray addObject:error];
+                    dispatch_semaphore_signal(self.semaphore);
                 }
             }
         }
@@ -754,30 +707,16 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:encoder.outputURL.path error:&error]) {
                 MEGALogError(@"[PA] Set attributes failed with error: %@", error);
             }
-            NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-            if (node && !self.shareThroughChat) {
-                if (self.node) {
-                    self.node(node);
-                }
-                if (self.nodes) {
-                    [self.nodesArray addObject:node];
-                    dispatch_semaphore_signal(self.semaphore);
-                }
-                [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
-            } else {
-                if (self.filePath) {
-                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
-                    self.filePath(filePath);
-                }
-                if (self.filePaths) {
-                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
-                    [self.filePathsArray addObject:filePath];
-                    dispatch_semaphore_signal(self.semaphore);
-                }
+            if (self.filePath) {
+                filePath = encoder.outputURL.path.mnz_relativeLocalPath;
+                self.filePath(filePath);
             }
-        }
-        else if (encoder.status == AVAssetExportSessionStatusCancelled) {
+            if (self.filePaths) {
+                filePath = encoder.outputURL.path.mnz_relativeLocalPath;
+                [self.filePathsArray addObject:filePath];
+                dispatch_semaphore_signal(self.semaphore);
+            }
+        } else if (encoder.status == AVAssetExportSessionStatusCancelled) {
             MEGALogDebug(@"[PA] Export session cancelled");
             if (!self.cancelExportByUser) {
                 [self exportSessionCancelledOrFailed];
