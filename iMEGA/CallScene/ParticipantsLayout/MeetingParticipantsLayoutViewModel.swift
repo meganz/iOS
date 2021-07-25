@@ -234,7 +234,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             case .success(let image):
                 completion(image)
             case .failure(_):
-                MEGALogError("Error fetching avatar for participant \(participant.participantId)")
+                MEGALogError("Error fetching avatar for participant \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
             }
         }
     }

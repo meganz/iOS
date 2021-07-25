@@ -69,21 +69,24 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func userFullName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void) {
         if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
+            MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
             completion(.success(name))
             return
         }
         
         let delegate = MEGAChatGenericRequestDelegate { (request, error) in
             guard error.type != .MEGAChatErrorTypeOk else {
-                MEGALogDebug("error fetching user attributes \(error.type) : \(error.name ?? "")")
+                MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
                 return
             }
             
             if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
+                MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
                 completion(.success(name))
             }
         }
         
+        MEGALogDebug("Load user name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
         sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate)
     }
     

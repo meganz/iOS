@@ -139,6 +139,8 @@ extension CallsRepository: MEGAChatCallDelegate {
             return
         }
         
+        MEGALogDebug("onChatSessionUpdate \(session ?? MEGAChatSession())")
+        
         if session.hasChanged(.status) {
             switch session.status {
             case .inProgress:

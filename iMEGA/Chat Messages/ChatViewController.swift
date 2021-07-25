@@ -676,7 +676,8 @@ class ChatViewController: MessagesViewController {
         [
             joinCallButton.heightAnchor.constraint(equalToConstant: 40.0),
             joinCallButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -30),
-            joinCallButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            joinCallButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            joinCallButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150.0)
         ].activate()
         
         joinCallButton.isHidden = true
