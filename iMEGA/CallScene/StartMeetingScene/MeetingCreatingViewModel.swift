@@ -100,7 +100,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             audioSessionUseCase.configureAudioSession()
-            audioSessionUseCase.routeChanged { [weak self] routeChangedReason in
+            audioSessionUseCase.routeChanged { [weak self] routeChangedReason, _ in
                 guard let self = self else { return }
                 self.sessionRouteChanged(routeChangedReason: routeChangedReason)
             }

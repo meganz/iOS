@@ -23,7 +23,7 @@ protocol AudioSessionRepositoryProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
     func configureAudioSession()
-    var routeChanged: ((AudioSessionRouteChangedReason) -> Void)? { get set }
+    var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)? { get set }
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
     func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
     func isOutputFrom(port: AudioPort) -> Bool

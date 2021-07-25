@@ -2,8 +2,8 @@
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     private let audioSession: AVAudioSession
     
-    var routeChanged: ((AudioSessionRouteChangedReason) -> Void)?
-    
+    var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
+
     var isBluetoothAudioRouteAvailable: Bool {
         audioSession.mnz_isBluetoothAudioRouteAvailable
     }
@@ -110,7 +110,9 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
         
         if let handler = routeChanged, let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
-            handler(audioSessionRouteChangeReason)
+            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
+            let previousAudioPort = previousRoute?.outputs.first?.toAudioPort()
+            handler(audioSessionRouteChangeReason, previousAudioPort)
         } else {
             MEGALogDebug("AudioSession: Either the handler is nil or the audioSessionRouteChangeReason is nil")
         }

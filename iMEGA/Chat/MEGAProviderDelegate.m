@@ -71,6 +71,10 @@
 - (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     MEGALogDebug(@"[CallKit] Report incoming call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
         
+    // Callkit abnormal behaviour when trying to enable loudspeaker from the lock screen.
+    // Solution provided in the below link.
+    // https://stackoverflow.com/questions/48023629/abnormal-behavior-of-speaker-button-on-system-provided-call-screen?rq=1
+    [self configureAudioSession];
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
     
