@@ -79,7 +79,7 @@ struct MeetingParticipantViewModel: ViewModelType {
                 invokeCommand?(.updateName(name: name, isMe: isMe))
                 completion(name)
             case .failure(let error):
-                MEGALogDebug("ChatRoom: failed to get the user display name for \(participant.participantId) - \(error)")
+                MEGALogDebug("ChatRoom: failed to get the user display name for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name") - \(error)")
             }
         }
     }
@@ -90,7 +90,7 @@ struct MeetingParticipantViewModel: ViewModelType {
             case .success(let image):
                 invokeCommand?(.updateAvatarImage(image: image))
             case .failure(let error):
-                MEGALogDebug("ChatRoom: failed to fetch avatar for \(participant.participantId) - \(error)")
+                MEGALogDebug("ChatRoom: failed to fetch avatar for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name") - \(error)")
             }
         }
     }
