@@ -86,9 +86,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     func dispatch(_ action: MeetingFloatingPanelAction) {
         switch action {
         case .onViewReady:
-            audioSessionUseCase.routeChanged { [weak self] routeChangedReason in
+            audioSessionUseCase.routeChanged { [weak self] routeChangedReason, previousAudioPort in
                 guard let self = self else { return }
-                self.sessionRouteChanged(routeChangedReason: routeChangedReason)
+                if previousAudioPort == nil,
+                   self.chatRoom.chatType == .meeting,
+                   self.audioSessionUseCase.currentSelectedAudioPort == .builtInReceiver {
+                    self.enableLoudSpeaker()
+                } else {
+                    self.sessionRouteChanged(routeChangedReason: routeChangedReason)
+                }
             }
             populateParticipants()
             callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)

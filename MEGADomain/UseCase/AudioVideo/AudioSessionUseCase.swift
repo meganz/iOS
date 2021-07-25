@@ -6,7 +6,7 @@ protocol AudioSessionUseCaseProtocol {
     func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
     func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
     func isOutputFrom(port: AudioPort) -> Bool
-    func routeChanged(handler: ((AudioSessionRouteChangedReason) -> Void)?)
+    func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?)
 }
 
 final class AudioSessionUseCase : AudioSessionUseCaseProtocol {
@@ -40,7 +40,7 @@ final class AudioSessionUseCase : AudioSessionUseCaseProtocol {
         audioSessionRepository.isOutputFrom(port: port)
     }
     
-    func routeChanged(handler: ((AudioSessionRouteChangedReason) -> Void)?) {
+    func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?) {
         audioSessionRepository.routeChanged = handler
     }
 }
