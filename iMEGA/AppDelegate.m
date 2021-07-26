@@ -1130,7 +1130,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
         };
         
         if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled] && hasBonusButton) {
-            customModalAlertVC.secondButtonTitle = NSLocalizedString(@"getBonus", @"Button title to see the available bonus");
+            customModalAlertVC.secondButtonTitle = NSLocalizedString(@"general.button.getBonus", @"");
             customModalAlertVC.secondCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
                     self.upgradeVCPresented = NO;
