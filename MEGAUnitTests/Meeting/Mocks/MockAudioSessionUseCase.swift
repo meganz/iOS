@@ -21,7 +21,7 @@ final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
         return port == audioPortOutput
     }
     
-    func routeChanged(handler: ((AudioSessionRouteChangedReason) -> Void)?) { }
+    func routeChanged(handler: ((AudioSessionRouteChangedReason, AudioPort?) -> Void)?) {}
     
     func configureAudioSession() {
         configureAudioSession_calledTimes += 1
