@@ -23,9 +23,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .updatedAudioPortSelection(audioPort: audioSession.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSession.isBluetoothAudioRouteAvailable),
                 .configView(title: "test name Meeting", subtitle: "", type: .start, isMicrophoneEnabled: false),
-                .updateMicrophoneButton(enabled: false)
              ])
     }
     
@@ -55,10 +53,9 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .updatedAudioPortSelection(audioPort: audioSession.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSession.isBluetoothAudioRouteAvailable),
                 .loadingStartMeeting,
                 .loadingEndMeeting,
-                .configView(title: "test name Meeting", subtitle: "", type: .join, isMicrophoneEnabled: false)
+                .configView(title: "test name Meeting", subtitle: "", type: .join, isMicrophoneEnabled: false),
              ])
     }
     
@@ -84,8 +81,8 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .didTapSpeakerButton,
              expectedCommands: [
-                .updatedAudioPortSelection(audioPort: audioSession.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSession.isBluetoothAudioRouteAvailable)
              ])
+        XCTAssert(audioSession.disableLoudSpeaker_calledTimes == 1)
     }
     
     func testAction_didTapCloseButton() {

@@ -185,25 +185,43 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
-        devicePermissionUseCase.getVideoAuthorizationStatus { [self] granted in
-            DispatchQueue.main.async {
-                if granted {
-                    completionBlock()
-                } else {
-                    router.showVideoPermissionError()
+        devicePermissionUseCase.getVideoAuthorizationStatus { [weak self] granted in
+            guard let self = self else { return }
+            if Thread.isMainThread {
+                self.videoPermissionGranted(granted, withCompletionBlock: completionBlock)
+            } else {
+                DispatchQueue.main.async {
+                    self.videoPermissionGranted(granted, withCompletionBlock: completionBlock)
                 }
             }
         }
     }
     
+    private func videoPermissionGranted(_ granted: Bool, withCompletionBlock completionBlock: @escaping () -> Void) {
+        if granted {
+            completionBlock()
+        } else {
+            router.showVideoPermissionError()
+        }
+    }
+    
     private func checkForAudioPermission(forCall call: CallEntity, completionBlock: @escaping (Bool) -> Void) {
-        devicePermissionUseCase.getAudioAuthorizationStatus { [self] granted in
-            DispatchQueue.main.async {
-                completionBlock(granted)
-                if !granted {
-                    router.showAudioPermissionError()
+        devicePermissionUseCase.getAudioAuthorizationStatus { [weak self] granted in
+            guard let self = self else { return }
+            if Thread.isMainThread {
+                self.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
+            } else {
+                DispatchQueue.main.async {
+                    self.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
                 }
             }
+        }
+    }
+    
+    private func audioPermissionGranted(_ granted: Bool, withCompletionBlock completionBlock: @escaping (Bool) -> Void) {
+        completionBlock(granted)
+        if !granted {
+            router.showAudioPermissionError()
         }
     }
     
