@@ -1014,6 +1014,8 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     
     switch (request.type) {            
         case MEGAChatRequestTypeUpdatePeerPermissions:
+        case MEGAChatRequestTypeInviteToChatRoom:
+        case MEGAChatRequestTypeRemoveFromChatRoom:
             [self setParticipants];
             [self.tableView reloadData];
             break;

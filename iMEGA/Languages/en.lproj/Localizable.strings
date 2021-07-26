@@ -932,6 +932,8 @@
 "downloadInUppercaseTransfers"="DOWNLOAD transfers";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgrade";
+/* Button title to see the available bonus */
+"general.button.getBonus"="Get Bonus";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
