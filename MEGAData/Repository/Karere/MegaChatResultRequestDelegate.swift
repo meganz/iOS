@@ -1,8 +1,8 @@
 final class MEGAChatResultRequestDelegate: NSObject, MEGAChatRequestDelegate {
     
-    private let completion: (Result<MEGAChatRequest, CallsErrorEntity>) -> Void
+    private let completion: (Result<MEGAChatRequest, CallErrorEntity>) -> Void
     
-    init(completion: @escaping (Result<MEGAChatRequest, CallsErrorEntity>) -> Void) {
+    init(completion: @escaping (Result<MEGAChatRequest, CallErrorEntity>) -> Void) {
         self.completion = completion
     }
     

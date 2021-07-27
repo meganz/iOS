@@ -1,12 +1,12 @@
 
 
 protocol ChatRoomRepositoryProtocol {
-    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity?
-    func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity?
-    func createChatRoom(forUserHandle userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, Error>) -> Void)
-    func createPublicLink(forChatId chatId: UInt64, completion: @escaping (Result<String, ChatLinkError>) -> Void)
-    func queryChatLink(forChatId chatId: UInt64, completion: @escaping (Result<String, ChatLinkError>) -> Void)
-    func userFullName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void)
+    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity?
+    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity?
+    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
+    func createPublicLink(forChatId chatId: MEGAHandle, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
+    func queryChatLink(forChatId chatId: MEGAHandle, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
+    func userFullName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, Error>) -> Void)
     func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
 }
 

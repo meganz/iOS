@@ -33,10 +33,10 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
         let vm = MeetingCreatingViewModel(
             router: self,
             type: type,
-            meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository()),
+            meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), sdk: MEGASdkManager.sharedMEGASdk())),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository:audioSessionRepository),
-            callsUseCase: CallsUseCase(repository: CallsRepository()),
-            localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
+            callsUseCase: CallsUseCase(repository: CallsRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),

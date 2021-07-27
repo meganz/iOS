@@ -52,11 +52,11 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       isSpeakerEnabled: isSpeakerEnabled,
                                                       enableVideo: enableVideo,
                                                       callManagerUseCase: CallManagerUseCase(),
-                                                      callsUseCase: CallsUseCase(repository: CallsRepository()),
+                                                      callsUseCase: CallsUseCase(repository: CallsRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-                                                      localVideoUseCase: CallsLocalVideoUseCase(repository: CallsLocalVideoRepository()),
+                                                      localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
                                                       userUseCase: UserUseCase(repo: .live))
         
         let userImageUseCase = UserImageUseCase(

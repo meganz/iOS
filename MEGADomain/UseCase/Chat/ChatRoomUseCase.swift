@@ -1,10 +1,10 @@
 
 protocol ChatRoomUseCaseProtocol {
-    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity?
-    func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity?
-    func createChatRoom(forUserHandle userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, Error>) -> Void)
-    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkError>) -> Void)
-    func userDisplayName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void)
+    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity?
+    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity?
+    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
+    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
+    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, Error>) -> Void)
     func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
 }
 
@@ -17,19 +17,19 @@ struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
         self.userStoreRepo = userStoreRepo
     }
     
-    func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity? {
+    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity? {
         chatRoomRepo.chatRoom(forChatId: chatId)
     }
     
-    func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
+    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity? {
         chatRoomRepo.chatRoom(forUserHandle: userHandle)
     }
     
-    func createChatRoom(forUserHandle userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, Error>) -> Void) {
+    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.createChatRoom(forUserHandle: userHandle, completion: completion)
     }
     
-    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkError>) -> Void) {
+    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         guard chatRoom.chatType != .oneToOne else {
             // Not allowed to create/query chat link
             completion(.failure(.creatingChatLinkNotAllowed))
@@ -50,7 +50,7 @@ struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
         }
     }
     
-    func userDisplayName(forPeerId peerId: UInt64, chatId: UInt64, completion: @escaping (Result<String, Error>) -> Void) {
+    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, Error>) -> Void) {
         if let displayName = userStoreRepo.getDisplayName(forUserHandle: peerId) {
             completion(.success(displayName))
             return

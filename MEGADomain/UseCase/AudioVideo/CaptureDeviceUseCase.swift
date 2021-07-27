@@ -1,6 +1,6 @@
 
 protocol CaptureDeviceUseCaseProtocol {
-    func wideAngleCameraLocalizedName(postion: CameraPosition) -> String?
+    func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String?
 }
 
 struct CaptureDeviceUseCase: CaptureDeviceUseCaseProtocol {
@@ -10,7 +10,7 @@ struct CaptureDeviceUseCase: CaptureDeviceUseCaseProtocol {
         self.repo = repo
     }
     
-    func wideAngleCameraLocalizedName(postion: CameraPosition) -> String? {
+    func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String? {
         repo.wideAngleCameraLocalizedName(postion: postion)
     }
 }

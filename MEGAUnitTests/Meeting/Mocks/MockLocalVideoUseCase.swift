@@ -1,8 +1,8 @@
 @testable import MEGA
 
 class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
-    var enableDisableVideoCompletion: Result<Void, CallsErrorEntity> = .success(())
-    var releaseDeviceResult: Result<Void, CallsErrorEntity> = .success(())
+    var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .success(())
+    var releaseDeviceResult: Result<Void, CallErrorEntity> = .success(())
     var selectCameraResult: Result<Void, CameraSelectionError> = .success(())
     var videoDeviceSelectedString: String?
     var addLocalVideo_CalledTimes = 0
@@ -10,13 +10,12 @@ class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
     var selectedCamera_calledTimes = 0
     var openDevice_calledTimes = 0
     var releaseVideoDevice_calledTimes = 0
-    
 
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         completion(enableDisableVideoCompletion)
     }
     
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         completion(enableDisableVideoCompletion)
     }
     
@@ -37,11 +36,11 @@ class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
         completion(selectCameraResult)
     }
     
-    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         openDevice_calledTimes += 1
     }
     
-    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         releaseVideoDevice_calledTimes += 1
         completion(releaseDeviceResult)
     }

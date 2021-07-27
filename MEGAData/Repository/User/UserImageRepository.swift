@@ -9,7 +9,7 @@ struct UserImageRepository: UserImageRepositoryProtocol {
   
     func loadUserImage(withUserHandle handle: String?,
                        destinationPath: String,
-                       completion: @escaping (Result<UIImage, UserImageLoadError>) -> Void) {
+                       completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
         
         let thumbnailRequestDelegate = MEGAGetThumbnailRequestDelegate { request in
             if let filePath = request.file, let image = UIImage(contentsOfFile: filePath) {

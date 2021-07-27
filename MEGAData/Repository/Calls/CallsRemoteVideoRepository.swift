@@ -1,8 +1,12 @@
 
 final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProtocol {
-    private let chatSdk = MEGASdkManager.sharedMEGAChatSdk()
-
+    
+    private let chatSdk: MEGAChatSdk
     private var remoteVideos = [RemoteVideoData]()
+    
+    init(chatSdk: MEGAChatSdk) {
+        self.chatSdk = chatSdk
+    }
     
     func enableRemoteVideo(for chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool, remoteVideoListener: CallsRemoteVideoListenerRepositoryProtocol) {
         let remoteVideoData = RemoteVideoData(chatId: chatId, clientId: clientId, hiRes: hiRes, remoteVideoListener: remoteVideoListener)
@@ -29,7 +33,7 @@ final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProt
         MEGALogDebug("Removed all remote video listeners")
     }
     
-    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         chatSdk.requestHiResVideo(forChatId: chatId, clientId: clientId, delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
@@ -42,7 +46,7 @@ final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProt
         })
     }
     
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         let clientIdsMapped = clientIds.map { NSNumber(value: $0) }
 
         chatSdk.stopHiResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
@@ -57,7 +61,7 @@ final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProt
         })
     }
     
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         let clientIdsMapped = clientIds.map { NSNumber(value: $0) }
         
         chatSdk.requestLowResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
@@ -72,7 +76,7 @@ final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProt
         })
     }
     
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         let clientIdsMapped = clientIds.map { NSNumber(value: $0) }
 
         chatSdk.stopLowResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in

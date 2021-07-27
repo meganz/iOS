@@ -1,5 +1,5 @@
 
 
 protocol CaptureDeviceRepositoryProtocol {
-    func wideAngleCameraLocalizedName(postion: CameraPosition) -> String?
+    func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String?
 }

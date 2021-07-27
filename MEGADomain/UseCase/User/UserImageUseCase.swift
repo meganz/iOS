@@ -2,7 +2,7 @@
 protocol UserImageUseCaseProtocol {
     func fetchUserAvatar(withUserHandle handle: UInt64,
                          name: String,
-                         completion: @escaping (Result<UIImage, UserImageLoadError>) -> Void)
+                         completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)
 }
 
 struct UserImageUseCase: UserImageUseCaseProtocol {
@@ -24,7 +24,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
     
     func fetchUserAvatar(withUserHandle handle: UInt64,
                          name: String,
-                         completion: @escaping (Result<UIImage, UserImageLoadError>) -> Void) {
+                         completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
             completion(.failure(.base64EncodingError))
             return

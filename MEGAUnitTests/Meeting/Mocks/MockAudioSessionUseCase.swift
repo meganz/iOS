@@ -9,11 +9,11 @@ final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     var disableLoudSpeaker_calledTimes = 0
     var configureAudioSession_calledTimes = 0
 
-    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         enableLoudSpeaker_calledTimes += 1
     }
     
-    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         disableLoudSpeaker_calledTimes += 1
     }
     

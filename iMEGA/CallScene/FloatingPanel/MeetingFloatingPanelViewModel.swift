@@ -19,10 +19,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case configView(canInviteParticipants: Bool,
                         isOneToOneMeeting: Bool,
                         isVideoEnabled: Bool,
-                        cameraPosition: CameraPosition?)
+                        cameraPosition: CameraPositionEntity?)
         case enabledLoudSpeaker(enabled: Bool)
         case microphoneMuted(muted: Bool)
-        case updatedCameraPosition(position: CameraPosition)
+        case updatedCameraPosition(position: CameraPositionEntity)
         case cameraTurnedOn(on: Bool)
         case reloadParticpantsList(participants: [CallParticipantEntity])
         case updatedAudioPortSelection(audioPort: AudioPort,bluetoothAudioRouteAvailable: Bool)
@@ -236,7 +236,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    private func currentCameraPosition() -> CameraPosition {
+    private func currentCameraPosition() -> CameraPositionEntity {
         return captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .front) == localVideoUseCase.videoDeviceSelected() ? .front : .back
     }
     
@@ -265,7 +265,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
         localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString) { [weak self] _ in
             guard let self = self else { return }
-            let cameraPosition: CameraPosition = backCameraOn ? .back : .front
+            let cameraPosition: CameraPositionEntity = backCameraOn ? .back : .front
             self.invokeCommand?(.updatedCameraPosition(position: cameraPosition))
         }
     }

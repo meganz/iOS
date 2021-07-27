@@ -1,7 +1,7 @@
 
 
 struct CallEntity {
-    enum CallStatusType {
+    enum CallStatusType: Int {
         case undefined
         case initial
         case userNoPresent
@@ -56,8 +56,8 @@ struct CallEntity {
     }
     
     let status: CallStatusType?
-    let chatId: UInt64
-    let callId: UInt64
+    let chatId: MEGAHandle
+    let callId: MEGAHandle
     let changeTye: ChangeType?
     let duration: Int64
     let initialTimestamp: Int64
@@ -69,8 +69,8 @@ struct CallEntity {
     let callCompositionChange: CompositionChangeType?
     let numberOfParticipants: Int
     let isOnHold: Bool
-    let sessionClientIds: [UInt64]
+    let sessionClientIds: [MEGAHandle]
     let clientSessions: [ChatSessionEntity]
-    let participants: [UInt64]
+    let participants: [MEGAHandle]
     let uuid: UUID
 }

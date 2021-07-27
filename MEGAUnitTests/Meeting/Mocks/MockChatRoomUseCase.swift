@@ -2,7 +2,7 @@
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var userDisplayNameCompletion: Result<String, Error> = .success("")
-    var publicLinkCompletion: Result<String, ChatLinkError> = .failure(.generic)
+    var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
     var createChatRoomCompletion: Result<ChatRoomEntity, Error>?
     var chatRoomEntity: ChatRoomEntity?
     var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .success("")
@@ -21,7 +21,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         }
     }
     
-    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkError>) -> Void) {
+    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         completion(publicLinkCompletion)
     }
     

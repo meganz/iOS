@@ -32,15 +32,15 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     func configureAudioSession() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
-            try AVAudioSession.sharedInstance().setActive(true)
+            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
+            try audioSession.setActive(true)
         } catch (let error) {
             MEGALogError("[AudioPlayer] AVAudioSession Error: \(error.localizedDescription)")
         }
     }
     
     
-    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         MEGALogDebug("AudioSession: enabling loud speaker")
         do {
             try audioSession.overrideOutputAudioPort(.speaker)
@@ -51,7 +51,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
     }
     
-    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         MEGALogDebug("AudioSession: disable loud speaker")
         do {
             try audioSession.overrideOutputAudioPort(.none)

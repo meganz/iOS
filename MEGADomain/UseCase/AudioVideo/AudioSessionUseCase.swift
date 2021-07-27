@@ -3,8 +3,8 @@ protocol AudioSessionUseCaseProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
     func configureAudioSession()
-    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
-    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void)
+    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void)
+    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void)
     func isOutputFrom(port: AudioPort) -> Bool
     func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?)
 }
@@ -28,11 +28,11 @@ final class AudioSessionUseCase : AudioSessionUseCaseProtocol {
         audioSessionRepository.configureAudioSession()
     }
     
-    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         audioSessionRepository.enableLoudSpeaker(completion: completion)
     }
     
-    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionError>) -> Void) {
+    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         audioSessionRepository.disableLoudSpeaker(completion: completion)
     }
     
