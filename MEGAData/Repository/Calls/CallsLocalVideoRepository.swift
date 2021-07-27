@@ -40,8 +40,16 @@ final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtoc
         chatSdk.videoDeviceSelected()
     }
     
-    func selectCamera(withLocalizedName localizedName: String) {
-        chatSdk.setChatVideoInDevices(localizedName)
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionError>) -> Void) {
+        let delegate =  MEGAChatGenericRequestDelegate { request, error in
+            if error.type == .MEGAChatErrorTypeOk {
+                completion(.success)
+            } else {
+                completion(.failure(.generic))
+            }
+        }
+        
+        chatSdk.setChatVideoInDevices(localizedName, delegate: delegate)
     }
     
     func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {

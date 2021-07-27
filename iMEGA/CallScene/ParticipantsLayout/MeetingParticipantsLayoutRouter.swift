@@ -8,14 +8,12 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
-    private var initialVideoCall: Bool
 
-    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, call: CallEntity, initialVideoCall: Bool = false) {
+    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, call: CallEntity) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.call = call
-        self.initialVideoCall = initialVideoCall
         super.init()
     }
     
@@ -40,8 +38,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
                                userUseCase: UserUseCase(repo: .live),
                                userImageUseCase: userImageUseCase,
                                chatRoom: chatRoom,
-                               call: call,
-                               initialVideoCall: initialVideoCall)
+                               call: call)
         
         let vc = MeetingParticipantsLayoutViewController(viewModel: vm)
         baseViewController = vc

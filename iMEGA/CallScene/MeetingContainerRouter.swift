@@ -24,7 +24,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var presenter: UIViewController?
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
-    private let isVideoEnabled: Bool
+    private var enableVideo: Bool
     private var isSpeakerEnabled: Bool
     private let isAnsweredFromCallKit: Bool
     private weak var baseViewController: UINavigationController?
@@ -42,7 +42,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
-        self.isVideoEnabled = isVideoEnabled
+        self.enableVideo = isVideoEnabled
         self.isSpeakerEnabled = isSpeakerEnabled
         self.isAnsweredFromCallKit = isAnsweredFromCallKit
         
@@ -205,8 +205,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let callViewRouter = MeetingParticipantsLayoutRouter(presenter: baseViewController,
                                             containerViewModel: containerViewModel,
                                             chatRoom: chatRoom,
-                                            call: call,
-                                            initialVideoCall: isVideoEnabled)
+                                            call: call)
         callViewRouter.start()
         self.meetingParticipantsRouter = callViewRouter
     }
@@ -216,7 +215,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let floatingPanelRouter = MeetingFloatingPanelRouter(presenter: baseViewController,
                                                              containerViewModel: containerViewModel,
                                                              chatRoom: chatRoom,
-                                                             isSpeakerEnabled: isSpeakerEnabled)
+                                                             isSpeakerEnabled: isSpeakerEnabled,
+                                                             enableVideo: enableVideo)
+        enableVideo = false
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
     }
