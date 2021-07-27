@@ -3,6 +3,7 @@
 class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
     var enableDisableVideoCompletion: Result<Void, CallsErrorEntity> = .success(())
     var releaseDeviceResult: Result<Void, CallsErrorEntity> = .success(())
+    var selectCameraResult: Result<Void, CameraSelectionError> = .success(())
     var videoDeviceSelectedString: String?
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0
@@ -31,8 +32,9 @@ class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
         return videoDeviceSelectedString
     }
     
-    func selectCamera(withLocalizedName localizedName: String) {
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionError>) -> Void) {
         selectedCamera_calledTimes += 1
+        completion(selectCameraResult)
     }
     
     func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {

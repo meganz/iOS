@@ -79,7 +79,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let router: MeetingParticipantsLayoutRouting
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
-    private var initialVideoCall: Bool
     private var timer: Timer?
     private var callDurationInfo: CallDurationInfo?
     private var callParticipants = [CallParticipantEntity]()
@@ -116,8 +115,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          userUseCase: UserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatRoom: ChatRoomEntity,
-         call: CallEntity,
-         initialVideoCall: Bool = false) {
+         call: CallEntity) {
         
         self.router = router
         self.containerViewModel = containerViewModel
@@ -130,7 +128,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.chatRoom = chatRoom
         self.call = call
-        self.initialVideoCall = initialVideoCall
 
         super.init()
     }
@@ -259,20 +256,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         return true
     }
     
-    internal func initialSubtitle() -> String {
+    private func initialSubtitle() -> String {
         if call.isRinging || call.status == .joining {
             return NSLocalizedString("connecting", comment: "")
         } else {
             return NSLocalizedString("calling...", comment: "")
-        }
-    }
-    
-    private func selectFrontCameraIfNeeded() {
-        if isBackCameraSelected() {
-            guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .front) else {
-                return
-            }
-            localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
         }
     }
     
@@ -308,7 +296,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             if isActiveCall() {
                 callsUseCase.createActiveSessions()
             } else {
-                selectFrontCameraIfNeeded()
                 if chatRoom.chatType == .meeting {
                     invokeCommand?(.showWaitingForOthersMessage)
                 }

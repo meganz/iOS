@@ -42,6 +42,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let userUseCase: UserUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
+    private var enableVideo: Bool
     private var isSpeakerEnabled: Bool {
         didSet {
             containerViewModel?.dispatch(.speakerEnabled(isSpeakerEnabled))
@@ -59,6 +60,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
          isSpeakerEnabled: Bool,
+         enableVideo: Bool,
          callManagerUseCase: CallManagerUseCaseProtocol,
          callsUseCase: CallsUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
@@ -76,6 +78,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.isSpeakerEnabled = isSpeakerEnabled
+        self.enableVideo = enableVideo
         self.userUseCase = userUseCase
     }
     
@@ -103,9 +106,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                        isVideoEnabled: isVideoEnabled ?? false,
                                        cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
-            if isVideoEnabled ?? false {
+            if enableVideo {
                 checkForVideoPermission {
-                    self.turnCamera(on: true)
+                    self.turnCamera(on: true) {
+                        if self.isBackCameraSelected() {
+                            self.switchCamera(backCameraOn: false)
+                        }
+                    }
                 }
             }
             
@@ -149,7 +156,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
         case .turnCamera(let on):
             checkForVideoPermission {
-                self.turnCamera(on: on)
+                self.turnCamera(on: on) {
+                    if self.isBackCameraSelected() {
+                        self.switchCamera(backCameraOn: false)
+                    }
+                }
             }
         case .switchCamera(let backCameraOn):
             switchCamera(backCameraOn: backCameraOn)
@@ -252,9 +263,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
               localVideoUseCase.videoDeviceSelected() != selectCameraLocalizedString else {
             return
         }
-        localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
-        let cameraPosition: CameraPosition = backCameraOn ? .back : .front
-        invokeCommand?(.updatedCameraPosition(position: cameraPosition))
+        localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString) { [weak self] _ in
+            guard let self = self else { return }
+            let cameraPosition: CameraPosition = backCameraOn ? .back : .front
+            self.invokeCommand?(.updatedCameraPosition(position: cameraPosition))
+        }
     }
     
     private func isBackCameraSelected() -> Bool {
@@ -273,20 +286,20 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 switch result {
                 case .success:
                     self.invokeCommand?(.cameraTurnedOn(on: on))
-                    completion?()
                 case .failure(_):
                     MEGALogDebug("Error enabling local video")
                 }
+                completion?()
             }
         } else {
             localVideoUseCase.disableLocalVideo(for: chatRoom.chatId) { result in
                 switch result {
                 case .success:
                     self.invokeCommand?(.cameraTurnedOn(on: on))
-                    completion?()
                 case .failure(_):
                     MEGALogDebug("Error disabling local video")
                 }
+                completion?()
             }
         }
     }

@@ -184,6 +184,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private func updateUI(canInviteParticipants: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPosition?) {
         cameraQuickActionView.isSelected = isVideoEnabled
         if let cameraPosition = cameraPosition {
+            flipQuickActionView.disabled = false
             flipQuickActionView.isSelected = cameraPosition == .back
         }
         

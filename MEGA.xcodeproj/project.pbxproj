@@ -1913,6 +1913,7 @@
 		BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */; };
 		BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */; };
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
+		BFBE04C826AF6F3C001D9A4F /* CameraSelectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE04C726AF6F3C001D9A4F /* CameraSelectionError.swift */; };
 		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
 		BFC214812547C04800AD648A /* RichPreviewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */; };
 		BFC470A424C66E4F00A23820 /* Date+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0E24BFE2B100D7D13B /* Date+Manipulation.swift */; };
@@ -4137,6 +4138,7 @@
 		BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessageLayoutDelegate.swift"; sourceTree = "<group>"; };
 		BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDisplayDelegate.swift"; sourceTree = "<group>"; };
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
+		BFBE04C726AF6F3C001D9A4F /* CameraSelectionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSelectionError.swift; sourceTree = "<group>"; };
 		BFC1794F24491073004F35AB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedEmojisUsersListViewController.swift; sourceTree = "<group>"; };
 		BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCarousalView.swift; sourceTree = "<group>"; };
@@ -9336,6 +9338,7 @@
 				BF782D4D269BA4BA0001D169 /* CookieSettingsErrorEntity.swift */,
 				BF782D4E269BA4BA0001D169 /* GetSMSErrorEntity.swift */,
 				BF782D4F269BA4BA0001D169 /* CallsErrorEntity.swift */,
+				BFBE04C726AF6F3C001D9A4F /* CameraSelectionError.swift */,
 				BF782D50269BA4BA0001D169 /* AudioSessionError.swift */,
 			);
 			path = Error;
@@ -11444,6 +11447,7 @@
 				83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */,
 				A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */,
 				5B118EC31FB1B0C6005D7D90 /* NSArray+MNZCategory.m in Sources */,
+				BFBE04C826AF6F3C001D9A4F /* CameraSelectionError.swift in Sources */,
 				5D8DC6B1248CB0C40067A4F9 /* CornerStyle.swift in Sources */,
 				BFE6E55E25535DEB00050DCA /* UITableViewCell+Additions.swift in Sources */,
 				B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */,
