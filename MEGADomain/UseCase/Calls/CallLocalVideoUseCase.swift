@@ -1,21 +1,21 @@
 
 protocol CallsLocalVideoUseCaseProtocol {
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
+    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
+    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol)
     func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol)
     func videoDeviceSelected() -> String?
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionError>) -> Void)
-    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
-    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void)
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void)
+    func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
 }
 
 protocol CallsLocalVideoCallbacksUseCaseProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data!)
+    func localVideoFrameData(width: Int, height: Int, buffer: Data)
     func localVideoChangedCameraPosition()
 }
 
-final class CallsLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
+final class CallLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
     
     private let repository: CallsLocalVideoRepositoryProtocol
     private var localVideoCallbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol?
@@ -24,11 +24,11 @@ final class CallsLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
         self.repository = repository
     }
     
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.enableLocalVideo(for: chatId, completion: completion)
     }
     
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.disableLocalVideo(for: chatId, completion: completion)
     }
     
@@ -46,21 +46,21 @@ final class CallsLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
         repository.videoDeviceSelected()
     }
     
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionError>) -> Void) {
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void) {
         repository.selectCamera(withLocalizedName: localizedName, completion: completion)
     }
     
-    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.openVideoDevice(completion: completion)
     }
     
-    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.releaseVideoDevice(completion: completion)
     }
 }
 
-extension CallsLocalVideoUseCase: CallsLocalVideoListenerRepositoryProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data!) {
+extension CallLocalVideoUseCase: CallsLocalVideoListenerRepositoryProtocol {
+    func localVideoFrameData(width: Int, height: Int, buffer: Data) {
         localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
     }
     

@@ -167,7 +167,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     //MARK:- Private methods
     
-    private func updatedCameraPosition(_ position: CameraPosition) {
+    private func updatedCameraPosition(_ position: CameraPositionEntity) {
         flipQuickActionView.isSelected = position == .back
         executeCommand(.cameraTurnedOn(on: true))
     }
@@ -181,7 +181,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         speakerQuickActionView?.selectedAudioPortUpdated(selectedAudioPort, isBluetoothRouteAvailable: isBluetoothRouteAvailable)
     }
     
-    private func updateUI(canInviteParticipants: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPosition?) {
+    private func updateUI(canInviteParticipants: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPositionEntity?) {
         cameraQuickActionView.isSelected = isVideoEnabled
         if let cameraPosition = cameraPosition {
             flipQuickActionView.disabled = false

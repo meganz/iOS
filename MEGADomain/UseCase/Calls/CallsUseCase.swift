@@ -3,16 +3,16 @@ protocol CallsUseCaseProtocol {
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol)
     func stopListeningForCall()
     func call(for chatId: MEGAHandle) -> CallEntity?
-    func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
-    func startOutgoingCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
-    func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void)
+    func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
+    func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
+    func joinCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
     func createActiveSessions()
     func hangCall(for callId: MEGAHandle)
     func endCall(for callId: MEGAHandle)
-    func addPeer(toCall call: CallEntity, peerId: UInt64)
-    func removePeer(fromCall call: CallEntity, peerId: UInt64)
-    func makePeerAModerator(inCall call: CallEntity, peerId: UInt64)
-    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64)
+    func addPeer(toCall call: CallEntity, peerId: MEGAHandle)
+    func removePeer(fromCall call: CallEntity, peerId: MEGAHandle)
+    func makePeerAModerator(inCall call: CallEntity, peerId: MEGAHandle)
+    func removePeerAsModerator(inCall call: CallEntity, peerId: MEGAHandle)
 }
 
 protocol CallsCallbacksUseCaseProtocol: AnyObject {
@@ -55,16 +55,16 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
         repository.call(for: chatId)
     }
     
-    func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
-        repository.answerIncomingCall(for: chatId, completion: completion)
+    func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+        repository.answerCall(for: chatId, completion: completion)
     }
     
-    func startOutgoingCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
-        repository.startChatCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+    func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+        repository.startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
     }
     
-    func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
-        repository.joinActiveCall(for: chatId, enableVideo: enableVideo, enableAudio: true, completion: completion)
+    func joinCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+        repository.joinCall(for: chatId, enableVideo: enableVideo, enableAudio: true, completion: completion)
     }
     
     func createActiveSessions() {
@@ -79,19 +79,19 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
         repository.endCall(for: callId)
     }
     
-    func addPeer(toCall call: CallEntity, peerId: UInt64) {
+    func addPeer(toCall call: CallEntity, peerId: MEGAHandle) {
         repository.addPeer(toCall: call, peerId: peerId)
     }
     
-    func removePeer(fromCall call: CallEntity, peerId: UInt64) {
+    func removePeer(fromCall call: CallEntity, peerId: MEGAHandle) {
         repository.removePeer(fromCall: call, peerId: peerId)
     }
     
-    func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
+    func makePeerAModerator(inCall call: CallEntity, peerId: MEGAHandle) {
         repository.makePeerAModerator(inCall: call, peerId: peerId)
     }
     
-    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
+    func removePeerAsModerator(inCall call: CallEntity, peerId: MEGAHandle) {
         repository.removePeerAsModerator(inCall: call, peerId: peerId)
     }
 }

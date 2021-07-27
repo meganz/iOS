@@ -54,7 +54,7 @@ class LocalUserView: UIView {
     }
 
     //MARK: - Public
-    func configure(for position: CameraPosition) {
+    func configure(for position: CameraPositionEntity) {
         if !isHidden {
             return
         }
@@ -78,7 +78,7 @@ class LocalUserView: UIView {
         videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
     }
     
-    func transformLocalVideo(for position: CameraPosition) {
+    func transformLocalVideo(for position: CameraPositionEntity) {
         videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
     }
     

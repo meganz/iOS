@@ -2,7 +2,7 @@
 
 struct CaptureDeviceRepository: CaptureDeviceRepositoryProtocol {
     
-    func wideAngleCameraLocalizedName(postion: CameraPosition) -> String? {
+    func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String? {
         guard let capturePosition = AVCaptureDevice.Position(rawValue: postion.rawValue) else {
             return nil
         }

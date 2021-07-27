@@ -40,7 +40,7 @@ private enum CallViewModelConstant {
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, subtitle: String, isUserAGuest: Bool, isOneToOne: Bool)
-        case configLocalUserView(position: CameraPosition)
+        case configLocalUserView(position: CameraPositionEntity)
         case switchMenusVisibility
         case toggleLayoutButton
         case switchLayoutMode(layout: CallLayoutMode, participantsCount: Int)
@@ -57,7 +57,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case participantRemoved(String)
         case reconnecting
         case reconnected
-        case updateCameraPositionTo(position: CameraPosition)
+        case updateCameraPositionTo(position: CameraPositionEntity)
         case updatedCameraPosition
         case showRenameAlert(title: String, isMeeting: Bool)
         case enableRenameButton(Bool)
@@ -97,7 +97,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let callsUseCase: CallsUseCaseProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
-    private let remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol
+    private let remoteVideoUseCase: CallRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
@@ -110,7 +110,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          callsUseCase: CallsUseCaseProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          localVideoUseCase: CallsLocalVideoUseCaseProtocol,
-         remoteVideoUseCase: CallsRemoteVideoUseCaseProtocol,
+         remoteVideoUseCase: CallRemoteVideoUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
@@ -626,7 +626,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
 }
 
 extension MeetingParticipantsLayoutViewModel: CallsLocalVideoCallbacksUseCaseProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data!) {
+    func localVideoFrameData(width: Int, height: Int, buffer: Data) {
         invokeCommand?(.localVideoFrame(width, height, buffer))
         
         if switchingCamera {
@@ -641,8 +641,8 @@ extension MeetingParticipantsLayoutViewModel: CallsLocalVideoCallbacksUseCasePro
     }
 }
 
-extension MeetingParticipantsLayoutViewModel: CallsRemoteVideoListenerUseCaseProtocol {
-    func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data!) {
+extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProtocol {
+    func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data) {
         guard let participant = callParticipants.filter({ $0.clientId == clientId }).first else {
             MEGALogError("Error getting participant from remote video frame")
             return

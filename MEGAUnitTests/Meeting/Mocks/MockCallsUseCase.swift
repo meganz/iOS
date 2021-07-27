@@ -3,7 +3,7 @@
 final class MockCallsUseCase: CallsUseCaseProtocol {
     var startListeningForCall_CalledTimes = 0
     var stopListeningForCall_CalledTimes = 0
-    var callCompletion: Result<CallEntity, CallsErrorEntity> = .failure(.generic)
+    var callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic)
     var createActiveSessions_calledTimes = 0
     var hangCall_CalledTimes = 0
     var endCall_CalledTimes = 0
@@ -25,15 +25,15 @@ final class MockCallsUseCase: CallsUseCaseProtocol {
         return callEntity
     }
     
-    func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+    func answerIncomingCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }
     
-    func startOutgoingCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+    func startOutgoingCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }
     
-    func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallsErrorEntity>) -> Void) {
+    func joinActiveCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }
     

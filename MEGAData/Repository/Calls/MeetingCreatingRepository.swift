@@ -2,9 +2,14 @@ import Foundation
 
 final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol {
     
-    private let chatSdk = MEGASdkManager.sharedMEGAChatSdk()
-    private let sdk = MEGASdkManager.sharedMEGASdk()
+    private let chatSdk: MEGAChatSdk
+    private let sdk: MEGASdk
     private var chatResultDelegate: MEGAChatResultDelegate?
+    
+    init(chatSdk: MEGAChatSdk, sdk: MEGASdk) {
+        self.chatSdk = chatSdk
+        self.sdk = sdk
+    }
     
     func getUsername() -> String {
         let user = MEGAStore.shareInstance().fetchUser(withEmail: sdk.myEmail)
@@ -26,7 +31,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         chatSdk.createChatLink(chatId)
     }
     
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
             guard let self = self else { return }
             guard let chatroom = self.chatSdk.chatRoom(forChatId: request.chatHandle) else {
@@ -52,7 +57,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         chatSdk.createMeeting(withTitle: meetingName, delegate: delegate)
     }
 
-    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
             guard let self = self, let megaChatRoom = self.chatSdk.chatRoom(forChatId: request.chatHandle) else {
                 MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
@@ -76,7 +81,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         
     }
     
-    func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+    func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         guard let url = URL(string: link) else {
             completion(.failure(.generic))
             return
@@ -171,7 +176,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         }))
     }
     
-    private func answerCall(for chatRoom: ChatRoomEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallsErrorEntity>) -> Void) {
+    private func answerCall(for chatRoom: ChatRoomEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
         let answerCallDelegate: MEGAChatRequestDelegate =  MEGAChatAnswerCallRequestDelegate { [weak self] (chatError) in
             guard let self = self else { return }

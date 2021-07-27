@@ -27,7 +27,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         case updateAvatarImage(UIImage)
         case updateVideoButton(enabled: Bool)
         case updateMicrophoneButton(enabled: Bool)
-        case updateCameraPosition(position: CameraPosition)
+        case updateCameraPosition(position: CameraPositionEntity)
         case loadingStartMeeting
         case loadingEndMeeting
         case localVideoFrame(width: Int, height: Int, buffer: Data!)
@@ -235,7 +235,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func joinChatCall(chatId: UInt64) {
-        meetingUseCase.joinChatCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled, userHandle: userHandle) { [weak self] in
+        meetingUseCase.joinCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled, userHandle: userHandle) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):
@@ -257,7 +257,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             dispatch(.updateMeetingName(defaultMeetingName))
         }
         
-        meetingUseCase.startChatCall(meetingName: meetingName, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled) { [weak self] in
+        meetingUseCase.startCall(meetingName: meetingName, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):
@@ -380,7 +380,7 @@ final class MeetingCreatingViewModel: ViewModelType {
 }
 
 extension MeetingCreatingViewModel: CallsLocalVideoCallbacksUseCaseProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data!) {
+    func localVideoFrameData(width: Int, height: Int, buffer: Data) {
         invokeCommand?(.localVideoFrame(width: width, height: height, buffer: buffer))
     }
     

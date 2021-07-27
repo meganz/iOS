@@ -1,10 +1,14 @@
 
-final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtocol {
+final class CallLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtocol {
     
-    private let chatSdk = MEGASdkManager.sharedMEGAChatSdk()
+    private let chatSdk: MEGAChatSdk
     private var localVideoCallbacksDelegate: CallsLocalVideoListenerRepositoryProtocol?
 
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    init(chatSdk: MEGAChatSdk) {
+        self.chatSdk = chatSdk
+    }
+    
+    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         chatSdk.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
             if error?.type == .MEGAChatErrorTypeOk {
                 completion(.success)
@@ -14,7 +18,7 @@ final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtoc
         }))
     }
     
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         chatSdk.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
             if error?.type == .MEGAChatErrorTypeOk {
                 completion(.success)
@@ -40,7 +44,7 @@ final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtoc
         chatSdk.videoDeviceSelected()
     }
     
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionError>) -> Void) {
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void) {
         let delegate =  MEGAChatGenericRequestDelegate { request, error in
             if error.type == .MEGAChatErrorTypeOk {
                 completion(.success)
@@ -52,7 +56,7 @@ final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtoc
         chatSdk.setChatVideoInDevices(localizedName, delegate: delegate)
     }
     
-    func openVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         chatSdk.openVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { request, error in
             if error.type == .MEGAChatErrorTypeOk {
                 completion(.success)
@@ -62,7 +66,7 @@ final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtoc
         }))
     }
     
-    func releaseVideoDevice(completion: @escaping (Result<Void, CallsErrorEntity>) -> Void) {
+    func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         chatSdk.releaseVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { request, error in
             if error.type == .MEGAChatErrorTypeOk {
                 if error.type == .MEGAChatErrorTypeOk {
@@ -75,13 +79,13 @@ final class CallsLocalVideoRepository: NSObject, CallsLocalVideoRepositoryProtoc
     }
 }
 
-extension CallsLocalVideoRepository: MEGAChatVideoDelegate {
-    func onChatVideoData(_ api: MEGAChatSdk!, chatId: UInt64, width: Int, height: Int, buffer: Data!) {
+extension CallLocalVideoRepository: MEGAChatVideoDelegate {
+    func onChatVideoData(_ api: MEGAChatSdk, chatId: UInt64, width: Int, height: Int, buffer: Data) {
         localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
     }
 }
 
-extension CallsLocalVideoRepository: MEGAChatRequestDelegate {
+extension CallLocalVideoRepository: MEGAChatRequestDelegate {
     func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
         if request.type == .changeVideoStream {
             localVideoCallbacksDelegate?.localVideoChangedCameraPosition()
