@@ -26,6 +26,12 @@
 
 - (void)startCall:(MEGAChatCall *)call {
     MEGALogDebug(@"[CallKit] Start call %@", call);
+    NSString *uuidString = [call.uuid UUIDString];
+    if (uuidString == nil || uuidString.length == 0) {
+        MEGALogDebug(@"UUID string cannot be empty of nil");
+        return;
+    }
+    
     CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:call.chatId]];
     CXStartCallAction *startCallAction = [[CXStartCallAction alloc] initWithCallUUID:call.uuid handle:handle];
     startCallAction.video = call.hasLocalVideo;
