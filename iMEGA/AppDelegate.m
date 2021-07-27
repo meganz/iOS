@@ -120,7 +120,6 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [Helper switchToStaging];
     [UncaughtExceptionHandler registerHandler];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
     
