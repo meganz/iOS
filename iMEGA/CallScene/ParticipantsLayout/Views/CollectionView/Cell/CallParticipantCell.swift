@@ -41,6 +41,7 @@ class CallParticipantCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        participant?.videoDataDelegate = nil
         participant = nil
     }
 }

@@ -98,12 +98,6 @@ extension CallsCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CallParticipantCell, let participant = cell.participant, let image = avatars[participant.participantId] else { return }
         cell.setAvatar(image: image)
-        participant.videoDataDelegate = cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? CallParticipantCell, let participant = cell.participant else { return }
-        participant.videoDataDelegate = nil
     }
 }
 
