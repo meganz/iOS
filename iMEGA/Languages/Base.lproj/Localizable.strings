@@ -1752,10 +1752,6 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
-/* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call"="%@ joined the call";
-/* Message to inform the local user that someone has left the current group call */
-"%@ left the call"="%@ left the call";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
 /* Message shown in a chat room when there is an active call */
@@ -1964,18 +1960,8 @@
 "Enabled"="Enabled";
 /* Text button for init a group chat with link. */
 "New Chat Link"="New Chat Link";
-/* Title for Enter Meeting Link. */
-"Enter Meeting Link"="Enter Meeting Link";
-/* Text button for init a Meeting. */
-"New Meeting"="New Meeting";
 /* Text button for init a group chat */
 "New Group Chat"="New Group Chat";
-/* Meeting Title */
-"%@ Meeting"="%@ Meeting";
-/* Join MEGA Title */
-"Do More With MEGA"="Do More With MEGA";
-/* Join MEGA subtitle */
-"Sign up for a free account and get up to 20GB of storage"="Sign up for a free account and get up to 20GB of storage";
 /* Title for the recents section. */
 "Recents"="Recents";
 /* Title show in Recents on the empty state when the recent activity is hidden */
@@ -2004,12 +1990,6 @@
 "No recent activity"="No Recent Activity";
 /* Plural of items which contains a folder. 2 items */
 "%1$d items"="%1$d items";
-/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end"="Meeting Ended";
-/* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="View Meeting Chat";
-/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end.description"="The meeting you're trying to join has already ended. You can still view the meeting chat history.";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Chat Link Unavailable";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2596,12 +2576,6 @@
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="My Account";
-/* Contacts selection screen header: Invite contacts to meetings */
-"Invite Participants" = "Invite Participants";
-/* Meetings: Floating panel participants count header */
-"Participants (%d)" = "Participants (%d)";
-/* Meetings: Floating panel participants listing indication if a participant is moderator*/
-"MODERATOR"="MODERATOR";
 /* Text for title for favourite nodes */
 "Favourites"="Favourites";
 /* Text describing that there is not any node marked as favourite */
@@ -2618,16 +2592,10 @@
 "Quickly access files on Recents section"="Quickly access files from your Recents section";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Quickly access files from your Offline section";
-/* Meetings: End a call */
-"End"="End";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="The device does not have enough space for MEGA to run properly.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";
-/* Action of a call/meeting to rename it */
-"meetings.action.rename"="Rename Meeting";
-/* Action of a call/meeting to share its link */
-"meetings.action.shareLink"="Share Meeting Link";
 /* The title of Turn on Notifications view */
 "dialog.turnOnNotifications.label.title"="Turn on Notifications";
 /* The description of Turn on Notifications view */
@@ -2646,14 +2614,6 @@
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
-/* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join...";
-/* Message shown when the user is the only one left in the meeting */
-"meetings.message.noOtherParticipants"="You are the only one here...";
-/* Message header when the user enters a invalid meeting URL */
-"meetings.joinMeeting.header"="Invalid Meeting URL";
-/* Message description when the user enters a invalid meeting URL */
-"meetings.joinMeeting.description"="Unable to join the meeting. Please try again.";
 /* Offline log out warning message */
 "offline.logOut.warning.message"="Your content will be deleted from this device when you log out.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
@@ -2666,6 +2626,42 @@
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Owner)";
+/* Name for the recovery key file */
+"general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@ joined the call";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@ left the call";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="Enter Meeting Link";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="New Meeting";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="%@ Meeting";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="Meeting Ended";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="View Meeting Chat";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="The meeting you're trying to join has already ended. You can still view the meeting chat history.";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants" = "Invite Participants";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount" = "Participants (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator*/
+"meetings.participant.moderator"="MODERATOR";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="Rename Meeting";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="Share Meeting Link";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="Waiting for others to join...";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="You are the only one here...";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="Invalid Meeting URL";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="Unable to join the meeting. Please try again.";
 /* Message shown when the meeting link cannot be generated*/
 "meetings.sharelink.Error" = "No meeting link available";
 /* Button text to join a meeting for the logged in user*/
@@ -2682,7 +2678,5 @@
 "meetings.joinMega.paragraph2.description"= "Sign up now and enjoy advanced collaboration features for free.";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="You are the new call moderator";
-/* Name for the recovery key file */
-"general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";

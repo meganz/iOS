@@ -166,9 +166,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .localVideoFrame(let width, let height, let buffer):
             localUserView.frameData(width: width, height: height, buffer: buffer)
         case .participantAdded(let name):
-            showNotification(message: String(format: NSLocalizedString("%@ joined the call", comment: "Message to inform the local user that someone has joined the current group call"), name), color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: String(format: NSLocalizedString("meetings.message.joinedCall", comment: "Message to inform the local user that someone has joined the current group call"), name), color: UIColor.mnz_turquoise(for: traitCollection))
         case .participantRemoved(let name):
-            showNotification(message: String(format: NSLocalizedString("%@ left the call", comment: "Message to inform the local user that someone has left the current group call"), name), color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: String(format: NSLocalizedString("meetings.message.leftCall", comment: "Message to inform the local user that someone has left the current group call"), name), color: UIColor.mnz_turquoise(for: traitCollection))
         case .reconnecting:
             showReconnectingNotification()
         case .reconnected:
