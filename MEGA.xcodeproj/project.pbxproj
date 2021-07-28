@@ -1900,6 +1900,8 @@
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
 		C4652805265294C700371270 /* BannerContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4652804265294C700371270 /* BannerContainer.storyboard */; };
+		C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */; };
+		C467AD5026A8656000AFE4D2 /* DynamicTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeProtocol.swift */; };
 		C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */; };
 		C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */; };
 		C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D675250DBAAB00D74666 /* StoreUserClient.swift */; };
@@ -4006,6 +4008,8 @@
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
 		C4652804265294C700371270 /* BannerContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BannerContainer.storyboard; sourceTree = "<group>"; };
+		C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASegmentedControl.swift; sourceTree = "<group>"; };
+		C467AD4F26A8656000AFE4D2 /* DynamicTypeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeProtocol.swift; sourceTree = "<group>"; };
 		C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBannerContainerViewRouter.swift; sourceTree = "<group>"; };
 		C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModelTests.swift; sourceTree = "<group>"; };
 		C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
@@ -4950,6 +4954,7 @@
 				B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */,
 				C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */,
 				BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */,
+				C467AD4D26A8651400AFE4D2 /* DynamicType */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5700,6 +5705,7 @@
 				C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */,
 				C4EDB73726655229006A114F /* RoundedView.swift */,
 				C4A5F0E7266E31DD001D783B /* MEGALabel.swift */,
+				C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */,
 				C463CCD426A5E03C00577271 /* MEGAButton.swift */,
 				C45B971A26A7221D00875003 /* MEGAVerticalButton.swift */,
 			);
@@ -9303,6 +9309,14 @@
 			path = BannerContainerScene;
 			sourceTree = "<group>";
 		};
+		C467AD4D26A8651400AFE4D2 /* DynamicType */ = {
+			isa = PBXGroup;
+			children = (
+				C467AD4F26A8656000AFE4D2 /* DynamicTypeProtocol.swift */,
+			);
+			path = DynamicType;
+			sourceTree = "<group>";
+		};
 		C46D4A7B26557AB900748BD3 /* BannerContainer */ = {
 			isa = PBXGroup;
 			children = (
@@ -10542,6 +10556,7 @@
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				5BFA95F6252DF10D003653EB /* ManageChatHistoryViewRouter.swift in Sources */,
+				C467AD5026A8656000AFE4D2 /* DynamicTypeProtocol.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				C45F982B264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift in Sources */,
@@ -11468,6 +11483,7 @@
 				83E3459B25B598A1006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */,
 				B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
+				C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */,
 				A86B9F8A2316D6AB00F35E7A /* FLEXObjcInternal.mm in Sources */,
 				BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */,
 				5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */,

@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-final class MEGALabel: UILabel {
+final class MEGALabel: UILabel, DynamicTypeProtocol {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     
@@ -18,29 +18,21 @@ final class MEGALabel: UILabel {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        removeObserver()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        adjustsFontForContentSizeCategory = true
-
-        setup()
+        applyFontSizes()
     }
     
-    // MARK: - Private functions
-    private func observeContentSizeUpdates() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setup), name: UIContentSizeCategory.didChangeNotification, object: nil)
-    }
-    
-    @objc private func setup() {
-        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
-        font = Font(style: textStyle, weight: weight).value
-    }
-    
-    // MARK: - Internal functions
     func apply(style: MEGALabelStyle) {
         traitCollection.theme.labelStyleFactory.styler(of: style)(self)
+    }
+    
+    func applyFontSizes() {
+        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
+        font = Font(style: textStyle, weight: weight).value
     }
 }

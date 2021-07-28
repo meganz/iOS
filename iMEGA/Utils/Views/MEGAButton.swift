@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-class MEGAButton: UIButton {
+class MEGAButton: UIButton, DynamicTypeProtocol {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     @IBInspectable var selectedTextStyle: String?
@@ -20,7 +20,7 @@ class MEGAButton: UIButton {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        removeObserver()
     }
     
     override func awakeFromNib() {
@@ -28,15 +28,10 @@ class MEGAButton: UIButton {
         
         titleLabel?.adjustsFontForContentSizeCategory = true
 
-        setup()
+        applyFontSizes()
     }
     
-    // MARK: - Private functions
-    private func observeContentSizeUpdates() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setup), name: UIContentSizeCategory.didChangeNotification, object: nil)
-    }
-    
-    @objc private func setup() {
+    func applyFontSizes() {
         if isSelected {
             guard let textStyle = Font.TextStyle(rawValue: selectedTextStyle ?? ""),
                   let weight = Font.Weight(rawValue: selectedWeight ?? "") else {
