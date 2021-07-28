@@ -1321,13 +1321,18 @@
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
     self.megatype = (MEGANotificationType)[response.notification.request.content.userInfo[@"megatype"] integerValue];
     
-    if (self.mainTBC) {
+    if (self.megatype) {
         [self openTabBasedOnNotificationMegatype];
-        if (self.megatype == MEGANotificationTypeChatMessage){
+    } else {
+        if (self.mainTBC) {
             [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
+        } else {
+            if (self.megatype) {
+                [self openTabBasedOnNotificationMegatype];
+            } else {
+                self.openChatLater = response.notification.request.content.userInfo[@"chatId"];
+            }
         }
-    } else if (self.megatype == MEGANotificationTypeChatMessage){
-        self.openChatLater = response.notification.request.content.userInfo[@"chatId"];
     }
     
     completionHandler();
