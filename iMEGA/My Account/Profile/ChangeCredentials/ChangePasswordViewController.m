@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet PasswordView *currentPasswordView;
 @property (weak, nonatomic) IBOutlet PasswordView *theNewPasswordView;
 @property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UIView *passwordStrengthContainer;
 @property (weak, nonatomic) IBOutlet PasswordView *confirmPasswordView;
 
 @property (weak, nonatomic) InputView *activeInputView;
@@ -53,9 +53,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     self.confirmButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"save password or email associated to an account.") style:UIBarButtonItemStylePlain target:self action:@selector(confirmButtonTouchUpInside:)];
-    [self.confirmButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = self.confirmButton;
     
     switch (self.changeType) {
@@ -456,11 +454,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         if (textField.tag == NewPasswordTextFieldTag) {
             if (text.length == 0) {
-                self.passwordStrengthIndicatorView.customView.hidden = YES;
-                self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+                self.passwordStrengthContainer.hidden = YES;
             } else {
-                self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
-                self.passwordStrengthIndicatorView.customView.hidden = NO;
+                self.passwordStrengthContainer.hidden = NO;
                 [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text] updateDescription:YES];
             }
         }
