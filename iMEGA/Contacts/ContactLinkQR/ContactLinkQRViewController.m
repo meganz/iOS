@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (weak, nonatomic) IBOutlet MEGASegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
@@ -152,8 +152,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
             self.backButton.tintColor = self.moreButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             
             if (@available(iOS 13.0, *)) {
-                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName : UIColor.mnz_label} forState:UIControlStateNormal];
-                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f weight:UIFontWeightSemibold], NSForegroundColorAttributeName : UIColor.mnz_label} forState:UIControlStateSelected];
+                [self.segmentedControl setTitleTextColor:UIColor.mnz_label selectedColor:UIColor.mnz_label];
             } else {
                 self.segmentedControl.tintColor = UIColor.whiteColor;
             }
@@ -170,10 +169,9 @@ typedef NS_ENUM(NSInteger, QRSection) {
             self.hintLabel.textColor = UIColor.whiteColor;
             
             if (@available(iOS 13.0, *)) {
-                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
-                
                 UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : UIColor.blackColor);
-                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f weight:UIFontWeightSemibold], NSForegroundColorAttributeName : scanCodeLabelTextColor} forState:UIControlStateSelected];
+                
+                [self.segmentedControl setTitleTextColor:UIColor.whiteColor selectedColor:scanCodeLabelTextColor];
             } else {
                 self.segmentedControl.tintColor = UIColor.whiteColor;
             }
