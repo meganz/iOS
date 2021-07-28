@@ -151,8 +151,6 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    [self alignSelectorButtonsImagesAndTitlesVertically];
-    
     [self addSearchBar];
     
     [self reloadUI];
@@ -207,11 +205,6 @@
             
             [self updateAppearance];
         }
-    }
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self updateTitlesFontSizes];
-        [self alignSelectorButtonsImagesAndTitlesVertically];
     }
     
     [self configPreviewingRegistration];
@@ -548,8 +541,6 @@
     
     self.linksButton.tintColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
     self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
-    
-    [self updateTitlesFontSizes];
         
     [self.incomingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
     [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
@@ -557,18 +548,6 @@
     [self.outgoingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.linksButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
     [self.linksButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-}
-
-- (void)updateTitlesFontSizes {
-    self.incomingButton.titleLabel.font = self.incomingButton.selected ? [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightSemibold] : [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
-    self.outgoingButton.titleLabel.font = self.outgoingButton.selected ? [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightSemibold] : [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
-    self.linksButton.titleLabel.font = self.linksButton.selected ? [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightSemibold] : [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
-}
-
-- (void)alignSelectorButtonsImagesAndTitlesVertically {
-    [self.incomingButton mnz_alignImageAndTitleVerticallyWithPadding:0.0];
-    [self.outgoingButton mnz_alignImageAndTitleVerticallyWithPadding:0.0];
-    [self.linksButton mnz_alignImageAndTitleVerticallyWithPadding:0.0];
 }
 
 - (void)startEditingModeAtIndex:(NSIndexPath *)indexPath {

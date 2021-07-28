@@ -5,15 +5,20 @@ final class MEGALabel: UILabel {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     
-    // MARK: - Private functions
-    private func setup() {
-        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
-        font = Font(style: textStyle, weight: weight).value
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        observeContentSizeUpdates()
     }
     
-    // MARK: - Internal functions
-    func apply(style: MEGALabelStyle) {
-        traitCollection.theme.labelStyleFactory.styler(of: style)(self)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        observeContentSizeUpdates()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func awakeFromNib() {
@@ -22,5 +27,20 @@ final class MEGALabel: UILabel {
         adjustsFontForContentSizeCategory = true
 
         setup()
+    }
+    
+    // MARK: - Private functions
+    private func observeContentSizeUpdates() {
+        NotificationCenter.default.addObserver(self, selector: #selector(setup), name: UIContentSizeCategory.didChangeNotification, object: nil)
+    }
+    
+    @objc private func setup() {
+        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
+        font = Font(style: textStyle, weight: weight).value
+    }
+    
+    // MARK: - Internal functions
+    func apply(style: MEGALabelStyle) {
+        traitCollection.theme.labelStyleFactory.styler(of: style)(self)
     }
 }

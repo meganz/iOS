@@ -49,13 +49,19 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jG1-zV-rlv">
                                                 <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleAspectFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7H-d7-rZL">
+                                                    <button opaque="NO" contentMode="scaleAspectFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7H-d7-rZL" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" title="Incoming" image="incomingSegmentControler"/>
                                                         <state key="selected">
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="footnote"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="footnote"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="incomingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="3wR-mu-5d1"/>
                                                         </connections>
@@ -80,13 +86,19 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i0g-8u-weC">
                                                 <rect key="frame" x="138" y="0.0" width="138" height="50"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrF-Sh-NQN">
+                                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrF-Sh-NQN" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" title="outgoing" image="outgoingSegmentControler"/>
                                                         <state key="selected">
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="footnote"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="footnote"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="outgoingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="EDT-nq-skb"/>
                                                         </connections>
@@ -111,13 +123,19 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nI0-PD-DCd">
                                                 <rect key="frame" x="276" y="0.0" width="138" height="50"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHD-aL-jy5">
+                                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHD-aL-jy5" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" title="link" image="linksSegmentControler"/>
                                                         <state key="selected">
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="footnote"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="footnote"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="linksTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="tut-1z-P85"/>
                                                         </connections>
@@ -571,11 +589,20 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="B7H-d7-rZL">
+            <size key="intrinsicContentSize" width="70" height="24"/>
+        </designable>
+        <designable name="IrF-Sh-NQN">
+            <size key="intrinsicContentSize" width="68" height="24"/>
+        </designable>
         <designable name="akU-GJ-wfx">
             <size key="intrinsicContentSize" width="31" height="18"/>
         </designable>
         <designable name="ggt-c4-txk">
             <size key="intrinsicContentSize" width="31" height="18"/>
+        </designable>
+        <designable name="sHD-aL-jy5">
+            <size key="intrinsicContentSize" width="42" height="24"/>
         </designable>
     </designables>
     <resources>

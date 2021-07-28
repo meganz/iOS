@@ -1879,6 +1879,7 @@
 		C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */; };
 		C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */; };
 		C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */; };
+		C45B971B26A7221D00875003 /* MEGAVerticalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B971A26A7221D00875003 /* MEGAVerticalButton.swift */; };
 		C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */; };
 		C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */; };
 		C45D791B2593AAB100EB6C2F /* MiniPlayerSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D791A2593AAB100EB6C2F /* MiniPlayerSource.swift */; };
@@ -1894,6 +1895,7 @@
 		C46157B72538A48D00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
 		C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */; };
 		C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
+		C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463CCD426A5E03C00577271 /* MEGAButton.swift */; };
 		C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527D326526BBA00371270 /* BannerContainerViewController.swift */; };
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
@@ -3984,6 +3986,7 @@
 		C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoUseCaseTests.swift; sourceTree = "<group>"; };
 		C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCaseTests.swift; sourceTree = "<group>"; };
 		C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCaseTests.swift; sourceTree = "<group>"; };
+		C45B971A26A7221D00875003 /* MEGAVerticalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAVerticalButton.swift; sourceTree = "<group>"; };
 		C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkActionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		C45D791A2593AAB100EB6C2F /* MiniPlayerSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSource.swift; sourceTree = "<group>"; };
@@ -3998,6 +4001,7 @@
 		C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAProgressBarView.swift; sourceTree = "<group>"; };
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
+		C463CCD426A5E03C00577271 /* MEGAButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAButton.swift; sourceTree = "<group>"; };
 		C46527D326526BBA00371270 /* BannerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewController.swift; sourceTree = "<group>"; };
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
@@ -5696,6 +5700,8 @@
 				C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */,
 				C4EDB73726655229006A114F /* RoundedView.swift */,
 				C4A5F0E7266E31DD001D783B /* MEGALabel.swift */,
+				C463CCD426A5E03C00577271 /* MEGAButton.swift */,
+				C45B971A26A7221D00875003 /* MEGAVerticalButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -10626,6 +10632,7 @@
 				0D213E8E263A613500B43723 /* NodeActionRepository.swift in Sources */,
 				5DD6B17424D6D67900F14515 /* UIView+RoundCornerShadow.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
+				C45B971B26A7221D00875003 /* MEGAVerticalButton.swift in Sources */,
 				BFE6906825350DF300CD21F9 /* EmptyStateViewModel.swift in Sources */,
 				BFCB810A2501B1C80096BD57 /* PhotoExplorerViewModel.swift in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
@@ -10869,6 +10876,7 @@
 				5D5DE4F82511F88900F2B4FD /* SearchFileUseCase.swift in Sources */,
 				834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
+				C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */,
 				A86B9F812316D6AB00F35E7A /* FLEXHeapEnumerator.m in Sources */,
 				C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */,
 				B6C959792689D5F900CF73A8 /* SortOrderEntity.swift in Sources */,
