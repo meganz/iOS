@@ -313,12 +313,6 @@
                 self.noContactsDescriptionLabel.text = NSLocalizedString(@"Invite contacts and start chatting securely with MEGA’s encrypted chat.", @"Text encouraging the user to invite contacts to MEGA");
                 self.inviteContactButton.titleLabel.text = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             }
-            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            self.inviteBarButtonItem.title = NSLocalizedString(@"inviteContact", nil);
-            [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
-            self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.inviteBarButtonItem];
-            [self.navigationController setToolbarHidden:NO];
-            
             break;
         }
             
@@ -370,6 +364,14 @@
         }
             
     }
+}
+
+- (void)showInviteToolbarButton {
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    self.inviteBarButtonItem.title = NSLocalizedString(@"inviteContact", nil);
+    [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
+    self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.inviteBarButtonItem];
+    [self.navigationController setToolbarHidden:NO];
 }
 
 - (void)reloadUI {
@@ -490,6 +492,7 @@
         } else {
             self.tableView.tableFooterView = UIView.new;
         }
+        [self showInviteToolbarButton];
     } else if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.tableView.tableHeaderView = self.chatNamingGroupTableViewHeader;
     }
