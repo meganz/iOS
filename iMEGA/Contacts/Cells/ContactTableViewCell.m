@@ -165,7 +165,7 @@
             self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
             break;
         case ContactsStartConversationNewMeeting:
-            self.nameLabel.text = NSLocalizedString(@"New Meeting", @"Text button for init a Meeting.");
+            self.nameLabel.text = NSLocalizedString(@"meetings.create.newMeeting", @"Text button for init a Meeting.");
             self.avatarImageView.image = [UIImage imageNamed:@"newMeeting"];
             break;
         case ContactsStartConversationJoinMeeting:

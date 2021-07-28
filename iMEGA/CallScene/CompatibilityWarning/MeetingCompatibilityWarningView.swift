@@ -10,7 +10,7 @@ final class MeetingCompatibilityWarningView: UIView {
         super.awakeFromNib()
         clipsToBounds = true
         layer.cornerRadius = 16.0
-        label.text = NSLocalizedString("calls.incompatibility.warningMessage", comment: "")
+        label.text = NSLocalizedString("meetings.incompatibility.warningMessage", comment: "")
         button.setTitle(NSLocalizedString("ok", comment: ""), for: .normal)
     }
     

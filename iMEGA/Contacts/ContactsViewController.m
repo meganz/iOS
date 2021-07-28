@@ -698,7 +698,7 @@
             }
             break;
         case ContactsModeInviteParticipants:
-            self.navigationItem.title = NSLocalizedString(@"Invite Participants", @"Menu item to add participants to a chat");
+            self.navigationItem.title = NSLocalizedString(@"meetings.panel.InviteParticipants", @"Menu item to add participants to a chat");
             break;
     }
 }

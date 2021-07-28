@@ -199,7 +199,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     }
     
     private func updateInTheMeetingLabel() {
-        participantsCountLabel.text = String(format: NSLocalizedString("Participants (%d)", comment: ""), callParticipants.count)
+        participantsCountLabel.text = String(format: NSLocalizedString("meetings.panel.ParticipantsCount", comment: ""), callParticipants.count)
     }
 }
 

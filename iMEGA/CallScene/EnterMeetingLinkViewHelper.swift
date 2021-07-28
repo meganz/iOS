@@ -29,7 +29,7 @@ final class EnterMeetingLinkViewHelper: NSObject {
     
     private func showEnterMeetingLink(presenter: UIViewController) {
         let alertViewController = UIAlertController(
-            title: NSLocalizedString("Enter Meeting Link", comment: ""),
+            title: NSLocalizedString("meetings.enterMeetingLink.title", comment: ""),
             message: nil,
             preferredStyle: .alert)
         
