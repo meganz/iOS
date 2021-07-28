@@ -4,7 +4,7 @@ import PanModal
 class EndMeetingOptionsViewViewController: UIViewController {
     private let viewModel: EndMeetingOptionsViewModel
     
-    private struct Constants {
+    private enum Constants {
         static let popoverSize = CGSize(width: 400, height: 200)
     }
     

@@ -1,7 +1,7 @@
 
 
 @objc class MeetingCompatibilityWarning: NSObject {
-    private struct Constants {
+    private enum Constants {
         static let timerDuration: TimeInterval = 26.0
         static let maxWidth: CGFloat = 600.0
         static let padding: CGFloat = 16.0
