@@ -996,26 +996,6 @@
     [self showStartConversation];
 }
 
-- (IBAction)meetingTapped:(UIBarButtonItem *)sender {
-    @weakify(self)
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"meetings.create.newMeeting", nil) detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
-        @strongify(self)
-        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:self type:MeetingConfigurationTypeStart link:nil userhandle:0];
-        [router start];
-    }]];
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"meetings.link.loggedInUser.joinButtonText", nil) detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
-        @strongify(self)
-        EnterMeetingLinkRouter *router = [[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO];
-        self.enterMeetingLinkObject = [router start];
-    }]];
-    
-    ActionSheetViewController *moreMinimizedActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
-    [self presentViewController:moreMinimizedActionSheet animated:YES completion:nil];
-}
-
 - (IBAction)optionsTapped:(UIBarButtonItem *)sender {
     if (!MEGASdkManager.sharedMEGAChatSdk.presenceConfig) {
         return;

@@ -4,7 +4,7 @@ protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInfo()
     func openChatRoom(withChatId chatId: UInt64)
     func showInviteSuccess(email: String)
-    func showInviteError(_ error: InviteError, email: String)
+    func showInviteError(_ error: InviteErrorEntity, email: String)
     func updateAttendeeAsModerator()
     func updateAttendeeAsParticipant()
 }
@@ -102,7 +102,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         presenter?.present(customModalAlertViewController, animated: true)
     }
 
-    func showInviteError(_ error: InviteError, email: String) {
+    func showInviteError(_ error: InviteErrorEntity, email: String) {
         switch error {
         case .generic(let errorString):
             SVProgressHUD.showError(withStatus: errorString)

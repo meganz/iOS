@@ -1,17 +1,17 @@
 import UIKit
 
-class JoinMegaViewController: UIViewController {
+class EncourageGuestUserToJoinMegaViewController: UIViewController {
     
     // MARK: - Internal properties
-    private let viewModel: JoinMegaViewModel
+    private let viewModel: EncourageGuestUserToJoinMegaViewModel
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var paragraph1TitleLabel: UILabel!
     @IBOutlet private weak var paragraph1SubtitleLabel: UILabel!
     @IBOutlet private weak var paragraph2TitleLabel: UILabel!
     @IBOutlet private weak var paragraph2SubtitleLabel: UILabel!
-    @IBOutlet private weak var joinButton: UIButton!
-
-    init(viewModel: JoinMegaViewModel) {
+    @IBOutlet private weak var createAccountButton: UIButton!
+    
+    init(viewModel: EncourageGuestUserToJoinMegaViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,8 +32,8 @@ class JoinMegaViewController: UIViewController {
             action: #selector(dissmissVC(_:))
         )
         
-        joinButton.setTitle(NSLocalizedString("createAccount", comment: ""), for: .normal)
-        joinButton.mnz_setupPrimary(traitCollection)
+        createAccountButton.setTitle(NSLocalizedString("createAccount", comment: ""), for: .normal)
+        createAccountButton.mnz_setupPrimary(traitCollection)
         
         paragraph1TitleLabel.text = NSLocalizedString("meetings.joinMega.paragraph1.title", comment: "")
         paragraph1SubtitleLabel.text = NSLocalizedString("meetings.joinMega.paragraph1.description", comment: "")

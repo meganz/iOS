@@ -161,12 +161,12 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 switch $0 {
                 case .success(let chatRequest):
                     MEGALogDebug("Create meeting: open chat preview succeeded with request \(chatRequest)")
-                    self?.chatResultDelegate = MEGAChatResultDelegate(completion: { (sdk, chatId, newState) in
+                    self?.chatResultDelegate = MEGAChatResultDelegate { sdk, chatId, newState in
                         if chatRequest.chatHandle == chatId, newState == .online {
                             self?.chatSdk.remove(self?.chatResultDelegate)
                             completion(.success(()))
                         }
-                    })
+                    }
                     self?.chatSdk.add(self?.chatResultDelegate)
                 case .failure(let error):
                     MEGALogDebug("Create meeting: open chat preview failure \(error)")

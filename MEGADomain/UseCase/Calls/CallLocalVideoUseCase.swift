@@ -1,26 +1,26 @@
 
-protocol CallsLocalVideoUseCaseProtocol {
+protocol CallLocalVideoUseCaseProtocol {
     func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
-    func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol)
-    func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol)
+    func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol)
+    func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol)
     func videoDeviceSelected() -> String?
     func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void)
     func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
 }
 
-protocol CallsLocalVideoCallbacksUseCaseProtocol {
+protocol CallLocalVideoCallbacksUseCaseProtocol {
     func localVideoFrameData(width: Int, height: Int, buffer: Data)
     func localVideoChangedCameraPosition()
 }
 
-final class CallLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
+final class CallLocalVideoUseCase: NSObject, CallLocalVideoUseCaseProtocol {
     
-    private let repository: CallsLocalVideoRepositoryProtocol
-    private var localVideoCallbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol?
+    private let repository: CallLocalVideoRepositoryProtocol
+    private var localVideoCallbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol?
     
-    init(repository: CallsLocalVideoRepositoryProtocol) {
+    init(repository: CallLocalVideoRepositoryProtocol) {
         self.repository = repository
     }
     
@@ -32,12 +32,12 @@ final class CallLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
         repository.disableLocalVideo(for: chatId, completion: completion)
     }
     
-    func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol) {
+    func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
         localVideoCallbacksDelegate = callbacksDelegate
         repository.addLocalVideo(for: chatId, localVideoListener: self)
     }
     
-    func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol) {
+    func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
         localVideoCallbacksDelegate = nil
         repository.removeLocalVideo(for: chatId, localVideoListener: self)
     }
@@ -59,7 +59,7 @@ final class CallLocalVideoUseCase: NSObject, CallsLocalVideoUseCaseProtocol {
     }
 }
 
-extension CallLocalVideoUseCase: CallsLocalVideoListenerRepositoryProtocol {
+extension CallLocalVideoUseCase: CallLocalVideoListenerRepositoryProtocol {
     func localVideoFrameData(width: Int, height: Int, buffer: Data) {
         localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
     }

@@ -31,14 +31,14 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let router: MeetingFloatingPanelRouting
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity? {
-        return callsUseCase.call(for: chatRoom.chatId)
+        return callUseCase.call(for: chatRoom.chatId)
     }
     private let callManagerUseCase: CallManagerUseCaseProtocol
-    private let callsUseCase: CallsUseCaseProtocol
+    private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
-    private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
+    private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
@@ -62,17 +62,17 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          isSpeakerEnabled: Bool,
          enableVideo: Bool,
          callManagerUseCase: CallManagerUseCaseProtocol,
-         callsUseCase: CallsUseCaseProtocol,
+         callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
+         localVideoUseCase: CallLocalVideoUseCaseProtocol,
          userUseCase: UserUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.callManagerUseCase = callManagerUseCase
-        self.callsUseCase = callsUseCase
+        self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
@@ -83,7 +83,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     deinit {
-        callsUseCase.stopListeningForCall()
+        callUseCase.stopListeningForCall()
     }
     
     func dispatch(_ action: MeetingFloatingPanelAction) {
@@ -100,7 +100,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 }
             }
             populateParticipants()
-            callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
+            callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuestAccount,
                                        isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                        isVideoEnabled: isVideoEnabled ?? false,
@@ -138,7 +138,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                       excludeParticpants: participantsIDs) { [weak self] userHandles in
                 guard let self = self, let call = self.call else { return }
                 self.containerViewModel?.dispatch(.onAddingParticipant)
-                userHandles.forEach { self.callsUseCase.addPeer(toCall: call, peerId: $0) }
+                userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
             }
         case .onContextMenuTap(let presenter, let sender, let attendee):
             router.showContextMenu(presenter: presenter,
@@ -171,12 +171,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .makeModerator(let participant):
             guard let call = call else { return }
             participant.isModerator = true
-            callsUseCase.makePeerAModerator(inCall: call, peerId: participant.participantId)
+            callUseCase.makePeerAModerator(inCall: call, peerId: participant.participantId)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         case .removeModerator(let participant):
             guard let call = call else { return }
             participant.isModerator = false
-            callsUseCase.removePeerAsModerator(inCall: call, peerId: participant.participantId)
+            callUseCase.removePeerAsModerator(inCall: call, peerId: participant.participantId)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
 
         }
@@ -318,7 +318,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
 }
 
 
-extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
+extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     func attendeeJoined(attendee: CallParticipantEntity) {
         callParticipants.append(attendee)
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
@@ -352,14 +352,4 @@ extension MeetingFloatingPanelViewModel: CallsCallbacksUseCaseProtocol {
                                    cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
-    
-    func remoteVideoResolutionChanged(for attende: CallParticipantEntity, with resolution: CallParticipantVideoResolution) {    }
-    func audioLevel(for attende: CallParticipantEntity) {   }
-    func participantAdded(with handle: MEGAHandle) {    }
-    func participantRemoved(with handle: MEGAHandle) {  }
-    func connecting() {   }
-    func inProgress() {    }
-    func localAvFlagsUpdated(video: Bool, audio: Bool) {    }
-    func chatTitleChanged(chatRoom: ChatRoomEntity) {   }
-    func networkQuality() {    }
 }

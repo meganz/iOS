@@ -1,6 +1,6 @@
 @testable import MEGA
 
-final class MockCallsUseCase: CallsUseCaseProtocol {
+final class MockCallUseCase: CallsUseCaseProtocol {
     var startListeningForCall_CalledTimes = 0
     var stopListeningForCall_CalledTimes = 0
     var callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic)

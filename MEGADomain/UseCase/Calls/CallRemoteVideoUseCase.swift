@@ -14,12 +14,12 @@ protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
     func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data)
 }
 
-final class CallsRemoteVideoUseCase: NSObject, CallRemoteVideoUseCaseProtocol {
+final class CallRemoteVideoUseCase: NSObject, CallRemoteVideoUseCaseProtocol {
     
-    private let repository: CallsRemoteVideoRepositoryProtocol
+    private let repository: CallRemoteVideoRepositoryProtocol
     private weak var remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol?
 
-    init(repository: CallsRemoteVideoRepository) {
+    init(repository: CallRemoteVideoRepository) {
         self.repository = repository
     }
      
@@ -56,7 +56,7 @@ final class CallsRemoteVideoUseCase: NSObject, CallRemoteVideoUseCaseProtocol {
     }
 }
 
-extension CallsRemoteVideoUseCase: CallsRemoteVideoListenerRepositoryProtocol {
+extension CallRemoteVideoUseCase: CallRemoteVideoListenerRepositoryProtocol {
     func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data) {
         remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer)
     }

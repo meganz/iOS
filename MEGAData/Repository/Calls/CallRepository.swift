@@ -1,8 +1,8 @@
 
-final class CallsRepository: NSObject, CallsRepositoryProtocol {
+final class CallRepository: NSObject, CallRepositoryProtocol {
 
     private let chatSdk: MEGAChatSdk
-    private var callbacksDelegate: CallsCallbacksRepositoryProtocol?
+    private var callbacksDelegate: CallCallbacksRepositoryProtocol?
 
     private var callId: MEGAHandle?
     private var call: CallEntity?
@@ -11,7 +11,7 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksRepositoryProtocol) {
+    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
             self.call = CallEntity(with: call)
             self.callId = call.callId
@@ -130,7 +130,7 @@ final class CallsRepository: NSObject, CallsRepositoryProtocol {
     }
 }
 
-extension CallsRepository: MEGAChatCallDelegate {
+extension CallRepository: MEGAChatCallDelegate {
     
     func onChatSessionUpdate(_ api: MEGAChatSdk!, chatId: UInt64, callId: UInt64, session: MEGAChatSession!) {
         if self.callId != callId {
@@ -223,7 +223,7 @@ extension CallsRepository: MEGAChatCallDelegate {
     }
 }
 
-extension CallsRepository: MEGAChatDelegate {
+extension CallRepository: MEGAChatDelegate {
     func onChatListItemUpdate(_ api: MEGAChatSdk!, item: MEGAChatListItem!) {
         guard let chatId = call?.chatId,
               item.chatId == chatId else {
