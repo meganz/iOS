@@ -1,6 +1,6 @@
 
 final class InviteRequestDelegate: NSObject, MEGARequestDelegate {
-    typealias Completion = (_ result: Result<Void, InviteError>) -> Void
+    typealias Completion = (_ result: Result<Void, InviteErrorEntity>) -> Void
     private let completion: Completion
     
     init(completion: @escaping Completion) {

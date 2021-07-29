@@ -20,10 +20,7 @@ struct MeetingOptionsMenuRouter: Routing {
     }
     
     func build() -> UIViewController {
-        let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: chatRoomRepository,
-                                               userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
-        let viewModel = MeetingOptionsMenuViewModel(router: self, chatRoom: chatRoom, chatRoomUseCase: chatRoomUseCase, isMyselfModerator: isMyselfModerator, containerViewModel: containerViewModel, sender: sender)
+        let viewModel = MeetingOptionsMenuViewModel(router: self, chatRoom: chatRoom, isMyselfModerator: isMyselfModerator, containerViewModel: containerViewModel, sender: sender)
         
         return MeetingOptionsMenuViewController(viewModel: viewModel, sender: sender)
     }

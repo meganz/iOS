@@ -9,15 +9,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JoinMegaViewController" customModule="MEGA" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EncourageGuestUserToJoinMegaViewController" customModule="MEGA" customModuleProvider="target">
             <connections>
-                <outlet property="imageView" destination="WrK-GW-Hi9" id="brq-sa-mz7"/>
-                <outlet property="joinButton" destination="sz3-H0-zDW" id="F6c-VA-T5z"/>
-                <outlet property="paragraph1SubtitleLabel" destination="d4Q-3x-YTq" id="8N8-Td-tW0"/>
-                <outlet property="paragraph1TitleLabel" destination="cYU-SG-EBH" id="2uV-DS-89X"/>
-                <outlet property="paragraph2SubtitleLabel" destination="08P-32-uKT" id="PW1-Iq-TfF"/>
-                <outlet property="paragraph2TitleLabel" destination="S9n-ln-R5h" id="bZE-jq-O4L"/>
-                <outlet property="view" destination="iN0-l3-epB" id="aF6-MB-XhX"/>
+                <outlet property="createAccountButton" destination="sz3-H0-zDW" id="eHp-iG-qmI"/>
+                <outlet property="imageView" destination="WrK-GW-Hi9" id="Mz2-7z-9BZ"/>
+                <outlet property="paragraph1SubtitleLabel" destination="d4Q-3x-YTq" id="9Lg-pB-Qm0"/>
+                <outlet property="paragraph1TitleLabel" destination="cYU-SG-EBH" id="plQ-NP-sXM"/>
+                <outlet property="paragraph2SubtitleLabel" destination="08P-32-uKT" id="x7y-Ka-l9v"/>
+                <outlet property="paragraph2TitleLabel" destination="S9n-ln-R5h" id="2g9-ko-rum"/>
+                <outlet property="view" destination="iN0-l3-epB" id="YdP-iY-Egr"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -36,7 +36,7 @@
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                             <state key="normal" title="Create Account"/>
                             <connections>
-                                <action selector="joinButtonTapped:" destination="-1" eventType="touchUpInside" id="4bT-JI-eU0"/>
+                                <action selector="joinButtonTapped:" destination="-1" eventType="touchUpInside" id="XU8-Pc-pxl"/>
                             </connections>
                         </button>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="xa4-7K-8SY">

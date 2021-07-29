@@ -94,9 +94,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var switchingCamera: Bool = false
     private weak var containerViewModel: MeetingContainerViewModel?
 
-    private let callsUseCase: CallsUseCaseProtocol
+    private let callUseCase: CallUseCaseProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
-    private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
+    private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let remoteVideoUseCase: CallRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
@@ -107,9 +107,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     init(router: MeetingParticipantsLayoutRouting,
          containerViewModel: MeetingContainerViewModel,
-         callsUseCase: CallsUseCaseProtocol,
+         callUseCase: CallUseCaseProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
+         localVideoUseCase: CallLocalVideoUseCaseProtocol,
          remoteVideoUseCase: CallRemoteVideoUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
@@ -119,7 +119,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         
         self.router = router
         self.containerViewModel = containerViewModel
-        self.callsUseCase = callsUseCase
+        self.callUseCase = callUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.remoteVideoUseCase = remoteVideoUseCase
@@ -133,7 +133,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     deinit {
-        callsUseCase.stopListeningForCall()
+        callUseCase.stopListeningForCall()
     }
     
     private func initTimerIfNeeded(with duration: Int) {
@@ -272,7 +272,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     func dispatch(_ action: CallViewAction) {
         switch action {
         case .onViewLoaded:
-            if let updatedCall = callsUseCase.call(for: chatRoom.chatId) {
+            if let updatedCall = callUseCase.call(for: chatRoom.chatId) {
                 call = updatedCall
             }
             if chatRoom.chatType == .meeting {
@@ -291,10 +291,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                                 isOneToOne: chatRoom.chatType == .oneToOne)
                 )
             }
-            callsUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
+            callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             remoteVideoUseCase.addRemoteVideoListener(self)
             if isActiveCall() {
-                callsUseCase.createActiveSessions()
+                callUseCase.createActiveSessions()
             } else {
                 if chatRoom.chatType == .meeting {
                     invokeCommand?(.showWaitingForOthersMessage)
@@ -323,7 +323,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .tapOnOptionsMenuButton(let presenter, let sender):
             containerViewModel?.dispatch(.showOptionsMenu(presenter: presenter, sender: sender, isMyselfModerator: chatRoom.ownPrivilege == .moderator))
         case .tapOnBackButton:
-            callsUseCase.stopListeningForCall()
+            callUseCase.stopListeningForCall()
             timer?.invalidate()
             remoteVideoUseCase.disableAllRemoteVideos()
             containerViewModel?.dispatch(.tapOnBackButton)
@@ -442,7 +442,7 @@ struct CallDurationInfo {
     let baseDate: Date
 }
 
-extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
+extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func attendeeJoined(attendee: CallParticipantEntity) {
         initTimerIfNeeded(with: Int(call.duration))
         invokeCommand?(.removeCompatibilityWarningView)
@@ -465,7 +465,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func attendeeLeft(attendee: CallParticipantEntity) {
-        if callsUseCase.call(for: call.chatId) == nil {
+        if callUseCase.call(for: call.chatId) == nil {
             callTerminated()
         } else if let index = callParticipants.firstIndex(of: attendee) {
             if attendee.video == .on {
@@ -557,7 +557,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     }
     
     func callTerminated() {
-        callsUseCase.stopListeningForCall()
+        callUseCase.stopListeningForCall()
         timer?.invalidate()
         router.dismissAndShowPasscodeIfNeeded()
     }
@@ -625,7 +625,7 @@ extension MeetingParticipantsLayoutViewModel: CallsCallbacksUseCaseProtocol {
     }
 }
 
-extension MeetingParticipantsLayoutViewModel: CallsLocalVideoCallbacksUseCaseProtocol {
+extension MeetingParticipantsLayoutViewModel: CallLocalVideoCallbacksUseCaseProtocol {
     func localVideoFrameData(width: Int, height: Int, buffer: Data) {
         invokeCommand?(.localVideoFrame(width, height, buffer))
         

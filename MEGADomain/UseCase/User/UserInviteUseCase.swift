@@ -2,7 +2,7 @@
 
 protocol UserInviteUseCaseProtocol {
     func sendInvite(forEmail email: String,
-                    completion: @escaping (Result<Void, InviteError>) -> Void)
+                    completion: @escaping (Result<Void, InviteErrorEntity>) -> Void)
 }
 
 struct UserInviteUseCase: UserInviteUseCaseProtocol {
@@ -12,7 +12,7 @@ struct UserInviteUseCase: UserInviteUseCaseProtocol {
         self.repo = repo
     }
     
-    func sendInvite(forEmail email: String, completion: @escaping (Result<Void, InviteError>) -> Void) {
+    func sendInvite(forEmail email: String, completion: @escaping (Result<Void, InviteErrorEntity>) -> Void) {
         repo.sendInvite(forEmail: email, completion: completion)
     }
 }

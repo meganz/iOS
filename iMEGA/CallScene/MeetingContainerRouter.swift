@@ -78,7 +78,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
                                                   call: call,
-                                                  callsUseCase: CallsUseCase(repository: CallsRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+                                                  callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),

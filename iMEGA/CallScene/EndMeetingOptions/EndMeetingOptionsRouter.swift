@@ -46,7 +46,7 @@ final class EndMeetingOptionsRouter: EndMeetingOptionsRouting {
     
     func showJoinMega() {
         meetingContainerViewModel?.dispatch(.endGuestUserCall {
-            JoinMegaRouter(presenter: UIApplication.mnz_presentingViewController()).start()
+            EncourageGuestUserToJoinMegaRouter(presenter: UIApplication.mnz_presentingViewController()).start()
         })
     }
 }

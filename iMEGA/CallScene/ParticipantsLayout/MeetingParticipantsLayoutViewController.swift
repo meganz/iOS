@@ -3,7 +3,7 @@ import Foundation
 
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     
-    @IBOutlet private weak var callsCollectionView: CallsCollectionView!
+    @IBOutlet private weak var callCollectionView: CallCollectionView!
     @IBOutlet private weak var localUserView: LocalUserView!
     
     @IBOutlet private weak var speakerAvatarImageView: UIImageView!
@@ -52,7 +52,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             queue: OperationQueue.main
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.callsCollectionView.layoutIfNeeded()
+            self.callCollectionView.layoutIfNeeded()
             self.viewModel.dispatch(.onViewReady)
         }
     }
@@ -102,7 +102,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             }
         }
         coordinator.animate(alongsideTransition: { _ in
-            self.callsCollectionView.collectionViewLayout.invalidateLayout()
+            self.callCollectionView.collectionViewLayout.invalidateLayout()
             self.localUserView.repositionView()
             self.emptyMeetingMessageView?.invalidateIntrinsicContentSize()
         })
@@ -128,7 +128,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .configView(let title, let subtitle, let isUserAGuest, let isOneToOne):
             self.isUserAGuest = isUserAGuest
             configureNavigationBar(title, subtitle)
-            callsCollectionView.configure(with: self)
+            callCollectionView.configure(with: self)
             if isOneToOne {
                 navigationItem.rightBarButtonItems = nil
             }
@@ -156,11 +156,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .updatePageControl(let count):
             updateNumberOfPageControl(for: count)
         case .insertParticipant(let participants):
-            callsCollectionView.addedParticipant(in: participants)
+            callCollectionView.addedParticipant(in: participants)
         case .deleteParticipantAt(let index, let participants):
-            callsCollectionView.deletedParticipant(in: participants, at: index)
+            callCollectionView.deletedParticipant(in: participants, at: index)
         case .updateParticipantAt(let index, let participants):
-            callsCollectionView.updateParticipant(in: participants, at: index)
+            callCollectionView.updateParticipant(in: participants, at: index)
         case .updateSpeakerViewFor(let participant):
             updateSpeaker(participant)
         case .localVideoFrame(let width, let height, let buffer):
@@ -199,7 +199,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .updateHasLocalAudio(let audio):
             localUserView.localAudio(enabled: audio)
         case .selectPinnedCellAt(let indexPath):
-            callsCollectionView.configurePinnedCell(at: indexPath)
+            callCollectionView.configurePinnedCell(at: indexPath)
         case .shouldHideSpeakerView(let hidden):
             speakerViews.forEach { $0.isHidden = hidden }
         case .ownPrivilegeChangedToModerator:
@@ -207,7 +207,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .lowNetworkQuality:
             showNotification(message: NSLocalizedString("Poor connection.", comment: "Message to inform the local user is having a bad quality network with someone in the current group call"), color: UIColor.systemOrange)
         case .updateAvatar(let image, let participant):
-            callsCollectionView.updateAvatar(image: image, for: participant)
+            callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
             speakerAvatarImageView.image = image
         case .updateMyAvatar(let image):
@@ -229,8 +229,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     @IBAction func didTapBagkgroundView(_ sender: UITapGestureRecognizer) {
-        let yPosition = sender.location(in: callsCollectionView).y
-        viewModel.dispatch(.tapOnView(onParticipantsView: yPosition > 0 && yPosition < callsCollectionView.frame.height))
+        let yPosition = sender.location(in: callCollectionView).y
+        viewModel.dispatch(.tapOnView(onParticipantsView: yPosition > 0 && yPosition < callCollectionView.frame.height))
     }
     
     //MARK: - Private
@@ -244,7 +244,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker || participantsCount <= 6
-        callsCollectionView.changeLayoutMode(mode)
+        callCollectionView.changeLayoutMode(mode)
     }
     
     private func updateSpeaker(_ participant: CallParticipantEntity?) {
@@ -366,7 +366,7 @@ extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate 
     }
 }
 
-extension MeetingParticipantsLayoutViewController: CallsCollectionViewDelegate {
+extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
     func collectionViewDidChangeOffset(to page: Int) {
         pageControl.currentPage = page
     }

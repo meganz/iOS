@@ -1,21 +1,21 @@
 
-protocol CallsCollectionViewDelegate: AnyObject {
+protocol CallCollectionViewDelegate: AnyObject {
     func collectionViewDidChangeOffset(to page: Int)
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath)
     func fetchAvatar(for participant: CallParticipantEntity)
 }
 
-class CallsCollectionView: UICollectionView {
+class CallCollectionView: UICollectionView {
     private var callParticipants = [CallParticipantEntity]()
     private var layoutMode: CallLayoutMode = .grid
-    private weak var callsCollectionViewDelegate: CallsCollectionViewDelegate?
+    private weak var callCollectionViewDelegate: CallCollectionViewDelegate?
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
 
-    func configure(with callsCollectionViewDelegate: CallsCollectionViewDelegate) {
+    func configure(with callCollectionViewDelegate: CallCollectionViewDelegate) {
         dataSource = self
         delegate = self
-        self.callsCollectionViewDelegate = callsCollectionViewDelegate
+        self.callCollectionViewDelegate = callCollectionViewDelegate
         register(CallParticipantCell.nib, forCellWithReuseIdentifier: CallParticipantCell.reuseIdentifier)
         backgroundColor = .black
     }
@@ -24,7 +24,7 @@ class CallsCollectionView: UICollectionView {
         callParticipants = participants
         guard participants.count == (numberOfItems(inSection: 0) + 1) else {
             reloadData()
-            MEGALogDebug("CallsCollectionView: Add particpant count reload called instead of insert")
+            MEGALogDebug("CallCollectionView: Add particpant count reload called instead of insert")
             return
         }
         insertItems(at: [IndexPath(item: callParticipants.count - 1, section: 0)])
@@ -61,7 +61,7 @@ class CallsCollectionView: UICollectionView {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        callsCollectionViewDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)))
+        callCollectionViewDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)))
     }
     
     func configurePinnedCell(at indexPath: IndexPath?) {
@@ -78,7 +78,7 @@ class CallsCollectionView: UICollectionView {
     }
 }
 
-extension CallsCollectionView: UICollectionViewDataSource {
+extension CallCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return callParticipants.count
     }
@@ -89,7 +89,7 @@ extension CallsCollectionView: UICollectionViewDataSource {
         }
         
         let participant = callParticipants[indexPath.item]
-        callsCollectionViewDelegate?.fetchAvatar(for: participant)
+        callCollectionViewDelegate?.fetchAvatar(for: participant)
         cell.configure(for: participant, in: layoutMode)
         
         return cell
@@ -101,16 +101,16 @@ extension CallsCollectionView: UICollectionViewDataSource {
     }
 }
 
-extension CallsCollectionView: UICollectionViewDelegate {
+extension CallCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard layoutMode == .speaker, let selectedParticipant = callParticipants[safe: indexPath.item] else {
             return
         }
-        callsCollectionViewDelegate?.collectionViewDidSelectParticipant(participant:selectedParticipant, at: indexPath)
+        callCollectionViewDelegate?.collectionViewDidSelectParticipant(participant:selectedParticipant, at: indexPath)
     }
 }
 
-extension CallsCollectionView: UICollectionViewDelegateFlowLayout {
+extension CallCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch layoutMode {
