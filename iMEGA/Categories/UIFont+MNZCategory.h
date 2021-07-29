@@ -26,8 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (UIFont *)italic;
 
-+ (UIFont *)mnz_preferredFontWithStyle:(UIFontTextStyle)style weight:(UIFontWeight)weight;
-
 @end
 
 NS_ASSUME_NONNULL_END
