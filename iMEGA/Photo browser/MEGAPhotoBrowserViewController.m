@@ -422,6 +422,29 @@ static const CGFloat GapBetweenPages = 10.0;
     return maximumZoomScale;
 }
 
+- (NSArray *)keyCommands {
+    UIKeyCommand *leftArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputLeftArrow modifierFlags:0 action:@selector(didInvokeLeftArrowCommand:)];
+    UIKeyCommand *rightArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputRightArrow modifierFlags:0 action:@selector(didInvokeRightArrowCommand:)];
+    return @[leftArrow, rightArrow];
+}
+
+- (void)didInvokeLeftArrowCommand:(UIKeyCommand *)keyCommand {
+    NSInteger newIndex = self.currentIndex - 1;
+    [self showPhotoAtIndex:newIndex];
+}
+
+- (void)didInvokeRightArrowCommand:(UIKeyCommand *)keyCommand {
+    NSInteger newIndex = self.currentIndex + 1;
+    [self showPhotoAtIndex:newIndex];
+}
+
+- (void)showPhotoAtIndex:(NSInteger)index {
+    if (index != self.currentIndex && index >= 0 && index < self.mediaNodes.count) {
+        self.currentIndex = index;
+        [self reloadUI];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -450,7 +473,6 @@ static const CGFloat GapBetweenPages = 10.0;
         
         NSUInteger newIndex = floor(scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
-            [self reloadTitleForIndex:newIndex];
             [self loadNearbyImagesFromIndex:newIndex];
         }
     }
