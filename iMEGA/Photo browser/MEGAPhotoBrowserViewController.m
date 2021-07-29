@@ -553,7 +553,7 @@ static const CGFloat GapBetweenPages = 10.0;
                     [playButton setImage:[UIImage imageNamed:@"blackCrossedPlayButton"] forState:UIControlStateNormal];
                 }
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
-                playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
+                playButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
                 [playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
                 [zoomableView addSubview:playButton];
             }

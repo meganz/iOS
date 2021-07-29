@@ -45,8 +45,6 @@ extension SortOrderEntity {
             return .favouriteAsc
         case .favouriteDesc:
             return .favouriteDesc
-        @unknown default:
-            return .none
         }
     }
 }
