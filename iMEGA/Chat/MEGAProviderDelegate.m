@@ -422,12 +422,6 @@
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
     switch (call.status) {
-//        case MEGAChatCallStatusRequestSent:
-//            self.outgoingCall = YES;
-//            [self.provider reportOutgoingCallWithUUID:call.uuid startedConnectingAtDate:nil];
-//            [self sendAudioPlayerInterruptDidStartNotificationIfNeeded];
-//            break;
-            
         case MEGAChatCallStatusUserNoPresent: {
             if (call.isRinging) {
                 NSUUID *uuid = [self.megaCallManager uuidForChatId:call.chatId callId:call.callId];

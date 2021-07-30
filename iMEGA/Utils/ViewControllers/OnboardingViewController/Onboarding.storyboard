@@ -63,14 +63,14 @@
                                         </constraints>
                                     </scrollView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="P3g-UA-WH7" userLabel="Bottom Stack View">
-                                        <rect key="frame" x="0.0" y="467" width="375" height="171.5"/>
+                                        <rect key="frame" x="0.0" y="407" width="375" height="243.5"/>
                                         <subviews>
                                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Jxv-iR-b0m">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="27.5"/>
                                                 <color key="pageIndicatorTintColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                                             </pageControl>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nwo-Tw-k6R" userLabel="Button Stack View">
-                                                <rect key="frame" x="0.0" y="49.5" width="375" height="122"/>
+                                                <rect key="frame" x="0.0" y="49.5" width="375" height="194"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-cN-Wxd">
                                                         <rect key="frame" x="43.5" y="0.0" width="288" height="50"/>
@@ -102,7 +102,7 @@
                                                             <constraint firstAttribute="width" constant="288" id="PiG-p8-5zn"/>
                                                             <constraint firstAttribute="height" priority="999" constant="50" id="Qb5-Y7-50n"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                         <state key="normal" title="Button"/>
                                                         <connections>
                                                             <action selector="thirdButtonTapped:" destination="ULD-EF-zT0" eventType="touchUpInside" id="Cno-Fy-avL"/>

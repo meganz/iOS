@@ -1,6 +1,6 @@
 
-protocol CallsUseCaseProtocol {
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol)
+protocol CallUseCaseProtocol {
+    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksUseCaseProtocol)
     func stopListeningForCall()
     func call(for chatId: MEGAHandle) -> CallEntity?
     func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
@@ -15,7 +15,7 @@ protocol CallsUseCaseProtocol {
     func removePeerAsModerator(inCall call: CallEntity, peerId: MEGAHandle)
 }
 
-protocol CallsCallbacksUseCaseProtocol: AnyObject {
+protocol CallCallbacksUseCaseProtocol: AnyObject {
     func attendeeJoined(attendee: CallParticipantEntity)
     func attendeeLeft(attendee: CallParticipantEntity)
     func updateAttendee(_ attendee: CallParticipantEntity)
@@ -32,16 +32,29 @@ protocol CallsCallbacksUseCaseProtocol: AnyObject {
     func networkQuality()
 }
 
-final class CallsUseCase: NSObject, CallsUseCaseProtocol {
-    
-    private let repository: CallsRepositoryProtocol
-    private weak var callbacksDelegate: CallsCallbacksUseCaseProtocol?
+//Default implementation for optional callbacks
+extension CallCallbacksUseCaseProtocol {
+    func remoteVideoResolutionChanged(for attende: CallParticipantEntity, with resolution: CallParticipantVideoResolution) { }
+    func audioLevel(for attende: CallParticipantEntity) { }
+    func participantAdded(with handle: MEGAHandle) { }
+    func participantRemoved(with handle: MEGAHandle) { }
+    func connecting() { }
+    func inProgress() { }
+    func localAvFlagsUpdated(video: Bool, audio: Bool) { }
+    func chatTitleChanged(chatRoom: ChatRoomEntity) { }
+    func networkQuality() { }
+}
 
-    init(repository: CallsRepositoryProtocol) {
+final class CallUseCase: NSObject, CallUseCaseProtocol {
+    
+    private let repository: CallRepositoryProtocol
+    private weak var callbacksDelegate: CallCallbacksUseCaseProtocol?
+
+    init(repository: CallRepositoryProtocol) {
         self.repository = repository
     }
     
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksUseCaseProtocol) {
+    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksUseCaseProtocol) {
         repository.startListeningForCallInChat(chatId, callbacksDelegate: self)
         self.callbacksDelegate = callbacksDelegate
     }
@@ -96,7 +109,7 @@ final class CallsUseCase: NSObject, CallsUseCaseProtocol {
     }
 }
 
-extension CallsUseCase: CallsCallbacksRepositoryProtocol {
+extension CallUseCase: CallCallbacksRepositoryProtocol {
 
     func createdSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
         callbacksDelegate?.attendeeJoined(attendee: CallParticipantEntity(session: session, chatId: chatId))

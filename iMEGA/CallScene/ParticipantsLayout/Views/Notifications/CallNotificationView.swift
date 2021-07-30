@@ -31,9 +31,10 @@ class CallNotificationView: UIView {
         }
         self.notificationLabel.text = message
         self.backgroundColor = backgroundColor
-        centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
-        heightAnchor.constraint(equalToConstant: notificationHeight).isActive = true
-        topAnchor.constraint(equalTo: superview.topAnchor, constant: -frame.size.height).isActive = true
+        NSLayoutConstraint.activate([centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+                                     heightAnchor.constraint(equalToConstant: notificationHeight),
+                                     topAnchor.constraint(equalTo: superview.topAnchor, constant: -frame.size.height)
+        ])
         
         fadeIn()
         

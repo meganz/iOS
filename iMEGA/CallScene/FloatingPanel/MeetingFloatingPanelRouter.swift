@@ -52,7 +52,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       isSpeakerEnabled: isSpeakerEnabled,
                                                       enableVideo: enableVideo,
                                                       callManagerUseCase: CallManagerUseCase(),
-                                                      callsUseCase: CallsUseCase(repository: CallsRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+                                                      callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),

@@ -20,7 +20,7 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private let router: MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
-    private let callsUseCase: CallsUseCaseProtocol
+    private let callUseCase: CallUseCaseProtocol
     private let callManagerUseCase: CallManagerUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
@@ -31,7 +31,7 @@ final class MeetingContainerViewModel: ViewModelType {
     init(router: MeetingContainerRouting,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
-         callsUseCase: CallsUseCaseProtocol,
+         callUseCase: CallUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callManagerUseCase: CallManagerUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
@@ -40,7 +40,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.router = router
         self.chatRoom = chatRoom
         self.call = call
-        self.callsUseCase = callsUseCase
+        self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callManagerUseCase = callManagerUseCase
         self.userUseCase = userUseCase
@@ -127,7 +127,7 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func dismissCall(completion: (() -> Void)?) {
-        if let call = callsUseCase.call(for: call.chatId) {
+        if let call = callUseCase.call(for: call.chatId) {
             if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
                let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
                 MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
@@ -136,7 +136,7 @@ final class MeetingContainerViewModel: ViewModelType {
             }
 
             callManagerUseCase.removeCallRemovedHandler()
-            callsUseCase.hangCall(for: call.callId)
+            callUseCase.hangCall(for: call.callId)
             callManagerUseCase.endCall(call)
         }
        
