@@ -300,7 +300,7 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
         showInviteSuccess_calledTimes += 1
     }
     
-    func showInviteError(_ error: InviteError, email: String) {
+    func showInviteError(_ error: InviteErrorEntity, email: String) {
         showInviteError_calledTimes += 1
     }
     

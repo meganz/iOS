@@ -1,9 +1,9 @@
 @testable import MEGA
 
-class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
+class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .success(())
     var releaseDeviceResult: Result<Void, CallErrorEntity> = .success(())
-    var selectCameraResult: Result<Void, CameraSelectionError> = .success(())
+    var selectCameraResult: Result<Void, CameraSelectionErrorEntity> = .success(())
     var videoDeviceSelectedString: String?
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0
@@ -19,11 +19,11 @@ class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
         completion(enableDisableVideoCompletion)
     }
     
-    func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol) {
+    func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
         addLocalVideo_CalledTimes += 1
     }
     
-    func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallsLocalVideoCallbacksUseCaseProtocol) {
+    func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
         removeLocalVideo_CalledTimes += 1
     }
     
@@ -31,7 +31,7 @@ class MockCallsLocalVideoUseCase: CallsLocalVideoUseCaseProtocol {
         return videoDeviceSelectedString
     }
     
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionError>) -> Void) {
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void) {
         selectedCamera_calledTimes += 1
         completion(selectCameraResult)
     }

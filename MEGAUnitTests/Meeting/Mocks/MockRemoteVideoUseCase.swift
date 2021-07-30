@@ -1,6 +1,6 @@
 @testable import MEGA
 
-class MockCallsRemoteVideoUseCase: CallsRemoteVideoUseCaseProtocol {
+class MockCallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
     var addRemoteVideoListener_CalledTimes = 0
     var disableAllRemoteVideos_CalledTimes = 0
     var enableRemoteVideo_CalledTimes = 0
@@ -10,7 +10,7 @@ class MockCallsRemoteVideoUseCase: CallsRemoteVideoUseCaseProtocol {
     var requestLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .success(())
     var stopLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .success(())
 
-    func addRemoteVideoListener(_ remoteVideoListener: CallsRemoteVideoListenerUseCaseProtocol) {
+    func addRemoteVideoListener(_ remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol) {
         addRemoteVideoListener_CalledTimes += 1
     }
     
