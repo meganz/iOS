@@ -2,8 +2,8 @@
 
 struct CallEntity {
     enum CallStatusType: Int {
-        case undefined
-        case initial
+        case undefined = -1
+        case initial = 0
         case userNoPresent
         case connecting
         case joining
