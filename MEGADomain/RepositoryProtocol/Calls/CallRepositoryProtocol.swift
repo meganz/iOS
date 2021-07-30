@@ -1,6 +1,6 @@
 
-protocol CallsRepositoryProtocol {
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallsCallbacksRepositoryProtocol)
+protocol CallRepositoryProtocol {
+    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksRepositoryProtocol)
     func stopListeningForCall()
     func call(for chatId: MEGAHandle) -> CallEntity?
     func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
@@ -15,7 +15,7 @@ protocol CallsRepositoryProtocol {
     func createActiveSessions()
 }
 
-protocol CallsCallbacksRepositoryProtocol {
+protocol CallCallbacksRepositoryProtocol {
     func createdSession(_ session: ChatSessionEntity, in chatId: MEGAHandle)
     func destroyedSession(_ session: ChatSessionEntity, in chatId: MEGAHandle)
     func avFlagsUpdated(for session: ChatSessionEntity, in chatId: MEGAHandle)

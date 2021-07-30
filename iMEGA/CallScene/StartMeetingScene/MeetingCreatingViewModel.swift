@@ -45,11 +45,9 @@ final class MeetingCreatingViewModel: ViewModelType {
     
     private let meetingUseCase: MeetingCreatingUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
-    private let callsUseCase: CallsUseCaseProtocol
-    private let localVideoUseCase: CallsLocalVideoUseCaseProtocol
+    private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
 
@@ -71,11 +69,9 @@ final class MeetingCreatingViewModel: ViewModelType {
          type: MeetingConfigurationType,
          meetingUseCase: MeetingCreatingUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
-         callsUseCase: CallsUseCaseProtocol,
-         localVideoUseCase: CallsLocalVideoUseCaseProtocol,
+         localVideoUseCase: CallLocalVideoUseCaseProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
          link: String?,
@@ -84,12 +80,10 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.type = type
         self.meetingUseCase = meetingUseCase
         self.link = link
-        self.callsUseCase = callsUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.localVideoUseCase = localVideoUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
-        self.chatRoomUseCase = chatRoomUseCase
         self.userImageUseCase = userImageUseCase
         self.userUseCase = userUseCase
         self.userHandle = userHandle
@@ -379,7 +373,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
 }
 
-extension MeetingCreatingViewModel: CallsLocalVideoCallbacksUseCaseProtocol {
+extension MeetingCreatingViewModel: CallLocalVideoCallbacksUseCaseProtocol {
     func localVideoFrameData(width: Int, height: Int, buffer: Data) {
         invokeCommand?(.localVideoFrame(width: width, height: height, buffer: buffer))
     }

@@ -1,18 +1,18 @@
 import Foundation
 import FlexLayout
 
-protocol JoinMegaRouting: Routing {
+protocol EncourageGuestUserToJoinMegaRouting: Routing {
     func dismiss(completion: (() -> Void)?)
     func createAccount()
 }
 
-extension JoinMegaRouting {
+extension EncourageGuestUserToJoinMegaRouting {
     func dismiss() {
         dismiss(completion: nil)
     }
 }
 
-@objc class JoinMegaRouter: NSObject, JoinMegaRouting {
+@objc class EncourageGuestUserToJoinMegaRouter: NSObject, EncourageGuestUserToJoinMegaRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     
@@ -21,8 +21,8 @@ extension JoinMegaRouting {
     }
     
     func build() -> UIViewController {
-        let viewModel = JoinMegaViewModel(router: self)
-        let vc = JoinMegaViewController(viewModel: viewModel)
+        let viewModel = EncourageGuestUserToJoinMegaViewModel(router: self)
+        let vc = EncourageGuestUserToJoinMegaViewController(viewModel: viewModel)
         
         baseViewController = vc
         return vc

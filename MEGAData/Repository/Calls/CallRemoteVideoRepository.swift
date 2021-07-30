@@ -1,5 +1,5 @@
 
-final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProtocol {
+final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtocol {
     
     private let chatSdk: MEGAChatSdk
     private var remoteVideos = [RemoteVideoData]()
@@ -8,7 +8,7 @@ final class CallsRemoteVideoRepository: NSObject, CallsRemoteVideoRepositoryProt
         self.chatSdk = chatSdk
     }
     
-    func enableRemoteVideo(for chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool, remoteVideoListener: CallsRemoteVideoListenerRepositoryProtocol) {
+    func enableRemoteVideo(for chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
         let remoteVideoData = RemoteVideoData(chatId: chatId, clientId: clientId, hiRes: hiRes, remoteVideoListener: remoteVideoListener)
         remoteVideos.append(remoteVideoData)
         chatSdk.addChatRemoteVideo(chatId, cliendId: clientId, hiRes: hiRes, delegate: remoteVideoData)
@@ -96,9 +96,9 @@ final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
     let chatId: MEGAHandle
     let clientId: MEGAHandle
     var hiRes: Bool = false
-    var remoteVideoListener: CallsRemoteVideoListenerRepositoryProtocol?
+    var remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol?
     
-    init(chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool, remoteVideoListener: CallsRemoteVideoListenerRepositoryProtocol) {
+    init(chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
         self.chatId = chatId
         self.clientId = clientId
         self.hiRes = hiRes
