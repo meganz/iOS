@@ -34,7 +34,7 @@ enum DeviceOrientation {
 }
 
 private enum CallViewModelConstant {
-    static let maxParticipantsCountForHighResolution = 6
+    static let maxParticipantsCountForHighResolution = 5
 }
 
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
