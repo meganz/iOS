@@ -1,7 +1,7 @@
 
 protocol MeetingContainerRouting: AnyObject, Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)
-    func dismiss(completion: (() -> Void)?)
+    func dismiss(animated: Bool, completion: (() -> Void)?)
     func toggleFloatingPanel(containerViewModel: MeetingContainerViewModel)
     func showEndMeetingOptions(presenter: UIViewController,
                                meetingContainerViewModel: MeetingContainerViewModel,
@@ -12,12 +12,6 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showShareMeetingError()
     func enableSpeaker(_ enable: Bool)
     func didAddFirstParticipant()
-}
-
-extension MeetingContainerRouting {
-    func dismiss() {
-        dismiss(completion: nil)
-    }
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -45,6 +39,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         self.enableVideo = isVideoEnabled
         self.isSpeakerEnabled = isSpeakerEnabled
         self.isAnsweredFromCallKit = isAnsweredFromCallKit
+        
+        if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
+            MEGALogDebug("Adding notifications for the call \(callId)")
+        }
         
         // While the application becomes active, if the floating panel is not shown to the user. Show it.
         self.appBecomeActiveObserver = NotificationCenter.default.addObserver(
@@ -111,9 +109,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
-    func dismiss(completion: (() -> Void)?) {
-        floatingPanelRouter?.dismiss(animated: true)
-        baseViewController?.dismiss(animated: true, completion: completion)
+    func dismiss(animated: Bool, completion: (() -> Void)?) {
+        if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
+            MEGALogDebug("Meeting ended for call \(callId) - dismiss called will animated \(animated)")
+        }
+        floatingPanelRouter?.dismiss(animated: animated)
+        baseViewController?.dismiss(animated: animated, completion: completion)
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
