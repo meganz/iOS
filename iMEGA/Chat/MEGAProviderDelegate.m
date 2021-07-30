@@ -337,14 +337,15 @@
             MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
             if ((call.status != MEGAChatCallStatusInitial && call.status != MEGAChatCallStatusUserNoPresent)
                 || chatRoom.isOneToOne) {
+                MEGALogDebug(@"[CallKit] hanging call for: %@, uuid: %@", call, action.callUUID);
                 [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.callId];
             }
         } else {
             self.endCallWhenConnect = YES;
             self.muteAudioWhenConnect = self.answerCallWhenConnect = NO;
         }
-        [action fulfill];
         [self.megaCallManager removeCallByUUID:action.callUUID];
+        [action fulfill];
     } else {
         [action fail];
     }

@@ -8,6 +8,7 @@
 
 @property (nonatomic, strong) CXCallController *callController;
 @property (nonatomic, strong) NSMutableDictionary <NSUUID *, NSNumber *> *callsDictionary;
+@property (nonatomic, copy) void (^callRemoved)(NSUUID *);
 
 @end
 
@@ -65,7 +66,6 @@
     } else {
         MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. Hang the call", [MEGASdk base64HandleForUserHandle:callId]);
         [self printAllCalls];
-//        [MEGASdkManager.sharedMEGAChatSdk hangChatCall:chatId];
     }
 }
 
@@ -103,12 +103,21 @@
     MEGALogDebug(@"[CallKit] Remove call: %@", uuid);
     [self.callsDictionary removeObjectForKey:uuid];
     [self printAllCalls];
+    if (self.callRemoved) {
+        self.callRemoved(uuid);
+    }
 }
 
 - (void)removeAllCalls {
     MEGALogDebug(@"Remove all calls:");
+    NSArray *allkeys = self.callsDictionary.allKeys;
     [self.callsDictionary removeAllObjects];
     [self printAllCalls];
+    if (self.callRemoved) {
+        [allkeys enumerateObjectsUsingBlock:^(NSUUID * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            self.callRemoved(obj);
+        }];
+    }
 }
 
 - (uint64_t)callIdForUUID:(NSUUID *)uuid {
@@ -143,6 +152,14 @@
 - (void)answerCallWithChatId:(MEGAHandle)chatId {
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
     [self answerCall:call];
+}
+
+- (void)addCallRemovedHandler:(void (^)(NSUUID *))handler {
+    self.callRemoved = handler;
+}
+
+- (void)removeCallRemovedHandler {
+    self.callRemoved = nil;
 }
 
 #pragma mark - Private

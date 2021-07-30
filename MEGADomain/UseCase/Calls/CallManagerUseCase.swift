@@ -6,6 +6,8 @@ protocol CallManagerUseCaseProtocol {
     func addCall(_ call: CallEntity)
     func startCall(_ call: CallEntity)
     func answerCall(_ call: CallEntity)
+    func addCallRemoved(handler: @escaping (UUID?) -> Void)
+    func removeCallRemovedHandler()
 }
 
 // MARK: - Use case implementation -
@@ -54,5 +56,13 @@ struct CallManagerUseCase: CallManagerUseCaseProtocol {
     func muteUnmuteCall(_ call: CallEntity, muted: Bool) {
         MEGALogDebug("CallManagerUseCase: mute call called")
         megaCallManager?.muteUnmuteCall(withCallId: call.callId, chatId: call.chatId, muted: muted)
+    }
+    
+    func addCallRemoved(handler: @escaping (UUID?) -> Void) {
+        megaCallManager?.addCallRemovedHandler(handler)
+    }
+    
+    func removeCallRemovedHandler() {
+        megaCallManager?.removeCallRemovedHandler()
     }
 }

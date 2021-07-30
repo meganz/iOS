@@ -7,6 +7,8 @@ final class MockCallManagerUseCase: CallManagerUseCaseProtocol {
     var addCall_CalledTimes = 0
     var startCall_CalledTimes = 0
     var answerCall_CalledTimes = 0
+    var addCallRemoved_CalledTimes = 0
+    var removeCallRemoved_CalledTimes = 0
 
     func endCall(_ call: CallEntity) {
         endCall_calledTimes += 1
@@ -30,5 +32,13 @@ final class MockCallManagerUseCase: CallManagerUseCaseProtocol {
     
     func answerCall(_ call: CallEntity) {
         answerCall_CalledTimes += 1
+    }
+    
+    func addCallRemoved(handler: @escaping (UUID?) -> Void) {
+        addCallRemoved_CalledTimes += 1
+    }
+    
+    func removeCallRemovedHandler() {
+        removeCallRemoved_CalledTimes += 1
     }
 }

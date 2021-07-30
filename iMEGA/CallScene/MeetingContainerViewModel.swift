@@ -46,6 +46,12 @@ final class MeetingContainerViewModel: ViewModelType {
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
         self.isAnsweredFromCallKit = isAnsweredFromCallKit
+        
+        self.callManagerUseCase.addCallRemoved { [weak self] uuid in
+            guard let uuid = uuid, let self = self, self.call.uuid == uuid else { return }
+            self.callManagerUseCase.removeCallRemovedHandler()
+            router.dismiss(animated: false, completion: nil)
+        }
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -65,7 +71,7 @@ final class MeetingContainerViewModel: ViewModelType {
         case.hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
         case .tapOnBackButton:
-            router.dismiss(completion: nil)
+            router.dismiss(animated: true, completion: nil)
         case .changeMenuVisibility:
             router.toggleFloatingPanel(containerViewModel: self)
         case .showOptionsMenu(let presenter, let sender, let isMyselfModerator):
@@ -129,11 +135,16 @@ final class MeetingContainerViewModel: ViewModelType {
                 MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
             }
 
+            callManagerUseCase.removeCallRemovedHandler()
             callsUseCase.hangCall(for: call.callId)
             callManagerUseCase.endCall(call)
         }
        
-        router.dismiss(completion: completion)
+        router.dismiss(animated: true, completion: completion)
+    }
+    
+    deinit {
+        self.callManagerUseCase.removeCallRemovedHandler()
     }
     
 }

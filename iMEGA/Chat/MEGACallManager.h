@@ -21,5 +21,6 @@
 
 - (void)startCallWithChatId:(MEGAHandle)chatId;
 - (void)answerCallWithChatId:(MEGAHandle)chatId;
-
+- (void)addCallRemovedHandler:(void(^)(NSUUID *))handler;
+- (void)removeCallRemovedHandler;
 @end
