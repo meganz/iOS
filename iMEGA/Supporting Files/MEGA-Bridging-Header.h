@@ -145,3 +145,4 @@
 #import "PhotosViewController.h"
 #import "SharedItemsViewController.h"
 #import "MOUploadTransfer+CoreDataProperties.h"
+#import "AchievementsViewController.h"
