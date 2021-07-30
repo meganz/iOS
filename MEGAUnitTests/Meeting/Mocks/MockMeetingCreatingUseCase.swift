@@ -8,13 +8,13 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
 
     var createChatLink_calledTimes = 0
     
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+    func startCall(meetingName: String, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         if let completionBlock = chatCallCompletion {
             completion(completionBlock)
         }
     }
     
-    func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+    func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         completion(joinCallCompletion)
     }
     
