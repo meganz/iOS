@@ -342,7 +342,6 @@
 		5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3D05F242A36240048123A /* UIColor+Additions.swift */; };
 		5BC47E38253F39D600853323 /* ManageChatHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC47E37253F39D600853323 /* ManageChatHistory.storyboard */; };
 		5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */; };
-		5BCD27F024A62AAC00A6E25E /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		5BCF7E43263170E900BE769B /* TermsAndPoliciesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF7E42263170E900BE769B /* TermsAndPoliciesTableViewController.swift */; };
 		5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */; };
 		5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */; };
@@ -10109,7 +10108,6 @@
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
-				5BCD27F024A62AAC00A6E25E /* GenericHeaderFooterView.xib in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
 			);

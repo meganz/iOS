@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,9 +17,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Vl-MI-BNF">
                     <rect key="frame" x="0.0" y="44" width="414" height="137"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHq-Vu-umU">
-                            <rect key="frame" x="16" y="116.5" width="382" height="16"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHq-Vu-umU">
+                            <rect key="frame" x="16" y="118" width="382" height="14.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -36,6 +36,7 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <viewLayoutGuide key="safeArea" id="PqJ-4t-dTX"/>
                     <constraints>
                         <constraint firstItem="UIR-AY-jhu" firstAttribute="top" secondItem="SHq-Vu-umU" secondAttribute="bottom" constant="4" id="0Le-Fd-fpb"/>
                         <constraint firstAttribute="trailing" secondItem="UIR-AY-jhu" secondAttribute="trailing" id="1AR-sH-ubw"/>
@@ -48,9 +49,9 @@
                         <constraint firstItem="UIR-AY-jhu" firstAttribute="leading" secondItem="1Vl-MI-BNF" secondAttribute="leading" id="oHV-mi-SFk"/>
                         <constraint firstItem="034-96-4SB" firstAttribute="top" secondItem="PqJ-4t-dTX" secondAttribute="top" id="tVw-Dh-Rpf"/>
                     </constraints>
-                    <viewLayoutGuide key="safeArea" id="PqJ-4t-dTX"/>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
                 <constraint firstItem="1Vl-MI-BNF" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="MBv-UY-fFQ"/>
                 <constraint firstItem="1Vl-MI-BNF" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="gPh-2S-u6F"/>
@@ -60,7 +61,6 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="backgroundColorView" destination="1Vl-MI-BNF" id="pf1-l5-d3L"/>
                 <outlet property="bottomSeparatorView" destination="UIR-AY-jhu" id="35A-D4-OBP"/>

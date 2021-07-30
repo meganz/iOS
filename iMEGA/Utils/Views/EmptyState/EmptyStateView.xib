@@ -34,7 +34,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="s20-oA-dSm"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -43,7 +43,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="gCF-ST-Qgu"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>

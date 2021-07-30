@@ -113,6 +113,8 @@
     
     [self.button mnz_setupPrimary:self.traitCollection];
     [self bottomViewVisibility];
+    self.button.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold];
+    self.descriptionButton.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium];
 }
 
 - (void)bottomViewVisibility {

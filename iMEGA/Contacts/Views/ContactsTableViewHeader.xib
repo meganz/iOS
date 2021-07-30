@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,15 +24,19 @@
                                 <constraint firstAttribute="height" constant="40" id="dTU-7M-2Zj"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KUz-O0-rzT">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KUz-O0-rzT" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                             <rect key="frame" x="60" y="21" width="66" height="18"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVP-Pd-geM">
-                            <rect key="frame" x="373" y="20.5" width="11" height="19.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVP-Pd-geM">
+                            <rect key="frame" x="375" y="22" width="9" height="16"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -45,19 +49,20 @@
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGT-5t-ijs">
                             <rect key="frame" x="60" y="59.5" width="354" height="0.5"/>
+                            <viewLayoutGuide key="safeArea" id="D01-UV-cde"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="geR-uF-KTc"/>
                             </constraints>
-                            <viewLayoutGuide key="safeArea" id="D01-UV-cde"/>
                         </view>
                     </subviews>
                     <gestureRecognizers/>
                     <constraints>
                         <constraint firstItem="Irg-Rg-gBB" firstAttribute="centerY" secondItem="j8b-j9-UIf" secondAttribute="centerY" id="1cJ-GN-yNM"/>
                         <constraint firstItem="m13-WL-SfT" firstAttribute="centerY" secondItem="j8b-j9-UIf" secondAttribute="centerY" id="5hg-ne-O6N"/>
-                        <constraint firstAttribute="height" constant="60" id="BNF-N3-etT"/>
+                        <constraint firstAttribute="height" constant="60" id="71o-0z-kjv"/>
                         <constraint firstItem="JVP-Pd-geM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KUz-O0-rzT" secondAttribute="trailing" constant="8" id="F7t-KZ-BjL"/>
                         <constraint firstItem="KUz-O0-rzT" firstAttribute="leading" secondItem="Irg-Rg-gBB" secondAttribute="trailing" constant="8" id="U0T-b1-t6R"/>
+                        <constraint firstItem="JVP-Pd-geM" firstAttribute="centerY" secondItem="KUz-O0-rzT" secondAttribute="centerY" id="XfN-3E-EnB"/>
                         <constraint firstItem="m13-WL-SfT" firstAttribute="leading" secondItem="JVP-Pd-geM" secondAttribute="trailing" constant="7" id="fhJ-6b-lma"/>
                         <constraint firstItem="Irg-Rg-gBB" firstAttribute="leading" secondItem="j8b-j9-UIf" secondAttribute="leading" constant="12" id="g2I-3H-c9j"/>
                         <constraint firstAttribute="bottom" secondItem="iGT-5t-ijs" secondAttribute="bottom" id="gfG-cn-8FE"/>
@@ -81,11 +86,15 @@
                                 <constraint firstAttribute="width" constant="40" id="VJV-zf-a0S"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Groups" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYJ-HK-0Om">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Groups" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYJ-HK-0Om" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                             <rect key="frame" x="60" y="21" width="52" height="18"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="jQh-Bc-N8H">
                             <rect key="frame" x="391" y="21" width="8" height="18"/>
@@ -98,12 +107,12 @@
                     <constraints>
                         <constraint firstItem="I9a-Mv-zub" firstAttribute="centerY" secondItem="QPp-22-baP" secondAttribute="centerY" id="1Z4-Kb-yo1"/>
                         <constraint firstItem="I9a-Mv-zub" firstAttribute="leading" secondItem="QPp-22-baP" secondAttribute="leading" constant="12" id="DY5-zI-Nko"/>
-                        <constraint firstAttribute="height" constant="60" id="FJg-3i-dqr"/>
+                        <constraint firstAttribute="height" constant="60" id="K2O-s6-32C"/>
+                        <constraint firstItem="iYJ-HK-0Om" firstAttribute="centerY" secondItem="QPp-22-baP" secondAttribute="centerY" id="PIZ-Dp-uhM"/>
                         <constraint firstAttribute="trailing" secondItem="jQh-Bc-N8H" secondAttribute="trailing" constant="15" id="eeB-a8-baq"/>
                         <constraint firstItem="jQh-Bc-N8H" firstAttribute="centerY" secondItem="QPp-22-baP" secondAttribute="centerY" id="fAM-wr-yzR"/>
                         <constraint firstItem="jQh-Bc-N8H" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iYJ-HK-0Om" secondAttribute="trailing" constant="8" id="h3j-jQ-OKi"/>
                         <constraint firstItem="iYJ-HK-0Om" firstAttribute="leading" secondItem="I9a-Mv-zub" secondAttribute="trailing" constant="8" id="if3-3F-CnA"/>
-                        <constraint firstItem="iYJ-HK-0Om" firstAttribute="centerY" secondItem="QPp-22-baP" secondAttribute="centerY" id="uTq-Lr-ePP"/>
                     </constraints>
                     <connections>
                         <outletCollection property="gestureRecognizers" destination="GG1-mJ-sym" appends="YES" id="zWt-ho-YRc"/>
@@ -144,6 +153,14 @@
             </connections>
         </tapGestureRecognizer>
     </objects>
+    <designables>
+        <designable name="KUz-O0-rzT">
+            <size key="intrinsicContentSize" width="65.5" height="18"/>
+        </designable>
+        <designable name="iYJ-HK-0Om">
+            <size key="intrinsicContentSize" width="51.5" height="18"/>
+        </designable>
+    </designables>
     <resources>
         <image name="contactRequests" width="40" height="40"/>
         <image name="groups" width="40" height="40"/>
