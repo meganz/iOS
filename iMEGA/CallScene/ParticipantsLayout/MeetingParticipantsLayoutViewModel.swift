@@ -157,6 +157,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func switchLayout() {
+        callParticipants.forEach { $0.videoDataDelegate = nil }
         if layoutMode == .grid {
             layoutMode = .speaker
             let participantsWithHighResolutionNoSpeaker = callParticipants.filter { $0.videoResolution == .high && $0.video == .on && $0.speakerVideoDataDelegate == nil }.map { $0.clientId }
@@ -647,7 +648,10 @@ extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProt
             MEGALogError("Error getting participant from remote video frame")
             return
         }
-        
+        if participant.videoDataDelegate == nil {
+            guard let index = callParticipants.firstIndex(of: participant) else { return }
+            invokeCommand?(.updateParticipantAt(index, callParticipants))
+        }
         participant.remoteVideoFrame(width: width, height: height, buffer: buffer)
     }
 }
