@@ -865,6 +865,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [MEGASdkManager.sharedMEGAChatSdk logout];
             if ([MEGASdkManager sharedMEGAChatSdk].myEmail == nil || [MEGASdkManager sharedMEGAChatSdk].myEmail.mnz_isEmpty) {
                 [[[EncourageGuestUserToJoinMegaRouter alloc] initWithPresenter:UIApplication.mnz_visibleViewController] start];
             }
