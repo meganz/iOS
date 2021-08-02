@@ -19,7 +19,6 @@ final class CallParticipantEntity: Equatable {
     let participantId: MEGAHandle
     let clientId: MEGAHandle
     var name: String?
-    var networkQuality: Int
     var email: String?
     var isModerator: Bool
     var isInContactList: Bool
@@ -43,7 +42,6 @@ final class CallParticipantEntity: Equatable {
         self.chatId = chatId
         self.participantId = participantId
         self.clientId = clientId
-        self.networkQuality = networkQuality
         self.email = email
         self.isModerator = isModerator
         self.isInContactList = isInContactList

@@ -5,10 +5,10 @@ class MockCallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
     var disableAllRemoteVideos_CalledTimes = 0
     var enableRemoteVideo_CalledTimes = 0
     var disableRemoteVideo_CalledTimes = 0
-    var requestHighResolutionVideoCompletion: Result<Void, CallErrorEntity> = .success(())
-    var stopHighResolutionVideoCompletion: Result<Void, CallErrorEntity> = .success(())
-    var requestLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .success(())
-    var stopLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .success(())
+    var requestHighResolutionVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
+    var stopHighResolutionVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
+    var requestLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
+    var stopLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
 
     func addRemoteVideoListener(_ remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol) {
         addRemoteVideoListener_CalledTimes += 1

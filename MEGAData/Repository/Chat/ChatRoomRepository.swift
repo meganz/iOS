@@ -67,7 +67,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         sdk.queryChatLink(chatId, delegate: publicChatLinkCreationDelegate)
     }
     
-    func userFullName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, Error>) -> Void) {
+    func userFullName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
             MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
             completion(.success(name))

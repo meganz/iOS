@@ -42,7 +42,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func build() -> UIViewController {
         guard let containerViewModel = containerViewModel else { return UIViewController() }
-        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance())
+        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared)
         let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: chatRoomRepository,
                                                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
@@ -52,7 +52,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       isSpeakerEnabled: isSpeakerEnabled,
                                                       enableVideo: enableVideo,
                                                       callManagerUseCase: CallManagerUseCase(),
-                                                      callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+                                                      callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),

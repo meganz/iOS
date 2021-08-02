@@ -1,7 +1,8 @@
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     private let audioSession: AVAudioSession
-    
+    private let callActionManager: CallActionManager
+
     var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
 
     var isBluetoothAudioRouteAvailable: Bool {
@@ -21,8 +22,9 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
     }
 
-    init(audioSession: AVAudioSession) {
+    init(audioSession: AVAudioSession, callActionManager: CallActionManager) {
         self.audioSession = audioSession
+        self.callActionManager = callActionManager
         addObservers()
     }
     
@@ -98,15 +100,15 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         if reason == .categoryChange,
            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription,
            let previousAudioPort = previousRoute.outputs.first?.toAudioPort(),
-           CallActionManager.shared.didEnableWebrtcAudioNow,
+           callActionManager.didEnableWebrtcAudioNow,
            previousAudioPort == .builtInSpeaker,
            currentAudioPort != .builtInSpeaker {
             MEGALogDebug("AudioSession: The route is changed is because of the webrtc audio")
-            CallActionManager.shared.didEnableWebrtcAudioNow = false
+            callActionManager.didEnableWebrtcAudioNow = false
             enableLoudSpeaker { _ in }
             return
-        } else if CallActionManager.shared.didEnableWebrtcAudioNow {
-            CallActionManager.shared.didEnableWebrtcAudioNow = false
+        } else if callActionManager.didEnableWebrtcAudioNow {
+            callActionManager.didEnableWebrtcAudioNow = false
         }
         
         if let handler = routeChanged, let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {

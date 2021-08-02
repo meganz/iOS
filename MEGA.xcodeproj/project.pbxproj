@@ -950,6 +950,7 @@
 		837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20E253DBABD0083D927 /* GetLinkViewController.swift */; };
 		8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */; };
 		8383CEFB26736B3600E6A0FF /* EmptyMeetingMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */; };
+		83847D9926B83CAF00A79F48 /* CallEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83847D9826B83CAF00A79F48 /* CallEntity+Additions.swift */; };
 		83850A3F26B2AACD00C62304 /* EnterMeetingLinkViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3C26B2AACC00C62304 /* EnterMeetingLinkViewHelper.swift */; };
 		83850A4026B2AACD00C62304 /* EnterMeetingLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3D26B2AACC00C62304 /* EnterMeetingLinkRouter.swift */; };
 		83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */; };
@@ -3127,6 +3128,7 @@
 		837EE20E253DBABD0083D927 /* GetLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkViewController.swift; sourceTree = "<group>"; };
 		8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMeetingMessageView.swift; sourceTree = "<group>"; };
 		8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMeetingMessageView.xib; sourceTree = "<group>"; };
+		83847D9826B83CAF00A79F48 /* CallEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallEntity+Additions.swift"; sourceTree = "<group>"; };
 		83850A3C26B2AACC00C62304 /* EnterMeetingLinkViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewHelper.swift; sourceTree = "<group>"; };
 		83850A3D26B2AACC00C62304 /* EnterMeetingLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkRouter.swift; sourceTree = "<group>"; };
 		83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewModel.swift; sourceTree = "<group>"; };
@@ -9123,6 +9125,7 @@
 				B6FD651D268D8EC600988A17 /* TransferEntity+Additions.swift */,
 				B6FD651F268D8EF100988A17 /* NodeEntity+Additions.swift */,
 				B6FD6521268D8F3600988A17 /* ShareEntity+Additions.swift */,
+				83847D9826B83CAF00A79F48 /* CallEntity+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -12637,6 +12640,7 @@
 				5D52C74C250C4FA700286A43 /* ContactRequest.swift in Sources */,
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
+				83847D9926B83CAF00A79F48 /* CallEntity+Additions.swift in Sources */,
 				B6AADEEC2518A377009A874C /* MockSMSRepository.swift in Sources */,
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
