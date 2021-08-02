@@ -1,9 +1,9 @@
 @testable import MEGA
 
 class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
-    var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .success(())
-    var releaseDeviceResult: Result<Void, CallErrorEntity> = .success(())
-    var selectCameraResult: Result<Void, CameraSelectionErrorEntity> = .success(())
+    var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
+    var releaseDeviceResult: Result<Void, CallErrorEntity> = .failure(.generic)
+    var selectCameraResult: Result<Void, CameraSelectionErrorEntity> = .failure(.generic)
     var videoDeviceSelectedString: String?
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0

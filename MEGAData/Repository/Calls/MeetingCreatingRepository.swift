@@ -4,11 +4,13 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     
     private let chatSdk: MEGAChatSdk
     private let sdk: MEGASdk
+    private let callActionManager: CallActionManager
     private var chatResultDelegate: MEGAChatResultDelegate?
     
-    init(chatSdk: MEGAChatSdk, sdk: MEGASdk) {
+    init(chatSdk: MEGAChatSdk, sdk: MEGASdk, callActionManager: CallActionManager) {
         self.chatSdk = chatSdk
         self.sdk = sdk
+        self.callActionManager = callActionManager
     }
     
     func getUsername() -> String {
@@ -51,7 +53,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 }
             }
             
-            CallActionManager.shared.startCall(chatId: chatroom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallDelegate)
+            self.callActionManager.startCall(chatId: chatroom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallDelegate)
         }
         
         chatSdk.createMeeting(withTitle: meetingName, delegate: delegate)
@@ -196,6 +198,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             }
         }
         
-        CallActionManager.shared.answerCall(chatId: chatRoom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallDelegate)
+        callActionManager.answerCall(chatId: chatRoom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallDelegate)
     }
 }

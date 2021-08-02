@@ -28,7 +28,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         
         let vm = MeetingParticipantsLayoutViewModel(router: self,
                                containerViewModel: containerViewModel,
-                               callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+                               callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
                                captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                                localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
                                remoteVideoUseCase: CallRemoteVideoUseCase(repository: CallRemoteVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),

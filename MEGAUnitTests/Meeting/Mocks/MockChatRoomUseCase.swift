@@ -1,11 +1,11 @@
 @testable import MEGA
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
-    var userDisplayNameCompletion: Result<String, Error> = .success("")
+    var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
     var createChatRoomCompletion: Result<ChatRoomEntity, ChatRoomErrorEntity>?
     var chatRoomEntity: ChatRoomEntity?
-    var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .success("")
+    var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -25,7 +25,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         completion(publicLinkCompletion)
     }
     
-    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, Error>) -> Void) {
+    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         completion(userDisplayNameCompletion)
     }
     

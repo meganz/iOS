@@ -2,13 +2,15 @@
 final class CallRepository: NSObject, CallRepositoryProtocol {
 
     private let chatSdk: MEGAChatSdk
+    private let callActionManager: CallActionManager
     private var callbacksDelegate: CallCallbacksRepositoryProtocol?
 
     private var callId: MEGAHandle?
     private var call: CallEntity?
     
-    init(chatSdk: MEGAChatSdk) {
+    init(chatSdk: MEGAChatSdk, callActionManager: CallActionManager) {
         self.chatSdk = chatSdk
+        self.callActionManager = callActionManager
     }
     
     func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksRepositoryProtocol) {
@@ -56,7 +58,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             }
         }
         
-        CallActionManager.shared.answerCall(chatId: chatId, enableVideo: false, enableAudio: true, delegate: delegate)
+        callActionManager.answerCall(chatId: chatId, enableVideo: false, enableAudio: true, delegate: delegate)
     }
     
     func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
@@ -79,7 +81,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             }
         }
         
-        CallActionManager.shared.startCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+        callActionManager.startCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
     }
     
     func joinCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
