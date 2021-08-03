@@ -36,6 +36,14 @@ final class TextEditorViewController: UIViewController {
         textView.autoPinEdgesToSuperviewSafeArea()
         registerForNotifications()
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            viewModel.dispatch(.setUpView)
+        }
+    }
 }
 
 //MARK: - U-R-MVVM ViewController ViewType
@@ -146,7 +154,7 @@ extension TextEditorViewController: ViewType {
                 target: self,
                 action: #selector(saveTapped)
             )
-            let attribute: [NSAttributedString.Key : Any] = [.font: UIFont.boldSystemFont(ofSize: 16)]
+            let attribute: [NSAttributedString.Key : Any] = [.font: UIFont.preferredFont(style: .callout, weight: .bold)]
             saveButton.setTitleTextAttributes(attribute, for: .normal)
             
             navigationItem.rightBarButtonItem = saveButton
