@@ -28,8 +28,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_onViewReady_joinMeeting() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
-
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         useCase.chatCallCompletion = .success(chatRoom)
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let audioSession = MockAudioSessionUseCase()
@@ -104,8 +103,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_joinChatCall() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: "test name Meeting", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
-
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         useCase.chatCallCompletion = .success(chatRoom)
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
 

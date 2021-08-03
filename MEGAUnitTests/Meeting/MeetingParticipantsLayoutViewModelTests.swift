@@ -4,7 +4,7 @@ import XCTest
 class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testAction_onViewLoaded() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -35,8 +35,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_onViewLoaded_activeCall() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
-        let call = CallEntity()
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity(clientSessions: [ChatSessionEntity(statusType: .inProgress)])
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
@@ -65,7 +65,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -91,7 +91,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_tapOnView() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -113,7 +113,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_tapOnLayoutButton() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -137,7 +137,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_tapOnBackButton() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -162,7 +162,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_switchIphoneOrientation_toLandscape() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -185,7 +185,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_switchIphoneOrientation_toProtrait() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -208,7 +208,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_switchIphoneOrientation_toLandscape_forceGridLayout() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
@@ -233,7 +233,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testAction_callTerminated() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: "Unit Tests", unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
