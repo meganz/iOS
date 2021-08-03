@@ -4,7 +4,7 @@ import XCTest
 final class MeetingContainerViewModelTests: XCTestCase {
 
     func testAction_onViewReady() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let callManagerUseCase = MockCallManagerUseCase()
         let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUseCase, userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
@@ -14,7 +14,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     }
     
     func testAction_hangCall_attendeeIsGuest() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
         let callUseCase = MockCallUseCase()
@@ -27,7 +27,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     }
     
     func testAction_hangCall_attendeeIsParticipantOrModerator() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
         let callUseCase = MockCallUseCase()
@@ -41,7 +41,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     }
     
     func testAction_backButtonTap() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
         test(viewModel: viewModel, action: .tapOnBackButton, expectedCommands: [])
@@ -49,7 +49,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     }
     
     func testAction_ChangeMenuVisibility() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
         test(viewModel: viewModel, action: .changeMenuVisibility, expectedCommands: [])
@@ -57,7 +57,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     }
 
     func testAction_shareLink_Success() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase()
         let callManagerUserCase = MockCallManagerUseCase()
@@ -68,7 +68,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     }
     
     func testAction_shareLink_Failure() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, changeType: nil, peerCount: 0, authorizationToken: "", title: nil, unreadCount: 0, userTypingHandle: 0, retentionTime: 0, creationTimeStamp: 0, hasCustomTitle: false, isPublicChat: false, isPreview: false, isactive: false, isArchived: false, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase()
         let callManagerUserCase = MockCallManagerUseCase()
