@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet PasswordView *retypePasswordView;
 
 @property (weak, nonatomic) IBOutlet UIButton *termsCheckboxButton;
-@property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
+@property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *termsForLosingPasswordCheckboxButton;
 @property (weak, nonatomic) IBOutlet UILabel *termsForLosingPasswordLabel;
@@ -131,6 +131,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             
             [self updateAppearance];
         }
+    }
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self setTermsOfServiceAttributedText];
+        [self setTermsForLosingPasswordAttributedText];
     }
 }
 
@@ -288,7 +293,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
-- (void)setTermsOfServiceAttributedTitle {
+- (void)setTermsOfServiceAttributedText {
     NSString *agreeWithTheMEGATermsOfService = NSLocalizedString(@"agreeWithTheMEGATermsOfService", @"");
     NSString *termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href=\"terms\">" andString:@"</a>"];
     if (!termsOfServiceString) {
@@ -297,13 +302,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
     
     UIColor *termsOfServiceColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    NSMutableAttributedString *termsOfServiceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreeWithTheMEGATermsOfService attributes:@{NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
     if (termsOfServiceString) {
         [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
     }
     
-    [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
+    [self.termsOfServiceLabel setAttributedText:termsOfServiceMutableAttributedString];
 }
 
 - (void)setTermsForLosingPasswordAttributedText {
@@ -321,7 +326,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     UIColor *primaryGrayColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     NSMutableAttributedString *termsMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreementForLosingPasswordText attributes:@{NSForegroundColorAttributeName : primaryGrayColor}];
 
-    NSDictionary *semiboldPrimaryGrayTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:12.f weight:UIFontWeightSemibold], NSForegroundColorAttributeName : primaryGrayColor};
+    NSDictionary *semiboldPrimaryGrayTextAttributes = @{NSFontAttributeName : [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightSemibold], NSForegroundColorAttributeName : primaryGrayColor};
     [termsMutableAttributedString setAttributes:semiboldPrimaryGrayTextAttributes range:semiboldPrimaryGrayTextRange];
 
     NSDictionary *greenTextAttributes = @{NSForegroundColorAttributeName : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection]};
@@ -351,7 +356,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.retypePasswordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     [self.retypePasswordView updateAppearance];
     
-    [self setTermsOfServiceAttributedTitle];
+    [self setTermsOfServiceAttributedText];
     [self setTermsForLosingPasswordAttributedText];
     
     [self.createAccountButton mnz_setupPrimary:self.traitCollection];
