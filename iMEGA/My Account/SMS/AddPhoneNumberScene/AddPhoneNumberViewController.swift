@@ -65,7 +65,9 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
             descriptionLabel.text = storage
             descriptionActivityIndicator.stopAnimating()
         case .loadAchievementError(let message):
+            descriptionLabel.isHidden = false
             descriptionLabel.text = message
+            descriptionActivityIndicator.stopAnimating()
         }
     }
     
