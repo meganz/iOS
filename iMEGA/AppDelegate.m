@@ -68,12 +68,6 @@
 
 #import "MEGA-Swift.h"
 
-typedef NS_ENUM(NSInteger, MEGANotificationType) {
-    MEGANotificationTypeShareFolder = 1,
-    MEGANotificationTypeChatMessage = 2,
-    MEGANotificationTypeContactRequest = 3
-};
-
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
