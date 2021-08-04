@@ -843,11 +843,30 @@
             return;
     }
     
-    self.mainTBC.selectedIndex = tabTag;
-    if (self.megatype == MEGANotificationTypeContactRequest) {
-        MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
-        ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
-        [navigationController pushViewController:contactRequestsVC animated:NO];
+    void (^manageNotificationBlock)(void) = ^{
+        if ([UIApplication.mnz_visibleViewController isKindOfClass: [ChatViewController class]]) {
+            MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeChat];
+            [navigationController popToRootViewControllerAnimated:NO];
+        }
+        
+        self.mainTBC.selectedIndex = tabTag;
+        if (self.megatype == MEGANotificationTypeContactRequest) {
+            if ([UIApplication.mnz_visibleViewController isKindOfClass: [ContactRequestsViewController class]]) {
+                return;
+            }
+            MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
+            ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+            [navigationController pushViewController:contactRequestsVC animated:NO];
+        }
+    };
+    
+    UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+    if (rootViewController.presentedViewController) {
+        [rootViewController dismissViewControllerAnimated:YES completion:^{
+            manageNotificationBlock();
+        }];
+    } else {
+        manageNotificationBlock();
     }
 }
 
@@ -1327,11 +1346,7 @@
         if (self.mainTBC) {
             [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];
         } else {
-            if (self.megatype) {
-                [self openTabBasedOnNotificationMegatype];
-            } else {
-                self.openChatLater = response.notification.request.content.userInfo[@"chatId"];
-            }
+            self.openChatLater = response.notification.request.content.userInfo[@"chatId"];
         }
     }
     
