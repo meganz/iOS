@@ -2634,3 +2634,5 @@
 "general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
 /* This message is shown when calling and the receiver is not picking up the call */
 "calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your call might not be connected due to version incompatibility issues.";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Choose";
