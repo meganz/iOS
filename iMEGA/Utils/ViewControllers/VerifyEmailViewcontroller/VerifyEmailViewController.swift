@@ -30,6 +30,11 @@ class VerifyEmailViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         
         updateAppearance()
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            localizeLabels()
+            boldenText()
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -77,8 +82,8 @@ class VerifyEmailViewController: UIViewController {
         let bottomStringComponents = bottomString.components(separatedBy: "[/S]")
         guard let textToBolden = bottomStringComponents.first, let textRegular = bottomStringComponents.last else { return }
 
-        let attributtedString = NSMutableAttributedString(string: textToBolden, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
-        let regularlString = NSAttributedString(string: textRegular, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let attributtedString = NSMutableAttributedString(string: textToBolden, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(style: .callout, weight: .semibold)])
+        let regularlString = NSAttributedString(string: textRegular, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout)])
         attributtedString.append(regularlString)
 
         bottomDescriptionLabel.attributedText = attributtedString
