@@ -91,13 +91,21 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+        MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "No name") with title \(title)")
         sdk.setChatTitle(chatId, title: title, delegate: MEGAChatGenericRequestDelegate { (request, error) in
             guard error.type == .MEGAChatErrorTypeOk else {
+                MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "No name") with title \(title) failed with error \(error)")
                 completion(.failure(.generic))
                 return
             }
             
-            completion(.success(request.text))
+            guard let text = request.text else {
+                MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "No name") with title \(title) with text nil")
+                completion(.failure(.emptyTextResponse))
+                return
+            }
+            
+            completion(.success(text))
         })
     }
 }
