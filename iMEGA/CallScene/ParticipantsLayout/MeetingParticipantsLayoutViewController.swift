@@ -280,6 +280,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         renameAlertController.addTextField { textField in
             textField.text = title
             textField.returnKeyType = .done
+            textField.enablesReturnKeyAutomatically = true
             textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         }
 
