@@ -9,6 +9,9 @@ extension ChatSessionEntity {
         self.audioDetected = session.audioDetected
         self.isOnHold = session.isOnHold
         self.changes = session.changes
-        self.isHighResolution = session.canReceiveVideoHiRes
+        self.isHighResolution = session.isHighResVideo
+        self.isLowResolution = session.isLowResVideo
+        self.canReceiveVideoHiRes = session.canReceiveVideoHiRes
+        self.canReceiveVideoLowRes = session.canReceiveVideoLowRes
     }
 }

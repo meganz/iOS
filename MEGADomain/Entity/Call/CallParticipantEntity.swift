@@ -1,9 +1,4 @@
 
-enum CallParticipantVideoResolution {
-    case low
-    case high
-}
-
 protocol CallParticipantVideoDelegate: AnyObject {
     func frameData(width: Int, height: Int, buffer: Data!)
 }
@@ -24,7 +19,10 @@ final class CallParticipantEntity: Equatable {
     var isInContactList: Bool
     var video: CallParticipantAudioVideoFlag = .unknown
     var audio: CallParticipantAudioVideoFlag = .unknown
-    var videoResolution: CallParticipantVideoResolution
+    var isVideoHiRes: Bool
+    var isVideoLowRes: Bool
+    var canReceiveVideoHiRes: Bool
+    var canReceiveVideoLowRes: Bool
     weak var videoDataDelegate: CallParticipantVideoDelegate?
     weak var speakerVideoDataDelegate: CallParticipantVideoDelegate?
     var isSpeakerPinned: Bool = false
@@ -38,7 +36,10 @@ final class CallParticipantEntity: Equatable {
          isInContactList: Bool,
          video: CallParticipantAudioVideoFlag = .unknown,
          audio: CallParticipantAudioVideoFlag = .unknown,
-         videoResolution: CallParticipantVideoResolution) {
+         isVideoHiRes: Bool,
+         isVideoLowRes: Bool,
+         canReceiveVideoHiRes: Bool,
+         canReceiveVideoLowRes: Bool) {
         self.chatId = chatId
         self.participantId = participantId
         self.clientId = clientId
@@ -47,7 +48,10 @@ final class CallParticipantEntity: Equatable {
         self.isInContactList = isInContactList
         self.video = video
         self.audio = audio
-        self.videoResolution = videoResolution
+        self.isVideoHiRes = isVideoHiRes
+        self.isVideoLowRes = isVideoLowRes
+        self.canReceiveVideoHiRes = canReceiveVideoHiRes
+        self.canReceiveVideoLowRes = canReceiveVideoLowRes
     }
     
     static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {

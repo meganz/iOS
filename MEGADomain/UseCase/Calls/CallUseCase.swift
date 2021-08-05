@@ -19,7 +19,7 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
     func attendeeJoined(attendee: CallParticipantEntity)
     func attendeeLeft(attendee: CallParticipantEntity)
     func updateAttendee(_ attendee: CallParticipantEntity)
-    func remoteVideoResolutionChanged(for attendee: CallParticipantEntity, with resolution: CallParticipantVideoResolution)
+    func remoteVideoResolutionChanged(for attendee: CallParticipantEntity)
     func audioLevel(for attendee: CallParticipantEntity)
     func callTerminated()
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
@@ -34,7 +34,7 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
 
 //Default implementation for optional callbacks
 extension CallCallbacksUseCaseProtocol {
-    func remoteVideoResolutionChanged(for attende: CallParticipantEntity, with resolution: CallParticipantVideoResolution) { }
+    func remoteVideoResolutionChanged(for attende: CallParticipantEntity) { }
     func audioLevel(for attende: CallParticipantEntity) { }
     func participantAdded(with handle: MEGAHandle) { }
     func participantRemoved(with handle: MEGAHandle) { }
@@ -152,11 +152,11 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
     }
     
     func onHiResSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
-        callbacksDelegate?.remoteVideoResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId), with: .high)
+        callbacksDelegate?.remoteVideoResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
     }
     
     func onLowResSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
-        callbacksDelegate?.remoteVideoResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId), with: .low)
+        callbacksDelegate?.remoteVideoResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
     }
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {

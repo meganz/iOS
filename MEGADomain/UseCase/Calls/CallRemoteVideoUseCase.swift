@@ -28,11 +28,11 @@ final class CallRemoteVideoUseCase: NSObject, CallRemoteVideoUseCaseProtocol {
     }
     
     func enableRemoteVideo(for participant: CallParticipantEntity) {
-        repository.enableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: participant.videoResolution == .high, remoteVideoListener: self)
+        repository.enableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: participant.canReceiveVideoHiRes, remoteVideoListener: self)
     }
     
     func disableRemoteVideo(for participant: CallParticipantEntity) {
-        repository.disableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: participant.videoResolution == .high)
+        repository.disableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: participant.canReceiveVideoHiRes)
     }
     
     func disableAllRemoteVideos() {

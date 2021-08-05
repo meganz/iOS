@@ -1,6 +1,4 @@
 
-
-
 struct ChatSessionEntity {
     enum StatusType: Int {
         case invalid = 0xFF
@@ -18,5 +16,8 @@ struct ChatSessionEntity {
     let isOnHold: Bool
     let changes: Int
     let isHighResolution: Bool
+    let isLowResolution: Bool
+    let canReceiveVideoHiRes: Bool
+    let canReceiveVideoLowRes: Bool
 }
 
