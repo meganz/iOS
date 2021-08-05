@@ -33,6 +33,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
         let destinationURLPath = appGroupFilePathUseCase.cachedThumbnailImageURL(forNode: base64Handle).path
         if let image = fetchImage(fromPath: destinationURLPath) {
             completion(.success(image))
+            return
         } else {
             if let image = getAvatarImage(withUserHandle: handle, name: name) {
                 completion(.success(image))
