@@ -26,6 +26,11 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
     private var appBecomeActiveObserver: NSObjectProtocol?
     private weak var containerViewModel: MeetingContainerViewModel?
+    private var chatRoomUseCase: ChatRoomUseCase {
+        let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
+        return ChatRoomUseCase(chatRoomRepo: chatRoomRepository,
+                               userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+    }
     
     init(presenter: UIViewController,
          chatRoom: ChatRoomEntity,
@@ -68,11 +73,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func build() -> UIViewController {
-        
-        let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: chatRoomRepository,
-                                               userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
-        
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
                                                   call: call,
@@ -212,7 +212,11 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     private func showFloatingPanel(containerViewModel: MeetingContainerViewModel) {
-        guard let baseViewController = baseViewController else { return }
+        // When toggling the chatroom instance might be outdated. So fetching it again.
+        guard let baseViewController = baseViewController,
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId) else {
+            return
+        }
         let floatingPanelRouter = MeetingFloatingPanelRouter(presenter: baseViewController,
                                                              containerViewModel: containerViewModel,
                                                              chatRoom: chatRoom,
