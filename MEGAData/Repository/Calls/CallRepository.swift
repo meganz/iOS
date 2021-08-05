@@ -138,9 +138,7 @@ extension CallRepository: MEGAChatCallDelegate {
         if self.callId != callId {
             return
         }
-        
-        MEGALogDebug("onChatSessionUpdate \(session ?? MEGAChatSession())")
-        
+                
         if session.hasChanged(.status) {
             switch session.status {
             case .inProgress:

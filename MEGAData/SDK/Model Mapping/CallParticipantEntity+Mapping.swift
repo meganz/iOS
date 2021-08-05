@@ -20,7 +20,10 @@ extension CallParticipantEntity {
                   isInContactList: isInContactList,
                   video: session.hasVideo ? .on : .off,
                   audio: session.hasAudio ? .on : .off,
-                  videoResolution: session.isHighResolution ? .high : .low)
+                  isVideoHiRes: session.isHighResolution,
+                  isVideoLowRes: session.isLowResolution,
+                  canReceiveVideoHiRes: session.canReceiveVideoHiRes,
+                  canReceiveVideoLowRes: session.canReceiveVideoLowRes)
     }
     
     static func myself(chatId: MEGAHandle) -> CallParticipantEntity? {
@@ -37,7 +40,10 @@ extension CallParticipantEntity {
                                                 email: email,
                                                 isModerator: ChatRoomEntity(with: chatRoom).ownPrivilege == .moderator,
                                                 isInContactList: false,
-                                                videoResolution: .high)
+                                                isVideoHiRes: true,
+                                                isVideoLowRes: false,
+                                                canReceiveVideoHiRes: true,
+                                                canReceiveVideoLowRes: false)
         
         return participant
     }

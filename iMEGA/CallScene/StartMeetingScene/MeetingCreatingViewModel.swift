@@ -132,11 +132,11 @@ final class MeetingCreatingViewModel: ViewModelType {
                 self.isVideoEnabled = !self.isVideoEnabled
                 if self.isVideoEnabled {
                     self.localVideoUseCase.openVideoDevice { result in
-                        self.localVideoUseCase.addLocalVideo(for: 123, callbacksDelegate: self)
+                        self.localVideoUseCase.addLocalVideo(for: self.chatId ?? MEGAInvalidHandle, callbacksDelegate: self)
                     }
                 } else {
                     self.localVideoUseCase.releaseVideoDevice { result in
-                        self.localVideoUseCase.removeLocalVideo(for: 123, callbacksDelegate: self)
+                        self.localVideoUseCase.removeLocalVideo(for: self.chatId ?? MEGAInvalidHandle, callbacksDelegate: self)
                     }
                 }
                 self.invokeCommand?(.updateVideoButton(enabled: self.isVideoEnabled))
@@ -222,7 +222,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             if self.isVideoEnabled {
                 self.localVideoUseCase.openVideoDevice { _ in
                     self.selectFrontCameraIfNeeded()
-                    self.localVideoUseCase.addLocalVideo(for: 123, callbacksDelegate: self)
+                    self.localVideoUseCase.addLocalVideo(for: chatId, callbacksDelegate: self)
                 }
             }
         }
@@ -351,7 +351,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     
     private func disableLocalVideoIfNeeded() {
         if isVideoEnabled {
-            localVideoUseCase.removeLocalVideo(for: 123, callbacksDelegate: self)
+            localVideoUseCase.removeLocalVideo(for: chatId ?? MEGAInvalidHandle, callbacksDelegate: self)
         }
     }
     
