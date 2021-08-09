@@ -41,8 +41,8 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 return
             }
             
-            let startCallDelegate: MEGAChatRequestDelegate = MEGAChatStartCallRequestDelegate { [weak self] (chatError) in
-                if chatError?.type == .MEGAChatErrorTypeOk {
+            let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] (chatError) in
+                if chatError.type == .MEGAChatErrorTypeOk {
                     guard (self?.chatSdk.chatCall(forChatId: request.chatHandle)) != nil else {
                         completion(.failure(.generic))
                         return
@@ -180,10 +180,10 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     
     private func answerCall(for chatRoom: ChatRoomEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
-        let answerCallDelegate: MEGAChatRequestDelegate =  MEGAChatAnswerCallRequestDelegate { [weak self] (chatError) in
+        let answerCallDelegate =  MEGAChatAnswerCallRequestDelegate { [weak self] (chatError) in
             guard let self = self else { return }
             
-            if chatError?.type == .MEGAChatErrorTypeOk {
+            if chatError.type == .MEGAChatErrorTypeOk {
                 guard self.chatSdk.chatCall(forChatId: chatRoom.chatId) != nil else {
                     MEGALogDebug("Create meeting: not able to find call with chat id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
                     completion(.failure(.generic))

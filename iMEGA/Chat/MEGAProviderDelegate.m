@@ -380,6 +380,8 @@
 - (void)provider:(CXProvider *)provider didActivateAudioSession:(AVAudioSession *)audioSession {
     MEGALogDebug(@"[CallKit] Provider did activate audio session");
     
+    [[CallActionManager shared] enableRTCAudioIfRequired];
+    
     if (self.isCallKitAnsweredCall) {
         self.callKitAnsweredCall = NO;
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.answeredChatId.unsignedLongLongValue];

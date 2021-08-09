@@ -38,8 +38,8 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     }
     
     func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        let delegate: MEGAChatRequestDelegate = MEGAChatAnswerCallRequestDelegate { [weak self] (error)  in
-            if error?.type == .MEGAChatErrorTypeOk {
+        let delegate = MEGAChatAnswerCallRequestDelegate { [weak self] (error)  in
+            if error.type == .MEGAChatErrorTypeOk {
                 guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
                     completion(.failure(.generic))
                     return
@@ -49,7 +49,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
                 self?.callId = callEntity.callId
                 completion(.success(callEntity))
             } else {
-                switch error?.type {
+                switch error.type {
                 case .MEGAChatErrorTooMany:
                     completion(.failure(.tooManyParticipants))
                 default:
@@ -62,8 +62,8 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     }
     
     func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        let delegate: MEGAChatRequestDelegate = MEGAChatStartCallRequestDelegate { [weak self] (error) in
-            if error?.type == .MEGAChatErrorTypeOk {
+        let delegate = MEGAChatStartCallRequestDelegate { [weak self] (error) in
+            if error.type == .MEGAChatErrorTypeOk {
                 guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
                     completion(.failure(.generic))
                     return
@@ -72,7 +72,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
                 self?.callId = call.callId
                 completion(.success(CallEntity(with: call)))
             } else {
-                switch error?.type {
+                switch error.type {
                 case .MEGAChatErrorTooMany:
                     completion(.failure(.tooManyParticipants))
                 default:

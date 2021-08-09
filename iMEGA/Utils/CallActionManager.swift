@@ -6,24 +6,41 @@
     private var chatOnlineListener: ChatOnlineListener?
     private var callInProgressListener: CallInProgressListener?
     var didEnableWebrtcAudioNow: Bool = false
+    private var enableRTCAudioExternally = false
+    
+    private var megaCallManager: MEGACallManager? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              let callManager = appDelegate.megaCallManager else {
+            return nil
+        }
+        
+        return callManager
+    }
 
     private override init() { super.init() }
+
     
-    @objc func startCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatRequestDelegate) {
+    @objc func startCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
         self.chatOnlineListener = ChatOnlineListener(
             chatId: chatId,
             sdk: chatSdk
         ) { [weak self] chatId in
             guard let self = self else { return }
             self.chatOnlineListener = nil
-            MEGALogDebug("CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
+            MEGALogDebug("step one: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             
-            self.configureAudioSession(chatId: chatId)
-            self.chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+            self.configureAudioSessionForStartCall(chatId: chatId)
+            let requestDelegate = MEGAChatStartCallRequestDelegate { error in
+                if error.type == .MEGAChatErrorTypeOk {
+                    self.notifyStartCallToCallKit(chatId: chatId)
+                }
+                delegate.completion(error)
+            }
+            self.chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: requestDelegate)
         }
     }
     
-    @objc func answerCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatRequestDelegate) {
+    @objc func answerCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatAnswerCallRequestDelegate) {
         let group = DispatchGroup()
         
         group.enter()
@@ -33,7 +50,7 @@
         ) { [weak self] chatId in
             guard let self = self else { return }
             self.chatOnlineListener = nil
-            MEGALogDebug("CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
+            MEGALogDebug("step 1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             group.leave()
         }
         
@@ -44,28 +61,61 @@
         ) { [weak self] chatId, call  in
             guard let self = self else { return }
             self.callAvailabilityListener = nil
-            MEGALogDebug("CallActionManager: Call is now available for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") - \(call)")
+            MEGALogDebug("step 2: CallActionManager: Call is now available for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") - \(call)")
             group.leave()
         }
         
         group.notify(queue: .main) {
-            self.configureAudioSession(chatId: chatId)
-            self.chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+            self.disableRTCAudio()
+            self.enableRTCAudioExternally = true
+            let requestDelegate = MEGAChatAnswerCallRequestDelegate { error in
+                if error.type == .MEGAChatErrorTypeOk {
+                    self.notifyStartCallToCallKit(chatId: chatId)
+                }
+                delegate.completion(error)
+            }
+            
+            self.chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: requestDelegate)
+        }
+    }
+    
+    @objc func enableRTCAudioIfRequired() {
+        guard enableRTCAudioExternally else {
+            return
+        }
+        
+        enableRTCAudioExternally = false
+        enableRTCAudio()
+    }
+    
+    private func notifyStartCallToCallKit(chatId: UInt64) {
+        if let call = chatSdk.chatCall(forChatId: chatId) {
+            megaCallManager?.start(call)
+            megaCallManager?.add(call)
         }
     }
         
-    private func configureAudioSession(chatId: UInt64) {
-        RTCAudioSession.sharedInstance().useManualAudio = true
-        RTCAudioSession.sharedInstance().isAudioEnabled = false
+    private func configureAudioSessionForStartCall(chatId: UInt64) {
+        disableRTCAudio()
         self.callInProgressListener = CallInProgressListener(chatId: chatId, sdk: chatSdk) { [weak self] chatId, call in
             guard let self = self else { return }
-            RTCAudioSession.sharedInstance().audioSessionDidActivate(AVAudioSession.sharedInstance())
-            RTCAudioSession.sharedInstance().isAudioEnabled = true
-            self.didEnableWebrtcAudioNow = true
+            self.enableRTCAudio()
             MEGALogDebug("CallActionManager: Enabled webrtc audio session")
             self.callInProgressListener = nil
         }
     }
+    
+    private func disableRTCAudio() {
+        RTCAudioSession.sharedInstance().useManualAudio = true
+        RTCAudioSession.sharedInstance().isAudioEnabled = false
+    }
+    
+    private func enableRTCAudio() {
+        RTCAudioSession.sharedInstance().audioSessionDidActivate(AVAudioSession.sharedInstance())
+        RTCAudioSession.sharedInstance().isAudioEnabled = true
+        self.didEnableWebrtcAudioNow = true
+    }
+
 }
 
 private final class ChatOnlineListener: NSObject {
