@@ -26,7 +26,6 @@ final class MeetingContainerViewModel: ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
     private var call: CallEntity
-    private let isAnsweredFromCallKit: Bool
 
     init(router: MeetingContainerRouting,
          chatRoom: ChatRoomEntity,
@@ -35,8 +34,7 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callManagerUseCase: CallManagerUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
-         authUseCase: AuthUseCaseProtocol,
-         isAnsweredFromCallKit: Bool) {
+         authUseCase: AuthUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.call = call
@@ -45,7 +43,6 @@ final class MeetingContainerViewModel: ViewModelType {
         self.callManagerUseCase = callManagerUseCase
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
-        self.isAnsweredFromCallKit = isAnsweredFromCallKit
         
         self.callManagerUseCase.addCallRemoved { [weak self] uuid in
             guard let uuid = uuid, let self = self, self.call.uuid == uuid else { return }
@@ -59,14 +56,6 @@ final class MeetingContainerViewModel: ViewModelType {
     func dispatch(_ action: MeetingContainerAction) {
         switch action {
         case .onViewReady:
-            if !isAnsweredFromCallKit {
-                if callManagerUseCase.isCallAlreadyAdded(call) {
-                    callManagerUseCase.answerCall(call)
-                } else {
-                    callManagerUseCase.addCall(call)
-                    callManagerUseCase.startCall(call)
-                }
-            }
             router.showMeetingUI(containerViewModel: self)
         case.hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)

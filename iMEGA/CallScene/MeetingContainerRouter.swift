@@ -20,7 +20,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private let call: CallEntity
     private var enableVideo: Bool
     private var isSpeakerEnabled: Bool
-    private let isAnsweredFromCallKit: Bool
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
@@ -36,14 +35,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
          chatRoom: ChatRoomEntity,
          call: CallEntity,
          isVideoEnabled: Bool,
-         isSpeakerEnabled: Bool,
-         isAnsweredFromCallKit: Bool = false) {
+         isSpeakerEnabled: Bool) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
         self.enableVideo = isVideoEnabled
         self.isSpeakerEnabled = isSpeakerEnabled
-        self.isAnsweredFromCallKit = isAnsweredFromCallKit
         
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
             MEGALogDebug("Adding notifications for the call \(callId)")
@@ -80,8 +77,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),
-                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk())),
-                                                  isAnsweredFromCallKit: isAnsweredFromCallKit)
+                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk())))
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         containerViewModel = viewModel

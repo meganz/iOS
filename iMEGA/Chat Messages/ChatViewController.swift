@@ -987,12 +987,11 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startOutGoingCall(isVideoEnabled: Bool) {
-        let startCallDelegate: MEGAChatRequestDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
+        let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
             self?.shouldDisableAudioVideoCalling = false
             self?.updateRightBarButtons()
             
-            guard let self = self,
-                  let error = error, error.type == .MEGAChatErrorTypeOk else {
+            guard let self = self, error.type == .MEGAChatErrorTypeOk else {
                 MEGALogDebug("Cannot start a call")
                 return
             }
@@ -1012,11 +1011,11 @@ class ChatViewController: MessagesViewController {
     }
     
     private func answerCall(isVideoEnabled: Bool) {
-        let delegate: MEGAChatRequestDelegate = MEGAChatAnswerCallRequestDelegate { error in
+        let delegate = MEGAChatAnswerCallRequestDelegate { error in
             self.shouldDisableAudioVideoCalling = false
             self.updateRightBarButtons()
 
-            if error?.type == .MEGAChatErrorTypeOk {
+            if error.type == .MEGAChatErrorTypeOk {
                 self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: false)
             }
         }
