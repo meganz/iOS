@@ -44,11 +44,17 @@
                         <constraint firstItem="PqJ-4t-dTX" firstAttribute="trailing" secondItem="SHq-Vu-umU" secondAttribute="trailing" constant="16" id="IUe-kn-BML"/>
                         <constraint firstItem="034-96-4SB" firstAttribute="leading" secondItem="1Vl-MI-BNF" secondAttribute="leading" id="Sy6-48-gxv"/>
                         <constraint firstAttribute="bottom" secondItem="UIR-AY-jhu" secondAttribute="bottom" id="dts-lB-WOD"/>
+                        <constraint firstItem="SHq-Vu-umU" firstAttribute="top" secondItem="PqJ-4t-dTX" secondAttribute="top" constant="15" id="g0c-xq-1tu"/>
                         <constraint firstAttribute="trailing" secondItem="034-96-4SB" secondAttribute="trailing" id="h9q-dP-QsV"/>
                         <constraint firstItem="PqJ-4t-dTX" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SHq-Vu-umU" secondAttribute="trailing" constant="16" id="mKM-kt-xix"/>
                         <constraint firstItem="UIR-AY-jhu" firstAttribute="leading" secondItem="1Vl-MI-BNF" secondAttribute="leading" id="oHV-mi-SFk"/>
                         <constraint firstItem="034-96-4SB" firstAttribute="top" secondItem="PqJ-4t-dTX" secondAttribute="top" id="tVw-Dh-Rpf"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="g0c-xq-1tu"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -65,6 +71,7 @@
                 <outlet property="backgroundColorView" destination="1Vl-MI-BNF" id="pf1-l5-d3L"/>
                 <outlet property="bottomSeparatorView" destination="UIR-AY-jhu" id="35A-D4-OBP"/>
                 <outlet property="titleLabel" destination="SHq-Vu-umU" id="Mhb-3P-v7k"/>
+                <outlet property="titleLabelTopDistanceConstraint" destination="g0c-xq-1tu" id="kXZ-tf-CtO"/>
                 <outlet property="topSeparatorView" destination="034-96-4SB" id="AFt-xi-6wN"/>
             </connections>
             <point key="canvasLocation" x="182.60869565217394" y="-55.245535714285715"/>
