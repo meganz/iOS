@@ -203,25 +203,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         }
     }
     
-    return 36.0f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat heightForRow = 0;
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:indexPath.section];
-    if (!recentActionBucket) {
-        return 0;
-    }
-    if (recentActionBucket.nodesList.size.integerValue > 1) {
-        if (recentActionBucket.isMedia && recentActionBucket.mnz_isExpanded) {
-            heightForRow = [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? 178.0f : 198.0f;
-        } else {
-            heightForRow = [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? 60.0f : 80.f;
-        }
-    } else {
-        heightForRow = [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? 60.0f : 80.f;
-    }
-    return heightForRow;
+    return UITableViewAutomaticDimension;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
