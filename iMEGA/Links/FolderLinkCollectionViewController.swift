@@ -43,6 +43,14 @@ class FolderLinkCollectionViewController: UIViewController  {
         }, completion: nil)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
     private func setupCollectionView() {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumColumnSpacing = 8
@@ -61,6 +69,18 @@ class FolderLinkCollectionViewController: UIViewController  {
     
     private func getNode(at indexPath: IndexPath) -> MEGANode? {
         return indexPath.section == ThumbnailSection.file.rawValue ? fileList[safe: indexPath.row] : folderList[safe: indexPath.row]
+    }
+    
+    private func nodeCellForRowAt(_ indexPath: IndexPath) -> NodeCollectionViewCell {
+        guard let node = getNode(at: indexPath), let cell = collectionView.dequeueReusableCell(withReuseIdentifier: indexPath.section == 1 ? "NodeCollectionFileID" : "NodeCollectionFolderID", for: indexPath) as? NodeCollectionViewCell else {
+            fatalError("Could not instantiate NodeCollectionViewCell or Node at index")
+        }
+        
+        cell.configureCell(for: node, api:MEGASdkManager.sharedMEGASdkFolder())
+        cell.selectImageView?.isHidden = !collectionView.allowsMultipleSelection
+        cell.moreButton?.isHidden = collectionView.allowsMultipleSelection
+        
+        return cell
     }
     
     @objc func setCollectionViewEditing(_ editing: Bool, animated: Bool) {
@@ -111,17 +131,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellId = indexPath.section == 1 ? "NodeCollectionFileID" : "NodeCollectionFolderID"
-        
-        guard let node = getNode(at: indexPath), let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? NodeCollectionViewCell else {
-            fatalError("Could not instantiate NodeCollectionViewCell or Node at index")
-        }
-        
-        cell.configureCell(for: node, api:MEGASdkManager.sharedMEGASdkFolder())
-        cell.selectImageView?.isHidden = !collectionView.allowsMultipleSelection
-        cell.moreButton?.isHidden = collectionView.allowsMultipleSelection
-        
-        return cell
+        nodeCellForRowAt(indexPath)
     }
 }
 
@@ -187,6 +197,14 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
 extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfallLayout {
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAt indexPath: IndexPath!) -> CGSize {
-        return indexPath.section == ThumbnailSection.file.rawValue ? CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFile.rawValue)) : CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFolder.rawValue))
+        
+        let cell = nodeCellForRowAt(indexPath)
+        cell.contentView.translatesAutoresizingMaskIntoConstraints = false
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
+        let fittingSize = CGSize(width: CGFloat(ThumbnailSize.width.rawValue), height: UIView.layoutFittingCompressedSize.height)
+        
+        return cell.contentView.systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .defaultLow)
     }
 }
