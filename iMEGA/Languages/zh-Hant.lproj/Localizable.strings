@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="請檢查您的電子信箱，並點擊信中的連結以確認啟用您的帳戶。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="您的帳號已被鎖定。請連繫 support@mega.nz";
+"accountBlocked"="您的帳戶因違反MEGA服務條款，包括但不限於第15條而被停用。";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="請輸入有效的電子郵件地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -859,7 +859,7 @@
 /*  */
 "yourAccounHasBeenParked"="您的舊帳號已成功停用。現在可登入您的新帳號。";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="新郵件";
+"newEmail"="新的電子郵件地址";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="確認電子郵件地址";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="您已經安裝MEGA手機應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA手機應用程式時，您可獲得%@的免費儲存空間，有效期為365天。 MEGA手機應用程式可在iOS、Android和Windows的手機上使用。";
+"account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA手機應用程式時，您可獲得%@的免費儲存空間，有效期為365天。 MEGA手機應用程式支援iOS與Android。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@的儲存空間。有效期為365天。";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1037,7 +1037,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@到期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
-"Renews on"="續訂日期";
+"Renews on"="更新於";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的共享";
 /* Button title which triggers the action to upgrade your MEGA account level */
@@ -1081,7 +1081,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="省下17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="訂閱出錯 %@ (%ld)";
+"wrongPurchase"="購買出錯 %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="應用程式內購買功能尚未啟用，請於iOS的設定中啟用此功能";
 /* Error message shown when the selected product doesn't exist */
@@ -1089,7 +1089,7 @@
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="允許購買";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="您必須於iOS設定中啟用應用程式內購買才可恢復訂閱。";
+"allowPurchase_message"="您必須於iOS設定中啟用應用程式內購買才可恢復購買。";
 /* Button title to restore failed purchases */
 "restore"="恢復";
 /* "Monthly" subscriptions */
@@ -1103,19 +1103,19 @@
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="謝謝您";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="您的訂閱已恢復";
+"purchaseRestore_message"="您的購買已恢復";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="訂閱已停止";
+"failedPurchase_title"="購買已停止";
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="可能是您取消請求或是Apple回報傳輸錯誤。請晚點再試一次或聯繫 ios@mega.nz";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="復原出錯";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="先前的訂閱未能找到。請選擇先前的訂閱產品以便復原。您將不會被收二次費用。";
+"incompleteRestore_message"="先前的購買未能找到。請選擇先前的購買產品以便復原。您將不會被收二次費用。";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="復原停止";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="不是請求已取消就是先前的訂閱未能復原。請晚點再試一次或聯繫 ios@mega.nz";
+"failedRestore_message"="不是請求已取消就是先前的購買未能復原。請晚點再試一次或聯繫 ios@mega.nz";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="升級至專業版";
 /* A description of MEGA features available only with a Pro plan. */
@@ -1325,7 +1325,7 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="參看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="解除";
+"dismiss"="忽略";
 /* Content of the notification when there is unknown activity on the Chat */
 "You may have new messages"="您可能有新的訊息";
 /* Notification text body shown when you have received a contact request */
@@ -1357,7 +1357,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu則未讀訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的訂閱自動更新續訂，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，可以在頁面下方以您的Apple ID登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下捲動到管理應用程式訂閱。在那裡您可以選擇你的MEGA Pro訂閱和查看您預定的續約日期，選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
+"autorenewableDescription"="訂閱將會自動更新，續期與第一次訂閱的相同，價格也相同。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的自動更新訂閱，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，可以在頁面下方以您的Apple ID登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下捲動到管理應用程式訂閱。在那裡您可以選擇你的MEGA Pro訂閱和查看您預定的續訂日期，選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2631,4 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA－還原金鑰";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="我們正在升級MEGAChat。由於版本不相容，您可能會遇到無法連線問題。";
+"calls.incompatibility.warningMessage"="我們正在升級MEGAchat。由於版本不相容，除非所有與會者將他們的MEGA應用程式更新至最新版本，否則您的通話可能無法接通。";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="目前的電子郵件地址";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="請升級";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎快滿了。立即升級至專業版帳戶並獲得高達%@TB（%@GB）的雲端儲存空間。";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="您的雲端空間已滿。請升級至MEGA專業版方案以增加您的儲存空間並享有額外的好處。如果您仍然超出您的空間限制而且沒有升級至專業版或刪除一些資料，您的帳戶可能會被封鎖。請查看我們發送給您的電子郵件了解更多訊息。";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="帳戶封鎖";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="您的資料正面臨風險！";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>可惜的是您沒有在<b>%@</b>天內採取任何行動，即使我們有將提醒訊息發送到您的email<b>%@</b>，發送時間為<b>%@</b>。目前您仍然使用<b>%@</b>儲存空間，這已超出您的免費空間限制。請查看我們寄給您的電子郵件以了解更多訊息。</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>可惜的是您尚未升級您的帳戶。如果現在不升級，您的資料將在明天被刪除。請查看您的電子郵件來獲得您需要採取什麼樣的行動的更多訊息。</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>請在<warn>%@</warn>內升級以避免您的資料被刪除。</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>如果您希望保存您的資料，請在今天升級。</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="獲得獎勵";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@加入通話";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@離開通話";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="輸入會議連結";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="新的會議";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="%@會議";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="會議已結束";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="查看會議記錄";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="您嘗試加入的會議已經結束。您仍然可以查看會議對談記錄。";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants"="邀請與會者";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount"="與會者（%d）";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
+"meetings.participant.moderator"="主持人";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="重新命名會議名稱";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="分享會議連結";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="等待其他人加入…";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="這裡只有您一人…";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="無效的會議連結";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="無法加入會議。請檢查連結是有效的。";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="無法生成會議連結。請再試一次。";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"="加入會議";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="以訪客身份加入";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="您的隱私很重要";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="加入世界上最大的安全雲端空間與協作平台。";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="免費獲得20 GB";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="立即註冊並免費享有進階的協作功能。";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="您是新的會議主持人";
+/* This message is shown when calling and the receiver is not picking up the call */
+"meetings.incompatibility.warningMessage"="我們正在升級MEGAchat。由於版本不相容，除非所有與會者將他們的MEGA應用程式更新至最新版本，否則您的通話可能無法接通。";

@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Пожалуйста, проверьте адрес эл. почты и перейдите по ссылке для подтверждения.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Ваша учётная запись была заблокирована. Пожалуйста, свяжитесь с support@mega.nz";
+"accountBlocked"="Ваш аккаунт был заблокирован из-за нарушения условий предоставления услуг MEGA, включая, помимо прочего, пункт 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Введите правильный email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -859,7 +859,7 @@
 /*  */
 "yourAccounHasBeenParked"="Ваша старая учётная запись успешно прекратила своё существование. Вы можете войти в новую учётную запись.";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="Новый адрес";
+"newEmail"="Новый адрес электронной почты";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Подтвердите электронную почту";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Вы получили %@ на диске за установку мобильного приложения.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Установив мобильное приложение MEGA, вы получите %@ бонусного места на диске на 365 дней. Мобильные приложения MEGA доступны для iOS, Android и Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Установив мобильное приложение MEGA, вы получите %@ бонусного места на диске на 365 дней. Мобильные приложения MEGA доступны для iOS и Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ на диске на 365 дней.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1187,7 +1187,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Отсутствие";
 /*  */
-"xMinutes"="[X] минут(ы)";
+"xMinutes"="[X] мин.";
 /*  */
 "1Minute"="1 минута";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -2631,4 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-КЛЮЧ-ВОССТАНОВЛЕНИЯ";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="Мы обновляем MEGAchat. Ваш звонок может не быть соединён из-за несовместимости версий.";
+"calls.incompatibility.warningMessage"="Мы обновляем MEGAchat. Ваши звонки могут не быть соединены из-за несовместимости версий, пока все участники не обновят свои приложения MEGA до последней версии.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="Текущий адрес электронной почты";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="Хотите улучшить аккаунт?";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="Ваш облачный диск почти заполнен. Улучшите аккаунт до Pro сейчас и получите до %@ ТБ (%@ ГБ) в облаке.";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="Ваше облачное хранилище заполнено. Перейдите на подписку MEGA Pro, чтобы увеличить пространство для хранения и воспользоваться дополнительными преимуществами. Если вы превысите лимит хранилища и не улучшите аккаунт, или не удалите некоторые данные, ваш аккаунт может быть заблокирован. Пожалуйста, просмотрите электронные письма, которые мы вам отправили, для получения дополнительной информации.";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="Аккаунт заблокирован";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="Ваши данные в опасности!";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>К сожалению, вы не предприняли никаких действий в течение <b>%@</b> после того, как мы отправили письма на <b>%@</b> <b>%@</b>. У вас всё ещё использовано <b>%@</b> хранилища, что превышает ваш бесплатный лимит. Для информации по дальнейшим действиям, пожалуйста, посмотрите электронные письма, которые мы отправили вам.</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>К сожалению, вы еще не улучшили аккаунт. Если вы не сделаете это, ваши данные будут удалены завтра. Информация о том, что нужно сделать, была отправлена по электронной почте.</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>Пожалуйста, улучшите аккаунт в течение <warn>%@</warn>, чтобы ваши данные не были удалены.</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>Пожалуйста, улучшите аккаунт сегодня, если вы хотите сохранить свои данные.</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="Бонусы";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@ присоединился к звонку";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@ покинул звонок";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="Введите ссылку на встречу";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="Новая встреча";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="Встреча %@";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="Встреча закончилась";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="Посмотреть чат встречи";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="Встреча, к которой вы пытаетесь присоединиться, уже закончилась. Вы по-прежнему можете просматривать историю чата собрания.";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants"="Пригласить участников";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount"="Участники (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
+"meetings.participant.moderator"="МОДЕРАТОР";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="Переименовать встречу";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="Поделиться ссылкой на встречу";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="Ожидаем присоединения других…";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="Здесь только вы…";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="Недействительная ссылка на встречу";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="Невозможно присоединиться к встрече. Пожалуйста, убедитесь, что ссылка верная.";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="Ссылка на встречу не может быть создана. Пожалуйста, попробуйте ещё раз.";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"="Присоединиться к встрече";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="Зайти как гость";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="Ваша конфиденциальность имеет значение";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="Присоединяйтесь к самой крупной в мире безопасной облачной платформе хранения и совместной работы.";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="Получите 20 ГБ бесплатно";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="Зарегистрируйтесь сейчас и наслаждайтесь расширенными функциями совместной работы бесплатно.";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="Вы новый модератор звонка";
+/* This message is shown when calling and the receiver is not picking up the call */
+"meetings.incompatibility.warningMessage"="Мы обновляем MEGAchat. Ваши звонки могут не быть соединены из-за несовместимости версий, пока все участники не обновят свои приложения MEGA до последней версии.";
