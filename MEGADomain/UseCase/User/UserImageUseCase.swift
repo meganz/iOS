@@ -26,20 +26,25 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
                          name: String,
                          completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
+            MEGALogDebug("UserImageUseCase: base64 handle not found for handle \(handle)")
             completion(.failure(.base64EncodingError))
             return
         }
         
         let destinationURLPath = appGroupFilePathUseCase.cachedThumbnailImageURL(forNode: base64Handle).path
         if let image = fetchImage(fromPath: destinationURLPath) {
+            MEGALogDebug("UserImageUseCase: imaged fetched for \(base64Handle) at path \(destinationURLPath)")
             completion(.success(image))
             return
         } else {
+            MEGALogDebug("UserImageUseCase: avatar image for \(base64Handle) at path \(destinationURLPath) started")
             if let image = getAvatarImage(withUserHandle: handle, name: name) {
+                MEGALogDebug("UserImageUseCase: avatar image for \(base64Handle) at path \(destinationURLPath) success")
                 completion(.success(image))
             }
         }
 
+        MEGALogDebug("UserImageUseCase: load image for \(base64Handle) at path \(destinationURLPath) started")
         userImageRepo.loadUserImage(withUserHandle: base64Handle,
                                     destinationPath: destinationURLPath,
                                     completion: completion)
