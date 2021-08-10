@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Please check your email and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Your account was terminated due to a breach of MEGA's Terms of Service including, but not limited to, clause 15.";
+"accountBlocked"="Your account was terminated due to a breach of MEGA’s Terms of Service including, but not limited to, clause 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Enter a valid email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -858,16 +858,18 @@
 "startNewAccount"="Start new account";
 /*  */
 "yourAccounHasBeenParked"="Your old account has been parked successfully. You can now log into your new account.";
-/* Hint text to display user's current email */
-"account.changeEmail.currentEmail"="Current email address";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="New email address";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirm email";
+/* Hint text where the user have to re-write the new email to confirm it */
+"confirmNewEmail"="Confirm new email";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Change Email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="The new and the old email must not match";
+/* Error message shown when you have not written the same email when confirming a new one */
+"emailsDoNotMatch"="Emails do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="You have already requested a confirmation link for that email address.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -932,8 +934,6 @@
 "downloadInUppercaseTransfers"="DOWNLOAD transfers";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgrade";
-/* Button title to see the available bonus */
-"general.button.getBonus"="Get Bonus";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS, Android and Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS and Android. ";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1046,12 +1046,10 @@
 "Manage Account"="Manage Account";
 /*  */
 "chooseYourAccountType"="Choose your account type";
-/* Title of Over Disk Quota dialog */
-"dialog.storage.odq.title"="Please Upgrade";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
-/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Storage";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1752,6 +1750,10 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
 /* Message shown in a chat room when there is an active call */
@@ -2298,20 +2300,20 @@
 "Shared Files"="Shared Files";
 /* Over Disk Quota Screen Navigation Bar Title */
 "Storage Full"="Storage Full";
-/* Over Disk Quota paywall not final title. */
-"dialog.storage.paywall.notFinal.title"="Account is locked";
-/* Over Disk Quota paywall final title. */
-"dialog.storage.paywall.final.title"="Your Data is at Risk!";
-/* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>Unfortunately you have not taken action in the <b>%@</b> since our emails send to <b>%@</b> on <b>%@</b>. You are still using <b>%@</b> storage which is over your free limit. Please see the emails we sent you for more information.</paragraph>";
-/* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Unfortunately you have not upgraded your account yet. If you do not upgrade now your data will be deleted tomorrow. See your email for more information.</paragraph>";
+/* Over Disk Quota title message that tell customer your data at risk. */
+"Your Data is at Risk!"="Your Data is at Risk!";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>";
+/* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>";
 /* Over Disk Quota of number of days */
 "%d days"="%d days";
-/* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Please upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
-/* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Please upgrade today if you wish to keep your data.</warn><body>";
+/* Over Disk Quota of must act immediately to save your data */
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
+/* Over Disk Quota warning message to tell user to how long left before upgrading */
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>You have <warn>%@</warn> left to upgrade.</body>";
+/* Over Disk Quota warnig message to tell user your data is subject to deletion. */
+"After that, your data is subject to deletion."="After that, your data is subject to deletion.";
 /* Title for action to modify the registered phone number. */
 "Modify Phone Number"="Modify Phone Number";
 /* Title for action to remove the registered phone number. */
@@ -2628,6 +2630,30 @@
 "cloudDrive.nodeInfo.owner"="%@ (Owner)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
+/* This message is shown when calling and the receiver is not picking up the call */
+"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="Current email address";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="Please Upgrade";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="Account Locked";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="Your Data is at Risk!";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Unfortunately you have not taken action in the <b>%@</b> since our emails were sent to <b>%@</b>, on <b>%@</b>. You are still using <b>%@</b> storage, which is over your free limit. Please see the emails we have sent you for more information on what you need to do.</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>Unfortunately you have not upgraded your account yet. If you do not upgrade now, your data will be deleted tomorrow. See your email for more information on what you need to do.</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>Please upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>Please upgrade today if you wish to keep your data.</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="Get Bonus";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ joined the call";
 /* Message to inform the local user that someone has left the current group call */
@@ -2643,39 +2669,39 @@
 /* Meeting ended Alert button -- View Meeting Chat history. */
 "meetings.alert.meetingchat"="View Meeting Chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end.description"="The meeting you're trying to join has already ended. You can still view the meeting chat history.";
+"meetings.alert.end.description"="The meeting you’re trying to join has already ended. You can still view the meeting chat history.";
 /* Contacts selection screen header: Invite contacts to meetings */
-"meetings.panel.InviteParticipants" = "Invite Participants";
+"meetings.panel.InviteParticipants"="Invite Participants";
 /* Meetings: Floating panel participants count header */
-"meetings.panel.ParticipantsCount" = "Participants (%d)";
-/* Meetings: Floating panel participants listing indication if a participant is moderator*/
+"meetings.panel.ParticipantsCount"="Participants (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATOR";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Rename Meeting";
 /* Action of a call/meeting to share its link */
 "meetings.action.shareLink"="Share Meeting Link";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join...";
+"meetings.message.waitingOthers"="Waiting for others to join…";
 /* Message shown when the user is the only one left in the meeting */
-"meetings.message.noOtherParticipants"="You are the only one here...";
+"meetings.message.noOtherParticipants"="You are the only one here…";
 /* Message header when the user enters a invalid meeting URL */
 "meetings.joinMeeting.header"="Invalid Meeting URL";
 /* Message description when the user enters a invalid meeting URL */
-"meetings.joinMeeting.description"="Unable to join the meeting. Please try again.";
-/* Message shown when the meeting link cannot be generated*/
-"meetings.sharelink.Error" = "No meeting link available";
-/* Button text to join a meeting for the logged in user*/
-"meetings.link.loggedInUser.joinButtonText" = "Join Meeting";
-/* Button text to join a meeting for the logged in user*/
-"meetings.link.guest.joinButtonText" = "Join as Guest";
-/* Guest user join Mega: paragraph 1 title*/
-"meetings.joinMega.paragraph1.title"= "Your Privacy Matters";
-/* Guest user join Mega: paragraph 1 description*/
-"meetings.joinMega.paragraph1.description"= "Join the largest secure cloud storage and collaboration platform in the world.";
-/* Guest user join Mega: paragraph 2 title*/
-"meetings.joinMega.paragraph2.title"= "Get 20 GB for free";
-/* Guest user join Mega: paragraph 2 description*/
-"meetings.joinMega.paragraph2.description"= "Sign up now and enjoy advanced collaboration features for free.";
+"meetings.joinMeeting.description"="Unable to join the meeting. Please check the link is valid.";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="Meeting link could not be generated. Please try again.";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"="Join meeting";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="Join as guest";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="Your privacy matters";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="Join the largest secure cloud storage and collaboration platform in the world.";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="Get 20 GB for free";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="Sign up now and enjoy advanced collaboration features for free.";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="You are the new call moderator";
 /* This message is shown when calling and the receiver is not picking up the call */

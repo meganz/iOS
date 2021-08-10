@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="请检查您的电子信箱，并点击信中的链接以确认激活您的帐户。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="您的账号已被锁定。请连系support@mega.nz";
+"accountBlocked"="您的帐户因违反《MEGA服务条款》而被终止，包括但不限于第15条。";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="请输入有效的邮箱地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -859,7 +859,7 @@
 /*  */
 "yourAccounHasBeenParked"="您的旧账号已成功封存。现在可登入您的新账号。";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="新邮件";
+"newEmail"="新电子邮件地址";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="确认电子邮件地址";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="您已通过安装MEGA手机App获得了%@存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="安装MEGA手机App后，您会获得%@免费存储空间，有效期为365天。MEGA手机App适用于iOS，Android和Windows Phone。";
+"account.achievement.mobileApp.incomplete.explaination.label"="安装MEGA手机App后，您会获得%@免费存储空间，有效期为365天。MEGA手机App适用于iOS和Android平台。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@存储空间。有效期为365天。";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2631,4 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-恢复密钥";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="我们正在升级MEGAchat。您的通话可能由于版本不兼容问题导致无法连接。";
+"calls.incompatibility.warningMessage"="我们正在升级MEGAchat。请所有参会者将MEGA App更新至最新版本，否则您的通话可能无法连接。";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="当前电子邮件地址";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="请升级帐户";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="您的云盘空间几乎已满。立即升级至Pro会员帐户并获得最高%@TB（%@GB）的云存储空间。";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="您的云盘空间已满。请升级至MEGA Pro会员增加您的存储空间并享受其他会员服务。如果您没有升级帐户或删除多余数据且仍然超出存储空间上限，您的帐户可能会被锁定。请查看我们发送给您的电子邮件以了解更多信息。";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="帐户已锁定";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="您的数据存在风险！";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>自从我们在<b>%@</b>向您的电子邮件地址<b>%@</b>发送了邮件后，您似乎并没有在<b>%@</b>内采取任何行动。目前，您仍然使用<b>%@</b>存储空间，这超出了免费存储空间上限。请查看我们发送给您的电子邮件以了解更多信息。</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>您似乎还没有升级您的帐户。若现在不升级，您的数据将于明天被删除。查看您的电子邮件以了解更多信息。</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>请在<warn>%@</warn>内升级您的帐户避免您的数据被删除。</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>如果您希望保留您的数据，请升级帐户。</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="获得奖励";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@加入了通话";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@离开了通话";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="请输入会议链接";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="新建会议";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="%@ 会议";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="会议已结束";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="查看会议聊天记录";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="您尝试加入的会议已结束。您仍然可以查看会议聊天记录。";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants"="邀请参会者";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount"="参会者（%d）";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
+"meetings.participant.moderator"="主持人";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="重命名会议";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="分享会议链接";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="正在等待其他人加入……";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="这里只有您一人……";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="会议链接无效";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="无法加入会议。请检查链接是否有效。";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="无法生成会议链接。请再试一次。";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"="加入会议";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="以访客身份加入";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="您的隐私非常重要";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="加入全球最大的安全云存储和协作平台。";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="获得20GB免费存储空间";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="立即注册并免费享受全球领先的协作平台。";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="您是新的会议主持人";
+/* This message is shown when calling and the receiver is not picking up the call */
+"meetings.incompatibility.warningMessage"="我们正在升级MEGAchat。请所有参会者将MEGA App更新至最新版本，否则您的通话可能无法连接。";

@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Controleer uw email en klik op de link om uw account te bevestigen.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Uw account is geblokkeerd. Neem contact op met support@mega.nz";
+"accountBlocked"="Uw account is beëindigd vanwege een schending van de Algemene Voorwaarden van MEGA, inclusief maar niet beperkt tot clausule 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Vul een geldig email adres in";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -859,7 +859,7 @@
 /*  */
 "yourAccounHasBeenParked"="Uw oude account is succesvol geparkeerd. U kunt nu inloggen met uw nieuwe account.";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="Nieuwe e-mailadres";
+"newEmail"="Nieuw e-mailadres";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Bevestig e-mailadres";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA mobiele applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA mobiele applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. De MEGA mobiele applicatie is beschikbaar voor iOs, Android en Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA mobiele applicatie installeert, krijgt u %@ gratis  opslagruimte, 365 dagen geldig. De MEGA mobiele applicatie is beschikbaar voor iOS en Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ aan opslag. Geldig voor 365 dagen.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2631,4 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-HERSTELSLEUTEL";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="We upgraden MEGAchat. Uw oproep is mogelijk niet verbonden vanwege incompatibiliteitsproblemen met de versie.";
+"calls.incompatibility.warningMessage"="We upgraden MEGAchat. Uw gesprekken zijn mogelijk niet verbonden vanwege incompatibiliteit met versies, tenzij alle partijen hun MEGA-applicaties updaten naar de nieuwste versie.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="Huidig e-mailadres";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="Gelieve te upgraden";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="Uw Cloud Drive is bijna vol. Upgrade nu naar een Pro-account en krijg tot%@ TB (%@GB) aan cloudopslagruimte.";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="Uw cloudopslag is vol. Upgrade naar een MEGA Pro-abonnement om uw opslagruimte te vergroten en van extra voordelen te genieten. Als u uw opslaglimiet overschrijdt en bepaalde gegevens niet opwaardeert of verwijdert, kan uw account worden vergrendeld. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie.";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="Account Gesloten";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="Uw Gegevens lopen Risico!";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Helaas heeft u geen actie ondernomen in de <b>%@</b>sinds onze e-mails zijn verzonden naar<b>%@</b>, op<b>%@</b>. U gebruikt nog steeds<b>%@</b> opslagruimte, wat uw gratis limiet overschrijdt. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie over wat u moet doen.</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>Helaas heeft u uw account nog niet geüpgraded. Als u nu niet upgradet, worden uw gegevens morgen verwijderd. Zie u e-mail voor meer informatie over wat u moet doen.</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>Voer een upgrade uit binnen <warn>%@</warn> om te voorkomen dat uw gegevens worden verwijderd.</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>Upgrade vandaag nog als u uw gegevens wilt behouden.</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="Beschikbare Bonus";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@ neemt deel aan de oproep";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@ heeft de oproep verlaten";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="Vergader Link Invoeren";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="Nieuwe Vergadering";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="%@ Vergadering";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="Vergadering Beëindigd";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="Vergader Gesprek Weergeven";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="De vergadering waaraan u probeert deel te nemen, is al beëindigd. U kunt de chatgeschiedenis van de vergadering nog steeds bekijken";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants"="Deelnemers Uitnodigen";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount"="Deelnemers (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
+"meetings.participant.moderator"="GESPREKSLEIDER";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="Hernoem Vergadering";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="Vergader Link Delen";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="Wachten op anderen om deel te nemen…";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="U bent de enige hier…";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="Ongeldige Vergader URL";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="Niet in staat deel te nemen aan de vergadering. Controleer of de link geldig is.";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="Vergaderlink kon niet gegenereerd worden. Probeer nogmaals.";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"=" Vergadering aansluiten";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="Deelnemen als gast";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="Uw privacy is belangrijk";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="Word lid van het grootste veilige cloudopslag- en samenwerkingsplatform ter wereld.";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="Krijg 20 GB gratis";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="Meld u nu aan en profiteer gratis van geavanceerde samenwerkingsfuncties.";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="U bent nu de nieuwe oproep gespreksleider";
+/* This message is shown when calling and the receiver is not picking up the call */
+"meetings.incompatibility.warningMessage"="We upgraden MEGAchat. Uw gesprekken zijn mogelijk niet verbonden vanwege incompatibiliteit met versies, tenzij alle partijen hun MEGA-applicaties updaten naar de nieuwste versie.";
