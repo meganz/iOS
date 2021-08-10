@@ -2,7 +2,6 @@
 protocol CallManagerUseCaseProtocol {
     func endCall(_ call: CallEntity)
     func muteUnmuteCall(_ call: CallEntity, muted: Bool)
-    func isCallAlreadyAdded(_ call: CallEntity) -> Bool
     func addCall(_ call: CallEntity)
     func startCall(_ call: CallEntity)
     func answerCall(_ call: CallEntity)
@@ -20,15 +19,6 @@ struct CallManagerUseCase: CallManagerUseCaseProtocol {
         }
         
         return callManager
-    }
-    
-    func isCallAlreadyAdded(_ call: CallEntity) -> Bool {
-        guard let megaCallManager = megaCallManager,
-              let uuid = megaCallManager.uuid(forChatId: call.chatId, callId: call.callId) else {
-            return false
-        }
-        
-        return megaCallManager.callId(for: uuid) != 0
     }
     
     func addCall(_ call: CallEntity) {

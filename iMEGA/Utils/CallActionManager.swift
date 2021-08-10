@@ -27,7 +27,7 @@
         ) { [weak self] chatId in
             guard let self = self else { return }
             self.chatOnlineListener = nil
-            MEGALogDebug("step one: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
+            MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             
             self.configureAudioSessionForStartCall(chatId: chatId)
             let requestDelegate = MEGAChatStartCallRequestDelegate { error in
@@ -50,7 +50,7 @@
         ) { [weak self] chatId in
             guard let self = self else { return }
             self.chatOnlineListener = nil
-            MEGALogDebug("step 1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
+            MEGALogDebug("2: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             group.leave()
         }
         
@@ -61,7 +61,7 @@
         ) { [weak self] chatId, call  in
             guard let self = self else { return }
             self.callAvailabilityListener = nil
-            MEGALogDebug("step 2: CallActionManager: Call is now available for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") - \(call)")
+            MEGALogDebug("3: CallActionManager: Call is now available for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") - \(call)")
             group.leave()
         }
         
