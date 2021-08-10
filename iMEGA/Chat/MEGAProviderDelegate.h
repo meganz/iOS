@@ -7,6 +7,8 @@
 
 @interface MEGAProviderDelegate : NSObject <CXProviderDelegate>
 
+@property (nonatomic, readonly) BOOL isAudioSessionActive;
+
 - (instancetype)initWithMEGACallManager:(MEGACallManager *)megaCallManager;
 
 - (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId;

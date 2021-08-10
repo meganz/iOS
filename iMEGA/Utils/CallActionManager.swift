@@ -16,6 +16,15 @@
         
         return callManager
     }
+    
+    private var providerDelegate: MEGAProviderDelegate? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              let megaProviderDelegate = appDelegate.megaProviderDelegate else {
+            return nil
+        }
+        
+        return megaProviderDelegate
+    }
 
     private override init() { super.init() }
 
@@ -66,8 +75,13 @@
         }
         
         group.notify(queue: .main) {
-            self.disableRTCAudio()
-            self.enableRTCAudioExternally = true
+            if let providerDelegate = self.providerDelegate,
+               providerDelegate.isAudioSessionActive {
+                self.configureAudioSessionForStartCall(chatId: chatId)
+            } else {
+                self.disableRTCAudio()
+                self.enableRTCAudioExternally = true
+            }
             let requestDelegate = MEGAChatAnswerCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
                     self.notifyStartCallToCallKit(chatId: chatId)
@@ -80,19 +94,28 @@
     }
     
     @objc func enableRTCAudioIfRequired() {
+        MEGALogDebug("CallActionManager: enableRTCAudioIfRequired started")
         guard enableRTCAudioExternally else {
             return
         }
         
+        MEGALogDebug("CallActionManager: enableRTCAudioIfRequired success")
         enableRTCAudioExternally = false
         enableRTCAudio()
     }
     
+    @objc func disableRTCAudioSession() {
+        MEGALogDebug("CallActionManager: Enable webrtc audio session")
+        disableRTCAudio()
+        RTCAudioSession.sharedInstance().audioSessionDidDeactivate(AVAudioSession.sharedInstance())
+    }
+    
     private func notifyStartCallToCallKit(chatId: UInt64) {
-        if let call = chatSdk.chatCall(forChatId: chatId) {
-            megaCallManager?.start(call)
-            megaCallManager?.add(call)
-        }
+        guard let call = chatSdk.chatCall(forChatId: chatId), !isCallAlreadyAdded(CallEntity(with: call)) else { return }
+        
+        MEGALogDebug("CallActionManager: Notifiying call to callkit")
+        megaCallManager?.start(call)
+        megaCallManager?.add(call)
     }
         
     private func configureAudioSessionForStartCall(chatId: UInt64) {
@@ -106,16 +129,26 @@
     }
     
     private func disableRTCAudio() {
+        MEGALogDebug("CallActionManager: Enable webrtc audio")
         RTCAudioSession.sharedInstance().useManualAudio = true
         RTCAudioSession.sharedInstance().isAudioEnabled = false
     }
     
     private func enableRTCAudio() {
+        MEGALogDebug("CallActionManager: Enable webrtc audio session")
         RTCAudioSession.sharedInstance().audioSessionDidActivate(AVAudioSession.sharedInstance())
         RTCAudioSession.sharedInstance().isAudioEnabled = true
         self.didEnableWebrtcAudioNow = true
     }
-
+    
+    private func isCallAlreadyAdded(_ call: CallEntity) -> Bool {
+        guard let megaCallManager = megaCallManager,
+              let uuid = megaCallManager.uuid(forChatId: call.chatId, callId: call.callId) else {
+            return false
+        }
+        
+        return megaCallManager.callId(for: uuid) != 0
+    }
 }
 
 private final class ChatOnlineListener: NSObject {

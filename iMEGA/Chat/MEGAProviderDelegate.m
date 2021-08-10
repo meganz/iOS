@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) MEGACallManager *megaCallManager;
 @property (nonatomic, strong) CXProvider *provider;
+@property (nonatomic, assign) BOOL isAudioSessionActive;
 
 @property (strong, nonatomic) AVAudioPlayer *player;
 
@@ -381,7 +382,8 @@
     MEGALogDebug(@"[CallKit] Provider did activate audio session");
     
     [[CallActionManager shared] enableRTCAudioIfRequired];
-    
+    self.isAudioSessionActive = YES;
+
     if (self.isCallKitAnsweredCall) {
         self.callKitAnsweredCall = NO;
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.answeredChatId.unsignedLongLongValue];
@@ -406,7 +408,9 @@
 - (void)provider:(CXProvider *)provider didDeactivateAudioSession:(AVAudioSession *)audioSession {
     MEGALogDebug(@"[CallKit] Provider did deactivate audio session");
     
+    self.isAudioSessionActive = NO;
     [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
+    [CallActionManager.shared disableRTCAudioSession];
 }
 
 #pragma mark - MEGAChatCallDelegate
