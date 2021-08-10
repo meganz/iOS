@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="アカウントを確認するためにMEGAからのメール内のリンクをアクセスしてください。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="あなたのアカウントはブロックされています。support@mega.nzへ連絡してください。";
+"accountBlocked"="お客様のアカウントは、MEGAのご利用規約（第15条を含むがこれに限定されない）に違反したために終了しました。";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="正しいメールを入力してください";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="あなたはMEGAモバイルアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAモバイルアプリは、iOS、Android、Windows Phoneに対応しています。";
+"account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAモバイルアプリは、iOSとAndroidに対応しています。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ストレージ。365日有効。";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2631,4 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-回復キー";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="MEGAChatをバージョンアップしています。バージョンの非互換性の問題により、電話がつながらない場合がございます。";
+"calls.incompatibility.warningMessage"="MEGAchatをバージョンアップしています。すべての参加者がMEGAアプリを最新版にアップデートしないと、バージョンの互換性がないために、通話がつながらない場合がございます。";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="現在のメールアドレス";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="アップグレードしてください";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="クラウドドライブがほぼいっぱいです。今すぐProアカウントにアップグレードすると、最大%@ TB (%@ GB)のクラウドストレージスペースが得られます。";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="クラウドストレージがいっぱいです。MEGA Proプランにアップグレードしてストレージスペースを増やし、さらなる特典をお楽しみください。ストレージの上限を超えたまま、アップグレードやデータの一部削除を行われない場合、アカウントがロックされる場合がございます。詳しくは、お送りしたメールをご覧ください。";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="アカウントがロックされています";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="あなたのデータは危険にさらされています！";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>残念ながら、お知らせしてから<b>%@</b>間アクションを起こされておりません。当社は<b>%@</b>様に<b>%@</b>にメールを送信いたしました。あなたはまだ<b>%@</b>のストレージを使用しており、無料の制限を超えています。何をするべきかについての詳細情報は、お送りしたメールをご覧ください。</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>残念ながら、まだアカウントをアップグレードされておりません。今すぐアップグレードされない場合、あなたのデータは明日削除されてしまいます。何をするべきかについての詳細情報は、メールをご覧ください。</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body><warn>%@</warn>以内にアップグレードして、データが削除されないようにしてください</body>。";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>データの保持をご希望の場合は、本日中にアップグレードしてください。</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="ボーナスを獲得";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@さんが通話に参加しました";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@さんが通話から抜けました";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="ミーティングリンクを入力";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="新しいミーティング";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="%@ミーティング";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="ミーティング終了";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="ミーティングチャットを見る";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="参加しようとしているミーティングはすでに終了しています。ミーティングのチャット履歴は引き続き見ることができます。";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants"="参加者を招待";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount"="参加者 (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
+"meetings.participant.moderator"="モデレーター";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="ミーティング名の変更";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="ミーティングリンクの共有";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="他の人が参加するのを待機中…";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="ここにいるのはあなただけです…";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="ミーティングURLが無効";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="ミーティングに参加できません。リンクが有効であることを確認してください。";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="ミーティングリンクが生成できませんでした。もう一度やり直してください。";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"="ミーティングに参加";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="ゲストとして参加";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="お客様のプライバシーは重要です";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="世界最大の安全なクラウドストレージとコラボレーションプラットフォームにご参加ください。";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="20 GBを無料で入手";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="今すぐ登録して、高度なコラボレーション機能を無料でお楽しみください。";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="あなたが新しいミーティングモデレーターです";
+/* This message is shown when calling and the receiver is not picking up the call */
+"meetings.incompatibility.warningMessage"="MEGAchatをバージョンアップしています。すべての参加者がMEGAアプリを最新版にアップデートしないと、バージョンの互換性がないために、通話がつながらない場合がございます。";

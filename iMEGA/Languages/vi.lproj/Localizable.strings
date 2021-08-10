@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Xin kiểm tra hộp thư email và làm theo hướng dẫn, nhấp vào đường liên kết để xác nhận tài khoản.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Tài khoản của quý khách bị khóa. Vui lòng liên hệ support@mega.nz";
+"accountBlocked"="Tài khoản quý khách đã bị chấm dứt do vi phạm nội quy trong Điều Khoản Dịch Vụ của MEGA, bao gồm nhưng không giới hạn ở điều khoản 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Nhập một email hợp lệ";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho dI động.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt ứng dụng MEGA trên điện thoại, bạn sẽ nhận được thêm %@ vào không gian lưu trữ, hạn sử dụng là 365 ngày. MEGA còn có ứng dụng di động dành cho iOS, Android, và Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS and Android. ";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ vào không gian lưu trữ. Hạn dùng là 365 ngày.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2089,7 +2089,7 @@
 /* Title of the "Links" Shared Items. */
 "Links"="Liên Kết";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No public links";
+"No Public Links"="Không có đường liên kết công khai";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Quản lý chia sẻ";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2631,4 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MAPHUCHOI-MEGA";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGAchát. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản khác nhau.";
+"calls.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGAchát. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản cho đến khi mỗi người cập nhật lên phiên bản mới nhất.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="Địa chỉ email hiện tại";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="Xin Nâng Cấp";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="Tài Khoản Bị Khóa";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="Dữ Liệu Sắp Bị Mất!";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Unfortunately you have not taken action in the <b>%@</b> since our emails were sent to <b>%@</b>, on <b>%@</b>. You are still using <b>%@</b> storage, which is over your free limit. Please see the emails we have sent you for more information on what you need to do.</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>Unfortunately you have not upgraded your account yet. If you do not upgrade now, your data will be deleted tomorrow. See your email for more information on what you need to do.</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>Xin nâng cấp trong vòng <warn>%@</warn> để tránh tình trạng dữ liệu bị xóa bỏ.</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>Xin nâng cấp tài khoản ngay hôm nay nếu quý khách muốn lưu giữ dữ liệu của mình.</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="Nhận thêm Thưởng";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@ tham gia vào cuộc gọi";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@ đã rời khỏi cuội gọi";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="Nhập Đường Liên Kết Họp Mặt";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="Cuộc Họp Mới";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="%@ Họp Mặt";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="Cuộc Họp Chấm Dứt";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="Xem Tin Nhắn Cuộc Họp";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="Cuộc họp mặt bạn đang muốn tham gia đã kết thúc. Bạn vẫn có thể xem các tin nhắn của của họp trong lịch sử chát.";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants"="Mời Thành Viên";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount"="Thành viên (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
+"meetings.participant.moderator"="NGƯỜI ĐIỀU HÀNH";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="Đổi Tên Cuộc Họp";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="Chia Sẻ Cuộc Họp Mặt";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="Đang chờ người khác tham gia…";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="Bạn là người duy nhất ở đây…";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="URL Cuộc Họp Không Đúng";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="Không thể tham gia vào cuộc họp mặt. Xin kiểm tra lại đường liên kết cho đúng.";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="Không tạo được đường liên kết cuộc họp mặt. Xin thử lại sau.";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"="Tham gia cuộc meeting";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="Tham gia với tư cách khách";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="Mức độ an ninh là điều quan trọng";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="Tham gia vào dịch vụ lưu trữ điện toán đám mây lớn và an ninh nhất với nền tảng cộng tác toàn cầu.";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="Nhận 20 GB miễn phí";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="Đăng ký ngay và tận hưởng các tính năng cộng tác hữu dụng và miễn phí.";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="Bạn đã được chọn là người điều hành mới";
+/* This message is shown when calling and the receiver is not picking up the call */
+"meetings.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGAchát. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản cho đến khi mỗi người cập nhật lên phiên bản mới nhất.";

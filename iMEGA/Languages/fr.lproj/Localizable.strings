@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Veuillez vérifier votre courriel et suivre le lien pour confirmer votre compte.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Votre compte a été bloqué. Veuillez contacter support@mega.nz";
+"accountBlocked"="Votre compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, dont, mais sans toutefois s’y limiter, la clause 15. ";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -203,9 +203,9 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Aucun contact";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Il n’y a aucun dossier partagé entrant";
+"noIncomingSharedItemsEmptyState_text"="Aucun dossier partagé entrant";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Il n’y a aucun dossier partagé sortant";
+"noOutgoingSharedItemsEmptyState_text"="Aucun dossier partagé sortant";
 /* Title of Contacts requests section */
 "contactRequests"="Demandes de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -227,15 +227,15 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="La demande a été supprimée";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Il n’y a aucune demande en attente";
+"noRequestPending"="Aucune demande en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Il n’y a aucun transfert";
+"transfersEmptyState_titleAll"="Aucun transfert";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Il n’y a aucun téléchargement";
+"transfersEmptyState_titleDownload"="Aucun téléchargement";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Il n’y a aucun téléversement";
+"transfersEmptyState_titleUpload"="Aucun téléversement";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Disque nuagique";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -635,9 +635,9 @@
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="À propos";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Envoyer un commentaire";
+"sendFeedbackLabel"="Envoyer une rétroaction";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Veuillez rédiger votre commentaire ici :";
+"pleaseWriteYourFeedback"="Veuillez rédiger votre rétroaction ici :";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Aucun compte courriel n’est défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -959,7 +959,7 @@
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Primes déverrouillées :";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
-"storageQuota"="Quota de stockage";
+"storageQuota"="Quota d’espace de stockage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Quota de transfert";
 /* Cell title shown on the achievements view for registration achievement */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé l’appli MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="En installant l’appli MEGA mobile, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA mobile est proposée pour iOS, Android et Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="En installant l’appli MEGA mobile, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA mobile est proposée pour iOS et Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ d’espace de stockage. Valide pendant 365 jours.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1291,7 +1291,7 @@
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
 "writeAMessage"="Rédigez un message pour %s…";
 /* Information if there are no history messages in current chat conversation */
-"noConversationHistory"="Il n’y a aucun historique de conversation";
+"noConversationHistory"="Aucun historique de conversation";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="Réessayer";
 /* Button which allows to delete message in chat conversation. */
@@ -1821,7 +1821,7 @@
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="La connexion est de mauvaise qualité.";
 /* There are no notifications to display. */
-"No notifications"="Il n’y a aucune notification";
+"No notifications"="Aucune notification";
 /* The header of a notification related to payments */
 "Payment info"="Renseignements sur le paiement";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
@@ -1989,7 +1989,7 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 créé par %3";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="Il n’y a aucune activité récente";
+"No recent activity"="Aucune activité récente";
 /* Plural of items which contains a folder. 2 items */
 "%1$d items"="%1$d éléments";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -2089,7 +2089,7 @@
 /* Title of the "Links" Shared Items. */
 "Links"="Liens";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="Il n’y a aucun lien public";
+"No Public Links"="Aucun lien public";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gérer le partage";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2291,7 +2291,7 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="Conversation créée le %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="Il n’y a aucun fichier partagé";
+"No Shared Files"="Aucun fichier partagé";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Le lien de dossier n’est pas disponible";
 /* Error message shown when opening a file link which doesn’t exist */
@@ -2581,7 +2581,7 @@
 /* Text for title for favourite nodes */
 "Favourites"="Favoris";
 /* Text describing that there is not any node marked as favourite */
-"No Favourites"="Il n’y a aucun favori";
+"No Favourites"="Aucun favori";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="AFFICHER DAVANTAGE";
 /* Title for the QuickAccess widget */
@@ -2619,9 +2619,9 @@
 /* Offline log out warning message */
 "offline.logOut.warning.message"="Votre contenu sera supprimé de cet appareil quand vous vous déconnecterez.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
-"transfer.cell.shareOwnerStorageQuota.infoLabel"="Le propriétaire du partage a dépassé son quota de stockage.";
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="Le propriétaire du partage a dépassé son quota d’espace de stockage.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
-"dialog.shareOwnerStorageQuota.message"="Le fichier ne peut pas être envoyé, car l’utilisateur cible a dépassé son quota de stockage.";
+"dialog.shareOwnerStorageQuota.message"="Le fichier ne peut pas être envoyé, car l’utilisateur cible a dépassé son quota d’espace de stockage.";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="Le fichier est trop gros et ne peut pas être modifié.";
 /* Hud info message when read unknown encode file. */
@@ -2631,4 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-CLÉdeRÉCUPÉRATION";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="Nous mettons MEGAchat à niveau. Votre appel pourrait ne pas être connecté en raison de problèmes d’incompatibilité des versions.";
+"calls.incompatibility.warningMessage"="Nous mettons MEGAchat à niveau. Vos appels pourraient ne pas être connectés en raison d’incompatibilité des versions, à moins qu’appelant et appelés aient aussi mis à niveau leurs applis MEGA vers la version la plus récente.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="Adresse courriel actuelle";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="Veuillez surclasser votre compte";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="Votre disque nuagique est presque plein. Surclassez votre compte maintenant vers un compte Pro et obtenez jusqu’à %@ To (%@ Go) d’espace de stockage nuagique.";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="Votre stockage nuagique est plein. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="Le compte est verrouillé";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="Vos données sont en danger !";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Malheureusement, vous n’avez pas pris de mesure pendant les <b>%@</b> depuis l’envoi de nos courriels à <b>%@</b>, le <b>%@</b>. Vous utilisez encore <b>%@</b> d’espace de stockage, ce qui dépasse votre limite gratuite. Pour plus de précisions sur ce que vous devez faire, veuillez vous référer aux courriels que nous vous avons envoyés.</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>Malheureusement, vous n’avez pas encore surclassé votre compte. Si vous ne le surclassez pas maintenant, vos données seront supprimées demain. Pour plus de précisions sur ce que vous devez faire, veuillez vous référer à nos courriels.</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>Veuillez surclasser votre compte d’ici <warn>%@</warn> pour éviter que vos données ne soient supprimées.</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>Veuillez surclasser votre compte aujourd’hui si vous souhaitez conserver vos données.</warn><body> ";
+/* Button title to see the available bonus */
+"general.button.getBonus"="Obtenir des primes";
+/* Message to inform the local user that someone has joined the current group call */
+"meetings.message.joinedCall"="%@ s’est joint à l’appel";
+/* Message to inform the local user that someone has left the current group call */
+"meetings.message.leftCall"="%@ a quitté l’appel";
+/* Title for Enter Meeting Link. */
+"meetings.enterMeetingLink.title"="Saisissez le lien de la réunion";
+/* Text button for init a Meeting. */
+"meetings.create.newMeeting"="Nouvelle réunion";
+/* Meeting Title */
+"meetings.createMeeting.defaultMeetingName"="Réunion de %@";
+/* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end"="La réunion est terminée";
+/* Meeting ended Alert button -- View Meeting Chat history. */
+"meetings.alert.meetingchat"="Visualiser l’historique de la réunion";
+/* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
+"meetings.alert.end.description"="La réunion à laquelle vous tentez de vous rejoindre est déjà terminée. Vous pouvez quand même visualiser l'historique de la conversation de la réunion.";
+/* Contacts selection screen header: Invite contacts to meetings */
+"meetings.panel.InviteParticipants"="Inviter des participants";
+/* Meetings: Floating panel participants count header */
+"meetings.panel.ParticipantsCount"="Participants (%d)";
+/* Meetings: Floating panel participants listing indication if a participant is moderator */
+"meetings.participant.moderator"="MODÉRATEUR";
+/* Action of a call/meeting to rename it */
+"meetings.action.rename"="Renommer la réunion";
+/* Action of a call/meeting to share its link */
+"meetings.action.shareLink"="Partager le lien de la réunion";
+/* Message shown when a meeting starts and user is waiting other users to join */
+"meetings.message.waitingOthers"="Nous attendons que d’autres se joignent…";
+/* Message shown when the user is the only one left in the meeting */
+"meetings.message.noOtherParticipants"="Vous êtes la seule personne ici…";
+/* Message header when the user enters a invalid meeting URL */
+"meetings.joinMeeting.header"="L’URL de la réunion est invalide";
+/* Message description when the user enters a invalid meeting URL */
+"meetings.joinMeeting.description"="Impossible de se joindre à la réunion. Veuillez confirmer que le lien est valide.";
+/* Message shown when the meeting link cannot be generated */
+"meetings.sharelink.Error"="Le lien de la réunion n’a pas pu être généré. Veuillez réessayer.";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.loggedInUser.joinButtonText"="Me joindre à une réunion";
+/* Button text to join a meeting for the logged in user */
+"meetings.link.guest.joinButtonText"="Vous joindre en tant qu’invité";
+/* Guest user join Mega: paragraph 1 title */
+"meetings.joinMega.paragraph1.title"="Votre vie privée compte";
+/* Guest user join Mega: paragraph 1 description */
+"meetings.joinMega.paragraph1.description"="Joignez-vous à la plus grande plateforme de stockage nuagique et de collaboration sécurisée au monde.";
+/* Guest user join Mega: paragraph 2 title */
+"meetings.joinMega.paragraph2.title"="Obtenez 20 Go gratuitement";
+/* Guest user join Mega: paragraph 2 description */
+"meetings.joinMega.paragraph2.description"="Inscrivez-vous maintenant et profitez gratuitement de fonctions évoluées de collaboration.";
+/* Message shown when the user privilege is changed to moderator */
+"meetings.notifications.moderatorPrivilege"="Vous êtes le nouveau modérateur de l’appel";
+/* This message is shown when calling and the receiver is not picking up the call */
+"meetings.incompatibility.warningMessage"="Nous mettons MEGAchat à niveau. Vos appels pourraient ne pas être connectés en raison d’incompatibilité des versions, à moins qu’appelant et appelés aient aussi mis à niveau leurs applis MEGA vers la version la plus récente.";
