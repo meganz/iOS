@@ -7896,12 +7896,12 @@
 		A88E7FE42549FD8A001B0A66 /* Recents */ = {
 			isa = PBXGroup;
 			children = (
+				A88E7FE82549FD8A001B0A66 /* Recents.storyboard */,
 				A88E7FE52549FD8A001B0A66 /* RecentsTableViewHeaderView.xib */,
 				A88E7FE62549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.h */,
-				A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */,
-				A88E7FE82549FD8A001B0A66 /* Recents.storyboard */,
 				A88E7FE92549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m */,
 				A88E7FEA2549FD8A001B0A66 /* RecentsViewController.h */,
+				A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */,
 			);
 			path = Recents;
 			sourceTree = "<group>";
