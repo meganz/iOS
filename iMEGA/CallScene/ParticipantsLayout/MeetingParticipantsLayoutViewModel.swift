@@ -357,13 +357,17 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .didAddFirstParticipant:
             invokeCommand?(.startCompatibilityWarningViewTimer)
         case .fetchAvatar(let participant):
-            fetchAvatar(for: participant) { [weak self] image in
-                self?.invokeCommand?(.updateAvatar(image, participant))
+            participantName(for: participant.participantId) { [weak self] name in
+                self?.fetchAvatar(for: participant) { [weak self] image in
+                    self?.invokeCommand?(.updateAvatar(image, participant))
+                }
             }
         case .fetchSpeakerAvatar:
             guard let speakerParticipant = speakerParticipant else { return }
-            fetchAvatar(for: speakerParticipant) { [weak self] image in
-                self?.invokeCommand?(.updateSpeakerAvatar(image))
+            participantName(for: speakerParticipant.participantId) { [weak self] name in
+                self?.fetchAvatar(for: speakerParticipant) { image in
+                    self?.invokeCommand?(.updateSpeakerAvatar(image))
+                }
             }
         }
     }
