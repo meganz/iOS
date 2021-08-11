@@ -129,7 +129,7 @@
     }
     
     private func disableRTCAudio() {
-        MEGALogDebug("CallActionManager: Enable webrtc audio")
+        MEGALogDebug("CallActionManager: Disable webrtc audio")
         RTCAudioSession.sharedInstance().useManualAudio = true
         RTCAudioSession.sharedInstance().isAudioEnabled = false
     }
