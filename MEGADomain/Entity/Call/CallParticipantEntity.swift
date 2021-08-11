@@ -39,7 +39,8 @@ final class CallParticipantEntity: Equatable {
          isVideoHiRes: Bool,
          isVideoLowRes: Bool,
          canReceiveVideoHiRes: Bool,
-         canReceiveVideoLowRes: Bool) {
+         canReceiveVideoLowRes: Bool,
+         name: String? = nil) {
         self.chatId = chatId
         self.participantId = participantId
         self.clientId = clientId
@@ -52,6 +53,7 @@ final class CallParticipantEntity: Equatable {
         self.isVideoLowRes = isVideoLowRes
         self.canReceiveVideoHiRes = canReceiveVideoHiRes
         self.canReceiveVideoLowRes = canReceiveVideoLowRes
+        self.name = name
     }
     
     static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
