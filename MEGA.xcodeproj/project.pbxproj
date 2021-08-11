@@ -1904,6 +1904,8 @@
 		C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */; };
 		C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */; };
 		C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D675250DBAAB00D74666 /* StoreUserClient.swift */; };
+		C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709A9826B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift */; };
+		C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709A9C26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift */; };
 		C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */; };
 		C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */; };
 		C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */; };
@@ -4012,6 +4014,8 @@
 		C467AD4F26A8656000AFE4D2 /* DynamicTypeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeProtocol.swift; sourceTree = "<group>"; };
 		C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBannerContainerViewRouter.swift; sourceTree = "<group>"; };
 		C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModelTests.swift; sourceTree = "<group>"; };
+		C4709A9826B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UpgradeTableViewController+Additions.swift"; sourceTree = "<group>"; };
+		C4709A9C26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailViewController+Additions.swift"; sourceTree = "<group>"; };
 		C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
 		C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModelTests.swift; sourceTree = "<group>"; };
 		C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoRepository.swift; sourceTree = "<group>"; };
@@ -5074,12 +5078,14 @@
 				5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */,
 				41A66D051AE7900F007D7E20 /* UpgradeTableViewController.h */,
 				41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */,
+				C4709A9826B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift */,
 				5B76EBA225DE8D9000CE77F2 /* UpgradeAccountFactory.swift */,
 				5B76EBD425DE8DF800CE77F2 /* UpgradeAccountRouter.swift */,
 				41A66D0B1AE7A0FE007D7E20 /* ProductTableViewCell.h */,
 				41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */,
 				41D14F6C1B85F6D40005A27A /* ProductDetailViewController.h */,
 				41D14F6D1B85F6D40005A27A /* ProductDetailViewController.m */,
+				C4709A9C26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift */,
 				41D14F6F1B8603AF0005A27A /* ProductDetailTableViewCell.h */,
 				41D14F701B8603AF0005A27A /* ProductDetailTableViewCell.m */,
 				41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */,
@@ -11072,6 +11078,7 @@
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				A80B66E125E7F72000486EC5 /* NodeEntity+Mapper.swift in Sources */,
 				BF6D30AA25390BBA00BD4653 /* FilesSearchUseCase.swift in Sources */,
+				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
 				5B9F5D51259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift in Sources */,
 				B63AEB0B2511BD74000B8517 /* GetSMSErrorEntity.swift in Sources */,
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
@@ -11271,6 +11278,7 @@
 				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,
 				9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */,
 				C4575F34265FEC3100D527DC /* NodeOwnerInfoTableViewCell.swift in Sources */,
+				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
 				2F9F112A2508A43300896DFF /* ServiceConstant.swift in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */,

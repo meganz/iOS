@@ -12,8 +12,6 @@
     BOOL isPurchased;
 }
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *crestImageView;
 
@@ -92,6 +90,7 @@
     [_save17Label setText:NSLocalizedString(@"save17", nil)];
     
     [self updateAppearance];
+    [self.tableView sizeHeaderToFit];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
