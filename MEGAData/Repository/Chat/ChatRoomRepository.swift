@@ -75,7 +75,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
         
         let delegate = MEGAChatGenericRequestDelegate { (request, error) in
-            guard error.type != .MEGAChatErrorTypeOk else {
+            guard error.type == .MEGAChatErrorTypeOk else {
                 MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
                 return
             }
