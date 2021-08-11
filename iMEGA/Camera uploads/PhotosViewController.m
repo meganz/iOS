@@ -304,7 +304,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     self.stateView.hidden = NO;
     self.stateLabel.hidden = NO;
-    self.stateLabel.font = [UIFont systemFontOfSize:17.0];
+    self.stateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     self.progressStackView.hidden = YES;
     self.enableCameraUploadsButton.hidden = YES;
     
@@ -334,7 +334,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             self.stateLabel.text = NSLocalizedString(@"loading", nil);
             break;
         case MEGACameraUploadsStateEnableVideo:
-            self.stateLabel.font = [UIFont systemFontOfSize:15.0];
+            self.stateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
             self.enableCameraUploadsButton.hidden = NO;
             break;
     }
