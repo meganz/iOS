@@ -66,18 +66,59 @@ class MegaAvatarView: UIView {
             configure(mode: .single)
         } else {
             let firstPeerHandle = chatRoom.peerHandle(at: 0)
-            let firstPeerName = chatRoom.userDisplayName(forUserHandle: firstPeerHandle)
-            if chatRoom.peerCount == 1 {
-                avatarImageView.mnz_setImage(forUserHandle: firstPeerHandle, name: firstPeerName)
-                configure(mode: .single)
-            } else {
-                let secondPeerHandle = chatRoom.peerHandle(at: 1)
-                let secondPeerName = chatRoom.userDisplayName(forUserHandle: secondPeerHandle)
-                firstPeerAvatarImageView.mnz_setImage(forUserHandle: firstPeerHandle, name: firstPeerName)
-                secondPeerAvatarImageView.mnz_setImage(forUserHandle: secondPeerHandle, name: secondPeerName)
-                configure(mode: .multiple)
+            userFullName(forPeerId: firstPeerHandle,
+                         chatId: chatRoom.chatId,
+                         sdk: MEGASdkManager.sharedMEGAChatSdk()) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let name):
+                    let imageView = chatRoom.peerCount == 1 ? self.avatarImageView : self.firstPeerAvatarImageView
+                    imageView?.mnz_setImage(forUserHandle: firstPeerHandle, name: name)
+                case .failure(let error):
+                    MEGALogDebug("not able to fetch the image for peer \(error)")
+                }
             }
+            
+            if chatRoom.peerCount > 1 {
+                let secondPeerHandle = chatRoom.peerHandle(at: 1)
+                userFullName(forPeerId: secondPeerHandle,
+                             chatId: chatRoom.chatId,
+                             sdk: MEGASdkManager.sharedMEGAChatSdk()) { [weak self] result in
+                    switch result {
+                    case .success(let name):
+                        self?.secondPeerAvatarImageView.mnz_setImage(forUserHandle: secondPeerHandle, name: name)
+                    case .failure(let error):
+                        MEGALogDebug("not able to fetch the image for peer \(error)")
+                    }
+                }
+            }
+            
+            configure(mode: (chatRoom.peerCount == 1) ? .single :.multiple)
         }
+    }
+    
+    func userFullName(forPeerId peerId: MEGAHandle,
+                      chatId: MEGAHandle,
+                      sdk: MEGAChatSdk,
+                      completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+        if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
+            completion(.success(name))
+            return
+        }
+        
+        let delegate = MEGAChatGenericRequestDelegate { (request, error) in
+            guard error.type == .MEGAChatErrorTypeOk,
+                  let name = sdk.userFullnameFromCache(byUserHandle: peerId) else {
+                MEGALogDebug("error fetching attributes for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
+                completion(.failure(.generic))
+                return
+            }
+            
+            completion(.success(name))
+        }
+        
+        MEGALogDebug("Load user attributes for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
+        sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
