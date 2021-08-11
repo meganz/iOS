@@ -75,15 +75,14 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
         
         let delegate = MEGAChatGenericRequestDelegate { (request, error) in
-            guard error.type == .MEGAChatErrorTypeOk else {
+            guard error.type == .MEGAChatErrorTypeOk,
+                  let name = sdk.userFullnameFromCache(byUserHandle: peerId) else {
                 MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
+                completion(.failure(.generic))
                 return
             }
             
-            if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
-                MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
-                completion(.success(name))
-            }
+            completion(.success(name))
         }
         
         MEGALogDebug("Load user name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
