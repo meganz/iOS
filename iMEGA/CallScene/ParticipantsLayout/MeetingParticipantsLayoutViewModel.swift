@@ -225,9 +225,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         remoteVideoUseCase.disableRemoteVideo(for: participant)
     }
     
-    private func fetchAvatar(for participant: CallParticipantEntity, completion: @escaping ((UIImage) -> Void)) {
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
-                                         name: participant.name ?? "Unknown") { result in
+    private func fetchAvatar(for participant: CallParticipantEntity, name: String, completion: @escaping ((UIImage) -> Void)) {
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name) { result in
             switch result {
             case .success(let image):
                 completion(image)
@@ -237,13 +236,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
-    private func participantName(for userHandle: MEGAHandle, completion: @escaping (String) -> Void) {
+    private func participantName(for userHandle: MEGAHandle, completion: @escaping (String?) -> Void) {
         chatRoomUseCase.userDisplayName(forPeerId: userHandle, chatId: chatRoom.chatId) { result in
             switch result {
             case .success(let displayName):
                 completion(displayName)
-            case .failure(_):
-                break
+            case .failure(let error):
+                MEGALogDebug("ParticipantViewModel: failed to get the user display name for \(MEGASdk.base64Handle(forUserHandle: userHandle) ?? "No name") - \(error)")
+                completion(nil)
             }
         }
     }
@@ -308,7 +308,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         case .onViewReady:
             if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
-                fetchAvatar(for: myself) { [weak self] image in
+                fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
                     self?.invokeCommand?(.updateMyAvatar(image))
                 }
             }
@@ -358,14 +358,16 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.startCompatibilityWarningViewTimer)
         case .fetchAvatar(let participant):
             participantName(for: participant.participantId) { [weak self] name in
-                self?.fetchAvatar(for: participant) { [weak self] image in
+                guard let name = name else { return }
+                self?.fetchAvatar(for: participant, name: name) { [weak self] image in
                     self?.invokeCommand?(.updateAvatar(image, participant))
                 }
             }
         case .fetchSpeakerAvatar:
             guard let speakerParticipant = speakerParticipant else { return }
             participantName(for: speakerParticipant.participantId) { [weak self] name in
-                self?.fetchAvatar(for: speakerParticipant) { image in
+                guard let name = name else { return }
+                self?.fetchAvatar(for: speakerParticipant, name: name) { image in
                     self?.invokeCommand?(.updateSpeakerAvatar(image))
                 }
             }
@@ -571,6 +573,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     
     func participantAdded(with handle: MEGAHandle) {
         participantName(for: handle) { [weak self] displayName in
+            guard let displayName = displayName else { return }
             self?.invokeCommand?(.participantAdded(displayName))
         }
         switchVideoResolutionBasedOnParticipantsCount()
@@ -578,6 +581,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     
     func participantRemoved(with handle: MEGAHandle) {
         participantName(for: handle) { [weak self] displayName in
+            guard let displayName = displayName else { return }
             self?.invokeCommand?(.participantRemoved(displayName))
         }
         switchVideoResolutionBasedOnParticipantsCount()

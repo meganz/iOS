@@ -105,7 +105,7 @@
     }
     
     @objc func disableRTCAudioSession() {
-        MEGALogDebug("CallActionManager: Enable webrtc audio session")
+        MEGALogDebug("CallActionManager: Disable webrtc audio session")
         disableRTCAudio()
         RTCAudioSession.sharedInstance().audioSessionDidDeactivate(AVAudioSession.sharedInstance())
     }

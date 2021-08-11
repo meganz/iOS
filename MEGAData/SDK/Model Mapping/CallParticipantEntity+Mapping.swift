@@ -43,7 +43,8 @@ extension CallParticipantEntity {
                                                 isVideoHiRes: true,
                                                 isVideoLowRes: false,
                                                 canReceiveVideoHiRes: true,
-                                                canReceiveVideoLowRes: false)
+                                                canReceiveVideoLowRes: false,
+                                                name: MEGASdkManager.sharedMEGAChatSdk().myFullname)
         
         return participant
     }
