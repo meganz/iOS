@@ -249,6 +249,10 @@ static const CGFloat GapBetweenPages = 10.0;
             [self updateAppearance];
         }
     }
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self reloadTitle];
+    }
 }
 
 #pragma mark - Status bar
