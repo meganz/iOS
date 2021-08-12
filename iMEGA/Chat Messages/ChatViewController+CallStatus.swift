@@ -9,6 +9,7 @@ extension ChatViewController {
         guard chatRoom.ownPrivilege == .standard
                 || chatRoom.ownPrivilege == .moderator
                 || !MEGAReachabilityManager.isReachable(),
+              MEGASdkManager.sharedMEGAChatSdk().hasCall(inChatRoom: chatRoom.chatId), // Noticed crash in Testflight when trying to fetch the call object directly.
               let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId),
               call.status != .destroyed,
               call.status != .terminatingUserParticipation else {
