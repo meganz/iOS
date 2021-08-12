@@ -143,9 +143,9 @@ class EnterEmailViewController: UIViewController {
         
         tokenField.toLabelText = "";
         tokenField.inputTextFieldTextColor = UIColor.mnz_label()
-        tokenField.inputTextFieldFont = UIFont.systemFont(ofSize: 17)
+        tokenField.inputTextFieldFont = UIFont.preferredFont(forTextStyle: .body)
         
-        tokenField.tokenFont = UIFont.systemFont(ofSize: 17)
+        tokenField.tokenFont = UIFont.preferredFont(forTextStyle: .body)
         tokenField.tokenHighlightedTextColor = UIColor.mnz_label()
         tokenField.tokenHighlightedBackgroundColor = UIColor.mnz_tertiaryBackgroundElevated(traitCollection)
         
