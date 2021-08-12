@@ -280,7 +280,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: "",
-                                isUserAGuest: userUseCase.isGuestAccount,
+                                isUserAGuest: userUseCase.isGuest,
                                 isOneToOne: false)
                 )
                 initTimerIfNeeded(with: Int(call.duration))
@@ -288,7 +288,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: initialSubtitle(),
-                                isUserAGuest: userUseCase.isGuestAccount,
+                                isUserAGuest: userUseCase.isGuest,
                                 isOneToOne: chatRoom.chatType == .oneToOne)
                 )
             }

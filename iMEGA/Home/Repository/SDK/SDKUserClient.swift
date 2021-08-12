@@ -5,7 +5,7 @@ struct SDKUserClient {
     /// Will return current login user in `MEGASDK` and return a `UserSDKEntity` that encapsulates the `MEGAUser` instance.
     var currentUser: () -> UserSDKEntity?
     
-    var hasUserLoggedIn: () -> Bool
+    var isLoggedIn: () -> Bool
     
     /// Will return the owner user of specified shared node in `MEGASDK`.
     /// - Parameter: Shared node's node handle.
@@ -13,7 +13,7 @@ struct SDKUserClient {
         _ nodeHandle: MEGAHandle
     ) -> UserSDKEntity?
     
-    var isGuestAccount: () -> Bool
+    var isGuest: () -> Bool
 }
 
 extension SDKUserClient {
@@ -27,7 +27,7 @@ extension SDKUserClient {
                 let base64Handle = MEGASdk.base64Handle(forUserHandle: user.handle)
                 return UserSDKEntity(with: user, base64Handle: base64Handle)
             },
-            hasUserLoggedIn: {
+            isLoggedIn: {
                 api.isLoggedIn() > 0
             },
             userForSharedNode: { nodeHandle in
@@ -36,7 +36,7 @@ extension SDKUserClient {
                 let base64Handle = MEGASdk.base64Handle(forUserHandle: user.handle)
                 return UserSDKEntity(with: user, base64Handle: base64Handle)
             },
-            isGuestAccount: {
+            isGuest: {
                 api.isGuestAccount
             }
         )

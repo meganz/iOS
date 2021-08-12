@@ -1,17 +1,20 @@
 @testable import MEGA
 
 final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
-    var chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity>?
-    var requestCompletion: Result<MEGARequest, MEGASDKErrorType>?
+    let userName: String
+    var chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
     var createEpehemeralAccountCompletion: Result<Void, MEGASDKErrorType>?
     var joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)
 
     var createChatLink_calledTimes = 0
     
+    init(userName: String, chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)) {
+        self.userName = userName
+        self.chatCallCompletion = chatCallCompletion
+    }
+    
     func startCall(meetingName: String, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        if let completionBlock = chatCallCompletion {
-            completion(completionBlock)
-        }
+        completion(chatCallCompletion)
     }
     
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
@@ -19,7 +22,7 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     }
     
     func getUsername() -> String {
-        "test name"
+        userName
     }
     
     func getCall(forChatId chatId: UInt64) -> CallEntity? {
@@ -27,9 +30,7 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     }
     
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        if let completionBlock = chatCallCompletion {
-            completion(completionBlock)
-        }
+        completion(chatCallCompletion)
     }
  
     func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void, karereInitCompletion: @escaping () -> Void) {

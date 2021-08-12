@@ -7,7 +7,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let callManagerUseCase = MockCallManagerUseCase()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUseCase, userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUseCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [])
         XCTAssert(router.showMeetingUI_calledTimes == 1)
         XCTAssert(callManagerUseCase.addCallRemoved_CalledTimes == 1)
@@ -20,7 +20,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase()
         callUseCase.callEntity = CallEntity()
         let callManagerUserCase = MockCallManagerUseCase()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: callEntity, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, hasUserLoggedIn: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: callEntity, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: false, isGuest: true), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
         XCTAssert(callManagerUserCase.removeCallRemoved_CalledTimes == 1)
@@ -33,7 +33,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase()
         callUseCase.callEntity = callEntity
         let callManagerUserCase = MockCallManagerUseCase()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(hasLocalVideo: false), callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(hasLocalVideo: false), callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.dismiss_calledTimes == 1)
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
@@ -43,7 +43,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_backButtonTap() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .tapOnBackButton, expectedCommands: [])
         XCTAssert(router.dismiss_calledTimes == 1)
     }
@@ -51,7 +51,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_ChangeMenuVisibility() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: MockCallUseCase(), chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .changeMenuVisibility, expectedCommands: [])
         XCTAssert(router.toggleFloatingPanel_CalledTimes == 1)
     }
@@ -62,7 +62,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase()
         let callManagerUserCase = MockCallManagerUseCase()
         let chatRoomUseCase = MockChatRoomUseCase(publicLinkCompletion: .success(""))
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 1)
     }
@@ -72,7 +72,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase()
         let callManagerUserCase = MockCallManagerUseCase()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 0)
     }

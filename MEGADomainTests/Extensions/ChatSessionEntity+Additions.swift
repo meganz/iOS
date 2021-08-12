@@ -9,7 +9,8 @@ extension ChatSessionEntity {
          peerId: UInt64 = MEGAInvalidHandle,
          clientId: UInt64 = MEGAInvalidHandle,
          changes: Int = 0,
-         isHighResolution: Bool = false) {
-        self.init(statusType: statusType, hasAudio: hasAudio, hasVideo: hasVideo, peerId: peerId, clientId: clientId, audioDetected: false, isOnHold: false, changes: changes, isHighResolution: isHighResolution)
+         isHighResolution: Bool = false,
+         isLowResolution: Bool = false) {
+        self.init(statusType: statusType, hasAudio: hasAudio, hasVideo: hasVideo, peerId: peerId, clientId: clientId, audioDetected: false, isOnHold: false, changes: changes, isHighResolution: isHighResolution, isLowResolution: isLowResolution, canReceiveVideoHiRes: false, canReceiveVideoLowRes: false)
     }
 }

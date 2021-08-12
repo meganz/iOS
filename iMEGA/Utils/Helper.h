@@ -57,7 +57,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (void)changeApiURL;
 + (void)restoreAPISetting;
 + (void)cannotPlayContentDuringACallAlert;
-+ (void)switchToStaging;
 
 + (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction;
 

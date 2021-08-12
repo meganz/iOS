@@ -5,11 +5,11 @@ extension SDKUserClient {
     static var foundNil: Self {
         return Self.init(currentUser: {
             return nil
-        }, hasUserLoggedIn: {
+        }, isLoggedIn: {
             false
         }, userForSharedNode: { _ in
             return nil
-        }, isGuestAccount: {
+        }, isGuest: {
             false
         })
     }
@@ -17,11 +17,11 @@ extension SDKUserClient {
     static var foundUser: Self {
         return Self(currentUser: {
             return UserSDKEntity.mockUser
-        }, hasUserLoggedIn: {
+        }, isLoggedIn: {
             false
         }, userForSharedNode: { _ in
             return UserSDKEntity.mockUser
-        }, isGuestAccount: {
+        }, isGuest: {
             false
         })
     }
