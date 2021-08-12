@@ -36,7 +36,7 @@ final class NodeActionViewControllerGenericDelegate:
             let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
             guard let contactsViewController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else { return }
             contactsViewController.node = node
-            contactsViewController.contactsMode = .shareFoldersWith
+            contactsViewController.contactsMode = .folderSharedWith
             
             if let navigationController = viewController as? UINavigationController {
                 navigationController.pushViewController(contactsViewController, animated: true)
