@@ -4,7 +4,7 @@ import XCTest
 final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     
     func testAction_onViewReady_MyselfAsModerator_AttendeeIsAModeratorAndIsInContactList() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: true, isInContactList: true, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, isInContactList: true, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -25,7 +25,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_MyselfAsModerator_AttendeeIsAModeratorAndNotInContactList() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: true, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: true, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -47,7 +47,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_MyselfAsModerator_AttendeeIsAParticipantAndAlsoInContactList() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: true, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: true, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -69,7 +69,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_MyselfAsModerator_AttendeeIsAParticipantAndNotInContactList() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -91,7 +91,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_MyselfAsParticipant_AttendeeIsAParticipantAndAlsoInContactList() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: true, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: true, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -113,7 +113,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_MyselfAsParticipant_AttendeeIsAParticipantAndNotInContactList() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -134,7 +134,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_AttendeeIsAGuest() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -156,7 +156,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_showInfo() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -173,7 +173,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_sendMessage() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomEntity = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
@@ -191,7 +191,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_addToContact_success() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -208,7 +208,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_addToContact_error() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()
@@ -225,7 +225,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     func testAction_makeModerator() {
-        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, networkQuality: 1, email: "test@email.com", isModerator: false, isInContactList: false, videoResolution: .high)
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let router = MockMeetingParticpiantInfoViewRouter()

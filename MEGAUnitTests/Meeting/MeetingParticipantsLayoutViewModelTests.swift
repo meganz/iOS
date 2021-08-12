@@ -8,7 +8,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -17,7 +17,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -39,7 +39,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity(clientSessions: [ChatSessionEntity(statusType: .inProgress)])
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -48,7 +48,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -69,7 +69,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -78,7 +78,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -95,7 +95,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -104,7 +104,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -117,7 +117,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
                                       callUseCase: callUseCase,
@@ -125,7 +125,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -141,7 +141,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -150,7 +150,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -166,7 +166,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -175,7 +175,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -189,7 +189,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -198,7 +198,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -212,7 +212,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -221,7 +221,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)
@@ -237,7 +237,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase()
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100), authUseCase: MockAuthUseCase(isUserLoggedIn: true), isAnsweredFromCallKit: false)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         let router = MockCallViewRouter()
         let viewModel = MeetingParticipantsLayoutViewModel(router: router,
                                       containerViewModel: containerViewModel,
@@ -246,7 +246,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                       remoteVideoUseCase: remoteVideoUseCase,
                                       chatRoomUseCase: MockChatRoomUseCase(),
-                                      userUseCase: MockUserUseCase(handle: 100),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
                                       userImageUseCase: MockUserImageUseCase(),
                                       chatRoom: chatRoom,
                                       call: call)

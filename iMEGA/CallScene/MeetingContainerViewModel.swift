@@ -76,7 +76,7 @@ final class MeetingContainerViewModel: ViewModelType {
                     self.router.shareLink(presenter: presenter,
                                           sender: sender,
                                           link: link,
-                                          isGuestAccount: self.userUseCase.isGuestAccount,
+                                          isGuestAccount: self.userUseCase.isGuest,
                                           completion: completion)
                 case .failure(_):
                     self.router.showShareMeetingError()
@@ -88,7 +88,7 @@ final class MeetingContainerViewModel: ViewModelType {
             dismissCall(completion: completion)
         case .endGuestUserCall(let completion):
             dismissCall {
-                if self.userUseCase.isGuestAccount {
+                if self.userUseCase.isGuest {
                     self.authUseCase.logout()
                 }
                 
@@ -106,7 +106,7 @@ final class MeetingContainerViewModel: ViewModelType {
     
     
     private func hangCall(presenter: UIViewController, sender: UIButton) {
-        if !userUseCase.isGuestAccount {
+        if !userUseCase.isGuest {
             dismissCall(completion: nil)
         } else {
             router.showEndMeetingOptions(presenter: presenter,

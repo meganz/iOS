@@ -101,7 +101,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             populateParticipants()
             callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
-            invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuestAccount,
+            invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuest,
                                        isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                        isVideoEnabled: isVideoEnabled ?? false,
                                        cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
@@ -346,7 +346,7 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
         self.chatRoom = chatRoom
         guard let attendee = callParticipants.first else { return }
         attendee.isModerator = privilege == .moderator
-        invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuestAccount,
+        invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuest,
                                    isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                    isVideoEnabled: isVideoEnabled ?? false,
                                    cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
