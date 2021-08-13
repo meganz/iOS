@@ -50,7 +50,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updatePageControl(Int)
         case insertParticipant([CallParticipantEntity])
         case deleteParticipantAt(Int, [CallParticipantEntity])
-        case updateParticipantAt(Int, [CallParticipantEntity])
+        case reloadParticipantAt(Int, [CallParticipantEntity])
         case updateSpeakerViewFor(CallParticipantEntity?)
         case localVideoFrame(Int, Int, Data)
         case participantAdded(String)
@@ -173,9 +173,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
-    private func updateParticipant(_ participant: CallParticipantEntity) {
+    private func reloadParticipant(_ participant: CallParticipantEntity) {
         guard let index = callParticipants.firstIndex(of: participant) else { return }
-        invokeCommand?(.updateParticipantAt(index, callParticipants))
+        invokeCommand?(.reloadParticipantAt(index, callParticipants))
         
         guard let currentSpeaker = speakerParticipant, currentSpeaker == participant else {
             return
@@ -450,15 +450,15 @@ struct CallDurationInfo {
 }
 
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
-    func attendeeJoined(attendee: CallParticipantEntity) {
+    func participantJoined(participant: CallParticipantEntity) {
         initTimerIfNeeded(with: Int(call.duration))
         invokeCommand?(.removeCompatibilityWarningView)
-        participantName(for: attendee.participantId) { [weak self] in
-            attendee.name = $0
-            if attendee.video == .on {
-                self?.enableRemoteVideo(for: attendee)
+        participantName(for: participant.participantId) { [weak self] in
+            participant.name = $0
+            if participant.video == .on {
+                self?.enableRemoteVideo(for: participant)
             }
-            self?.callParticipants.append(attendee)
+            self?.callParticipants.append(participant)
             self?.invokeCommand?(.insertParticipant(self?.callParticipants ?? []))
             if self?.callParticipants.count == 1 && self?.layoutMode == .speaker {
                 self?.invokeCommand?(.shouldHideSpeakerView(false))
@@ -471,11 +471,11 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
     }
     
-    func attendeeLeft(attendee: CallParticipantEntity) {
+    func participantLeft(participant: CallParticipantEntity) {
         if callUseCase.call(for: call.chatId) == nil {
             callTerminated()
-        } else if let index = callParticipants.firstIndex(of: attendee) {
-            if attendee.video == .on {
+        } else if let index = callParticipants.firstIndex(of: participant) {
+            if participant.video == .on {
                 remoteVideoUseCase.disableRemoteVideo(for: callParticipants[index])
             }
             callParticipants.remove(at: index)
@@ -494,7 +494,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 invokeCommand?(.updatePageControl(callParticipants.count))
             }
             
-            guard let currentSpeaker = speakerParticipant, currentSpeaker == attendee else {
+            guard let currentSpeaker = speakerParticipant, currentSpeaker == participant else {
                 return
             }
             isSpeakerParticipantPinned = false
@@ -504,43 +504,43 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
     }
     
-    func updateAttendee(_ attendee: CallParticipantEntity) {
-        guard let participantUpdated = callParticipants.filter({$0 == attendee}).first else {
+    func updateParticipant(_ participant: CallParticipantEntity) {
+        guard let participantUpdated = callParticipants.filter({$0 == participant}).first else {
             MEGALogError("Error getting participant updated")
             return
         }
-        if participantUpdated.video == .off && attendee.video == .on {
+        if participantUpdated.video == .off && participant.video == .on {
             participantUpdated.video = .on
             enableRemoteVideo(for: participantUpdated)
-        } else if participantUpdated.video == .on && attendee.video == .off {
+        } else if participantUpdated.video == .on && participant.video == .off {
             participantUpdated.video = .off
             disableRemoteVideo(for: participantUpdated)
         }
 
-        participantUpdated.audio = attendee.audio
-        updateParticipant(participantUpdated)
+        participantUpdated.audio = participant.audio
+        reloadParticipant(participantUpdated)
     }
     
-    func remoteVideoResolutionChanged(for attendee: CallParticipantEntity) {
-        guard let participantUpdated = callParticipants.filter({$0 == attendee}).first else {
+    func remoteVideoResolutionChanged(for participant: CallParticipantEntity) {
+        guard let participantUpdated = callParticipants.filter({$0 == participant}).first else {
             MEGALogError("Error getting participant updated with video resolution")
             return
         }
-        if (participantUpdated.canReceiveVideoLowRes != attendee.canReceiveVideoLowRes || participantUpdated.canReceiveVideoHiRes != attendee.canReceiveVideoHiRes) && participantUpdated.video == .on {
+        if (participantUpdated.canReceiveVideoLowRes != participant.canReceiveVideoLowRes || participantUpdated.canReceiveVideoHiRes != participant.canReceiveVideoHiRes) && participantUpdated.video == .on {
             disableRemoteVideo(for: participantUpdated)
-            participantUpdated.isVideoLowRes = attendee.isVideoLowRes
-            participantUpdated.isVideoHiRes = attendee.isVideoHiRes
-            participantUpdated.canReceiveVideoLowRes = attendee.canReceiveVideoLowRes
-            participantUpdated.canReceiveVideoHiRes = attendee.canReceiveVideoHiRes
+            participantUpdated.isVideoLowRes = participant.isVideoLowRes
+            participantUpdated.isVideoHiRes = participant.isVideoHiRes
+            participantUpdated.canReceiveVideoLowRes = participant.canReceiveVideoLowRes
+            participantUpdated.canReceiveVideoHiRes = participant.canReceiveVideoHiRes
             enableRemoteVideo(for: participantUpdated)
         }
     }
     
-    func audioLevel(for attendee: CallParticipantEntity) {
+    func audioLevel(for participant: CallParticipantEntity) {
         if isSpeakerParticipantPinned {
             return
         }
-        guard let participantWithAudio = callParticipants.filter({$0 == attendee}).first else {
+        guard let participantWithAudio = callParticipants.filter({$0 == participant}).first else {
             MEGALogError("Error getting participant with audio")
             return
         }
@@ -660,7 +660,7 @@ extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProt
         }
         if participant.videoDataDelegate == nil {
             guard let index = callParticipants.firstIndex(of: participant) else { return }
-            invokeCommand?(.updateParticipantAt(index, callParticipants))
+            invokeCommand?(.reloadParticipantAt(index, callParticipants))
         }
         participant.remoteVideoFrame(width: width, height: height, buffer: buffer)
     }

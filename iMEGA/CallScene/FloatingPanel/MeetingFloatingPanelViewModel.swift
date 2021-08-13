@@ -4,7 +4,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case hangCall(presenter: UIViewController, sender: UIButton)
     case shareLink(presenter: UIViewController, sender: UIButton)
     case inviteParticipants(presenter: UIViewController)
-    case onContextMenuTap(presenter: UIViewController, sender: UIButton, attendee: CallParticipantEntity)
+    case onContextMenuTap(presenter: UIViewController, sender: UIButton, participant: CallParticipantEntity)
     case muteUnmuteCall(mute: Bool)
     case turnCamera(on: Bool)
     case switchCamera(backCameraOn: Bool)
@@ -140,10 +140,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 self.containerViewModel?.dispatch(.onAddingParticipant)
                 userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
             }
-        case .onContextMenuTap(let presenter, let sender, let attendee):
+        case .onContextMenuTap(let presenter, let sender, let participant):
             router.showContextMenu(presenter: presenter,
                                    sender: sender,
-                                   attendee: attendee,
+                                   participant: participant,
                                    isMyselfModerator: isMyselfAModerator,
                                    meetingFloatingPanelModel: self)
 
@@ -319,23 +319,23 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
 
 
 extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
-    func attendeeJoined(attendee: CallParticipantEntity) {
-        callParticipants.append(attendee)
+    func participantJoined(participant: CallParticipantEntity) {
+        callParticipants.append(participant)
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
     
-    func attendeeLeft(attendee: CallParticipantEntity) {
+    func participantLeft(participant: CallParticipantEntity) {
         if call == nil {
             containerViewModel?.dispatch(.dismissCall(completion: nil))
-        } else if let index = callParticipants.firstIndex(of: attendee) {
+        } else if let index = callParticipants.firstIndex(of: participant) {
             callParticipants.remove(at: index)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }
     
-    func updateAttendee(_ attendee: CallParticipantEntity) {
-        if let index = callParticipants.firstIndex(of: attendee) {
-            callParticipants[index] = attendee
+    func updateParticipant(_ participant: CallParticipantEntity) {
+        if let index = callParticipants.firstIndex(of: participant) {
+            callParticipants[index] = participant
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }
@@ -344,8 +344,8 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
-        guard let attendee = callParticipants.first else { return }
-        attendee.isModerator = privilege == .moderator
+        guard let participant = callParticipants.first else { return }
+        participant.isModerator = privilege == .moderator
         invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuest,
                                    isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                    isVideoEnabled: isVideoEnabled ?? false,

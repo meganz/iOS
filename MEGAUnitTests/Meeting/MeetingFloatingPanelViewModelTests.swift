@@ -307,7 +307,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
-        test(viewModel: viewModel, action: .onContextMenuTap(presenter: UIViewController(), sender: UIButton(), attendee: particpant), expectedCommands: [])
+        test(viewModel: viewModel, action: .onContextMenuTap(presenter: UIViewController(), sender: UIButton(), participant: particpant), expectedCommands: [])
         XCTAssert(router.showContextMenu_calledTimes == 1)
     }
     
@@ -695,7 +695,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showContextMenu(presenter: UIViewController,
                          sender: UIButton,
-                         attendee: CallParticipantEntity,
+                         participant: CallParticipantEntity,
                          isMyselfModerator: Bool,
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel) {
         showContextMenu_calledTimes += 1
