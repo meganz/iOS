@@ -3,8 +3,7 @@ import PanModal
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)
     func inviteParticipants(
-        presenter: UIViewController,
-        excludeParticpants: [UInt64]?,
+        excludeParticpants: NSMutableDictionary,
         selectedUsersHandler: @escaping (([UInt64]) -> Void)
     )
     func showContextMenu(presenter: UIViewController,
@@ -85,11 +84,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         baseViewController?.dismiss(animated: animated)
     }
     
-    func inviteParticipants(
-        presenter: UIViewController,
-        excludeParticpants: [UInt64]?,
-        selectedUsersHandler: @escaping (([UInt64]) -> Void)
-    ) {
+    func inviteParticipants(excludeParticpants: NSMutableDictionary, selectedUsersHandler: @escaping (([UInt64]) -> Void)) {
         let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
         guard let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController else { fatalError("no contacts navigation view controller found") }
         if #available(iOS 13.0, *) {
@@ -97,21 +92,13 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         }
         guard let contactController = contactsNavigationController.viewControllers.first as? ContactsViewController else { fatalError("no contact view controller found") }
         contactController.contactsMode = .inviteParticipants
-
-        let excludeParticpantsDict = excludeParticpants?.reduce(into: [:]) { result, element in
-            result[NSNumber(value: element)] = NSNumber(value: element)
-        }
-        
-        if let dict = excludeParticpantsDict {
-            contactController.participantsMutableDictionary = NSMutableDictionary(dictionary: dict)
-        }
-        
+        contactController.participantsMutableDictionary = excludeParticpants
         contactController.userSelected = { selectedUsers in
             guard let users = selectedUsers else { return }
             selectedUsersHandler(users.map({ $0.handle }))
         }
         
-        presenter.present(contactsNavigationController, animated: true)
+        baseViewController?.present(contactsNavigationController, animated: true)
     }
     
     func showContextMenu(presenter: UIViewController,

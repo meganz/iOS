@@ -124,9 +124,24 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
             case .success():
                 self.router.showInviteSuccess(email: email)
             case .failure(let error):
-                self.router.showInviteError(error, email: email)
+                errorInvitingToContact(error, email: email)
             }
         }
+    }
+    
+    private func errorInvitingToContact(_ error: InviteErrorEntity, email: String) {
+        var errorString = ""
+        switch error {
+        case .generic(let error):
+            errorString = error
+        case .ownEmailEntered:
+            errorString = NSLocalizedString("noNeedToAddYourOwnEmailAddress", comment: "")
+        case .alreadyAContact:
+            errorString = NSLocalizedString("alreadyAContact", comment: "").replacingOccurrences(of: "%s", with: email)
+        case .isInOutgoingContactRequest:
+            errorString = NSLocalizedString("theUserHasBeenInvited", comment: "")
+        }
+        self.router.showInviteErrorMessage(errorString)
     }
         
     private func infoAction() -> ActionSheetAction {

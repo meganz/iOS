@@ -221,7 +221,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         router: router)
         
         viewModel.dispatch(.addToContact)
-        XCTAssert(router.showInviteError_calledTimes == 1)
+        XCTAssert(router.showInviteErrorMessage_calledTimes == 1)
     }
     
     func testAction_makeModerator() {
@@ -284,7 +284,7 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     var showInfo_calledTimes = 0
     var openChatRoom_calledTimes = 0
     var showInviteSuccess_calledTimes = 0
-    var showInviteError_calledTimes = 0
+    var showInviteErrorMessage_calledTimes = 0
     var makeParticipantAsModerator_calledTimes = 0
     var removeParticipantAsModerator_calledTimes = 0
 
@@ -300,8 +300,8 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
         showInviteSuccess_calledTimes += 1
     }
     
-    func showInviteError(_ error: InviteErrorEntity, email: String) {
-        showInviteError_calledTimes += 1
+    func showInviteErrorMessage(_ message: String) {
+        showInviteErrorMessage_calledTimes += 1
     }
     
     func makeParticipantAsModerator() {
