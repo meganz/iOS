@@ -282,7 +282,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
-        test(viewModel: viewModel, action: .inviteParticipants(presenter: UIViewController()), expectedCommands: [])
+        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
     
@@ -686,8 +686,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func inviteParticipants(
-        presenter: UIViewController,
-        excludeParticpants: [UInt64]?,
+        excludeParticpants: NSMutableDictionary,
         selectedUsersHandler: @escaping (([UInt64]) -> Void)
     ) {
         inviteParticpants_calledTimes += 1

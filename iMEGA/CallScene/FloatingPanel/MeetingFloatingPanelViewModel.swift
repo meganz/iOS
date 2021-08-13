@@ -3,7 +3,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
     case hangCall(presenter: UIViewController, sender: UIButton)
     case shareLink(presenter: UIViewController, sender: UIButton)
-    case inviteParticipants(presenter: UIViewController)
+    case inviteParticipants
     case onContextMenuTap(presenter: UIViewController, sender: UIButton, participant: CallParticipantEntity)
     case muteUnmuteCall(mute: Bool)
     case turnCamera(on: Bool)
@@ -132,10 +132,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
         case .shareLink(let presenter, let sender):
             containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
-        case .inviteParticipants(let presenter):
+        case .inviteParticipants:
             let participantsIDs = callParticipants.map({ $0.participantId })
-            router.inviteParticipants(presenter: presenter,
-                                      excludeParticpants: participantsIDs) { [weak self] userHandles in
+            let excludeParticpantsDict = NSMutableDictionary(dictionary: participantsIDs.reduce(into: [:]) { result, element in
+                result[NSNumber(value: element)] = NSNumber(value: element)
+            })
+            router.inviteParticipants(excludeParticpants: excludeParticpantsDict) { [weak self] userHandles in
                 guard let self = self, let call = self.call else { return }
                 self.containerViewModel?.dispatch(.onAddingParticipant)
                 userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }

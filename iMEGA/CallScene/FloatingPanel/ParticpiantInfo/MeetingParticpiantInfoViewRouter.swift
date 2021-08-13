@@ -4,7 +4,7 @@ protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInfo()
     func openChatRoom(withChatId chatId: UInt64)
     func showInviteSuccess(email: String)
-    func showInviteError(_ error: InviteErrorEntity, email: String)
+    func showInviteErrorMessage(_ message: String)
     func makeParticipantAsModerator()
     func removeParticipantAsModerator()
 }
@@ -102,18 +102,8 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         presenter?.present(customModalAlertViewController, animated: true)
     }
 
-    func showInviteError(_ error: InviteErrorEntity, email: String) {
-        switch error {
-        case .generic(let errorString):
-            SVProgressHUD.showError(withStatus: errorString)
-        case .ownEmailEntered:
-            SVProgressHUD.showError(withStatus: NSLocalizedString("noNeedToAddYourOwnEmailAddress", comment: ""))
-        case .alreadyAContact:
-            let errorString = NSLocalizedString("alreadyAContact", comment: "").replacingOccurrences(of: "%s", with: email)
-            SVProgressHUD.showError(withStatus: errorString)
-        case .isInOutgoingContactRequest:
-            SVProgressHUD.showError(withStatus: NSLocalizedString("theUserHasBeenInvited", comment: ""))
-        }
+    func showInviteErrorMessage(_ message: String) {
+        SVProgressHUD.showError(withStatus: message)
     }
 
 }

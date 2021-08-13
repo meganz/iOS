@@ -142,7 +142,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     }
     
     @IBAction func inviteParticipants(_ sender: UIButton) {
-        viewModel.dispatch(.inviteParticipants(presenter: self))
+        viewModel.dispatch(.inviteParticipants)
     }
     
     // MARK: - Actions buttons
