@@ -9,7 +9,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     )
     func showContextMenu(presenter: UIViewController,
                          sender: UIButton,
-                         attendee: CallParticipantEntity,
+                         participant: CallParticipantEntity,
                          isMyselfModerator: Bool,
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel)
     func showVideoPermissionError()
@@ -116,13 +116,13 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showContextMenu(presenter: UIViewController,
                          sender: UIButton,
-                         attendee: CallParticipantEntity,
+                         participant: CallParticipantEntity,
                          isMyselfModerator: Bool,
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel) {
         let participantInfoRouter = MeetingParticpiantInfoViewRouter(
             presenter: presenter,
             sender: sender,
-            attendee: attendee,
+            participant: participant,
             isMyselfModerator: isMyselfModerator,
             meetingFloatingPanelModel: meetingFloatingPanelModel)
         

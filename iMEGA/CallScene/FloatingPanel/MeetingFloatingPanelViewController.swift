@@ -210,12 +210,12 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return UITableViewCell() }
-        cell.viewModel = MeetingParticipantViewModel(attendee: callParticipants[indexPath.row],
+        cell.viewModel = MeetingParticipantViewModel(participant: callParticipants[indexPath.row],
                                                      userImageUseCase: userImageUseCase,
                                                      userUseCase: userUseCase,
                                                      chatRoomUseCase: chatRoomUseCase) { [weak self] participant, button in
             guard let self = self else { return }
-            self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, attendee: participant))
+            self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
         }
         return cell
     }

@@ -159,8 +159,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             callCollectionView.addedParticipant(in: participants)
         case .deleteParticipantAt(let index, let participants):
             callCollectionView.deletedParticipant(in: participants, at: index)
-        case .updateParticipantAt(let index, let participants):
-            callCollectionView.updateParticipant(in: participants, at: index)
+        case .reloadParticipantAt(let index, let participants):
+            callCollectionView.reloadParticipant(in: participants, at: index)
         case .updateSpeakerViewFor(let participant):
             updateSpeaker(participant)
         case .localVideoFrame(let width, let height, let buffer):

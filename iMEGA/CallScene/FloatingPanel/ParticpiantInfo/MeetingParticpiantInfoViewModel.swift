@@ -16,20 +16,20 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         case updateName(name: String)
     }
     
-    private let attendee: CallParticipantEntity
+    private let participant: CallParticipantEntity
     private let userImageUseCase: UserImageUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userInviteUseCase: UserInviteUseCaseProtocol
     private let isMyselfModerator: Bool
     private let router: MeetingParticpiantInfoViewRouting
     
-    init(attendee: CallParticipantEntity,
+    init(participant: CallParticipantEntity,
          userImageUseCase: UserImageUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userInviteUseCase: UserInviteUseCaseProtocol,
          isMyselfModerator: Bool,
          router: MeetingParticpiantInfoViewRouting) {
-        self.attendee = attendee
+        self.participant = participant
         self.userImageUseCase = userImageUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.userInviteUseCase = userInviteUseCase
@@ -42,9 +42,9 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     func dispatch(_ action: MeetingParticpiantInfoAction) {
         switch action {
         case .onViewReady:
-            invokeCommand?(.configView(email: attendee.email, actions: actions()))
-            fetchName(forParticipant: attendee) { name in
-                fetchUserAvatar(forParticipant: attendee, name: name)
+            invokeCommand?(.configView(email: participant.email, actions: actions()))
+            fetchName(forParticipant: participant) { name in
+                fetchUserAvatar(forParticipant: participant, name: name)
             }
         case .showInfo:
             router.showInfo()
@@ -53,9 +53,9 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         case .addToContact:
             addToContact()
         case .makeModerator:
-            router.updateAttendeeAsModerator()
+            router.makeParticipantAsModerator()
         case .removeModerator:
-            router.updateAttendeeAsParticipant()
+            router.removeParticipantAsModerator()
         }
     }
     
@@ -63,16 +63,16 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     
     private func actions() -> [ActionSheetAction] {
         if isMyselfModerator {
-            if !attendee.isModerator && attendee.isInContactList {
+            if !participant.isModerator && participant.isInContactList {
                 return [infoAction(), sendMessageAction(), makeModeratorAction()]
-            } else if !attendee.isModerator && !attendee.isInContactList {
+            } else if !participant.isModerator && !participant.isInContactList {
                 return [makeModeratorAction()]
-            } else if attendee.isModerator && attendee.isInContactList {
+            } else if participant.isModerator && participant.isInContactList {
                 return [infoAction(), sendMessageAction(), removeModeratorAction()]
-            } else if attendee.isModerator && !attendee.isInContactList {
+            } else if participant.isModerator && !participant.isInContactList {
                 return [removeModeratorAction()]
             } else {
-                MEGALogDebug("I am a moderator and the attendee is moderator \(attendee.isModerator) and in contact list \(attendee.isInContactList)")
+                MEGALogDebug("I am a moderator and the participant is moderator \(participant.isModerator) and in contact list \(participant.isInContactList)")
             }
         } else {
             return [infoAction(), sendMessageAction()]
@@ -105,10 +105,10 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
     
     private func sendMessage() {
-        if let chatRoom = chatRoomUseCase.chatRoom(forUserHandle: attendee.participantId) {
+        if let chatRoom = chatRoomUseCase.chatRoom(forUserHandle: participant.participantId) {
             router.openChatRoom(withChatId: chatRoom.chatId)
         } else {
-            chatRoomUseCase.createChatRoom(forUserHandle: attendee.participantId) { result in
+            chatRoomUseCase.createChatRoom(forUserHandle: participant.participantId) { result in
                 if case .success(let chatRoom) = result {
                     self.router.openChatRoom(withChatId: chatRoom.chatId)
                 }
@@ -117,7 +117,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
     
     private func addToContact() {
-        guard let email = attendee.email else { return }
+        guard let email = participant.email else { return }
         
         userInviteUseCase.sendInvite(forEmail: email) { result in
             switch result {

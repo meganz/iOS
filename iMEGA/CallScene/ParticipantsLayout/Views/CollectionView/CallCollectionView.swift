@@ -37,7 +37,7 @@ class CallCollectionView: UICollectionView {
         deleteItems(at: [IndexPath(item: index, section: 0)])
     }
     
-    func updateParticipant(in participants: [CallParticipantEntity], at index: Int) {
+    func reloadParticipant(in participants: [CallParticipantEntity], at index: Int) {
         callParticipants = participants
         reloadItems(at: [IndexPath(item: index, section: 0)])
     }

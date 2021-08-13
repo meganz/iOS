@@ -11,7 +11,7 @@ struct MeetingParticipantViewModel: ViewModelType {
         case updateName(name: String)
     }
     
-    private let attendee: CallParticipantEntity
+    private let participant: CallParticipantEntity
     private let userImageUseCase: UserImageUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
@@ -22,19 +22,19 @@ struct MeetingParticipantViewModel: ViewModelType {
             return true
         }
         
-        return isMe || (!isMyselfModerator && !attendee.isInContactList) || isOneToOneChat
+        return isMe || (!isMyselfModerator && !participant.isInContactList) || isOneToOneChat
     }
     
     private var isMe: Bool {
-        return userUseCase.myHandle == attendee.participantId
+        return userUseCase.myHandle == participant.participantId
     }
     
     private var isOneToOneChat: Bool {
-        return chatRoomUseCase.chatRoom(forChatId: attendee.chatId)?.chatType == .oneToOne
+        return chatRoomUseCase.chatRoom(forChatId: participant.chatId)?.chatType == .oneToOne
     }
     
     private var isMyselfModerator: Bool {
-        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: attendee.chatId) else {
+        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: participant.chatId) else {
             return false
         }
         
@@ -43,12 +43,12 @@ struct MeetingParticipantViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    init(attendee: CallParticipantEntity,
+    init(participant: CallParticipantEntity,
          userImageUseCase: UserImageUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          contextMenuTappedHandler: @escaping (CallParticipantEntity, UIButton) -> Void) {
-        self.attendee = attendee
+        self.participant = participant
         self.userImageUseCase = userImageUseCase
         self.userUseCase = userUseCase
         self.chatRoomUseCase = chatRoomUseCase
@@ -59,16 +59,16 @@ struct MeetingParticipantViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             invokeCommand?(
-                .configView(isModerator: attendee.isModerator && !isOneToOneChat,
-                            isMicMuted: attendee.audio == .off,
-                            isVideoOn: attendee.video == .on,
+                .configView(isModerator: participant.isModerator && !isOneToOneChat,
+                            isMicMuted: participant.audio == .off,
+                            isVideoOn: participant.video == .on,
                             shouldHideContextMenu: shouldHideContextMenu)
             )
-            fetchName(forParticipant: attendee) { name in
-                fetchUserAvatar(forParticipant: attendee, name: name)
+            fetchName(forParticipant: participant) { name in
+                fetchUserAvatar(forParticipant: participant, name: name)
             }
         case .contextMenuTapped(let button):
-            contextMenuTappedHandler(attendee, button)
+            contextMenuTappedHandler(participant, button)
         }
     }
     

@@ -16,11 +16,11 @@ protocol CallUseCaseProtocol {
 }
 
 protocol CallCallbacksUseCaseProtocol: AnyObject {
-    func attendeeJoined(attendee: CallParticipantEntity)
-    func attendeeLeft(attendee: CallParticipantEntity)
-    func updateAttendee(_ attendee: CallParticipantEntity)
-    func remoteVideoResolutionChanged(for attendee: CallParticipantEntity)
-    func audioLevel(for attendee: CallParticipantEntity)
+    func participantJoined(participant: CallParticipantEntity)
+    func participantLeft(participant: CallParticipantEntity)
+    func updateParticipant(_ participant: CallParticipantEntity)
+    func remoteVideoResolutionChanged(for participant: CallParticipantEntity)
+    func audioLevel(for participant: CallParticipantEntity)
     func callTerminated()
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
     func participantAdded(with handle: MEGAHandle)
@@ -112,15 +112,15 @@ final class CallUseCase: NSObject, CallUseCaseProtocol {
 extension CallUseCase: CallCallbacksRepositoryProtocol {
 
     func createdSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
-        callbacksDelegate?.attendeeJoined(attendee: CallParticipantEntity(session: session, chatId: chatId))
+        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: session, chatId: chatId))
     }
     
     func destroyedSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
-        callbacksDelegate?.attendeeLeft(attendee: CallParticipantEntity(session: session, chatId: chatId))
+        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: session, chatId: chatId))
     }
     
     func avFlagsUpdated(for session: ChatSessionEntity, in chatId: MEGAHandle) {
-        callbacksDelegate?.updateAttendee(CallParticipantEntity(session: session, chatId: chatId))
+        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: session, chatId: chatId))
     }
     
     func audioLevel(for session: ChatSessionEntity, in chatId: MEGAHandle) {

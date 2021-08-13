@@ -5,25 +5,25 @@ protocol MeetingParticpiantInfoViewRouting: Routing {
     func openChatRoom(withChatId chatId: UInt64)
     func showInviteSuccess(email: String)
     func showInviteError(_ error: InviteErrorEntity, email: String)
-    func updateAttendeeAsModerator()
-    func updateAttendeeAsParticipant()
+    func makeParticipantAsModerator()
+    func removeParticipantAsModerator()
 }
 
 struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     private let sender: UIButton
     private weak var presenter: UIViewController?
-    private let attendee: CallParticipantEntity
+    private let participant: CallParticipantEntity
     private let isMyselfModerator: Bool
     private weak var meetingFloatingPanelModel: MeetingFloatingPanelViewModel?
     
     init(presenter: UIViewController,
          sender: UIButton,
-         attendee: CallParticipantEntity,
+         participant: CallParticipantEntity,
          isMyselfModerator: Bool,
          meetingFloatingPanelModel: MeetingFloatingPanelViewModel) {
         self.presenter = presenter
         self.sender = sender
-        self.attendee = attendee
+        self.participant = participant
         self.isMyselfModerator = isMyselfModerator
         self.meetingFloatingPanelModel = meetingFloatingPanelModel
     }
@@ -41,7 +41,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
 
         let userInviteUseCase = UserInviteUseCase(repo: UserInviteRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
-        let viewModel = MeetingParticpiantInfoViewModel(attendee: attendee,
+        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         userInviteUseCase: userInviteUseCase,
@@ -69,18 +69,18 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         }
         
         contactDetailsVC.contactDetailsMode = .meeting
-        contactDetailsVC.userEmail = attendee.email
-        contactDetailsVC.userHandle = attendee.participantId
+        contactDetailsVC.userEmail = participant.email
+        contactDetailsVC.userHandle = participant.participantId
         
         presenter?.present(MEGANavigationController(rootViewController: contactDetailsVC), animated: true)
     }
     
-    func updateAttendeeAsModerator() {
-        meetingFloatingPanelModel?.dispatch(.makeModerator(participant: attendee))
+    func makeParticipantAsModerator() {
+        meetingFloatingPanelModel?.dispatch(.makeModerator(participant: participant))
     }
     
-    func updateAttendeeAsParticipant() {
-        meetingFloatingPanelModel?.dispatch(.removeModerator(participant: attendee))
+    func removeParticipantAsModerator() {
+        meetingFloatingPanelModel?.dispatch(.removeModerator(participant: participant))
     }
     
     func openChatRoom(withChatId chatId: UInt64) {
