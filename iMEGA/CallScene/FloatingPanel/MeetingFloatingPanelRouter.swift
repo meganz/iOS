@@ -1,7 +1,6 @@
 import PanModal
 
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
-    var viewModel: MeetingFloatingPanelViewModel? { get }
     func dismiss(animated: Bool)
     func inviteParticipants(
         presenter: UIViewController,

@@ -35,12 +35,8 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
 
         case .updateAvatarImage(let image):
             avatarImageView.image = image
-        case .updateName(let name, let isMe):
-            if isMe {
-                nameLabel.text = String(format: "%@ (%@)", name, NSLocalizedString("me", comment: ""))
-            } else {
-                nameLabel.text = name
-            }
+        case .updateName(let name):
+            nameLabel.text = name
         }
     }
     

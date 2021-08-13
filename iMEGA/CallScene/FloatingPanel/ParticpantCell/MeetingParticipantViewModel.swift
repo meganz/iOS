@@ -8,7 +8,7 @@ struct MeetingParticipantViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(isModerator: Bool, isMicMuted: Bool, isVideoOn: Bool, shouldHideContextMenu: Bool)
         case updateAvatarImage(image: UIImage)
-        case updateName(name: String, isMe: Bool)
+        case updateName(name: String)
     }
     
     private let attendee: CallParticipantEntity
@@ -76,7 +76,11 @@ struct MeetingParticipantViewModel: ViewModelType {
         chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatId: participant.chatId) { result in
             switch result {
             case .success(let name):
-                invokeCommand?(.updateName(name: name, isMe: isMe))
+                invokeCommand?(
+                    .updateName(
+                        name: isMe ? String(format: "%@ (%@)", name, NSLocalizedString("me", comment: "")) : name
+                    )
+                )
                 completion(name)
             case .failure(let error):
                 MEGALogDebug("ChatRoom: failed to get the user display name for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name") - \(error)")
