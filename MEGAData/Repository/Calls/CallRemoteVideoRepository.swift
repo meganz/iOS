@@ -12,7 +12,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         let remoteVideoData = RemoteVideoData(chatId: chatId, clientId: clientId, hiRes: hiRes, remoteVideoListener: remoteVideoListener)
         remoteVideos.append(remoteVideoData)
         chatSdk.addChatRemoteVideo(chatId, cliendId: clientId, hiRes: hiRes, delegate: remoteVideoData)
-        MEGALogDebug("Number of videos after enable remote video: \(remoteVideos.count) is high resolution: \(hiRes)")
+        MEGALogDebug("Number of videos after enable remote video: \(remoteVideos.count)")
     }
     
     func disableRemoteVideo(for chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool) {
@@ -24,7 +24,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
             return
         }
         remoteVideos.remove(at: index)
-        MEGALogDebug("Number of videos after disable remote video: \(remoteVideos.count) was high resolution: \(hiRes)")
+        MEGALogDebug("Number of videos after disable remote video: \(remoteVideos.count)")
     }
     
     func disableAllRemoteVideos() {
@@ -37,10 +37,8 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         chatSdk.requestHiResVideo(forChatId: chatId, clientId: clientId, delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
-                MEGALogDebug("Success to request high resolution video")
                 completion(.success)
             case .failure(_):
-                MEGALogError("Fail to request high resolution video")
                 completion(.failure(.requestResolutionVideoChange))
             }
         })
@@ -52,10 +50,8 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         chatSdk.stopHiResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
-                MEGALogDebug("Success to stop high resolution video")
                 completion(.success)
             case .failure(_):
-                MEGALogError("Fail to stop high resolution video")
                 completion(.failure(.stopHighResolutionVideo))
             }
         })
@@ -67,10 +63,8 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         chatSdk.requestLowResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
-                MEGALogDebug("Success to request low resolution video")
                 completion(.success)
             case .failure(_):
-                MEGALogError("Fail to request low resolution video")
                 completion(.failure(.requestResolutionVideoChange))
             }
         })
@@ -82,10 +76,8 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         chatSdk.stopLowResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
-                MEGALogDebug("Success to stop low resolution video")
                 completion(.success)
             case .failure(_):
-                MEGALogError("Fail to stop low resolution video")
                 completion(.failure(.stopLowResolutionVideo))
             }
         })

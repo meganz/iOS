@@ -157,6 +157,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func switchLayout() {
+        MEGALogDebug("Switch meetings layout from \(layoutMode == .grid ? "grid" : "speaker") to \(layoutMode == .grid ? "speaker" : "grid")")
         callParticipants.forEach { $0.videoDataDelegate = nil }
         if layoutMode == .grid {
             layoutMode = .speaker
@@ -164,7 +165,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             switchVideoResolutionHighToLow(for: participantsWithHighResolutionNoSpeaker, in: chatRoom.chatId)
         } else {
             layoutMode = .grid
-            switchVideoResolutionBasedOnParticipantsCount()
+            let participantsWithLowResolution = callParticipants.filter { $0.canReceiveVideoLowRes && $0.video == .on }.map { $0.clientId }
+            switchVideoResolutionLowToHigh(for: participantsWithLowResolution, in: chatRoom.chatId)
         }
         invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
         
@@ -186,20 +188,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func enableRemoteVideo(for participant: CallParticipantEntity) {
         switch layoutMode {
         case .grid:
-            if callParticipants.count <= CallViewModelConstant.maxParticipantsCountForHighResolution {
-                if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
-                    MEGALogDebug("Enable remote video grid view high resolution")
-                    remoteVideoUseCase.enableRemoteVideo(for: participant)
-                } else {
-                    switchVideoResolutionLowToHigh(for: [participant.clientId], in: chatRoom.chatId)
-                }
+            if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
+                MEGALogDebug("Enable remote video grid view high resolution")
+                remoteVideoUseCase.enableRemoteVideo(for: participant)
             } else {
-                if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
-                    MEGALogDebug("Enable remote video grid view low resolution")
-                    remoteVideoUseCase.enableRemoteVideo(for: participant)
-                } else {
-                    switchVideoResolutionHighToLow(for: [participant.clientId], in: chatRoom.chatId)
-                }
+                switchVideoResolutionLowToHigh(for: [participant.clientId], in: chatRoom.chatId)
             }
         case .speaker:
             if participant.speakerVideoDataDelegate == nil {
@@ -432,16 +425,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         }
     }
-    
-    private func switchVideoResolutionBasedOnParticipantsCount() {
-        if callParticipants.count <= CallViewModelConstant.maxParticipantsCountForHighResolution {
-            let participantsWithLowResolution = callParticipants.filter { $0.canReceiveVideoLowRes && $0.video == .on }.map { $0.clientId }
-            switchVideoResolutionLowToHigh(for: participantsWithLowResolution, in: chatRoom.chatId)
-        } else {
-            let participantsWithHighResolution = callParticipants.filter { $0.canReceiveVideoHiRes && $0.video == .on }.map { $0.clientId }
-            switchVideoResolutionHighToLow(for: participantsWithHighResolution, in: chatRoom.chatId)
-        }
-    }
 }
 
 struct CallDurationInfo {
@@ -576,7 +559,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             guard let displayName = displayName else { return }
             self?.invokeCommand?(.participantAdded(displayName))
         }
-        switchVideoResolutionBasedOnParticipantsCount()
     }
     
     func participantRemoved(with handle: MEGAHandle) {
@@ -584,7 +566,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             guard let displayName = displayName else { return }
             self?.invokeCommand?(.participantRemoved(displayName))
         }
-        switchVideoResolutionBasedOnParticipantsCount()
     }
     
     func connecting() {
