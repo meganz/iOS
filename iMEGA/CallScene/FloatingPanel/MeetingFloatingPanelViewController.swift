@@ -169,7 +169,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     private func updatedCameraPosition(_ position: CameraPositionEntity) {
         flipQuickActionView.isSelected = position == .back
-        executeCommand(.cameraTurnedOn(on: true))
     }
     
     private func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {

@@ -76,7 +76,6 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
         MeetingContainerRouter(presenter: viewControllerToPresent,
                                chatRoom: chatRoom,
                                call: call,
-                               isVideoEnabled: isVideoEnabled,
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
     

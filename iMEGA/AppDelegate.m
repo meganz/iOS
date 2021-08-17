@@ -479,7 +479,6 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
                             BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
                             [self performCallWithPresenter:UIApplication.mnz_presentingViewController
                                                   chatRoom:self.chatRoom
-                                            isVideoEnabled:self.isVideoCall
                                           isSpeakerEnabled:isSpeakerEnabled];
                             self.chatRoom = nil;
                         } else {
@@ -527,7 +526,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
                     MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
                     BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
-                    [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isVideoEnabled:self.isVideoCall isSpeakerEnabled:isSpeakerEnabled];
+                    [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isSpeakerEnabled:isSpeakerEnabled];
                     self.chatRoom = nil;
                 } else {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
@@ -979,7 +978,6 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
         if (error.type == MEGAErrorTypeApiOk) {
             [self performCallWithPresenter:self.mainTBC
                                   chatRoom:self.chatRoom
-                            isVideoEnabled:self.videoCall
                           isSpeakerEnabled:self.chatRoom.isMeeting];
         }
         self.chatRoom = nil;

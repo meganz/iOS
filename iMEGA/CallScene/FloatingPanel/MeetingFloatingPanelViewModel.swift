@@ -42,7 +42,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let userUseCase: UserUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
-    private var enableVideo: Bool
     private var isSpeakerEnabled: Bool {
         didSet {
             containerViewModel?.dispatch(.speakerEnabled(isSpeakerEnabled))
@@ -60,7 +59,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
          isSpeakerEnabled: Bool,
-         enableVideo: Bool,
          callManagerUseCase: CallManagerUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
@@ -78,7 +76,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.isSpeakerEnabled = isSpeakerEnabled
-        self.enableVideo = enableVideo
         self.userUseCase = userUseCase
     }
     
@@ -106,11 +103,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                        isVideoEnabled: isVideoEnabled ?? false,
                                        cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
-            if enableVideo {
+            if let call = call, call.hasLocalVideo {
                 checkForVideoPermission {
                     self.turnCamera(on: true) {
                         if self.isBackCameraSelected() {
-                            self.switchCamera(backCameraOn: false)
+                            self.invokeCommand?(.updatedCameraPosition(position: .back))
                         }
                     }
                 }
@@ -159,8 +156,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .turnCamera(let on):
             checkForVideoPermission {
                 self.turnCamera(on: on) {
-                    if self.isBackCameraSelected() {
-                        self.switchCamera(backCameraOn: false)
+                    if on && self.isBackCameraSelected() {
+                        self.invokeCommand?(.updatedCameraPosition(position: .back))
                     }
                 }
             }
@@ -180,7 +177,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             participant.isModerator = false
             callUseCase.removePeerAsModerator(inCall: call, peerId: participant.participantId)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
-
         }
     }
     
@@ -307,11 +303,14 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func populateParticipants() {
+        guard let call = call else {
+            MEGALogError("Failed to fetch call to populate participants")
+            return
+        }
         if let myself = CallParticipantEntity.myself(chatId: chatRoom.chatId) {
+            myself.video = call.hasLocalVideo ? .on : .off
             callParticipants.append(myself)
         }
-        
-        guard let call = call else { return }
         let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatId: chatRoom.chatId)})
         if !participants.isEmpty {
             callParticipants.append(contentsOf: participants)

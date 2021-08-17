@@ -45,6 +45,7 @@
                 }
                 delegate.completion(error)
             }
+            self.chatSdk.setChatVideoInDevices("Front Camera")
             self.chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: requestDelegate)
         }
     }
@@ -89,6 +90,7 @@
                 delegate.completion(error)
             }
             
+            self.chatSdk.setChatVideoInDevices("Front Camera")
             self.chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: requestDelegate)
         }
     }
