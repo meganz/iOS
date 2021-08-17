@@ -27,15 +27,13 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private weak var containerViewModel: MeetingContainerViewModel?
     private let chatRoom: ChatRoomEntity
     private let isSpeakerEnabled: Bool
-    private let enableVideo: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     
-    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool, enableVideo: Bool) {
+    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.isSpeakerEnabled = isSpeakerEnabled
-        self.enableVideo = enableVideo
     }
     
     func build() -> UIViewController {
@@ -48,7 +46,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: isSpeakerEnabled,
-                                                      enableVideo: enableVideo,
                                                       callManagerUseCase: CallManagerUseCase(),
                                                       callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),

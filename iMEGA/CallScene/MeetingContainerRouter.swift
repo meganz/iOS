@@ -18,7 +18,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var presenter: UIViewController?
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
-    private var enableVideo: Bool
     private var isSpeakerEnabled: Bool
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
@@ -34,12 +33,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     init(presenter: UIViewController,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
-         isVideoEnabled: Bool,
          isSpeakerEnabled: Bool) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
-        self.enableVideo = isVideoEnabled
         self.isSpeakerEnabled = isSpeakerEnabled
         
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
@@ -216,9 +213,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let floatingPanelRouter = MeetingFloatingPanelRouter(presenter: baseViewController,
                                                              containerViewModel: containerViewModel,
                                                              chatRoom: chatRoom,
-                                                             isSpeakerEnabled: isSpeakerEnabled,
-                                                             enableVideo: enableVideo)
-        enableVideo = false
+                                                             isSpeakerEnabled: isSpeakerEnabled)
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
     }

@@ -565,11 +565,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
     MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     if (active) {
-        [self joinMeetingWithChatRoom:chatRoom isVideoEnabled:videoCall];
+        [self joinMeetingWithChatRoom:chatRoom];
     } else {
         MEGAChatStartCallRequestDelegate *startCallDelegate = [MEGAChatStartCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
             if (error.type == MEGAErrorTypeApiOk) {
-                [self joinMeetingWithChatRoom:chatRoom isVideoEnabled:videoCall];
+                [self joinMeetingWithChatRoom:chatRoom];
             }
         }];
         

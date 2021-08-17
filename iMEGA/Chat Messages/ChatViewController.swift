@@ -1053,7 +1053,6 @@ class ChatViewController: MessagesViewController {
         MeetingContainerRouter(presenter: self,
                                chatRoom: chatRoomEntity,
                                call: callEntity,
-                               isVideoEnabled: isVideoEnabled,
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
 
