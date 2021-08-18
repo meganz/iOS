@@ -1906,6 +1906,7 @@
 		C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D675250DBAAB00D74666 /* StoreUserClient.swift */; };
 		C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709A9826B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift */; };
 		C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709A9C26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift */; };
+		C472964426C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */; };
 		C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */; };
 		C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */; };
 		C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */; };
@@ -4016,6 +4017,7 @@
 		C46D4A8026557B1200748BD3 /* BannerContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModelTests.swift; sourceTree = "<group>"; };
 		C4709A9826B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UpgradeTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		C4709A9C26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailViewController+Additions.swift"; sourceTree = "<group>"; };
+		C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+Transfers.swift"; sourceTree = "<group>"; };
 		C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
 		C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModelTests.swift; sourceTree = "<group>"; };
 		C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoRepository.swift; sourceTree = "<group>"; };
@@ -9424,6 +9426,7 @@
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
 				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
+				C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */,
 				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
 				83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */,
 				E85044C41A6D84620064B675 /* FileLinkViewController.h */,
@@ -11349,6 +11352,7 @@
 				835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */,
 				BFAB114623CEA5C300BCE72D /* PhotoCarouselDataSource.swift in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
+				C472964426C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift in Sources */,
 				0D7E5F4426322EC500C5CB2A /* TransferErrorEntity.swift in Sources */,
 				A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */,
 				5D166B8D252198EF004F4F4A /* HomeSearchHintViewModel.swift in Sources */,

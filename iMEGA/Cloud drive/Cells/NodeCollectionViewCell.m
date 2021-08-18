@@ -79,7 +79,12 @@
         self.durationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
     }
     
-    self.downloadedImageView.hidden = !(node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
+    if (self.downloadedView != nil) {
+        self.downloadedImageView.hidden = self.downloadedView.hidden = !(node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
+    } else {
+        self.downloadedImageView.hidden = !(node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
+    }
+    
     
     [self setupAppearance];
 }

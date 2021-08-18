@@ -59,6 +59,8 @@
 @property (nonatomic, strong) MEGAGenericRequestDelegate* requestDelegate;
 @property (nonatomic, strong) GlobalDelegate* globalDelegate;
 
+@property (nonatomic, strong) NSMutableArray<NSString *> * _Nullable downloadingNodes;
+
 @end
 
 @implementation FolderLinkViewController
@@ -119,6 +121,8 @@
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     [self updateAppearance];
+    
+    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -543,6 +547,54 @@
         [self initTable];
     }
 }
+
+- (void)didDownloadTransferStart:(MEGANode *)node {
+    if (![self.downloadingNodes containsObject:node.base64Handle]) {
+        if (self.downloadingNodes == nil) {
+            self.downloadingNodes = [NSMutableArray array];
+        }
+        
+        [self.downloadingNodes addObject:node.base64Handle];
+        
+        if (self.viewModePreference == ViewModePreferenceList) {
+            [self.flTableView reloadWithNode:node];
+        } else {
+            [self.flCollectionView reloadWithNode:node];
+        }
+    }
+}
+
+- (void)didDownloadTransferFinish:(MEGANode *)node {
+    if ([self.downloadingNodes containsObject:node.base64Handle]) {
+        [self.downloadingNodes removeObject:node.base64Handle];
+    }
+    
+    if (self.viewModePreference == ViewModePreferenceList) {
+        [self.flTableView reloadWithNode:node];
+    } else {
+        [self.flCollectionView reloadWithNode:node];
+    }
+}
+
+- (void)didDownloadTransferUpdated:(MEGANode *)node transferredBytes:(NSNumber *)bytes totalBytes:(NSNumber *)totalBytes speed:(NSNumber*)speed {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        float percentage = ([bytes floatValue] / [totalBytes floatValue] * 100);
+        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
+        NSString *speedStr = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:speed.longLongValue]];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.searchController.isActive ? [self.searchNodesArray indexOfObject:node] : [self.nodesArray indexOfObject:node] inSection:0];
+                                   
+        if (indexPath != nil) {
+            NodeTableViewCell *cell = (NodeTableViewCell *)[self.flTableView.tableView cellForRowAtIndexPath:indexPath];
+            [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speedStr]];
+            cell.downloadProgressView.progress = [bytes floatValue] / [totalBytes floatValue];
+        }
+    }
+}
+
+- (BOOL)isADownloadingNode:(MEGANode *)node {
+    return [self.downloadingNodes containsObject:node.base64Handle];
+}
     
 #pragma mark - IBActions
 
@@ -642,21 +694,19 @@
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-            if (self.selectedNodesArray.count != 0) {
-                browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
-            } else {
-                if (self.parentNode == nil) {
-                    return;
-                }
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
+        if (self.selectedNodesArray.count != 0) {
+            browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
+        } else {
+            if (self.parentNode == nil) {
+                return;
             }
-            
-            [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-        }];
+            browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
+        }
+        
+        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
     } else {
         if (self.selectedNodesArray.count != 0) {
             [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
@@ -677,6 +727,7 @@
     
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
+    [self reloadData];
     if (self.selectedNodesArray.count != 0) {
         for (MEGANode *node in _selectedNodesArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
@@ -703,7 +754,6 @@
         [SVProgressHUD show];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [self dismissViewControllerAnimated:YES completion:nil];
         });
     } else {
         if (self.selectedNodesArray.count != 0) {
