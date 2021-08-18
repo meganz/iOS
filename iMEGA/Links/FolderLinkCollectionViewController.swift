@@ -80,6 +80,12 @@ class FolderLinkCollectionViewController: UIViewController  {
         cell.selectImageView?.isHidden = !collectionView.allowsMultipleSelection
         cell.moreButton?.isHidden = collectionView.allowsMultipleSelection
         
+        if node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil {
+            cell.downloadedImageView?.isHidden = false
+        } else {
+            cell.downloadedImageView?.isHidden = true
+        }
+        
         return cell
     }
     
@@ -114,6 +120,14 @@ class FolderLinkCollectionViewController: UIViewController  {
     
     @objc func collectionViewSelectIndexPath(_ indexPath: IndexPath) {
         collectionView(collectionView, didSelectItemAt: indexPath)
+    }
+    
+    @objc func reload(node: MEGANode) {
+        guard let rowIndex = node.isFile() ? fileList.firstIndex(of: node) : folderList.firstIndex(of: node) else { return }
+        
+        UIView.performWithoutAnimation {
+            collectionView.reloadItems(at: [IndexPath(row: rowIndex, section: Int(node.isFile() ? ThumbnailSection.file.rawValue : ThumbnailSection.folder.rawValue))])
+        }
     }
 }
 
