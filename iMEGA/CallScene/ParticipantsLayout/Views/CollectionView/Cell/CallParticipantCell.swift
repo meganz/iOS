@@ -7,7 +7,7 @@ class CallParticipantCell: UICollectionViewCell {
     
     private(set) var participant: CallParticipantEntity?
     
-    func configure(for participant: CallParticipantEntity, in layoutMode: CallLayoutMode) {
+    func configure(for participant: CallParticipantEntity, in layoutMode: ParticipantsLayoutMode) {
         self.participant = participant
         nameLabel.text = participant.name
         mutedImageView.isHidden = participant.audio == .on
