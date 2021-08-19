@@ -1,13 +1,15 @@
 
+typealias ResolutionVideoChangeCompletion = (Result<Void, CallErrorEntity>) -> Void
+
 protocol CallRemoteVideoUseCaseProtocol {
     func addRemoteVideoListener(_ remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol)
     func enableRemoteVideo(for participant: CallParticipantEntity)
     func disableRemoteVideo(for participant: CallParticipantEntity)
     func disableAllRemoteVideos()
-    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
+    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?)
+    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?)
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?)
 }
 
 protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
@@ -39,19 +41,19 @@ final class CallRemoteVideoUseCase: NSObject, CallRemoteVideoUseCaseProtocol {
         repository.disableAllRemoteVideos()
     }
     
-    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
         repository.requestHighResolutionVideo(for: chatId, clientId: clientId, completion: completion)
     }
 
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
         repository.stopHighResolutionVideo(for: chatId, clientIds: clientIds, completion: completion)
     }
     
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
         repository.requestLowResolutionVideos(for: chatId, clientIds: clientIds, completion: completion)
     }
     
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
         repository.stopLowResolutionVideo(for: chatId, clientIds: clientIds, completion: completion)
     }
 }

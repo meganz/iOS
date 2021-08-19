@@ -21,9 +21,11 @@ enum CallViewAction: ActionType {
     case tapParticipantToPinAsSpeaker(CallParticipantEntity, IndexPath)
     case fetchAvatar(participant: CallParticipantEntity)
     case fetchSpeakerAvatar
+    case particpantIsVisible(_ participant: CallParticipantEntity)
+    case particpantIsNotVisible(_ participant: CallParticipantEntity)
 }
 
-enum CallLayoutMode {
+enum ParticipantsLayoutMode {
     case grid
     case speaker
 }
@@ -43,7 +45,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case configLocalUserView(position: CameraPositionEntity)
         case switchMenusVisibility
         case toggleLayoutButton
-        case switchLayoutMode(layout: CallLayoutMode, participantsCount: Int)
+        case switchLayoutMode(layout: ParticipantsLayoutMode, participantsCount: Int)
         case switchLocalVideo
         case updateName(String)
         case updateDuration(String)
@@ -88,7 +90,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     private var isSpeakerParticipantPinned: Bool = false
-    internal var layoutMode: CallLayoutMode = .grid
+    internal var layoutMode: ParticipantsLayoutMode = .grid
     private var localVideoEnabled: Bool = false
     private var reconnecting: Bool = false
     private var switchingCamera: Bool = false
@@ -161,18 +163,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callParticipants.forEach { $0.videoDataDelegate = nil }
         if layoutMode == .grid {
             layoutMode = .speaker
-            let participantsWithHighResolutionNoSpeaker = callParticipants.filter { $0.canReceiveVideoHiRes && $0.video == .on && $0.speakerVideoDataDelegate == nil }.map { $0.clientId }
-            switchVideoResolutionHighToLow(for: participantsWithHighResolutionNoSpeaker, in: chatRoom.chatId)
         } else {
             layoutMode = .grid
-            let participantsWithLowResolution = callParticipants.filter { $0.canReceiveVideoLowRes && $0.video == .on }.map { $0.clientId }
-            switchVideoResolutionLowToHigh(for: participantsWithLowResolution, in: chatRoom.chatId)
         }
-        invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
-        
         if speakerParticipant == nil {
             speakerParticipant = callParticipants.first
         }
+        
+        invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
     }
     
     private func reloadParticipant(_ participant: CallParticipantEntity) {
@@ -191,30 +189,35 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
                 MEGALogDebug("Enable remote video grid view high resolution")
                 remoteVideoUseCase.enableRemoteVideo(for: participant)
-            } else {
+            } else if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
                 switchVideoResolutionLowToHigh(for: [participant.clientId], in: chatRoom.chatId)
+            } else {
+                remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
             }
         case .speaker:
             if participant.speakerVideoDataDelegate == nil {
                 if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
                     MEGALogDebug("Enable remote video speaker view low resolution for no speaker")
                     remoteVideoUseCase.enableRemoteVideo(for: participant)
-                } else {
+                } else if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
                     switchVideoResolutionHighToLow(for: [participant.clientId], in: chatRoom.chatId)
+                } else {
+                    remoteVideoUseCase.requestLowResolutionVideos(for: chatRoom.chatId, clientIds: [participant.clientId], completion: nil)
                 }
             } else {
                 if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
                     MEGALogDebug("Enable remote video speaker view high resolution for speaker")
                     remoteVideoUseCase.enableRemoteVideo(for: participant)
-                } else {
+                } else if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
                     switchVideoResolutionLowToHigh(for: [participant.clientId], in: chatRoom.chatId)
+                } else {
+                    remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
                 }
             }
         }
     }
     
     private func disableRemoteVideo(for participant: CallParticipantEntity) {
-        MEGALogDebug("Disable remote video")
         remoteVideoUseCase.disableRemoteVideo(for: participant)
     }
     
@@ -364,16 +367,34 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     self?.invokeCommand?(.updateSpeakerAvatar(image))
                 }
             }
+        case .particpantIsVisible(let participant):
+            if participant.video == .on {
+                enableRemoteVideo(for: participant)
+            } else if (participant.isVideoHiRes && participant.canReceiveVideoHiRes) || (participant.isVideoLowRes && participant.canReceiveVideoLowRes) {
+                disableRemoteVideo(for: participant)
+            }
+        case .particpantIsNotVisible(let participant):
+            if participant.video == .on && participant.speakerVideoDataDelegate == nil {
+                disableRemoteVideo(for: participant)
+            }
         }
     }
     
     private func tappedParticipant(_ participant: CallParticipantEntity, at indexPath: IndexPath) {
         if !isSpeakerParticipantPinned || (isSpeakerParticipantPinned && speakerParticipant != participant) {
+            if let currentSpeaker = speakerParticipant {
+                if currentSpeaker.video == .on && currentSpeaker.isVideoHiRes && currentSpeaker.canReceiveVideoHiRes {
+                    switchVideoResolutionHighToLow(for: [currentSpeaker.clientId], in: chatRoom.chatId)
+                }
+            }
             speakerParticipant?.speakerVideoDataDelegate = nil
             speakerParticipant?.isSpeakerPinned = false
             isSpeakerParticipantPinned = true
             participant.isSpeakerPinned = true
             speakerParticipant = participant
+            if participant.video == .on && participant.isVideoLowRes && participant.canReceiveVideoLowRes {
+                switchVideoResolutionLowToHigh(for: [participant.clientId], in: chatRoom.chatId)
+            }
             invokeCommand?(.selectPinnedCellAt(indexPath))
         } else {
             participant.isSpeakerPinned = false
@@ -389,16 +410,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientIds: clientIds) {  [weak self] result in
             switch result {
             case .success:
-                self?.remoteVideoUseCase.requestLowResolutionVideos(for: chatId, clientIds: clientIds) { result in
-                    switch result {
-                    case .success:
-                        MEGALogDebug("Success to request low resolution video")
-                    case .failure(_):
-                        MEGALogError("Fail to request low resolution video")
-                    }
-                }
+                self?.remoteVideoUseCase.requestLowResolutionVideos(for: chatId, clientIds: clientIds, completion: nil)
             case .failure(_):
-                MEGALogError("Fail to stop high resolution video")
+                break
             }
         }
     }
@@ -411,17 +425,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             switch result {
             case .success:
                 clientIds.forEach { clientId in
-                    self?.remoteVideoUseCase.requestHighResolutionVideo(for: chatId, clientId: clientId) { result in
-                        switch result {
-                        case .success:
-                            MEGALogDebug("Success to request high resolution video")
-                        case .failure(_):
-                            MEGALogError("Fail to request high resolution video")
-                        }
-                    }
+                    self?.remoteVideoUseCase.requestHighResolutionVideo(for: chatId, clientId: clientId, completion: nil)
                 }
             case .failure(_):
-                MEGALogError("Fail to stop low resolution video")
+                break
             }
         }
     }
@@ -438,9 +445,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         invokeCommand?(.removeCompatibilityWarningView)
         participantName(for: participant.participantId) { [weak self] in
             participant.name = $0
-            if participant.video == .on {
-                self?.enableRemoteVideo(for: participant)
-            }
             self?.callParticipants.append(participant)
             self?.invokeCommand?(.insertParticipant(self?.callParticipants ?? []))
             if self?.callParticipants.count == 1 && self?.layoutMode == .speaker {
@@ -458,9 +462,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if callUseCase.call(for: call.chatId) == nil {
             callTerminated()
         } else if let index = callParticipants.firstIndex(of: participant) {
-            if participant.video == .on {
-                remoteVideoUseCase.disableRemoteVideo(for: callParticipants[index])
-            }
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             
@@ -494,10 +495,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
         if participantUpdated.video == .off && participant.video == .on {
             participantUpdated.video = .on
-            enableRemoteVideo(for: participantUpdated)
         } else if participantUpdated.video == .on && participant.video == .off {
             participantUpdated.video = .off
-            disableRemoteVideo(for: participantUpdated)
         }
 
         participantUpdated.audio = participant.audio
@@ -509,14 +508,18 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             MEGALogError("Error getting participant updated with video resolution")
             return
         }
-        if (participantUpdated.canReceiveVideoLowRes != participant.canReceiveVideoLowRes || participantUpdated.canReceiveVideoHiRes != participant.canReceiveVideoHiRes) && participantUpdated.video == .on {
+        
+        MEGALogDebug("remoteVideoResolutionChanged for client \(participant.clientId). CallCollectionView")
+
+        if (participantUpdated.canReceiveVideoLowRes != participant.canReceiveVideoLowRes || participantUpdated.canReceiveVideoHiRes != participant.canReceiveVideoHiRes) {
             disableRemoteVideo(for: participantUpdated)
-            participantUpdated.isVideoLowRes = participant.isVideoLowRes
-            participantUpdated.isVideoHiRes = participant.isVideoHiRes
-            participantUpdated.canReceiveVideoLowRes = participant.canReceiveVideoLowRes
-            participantUpdated.canReceiveVideoHiRes = participant.canReceiveVideoHiRes
-            enableRemoteVideo(for: participantUpdated)
         }
+
+        participantUpdated.isVideoLowRes = participant.isVideoLowRes
+        participantUpdated.isVideoHiRes = participant.isVideoHiRes
+        participantUpdated.canReceiveVideoLowRes = participant.canReceiveVideoLowRes
+        participantUpdated.canReceiveVideoHiRes = participant.canReceiveVideoHiRes
+        enableRemoteVideo(for: participantUpdated)
     }
     
     func audioLevel(for participant: CallParticipantEntity) {
@@ -532,10 +535,10 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 currentSpeaker.speakerVideoDataDelegate = nil
                 speakerParticipant = participantWithAudio
                 if layoutMode == .speaker {
-                    if currentSpeaker.video == .on && currentSpeaker.canReceiveVideoHiRes {
+                    if currentSpeaker.video == .on && currentSpeaker.isVideoHiRes && currentSpeaker.canReceiveVideoHiRes {
                         switchVideoResolutionHighToLow(for: [currentSpeaker.clientId], in: chatRoom.chatId)
                     }
-                    if participantWithAudio.video == .on && participantWithAudio.canReceiveVideoLowRes {
+                    if participantWithAudio.video == .on && participantWithAudio.isVideoLowRes && participantWithAudio.canReceiveVideoLowRes {
                         switchVideoResolutionLowToHigh(for: [participantWithAudio.clientId], in: chatRoom.chatId)
                     }
                 }

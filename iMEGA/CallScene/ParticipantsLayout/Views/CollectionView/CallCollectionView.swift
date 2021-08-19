@@ -3,11 +3,13 @@ protocol CallCollectionViewDelegate: AnyObject {
     func collectionViewDidChangeOffset(to page: Int)
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath)
     func fetchAvatar(for participant: CallParticipantEntity)
+    func participantCellIsVisible(_ participant: CallParticipantEntity)
+    func participantCellIsNotVisible(_ participant: CallParticipantEntity)
 }
 
 class CallCollectionView: UICollectionView {
     private var callParticipants = [CallParticipantEntity]()
-    private var layoutMode: CallLayoutMode = .grid
+    private var layoutMode: ParticipantsLayoutMode = .grid
     private weak var callCollectionViewDelegate: CallCollectionViewDelegate?
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
@@ -28,6 +30,7 @@ class CallCollectionView: UICollectionView {
             return
         }
         insertItems(at: [IndexPath(item: callParticipants.count - 1, section: 0)])
+        layoutIfNeeded()
     }
     
     func deletedParticipant(in participants: [CallParticipantEntity], at index: Int) {
@@ -35,11 +38,20 @@ class CallCollectionView: UICollectionView {
         cell?.videoImageView.image = nil
         callParticipants = participants
         deleteItems(at: [IndexPath(item: index, section: 0)])
+        layoutIfNeeded()
     }
     
     func reloadParticipant(in participants: [CallParticipantEntity], at index: Int) {
         callParticipants = participants
-        reloadItems(at: [IndexPath(item: index, section: 0)])
+        guard let cell = cellForItem(at: IndexPath(item: index, section: 0)) as? CallParticipantCell, let participant = cell.participant else {
+            return
+        }
+        if visibleCells.contains(cell) {
+            cell.configure(for: participant, in: layoutMode)
+            callCollectionViewDelegate?.participantCellIsVisible(participant)
+        } else {
+            callCollectionViewDelegate?.participantCellIsNotVisible(participant)
+        }
     }
     
     func updateAvatar(image: UIImage, for participant: CallParticipantEntity) {
@@ -54,7 +66,7 @@ class CallCollectionView: UICollectionView {
         cell.setAvatar(image: image)
     }
     
-    func changeLayoutMode(_ mode: CallLayoutMode) {
+    func changeLayoutMode(_ mode: ParticipantsLayoutMode) {
         layoutMode = mode
         reloadData()
         layoutIfNeeded()
@@ -98,6 +110,13 @@ extension CallCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CallParticipantCell, let participant = cell.participant, let image = avatars[participant.participantId] else { return }
         cell.setAvatar(image: image)
+        callCollectionViewDelegate?.participantCellIsVisible(participant)
+        cell.configure(for: participant, in: layoutMode)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? CallParticipantCell, let participant = cell.participant else { return }
+        callCollectionViewDelegate?.participantCellIsNotVisible(participant)
     }
 }
 

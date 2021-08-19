@@ -235,7 +235,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     //MARK: - Private
     
-    private func configureLayout(mode: CallLayoutMode, participantsCount: Int) {
+    private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
         switch mode {
         case .grid:
             layoutModeBarButton.image = UIImage(named: "speakerView")
@@ -378,6 +378,14 @@ extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
     
     func fetchAvatar(for participant: CallParticipantEntity) {
         viewModel.dispatch(.fetchAvatar(participant: participant))
+    }
+    
+    func participantCellIsVisible(_ participant: CallParticipantEntity) {
+        viewModel.dispatch(.particpantIsVisible(participant))
+    }
+    
+    func participantCellIsNotVisible(_ participant: CallParticipantEntity) {
+        viewModel.dispatch(.particpantIsNotVisible(participant))
     }
 }
 
