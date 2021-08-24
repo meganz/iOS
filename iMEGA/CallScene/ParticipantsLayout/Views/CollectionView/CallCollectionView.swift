@@ -139,26 +139,26 @@ extension CallCollectionView: UICollectionViewDelegateFlowLayout {
                 case 1:
                     return collectionView.frame.size
                 case 2:
-                    return  CGSize(width: collectionView.frame.size.width, height: (collectionView.frame.size.height - spacingForCells) / 2 )
+                    return  CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height / 2  - spacingForCells)
                 case 3:
-                    return  CGSize(width: collectionView.frame.size.width, height: (collectionView.frame.size.height - spacingForCells * 2) / 3)
+                    return  CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height / 3 - spacingForCells)
                 case 4:
-                    return  CGSize(width: (collectionView.frame.size.width - spacingForCells) / 2, height: (collectionView.frame.size.height - spacingForCells) / 2)
+                    return  CGSize(width: collectionView.frame.size.width / 2  - spacingForCells, height: collectionView.frame.size.height / 2 - spacingForCells)
                 default:
-                    return  CGSize(width: (collectionView.frame.size.width - spacingForCells) / 2, height: (collectionView.frame.size.height - spacingForCells * 2) / 3)
+                    return  CGSize(width: collectionView.frame.size.width / 2  - spacingForCells, height: collectionView.frame.size.height / 3 - spacingForCells)
                 }
             } else {
                 switch callParticipants.count {
                 case 1:
                     return collectionView.frame.size
                 case 2:
-                    return  CGSize(width: (collectionView.frame.size.width - spacingForCells) / 2, height: collectionView.frame.size.height)
+                    return  CGSize(width: collectionView.frame.size.width / 2 - spacingForCells, height: collectionView.frame.size.height)
                 case 3:
-                    return  CGSize(width: (collectionView.frame.size.width - spacingForCells * 2) / 3, height: collectionView.frame.size.height)
+                    return  CGSize(width: collectionView.frame.size.width / 3 - spacingForCells, height: collectionView.frame.size.height)
                 case 4:
-                    return  CGSize(width: (collectionView.frame.size.width - spacingForCells) / 2, height: (collectionView.frame.size.height - spacingForCells) / 2)
+                    return  CGSize(width: collectionView.frame.size.width / 2 - spacingForCells, height: collectionView.frame.size.height / 2 - spacingForCells)
                 default:
-                    return  CGSize(width: (collectionView.frame.size.width - spacingForCells * 2) / 3, height: (collectionView.frame.size.height - spacingForCells) / 2)
+                    return  CGSize(width: collectionView.frame.size.width / 3 - spacingForCells, height: collectionView.frame.size.height / 2 - spacingForCells)
                 }
             }
         case .speaker:
