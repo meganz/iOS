@@ -159,12 +159,12 @@ extension CallRepository: MEGAChatCallDelegate {
                 callbacksDelegate?.audioLevel(for: ChatSessionEntity(with: session), in: chatId)
             }
             
-            if session.hasChanged(.onHiRes) && session.canReceiveVideoHiRes {
-                callbacksDelegate?.onHiResSession(ChatSessionEntity(with: session), in: chatId)
+            if session.hasChanged(.onHiRes) {
+                callbacksDelegate?.onHiResSessionChanged(ChatSessionEntity(with: session), in: chatId)
             }
             
-            if session.hasChanged(.onLowRes) && session.canReceiveVideoLowRes {
-                callbacksDelegate?.onLowResSession(ChatSessionEntity(with: session), in: chatId)
+            if session.hasChanged(.onLowRes) {
+                callbacksDelegate?.onLowResSessionChanged(ChatSessionEntity(with: session), in: chatId)
             }
         }
     }

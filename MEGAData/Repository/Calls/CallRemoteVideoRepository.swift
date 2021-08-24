@@ -25,7 +25,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
             MEGALogDebug("Video for clientId \(clientId) already disabled")
             return
         }
-        chatSdk.removeChatRemoteVideo(chatId, cliendId: clientId, hiRes: hiRes, delegate: remoteVideo)
+        chatSdk.removeChatRemoteVideo(chatId, cliendId: clientId, hiRes: remoteVideo.hiRes, delegate: remoteVideo)
         guard let index = remoteVideos.firstIndex(of: remoteVideo) else {
             return
         }

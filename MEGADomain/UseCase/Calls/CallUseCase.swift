@@ -20,6 +20,8 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
     func participantLeft(participant: CallParticipantEntity)
     func updateParticipant(_ participant: CallParticipantEntity)
     func remoteVideoResolutionChanged(for participant: CallParticipantEntity)
+    func highResolutionChanged(for participant: CallParticipantEntity)
+    func lowResolutionChanged(for participant: CallParticipantEntity)
     func audioLevel(for participant: CallParticipantEntity)
     func callTerminated()
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
@@ -35,6 +37,8 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
 //Default implementation for optional callbacks
 extension CallCallbacksUseCaseProtocol {
     func remoteVideoResolutionChanged(for attende: CallParticipantEntity) { }
+    func highResolutionChanged(for participant: CallParticipantEntity) { }
+    func lowResolutionChanged(for participant: CallParticipantEntity) { }
     func audioLevel(for attende: CallParticipantEntity) { }
     func participantAdded(with handle: MEGAHandle) { }
     func participantRemoved(with handle: MEGAHandle) { }
@@ -151,12 +155,12 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.inProgress()
     }
     
-    func onHiResSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
-        callbacksDelegate?.remoteVideoResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
+    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
     }
     
-    func onLowResSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
-        callbacksDelegate?.remoteVideoResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
+    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
     }
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {
