@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Verifique o seu e-mail e clique no link para confirmar a sua conta.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz";
+"accountBlocked"="A sua conta foi encerrada por infringir os Termos de Serviço do MEGA, incluindo a cláusula 15, mas não se limitando à mesma.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Digite um email válido";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -975,11 +975,11 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Ao instalar o aplicativo para desktop do MEGA, você recebe grátis %@ de espaço de armazenamento, válidos por 365 dias. O aplicativo para desktop do MEGA está disponível para Windows, macOS e a maioria das distribuições Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
+"account.achievement.mobileApp.title"="Instalar o aplicativo do MEGA para dispositivos móveis";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Você recebeu %@ de espaço de armazenamento por instalar o aplicativo do MEGA para dispositivos móveis.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Ao instalar o nosso aplicativo para dispositivos móveis, você recebe grátis %@ de espaço de armazenamento, válidos por 365 dias. Oferecemos aplicativos para dispositivos móveis com iOS, Android e Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Ao instalar o nosso aplicativo para dispositivos móveis, você recebe grátis %@ de espaço de armazenamento, válidos por 365 dias. Oferecemos aplicativos para dispositivos móveis com iOS e Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="Obtenha %@ de armazenamento. Válido por 365 dias.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mensagem de voz";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
+"This action can not be completed as it would take you over your current storage limit"="Esta ação não pode ser concluída, pois excederia o seu limite de armazenamento atual.";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque a sua conta está cheia";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Ontem";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send this location";
+"Send This Location"="Enviar esta localização";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Configurações de mapa";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2083,13 +2083,13 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="A sua conta [B]expirou[/B]. Somente é possível visualizar os seus dados.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Embora o MEGA não tenha acesso aos seus dados, o administrador da sua conta Business pode acessar os seus Uploads da câmera.";
 /*  */
 "Something went wrong"="Algo deu errado";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No public links";
+"No Public Links"="Não há links públicos";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gerenciar pasta compartilhada";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2135,7 +2135,7 @@
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Deletar apelido";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or Nickname";
+"Alias/ Nickname"="Apelido";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pagamento atrasado";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Incluir etiquetas de localização";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Ao ativar, as informações de localização serão incluídas nas suas fotos. Por favor, tenha cuidado ao compartilhá-los.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2631,4 +2631,26 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-CHAVEDERECUPERACAO";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your call might not be connected due to version incompatibility issues.";
+"calls.incompatibility.warningMessage"="Estamos atualizando o MEGAchat. As suas chamadas podem não ser estabelecidas devido a uma incompatibilidade com a versão do aplicativo, a menos que todos os participantes atualizem os seus aplicativos do MEGA à versão mais recente.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="Email atual";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="Faça o upgrade";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="A sua Nuvem de arquivos está quase cheia. Faça o upgrade a um plano Pro e obtenha até %@ TB (%@ GB) de espaço de armazenamento.";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="A sua Nuvem de arquivos está cheia. Faça o upgrade a um plano Pro para aumentar o seu espaço de armazenamento e obter vantagens adicionais. Se você continuar excedendo o limite de armazenamento e não fizer upgrade ou deletar alguns dados, a sua conta pode ser bloqueada. Consulte os emails que enviamos para obter mais informações.";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="Conta bloqueada";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="Os seus dados estão em perigo!";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Infelizmente, você não solucionou a situação nos <b>%@</b> que passaram desde que enviamos emails para <b>%@</b>, em <b>%@</b>. Você continua usando <b>%@</b>, o que excede o seu limite de armazenamento gratuito. Consulte os emails que enviamos para obter mais informações. </paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>Infelizmente, você ainda não fez o upgrade da sua conta. Caso não o fizer ainda hoje, os seus dados serão excluídos amanhã. Acesse o seu email para mais informações sobre o que você precisa fazer.</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>Por favor, faça o upgrade em <warn>%@</warn>para evitar que os seus dados sejam deletados.</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>Por favor, faça o upgrade ainda hoje para manter os seus dados.</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="Ganhe bônus";
