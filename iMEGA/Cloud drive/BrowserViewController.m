@@ -1077,8 +1077,6 @@
                     } else {
                         [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"filesImported", @"Message shown when some files have been imported")];
                     }
-                    
-                    [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
                 [self dismissAndSelectNodesIfNeeded:NO];
