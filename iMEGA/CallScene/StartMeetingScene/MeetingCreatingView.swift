@@ -22,6 +22,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         static let iconBackgroundColorNormal = #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1)
         static let iconBackgroundColorSelected = UIColor.white
         static let meetingNameTextColor = UIColor.white.withAlphaComponent(0.2)
+        static let placeholderTextColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.3)
     }
        
     private weak var vc: MeetingCreatingViewController!
@@ -97,7 +98,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         input.delegate = self
         let placeholderText = NSAttributedString(
             string: NSLocalizedString("firstName", comment: ""),
-            attributes: [NSAttributedString.Key.foregroundColor: Constants.backgroundColor,
+            attributes: [NSAttributedString.Key.foregroundColor: Constants.placeholderTextColor,
                          NSAttributedString.Key.font: Constants.bottomBarText]
         )
         input.attributedPlaceholder = placeholderText
@@ -119,7 +120,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         input.delegate = self
         let placeholderText = NSAttributedString(
             string: NSLocalizedString("lastName", comment: ""),
-            attributes: [NSAttributedString.Key.foregroundColor: Constants.backgroundColor,
+            attributes: [NSAttributedString.Key.foregroundColor: Constants.placeholderTextColor,
                          NSAttributedString.Key.font: Constants.bottomBarText]
         )
         input.attributedPlaceholder = placeholderText
