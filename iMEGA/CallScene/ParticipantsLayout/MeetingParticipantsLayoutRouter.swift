@@ -50,16 +50,6 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         guard let presenter = presenter else { return }
         presenter.setViewControllers([build()], animated: true)
     }
-
-    func dismissAndShowPasscodeIfNeeded() {
-        navigationController?.dismiss(animated: true, completion: {
-            if UserDefaults.standard.bool(forKey: "presentPasscodeLater") && LTHPasscodeViewController.doesPasscodeExist() {
-                LTHPasscodeViewController.sharedUser()?.showLockScreenOver(UIApplication.mnz_visibleViewController().view, withAnimation: true, withLogout: false, andLogoutTitle: nil)
-                UserDefaults.standard.set(false, forKey: "presentPasscodeLater")
-            }
-            LTHPasscodeViewController.sharedUser()?.enablePasscodeWhenApplicationEntersBackground()
-        })
-    }
     
     func showRenameChatAlert() {
         viewModel?.dispatch(.showRenameChatAlert)

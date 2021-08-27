@@ -26,19 +26,19 @@ class MockCallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
         disableAllRemoteVideos_CalledTimes += 1
     }
     
-    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        completion(requestHighResolutionVideoCompletion)
+    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
+        completion?(requestHighResolutionVideoCompletion)
     }
     
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        completion(stopHighResolutionVideoCompletion)
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
+        completion?(stopHighResolutionVideoCompletion)
     }
     
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        completion(requestLowResolutionVideoCompletion)
+    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
+        completion?(requestLowResolutionVideoCompletion)
     }
     
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        completion(stopLowResolutionVideoCompletion)
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
+        completion?(stopLowResolutionVideoCompletion)
     }
 }

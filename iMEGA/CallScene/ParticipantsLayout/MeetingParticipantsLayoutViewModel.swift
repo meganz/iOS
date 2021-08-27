@@ -1,6 +1,5 @@
 
 protocol MeetingParticipantsLayoutRouting: Routing {
-    func dismissAndShowPasscodeIfNeeded()
     func showRenameChatAlert()
     func didAddFirstParticipant()
 }
@@ -567,7 +566,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func callTerminated() {
         callUseCase.stopListeningForCall()
         timer?.invalidate()
-        router.dismissAndShowPasscodeIfNeeded()
     }
     
     func participantAdded(with handle: MEGAHandle) {
