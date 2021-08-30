@@ -436,7 +436,11 @@
         [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:NO];
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.sendMode == SendModeFileAndFolderLink) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
