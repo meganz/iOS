@@ -1065,13 +1065,7 @@
                 if (self.browserAction == BrowserActionCopy) {
                     NSString *message = [self successMessageForCopyAction];
                     [SVProgressHUD showSuccessWithStatus:message];
-                } else if (self.browserAction == BrowserActionImport) {
-                    if ((self.selectedNodesArray.count == 1) && [self.selectedNodesArray.firstObject isFile]) {
-                        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"fileImported", @"Message shown when a file has been imported")];
-                    } else {
-                        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"filesImported", @"Message shown when some files have been imported")];
-                    }
-                } else if (self.browserAction == BrowserActionImportFromFolderLink) {
+                } else if (self.browserAction == BrowserActionImport || self.browserAction == BrowserActionImportFromFolderLink) {
                     if ((self.selectedNodesArray.count == 1) && [self.selectedNodesArray.firstObject isFile]) {
                         [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"fileImported", @"Message shown when a file has been imported")];
                     } else {

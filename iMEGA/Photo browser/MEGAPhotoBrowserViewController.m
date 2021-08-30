@@ -1198,7 +1198,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case MegaNodeActionTypeImport:
-            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+            [node mnz_fileLinkImportFromViewController:self isFolderLink:(self.displayMode == DisplayModeNodeInsideFolderLink)];
             break;
             
         case MegaNodeActionTypeRemove:
