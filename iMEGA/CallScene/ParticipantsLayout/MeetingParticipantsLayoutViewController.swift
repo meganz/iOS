@@ -143,8 +143,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
             localUserView.updateOffsetWithNavigation(hidden: statusBarHidden)
             forceDarkNavigationUI()
-        case .toggleLayoutButton:
-            layoutModeBarButton.isEnabled.toggle()
+        case .enableLayoutButton(let enabled):
+            layoutModeBarButton.isEnabled = enabled
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
         case .switchLocalVideo:
@@ -319,6 +319,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         navigationItem.rightBarButtonItems = [optionsMenuButton,
                                               layoutModeBarButton]
+        layoutModeBarButton.isEnabled =  UIDevice.current.iPadDevice || (UIDevice.current.orientation.isPortrait && UIDevice.current.iPhoneDevice)
     }
     
     private func showReconnectingNotification() {
