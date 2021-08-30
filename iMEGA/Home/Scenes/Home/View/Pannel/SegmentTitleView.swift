@@ -53,9 +53,6 @@ final class SegmentTitleView: UIView {
             if index == 0 { button.isSelected = true }
             button.addTarget(self, action: #selector(didTap(button:)), for: .touchUpInside)
             titleButtonStyler(button)
-            button.widthAnchor.constraint(
-                equalToConstant: button.intrinsicContentSize.width + Constants.reservedWidthForLargeFont
-            ).isActive = true
             return button
         }
 
@@ -128,9 +125,8 @@ final class SegmentTitleView: UIView {
     }
 
     private enum Constants {
-        static let spacingBetweenButtons: CGFloat = 8
+        static let spacingBetweenButtons: CGFloat = 16
         static let stackViewInset: CGFloat = 16
-        static let reservedWidthForLargeFont: CGFloat = 20
     }
 }
 
