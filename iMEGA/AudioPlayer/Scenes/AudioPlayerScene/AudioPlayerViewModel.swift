@@ -160,6 +160,9 @@ final class AudioPlayerViewModel: ViewModelType {
         
         reloadNodeInfoWithCurrentItem()
         
+        if node == nil && (filePaths != nil) {
+            playerType = .offline
+        }
         configurePlayerType(tracks: tracks, currentTrack: currentTrack)
     }
     
