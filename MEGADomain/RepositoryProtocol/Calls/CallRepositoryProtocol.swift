@@ -20,7 +20,7 @@ protocol CallCallbacksRepositoryProtocol {
     func destroyedSession(_ session: ChatSessionEntity, in chatId: MEGAHandle)
     func avFlagsUpdated(for session: ChatSessionEntity, in chatId: MEGAHandle)
     func audioLevel(for session: ChatSessionEntity, in chatId: MEGAHandle)
-    func callTerminated()
+    func callTerminated(_ call: CallEntity)
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
     func participantAdded(with handle: MEGAHandle)
     func participantRemoved(with handle: MEGAHandle)

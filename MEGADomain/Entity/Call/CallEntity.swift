@@ -20,18 +20,11 @@ struct CallEntity {
     }
     
     enum TermCodeType: Int {
-        case UserHangup = 0
-        case reqCancel
+        case invalid = -1
+        case userHangup = 0
+        case tooManyParticipants
         case reject
-        case answerElseWhere
-        case rejectElseWhere
-        case answerTimeout
-        case ringOutTimeout
-        case appTerminating
-        case busy = 9
-        case notFinished
-        case destroyByCallCollision = 19
-        case error = 21
+        case error
     }
     
     enum ChangeType: Int {

@@ -340,9 +340,7 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }
-    
-    func callTerminated() { }
-    
+        
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
         guard let participant = callParticipants.first else { return }

@@ -214,7 +214,7 @@ extension CallRepository: MEGAChatCallDelegate {
                 }
             }
         case .terminatingUserParticipation, .destroyed:
-            callbacksDelegate?.callTerminated()
+            callbacksDelegate?.callTerminated(CallEntity(with: call))
         case .userNoPresent:
             break
         @unknown default:

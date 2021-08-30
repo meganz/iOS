@@ -464,7 +464,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     
     func participantLeft(participant: CallParticipantEntity) {
         if callUseCase.call(for: call.chatId) == nil {
-            callTerminated()
+            callTerminated(call)
         } else if let index = callParticipants.firstIndex(of: participant) {
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
@@ -563,9 +563,14 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
     }
     
-    func callTerminated() {
+    func callTerminated(_ call: CallEntity) {
         callUseCase.stopListeningForCall()
         timer?.invalidate()
+        if (call.termCodeType == .tooManyParticipants)  {
+            containerViewModel?.dispatch(.dismissCall(completion: {
+                SVProgressHUD.showError(withStatus: NSLocalizedString("Error. No more participants are allowed in this group call.", comment: "Message show when a call cannot be established because there are too many participants in the group call"))
+            }))
+        }
     }
     
     func participantAdded(with handle: MEGAHandle) {

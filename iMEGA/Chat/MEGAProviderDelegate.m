@@ -126,23 +126,15 @@
     
     CXCallEndedReason callEndedReason = 0;
     switch (call.termCode) {
+        case MEGAChatCallTermCodeInvalid:
         case MEGAChatCallTermCodeError:
+        case MEGAChatCallTermCodeTooManyParticipants:
             callEndedReason = CXCallEndedReasonFailed;
             break;
             
         case MEGAChatCallTermCodeCallReject:
-        case MEGAChatCallTermCodeCallReqCancel:
         case MEGAChatCallTermCodeUserHangup:
             callEndedReason = CXCallEndedReasonRemoteEnded;
-            break;
-            
-        case MEGAChatCallTermCodeRingOutTimeout:
-        case MEGAChatCallTermCodeAnswerTimeout:
-            callEndedReason = CXCallEndedReasonUnanswered;
-            break;
-            
-        default:
-            callEndedReason = CXCallEndedReasonAnsweredElsewhere;
             break;
     }
     
@@ -483,13 +475,7 @@
             
         case MEGAChatCallStatusTerminatingUserParticipation:
             if ([call hasChangedForType:MEGAChatCallChangeTypeStatus]) {
-                if((call.termCode == MEGAChatCallTermCodeCallReject && !self.isOutgoingCall) ||
-                   (call.termCode == MEGAChatCallTermCodeCallReqCancel && !self.isOutgoingCall) ||
-                   call.termCode == MEGAChatCallTermCodeAnswerTimeout ||
-                   call.termCode == MEGAChatCallTermCodeRejectElseWhere ||
-                   call.termCode == MEGAChatCallTermCodeAnswerElseWhere ||
-                   call.termCode == MEGAChatCallTermCodeBusy ||
-                   call.termCode == MEGAChatCallTermCodeError) {
+                if((call.termCode == MEGAChatCallTermCodeCallReject && !self.isOutgoingCall) || call.termCode == MEGAChatCallTermCodeError) {
                     [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
                 }
             }
