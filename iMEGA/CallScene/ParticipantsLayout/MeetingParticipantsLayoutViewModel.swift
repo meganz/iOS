@@ -43,7 +43,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case configView(title: String, subtitle: String, isUserAGuest: Bool, isOneToOne: Bool)
         case configLocalUserView(position: CameraPositionEntity)
         case switchMenusVisibility
-        case toggleLayoutButton
+        case enableLayoutButton(Bool)
         case switchLayoutMode(layout: ParticipantsLayoutMode, participantsCount: Int)
         case switchLocalVideo
         case updateName(String)
@@ -324,9 +324,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             switch orientation {
             case .landscape:
                 forceGridLayout()
-                invokeCommand?(.toggleLayoutButton)
+                invokeCommand?(.enableLayoutButton(false))
             case .portrait:
-                invokeCommand?(.toggleLayoutButton)
+                invokeCommand?(.enableLayoutButton(true))
             }
         case .showRenameChatAlert:
             invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.chatType == .meeting))
