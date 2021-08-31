@@ -1,10 +1,9 @@
 
 protocol CallCollectionViewDelegate: AnyObject {
-    func collectionViewDidChangeOffset(to page: Int)
+    func collectionViewDidChangeOffset(to page: Int, visibleIndexPaths: [IndexPath])
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath)
     func fetchAvatar(for participant: CallParticipantEntity)
-    func participantCellIsVisible(_ participant: CallParticipantEntity)
-    func participantCellIsNotVisible(_ participant: CallParticipantEntity)
+    func participantCellIsVisible(_ participant: CallParticipantEntity, at indexPath: IndexPath)
 }
 
 class CallCollectionView: UICollectionView {
@@ -48,9 +47,7 @@ class CallCollectionView: UICollectionView {
         }
         if visibleCells.contains(cell) {
             cell.configure(for: participant, in: layoutMode)
-            callCollectionViewDelegate?.participantCellIsVisible(participant)
-        } else {
-            callCollectionViewDelegate?.participantCellIsNotVisible(participant)
+            callCollectionViewDelegate?.participantCellIsVisible(participant, at: IndexPath(item: index, section: 0))
         }
     }
     
@@ -68,12 +65,13 @@ class CallCollectionView: UICollectionView {
     
     func changeLayoutMode(_ mode: ParticipantsLayoutMode) {
         layoutMode = mode
+        isPagingEnabled = layoutMode == .grid
         reloadData()
         layoutIfNeeded()
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        callCollectionViewDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)))
+        callCollectionViewDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)), visibleIndexPaths: indexPathsForVisibleItems)
     }
     
     func configurePinnedCell(at indexPath: IndexPath?) {
@@ -110,13 +108,8 @@ extension CallCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CallParticipantCell, let participant = cell.participant, let image = avatars[participant.participantId] else { return }
         cell.setAvatar(image: image)
-        callCollectionViewDelegate?.participantCellIsVisible(participant)
+        callCollectionViewDelegate?.participantCellIsVisible(participant, at: indexPath)
         cell.configure(for: participant, in: layoutMode)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? CallParticipantCell, let participant = cell.participant else { return }
-        callCollectionViewDelegate?.participantCellIsNotVisible(participant)
     }
 }
 

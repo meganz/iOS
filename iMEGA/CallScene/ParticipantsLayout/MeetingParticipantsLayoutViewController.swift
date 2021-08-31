@@ -369,8 +369,9 @@ extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate 
 }
 
 extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
-    func collectionViewDidChangeOffset(to page: Int) {
+    func collectionViewDidChangeOffset(to page: Int, visibleIndexPaths: [IndexPath]) {
         pageControl.currentPage = page
+        viewModel.dispatch(.indexVisibleParticipants(visibleIndexPaths.map { $0.item }))
     }
     
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath) {
@@ -381,12 +382,8 @@ extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
         viewModel.dispatch(.fetchAvatar(participant: participant))
     }
     
-    func participantCellIsVisible(_ participant: CallParticipantEntity) {
-        viewModel.dispatch(.particpantIsVisible(participant))
-    }
-    
-    func participantCellIsNotVisible(_ participant: CallParticipantEntity) {
-        viewModel.dispatch(.particpantIsNotVisible(participant))
+    func participantCellIsVisible(_ participant: CallParticipantEntity, at indexPath: IndexPath) {
+        viewModel.dispatch(.particpantIsVisible(participant, index: indexPath.item))
     }
 }
 
