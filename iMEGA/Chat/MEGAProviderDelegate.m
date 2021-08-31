@@ -348,21 +348,26 @@
     uint64_t callId = [self.megaCallManager callIdForUUID:action.callUUID];
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
-    MEGALogDebug(@"[CallKit] Provider perform mute call: %@, uuid: %@", call, action.callUUID);
+    MEGALogDebug(@"[CallKit] Provider perform mute/unmute call: %@, uuid: %@, action: %d", call, action.callUUID, action.muted);
     
     if (action.callUUID) {
         if (call) {
             if (call.hasLocalAudio && action.muted) {
+                MEGALogDebug(@"[CallKit][ChatSDK] Provider perform mute call: %@", call);
                 [MEGASdkManager.sharedMEGAChatSdk disableAudioForChat:call.chatId];
             } else if (!call.hasLocalAudio && !action.muted) {
+                MEGALogDebug(@"[CallKit][ChatSDK] Provider perform unmute call: %@", call);
                 [MEGASdkManager.sharedMEGAChatSdk enableAudioForChat:call.chatId];
             }
         } else {
+            MEGALogDebug(@"[CallKit][ChatSDK] Provider perfom store action for call");
             self.muteAudioWhenConnect = action.muted;
         }
         [action fulfill];
+        MEGALogDebug(@"[CallKit] Provider perform mute/umute fulfill");
     } else {
         [action fail];
+        MEGALogDebug(@"[CallKit] Provider perform mute/umute fail");
     }
 }
 

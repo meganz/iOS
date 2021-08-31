@@ -44,7 +44,7 @@ struct CallManagerUseCase: CallManagerUseCaseProtocol {
     }
     
     func muteUnmuteCall(_ call: CallEntity, muted: Bool) {
-        MEGALogDebug("CallManagerUseCase: mute call called")
+        MEGALogDebug("CallManagerUseCase: mute/unmute call called: \(muted)")
         megaCallManager?.muteUnmuteCall(withCallId: call.callId, chatId: call.chatId, muted: muted)
     }
     
