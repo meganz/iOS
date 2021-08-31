@@ -20,8 +20,8 @@ enum CallViewAction: ActionType {
     case tapParticipantToPinAsSpeaker(CallParticipantEntity, IndexPath)
     case fetchAvatar(participant: CallParticipantEntity)
     case fetchSpeakerAvatar
-    case particpantIsVisible(_ participant: CallParticipantEntity)
-    case particpantIsNotVisible(_ participant: CallParticipantEntity)
+    case particpantIsVisible(_ participant: CallParticipantEntity, index: Int)
+    case indexVisibleParticipants([Int])
 }
 
 enum ParticipantsLayoutMode {
@@ -83,6 +83,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var timer: Timer?
     private var callDurationInfo: CallDurationInfo?
     private var callParticipants = [CallParticipantEntity]()
+    private var indexOfVisibleParticipants = [Int]()
     private var speakerParticipant: CallParticipantEntity? {
         didSet(newValue) {
             invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
@@ -363,24 +364,34 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     self?.invokeCommand?(.updateSpeakerAvatar(image))
                 }
             }
-        case .particpantIsVisible(let participant):
+        case .particpantIsVisible(let participant, let index):
             if participant.video == .on {
                 enableRemoteVideo(for: participant)
             } else {
-                if participant.canReceiveVideoLowRes {
-                    remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientIds: [participant.clientId], completion: nil)
-                } else if participant.canReceiveVideoHiRes {
-                    remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientIds: [participant.clientId], completion: nil)
+                stopVideoForParticipant(participant)
+            }
+            indexOfVisibleParticipants.append(index)
+        case .indexVisibleParticipants(let visibleIndex):
+            updateVisibeParticipants(for: visibleIndex)
+        }
+    }
+    
+    private func updateVisibeParticipants(for visibleIndex: [Int]) {
+        indexOfVisibleParticipants.forEach {
+            if !visibleIndex.contains($0) {
+                if callParticipants[$0].video == .on && callParticipants[$0].speakerVideoDataDelegate == nil {
+                    stopVideoForParticipant(callParticipants[$0])
                 }
             }
-        case .particpantIsNotVisible(let participant):
-            if participant.video == .on && participant.speakerVideoDataDelegate == nil {
-                if participant.canReceiveVideoLowRes {
-                    remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientIds: [participant.clientId], completion: nil)
-                } else if participant.canReceiveVideoHiRes {
-                    remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientIds: [participant.clientId], completion: nil)
-                }
-            }
+        }
+        indexOfVisibleParticipants = visibleIndex
+    }
+    
+    private func stopVideoForParticipant(_ participant: CallParticipantEntity) {
+        if participant.canReceiveVideoLowRes {
+            remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientIds: [participant.clientId], completion: nil)
+        } else if participant.canReceiveVideoHiRes {
+            remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientIds: [participant.clientId], completion: nil)
         }
     }
     
@@ -468,6 +479,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         } else if let index = callParticipants.firstIndex(of: participant) {
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
+            stopVideoForParticipant(participant)
             
             if callParticipants.isEmpty {
                 if chatRoom.chatType == .meeting && !reconnecting {
