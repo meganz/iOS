@@ -276,7 +276,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
                 self.progressViewBottomConstraint.constant = -60.0;
             }
             [UIView animateWithDuration:0.3 animations:^{
-                [self.view layoutIfNeeded];
+                [subview layoutIfNeeded];
             }];
         }
     }
