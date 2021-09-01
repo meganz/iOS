@@ -37,7 +37,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testAction_onViewLoaded_activeCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity(clientSessions: [ChatSessionEntity(statusType: .inProgress)])
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
@@ -67,7 +67,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testAction_onViewReady() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
@@ -93,7 +93,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testAction_tapOnView() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
@@ -115,7 +115,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testAction_tapOnLayoutButton() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
@@ -132,14 +132,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         viewModel.layoutMode = .grid
         test(viewModel: viewModel,
              action: .tapOnLayoutModeButton,
-             expectedCommands: [.switchLayoutMode(layout: .speaker, participantsCount: 0),
-                                .updateSpeakerViewFor(nil)])
+             expectedCommands: [.updateSpeakerViewFor(nil),
+                                .switchLayoutMode(layout: .speaker, participantsCount: 0)
+                                ])
     }
     
     func testAction_tapOnBackButton() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
@@ -164,7 +165,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testAction_switchIphoneOrientation_toLandscape() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
@@ -187,7 +188,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testAction_switchIphoneOrientation_toProtrait() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
@@ -210,7 +211,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testAction_switchIphoneOrientation_toLandscape_forceGridLayout() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         
