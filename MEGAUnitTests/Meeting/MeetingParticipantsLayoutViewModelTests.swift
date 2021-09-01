@@ -181,7 +181,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       call: call)
         test(viewModel: viewModel,
              action: .switchIphoneOrientation(.landscape),
-             expectedCommands: [.enableLayoutButton(enabled: Bool)])
+             expectedCommands: [.enableLayoutButton(false)])
     }
     
     func testAction_switchIphoneOrientation_toProtrait() {
@@ -204,7 +204,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                                       call: call)
         test(viewModel: viewModel,
              action: .switchIphoneOrientation(.portrait),
-             expectedCommands: [.enableLayoutButton(enabled: Bool)])
+             expectedCommands: [.enableLayoutButton(true)])
     }
     
     func testAction_switchIphoneOrientation_toLandscape_forceGridLayout() {
@@ -229,7 +229,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .switchIphoneOrientation(.landscape),
              expectedCommands: [.switchLayoutMode(layout: .grid, participantsCount: 0),
-                                .enableLayoutButton(enabled: Bool)])
+                                .enableLayoutButton(false)])
     }
 }
 
