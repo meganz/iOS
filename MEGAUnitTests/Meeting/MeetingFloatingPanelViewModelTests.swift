@@ -25,8 +25,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
-                .microphoneMuted(muted: true),
-                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
+                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -53,8 +53,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
-                .microphoneMuted(muted: true),
-                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
+                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -84,8 +84,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .front),
                 .reloadParticpantsList(participants: []),
+                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true),
-                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -117,8 +117,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .back),
                 .reloadParticpantsList(participants: []),
-                .microphoneMuted(muted: true),
-                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
+                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -145,8 +145,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
-                .microphoneMuted(muted: true),
-                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
+                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -173,8 +173,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
-                .microphoneMuted(muted: true),
-                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
+                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -369,12 +369,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
              expectedCommands: [
                 .cameraTurnedOn(on: true),
+                .updatedCameraPosition(position: .back)
              ])
         
     }
@@ -400,7 +401,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
@@ -432,7 +433,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
-                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      localVideoUseCase: localVideoUseCase,
                                                       userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
         test(viewModel: viewModel,
              action: .turnCamera(on: false),

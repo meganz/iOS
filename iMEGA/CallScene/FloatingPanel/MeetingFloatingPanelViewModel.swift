@@ -196,12 +196,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
         devicePermissionUseCase.getVideoAuthorizationStatus { [weak self] granted in
             guard let self = self else { return }
-            if Thread.isMainThread {
+            DispatchQueue.main.async {
                 self.videoPermissionGranted(granted, withCompletionBlock: completionBlock)
-            } else {
-                DispatchQueue.main.async {
-                    self.videoPermissionGranted(granted, withCompletionBlock: completionBlock)
-                }
             }
         }
     }
@@ -217,12 +213,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func checkForAudioPermission(forCall call: CallEntity, completionBlock: @escaping (Bool) -> Void) {
         devicePermissionUseCase.getAudioAuthorizationStatus { [weak self] granted in
             guard let self = self else { return }
-            if Thread.isMainThread {
+            DispatchQueue.main.async {
                 self.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
-            } else {
-                DispatchQueue.main.async {
-                    self.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
-                }
             }
         }
     }
