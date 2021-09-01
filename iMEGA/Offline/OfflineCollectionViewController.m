@@ -44,14 +44,6 @@ static NSString *kPath = @"kPath";
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self.collectionView.collectionViewLayout invalidateLayout];
-    }
-}
-
 #pragma mark - CollectionView UI Setup
 
 - (void)setupCollectionView {
@@ -111,7 +103,8 @@ static NSString *kPath = @"kPath";
     }
 }
 
-- (NodeCollectionViewCell *)nodeCellForItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     NodeCollectionViewCell *cell = indexPath.section == ThumbnailSectionFile ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
     
     NSDictionary *item = [self getItemAtIndexPath:indexPath];
@@ -174,7 +167,7 @@ static NSString *kPath = @"kPath";
                 cell.thumbnailImageView.image = nil;
             }
         }
-        
+    
     }
     cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     
@@ -186,14 +179,11 @@ static NSString *kPath = @"kPath";
         cell.durationLabel.layer.masksToBounds = true;
         cell.durationLabel.text = nameString.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
     }
-    
+
     cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     [cell setupAppearance];
+    
     return cell;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self nodeCellForItemAtIndexPath:indexPath];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -247,16 +237,7 @@ static NSString *kPath = @"kPath";
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NodeCollectionViewCell *cell = [self nodeCellForItemAtIndexPath:indexPath];
-    cell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
-    
-    CGSize fittingSize = UILayoutFittingCompressedSize;
-    fittingSize.width = ThumbnailSizeWidth;
-    
-    return [cell.contentView systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityRequired verticalFittingPriority:UILayoutPriorityDefaultLow];
+    return indexPath.section == ThumbnailSectionFile ? CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFile) : CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFolder);
 }
 
 #pragma mark - Actions
