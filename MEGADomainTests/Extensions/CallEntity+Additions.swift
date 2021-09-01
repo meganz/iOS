@@ -12,7 +12,7 @@ extension CallEntity {
          finalTimestamp: Int64 = 0,
          hasLocalAudio: Bool = false,
          hasLocalVideo: Bool = false,
-         termCodeType: TermCodeType = .notFinished,
+         termCodeType: TermCodeType = .invalid,
          isRinging: Bool = false,
          callCompositionChange: CompositionChangeType = .noChange,
          numberOfParticipants: Int = 0,
