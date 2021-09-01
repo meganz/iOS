@@ -25,6 +25,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
+                .microphoneMuted(muted: true),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -52,6 +53,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
+                .microphoneMuted(muted: true),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -143,6 +145,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
+                .microphoneMuted(muted: true),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -170,6 +173,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
                 .reloadParticpantsList(participants: []),
+                .microphoneMuted(muted: true),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
