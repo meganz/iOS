@@ -133,6 +133,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case DisplayModeSharedItem:
+        case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];
             break;
             
