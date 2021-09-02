@@ -129,6 +129,12 @@ extension FolderLinkCollectionViewController: UICollectionViewDataSource {
         cell.selectImageView?.isHidden = !collectionView.allowsMultipleSelection
         cell.moreButton?.isHidden = collectionView.allowsMultipleSelection
         
+        if node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil {
+            cell.downloadedImageView?.isHidden = false
+        } else {
+            cell.downloadedImageView?.isHidden = true
+        }
+        
         return cell
     }
 }

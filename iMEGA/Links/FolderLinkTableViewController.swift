@@ -102,6 +102,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         }
         
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
+        cell.infoLabel.textColor = UIColor.mnz_label()
         
         if node.isFile() {
             if node.hasThumbnail() {
@@ -117,6 +118,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         
         cell.thumbnailPlayImageView.isHidden = !node.name.mnz_isVideoPathExtension
         cell.nameLabel.text = node.name
+        cell.nameLabel.textColor = UIColor.mnz_label()
         cell.node = node
         
         if tableView.isEditing {
