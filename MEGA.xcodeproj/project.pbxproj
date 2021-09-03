@@ -951,7 +951,7 @@
 		8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */; };
 		8383CEFB26736B3600E6A0FF /* EmptyMeetingMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */; };
 		83847D9926B83CAF00A79F48 /* CallEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83847D9826B83CAF00A79F48 /* CallEntity+Additions.swift */; };
-		83850A3F26B2AACD00C62304 /* EnterMeetingLinkViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3C26B2AACC00C62304 /* EnterMeetingLinkViewHelper.swift */; };
+		83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3C26B2AACC00C62304 /* EnterMeetingLinkControllerWrapper.swift */; };
 		83850A4026B2AACD00C62304 /* EnterMeetingLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3D26B2AACC00C62304 /* EnterMeetingLinkRouter.swift */; };
 		83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */; };
 		83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */; };
@@ -3133,7 +3133,7 @@
 		8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMeetingMessageView.swift; sourceTree = "<group>"; };
 		8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMeetingMessageView.xib; sourceTree = "<group>"; };
 		83847D9826B83CAF00A79F48 /* CallEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallEntity+Additions.swift"; sourceTree = "<group>"; };
-		83850A3C26B2AACC00C62304 /* EnterMeetingLinkViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewHelper.swift; sourceTree = "<group>"; };
+		83850A3C26B2AACC00C62304 /* EnterMeetingLinkControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkControllerWrapper.swift; sourceTree = "<group>"; };
 		83850A3D26B2AACC00C62304 /* EnterMeetingLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkRouter.swift; sourceTree = "<group>"; };
 		83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewModel.swift; sourceTree = "<group>"; };
 		83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAChatResultDelegate.swift; sourceTree = "<group>"; };
@@ -7430,7 +7430,7 @@
 		83850A3B26B2AACC00C62304 /* EnterMeetingLinkScene */ = {
 			isa = PBXGroup;
 			children = (
-				83850A3C26B2AACC00C62304 /* EnterMeetingLinkViewHelper.swift */,
+				83850A3C26B2AACC00C62304 /* EnterMeetingLinkControllerWrapper.swift */,
 				83850A3D26B2AACC00C62304 /* EnterMeetingLinkRouter.swift */,
 				83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */,
 			);
@@ -11578,7 +11578,7 @@
 				83143BB62604E61B0033161A /* CallRemoteVideoUseCase.swift in Sources */,
 				BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */,
 				BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */,
-				83850A3F26B2AACD00C62304 /* EnterMeetingLinkViewHelper.swift in Sources */,
+				83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */,
 				2F879C6D2629291C00D2FA78 /* EncourageGuestUserToJoinMegaRouter.swift in Sources */,
 				5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */,

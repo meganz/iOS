@@ -1,15 +1,11 @@
 import Foundation
 
 enum EnterMeetingLinkViewAction: ActionType {
-    case showEnterMeetingLink(presenter: UIViewController)
     case didTapJoinButton(String)
 }
 
 final class EnterMeetingLinkViewModel: ViewModelType {
-    enum Command: CommandType {
-        case showEnterMeetingLink(presenter: UIViewController)
-        case linkError(presenter: UIViewController)
-    }
+    enum Command: CommandType { }
     
     // MARK: - Private properties
     private let router: EnterMeetingLinkRouting
@@ -24,8 +20,6 @@ final class EnterMeetingLinkViewModel: ViewModelType {
     // MARK: - Dispatch action
     func dispatch(_ action: EnterMeetingLinkViewAction) {
         switch action {
-        case .showEnterMeetingLink(let presenter):
-            invokeCommand?(.showEnterMeetingLink(presenter: presenter))
         case .didTapJoinButton(let link):
             let url = URL(string: link)
             
@@ -33,14 +27,8 @@ final class EnterMeetingLinkViewModel: ViewModelType {
                 MEGALinkManager.linkURL = url
                 MEGALinkManager.processLinkURL(url)
             } else {
-                guard let presenter = router.viewControllerToPresent else {
-                    return
-                }
-                
-                invokeCommand?(.linkError(presenter: presenter))
+                router.showLinkError()
             }
         }
-      
     }
-    
 }

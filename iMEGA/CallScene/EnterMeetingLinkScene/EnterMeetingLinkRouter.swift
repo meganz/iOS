@@ -1,14 +1,14 @@
 import Foundation
 
-protocol EnterMeetingLinkRouting {
-    var viewControllerToPresent: UIViewController? { get }
+protocol EnterMeetingLinkRouting: Routing {
     func joinMeeting(link: String)
+    func showLinkError()
 }
 
-class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
+final class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
     
     private weak var baseViewController: UIViewController?
-    private(set) weak var viewControllerToPresent: UIViewController?
+    private weak var viewControllerToPresent: UIViewController?
     private let isGuest: Bool
     
     @objc init(viewControllerToPresent: UIViewController, isGuest: Bool) {
@@ -16,14 +16,14 @@ class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
         self.isGuest = isGuest
     }
     
-    @objc func start() -> NSObject? {
-        guard let viewControllerToPresent = viewControllerToPresent else {
-            return nil
-        }
+    func build() -> UIViewController {
         let viewModel = EnterMeetingLinkViewModel(router: self)
-        let joinAlertWrapper = EnterMeetingLinkViewHelper(viewModel: viewModel)
-        viewModel.dispatch(.showEnterMeetingLink(presenter: viewControllerToPresent))
-        return joinAlertWrapper
+        return EnterMeetingLinkControllerWrapper.createViewController(withViewModel: viewModel)
+    }
+    
+    @objc func start() {
+        guard let viewControllerToPresent = viewControllerToPresent else { return }
+        viewControllerToPresent.present(build(), animated: true)
     }
     
     func joinMeeting(link: String) {
@@ -33,5 +33,16 @@ class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
         
         let router = MeetingCreatingViewRouter(viewControllerToPresent: viewControllerToPresent, type: isGuest ? .guestJoin : .join, link: link, userhandle: 0)
         router.start()
+    }
+    
+    func showLinkError() {
+        guard let viewControllerToPresent = viewControllerToPresent else { return }
+
+        let title = NSLocalizedString("meetings.joinMeeting.header", comment: "")
+        let message = NSLocalizedString("meetings.joinMeeting.description", comment: "")
+        let cancelButtonText = NSLocalizedString("ok", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: cancelButtonText, style: .cancel))
+        viewControllerToPresent.present(alert, animated: true)
     }
 }
