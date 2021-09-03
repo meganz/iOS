@@ -15,8 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *secondaryButton;
 @property (weak, nonatomic) IBOutlet UIButton *thirdButton;
 
-@property (strong, nonatomic) NSObject *enterMeetingLinkObject;
-
 @end
 
 @implementation OnboardingViewController
@@ -262,8 +260,7 @@
 - (IBAction)thirdButtonTapped:(UIButton *)sender {
     switch (self.type) {
         case OnboardingTypeDefault: {
-            EnterMeetingLinkRouter *router = [[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:YES];
-            self.enterMeetingLinkObject = [router start];
+            [[[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO] start];
             break;
         }
             

@@ -107,7 +107,6 @@
 @property (strong, nonatomic) NSString *currentSearch;
 
 @property (nonatomic) EnterGroupNameTextFieldDelegate *enterGroupNameTextFieldDelegate;
-@property (strong, nonatomic) NSObject *enterMeetingLinkObject;
 
 @end
 
@@ -1010,8 +1009,7 @@
 }
 
 - (void)joinMeeting {
-    EnterMeetingLinkRouter *router = [[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO];
-    self.enterMeetingLinkObject = [router start];
+    [[[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO] start];
 }
 
 - (void)showEmailContactPicker {
