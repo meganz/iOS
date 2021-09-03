@@ -608,7 +608,7 @@
                     [strongSelf pushBrowserWithParentNode:newFolderNode];
                 }];
                 
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:strongSelf.parentNode delegate:createFolderRequestDelegate];
+                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:strongSelf.parentNode delegate:createFolderRequestDelegate];
             }
         }
     }];
