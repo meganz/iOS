@@ -477,6 +477,10 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if callUseCase.call(for: call.chatId) == nil {
             callTerminated(call)
         } else if let index = callParticipants.firstIndex(of: participant) {
+            // FIXME: Noticed that the "indexOfVisibleParticipants" can contain duplicate elements.
+            // Also I donot see that the objects being removed from "indexOfVisibleParticipants" when the participants are not visible.
+            // Should we revisit the "indexOfVisibleParticipants" logic Carlos?
+            indexOfVisibleParticipants = indexOfVisibleParticipants.filter { $0 != index }
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             stopVideoForParticipant(participant)
