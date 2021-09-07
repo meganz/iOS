@@ -319,7 +319,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         navigationItem.rightBarButtonItems = [optionsMenuButton,
                                               layoutModeBarButton]
-        layoutModeBarButton.isEnabled =  UIDevice.current.iPadDevice || (UIDevice.current.orientation.isPortrait && UIDevice.current.iPhoneDevice)
+        
+        layoutModeBarButton.isEnabled = !(UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape)
     }
     
     private func showReconnectingNotification() {
