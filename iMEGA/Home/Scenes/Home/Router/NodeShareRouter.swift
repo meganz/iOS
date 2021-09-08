@@ -30,7 +30,7 @@ final class NodeShareRouter: NSObject {
             .instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController
             else { return }
         contactViewController.node = node
-        contactViewController.contactsMode = .shareFoldersWith
+        contactViewController.contactsMode = .folderSharedWith
         navigationController?.present(contactViewController, animated: true, completion: nil)
     }
 }

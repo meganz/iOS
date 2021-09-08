@@ -188,6 +188,14 @@
             <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="AAf-4x-9CH">
+            <size key="intrinsicContentSize" width="115.5" height="18"/>
+        </designable>
+        <designable name="dKu-Ca-hiO">
+            <size key="intrinsicContentSize" width="115.5" height="18"/>
+        </designable>
+    </designables>
     <resources>
         <image name="createGroup" width="40" height="40"/>
         <image name="privateChat" width="24" height="24"/>

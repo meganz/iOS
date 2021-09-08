@@ -20,6 +20,7 @@ final class AudioPlayer: NSObject {
     var audioQueueBufferFullObserver: NSKeyValueObservation?
     var audioQueueRateObserver: NSKeyValueObservation?
     var audioQueueNewItemObserver: NSKeyValueObservation?
+    var audioQueueLoadedTimeRangesObserver: NSKeyValueObservation?
     var metadataQueueFinishAllOperationsObserver: NSKeyValueObservation?
     var audioPlayerConfig: [PlayerConfiguration: Any] = [.loop: false, .shuffle: false]
     var listenerManager = ListenerManager<AudioPlayerObserversProtocol>()
@@ -45,6 +46,7 @@ final class AudioPlayer: NSObject {
     private var playerViewControllerKVOContext = 0
     private var timer: Timer?
     private var taskId: UIBackgroundTaskIdentifier?
+    private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
     
     //MARK: - Internal Computed Properties
     var currentIndex: Int? {
@@ -107,6 +109,7 @@ final class AudioPlayer: NSObject {
     }
     
     deinit {
+        MEGALogDebug("[AudioPlayer] destroying audio player instance")
         queuePlayer = nil
         onClosePlayerCompletion?()
     }
@@ -117,10 +120,21 @@ final class AudioPlayer: NSObject {
         if isPlaying {
             pause()
         }
-        unregisterAudioPlayerEvents()
+        unregister()
+        opQueue.cancelAllOperations()
+    }
+    
+    private func unregister() {
         invalidateTimer()
+        unregisterAudioPlayerEvents()
         unregisterRemoteControls()
         unregisterAudioPlayerNotifications()
+    }
+    
+    private func register() {
+        registerAudioPlayerEvents()
+        registerRemoteControls()
+        registerAudioPlayerNotifications()
     }
     
     private func setupPlayer() {
@@ -131,12 +145,39 @@ final class AudioPlayer: NSObject {
         queuePlayer?.usesExternalPlaybackWhileExternalScreenIsActive = true
         queuePlayer?.volume = 1.0
         
-        registerAudioPlayerEvents()
-        registerRemoteControls()
-        registerAudioPlayerNotifications()
-        notify(aboutCurrentState)
+        register()
         
+        configurePlayer()
+    }
+    
+    private func refreshPlayer(tracks: [AudioPlayerItem]) {
+        notify(aboutTheBeginningOfBlockingAction)
+        unregister()
+        
+        debouncer.start { [weak self] in
+            guard let `self` = self else { return }
+            
+            self.tracks = tracks
+            self.audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
+            self.queuePlayer?.pause()
+            
+            self.queuePlayer?.replaceCurrentItem(with: tracks.first)
+            self.queuePlayer?.items().filter({$0 != self.queuePlayer?.items().first}).forEach {
+                self.queuePlayer?.remove($0)
+            }
+            self.tracks.forEach { self.queuePlayer?.secureInsert($0, after: self.queuePlayer?.items().last) }
+            
+            self.register()
+            
+            self.configurePlayer()
+            self.notify(self.aboutTheEndOfBlockingAction)
+        }
+    }
+    
+    private func configurePlayer() {
         isAutoPlayEnabled ? play() : pause()
+        
+        opQueue.cancelAllOperations()
         preloadNextTracksMetadata()
     }
     
@@ -181,7 +222,14 @@ final class AudioPlayer: NSObject {
     func add(tracks: [AudioPlayerItem]) {
         beginBackgroundTask()
         self.tracks = tracks
-        setupPlayer()
+        
+        if queuePlayer != nil {
+            refreshPlayer(tracks: self.tracks)
+            MEGALogDebug("[AudioPlayer] Refresh the current audio player")
+        } else {
+            setupPlayer()
+            MEGALogDebug("[AudioPlayer] Setting up a new audio player")
+        }
     }
     
     func update(tracks: [AudioPlayerItem]) {

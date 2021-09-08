@@ -15,8 +15,9 @@ final class MiniPlayerViewModelTests: XCTestCase {
                                              offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()))
     
     func testAudioPlayerActions() {
-        test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands:[.initTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, loopMode: false),
-                                                                             .showLoading(true)])
+        test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands:[.showLoading(false),
+                                                                             .initTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, loopMode: false),
+                                                                             ])
         XCTAssertEqual(playerHandler.addPlayerListener_calledTimes, 1)
         
         test(viewModel: viewModel, action: .onPlayPause, expectedCommands: [])

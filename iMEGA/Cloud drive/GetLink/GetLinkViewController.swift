@@ -658,64 +658,26 @@ extension GetLinkViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 
 extension GetLinkViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if getLinkVM.multilink {
-            if indexPath.row == 0 {
-                return 60
-            } else {
-                return 44
-            }
-        } else {
-            if sections()[indexPath.section] == .info {
-                return 60
-            } else if sections()[indexPath.section] == .expiryDate && expireDateRows()[indexPath.row] == .pickExpiryDate {
-                if #available(iOS 14.0, *) {
-                    return 60
-                } else {
-                    return 160
-                }
-            } else {
-                return 44
-            }
-        }
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if getLinkVM.multilink {
-            if section == 0 {
-                return 38
-            } else {
+            if section != 0 {
                 return 0
             }
         } else {
+            
             switch sections()[section] {
-            case .link, .key:
-                return 38
-            case .expiryDate:
-                return 20
+            case .link, .key, .expiryDate:
+                return UITableView.automaticDimension
             case .passwordProtection:
-                if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
-                    return 20
-                } else {
+                if !(getLinkVM.expiryDate && !getLinkVM.selectDate && getLinkVM.date != nil) {
                     return 0
                 }
             default:
                 return 0
             }
         }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if getLinkVM.multilink {
-            return 25
-        } else {
-            switch sections()[section] {
-            case .decryptKeySeparate:
-                return 38
-            default:
-                return 25
-            }
-        }
+        
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -726,26 +688,37 @@ extension GetLinkViewController: UITableViewDelegate {
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         header.bottomSeparatorView.isHidden = false
         
+        var headerTitleTopDistance: CGFloat = 0
+        
         if getLinkVM.multilink {
             header.titleLabel.text = NSLocalizedString("LINK", comment: "Text presenting a link as header usually")
             header.topSeparatorView.isHidden = true
+            headerTitleTopDistance = section == 0 ? 17 : 0
         } else {
             switch sections()[section] {
             case .link:
                 header.titleLabel.text = NSLocalizedString("LINK", comment: "Text presenting a link as header usually")
                 header.topSeparatorView.isHidden = true
+                headerTitleTopDistance = 17
             case .key:
                 header.titleLabel.text = NSLocalizedString("KEY", comment: "Text presenting a key (for a LINK or similar) as header usually")
                 header.topSeparatorView.isHidden = true
+                headerTitleTopDistance = 17
             case .expiryDate:
                 header.titleLabel.text = ""
                 header.topSeparatorView.isHidden = true
+                headerTitleTopDistance = 17
             case .passwordProtection:
                 header.titleLabel.text = ""
                 header.topSeparatorView.isHidden = getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil)
             default:
                 header.titleLabel.text = ""
             }
+        }
+        
+        if headerTitleTopDistance != 0 {
+            header.titleLabelTopDistanceConstraint.isActive = true
+            header.titleLabelTopDistanceConstraint.constant = headerTitleTopDistance
         }
         
         return header
@@ -756,6 +729,8 @@ extension GetLinkViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         
+        footer.titleLabelTopDistanceConstraint.isActive = true
+        footer.titleLabelTopDistanceConstraint.constant = 4
         footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         footer.topSeparatorView.isHidden = false
         footer.titleLabel.text = ""
@@ -773,10 +748,11 @@ extension GetLinkViewController: UITableViewDelegate {
                 let attributedString = NSMutableAttributedString(string: NSLocalizedString("Export the link and decryption key separately.", comment: "Hint text for option separate the key from the link in Get Link View"))
                 let learnMoreString = NSAttributedString(string: " " + NSLocalizedString("Learn more", comment: "Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible)."), attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
                 attributedString.append(learnMoreString)
-                footer.titleLabel.numberOfLines = 2
+                footer.titleLabel.numberOfLines = 0
                 footer.titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMoreTapped)))
                 footer.titleLabel.isUserInteractionEnabled = true
                 footer.titleLabel.attributedText = attributedString
+                footer.titleLabelTopDistanceConstraint.constant = 17
             case .expiryDate:
                 if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
                     footer.titleLabel.text = String(format: NSLocalizedString("Link expires %@", comment: "Text indicating the date until a link will be valid"), dateFormatter.localisedString(from: getLinkVM.date ?? Date()))

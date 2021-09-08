@@ -188,10 +188,10 @@
         if (shareType == MEGAShareTypeAccessOwner) {
             MEGANode *firstbornParentNode = [[MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
-                self.incomingOrOutgoingImageView.hidden = NO;
+                self.incomingOrOutgoingView.hidden = NO;
                 self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_outgoing"];
             } else {
-                self.incomingOrOutgoingImageView.hidden = YES;
+                self.incomingOrOutgoingView.hidden = YES;
             }
         } else {
             self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];

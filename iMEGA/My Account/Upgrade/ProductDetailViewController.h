@@ -4,6 +4,8 @@
 
 @interface ProductDetailViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property (nonatomic, getter=isChoosingTheAccountType) BOOL chooseAccountType;
 
 @property (nonatomic) MEGAAccountType megaAccountType;

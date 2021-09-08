@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,10 +28,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sy9-8p-mxu" userLabel="MainView" customClass="ALView">
-                    <rect key="frame" x="20.5" y="216.5" width="373" height="463"/>
+                    <rect key="frame" x="20.5" y="218" width="373" height="460"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4Ln-Ti-cts">
-                            <rect key="frame" x="12" y="35" width="349" height="399"/>
+                            <rect key="frame" x="12" y="35" width="349" height="396"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="2PZ-4l-cdv">
                                     <rect key="frame" x="110.5" y="0.0" width="128" height="50"/>
@@ -50,11 +50,15 @@
                                         </constraint>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7Y-Zm-Y3I">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7Y-Zm-Y3I" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                     <rect key="frame" x="136" y="70" width="77" height="19.5"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="callout"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                    </userDefinedRuntimeAttributes>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1j-av-tR3">
                                     <rect key="frame" x="32.5" y="109.5" width="284" height="50"/>
@@ -81,16 +85,16 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Detail label Detail label Detail label Detail label Detail label Detail labelDetail labelDetail label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="KXA-VS-o9F">
-                                    <rect key="frame" x="3.5" y="179.5" width="342" height="33.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Detail label Detail label Detail label Detail label Detail label Detail labelDetail labelDetail label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KXA-VS-o9F">
+                                    <rect key="frame" x="9" y="179.5" width="331.5" height="30.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="woc-LH-3yv">
-                                    <rect key="frame" x="35" y="233" width="279" height="166"/>
+                                    <rect key="frame" x="35" y="230" width="279" height="166"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVu-6u-5sa">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVu-6u-5sa" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="279" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="OQw-Cu-GeO"/>
@@ -98,11 +102,15 @@
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                             <state key="normal" title="First"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="body"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="semibold"/>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="firstButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="Vkh-ao-cdF"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Tk-m3-ghO">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Tk-m3-ghO" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="58" width="279" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="cYk-e2-ssh"/>
@@ -111,17 +119,25 @@
                                             <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
                                             <state key="normal" title="Second"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="body"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="semibold"/>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="secondButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="46i-1F-qas"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dp-dd-BzY">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dp-dd-BzY" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="116" width="279" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="5OY-NV-ozf"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <state key="normal" title="Dismiss"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="body"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="dismissTouchUpInside:" destination="-1" eventType="touchUpInside" id="ZoY-Bf-3NQ"/>
                                             </connections>
@@ -173,6 +189,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="lDz-07-rjL"/>
             <constraints>
                 <constraint firstItem="sy9-8p-mxu" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.7" id="Jmq-pf-VxV"/>
                 <constraint firstItem="sy9-8p-mxu" firstAttribute="leading" secondItem="lDz-07-rjL" secondAttribute="leading" priority="999" constant="29" id="KDM-my-ObN"/>
@@ -184,7 +201,6 @@
                 <constraint firstItem="sy9-8p-mxu" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ujV-TX-51k"/>
                 <constraint firstItem="sy9-8p-mxu" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.9" id="vle-eH-JSc"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="lDz-07-rjL"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="Jmq-pf-VxV"/>
@@ -216,4 +232,18 @@
             <point key="canvasLocation" x="22.5" y="48.75"/>
         </view>
     </objects>
+    <designables>
+        <designable name="3Tk-m3-ghO">
+            <size key="intrinsicContentSize" width="61" height="33"/>
+        </designable>
+        <designable name="9dp-dd-BzY">
+            <size key="intrinsicContentSize" width="60" height="33"/>
+        </designable>
+        <designable name="RVu-6u-5sa">
+            <size key="intrinsicContentSize" width="36" height="33"/>
+        </designable>
+        <designable name="a7Y-Zm-Y3I">
+            <size key="intrinsicContentSize" width="77" height="19.5"/>
+        </designable>
+    </designables>
 </document>

@@ -494,7 +494,7 @@ class ChatViewController: MessagesViewController {
         navigationController?.viewControllers.first?.navigationItem.backBarButtonItem = backBarButton
     }
 
-    @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
+    @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView?) {
 
     }
     

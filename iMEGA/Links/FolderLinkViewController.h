@@ -30,4 +30,9 @@
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue;
 - (void)setViewEditing:(BOOL)editing;
 
+- (void)didDownloadTransferStart:(MEGANode * _Nonnull)node;
+- (void)didDownloadTransferFinish:(MEGANode * _Nonnull)node;
+- (void)didDownloadTransferUpdated:(MEGANode * _Nonnull)node transferredBytes:(NSNumber * _Nonnull)bytes totalBytes:(NSNumber * _Nonnull)totalBytes speed:(NSNumber * _Nonnull)speed;
+- (BOOL)isADownloadingNode:(MEGANode * _Nonnull)node;
+
 @end

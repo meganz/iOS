@@ -933,7 +933,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD-Transfers";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="PRO-Status";
+"upgrade"="Pro-Status";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Profil anzeigen/bearbeiten";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1045,7 +1045,7 @@
 /* account management button title in business account’s landing page */
 "Manage Account"="Account verwalten";
 /*  */
-"chooseYourAccountType"="PRO-Accounts";
+"chooseYourAccountType"="Pro-Accounts";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA Pro[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -1323,7 +1323,7 @@
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Die zu übertragende Datenmenge überschreitet das verbleibende Transfervolumen Ihres Accounts. Die Übertragung könnte daher unterbrochen werden.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="Verfügbare PRO-Stufen";
+"seePlans"="Verfügbare Pro-Stufen";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Später";
 /* Content of the notification when there is unknown activity on the Chat */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Der Papierkorb kann für Sie automatisch geleert werden. Die minimale Aufbewahrungsdauer beträgt sieben Tage.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Eine automatische Leerung nach mehr als 30 Tagen (oder das Abschalten derselben) erfordert PRO-Status.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Eine automatische Leerung nach mehr als 30 Tagen (oder das Abschalten derselben) erfordert Pro-Status.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Alle anderen Logins beenden? Sie werden überall außer auf diesem Gerät ausgeloggt.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1891,7 +1891,7 @@
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="Ihr Pro-Status ist gestern abgelaufen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Ihr PRO-Status ist vor %1 Tagen abgelaufen";
+"Your PRO membership plan expired %1 days ago"="Ihr Pro-Status ist vor %1 Tagen abgelaufen";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Ihr per exportiertem Link zugänglich gemachter %1 (%2) wurde auf eine Beschwerde hin gelöscht.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2049,7 +2049,7 @@
 /* Destination folder name of chat files */
 "My chat files"="Chatdateien";
 /* Title of the section about the plan in the storage tab in My Account Section */
-"Plan"="PRO-Stufe";
+"Plan"="Pro-Stufe";
 /*  */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Ohne Passwort und ohne Rettungsschlüssel [B]verlieren Sie den Zugang zu allen Ihren Dateien, Ordnern und Nachrichten. Selbst MEGA kann Ihnen dann nicht helfen![/B]";
 /*  */

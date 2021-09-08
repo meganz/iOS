@@ -133,6 +133,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case DisplayModeSharedItem:
+        case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];
             break;
             
@@ -248,6 +249,10 @@ static const CGFloat GapBetweenPages = 10.0;
             
             [self updateAppearance];
         }
+    }
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self reloadTitle];
     }
 }
 
@@ -422,6 +427,29 @@ static const CGFloat GapBetweenPages = 10.0;
     return maximumZoomScale;
 }
 
+- (NSArray *)keyCommands {
+    UIKeyCommand *leftArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputLeftArrow modifierFlags:0 action:@selector(didInvokeLeftArrowCommand:)];
+    UIKeyCommand *rightArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputRightArrow modifierFlags:0 action:@selector(didInvokeRightArrowCommand:)];
+    return @[leftArrow, rightArrow];
+}
+
+- (void)didInvokeLeftArrowCommand:(UIKeyCommand *)keyCommand {
+    NSInteger newIndex = self.currentIndex - 1;
+    [self showPhotoAtIndex:newIndex];
+}
+
+- (void)didInvokeRightArrowCommand:(UIKeyCommand *)keyCommand {
+    NSInteger newIndex = self.currentIndex + 1;
+    [self showPhotoAtIndex:newIndex];
+}
+
+- (void)showPhotoAtIndex:(NSInteger)index {
+    if (index != self.currentIndex && index >= 0 && index < self.mediaNodes.count) {
+        self.currentIndex = index;
+        [self reloadUI];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -450,7 +478,6 @@ static const CGFloat GapBetweenPages = 10.0;
         
         NSUInteger newIndex = floor(scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
-            [self reloadTitleForIndex:newIndex];
             [self loadNearbyImagesFromIndex:newIndex];
         }
     }
@@ -553,7 +580,7 @@ static const CGFloat GapBetweenPages = 10.0;
                     [playButton setImage:[UIImage imageNamed:@"blackCrossedPlayButton"] forState:UIControlStateNormal];
                 }
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
-                playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
+                playButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
                 [playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
                 [zoomableView addSubview:playButton];
             }
@@ -1172,7 +1199,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case MegaNodeActionTypeImport:
-            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+            [node mnz_fileLinkImportFromViewController:self isFolderLink:(self.displayMode == DisplayModeNodeInsideFolderLink)];
             break;
             
         case MegaNodeActionTypeRemove:

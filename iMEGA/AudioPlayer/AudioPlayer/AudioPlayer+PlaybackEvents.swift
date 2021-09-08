@@ -34,11 +34,10 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
     
     func resetPlaylist() {
-        var lastItem = queuePlayer?.currentItem as? AudioPlayerItem
+        guard let queuePlayer = queuePlayer else { return }
         tracks.forEach {
-            queuePlayer?.remove($0)
-            queuePlayer?.secureInsert($0, after: lastItem)
-            lastItem = $0
+            queuePlayer.remove($0)
+            queuePlayer.secureInsert($0, after: queuePlayer.items().last)
         }
         
         if let loopAllowed = audioPlayerConfig[.loop] as? Bool, loopAllowed {
@@ -417,7 +416,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func playerCurrentTime() -> TimeInterval { currentTime }
     
     @objc func refreshCurrentItemState() {
-        notify(aboutCurrentState)
+        notify([aboutCurrentState, aboutCurrentItem])
     }
     
     func blockAudioPlayerInteraction() {

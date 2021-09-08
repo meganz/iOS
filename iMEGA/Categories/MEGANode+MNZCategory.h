@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)mnz_downloadNodeTopPriority;
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
-- (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
+- (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^ _Nullable)(MEGARequest *request))completion;
 - (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController;
 - (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion;
 - (void)mnz_removeInViewController:(UIViewController *)viewController;

@@ -24,7 +24,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     func testPlaybackActions() {
         test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.showLoading(true),
-                                                                              .configureFileLinkPlayer(title: "Track 5", subtitle:  "File Link"),
+                                                                             .configureFileLinkPlayer(title: "Track 5", subtitle: NSLocalizedString("fileLink", comment: "")),
                                                                               .updateShuffle(status: playerHandler.isShuffleEnabled())], timeout: 0.5)
         XCTAssertEqual(playerHandler.addPlayerListener_calledTimes, 1)
         XCTAssertEqual(playerHandler.addPlayer_calledTimes, 1)

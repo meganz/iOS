@@ -25,7 +25,6 @@
 
 @property (nonatomic) NSArray *userAlertsArray;
 @property (nonatomic) NSDateFormatter *dateFormatter;
-@property (nonatomic) UIFont *boldFont;
 
 @end
 
@@ -43,8 +42,6 @@
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateStyle = NSDateFormatterLongStyle;
     self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
-    
-    self.boldFont = [UIFont boldSystemFontOfSize:14.0f];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
@@ -182,6 +179,8 @@
 }
 
 - (void)configureContentLabel:(UILabel *)contentLabel forAlert:(MEGAUserAlert *)userAlert {
+    UIFont *boldFont = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightBold];
+    
     switch (userAlert.type) {
         case MEGAUserAlertTypeIncomingPendingContactRequest:
             contentLabel.text = NSLocalizedString(@"Sent you a contact request", @"When a contact sent a contact/friend request");
@@ -238,7 +237,7 @@
         case MEGAUserAlertTypeDeletedShare: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
             if ([userAlert numberAtIndex:0] == 0) {
-                NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name ?: @""  attributes:@{ NSFontAttributeName : self.boldFont }];
+                NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name ?: @""  attributes:@{ NSFontAttributeName : boldFont }];
                 NSString *text = NSLocalizedString(@"A user has left the shared folder {0}", @"notification text");
                 NSRange range = [text rangeOfString:@"{0}"];
                 NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
@@ -296,7 +295,7 @@
             
         case MEGAUserAlertTypePaymentSucceeded: {
             NSString *proPlanString = [userAlert stringAtIndex:0] ? [userAlert stringAtIndex:0] : @"";
-            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : boldFont }];
             NSString *text = NSLocalizedString(@"Your payment for the %1 plan was received.", @"A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III.");
             NSRange range = [text rangeOfString:@"%1"];
             NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
@@ -307,7 +306,7 @@
             
         case MEGAUserAlertTypePaymentFailed: {
             NSString *proPlanString = [userAlert stringAtIndex:0] ? [userAlert stringAtIndex:0] : @"";
-            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : boldFont }];
             NSString *text = NSLocalizedString(@"Your payment for the %1 plan was unsuccessful.", @"A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II.");
             NSRange range = [text rangeOfString:@"%1"];
             NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
@@ -340,7 +339,7 @@
             } else if (node.type == MEGANodeTypeFolder) {
                 nodeType = NSLocalizedString(@"folder", nil);
             }
-            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : boldFont }];
             NSString *text = NSLocalizedString(@"Your publicly shared %1 (%2) has been taken down.", @"The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
             text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
             NSRange range = [text rangeOfString:@"%2"];
@@ -358,7 +357,7 @@
             } else if (node.type == MEGANodeTypeFolder) {
                 nodeType = NSLocalizedString(@"folder", nil);
             }
-            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : boldFont }];
             NSString *text = NSLocalizedString(@"Your taken down %1 (%2) has been reinstated.", @"The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
             text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
             NSRange range = [text rangeOfString:@"%2"];

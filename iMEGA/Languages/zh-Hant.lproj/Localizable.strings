@@ -367,7 +367,7 @@
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="連結包含金鑰";
 /* An alert dialog for the Get Link feature */
-"proOnly"="（PRO專業版限定）";
+"proOnly"="（Pro會員限定）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="設定有效日期";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -1047,9 +1047,9 @@
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為專業版帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
+"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為Pro帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為專業版帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
+"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為Pro帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="儲存空間";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1117,9 +1117,9 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="不是請求已取消就是先前的購買未能復原。請晚點再試一次或聯繫 ios@mega.nz";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="升級至專業版";
+"Upgrade to Pro"="升級至Pro方案";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="享有專業版專屬的功能，例如可為公開檔案設定密碼保護與連結的有效日期。";
+"Access Pro only features like setting password protection and expiry dates for public files."="享有Pro方案專屬的功能，例如可為公開檔案設定密碼保護與連結的有效日期。";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="開啟除錯模式";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾筒可執行自動清除。最短清除期限為7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾筒清理排程或設定更長的保留期限，您需要訂閱PRO方案。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾筒清理排程或設定更長的保留期限，您需要訂閱Pro方案。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他工作階段嗎？這將使您登出除了目前工作階段之外的所有其他工作階段。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1825,7 +1825,7 @@
 /* The header of a notification related to payments */
 "Payment info"="付款資訊";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="專業版會員即將到期";
+"PRO membership plan expiring soon"="Pro會員方案即將到期";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="移除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1885,13 +1885,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="您的%1方案付款不成功。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="您的專業版會員將在明天到期。";
+"Your PRO membership plan will expire in 1 day."="您的Pro會員將在明天到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="您的專業版會員將在%1天內到期。";
+"Your PRO membership plan will expire in %1 days."="您的Pro會員將在%1天內到期。";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="您的專業版方案已於1天前到期";
+"Your PRO membership plan expired 1 day ago"="您的Pro方案已於1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="您的專業版方案已於%1天前到期";
+"Your PRO membership plan expired %1 days ago"="您的Pro方案已於%1天前到期";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="您公開共享的 %1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2637,9 +2637,9 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="請升級";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎快滿了。立即升級至專業版帳戶並獲得高達%@TB（%@GB）的雲端儲存空間。";
+"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎快滿了。立即升級至Pro帳戶並獲得高達%@TB（%@GB）的雲端儲存空間。";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="您的雲端空間已滿。請升級至MEGA專業版方案以增加您的儲存空間並享有額外的好處。如果您仍然超出您的空間限制而且沒有升級至專業版或刪除一些資料，您的帳戶可能會被封鎖。請查看我們發送給您的電子郵件了解更多訊息。";
+"dialog.storage.odq.detail"="您的雲端空間已滿。請升級至MEGA Pro方案以增加您的儲存空間並享有額外的好處。如果您仍然超出您的空間限制而且沒有升級至Pro方案或刪除一些資料，您的帳戶可能會被封鎖。請查看我們發送給您的電子郵件了解更多訊息。";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="帳戶封鎖";
 /* Over Disk Quota paywall final title. */

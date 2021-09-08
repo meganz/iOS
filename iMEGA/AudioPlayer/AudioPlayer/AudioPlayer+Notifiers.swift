@@ -19,7 +19,6 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
     func aboutCurrentItem(_ observer: AudioPlayerObserversProtocol) {
         guard let player = queuePlayer else { return }
         
-        observer.audio?(player: player, showLoading: false)
         if currentNode != nil, let currentItem = currentItem() {
             observer.audio?(player: player, name: currentName ?? "", artist: currentArtist ?? "", thumbnail: currentThumbnail, url: currentItem.url.absoluteString)
         } else {

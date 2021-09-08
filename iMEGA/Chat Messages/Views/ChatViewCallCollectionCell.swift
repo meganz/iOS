@@ -1,40 +1,54 @@
 import MessageKit
 
 class ChatViewCallCollectionCell: MessageContentCell {
+    let defaultIconSize: CGFloat = 36
     
     open var iconImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     open var reasonTextLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
     
-    open var containerView = UIView()
+    open var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = 8
+        stack.distribution = .fill
+        return stack
+    }()
+   
     // MARK: - Methods
     
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
-        containerView.autoCenterInSuperview()
-        containerView.autoSetDimension(.height, toSize: 36)
-        containerView.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 10, relation: .greaterThanOrEqual)
-        containerView.autoPinEdge(toSuperviewSafeArea: .trailing, withInset: 10, relation: .greaterThanOrEqual)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: messageContainerView.safeAreaLayoutGuide.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: messageContainerView.safeAreaLayoutGuide.bottomAnchor),
+            stackView.centerXAnchor.constraint(equalTo: messageContainerView.safeAreaLayoutGuide.centerXAnchor),
+            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: messageContainerView.safeAreaLayoutGuide.leadingAnchor, constant: 5.0),
 
-        iconImageView.autoSetDimensions(to: CGSize(width: 36, height: 36))
-        iconImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        iconImageView.autoPinEdge(.trailing, to: .leading, of: reasonTextLabel, withOffset: -8)
-        reasonTextLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .leading)
+            iconImageView.heightAnchor.constraint(equalToConstant: defaultIconSize),
+            iconImageView.widthAnchor.constraint(equalToConstant: defaultIconSize)
+        ])
     }
 
     override open func setupSubviews() {
         super.setupSubviews()
-        messageContainerView.addSubview(containerView)
-        containerView.addSubview(iconImageView)
-        containerView.addSubview(reasonTextLabel)
+        messageContainerView.addSubview(stackView)
+        stackView.addArrangedSubview(iconImageView)
+        stackView.addArrangedSubview(reasonTextLabel)
 
         setupConstraints()
     }
@@ -71,6 +85,8 @@ class ChatViewCallCollectionCell: MessageContentCell {
 
 class ChatViewCallCollectionCellCalculator: MessageSizeCalculator {
     
+    lazy var layoutCell = ChatViewCallCollectionCell()
+    
     override public init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         incomingAvatarSize = .zero
@@ -83,6 +99,11 @@ class ChatViewCallCollectionCellCalculator: MessageSizeCalculator {
         let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
         let contentInset = layout.collectionView?.contentInset ?? .zero
         let inset = layout.sectionInset.left + layout.sectionInset.right + contentInset.left + contentInset.right
-        return CGSize(width: collectionViewWidth - inset, height: 30)
+        
+        layoutCell.configure(with: message, at: IndexPath(row: 0, section: 0), and: messagesLayout.messagesCollectionView)
+        
+        let height = layoutCell.reasonTextLabel.text?.height(withConstrainedWidth: collectionViewWidth - inset, font: layoutCell.reasonTextLabel.font) ?? 0.0
+        
+        return CGSize(width: collectionViewWidth - inset, height: max(height, layoutCell.defaultIconSize))
     }
 }

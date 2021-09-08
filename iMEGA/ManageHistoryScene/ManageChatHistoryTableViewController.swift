@@ -313,25 +313,16 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var heightForRow: CGFloat = 0
         switch indexPath.section {
         case ManageChatHistorySection.historyRetention.rawValue:
-            if indexPath.row == HistoryRetentionRow.uiswitch.rawValue {
-                heightForRow = 44.0
-            } else if indexPath.row == HistoryRetentionRow.customTime.rawValue {
-                heightForRow = historyRetentionCustomTableViewCell.isHidden ? 0 : 44.0
-            } else if indexPath.row == HistoryRetentionRow.picker.rawValue {
-                heightForRow = historyRetentionPickerTableViewCell.isHidden ? 0 : 162.0
+            if (indexPath.row == HistoryRetentionRow.customTime.rawValue && historyRetentionCustomTableViewCell.isHidden) ||
+                indexPath.row == HistoryRetentionRow.picker.rawValue  && historyRetentionPickerTableViewCell.isHidden {
+                return 0
             }
-            
-        case ManageChatHistorySection.clearChatHistory.rawValue:
-            heightForRow = 44.0
-            
         default:
-            heightForRow = 44.0
+            break
         }
-        
-        return heightForRow
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {

@@ -50,7 +50,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KuK-Wv-wZ8">
                                         <rect key="frame" x="0.0" y="0.0" width="187.5" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bU-zv-qtw">
+                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bU-zv-qtw" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="187.5" height="43"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -58,6 +58,10 @@
                                                 <state key="selected">
                                                     <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="selectTransfersTouchUpInside:" destination="Jj4-Va-dMO" eventType="touchUpInside" id="be7-OI-vjN"/>
                                                 </connections>
@@ -89,7 +93,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="hor-SN-P7B"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jg2-JP-pBf">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jg2-JP-pBf" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="187.5" height="43"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -97,6 +101,10 @@
                                                 <state key="selected">
                                                     <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="selectTransfersTouchUpInside:" destination="Jj4-Va-dMO" eventType="touchUpInside" id="3Uv-4X-1gl"/>
                                                 </connections>

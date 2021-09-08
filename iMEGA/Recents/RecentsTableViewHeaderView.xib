@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,11 +17,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOT-6B-CKg" userLabel="Content View">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ3-n9-GrK" userLabel="Date Label">
-                            <rect key="frame" x="24" y="10.5" width="41" height="15"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ3-n9-GrK" userLabel="Date Label" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                            <rect key="frame" x="24" y="10" width="41" height="16"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption1"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wet-V6-Nr3" userLabel="Bottom Separator View">
                             <rect key="frame" x="0.0" y="35.5" width="375" height="0.5"/>
@@ -35,6 +39,8 @@
                         <constraint firstAttribute="bottom" secondItem="wet-V6-Nr3" secondAttribute="bottom" id="2zc-ty-bSH"/>
                         <constraint firstAttribute="trailing" secondItem="wet-V6-Nr3" secondAttribute="trailing" id="7CN-Dd-e0I"/>
                         <constraint firstItem="KJ3-n9-GrK" firstAttribute="leading" secondItem="jOT-6B-CKg" secondAttribute="leading" constant="24" id="VnZ-bp-sun"/>
+                        <constraint firstItem="KJ3-n9-GrK" firstAttribute="top" secondItem="jOT-6B-CKg" secondAttribute="top" constant="10" id="Whx-Vv-yWZ"/>
+                        <constraint firstAttribute="bottom" secondItem="KJ3-n9-GrK" secondAttribute="bottom" constant="10" id="hww-Tk-4L8"/>
                         <constraint firstItem="wet-V6-Nr3" firstAttribute="leading" secondItem="jOT-6B-CKg" secondAttribute="leading" id="mH5-RI-Ebp"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KJ3-n9-GrK" secondAttribute="trailing" constant="10" id="q8o-k6-c0O"/>
                     </constraints>
@@ -45,7 +51,6 @@
                 <constraint firstItem="jOT-6B-CKg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0Mn-NG-6OQ"/>
                 <constraint firstAttribute="trailing" secondItem="jOT-6B-CKg" secondAttribute="trailing" id="2nZ-NJ-UuK"/>
                 <constraint firstItem="jOT-6B-CKg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="el1-FQ-xHa"/>
-                <constraint firstItem="KJ3-n9-GrK" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="kmp-NF-ziI"/>
                 <constraint firstAttribute="bottom" secondItem="jOT-6B-CKg" secondAttribute="bottom" id="lIz-Gv-Qmu"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

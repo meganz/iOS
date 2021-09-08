@@ -1563,17 +1563,19 @@
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {
             if (self.recentlyAddedUsersArray.count > 0) {
-                headerView.titleLabel.font = [UIFont systemFontOfSize:13.f];
+                headerView.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
                 headerView.titleLabel.text = NSLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts").uppercaseString;
                 
                 return headerView;
             }
         } else {
-            headerView.titleLabel.font = [UIFont systemFontOfSize:17.f weight:UIFontWeightSemibold];
-            headerView.titleLabel.textColor = UIColor.mnz_label;
-            headerView.titleLabel.text = [UILocalizedIndexedCollation.currentCollation.sectionTitles objectAtIndex:[self currentIndexedSection:section]];
-            
-            return headerView;
+            if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
+                headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold];
+                headerView.titleLabel.textColor = UIColor.mnz_label;
+                headerView.titleLabel.text = [UILocalizedIndexedCollation.currentCollation.sectionTitles objectAtIndex:[self currentIndexedSection:section]];
+
+                return headerView;
+            }
         }
     }
     
@@ -1612,78 +1614,59 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat heightForHeader = 0.0f;
+    BOOL sectionHeaderNeeded = NO;
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            if (section == 0) {
-                if (self.recentlyAddedUsersArray.count > 0) {
-                    heightForHeader = 35.0f;
-                }
-            } else {
-                if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
-                    heightForHeader = 28.0f;
-                }
+            if ((section == 0 && self.recentlyAddedUsersArray.count > 0) ||
+                (section != 0 && self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0)) {
+                sectionHeaderNeeded = YES;
             }
             break;
         }
-            
+
         case ContactsModeShareFoldersWith: {
             if (section == 0) {
-                heightForHeader = 25.0f;
+                sectionHeaderNeeded = YES;
             }
             break;
         }
-            
+
         case ContactsModeFolderSharedWith: {
-            if (section == 0) {
-                heightForHeader = 50.0f;
-            } else if (section == 1) {
-                if (self.pendingShareUsersArray.count > 0) {
-                    heightForHeader = 50.0;
-                }
+            if ((section == 0) ||
+                (section == 1 && self.pendingShareUsersArray.count > 0)) {
+                sectionHeaderNeeded = YES;
             }
             break;
         }
-            
+
         case ContactsModeChatStartConversation: {
             if (section == 1 || section == 2) {
-                heightForHeader = 35.0f;
+                sectionHeaderNeeded = YES;
             }
             break;
         }
-        
+
         case ContactsModeChatAddParticipant:
         case ContactsModeChatAttachParticipant: {
             if (section == 1) {
-                heightForHeader = 35.0f;
+                sectionHeaderNeeded = YES;
             }
             break;
         }
-            
+
         case ContactsModeChatCreateGroup:
-        case ContactsModeInviteParticipants: {
-            if (section == 0) {
-                heightForHeader = 25.0f;
-            } else if (section == 1) {
-                heightForHeader = 35.0f;
-            }
-            break;
-        }
-            
         case ContactsModeChatNamingGroup: {
-            if (section == 0) {
-                heightForHeader = 45.0f;
-            } else if (section == 1) {
-                heightForHeader = 35.0f;
+            if (section == 0 || section == 1) {
+                sectionHeaderNeeded = YES;
             }
             break;
         }
-            
+
         default:
             break;
     }
-    
-    return heightForHeader;
+
+    return sectionHeaderNeeded ? UITableViewAutomaticDimension : 0.0;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {

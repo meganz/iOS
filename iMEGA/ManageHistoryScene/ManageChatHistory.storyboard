@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,7 +18,7 @@
                         <sections>
                             <tableViewSection footerTitle="Automatically delete messages older than a certain amount of time." id="unh-OR-rey">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="eVz-UR-606">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="eVz-UR-606">
                                         <rect key="frame" x="0.0" y="17.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="eVz-UR-606" id="Tsv-ww-Uhx">
@@ -31,9 +31,9 @@
                                                         <action selector="historyRetentionSwitchValueChanged:" destination="U5G-Eg-fSa" eventType="valueChanged" id="nvP-h9-4ke"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History Retention" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDo-wQ-xnb">
-                                                    <rect key="frame" x="20" y="11.5" width="132" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History Retention" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDo-wQ-xnb">
+                                                    <rect key="frame" x="20" y="13.5" width="112" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -43,10 +43,12 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="lfh-Xw-hlB" secondAttribute="trailing" id="1y9-je-0pF"/>
                                                 <constraint firstItem="fDo-wQ-xnb" firstAttribute="trailing" secondItem="Tsv-ww-Uhx" secondAttribute="trailingMargin" id="4bO-Rx-xIX"/>
                                                 <constraint firstItem="lfh-Xw-hlB" firstAttribute="trailing" secondItem="Tsv-ww-Uhx" secondAttribute="trailingMargin" id="6Gz-FT-ygl"/>
+                                                <constraint firstAttribute="bottom" secondItem="fDo-wQ-xnb" secondAttribute="bottom" constant="13.5" id="Dag-id-nDw"/>
                                                 <constraint firstItem="fDo-wQ-xnb" firstAttribute="leading" secondItem="Tsv-ww-Uhx" secondAttribute="leadingMargin" constant="15" id="Ogf-6B-u8K"/>
                                                 <constraint firstItem="fDo-wQ-xnb" firstAttribute="leading" secondItem="Tsv-ww-Uhx" secondAttribute="leadingMargin" id="Tf3-Z1-Q5v"/>
                                                 <constraint firstItem="lfh-Xw-hlB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fDo-wQ-xnb" secondAttribute="trailing" constant="8" id="Uqs-XC-B34"/>
                                                 <constraint firstItem="lfh-Xw-hlB" firstAttribute="centerY" secondItem="Tsv-ww-Uhx" secondAttribute="centerY" id="fb3-GA-y9i"/>
+                                                <constraint firstItem="fDo-wQ-xnb" firstAttribute="top" secondItem="Tsv-ww-Uhx" secondAttribute="top" constant="13.5" id="ts5-DK-fcL"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -65,26 +67,31 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lc-3k-BEa">
-                                                    <rect key="frame" x="345" y="1.5" width="57" height="41"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lc-3k-BEa" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                                    <rect key="frame" x="350" y="3.5" width="52" height="37"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                                     <state key="normal" title="Save"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="body"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="historyRetentionSaveTouchUpInside:" destination="U5G-Eg-fSa" eventType="touchUpInside" id="nbA-Hs-3ds"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 hour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKz-JB-gpc">
-                                                    <rect key="frame" x="183.5" y="11.5" width="47" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 hour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKz-JB-gpc">
+                                                    <rect key="frame" x="187" y="11.5" width="40" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="9Lc-3k-BEa" firstAttribute="centerY" secondItem="0wl-O9-gJd" secondAttribute="centerY" id="0L0-vX-pRM"/>
+                                                <constraint firstItem="iKz-JB-gpc" firstAttribute="top" secondItem="0wl-O9-gJd" secondAttribute="top" constant="11.5" id="I8e-h7-SFS"/>
                                                 <constraint firstItem="9Lc-3k-BEa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iKz-JB-gpc" secondAttribute="trailing" constant="10" id="Sq7-ES-giY"/>
-                                                <constraint firstItem="iKz-JB-gpc" firstAttribute="centerY" secondItem="0wl-O9-gJd" secondAttribute="centerYWithinMargins" id="b8I-T1-RRl"/>
+                                                <constraint firstAttribute="bottom" secondItem="iKz-JB-gpc" secondAttribute="bottom" constant="11.5" id="Tj7-XM-h3I"/>
                                                 <constraint firstItem="iKz-JB-gpc" firstAttribute="centerX" secondItem="0wl-O9-gJd" secondAttribute="centerX" id="nNQ-av-QAH"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="9Lc-3k-BEa" secondAttribute="trailingMargin" id="rfJ-ts-E3J"/>
                                             </constraints>
@@ -116,16 +123,16 @@
                             <tableViewSection footerTitle="Delete all messages and files shared in this conversation from both parties. This action is irreversible." id="Mir-4Q-TAo">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="WKa-Qn-3mM" style="IBUITableViewCellStyleDefault" id="AuO-yF-E4v">
-                                        <rect key="frame" x="0.0" y="331" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="325.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="AuO-yF-E4v" id="LOI-Uo-CWN">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Clear All Chat History" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WKa-Qn-3mM">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Clear All Chat History" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="WKa-Qn-3mM">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

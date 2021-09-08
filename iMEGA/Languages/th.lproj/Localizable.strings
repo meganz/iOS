@@ -1899,7 +1899,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="ข้อความเสียง";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
+"This action can not be completed as it would take you over your current storage limit"="ไม่สามารถดำเนินการต่อได้ เนื่องจากจะทำให้พื้นที่เก็บข้อมูลของคุณเกินขีดจำกัดได้";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="การอัปโหลดของคุณไม่สามารถดำเนินการต่อได้ เนื่องจากบัญชีของคุณเต็มแล้ว";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="เมื่อวาน";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send this location";
+"Send This Location"="ส่งตำแหน่งนี้";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="การตั้งค่าแผนที่";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -2089,7 +2089,7 @@
 /* Title of the "Links" Shared Items. */
 "Links"="ลิงก์";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No public links";
+"No Public Links"="ไม่มีลิงก์สาธารณะ";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="จัดการการแชร์";
 /* Title of the screen that shows the users with whom the user can share a folder */
