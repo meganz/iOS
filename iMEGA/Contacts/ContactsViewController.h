@@ -8,7 +8,8 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeChatAddParticipant = 4,
     ContactsModeChatAttachParticipant = 5,
     ContactsModeChatCreateGroup = 6,
-    ContactsModeChatNamingGroup = 7
+    ContactsModeChatNamingGroup = 7,
+    ContactsModeInviteParticipants = 8
 };
 
 @protocol ContatctsViewControllerDelegate <NSObject>
