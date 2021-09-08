@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="請檢查您的電子信箱，並點擊信中的連結以確認啟用您的帳戶。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="您的帳號已被鎖定。請連繫 support@mega.nz";
+"accountBlocked"="您的帳戶因違反MEGA服務條款，包括但不限於第15條而被停用。";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="請輸入有效的電子郵件地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -367,7 +367,7 @@
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="連結包含金鑰";
 /* An alert dialog for the Get Link feature */
-"proOnly"="（PRO專業版限定）";
+"proOnly"="（Pro會員限定）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="設定有效日期";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -859,7 +859,7 @@
 /*  */
 "yourAccounHasBeenParked"="您的舊帳號已成功停用。現在可登入您的新帳號。";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="新郵件";
+"newEmail"="新的電子郵件地址";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="確認電子郵件地址";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="您已經安裝MEGA手機應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA手機應用程式時，您可獲得%@的免費儲存空間，有效期為365天。 MEGA手機應用程式可在iOS、Android和Windows的手機上使用。";
+"account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA手機應用程式時，您可獲得%@的免費儲存空間，有效期為365天。 MEGA手機應用程式支援iOS與Android。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@的儲存空間。有效期為365天。";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1037,7 +1037,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@到期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
-"Renews on"="續訂日期";
+"Renews on"="更新於";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的共享";
 /* Button title which triggers the action to upgrade your MEGA account level */
@@ -1047,9 +1047,9 @@
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為專業版帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
+"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為Pro帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為專業版帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
+"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為Pro帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="儲存空間";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1081,7 +1081,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="省下17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="訂閱出錯 %@ (%ld)";
+"wrongPurchase"="購買出錯 %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="應用程式內購買功能尚未啟用，請於iOS的設定中啟用此功能";
 /* Error message shown when the selected product doesn't exist */
@@ -1089,7 +1089,7 @@
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="允許購買";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="您必須於iOS設定中啟用應用程式內購買才可恢復訂閱。";
+"allowPurchase_message"="您必須於iOS設定中啟用應用程式內購買才可恢復購買。";
 /* Button title to restore failed purchases */
 "restore"="恢復";
 /* "Monthly" subscriptions */
@@ -1103,23 +1103,23 @@
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="謝謝您";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="您的訂閱已恢復";
+"purchaseRestore_message"="您的購買已恢復";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="訂閱已停止";
+"failedPurchase_title"="購買已停止";
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="可能是您取消請求或是Apple回報傳輸錯誤。請晚點再試一次或聯繫 ios@mega.nz";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="復原出錯";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="先前的訂閱未能找到。請選擇先前的訂閱產品以便復原。您將不會被收二次費用。";
+"incompleteRestore_message"="先前的購買未能找到。請選擇先前的購買產品以便復原。您將不會被收二次費用。";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="復原停止";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="不是請求已取消就是先前的訂閱未能復原。請晚點再試一次或聯繫 ios@mega.nz";
+"failedRestore_message"="不是請求已取消就是先前的購買未能復原。請晚點再試一次或聯繫 ios@mega.nz";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="升級至專業版";
+"Upgrade to Pro"="升級至Pro方案";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="享有專業版專屬的功能，例如可為公開檔案設定密碼保護與連結的有效日期。";
+"Access Pro only features like setting password protection and expiry dates for public files."="享有Pro方案專屬的功能，例如可為公開檔案設定密碼保護與連結的有效日期。";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="開啟除錯模式";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1325,7 +1325,7 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="參看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="解除";
+"dismiss"="忽略";
 /* Content of the notification when there is unknown activity on the Chat */
 "You may have new messages"="您可能有新的訊息";
 /* Notification text body shown when you have received a contact request */
@@ -1357,7 +1357,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu則未讀訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的訂閱自動更新續訂，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，可以在頁面下方以您的Apple ID登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下捲動到管理應用程式訂閱。在那裡您可以選擇你的MEGA Pro訂閱和查看您預定的續約日期，選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
+"autorenewableDescription"="訂閱將會自動更新，續期與第一次訂閱的相同，價格也相同。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的自動更新訂閱，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，可以在頁面下方以您的Apple ID登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下捲動到管理應用程式訂閱。在那裡您可以選擇你的MEGA Pro訂閱和查看您預定的續訂日期，選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾筒可執行自動清除。最短清除期限為7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾筒清理排程或設定更長的保留期限，您需要訂閱PRO方案。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾筒清理排程或設定更長的保留期限，您需要訂閱Pro方案。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他工作階段嗎？這將使您登出除了目前工作階段之外的所有其他工作階段。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1825,7 +1825,7 @@
 /* The header of a notification related to payments */
 "Payment info"="付款資訊";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="專業版會員即將到期";
+"PRO membership plan expiring soon"="Pro會員方案即將到期";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="移除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1885,13 +1885,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="您的%1方案付款不成功。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="您的專業版會員將在明天到期。";
+"Your PRO membership plan will expire in 1 day."="您的Pro會員將在明天到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="您的專業版會員將在%1天內到期。";
+"Your PRO membership plan will expire in %1 days."="您的Pro會員將在%1天內到期。";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="您的專業版方案已於1天前到期";
+"Your PRO membership plan expired 1 day ago"="您的Pro方案已於1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="您的專業版方案已於%1天前到期";
+"Your PRO membership plan expired %1 days ago"="您的Pro方案已於%1天前到期";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="您公開共享的 %1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2631,4 +2631,26 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA－還原金鑰";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="我們正在升級MEGAChat。由於版本不相容，您可能會遇到無法連線問題。";
+"calls.incompatibility.warningMessage"="我們正在升級MEGAchat。由於版本不相容，除非所有與會者將他們的MEGA應用程式更新至最新版本，否則您的通話可能無法接通。";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="目前的電子郵件地址";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="請升級";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎快滿了。立即升級至Pro帳戶並獲得高達%@TB（%@GB）的雲端儲存空間。";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="您的雲端空間已滿。請升級至MEGA Pro方案以增加您的儲存空間並享有額外的好處。如果您仍然超出您的空間限制而且沒有升級至Pro方案或刪除一些資料，您的帳戶可能會被封鎖。請查看我們發送給您的電子郵件了解更多訊息。";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="帳戶封鎖";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="您的資料正面臨風險！";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>可惜的是您沒有在<b>%@</b>天內採取任何行動，即使我們有將提醒訊息發送到您的email<b>%@</b>，發送時間為<b>%@</b>。目前您仍然使用<b>%@</b>儲存空間，這已超出您的免費空間限制。請查看我們寄給您的電子郵件以了解更多訊息。</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>可惜的是您尚未升級您的帳戶。如果現在不升級，您的資料將在明天被刪除。請查看您的電子郵件來獲得您需要採取什麼樣的行動的更多訊息。</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>請在<warn>%@</warn>內升級以避免您的資料被刪除。</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>如果您希望保存您的資料，請在今天升級。</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="獲得獎勵";

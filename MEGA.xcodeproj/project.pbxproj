@@ -297,6 +297,7 @@
 		5B72739E240D4310005816AB /* defaultIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739C240D430F005816AB /* defaultIcon@3x.png */; };
 		5B72739F240D4310005816AB /* defaultIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739D240D4310005816AB /* defaultIcon@2x.png */; };
 		5B7273A1240D4F71005816AB /* SortingAndViewModeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */; };
+		5B74365226D78CBE00EEF758 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B76EBA225DE8D9000CE77F2 /* UpgradeAccountFactory.swift */; };
 		5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B76EBD425DE8DF800CE77F2 /* UpgradeAccountRouter.swift */; };
 		5B784DBF259A0E8E00CE752B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
@@ -10116,6 +10117,7 @@
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
+				5B74365226D78CBE00EEF758 /* GenericHeaderFooterView.xib in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
@@ -12255,7 +12257,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -12292,7 +12294,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -12325,7 +12327,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -12361,7 +12363,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -12398,7 +12400,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-PrefixHeader.pch";
@@ -12423,7 +12425,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -12461,7 +12463,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-PrefixHeader.pch";
@@ -12485,7 +12487,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -12522,7 +12524,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-PrefixHeader.pch";
@@ -12548,7 +12550,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
@@ -12583,7 +12585,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-PrefixHeader.pch";
@@ -12608,7 +12610,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -12636,7 +12638,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -12651,7 +12653,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
@@ -12677,7 +12679,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -12691,7 +12693,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -12713,7 +12715,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -12734,7 +12736,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAPickerFileProvider";
@@ -12760,7 +12762,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -12781,7 +12783,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
@@ -12807,7 +12809,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12839,7 +12841,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -12870,7 +12872,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12901,7 +12903,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPicker";
@@ -12930,7 +12932,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12962,7 +12964,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAShare";
@@ -12991,7 +12993,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 21070572;
+				CURRENT_PROJECT_VERSION = 21090778;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13022,7 +13024,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.18.1;
+				MARKETING_VERSION = 5.19;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAShare";

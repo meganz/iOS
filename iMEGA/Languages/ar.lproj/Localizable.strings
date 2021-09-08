@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="الرجاء تفقد بريدك الالكتروني والضغط على رابط تأكيد الحساب";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="تم حظر الحساب الخاص بك. يرجى الاتصال ب support@mega.nz";
+"accountBlocked"="تم إنهاء حسابك بسبب خرق لشروط الخدمة لدى ميغا MEGA بما في ذلك على سبيل المثال لا الحصر ، البند 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="ادخل يريد إليكتروني صالح";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -859,7 +859,7 @@
 /*  */
 "yourAccounHasBeenParked"="لقد تم تعليق حسابك القديم بنجاح. يمكنك الآن تسجيل الدخول إلى حسابك الجديد.";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="بريد إلكتروني جديد";
+"newEmail"="عنوان البريد الإلكتروني الجديد";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="تأكيد البريد الإلكتروني";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لتثبيتك تطبيق ميغا للهاتف المحمول MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا للهاتف المحمول MEGA mobile، تحصل على %@ من مساحة التخزين المجانية الصالحة لمدة 365 يومًا. تطبيق ميغا للهاتف المحمول MEGA mobile متاح لأنظمة أي او اس iOS و اندرويد Android و ويندوز Windows Phone.";
+"account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا MEGA للهاتف المحمول، تحصل على %@ من مساحة التخزين المجانية صالحة لمدة 365 يومًا. تطبيق ميغا MEGA للهاتف المحمول متاح لنظامي التشغيل أي أو إس iOS و اندرويد Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ من مساحة التخزين. صالحة لمدة 365 يوماً.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1265,7 +1265,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="المشاركون";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="وسيط";
+"moderator"="مشرف";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="معيار";
 /* A button title which removes a participant from a chat. */
@@ -2631,4 +2631,26 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="ميغا MEGA-مفتاح الإستعادة";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="نحن بصدد ترقية محادثات ميغا MEGAchat. قد لا تكون مكالمتك متصلة بسبب مشكلات عدم توافق الإصدار.";
+"calls.incompatibility.warningMessage"="نحن بصدد ترقية محادثات ميغا MEGAchat. قد لا تكون مكالماتك متصلة بسبب عدم توافق الإصدار ما لم تقم جميع الأطراف بتحديث تطبيقات ميغا MEGA الخاصة بهم إلى أحدث إصدار.";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="عنوان البريد الإلكتروني الحالي";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="الرجاء الترقية";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="السواقة السحابية الخاصة بك ممتلئة تقريباً. قم بالترقية الآن إلى حساب برو Pro واحصل على ما يصل إلى %@ تيرابايت (%@غيغابايت) من مساحة التخزين السحابي.";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="سحابة التخزين الخاصة بك ممتلئة. يرجى الترقية إلى باقة ميغا برو MEGA Pro لزيادة مساحة التخزين لديك والتمتع بمزايا إضافية. إذا بقيت فوق حد التخزين الخاص بك ولم تقم بترقية أو حذف بعض البيانات، فقد يتم قفل حسابك. يرجى الاطلاع على رسائل البريد الإلكتروني التي أرسلناها لك للحصول على مزيد من المعلومات.";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="حساب مقفل";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="بياناتك في خطر!";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>للأسف، لم تتخذ أي إجراء خلال<b>%@</b> منذ أن قمنا بإرسال رسائل البريد الإلكتروني الخاصة بنا إلى <b>%@</b> بتاريخ<b>%@</b>. أنت لا تزال تستخدم <b>%@</b>من مساحة التخزين، والتي تتجاوز الحد المجاني الخاص بك. يرجى الاطلاع على رسائل البريد الإلكتروني التي أرسلناها لك للحصول على مزيد من المعلومات حول ما عليك القيام به.</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>للأسف لم تقم بترقية حسابك حتى الآن. إذا لم تقم بالترقية الآن، فسيتم حذف بياناتك غدًا. راجع بريدك الإلكتروني للحصول على مزيد من المعلومات حول ما عليك القيام به.</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body>يرجى الترقية في غضون<warn>%@</warn> لتجنب حذف البيانات الخاصة بك.</body>";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>يرجى الترقية اليوم إذا كنت ترغب في الاحتفاظ ببياناتك.</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="احصل على علاوة";

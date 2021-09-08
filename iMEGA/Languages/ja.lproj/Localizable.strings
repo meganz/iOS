@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="アカウントを確認するためにMEGAからのメール内のリンクをアクセスしてください。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="あなたのアカウントはブロックされています。support@mega.nzへ連絡してください。";
+"accountBlocked"="お客様のアカウントは、MEGAのご利用規約（第15条を含むがこれに限定されない）に違反したために終了しました。";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="正しいメールを入力してください";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="あなたはMEGAモバイルアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAモバイルアプリは、iOS、Android、Windows Phoneに対応しています。";
+"account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAモバイルアプリは、iOSとAndroidに対応しています。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ストレージ。365日有効。";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2631,4 +2631,26 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-回復キー";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="MEGAChatをバージョンアップしています。バージョンの非互換性の問題により、電話がつながらない場合がございます。";
+"calls.incompatibility.warningMessage"="MEGAchatをバージョンアップしています。すべての参加者がMEGAアプリを最新版にアップデートしないと、バージョンの互換性がないために、通話がつながらない場合がございます。";
+/* Hint text to display user's current email */
+"account.changeEmail.currentEmail"="現在のメールアドレス";
+/* Title of Over Disk Quota dialog */
+"dialog.storage.odq.title"="アップグレードしてください";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+"dialog.storage.almostFull.detail"="クラウドドライブがほぼいっぱいです。今すぐProアカウントにアップグレードすると、最大%@ TB (%@ GB)のクラウドストレージスペースが得られます。";
+/* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
+"dialog.storage.odq.detail"="クラウドストレージがいっぱいです。MEGA Proプランにアップグレードしてストレージスペースを増やし、さらなる特典をお楽しみください。ストレージの上限を超えたまま、アップグレードやデータの一部削除を行われない場合、アカウントがロックされる場合がございます。詳しくは、お送りしたメールをご覧ください。";
+/* Over Disk Quota paywall not final title. */
+"dialog.storage.paywall.notFinal.title"="アカウントがロックされています";
+/* Over Disk Quota paywall final title. */
+"dialog.storage.paywall.final.title"="あなたのデータは危険にさらされています！";
+/* Over Disk Quota paywall not final detail message. */
+"dialog.storage.paywall.notFinal.detail"="<paragraph>残念ながら、お知らせしてから<b>%@</b>間アクションを起こされておりません。当社は<b>%@</b>様に<b>%@</b>にメールを送信いたしました。あなたはまだ<b>%@</b>のストレージを使用しており、無料の制限を超えています。何をするべきかについての詳細情報は、お送りしたメールをご覧ください。</paragraph>";
+/* Over Disk Quota paywall final detail message. */
+"dialog.storage.paywall.final.detail"="<paragraph>残念ながら、まだアカウントをアップグレードされておりません。今すぐアップグレードされない場合、あなたのデータは明日削除されてしまいます。何をするべきかについての詳細情報は、メールをご覧ください。</paragraph>";
+/* Over Disk Quota paywall, not final warning label. */
+"dialog.storage.paywall.notFinal.warning"="<body><warn>%@</warn>以内にアップグレードして、データが削除されないようにしてください</body>。";
+/* Over Disk Quota paywall, final warning label. */
+"dialog.storage.paywall.final.warning"="<body><warn>データの保持をご希望の場合は、本日中にアップグレードしてください。</warn><body>";
+/* Button title to see the available bonus */
+"general.button.getBonus"="ボーナスを獲得";

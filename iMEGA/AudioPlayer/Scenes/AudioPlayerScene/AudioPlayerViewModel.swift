@@ -133,6 +133,21 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     // MARK: - Private functions
+    private func shouldInitializePlayer() -> Bool {
+        if playerHandler.isPlayerDefined() {
+            guard let node = node else {
+                return URL(fileURLWithPath: selectedFilePath ?? "") != playerHandler.playerCurrentItem()?.url
+            }
+            if fileLink != nil {
+                return streamingInfoUseCase?.info(from: node)?.node != playerHandler.playerCurrentItem()?.node
+            } else {
+                return node.handle != playerHandler.playerCurrentItem()?.node?.handle
+            }
+        } else {
+            return true
+        }
+    }
+    
     private func preparePlayer() {
         if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
             streamingInfoUseCase?.startServer()
@@ -160,6 +175,9 @@ final class AudioPlayerViewModel: ViewModelType {
         
         reloadNodeInfoWithCurrentItem()
         
+        if node == nil && (filePaths != nil) {
+            playerType = .offline
+        }
         configurePlayerType(tracks: tracks, currentTrack: currentTrack)
     }
     
@@ -177,7 +195,7 @@ final class AudioPlayerViewModel: ViewModelType {
         }
     }
     
-    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem, currentItemChanges: Bool) {
+    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
         
@@ -185,7 +203,7 @@ final class AudioPlayerViewModel: ViewModelType {
             playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil)
             playerHandler.addPlayer(tracks: mutableTracks)
         } else {
-            if currentItemChanges {
+            if shouldInitializePlayer() {
                 playerHandler.autoPlay(enable: playerType != .fileLink)
                 playerHandler.addPlayer(tracks: mutableTracks)
                 
@@ -216,7 +234,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             
             playerType = .fileLink
-            initialize(tracks: [track], currentTrack: track, currentItemChanges: track.node != playerHandler.playerCurrentItem()?.node)
+            initialize(tracks: [track], currentTrack: track)
         } else {
             guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
@@ -230,12 +248,12 @@ final class AudioPlayerViewModel: ViewModelType {
                 }
                 
                 playerType = .default
-                initialize(tracks: [track], currentTrack: track, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node?.handle)
+                initialize(tracks: [track], currentTrack: track)
                 return
             }
             
             playerType = isFolderLink ? .folderLink : .default
-            initialize(tracks: children, currentTrack: currentTrack, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node?.handle)
+            initialize(tracks: children, currentTrack: currentTrack)
         }
     }
     
@@ -254,7 +272,7 @@ final class AudioPlayerViewModel: ViewModelType {
         }
         
         playerType = .offline
-        initialize(tracks: files, currentTrack: currentTrack, currentItemChanges: URL(fileURLWithPath: currentFilePath) != playerHandler.playerCurrentItem()?.url)
+        initialize(tracks: files, currentTrack: currentTrack)
     }
     
     private func reloadNodeInfoWithCurrentItem() {
@@ -273,13 +291,13 @@ final class AudioPlayerViewModel: ViewModelType {
     func dispatch(_ action: AudioPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            let shouldInitializePlayer = !(playerHandler.isPlayerDefined() && fileLink == nil)
-            invokeCommand?(.showLoading(shouldInitializePlayer))
-            if shouldInitializePlayer {
+            if shouldInitializePlayer() {
+                invokeCommand?(.showLoading(true))
                 dispatchQueue.async(qos: .userInteractive) {
                     self.preparePlayer()
                 }
             } else {
+                invokeCommand?(.showLoading(false))
                 configurePlayer()
             }
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
