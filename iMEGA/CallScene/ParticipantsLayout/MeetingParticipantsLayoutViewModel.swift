@@ -378,9 +378,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func updateVisibeParticipants(for visibleIndex: [Int]) {
         indexOfVisibleParticipants.forEach {
-            if !visibleIndex.contains($0) {
-                if callParticipants[$0].video == .on && callParticipants[$0].speakerVideoDataDelegate == nil {
-                    stopVideoForParticipant(callParticipants[$0])
+            if !visibleIndex.contains($0),
+               let participant = callParticipants[safe: $0] {
+                if participant.video == .on && participant.speakerVideoDataDelegate == nil {
+                    stopVideoForParticipant(participant)
                 }
             }
         }
@@ -477,10 +478,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if callUseCase.call(for: call.chatId) == nil {
             callTerminated(call)
         } else if let index = callParticipants.firstIndex(of: participant) {
-            // FIXME: Noticed that the "indexOfVisibleParticipants" can contain duplicate elements.
-            // Also I donot see that the objects being removed from "indexOfVisibleParticipants" when the participants are not visible.
-            // Should we revisit the "indexOfVisibleParticipants" logic Carlos?
-            indexOfVisibleParticipants = indexOfVisibleParticipants.filter { $0 != index }
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             stopVideoForParticipant(participant)
