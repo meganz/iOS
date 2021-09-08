@@ -552,17 +552,26 @@
     }
 }
 
+- (void)presentBrowserViewControllerWithBrowserAction:(BrowserAction)browserAction {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
+    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    
+    browserVC.browserAction = browserAction;
+}
+
 - (void)mnz_fileLinkImportFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            [viewController dismissViewControllerAnimated:YES completion:^{
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
-                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-                
-                browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
-            }];
+            BrowserAction browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
+            if (isFolderLink) {
+                [self presentBrowserViewControllerWithBrowserAction:browserAction];
+            } else {
+                [viewController dismissViewControllerAnimated:YES completion:^{
+                    [self presentBrowserViewControllerWithBrowserAction:browserAction];
+                }];
+            }
         } else {
             if (isFolderLink) {
                 [MEGALinkManager.nodesFromLinkMutableArray addObject:self];

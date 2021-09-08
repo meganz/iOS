@@ -37,14 +37,6 @@
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self.collectionView.collectionViewLayout invalidateLayout];
-    }
-}
-
 #pragma mark - CollectionView UI Setup
 
 - (void)setupCollectionView {
@@ -68,10 +60,6 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self nodeCellForItemAtIndexPath:indexPath];
-}
-
-- (NodeCollectionViewCell *)nodeCellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
     NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
     [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
@@ -166,15 +154,7 @@
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NodeCollectionViewCell *cell = [self nodeCellForItemAtIndexPath:indexPath];
-    cell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
-    
-    CGSize fittingSize = UILayoutFittingCompressedSize;
-    fittingSize.width = ThumbnailSizeWidth;
-    
-    return [cell.contentView systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityRequired verticalFittingPriority:UILayoutPriorityDefaultLow];
+    return indexPath.section == ThumbnailSectionFile ? CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFile) : CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFolder);
 }
 
 #pragma mark - Actions
