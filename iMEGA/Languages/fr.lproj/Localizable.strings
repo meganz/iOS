@@ -191,7 +191,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Le dossier est vide";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Aucun fichier dans votre disque nuagique";
+"cloudDriveEmptyState_title"="Aucun fichier dans votre Disque nuagique";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Ajouter des fichiers";
 /* Title shown when you make a search and there is 'No Results' */
@@ -483,7 +483,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d dossiers ont été partagés avec succès.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Importer vers le disque nuagique";
+"Import to Cloud Drive"="Importer vers le Disque nuagique";
 /* Message shown when a file has been imported */
 "fileImported"="Le fichier a été importé";
 /* Message shown when some files have been imported */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Ignorer";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Sauvegardez automatiquement vos photos et vos vidéos dans votre disque nuagique.";
+"Automatically backup your photos and videos to the Cloud Drive."="Sauvegardez automatiquement vos photos et vos vidéos dans votre Disque nuagique.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activer Téléversements de l’appareil photo";
 /* Success message shown when Camera Uploads has been enabled */
@@ -747,15 +747,15 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Changer le mot de passe";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="En exportant et en conservant la clé de récupération en lieu sûr, vous pourrez définir un nouveau mot de passe sans risquer de perdre des données.";
+"exportMasterKeyFooter"="En exportant et en conservant la Clé de récupération en lieu sûr, vous pourrez définir un nouveau mot de passe sans risquer de perdre des données.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d’une clé de récupération ?";
+"whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d’une Clé de récupération ?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="La clé de récupération a été copiée dans le presse-papiers. Veuillez la conserver en lieu sûr.";
+"recoveryKeyCopiedToClipboard"="La Clé de récupération a été copiée dans le presse-papiers. Veuillez la conserver en lieu sûr.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="La clé de récupération a été exportée";
+"masterKeyExported"="La Clé de récupération a été exportée";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous MEGA-CLÉdeRÉCUPÉRATION.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
+"masterKeyExported_alertMessage"="La Clé de récupération a été exportée dans la section Hors ligne sous MEGA-CLÉdeRÉCUPÉRATION.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sur votre appareil";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -839,13 +839,13 @@
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Réinitialisation du mot de passe";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
-"pleaseEnterYourRecoveryKey"="Veuillez saisir votre clé de récupération";
+"pleaseEnterYourRecoveryKey"="Veuillez saisir votre Clé de récupération";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Clé de récupération";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="La clé de récupération est invalide";
+"invalidRecoveryKey"="La Clé de récupération est invalide";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Votre clé de récupération sera utilisée pour réinitialiser votre mot de passe. Veuillez saisir votre nouveau mot de passe.";
+"youRecoveryKeyIsGoingTo"="Votre Clé de récupération sera utilisée pour réinitialiser votre mot de passe. Veuillez saisir votre nouveau mot de passe.";
 /*  */
 "yourPasswordHasBeenReset"="Votre mot de passe a été réinitialisé avec succès. Veuillez maintenant vous connecter à votre compte.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -853,7 +853,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Remiser le compte";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Je reconnais que je commence un nouveau compte vide et que je perdrai toutes les données de mon compte actuel, à moins de me souvenir de mon mot de passe ou de trouver une clé de récupération exportée.";
+"startingFreshAccount"="Je reconnais que je commence un nouveau compte vide et que je perdrai toutes les données de mon compte actuel, à moins de me souvenir de mon mot de passe ou de trouver une Clé de récupération exportée.";
 /* Caption of the button to proceed */
 "startNewAccount"="Commencer un nouveau compte";
 /*  */
@@ -1047,9 +1047,9 @@
 /*  */
 "chooseYourAccountType"="Choisissez votre type de compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
+"cloudDriveIsAlmostFull"="[S]Votre Disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
+"cloudDriveIsFull"="[S]Votre Disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Espace de stockage";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1297,7 +1297,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Supprimer le message";
 /*  */
-"fromCloudDrive"="Du disque nuagique";
+"fromCloudDrive"="Du Disque nuagique";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Envoyer un contact";
 /*  */
@@ -1531,13 +1531,13 @@
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="En raison de la technologie de chiffrement de MEGA, vous ne pouvez pas réinitialiser votre mot de passe sans perte de données. Veuillez faire en sorte de vous rappeler votre mot de passe.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Avant de vous déconnecter, nous vous recommandons d’exporter votre clé de récupération en lieu sûr. Notez que vous ne pouvez pas réinitialiser votre mot de passe si vous l’oubliez.";
+"remindPasswordLogoutText"="Avant de vous déconnecter, nous vous recommandons d’exporter votre Clé de récupération en lieu sûr. Notez que vous ne pouvez pas réinitialiser votre mot de passe si vous l’oubliez.";
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Ne plus afficher";
 /* Label for test password button and titles */
 "testPassword"="Confirmer le mot de passe";
 /* Label for recovery key button */
-"backupRecoveryKey"="Sauvegarder la clé de récupération";
+"backupRecoveryKey"="Sauvegarder la Clé de récupération";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Veuillez confirmer votre mot de passe ci-dessous pour vous assurer de vous en souvenir. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA. [A]En apprendre davantage[/A]";
 /* Title text for the account confirmation. */
@@ -1545,7 +1545,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="Le mot de passe a été accepté";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="Exporter la clé de récupération";
+"exportRecoveryKey"="Exporter la Clé de récupération";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Poursuivre la déconnexion";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1647,9 +1647,9 @@
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="La prochaine fois que vous vous connecterez à votre compte, un code à 6 chiffres fourni par votre appli d’authentification vous sera demandé.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Veuillez enregistrer votre clé de récupération en lieu sûr";
+"pleaseSaveYourRecoveryKey"="Veuillez enregistrer votre Clé de récupération en lieu sûr";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="Si vous perdez l’accès à votre compte après avoir activé l’A2F et si vous n’avez pas sauvegardé votre clé de récupération, MEGA ne pourra pas vous aider à y accéder de nouveau.";
+"twoFactorAuthenticationEnabledWarning"="Si vous perdez l’accès à votre compte après avoir activé l’A2F et si vous n’avez pas sauvegardé votre Clé de récupération, MEGA ne pourra pas vous aider à y accéder de nouveau.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="L’authentification à deux facteurs est désactivée";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -1681,7 +1681,7 @@
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Dialogue en ligne chiffré";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré et offre des appels vocaux et vidéo, une messagerie de groupe et le partage de fichiers, tous intégrés à votre disque nuagique.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré et offre des appels vocaux et vidéo, une messagerie de groupe et le partage de fichiers, tous intégrés à votre Disque nuagique.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Créez votre réseau";
 /* Description shown in a page of the onboarding screens explaining contacts */
@@ -2051,7 +2051,7 @@
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="Abonnement";
 /*  */
-"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Si vous perdez votre clé de récupération et oubliez votre mot de passe, [B]tous vos fichiers, dossiers et messages seront inaccessibles, même pour MEGA[/B].";
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Si vous perdez votre Clé de récupération et oubliez votre mot de passe, [B]tous vos fichiers, dossiers et messages seront inaccessibles, même pour MEGA[/B].";
 /*  */
 "Business"="Pour entreprise";
 /*  */
@@ -2637,7 +2637,11 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Veuillez surclasser votre compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
+<<<<<<< HEAD
 "dialog.storage.almostFull.detail"="Votre disque nuagique est presque plein. Surclassez votre compte maintenant vers un compte Pro et obtenez jusqu’à %@ To (%@ Go) d’espace de stockage nuagique.";
+=======
+"dialog.storage.almostFull.detail"="Votre Disque nuagique est presque plein. Surclassez votre compte maintenant vers un compte Pro et obtenez jusqu’à %@ To (%@ Go) d’espace de stockage nuagique.";
+>>>>>>> 3ee209728dbed1a337b8bd77ae37f8e7a410ba70
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Votre stockage nuagique est plein. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
 /* Over Disk Quota paywall not final title. */

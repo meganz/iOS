@@ -144,7 +144,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
     
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
-        return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
+        return [.url, .address, .phoneNumber, .transitInformation, .mention, .hashtag]
     }
     
     // MARK: - Audio Messages

@@ -94,6 +94,10 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     @IBAction func sendAction(_ sender: Any) {
         
+        guard isValidName() else {
+            return
+        }
+        
         guard let chatRoom = chatRoom else {
             return
         }
@@ -112,6 +116,19 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             }
         })
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func isValidName() -> Bool {
+        let containsInvalidChars = fileName.mnz_containsInvalidChars()
+        let empty = fileName.mnz_isEmpty()
+        if containsInvalidChars || empty {
+            let element = self.view.subviews.first(where: { $0 is DocScannerFileNameTableCell })
+            let cell = element as? DocScannerFileNameTableCell
+            cell?.filenameTextField.becomeFirstResponder()
+            return false
+        } else {
+            return true
+        }
     }
     
     private func updateAppearance() {
@@ -257,6 +274,9 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             default: break
             }
         } else if indexPath.section == 2 {
+            guard isValidName() else {
+                return
+            }
             switch indexPath.row {
             case 0:
                 let storyboard = UIStoryboard(name: "Cloud", bundle: Bundle(for: BrowserViewController.self))
@@ -284,10 +304,6 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
 
 extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellDelegate {
     func filenameChanged(_ newFilename: String) {
-        guard !newFilename.isEmpty else {
-            fileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
-            return
-        }
         fileName = newFilename
     }
 }

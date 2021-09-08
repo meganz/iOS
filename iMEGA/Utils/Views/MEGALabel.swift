@@ -1,26 +1,38 @@
 import UIKit
 
 @IBDesignable
-final class MEGALabel: UILabel {
+final class MEGALabel: UILabel, DynamicTypeProtocol {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     
-    // MARK: - Private functions
-    private func setup() {
-        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
-        font = Font(style: textStyle, weight: weight).value
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        observeContentSizeUpdates()
     }
     
-    // MARK: - Internal functions
-    func apply(style: MEGALabelStyle) {
-        traitCollection.theme.labelStyleFactory.styler(of: style)(self)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        observeContentSizeUpdates()
+    }
+    
+    deinit {
+        removeObserver()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        adjustsFontForContentSizeCategory = true
-
-        setup()
+        applyFontSizes()
+    }
+    
+    func apply(style: MEGALabelStyle) {
+        traitCollection.theme.labelStyleFactory.styler(of: style)(self)
+    }
+    
+    func applyFontSizes() {
+        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
+        font = Font(style: textStyle, weight: weight).value
     }
 }

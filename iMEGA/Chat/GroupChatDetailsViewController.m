@@ -123,7 +123,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         self.participantsLabel.text = NSLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
     } else {
         NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview ? 1 : 0);
-        self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:NSLocalizedString(@"%d participant", @"Singular of participant. 1 participant"), 1] : [NSString stringWithFormat:NSLocalizedString(@"%d participants", @"Singular of participant. 1 participant"), peers];
+        self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:NSLocalizedString(@"%d participant", @"Singular of participant. 1 participant"), 1] : [NSString stringWithFormat:NSLocalizedString(@"%d participants", @"Singular of participant. 1 participant"), (int)peers];
     }
 }
 
@@ -417,11 +417,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.participantsMutableArray.count == 1 && [self.participantsMutableArray[0] isEqual:[NSNumber numberWithUnsignedLongLong:MEGASdkManager.sharedMEGAChatSdk.myUserHandle]]) {
-        return 9;
-    } else {
-        return 10;
-    }
+    return 10;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

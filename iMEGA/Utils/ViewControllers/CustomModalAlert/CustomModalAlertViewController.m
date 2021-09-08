@@ -70,7 +70,7 @@
         NSMutableAttributedString *detailAttributedString = [[NSMutableAttributedString alloc] initWithString:self.detail];
         
         [detailAttributedString beginEditing];
-        [detailAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium] range:boldRange];
+        [detailAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightMedium] range:boldRange];
         
         [detailAttributedString endEditing];
         self.detailLabel.attributedText = detailAttributedString;
@@ -80,7 +80,7 @@
         NSMutableAttributedString *detailAttributedString = [[NSMutableAttributedString alloc] initWithString:self.detail];
         
         [detailAttributedString beginEditing];
-        [detailAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Menlo" size:14.0f] range:monospaceRange];
+        [detailAttributedString addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] range:monospaceRange];
         
         [detailAttributedString endEditing];
         self.detailLabel.attributedText = detailAttributedString;

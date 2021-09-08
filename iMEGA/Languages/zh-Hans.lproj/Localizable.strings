@@ -69,7 +69,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您尝试访问的内容无法用于该帐户。请使用与手机客户端相同的帐户登录。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
+"takingLongerThanExpected"="加载时间较长，请稍后……";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="服务器忙碌中。请稍候…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -367,7 +367,7 @@
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="链接包含密钥";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(PRO专业版限定)";
+"proOnly"="（仅限Pro会员）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="设定到期日";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -1021,7 +1021,7 @@
 /* Button title that allows the user change his name */
 "changeName"="更改名称";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="您已成功更新您的个人文件";
+"youHaveSuccessfullyChangedYourProfile"="个人资料更新成功。";
 /* Hint text for the first name (Placeholder) */
 "firstName"="名";
 /* Hint text for the last name (Placeholder) */
@@ -1825,7 +1825,7 @@
 /* The header of a notification related to payments */
 "Payment info"="付款资讯";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Pro会员方案即将到期";
+"PRO membership plan expiring soon"="Pro会员即将到期";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="删除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1887,7 +1887,7 @@
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="您的Pro会员方案将于明天到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="您的Pro会员方案将于%1天后到期。";
+"Your PRO membership plan will expire in %1 days."="您的Pro会员将于%1天后到期。";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="您的Pro会员已于1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2333,7 +2333,7 @@
 /* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
 "Proxy Settings"="Proxy代理服务器设定";
 /* Label to indicate not to use any proxy. String as short as possible. */
-"No proxy"="无Proxy代理服务器";
+"No proxy"="不使用代理";
 /* Label to indicate the server IP to be used. String as short as possible. */
 "Server:"="服务器:";
 /* Label to indicate a server port to be used. String as short as possible. */
@@ -2421,7 +2421,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="由于严重违反MEGA[A]服务条款[/A]，该用户的帐户已关闭，因此该链接不可用。";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="该文件夹/文件已被举报其含有敏感内容，例如儿童色情，暴力极端主义或兽交。该链接创建者的帐户已关闭，其完整详细信息（包括IP地址）已提交至监管部门。";
+"Taken down due to severe violation of our terms of service"="该文件/文件夹已被举报其含有敏感内容，例如儿童色情，暴力极端主义或兽交。该链接创建者的帐户已关闭，其帐户详细信息，包括IP地址，已提交至监管部门。";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="不可用";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -2539,7 +2539,7 @@
 /* Cookie dialog header */
 "Before You Continue"="我们的Cookie政策";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用本地存储和类似技术（“ Cookies”）为您提供服务，通过我们的服务增强您的体验，并定制您所看到的广告（包括通过第三方）。从访问开始就接受我们对Cookie的使用，或在Cookie设置中自定义Cookie。您可以在我们的[A]《Cookie政策》[/A]中了解更多信息。";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用本地存储和类似技术（“ Cookies”）为您提供服务，通过我们的服务增强您的体验，并定制您所看到的广告，包括第三方广告。从访问开始就接受我们对Cookie的使用，或在Cookie设置中自定义Cookie。您可以在我们的[A]Cookie政策[/A]中了解更多信息。";
 /* Cookie dialog button label. */
 "Accept Cookies"="接受Cookies";
 /* Cookie settings dialog text. */
@@ -2575,7 +2575,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您没有还原文件所需的权限，您想使用已还原的数据创建一个新文件吗？";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro精简版";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="我的账号";
 /* Text for title for favourite nodes */
@@ -2637,7 +2637,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="请升级帐户";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="您的云盘空间几乎已满。立即升级至Pro会员帐户并获得最高%@TB（%@GB）的云存储空间。";
+"dialog.storage.almostFull.detail"="您的云盘空间几乎已满。立即升级至 Pro 会员帐户并获得最高%@TB（%@GB）的云存储空间。";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="您的云盘空间已满。请升级至MEGA Pro会员增加您的存储空间并享受其他会员服务。如果您没有升级帐户或删除多余数据且仍然超出存储空间上限，您的帐户可能会被锁定。请查看我们发送给您的电子邮件以了解更多信息。";
 /* Over Disk Quota paywall not final title. */

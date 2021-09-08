@@ -30,7 +30,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         
         sortingPreferencePerFolderLabel.text = NSLocalizedString("Per Folder", comment: "Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
         sortingPreferenceSameForAllLabel.text = NSLocalizedString("Same for All", comment: "Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
-        sortingPreferenceSameForAllDetailLabel.text = NSLocalizedString("choosePhotoVideo", comment: "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
+        sortingPreferenceSameForAllDetailLabel.text = NSLocalizedString("general.choose", comment: "Text show usually on a secondary label to highlight that you can choose a different option")
         
         viewModePreferencePerFolderLabel.text = NSLocalizedString("Per Folder", comment: "Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'.")
         viewModePreferenceListViewLabel.text = NSLocalizedString("List View", comment: "Text shown for switching from thumbnail view to list view.")
@@ -187,7 +187,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
                 sortingPreference = indexPath.row
                 UserDefaults.standard.set(sortingPreference, forKey: MEGASortingPreference)
                 
-                sortingPreferenceSameForAllDetailLabel.text = NSLocalizedString("choosePhotoVideo", comment: "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
+                sortingPreferenceSameForAllDetailLabel.text = NSLocalizedString("general.choose", comment: "Text show to highlight that you can choose a different option")
             } else {
                 var actions = [ActionSheetAction]()
                 let sortType = Helper.sortType(for: nil)

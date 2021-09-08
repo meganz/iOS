@@ -13,7 +13,11 @@ class SendLinkToChatsDelegate: NSObject {
 
 extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
     func send(_ viewController: SendToViewController!, toChats chats: [MEGAChatListItem]!, andUsers users: [MEGAUser]!) {
-        viewController.dismiss(animated: true, completion: nil)
+        if navigationController?.viewControllers.first?.isKind(of: FolderLinkViewController.self) == true {
+            navigationController?.popViewController(animated: true)
+        } else {
+            viewController.dismiss(animated: true, completion: nil)
+        }
         
         chats.forEach {
             MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: $0.chatId, message: link)

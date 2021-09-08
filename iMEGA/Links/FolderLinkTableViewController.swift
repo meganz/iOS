@@ -24,9 +24,6 @@ class FolderLinkTableViewController: UIViewController  {
     
     override func viewDidLoad() {
         tableView.backgroundView = UIView()
-        
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableView.automaticDimension
     }
     
     @IBAction func nodeActionsTapped(_ sender: UIButton) {
@@ -65,6 +62,15 @@ class FolderLinkTableViewController: UIViewController  {
         tableView(tableView, didSelectRowAt: indexPath)
     }
     
+    @objc func reload(node: MEGANode) {
+        guard let rowIndex = folderLink.searchController.isActive ? folderLink.searchNodesArray.firstIndex(of: node) : folderLink.nodesArray.firstIndex(of: node),
+              tableView.hasRow(at: IndexPath(row: rowIndex, section: 0)) else { return }
+        
+        UIView.performWithoutAnimation {
+            tableView.reloadRows(at: [IndexPath(row: rowIndex, section: 0)], with: .none)
+        }
+    }
+    
     private func getNode(at indexPath: IndexPath) -> MEGANode? {
         folderLink.searchController.isActive ? folderLink.searchNodesArray[safe: indexPath.row] : folderLink.nodesArray[safe: indexPath.row]
     }
@@ -88,11 +94,15 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let node = getNode(at: indexPath), let cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
+        guard let node = getNode(at: indexPath),
+              let cell = folderLink.isADownloadingNode(node) ?
+                    tableView.dequeueReusableCell(withIdentifier: "downloadingNodeCell", for: indexPath) as? NodeTableViewCell :
+                    tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
             fatalError("Could not instantiate NodeCollectionViewCell or node at index")
         }
         
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
+        cell.infoLabel.textColor = UIColor.mnz_label()
         
         if node.isFile() {
             if node.hasThumbnail() {
@@ -108,6 +118,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         
         cell.thumbnailPlayImageView.isHidden = !node.name.mnz_isVideoPathExtension
         cell.nameLabel.text = node.name
+        cell.nameLabel.textColor = UIColor.mnz_label()
         cell.node = node
         
         if tableView.isEditing {
@@ -129,6 +140,14 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = true
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
+        
+        if folderLink.isADownloadingNode(node) {
+            cell.downloadingArrowView.isHidden = false
+            cell.downloadingArrowImageView.image = UIImage(named: "downloadQueued")
+        } else {
+            let isDownloaded = node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil
+            cell.downloadedView.isHidden = !isDownloaded
+        }
         
         return cell
     }

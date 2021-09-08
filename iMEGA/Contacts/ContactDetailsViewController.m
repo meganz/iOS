@@ -231,7 +231,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForDNDWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
-    cell.nameLabel.font = [UIFont systemFontOfSize:15.0];
+    cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
                                              chatId:self.chatRoom.chatId];
     cell.delegate = self;
@@ -977,14 +977,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 #pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isSharedFolderSection:indexPath.section]) {
-        return 60.0f;
-    } else {
-        return 44.0;
-    }
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.contactDetailsSections[indexPath.section].intValue) {

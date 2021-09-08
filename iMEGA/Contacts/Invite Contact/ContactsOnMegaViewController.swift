@@ -181,10 +181,6 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
         return header
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 38
-    }
-
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch CNContactStore.authorizationStatus(for: CNEntityType.contacts) {
         case .notDetermined:

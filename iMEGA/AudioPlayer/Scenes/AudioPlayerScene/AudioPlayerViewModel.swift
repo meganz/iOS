@@ -133,6 +133,21 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     // MARK: - Private functions
+    private func shouldInitializePlayer() -> Bool {
+        if playerHandler.isPlayerDefined() {
+            guard let node = node else {
+                return URL(fileURLWithPath: selectedFilePath ?? "") != playerHandler.playerCurrentItem()?.url
+            }
+            if fileLink != nil {
+                return streamingInfoUseCase?.info(from: node)?.node != playerHandler.playerCurrentItem()?.node
+            } else {
+                return node.handle != playerHandler.playerCurrentItem()?.node?.handle
+            }
+        } else {
+            return true
+        }
+    }
+    
     private func preparePlayer() {
         if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
             streamingInfoUseCase?.startServer()
@@ -144,27 +159,29 @@ final class AudioPlayerViewModel: ViewModelType {
             initialize(with: offlineFilePaths)
         }
         playerHandler.addPlayer(listener: self)
-        playerHandler.refreshCurrentItemState()
     }
     
-    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem, currentItemChanges: Bool) {
-        var mutableTracks = tracks
-        mutableTracks.bringToFront(item: currentTrack)
+    private func configurePlayer() {
+        playerHandler.addPlayer(listener: self)
         
-        if !(playerHandler.isPlayerDefined()) {
-            playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil)
-            playerHandler.addPlayer(tracks: mutableTracks)
-        } else {
-            if currentItemChanges {
-                playerHandler.addPlayer(tracks: mutableTracks)
-                
-                if fileLink != nil && playerHandler.isPlayerPlaying() {
-                    playerHandler.playerPause()
-                }
-            } else {
-                self.reloadNodeInfoWithCurrentItem()
+        guard !playerHandler.isPlayerEmpty(),
+              let tracks = playerHandler.currentPlayer()?.tracks,
+              let currentTrack = playerHandler.playerCurrentItem() else {
+            DispatchQueue.main.async { [weak self] in
+                self?.router.dismiss()
             }
+            return
         }
+        
+        reloadNodeInfoWithCurrentItem()
+        
+        if node == nil && (filePaths != nil) {
+            playerType = .offline
+        }
+        configurePlayerType(tracks: tracks, currentTrack: currentTrack)
+    }
+    
+    private func configurePlayerType(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         
         switch playerType {
         case .default, .folderLink:
@@ -176,6 +193,29 @@ final class AudioPlayerViewModel: ViewModelType {
         case .fileLink:
             invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: NSLocalizedString("fileLink", comment: "")))
         }
+    }
+    
+    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
+        var mutableTracks = tracks
+        mutableTracks.bringToFront(item: currentTrack)
+        
+        if !(playerHandler.isPlayerDefined()) {
+            playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil)
+            playerHandler.addPlayer(tracks: mutableTracks)
+        } else {
+            if shouldInitializePlayer() {
+                playerHandler.autoPlay(enable: playerType != .fileLink)
+                playerHandler.addPlayer(tracks: mutableTracks)
+                
+                if fileLink != nil && playerHandler.isPlayerPlaying() {
+                    playerHandler.playerPause()
+                }
+            } else {
+                self.reloadNodeInfoWithCurrentItem()
+            }
+        }
+        
+        configurePlayerType(tracks: tracks, currentTrack: currentTrack)
     }
     
     private func updateTracksActionStatus(enabled: Bool) {
@@ -194,7 +234,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             
             playerType = .fileLink
-            initialize(tracks: [track], currentTrack: track, currentItemChanges: track.node != playerHandler.playerCurrentItem()?.node)
+            initialize(tracks: [track], currentTrack: track)
         } else {
             guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
@@ -208,12 +248,12 @@ final class AudioPlayerViewModel: ViewModelType {
                 }
                 
                 playerType = .default
-                initialize(tracks: [track], currentTrack: track, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node?.handle)
+                initialize(tracks: [track], currentTrack: track)
                 return
             }
             
             playerType = isFolderLink ? .folderLink : .default
-            initialize(tracks: children, currentTrack: currentTrack, currentItemChanges: node.handle != playerHandler.playerCurrentItem()?.node?.handle)
+            initialize(tracks: children, currentTrack: currentTrack)
         }
     }
     
@@ -221,7 +261,8 @@ final class AudioPlayerViewModel: ViewModelType {
     private func initialize(with offlineFilePaths: [String]) {
         guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
               let currentFilePath = selectedFilePath,
-              let currentTrack = files.first(where: { $0.url.path == currentFilePath }) else {
+              let currentTrack = files.first(where: { $0.url.path == currentFilePath ||
+                                                $0.url.absoluteString == currentFilePath }) else {
             invokeCommand?(.configureOfflinePlayer)
             self.reloadNodeInfoWithCurrentItem()
             DispatchQueue.main.async { [weak self] in
@@ -231,7 +272,7 @@ final class AudioPlayerViewModel: ViewModelType {
         }
         
         playerType = .offline
-        initialize(tracks: files, currentTrack: currentTrack, currentItemChanges: URL(fileURLWithPath: currentFilePath) != playerHandler.playerCurrentItem()?.url)
+        initialize(tracks: files, currentTrack: currentTrack)
     }
     
     private func reloadNodeInfoWithCurrentItem() {
@@ -241,6 +282,8 @@ final class AudioPlayerViewModel: ViewModelType {
                                        thumbnail: currentItem.artwork,
                                        size: Helper.memoryStyleString(fromByteCount: node?.size?.int64Value ?? Int64(0))))
         
+        playerHandler.refreshCurrentItemState()
+        
         invokeCommand?(.showLoading(false))
     }
 
@@ -248,9 +291,14 @@ final class AudioPlayerViewModel: ViewModelType {
     func dispatch(_ action: AudioPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            invokeCommand?(.showLoading(true))
-            dispatchQueue.async(qos: .userInteractive) {
-                self.preparePlayer()
+            if shouldInitializePlayer() {
+                invokeCommand?(.showLoading(true))
+                dispatchQueue.async(qos: .userInteractive) {
+                    self.preparePlayer()
+                }
+            } else {
+                invokeCommand?(.showLoading(false))
+                configurePlayer()
             }
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
         case .updateCurrentTime(let percentage):
@@ -341,12 +389,7 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
         if fileLink != nil, !isFolderLink {
             invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: node?.size.int64Value ?? Int64(0))))
         } else {
-            invokeCommand?(.showLoading(true))
-            nodeInfoUseCase?.publicNode(fromFileLink: url, completion: { [weak self] node in
-                guard let `self` = self else { return }
-                self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: node?.size.int64Value ?? Int64(0))))
-                self.invokeCommand?(.showLoading(false))
-            })
+            self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: Int64(0))))
         }
     }
     

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,10 +27,10 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bVT-mj-kqb">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
+                            <viewLayoutGuide key="safeArea" id="laj-rp-W6c"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="X6U-Gp-GAj"/>
                             </constraints>
-                            <viewLayoutGuide key="safeArea" id="laj-rp-W6c"/>
                         </view>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nCJ-jJ-kwx">
                             <rect key="frame" x="17" y="18" width="24" height="24"/>
@@ -39,23 +39,23 @@
                                 <constraint firstAttribute="width" constant="24" id="K83-TP-Rng"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwJ-5i-iM3">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwJ-5i-iM3">
                             <rect key="frame" x="58" y="11" width="0.0" height="0.0"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fvj-Nu-nez">
-                            <rect key="frame" x="58" y="14" width="300" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fvj-Nu-nez">
+                            <rect key="frame" x="58" y="14" width="300" height="36"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zoc-CA-Duh">
                             <rect key="frame" x="0.0" y="59.5" width="375" height="0.5"/>
+                            <viewLayoutGuide key="safeArea" id="cmw-aE-ByX"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="aq2-aT-KNk"/>
                             </constraints>
-                            <viewLayoutGuide key="safeArea" id="cmw-aE-ByX"/>
                         </view>
                     </subviews>
                     <constraints>
@@ -66,16 +66,17 @@
                         <constraint firstItem="fvj-Nu-nez" firstAttribute="leading" secondItem="nCJ-jJ-kwx" secondAttribute="trailing" constant="17" id="E0Y-Ua-ozx"/>
                         <constraint firstItem="nCJ-jJ-kwx" firstAttribute="centerY" secondItem="HhQ-j5-Cb1" secondAttribute="centerY" id="KbY-93-3XX"/>
                         <constraint firstAttribute="bottom" secondItem="Zoc-CA-Duh" secondAttribute="bottom" id="LCU-F0-IrW"/>
+                        <constraint firstAttribute="bottom" secondItem="fvj-Nu-nez" secondAttribute="bottom" constant="10" id="LCk-A3-2T2"/>
                         <constraint firstItem="bVT-mj-kqb" firstAttribute="top" secondItem="HhQ-j5-Cb1" secondAttribute="top" id="Npn-dK-H2A"/>
                         <constraint firstAttribute="trailing" secondItem="fvj-Nu-nez" secondAttribute="trailing" constant="17" id="Ntp-dr-Egi"/>
                         <constraint firstItem="bVT-mj-kqb" firstAttribute="leading" secondItem="HhQ-j5-Cb1" secondAttribute="leading" id="aHc-h5-OGU"/>
                         <constraint firstItem="MwJ-5i-iM3" firstAttribute="leading" secondItem="nCJ-jJ-kwx" secondAttribute="trailing" constant="17" id="fUa-2j-vBS"/>
                         <constraint firstItem="nCJ-jJ-kwx" firstAttribute="leading" secondItem="HhQ-j5-Cb1" secondAttribute="leading" constant="17" id="iZs-cg-nGb"/>
-                        <constraint firstAttribute="height" constant="60" id="m9C-o8-fY1"/>
                         <constraint firstAttribute="trailing" secondItem="bVT-mj-kqb" secondAttribute="trailing" id="qrT-aa-EOg"/>
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
                 <constraint firstItem="HhQ-j5-Cb1" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="HzK-ZW-D0F"/>
                 <constraint firstItem="HhQ-j5-Cb1" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Yl0-dG-n0j"/>
@@ -83,7 +84,6 @@
                 <constraint firstItem="HhQ-j5-Cb1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="lHr-vs-5eS"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="132" y="155"/>
         </view>
     </objects>

@@ -7,6 +7,7 @@ class GenericHeaderFooterView: UITableViewHeaderFooterView {
     @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var bottomSeparatorView: UIView!
     @IBOutlet weak var backgroundColorView: UIView!
+    @IBOutlet weak var titleLabelTopDistanceConstraint: NSLayoutConstraint!
     
     private var usingDefaultBackgroundColor: Bool = false
     

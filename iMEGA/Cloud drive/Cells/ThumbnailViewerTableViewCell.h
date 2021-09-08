@@ -23,6 +23,7 @@ typedef void (^ShowSelectedNodeAction)(UIViewController *);
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *incomingOrOutgoingImageView;
+@property (weak, nonatomic) IBOutlet UIView *incomingOrOutgoingView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadOrVersionImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *indicatorImageView;
 

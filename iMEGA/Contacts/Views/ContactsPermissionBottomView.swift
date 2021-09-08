@@ -33,6 +33,7 @@ class ContactsPermissionBottomView: UITableViewHeaderFooterView {
         descriptionLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
         
         enableButton.mnz_setupPrimary(traitCollection)
+        enableButton.titleLabel?.font = UIFont.preferredFont(style: .subheadline, weight: .semibold)
     }
     
     func nib() -> UINib {

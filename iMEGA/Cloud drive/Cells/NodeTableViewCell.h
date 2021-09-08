@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *incomingOrOutgoingView;
 @property (weak, nonatomic) IBOutlet UIImageView *incomingOrOutgoingImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadOrVersionImageView;
 

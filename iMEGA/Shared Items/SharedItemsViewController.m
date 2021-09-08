@@ -73,13 +73,10 @@
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 @property (weak, nonatomic) IBOutlet UIButton *incomingButton;
-@property (weak, nonatomic) IBOutlet UILabel *incomingLabel;
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;
 @property (weak, nonatomic) IBOutlet UIButton *outgoingButton;
-@property (weak, nonatomic) IBOutlet UILabel *outgoingLabel;
 @property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
 @property (weak, nonatomic) IBOutlet UIButton *linksButton;
-@property (weak, nonatomic) IBOutlet UILabel *linksLabel;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
 
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
@@ -110,16 +107,13 @@
     self.editBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
-    self.incomingButton.accessibilityLabel = NSLocalizedString(@"incoming", nil);
-    self.outgoingButton.accessibilityLabel = NSLocalizedString(@"outgoing", nil);
-    self.linksButton.accessibilityLabel = NSLocalizedString(@"Links", nil);
+    [self.incomingButton setTitle:NSLocalizedString(@"incoming", nil) forState:UIControlStateNormal];
+    [self.outgoingButton setTitle:NSLocalizedString(@"outgoing", nil) forState:UIControlStateNormal];
+    [self.linksButton setTitle:NSLocalizedString(@"Links", nil) forState:UIControlStateNormal];
     
-    self.incomingLabel.text = NSLocalizedString(@"incoming", nil);
-    self.incomingLabel.isAccessibilityElement = NO;
-    self.outgoingLabel.text = NSLocalizedString(@"outgoing", nil);
-    self.outgoingLabel.isAccessibilityElement = NO;
-    self.linksLabel.text = NSLocalizedString(@"Links", nil);
-    self.linksLabel.isAccessibilityElement = NO;
+    self.incomingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.outgoingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.linksButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     
     self.incomingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
     self.incomingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
@@ -540,16 +534,20 @@
     self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
     self.incomingButton.tintColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.incomingLabel.textColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
     self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
     
     self.outgoingButton.tintColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.outgoingLabel.textColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
     self.outgoingLineView.backgroundColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
     
     self.linksButton.tintColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.linksLabel.textColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
     self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+        
+    [self.incomingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.outgoingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    [self.outgoingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.linksButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    [self.linksButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
 }
 
 - (void)startEditingModeAtIndex:(NSIndexPath *)indexPath {

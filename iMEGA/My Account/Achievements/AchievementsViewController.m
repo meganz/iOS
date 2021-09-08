@@ -27,8 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *storageQuotaLabel;
 @property (weak, nonatomic) IBOutlet UIView *unlockedBonusesBottomSeparatorView;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (nonatomic) MEGAAchievementsDetails *achievementsDetails;
 @property (nonatomic) NSMutableDictionary *achievementsIndexesMutableDictionary;
 @property (nonatomic) NSMutableArray<NSNumber *> *displayOrderMutableArray;
@@ -50,6 +48,8 @@
     self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
     self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     self.numberFormatter.maximumFractionDigits = 0;
+    
+    [self.tableView sizeHeaderToFit];
     
     self.navigationItem.title = NSLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     
@@ -127,9 +127,9 @@
     secondPartRange = [secondPartString rangeOfString:secondPartString];
     NSMutableAttributedString *secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
-    [firstPartMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:32.0f] range:firstPartRange];
+    [firstPartMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleLargeTitle] range:firstPartRange];
     
-    [secondPartMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17.0f] range:secondPartRange];
+    [secondPartMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] range:secondPartRange];
     
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
     
