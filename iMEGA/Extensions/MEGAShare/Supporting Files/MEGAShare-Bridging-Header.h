@@ -30,4 +30,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
+#import "SAMKeychain.h"
+#import "LTHPasscodeViewController.h"
+
 #endif /* MEGAShare_Bridging_Header_h */
