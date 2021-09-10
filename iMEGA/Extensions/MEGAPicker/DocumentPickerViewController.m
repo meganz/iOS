@@ -190,6 +190,12 @@
     [self configureProgressHUD];
     [SVProgressHUD setViewForExtension:self.view];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+        
+    AppReinstallationCleaner *appReinstallationCleaner = AppReinstallationCleaner.alloc.init;
+    if ([appReinstallationCleaner cleanCredentialsIfNeeded]) {
+        self.session = nil;
+    }
+    
     if (self.session) {
         // Common scenario, present the browser after passcode.
         [self loginToMEGA];

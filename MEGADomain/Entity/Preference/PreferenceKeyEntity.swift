@@ -12,4 +12,5 @@ enum PreferenceKeyEntity: String {
     case offlineLogOutWarningDismissed
     case showRecents
     case lastRequestedVersionForRating
+    case firstRun = "FirstRun"
 }
