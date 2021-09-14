@@ -65,6 +65,8 @@ extension MyAvatarViewModel: MyAvatarViewModelInputs {
 
     func viewIsReady() {
         observeUserAlertsAndContactRequests()
+        
+        refreshAvatarWhenCached()
     }
 
     func viewIsAppearing() {
@@ -75,9 +77,19 @@ extension MyAvatarViewModel: MyAvatarViewModelInputs {
 // MARK: - Load Avatar Image
 
 extension MyAvatarViewModel {
+    private func refreshAvatarWhenCached() {
+        guard cachedAvatarImage() != nil else { return }
+        loadRemoteAvatarImage()
+    }
+
+    
+    private func cachedAvatarImage() -> UIImage? {
+        return megaAvatarUseCase.getCachedAvatarImage()
+    }
+
 
     private func loadAvatarImage() {
-        if let cachedAvatarImage = megaAvatarUseCase.getCachedAvatarImage() {
+        if let cachedAvatarImage = cachedAvatarImage() {
             self.avatarImage = .success(cachedAvatarImage)
             self.notifyUpdate?(self.outputs)
             return
@@ -87,7 +99,12 @@ extension MyAvatarViewModel {
             self.avatarImage = .success(generatedAvatarImage)
             self.notifyUpdate?(self.outputs)
         }
-
+        
+        loadRemoteAvatarImage()
+    }
+    
+    
+    private func loadRemoteAvatarImage() {
         megaAvatarUseCase.loadRemoteAvatarImage { [weak self] image in
             guard let self = self, let image = image else { return }
             self.avatarImage = .success(image)
