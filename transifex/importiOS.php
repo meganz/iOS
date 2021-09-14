@@ -11,7 +11,7 @@ define("PROJECT", $configDecode['project']);
 
 const ALL_LANGUAGES_URL = "https://rest.api.transifex.com/projects/o:" . ORGANIZATION . ":p:" . PROJECT . "/languages";
 const ALL_RESOURCES_URL = "https://rest.api.transifex.com/resources?filter[project]=o:" . ORGANIZATION . ":p:" . PROJECT;
-
+const APPLICATION_JSON_HEADER = ["Content-Type: application/vnd.api+json", "Authorization: Bearer " . TRANSIFEX_API_TOKEN];
 const MAIN_LOCALIZABLE_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2FLocalizable.strings/raw?ref=develop";
 const MAIN_INFOPLIST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2FInfoPlist.strings/raw?ref=develop";
 
@@ -372,6 +372,118 @@ function getDiffOfResource($gitlabArr,$ourStringsArr){
     return $stringsToPush;
 }
 
+/**
+ * Generic multi curl request to batch curl requests for performance
+ *
+ * @param $method
+ * @param $requests
+ * @param $headers
+ * @param $url
+ * @return array
+ */
+function makeGenericMultiCurlRequest($method, $requests = null, $headers, $urls): array
+{
+    // array of all curls
+    $multiCurl = array();
+    // data to be returned
+    $result = array();
+    // multi handle
+    $mh = curl_multi_init();
+    $i = 0;
+    foreach ($urls as $key => $url) {
+        $options = array(
+            CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
+            CURLOPT_POSTFIELDS => $requests[$key],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_ENCODING => '',
+            CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_URL => $url
+        );
+        $multiCurl[$i] = curl_init();
+        curl_setopt_array($multiCurl[$i], $options);
+        curl_multi_add_handle($mh, $multiCurl[$i]);
+        $i++;
+    }
+
+    $index = null;
+    do {
+        curl_multi_exec($mh, $index);
+    } while ($index > 0);
+    // get content and remove handles
+    foreach ($multiCurl as $k => $ch) {
+        $responseJson = json_decode(curl_multi_getcontent($ch), true);
+        if (isset($responseJson['errors'])) {
+            foreach ($responseJson['errors'] as $error) {
+                echo "Error {$error['status']}: {$error['detail']}.\n";
+            }
+            die();
+        }
+        $result[$k] = $responseJson;
+        curl_multi_remove_handle($mh, $ch);
+    }
+    // close
+    curl_multi_close($mh);
+    return $result;
+}
+
+function getLockedLangCodes(){
+    $arrOfLangCodes = [];
+    $ch = curl_init("https://rest.api.transifex.com/projects/o:" . ORGANIZATION . ":p:" . PROJECT . "/languages");
+    curl_setopt($ch, CURLOPT_HTTPGET, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/vnd.api+json", "Authorization: Bearer " . TRANSIFEX_API_TOKEN]);
+    $result = curl_exec($ch);
+    $responseJson = json_decode($result, true);
+    if (isset($responseJson['errors'])) {
+        foreach ($responseJson['errors'] as $error) {
+            echo "Error {$error['status']}: {$error['detail']}.\n";
+        }
+        die();
+    }
+    curl_close($ch);
+    foreach($responseJson as $data) {
+        foreach ($data as $val) {
+            $arrOfLangCodes[] = "locked_" . $val['attributes']['code'];
+        }
+    }
+    return $arrOfLangCodes;
+}
+
+// get array of string hashes from transifex by providing an array of string keys.
+function getStringHash($stringKeys, $branchResourceName){
+    $urls = [];
+    $hashes = [];
+    foreach($stringKeys as $key) {
+        $urls[] = "https://rest.api.transifex.com/resource_strings?filter[resource]=o:" . ORGANIZATION . ":p:" . PROJECT . ":r:" . strtolower($branchResourceName) . "&filter[key]=" . urlencode($key);
+    }
+    $result =  makeGenericMultiCurlRequest("GET",null,APPLICATION_JSON_HEADER,$urls);
+    foreach($result as $res) {
+        if(count($res['data'][0]['attributes']['tags']) == 0 && strtotime($res['data'][0]['attributes']['strings_datetime_modified']) >= time() - 120)
+        $hashes[] = $res['data'][0]['id'];
+    }
+    return $hashes;
+}
+
+function updateStringLock($hashes, $arrLangCodes){
+    $urls = [];
+    $reqs = [];
+    $arrLangCodes[] = "do_not_translate";
+    foreach($hashes as $hash){
+        $urls[] = "https://rest.api.transifex.com/resource_strings/" . $hash;
+        $reqs[] = '{
+  "data": {
+    "attributes": {
+      "tags": ' . json_encode($arrLangCodes) . '
+    },
+    "id": "'. $hash .'",
+    "type": "resource_strings"
+  }
+}';
+    }
+    $res = makeGenericMultiCurlRequest("PATCH",$reqs,APPLICATION_JSON_HEADER,$urls);
+}
+
 function resourceChooser(): string
 {
     do{
@@ -440,7 +552,6 @@ if (in_array(str_replace(PHP_EOL, "", $branchName), ["master", "develop"])) {
 $branchResourceName = $fileParts['filename'] . "-" .  preg_replace("/[^A-Za-z0-9]/", '', $branchName);
 
 // get the gitlab strings for comparisons
-
 $stringsToPush = "";
 $ourStrings =  file_get_contents($filePath);
 $gitlabResourceStrings = "";
@@ -449,7 +560,6 @@ if($fileParts['filename'] == "InfoPlist"){
 }else if ($fileParts['filename'] == "Localizable"){
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_LOCALIZABLE_URL);
 }
-
 // parse
 if($fileParts['extension'] == "strings"){
     $gitlabResArr =  parseAppleStrings(trimUnicode($gitlabResourceStrings));
@@ -469,6 +579,11 @@ if (getResourceDetails(strtolower($fileParts['filename']))) {
         createNewResource($branchResourceName,true);
         addNewSourceFile($filePath, $branchResourceName,true);
     }
+    sleep(5);
+    $stringsToPushKeys = array_keys(parseAppleStrings($stringsToPush));
+    $hashes = getStringHash($stringsToPushKeys, $branchResourceName);
+    $arrLangCodes = getLockedLangCodes();
+    updateStringLock($hashes,$arrLangCodes);
 } else {
     echo "File name should be the name of the resource (Case Sensitive).\n";
     die();
