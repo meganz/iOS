@@ -119,6 +119,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     }
     
     private func isValidName() -> Bool {
+        fileName = fileName.trimmingCharacters(in: .whitespaces)
         let containsInvalidChars = fileName.mnz_containsInvalidChars()
         let empty = fileName.mnz_isEmpty()
         if containsInvalidChars || empty {

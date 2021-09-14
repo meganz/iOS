@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)mnz_isValidEmail;
 
 - (BOOL)mnz_isEmpty;
+/// @return A new string by trimming leading and trailing whitespace and newline characters
 - (NSString *)mnz_removeWhitespacesAndNewlinesFromBothEnds;
 
 - (BOOL)mnz_containsInvalidChars;

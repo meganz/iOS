@@ -354,14 +354,14 @@
                         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
                     } else {
                         MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds delegate:delegate];
                     }
                 } else {
                     if ([childrenNodeList mnz_existsFileWithName:alertViewTextField.text]) {
                         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.")];
                     } else {
                         MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds delegate:delegate];
                     }
                 }
             }
