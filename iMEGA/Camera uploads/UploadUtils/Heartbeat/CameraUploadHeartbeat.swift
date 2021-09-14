@@ -44,6 +44,7 @@ final class CameraUploadHeartbeat: NSObject {
     
     // MARK: - Registration
     @objc func registerHeartbeat() {
+        setDeviceNameIfNeeded()
         recorder.startRecordingBackupUpdate()
         register.registerBackupIfNeeded()
         setupHeartbeatTimers()
@@ -53,6 +54,18 @@ final class CameraUploadHeartbeat: NSObject {
         cancelHeartbeatTimers()
         register.unregisterBackup()
         recorder.stopRecordingBackupUpdate()
+    }
+    
+    private func setDeviceNameIfNeeded() {
+        sdk.getDeviceName(with: RequestDelegate { [weak self] getResult in
+            if case let .failure(getError) = getResult, getError.type == .apiENoent {
+                self?.sdk.setDeviceName(UIDevice.current.name, delegate: RequestDelegate { setResult in
+                    if case let .failure(setError) = setResult {
+                        MEGALogError("[Camera Upload] heartbeat - error when to set device name \(setError.type) \(String(describing: setError.name))")
+                    }
+                })
+            }
+        })
     }
 
     // MARK: - Manage Timers

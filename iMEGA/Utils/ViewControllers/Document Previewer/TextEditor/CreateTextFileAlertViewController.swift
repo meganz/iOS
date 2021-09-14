@@ -17,7 +17,7 @@ final class CreateTextFileAlertViewController: UIAlertController {
             if MEGAReachabilityManager.isReachableHUDIfNot() {
                 let textField = self.textFields?.first
                 if let inputFileName = textField?.text {
-                    let fileName = inputFileName
+                    let fileName = inputFileName.trimmingCharacters(in: .whitespaces)
                     self.viewModel.dispatch(.createTextFile(fileName))
                 }
             }

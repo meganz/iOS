@@ -1429,7 +1429,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                         MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                         [self didSelectNode:newFolderNode];
                     }];
-                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
+                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
                 }
             }
         }];
