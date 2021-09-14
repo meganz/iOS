@@ -3,6 +3,8 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
     
     private let chatSdk: MEGAChatSdk
     private var remoteVideos = [RemoteVideoData]()
+    private var requestingLowResolutionIds = [MEGAHandle]()
+    private var requestingHighResolutionIds = [MEGAHandle]()
     
     init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
@@ -40,7 +42,14 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
     }
     
     func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
-        chatSdk.requestHiResVideo(forChatId: chatId, clientId: clientId, delegate: MEGAChatResultRequestDelegate { result in
+        
+        if requestingHighResolutionIds.contains(clientId) {
+            MEGALogDebug("High resolution for \(clientId) already requested")
+            return
+        }
+        requestingHighResolutionIds.append(clientId)
+        
+        chatSdk.requestHiResVideo(forChatId: chatId, clientId: clientId, delegate: MEGAChatResultRequestDelegate { [self] result in
             switch result {
             case .success(_):
                 MEGALogDebug("Success to request high resolution video for clientId: \(clientId)")
@@ -49,6 +58,10 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
                 MEGALogError("Fail to request high resolution video for clientId: \(clientId)")
                 completion?(.failure(.requestResolutionVideoChange))
             }
+            guard let index = self.requestingHighResolutionIds.firstIndex(of: clientId) else {
+                return
+            }
+            self.requestingHighResolutionIds.remove(at: index)
         })
     }
     
@@ -68,7 +81,17 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
     }
     
     func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion? = nil) {
-        let clientIdsMapped = clientIds.map { NSNumber(value: $0) }
+        
+        var clientIdsMapped = [NSNumber]()
+        
+        clientIds.forEach {
+            if requestingLowResolutionIds.contains($0) {
+                MEGALogDebug("Low resolution for \($0) already requested")
+            } else {
+                clientIdsMapped.append(NSNumber(value: $0))
+                requestingLowResolutionIds.append($0)
+            }
+        }
         
         chatSdk.requestLowResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
             switch result {
@@ -78,6 +101,11 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
             case .failure(_):
                 MEGALogError("Fail to request low resolution video for clientIds: \(clientIds)")
                 completion?(.failure(.requestResolutionVideoChange))
+            }
+            clientIds.forEach {
+                if let index = self.requestingLowResolutionIds.firstIndex(of: $0) {
+                    self.requestingLowResolutionIds.remove(at: index)
+                }
             }
         })
     }
