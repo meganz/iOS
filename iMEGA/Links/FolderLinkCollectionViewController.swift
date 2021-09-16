@@ -97,11 +97,17 @@ class FolderLinkCollectionViewController: UIViewController  {
     }
     
     @objc func reload(node: MEGANode) {
-        guard let rowIndex = node.isFile() ? fileList.firstIndex(of: node) : folderList.firstIndex(of: node) else { return }
-        
-        UIView.performWithoutAnimation {
-            collectionView.reloadItems(at: [IndexPath(row: rowIndex, section: Int(node.isFile() ? ThumbnailSection.file.rawValue : ThumbnailSection.folder.rawValue))])
-        }
+        guard let rowIndex = node.isFile() ?
+         fileList.firstIndex(where: { $0.handle == node.handle }) :
+         folderList.firstIndex(where: { $0.handle == node.handle }) else { return }
+ 
+         let indexPath = IndexPath(row: rowIndex, section: Int(node.isFile() ? ThumbnailSection.file.rawValue : ThumbnailSection.folder.rawValue))
+         
+         if collectionView.isValid(indexPath: indexPath) {
+             UIView.performWithoutAnimation {
+                 collectionView.reloadItems(at: [indexPath])
+             }
+         }
     }
 }
 
