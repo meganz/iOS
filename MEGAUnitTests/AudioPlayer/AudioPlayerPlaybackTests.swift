@@ -89,7 +89,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
             switch (qPlayer.timeControlStatus) {
             case .playing:
                 self.audioPlayer.rewindForward(duration: CMTime(seconds: self.audioPlayer.defaultRewindInterval, preferredTimescale: qPlayer.currentTime().timescale)) { _ in
-                    XCTAssertTrue(currentTime.seconds + self.audioPlayer.defaultRewindInterval == qPlayer.currentTime().seconds)
+                    XCTAssertTrue(currentTime.seconds < qPlayer.currentTime().seconds)
                     expect.fulfill()
                 }
             default:
@@ -118,7 +118,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
                 self.audioPlayer.rewindBackward { _ in
                     XCTAssertTrue(currentTime.seconds <= self.audioPlayer.defaultRewindInterval ?
                                     qPlayer.currentTime().seconds == 0 :
-                                    currentTime.seconds == qPlayer.currentTime().seconds + self.audioPlayer.defaultRewindInterval)
+                                    currentTime.seconds > qPlayer.currentTime().seconds)
                     expect.fulfill()
                 }
             default:
