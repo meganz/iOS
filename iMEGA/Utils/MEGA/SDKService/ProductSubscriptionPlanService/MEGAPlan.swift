@@ -14,7 +14,7 @@ struct MEGAPlan: Equatable {
     let transfer: DataMeasurementInGB
     let subscriptionLife: DateDurationInMonth
     let price: Price
-    let currency: Currency
+    let currency: Currency?
     let proLevel: MEGAAccountType
     let description: Description
 }
