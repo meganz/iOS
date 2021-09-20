@@ -1548,7 +1548,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
         self.selectedNodesArray = nil;
-        self.navigationItem.leftBarButtonItems = @[];
+        self.navigationItem.leftBarButtonItem = self.myAvatarManager.myAvatarBarButton;
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];

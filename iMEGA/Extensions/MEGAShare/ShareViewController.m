@@ -126,6 +126,12 @@
     [SVProgressHUD setViewForExtension:self.view];
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+        
+    AppReinstallationCleaner *appReinstallationCleaner = AppReinstallationCleaner.alloc.init;
+    if ([appReinstallationCleaner cleanCredentialsIfNeeded]) {
+        self.session = nil;
+    }
+    
     if (self.session) {
         [self initChatAndStartLogging];
         [self fetchAttachments];

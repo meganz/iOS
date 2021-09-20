@@ -30,6 +30,8 @@
 #import "MEGA-Swift.h"
 
 static const CGFloat GapBetweenPages = 10.0;
+static const long long MaxSizeToDownloadOriginal = 50 * 1024 * 1024; // 50 MB. Download original as long it's smaller than 50MB
+static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Don't request the preview and download the original if the photo is smaller than 1 MB
 
 @interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
 
@@ -534,16 +536,24 @@ static const CGFloat GapBetweenPages = 10.0;
             
             MEGANode *node = [self.mediaNodes objectOrNilAtIndex:i];
             NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+            NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                    [imageView sd_setImageWithURL:[NSURL fileURLWithPath:temporaryImagePath]];
-            } else if ([MEGAReachabilityManager isReachableViaWiFi] && node.name.mnz_isImagePathExtension) {
-                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
+                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:temporaryImagePath] placeholderImage:placeHolderImage];
             } else {
-                NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
+                if ([MEGAReachabilityManager isReachableViaWiFi] && node.name.mnz_isImagePathExtension && node.size.longLongValue < MaxSizeToDownloadOriginal) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                }
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
                 } else if (node.hasPreview) {
-                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                    if ([MEGAReachabilityManager isReachableViaWiFi]) {
+                        if (node.size.longLongValue > MinSizeToRequestThePreview) {
+                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                        }
+                    } else {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                    }
                 } else {
                     NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
