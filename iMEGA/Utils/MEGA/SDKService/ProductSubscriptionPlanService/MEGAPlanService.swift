@@ -69,21 +69,21 @@ fileprivate final class MEGAPlanLoadTask {
                 return
             }
 
-            let fetchedMEGAPlans = self.setupCache(with: request.pricing)
+            let fetchedMEGAPlans = self.setupCache(with: request.pricing, currencyName: request.currency.currencyName)
             completion(.success(fetchedMEGAPlans))
         }))
     }
 
     // MARK: - Privates
 
-    private func setupCache(with pricing: MEGAPricing) -> [MEGAPlan] {
+    private func setupCache(with pricing: MEGAPricing, currencyName: String?) -> [MEGAPlan] {
         return (0..<pricing.products).map { productIndex in
             return MEGAPlan(id: productIndex,
                             storage: .gigabytes(of: pricing.storageGB(atProductIndex: productIndex)),
                             transfer: .gigabytes(of: pricing.transferGB(atProductIndex: productIndex)),
                             subscriptionLife: pricing.months(atProductIndex: productIndex),
                             price: pricing.amount(atProductIndex: productIndex),
-                            currency: pricing.currency(atProductIndex: productIndex),
+                            currency: currencyName,
                             proLevel: pricing.proLevel(atProductIndex: productIndex),
                             description: pricing.description(atProductIndex: productIndex))
         }
