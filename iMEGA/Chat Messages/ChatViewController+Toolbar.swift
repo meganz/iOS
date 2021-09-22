@@ -140,7 +140,7 @@ extension ChatViewController {
                     } else {
                         message.chatId = self.chatRoom.chatId
                         self.chatRoomDelegate.insertMessage(message)
-                        self.messagesCollectionView.scrollToLastItem()
+                        self.scrollToBottom()
                     }
                     
                 })
