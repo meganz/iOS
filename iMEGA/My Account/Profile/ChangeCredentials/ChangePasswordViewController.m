@@ -223,6 +223,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     if (self.theNewPasswordView.passwordTextField.text.mnz_isEmpty) {
         [self.theNewPasswordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
         return NO;
+    } else if ([MEGASdkManager.sharedMEGASdk checkPassword:self.theNewPasswordView.passwordTextField.text]) {
+        [self.theNewPasswordView setErrorState:YES withText:NSLocalizedString(@"account.changePassword.error.currentPassword", @"Account, Change Password view. Error shown when you type your current password.")];
+        return NO;
     } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
         [self.theNewPasswordView setErrorState:YES withText:NSLocalizedString(@"pleaseStrengthenYourPassword", nil)];
         return NO;
@@ -420,6 +423,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         case ConfirmPasswordTextFieldTag:
             self.confirmPasswordView.passwordTextField.secureTextEntry = YES;
             [self.confirmPasswordView configureSecureTextEntry];
+            [self validateNewPassword];
             [self validateConfirmPassword];
             break;
             
@@ -432,19 +436,17 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     switch (textField.tag) {
-        case 1:
+        case NewEmailTextFieldTag:
             [self.theNewEmailInputView setErrorState:NO withText:NSLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
             
             break;
             
-        case 4:
+        case NewPasswordTextFieldTag:
             [self.theNewPasswordView setErrorState:NO withText:NSLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
-            
             break;
             
-        case 5:
+        case ConfirmPasswordTextFieldTag:
             [self.confirmPasswordView setErrorState:NO withText:NSLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
-            
             break;
             
         default:
