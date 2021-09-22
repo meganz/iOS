@@ -182,7 +182,7 @@
             uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
             self.oldNode = [api nodeForHandle:handle];
             MEGANode *parent = [api parentNodeForNode:self.oldNode];
-            [api startUploadWithLocalPath:self.url.path parent:parent];
+            [api startUploadWithLocalPath:self.url.path parent:parent delegate:self];
             break;
         }
             
