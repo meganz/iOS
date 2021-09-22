@@ -11,16 +11,22 @@ class DocScannerFileNameTableCell: UITableViewCell {
     
     weak var delegate: DocScannerFileInfoTableCellDelegate?
     
-    var filename: String? {
+    var originalFilename: String? {
         didSet {
-            filenameTextField?.text = filename
+            filenameTextField?.placeholder = originalFilename
+        }
+    }
+    var currentFilename: String? {
+        didSet {
+            filenameTextField?.text = currentFilename
         }
     }
     
     func configure(filename: String, fileType: String?) {
         backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
         
-        self.filename = filename
+        self.originalFilename = filename
+        self.currentFilename = filename
         fileImageView.mnz_setImage(forExtension: fileType)
     }
 }
@@ -28,6 +34,14 @@ class DocScannerFileNameTableCell: UITableViewCell {
 extension DocScannerFileNameTableCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
+        if textField.text?.count == 0 {
+            guard let originalFileName = originalFilename else {
+                return true
+            }
+            textField.text = originalFileName
+        }
+        
         return true
     }
     
@@ -35,9 +49,17 @@ extension DocScannerFileNameTableCell: UITextFieldDelegate {
         guard let text = textField.text else {
             return
         }
-        let containsInvalidChars = textField.text?.mnz_containsInvalidChars() ?? false
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redError() : UIColor.mnz_label()
-        filename = text
-        delegate?.filenameChanged(text)
+        
+        if textField.text?.count == 0 {
+            guard let originalFileName = originalFilename else {
+                return
+            }
+            delegate?.filenameChanged(originalFileName)
+        } else {
+            let containsInvalidChars = textField.text?.mnz_containsInvalidChars() ?? false
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redError() : UIColor.mnz_label()
+            currentFilename = text
+            delegate?.filenameChanged(text)
+        }
     }
 }
