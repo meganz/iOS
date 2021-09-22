@@ -84,7 +84,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.messagesCollectionView.reloadSections([index])
             }, completion: { _ in
                 if index == self.messages.count - 1 {
-                    self.chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
+                    self.chatViewController?.scrollToBottom()
                 }
             })
         }
@@ -196,9 +196,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 }
 
                 chatViewController?.messagesCollectionView.reloadData()
-                chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
-                chatViewController?.messagesCollectionView.scrollToLastItem(animated: false)
-
+                chatViewController?.scrollToBottom(animated: false)
                 return
             }
 
@@ -277,7 +275,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                             chatViewController?.messagesCollectionView.reloadSections([index])
                         }, completion: { _ in
                             if index == self.messages.count - 1 {
-                                self.chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
+                                self.chatViewController?.scrollToBottom()
                             }
                         })
                     }
@@ -341,7 +339,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                         chatViewController?.messagesCollectionView.performBatchUpdates({
                             chatViewController?.messagesCollectionView.reloadSections([index])
                             if isLastSectionVisible() {
-                                chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
+                                chatViewController?.scrollToBottom()
                             }
                         }, completion: nil)
                     }
@@ -411,7 +409,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.messagesCollectionView.reloadSections([index])
             }, completion: { _ in
                 if index == self.messages.count - 1 {
-                    self.chatViewController?.messagesCollectionView.scrollToLastItem(animated: true)
+                    self.chatViewController?.scrollToBottom()
                 }
             })
         }
@@ -508,7 +506,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             if chatViewController?.keyboardVisible ?? false {
                 chatViewController?.additionalBottomInset = 0
             }
-            messagesCollectionView.scrollToLastItem(animated: true)
+            chatViewController?.scrollToBottom()
             return
         }
         
@@ -528,11 +526,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             if chatViewController.keyboardVisible {
                 chatViewController.additionalBottomInset = 0
             }
-            chatViewController.messagesCollectionView.scrollToLastItem(animated: true)
+            chatViewController.scrollToBottom()
             return
         }
         chatViewController.messagesCollectionView.reloadData()
-        chatViewController.messagesCollectionView.scrollToLastItem(animated: true)
+        chatViewController.scrollToBottom()
     }
 
     // MARK: - Private methods
@@ -711,7 +709,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             
             chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
             if isLastSectionVisible() {
-                chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
+                chatViewController?.scrollToBottom(animated: false)
             }
         }
     }
@@ -744,7 +742,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             
             chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
             if isLastSectionVisible() {
-                chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
+                chatViewController?.scrollToBottom(animated: false)
             }
         }
     }

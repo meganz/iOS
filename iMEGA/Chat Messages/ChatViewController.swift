@@ -878,7 +878,7 @@ class ChatViewController: MessagesViewController {
                 return
             }
             self.unreadNewMessagesCount = 0
-            self.messagesCollectionView.scrollToLastItem()
+            self.scrollToBottom()
             self.hideJumpToBottomIfRequired()
         }
         view.addSubview(chatBottomInfoScreen)
@@ -1066,6 +1066,21 @@ class ChatViewController: MessagesViewController {
             answerCall(isVideoEnabled: videoCall)
         } else {
             joinActiveCall(isVideoEnabled: videoCall)
+        }
+    }
+    
+    func scrollToBottom(animated: Bool = true) {
+        messagesCollectionView.performBatchUpdates(nil) { [weak self] _ in
+            guard let self = self,
+                  case let collectionViewContentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height,
+                  collectionViewContentHeight >= 1.0 else {
+                return
+            }
+            
+            self.messagesCollectionView.scrollRectToVisible(
+                CGRect(x: 0.0, y: collectionViewContentHeight - 1.0, width: 1.0, height: 1.0),
+                animated: animated
+            )
         }
     }
     
