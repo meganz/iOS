@@ -13,6 +13,10 @@ class FolderLinkCollectionViewController: UIViewController  {
     var fileList = [MEGANode]()
     var folderList = [MEGANode]()
     
+    @available(iOS 13.0, *)
+    lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView)
+    lazy var dataSource = FolderLinkCollectionViewDataSource(controller: self)
+    
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkCollectionViewController {
         guard let folderLinkCollectionVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkCollectionViewControllerID") as? FolderLinkCollectionViewController else {
             fatalError("Could not instantiate FolderLinkCollectionViewController")
@@ -26,6 +30,16 @@ class FolderLinkCollectionViewController: UIViewController  {
     required init?(coder aDecoder: NSCoder) {
         self.folderLink = FolderLinkViewController()
         super.init(coder: aDecoder)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if #available(iOS 13.0, *) {
+            diffableDataSource.configureDataSource()
+        } else {
+            collectionView.dataSource = dataSource
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +73,7 @@ class FolderLinkCollectionViewController: UIViewController  {
         return listOfNodes.filter { ($0.isFile() && fileType == .file) || ($0.isFolder() && fileType == .folder) }
     }
     
-    private func getNode(at indexPath: IndexPath) -> MEGANode? {
+    func getNode(at indexPath: IndexPath) -> MEGANode? {
         return indexPath.section == ThumbnailSection.file.rawValue ? fileList[safe: indexPath.row] : folderList[safe: indexPath.row]
     }
     
@@ -72,7 +86,11 @@ class FolderLinkCollectionViewController: UIViewController  {
         
         folderLink.setViewEditing(editing)
         
-        collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+        if #available(iOS 13.0, *) {
+            diffableDataSource.reload(nodes: folderList + fileList)
+        } else {
+            collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+        }
     }
     
     @IBAction func nodeActionsTapped(_ sender: UIButton) {
@@ -89,7 +107,19 @@ class FolderLinkCollectionViewController: UIViewController  {
     @objc func reloadData() {
         fileList = buildNodeListFor(fileType: .file)
         folderList = buildNodeListFor(fileType: .folder)
-        collectionView.reloadData()
+        
+        if #available(iOS 13.0, *) {
+            if MEGAReachabilityManager.isReachable(),
+               folderList.count + fileList.count > 0 {
+                removeErrorViewIfRequired()
+                diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
+            } else {
+                diffableDataSource.load(data: [:], keys: [])
+                showErrorViewIfRequired()
+            }
+        } else {
+            collectionView.reloadData()
+        }
     }
     
     @objc func collectionViewSelectIndexPath(_ indexPath: IndexPath) {
@@ -100,48 +130,34 @@ class FolderLinkCollectionViewController: UIViewController  {
         guard let rowIndex = node.isFile() ?
          fileList.firstIndex(where: { $0.handle == node.handle }) :
          folderList.firstIndex(where: { $0.handle == node.handle }) else { return }
- 
-         let indexPath = IndexPath(row: rowIndex, section: Int(node.isFile() ? ThumbnailSection.file.rawValue : ThumbnailSection.folder.rawValue))
-         
-         if collectionView.isValid(indexPath: indexPath) {
-             UIView.performWithoutAnimation {
-                 collectionView.reloadItems(at: [indexPath])
-             }
-         }
-    }
-}
-
-extension FolderLinkCollectionViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return section == ThumbnailSection.file.rawValue ? fileList.count : folderList.count
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if MEGAReachabilityManager.isReachable() {
-            return Int(ThumbnailSection.count.rawValue)
+        
+        if #available(iOS 13.0, *) {
+            if MEGAReachabilityManager.isReachable() {
+                diffableDataSource.reload(nodes: [node])
+            } else {
+                diffableDataSource.load(data: [:], keys: [])
+                showErrorViewIfRequired()
+            }
         } else {
-            return 0
+            let indexPath = IndexPath(row: rowIndex, section: Int(node.isFile() ? ThumbnailSection.file.rawValue : ThumbnailSection.folder.rawValue))
+            
+            if collectionView.isValid(indexPath: indexPath),
+               MEGAReachabilityManager.isReachable() {
+                UIView.performWithoutAnimation {
+                    collectionView.reloadItems(at: [indexPath])
+                }
+            }
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellId = indexPath.section == 1 ? "NodeCollectionFileID" : "NodeCollectionFolderID"
-        
-        guard let node = getNode(at: indexPath), let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? NodeCollectionViewCell else {
-            fatalError("Could not instantiate NodeCollectionViewCell or Node at index")
-        }
-        
-        cell.configureCell(for: node, api:MEGASdkManager.sharedMEGASdkFolder())
-        cell.selectImageView?.isHidden = !collectionView.allowsMultipleSelection
-        cell.moreButton?.isHidden = collectionView.allowsMultipleSelection
-        
-        if node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil {
-            cell.downloadedImageView?.isHidden = false
-        } else {
-            cell.downloadedImageView?.isHidden = true
-        }
-        
-        return cell
+    private func showErrorViewIfRequired() {
+        guard view.subviews.filter({ $0 is EmptyStateView}).isEmpty,
+              let customView = folderLink.customView(forEmptyDataSet: collectionView) else { return }
+        view.wrap(customView)
+    }
+    
+    private func removeErrorViewIfRequired() {
+        view.subviews.filter({ $0 is EmptyStateView}).forEach({ $0.removeFromSuperview() })
     }
 }
 
