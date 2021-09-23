@@ -2000,6 +2000,8 @@
 		BFFED49F26F944ED00B9EBEC /* PreferenceKeyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D30269BA4BA0001D169 /* PreferenceKeyEntity.swift */; };
 		BFFED4A226F944F400B9EBEC /* PreferenceKeyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D30269BA4BA0001D169 /* PreferenceKeyEntity.swift */; };
 		BFFED4A326F944F500B9EBEC /* PreferenceKeyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D30269BA4BA0001D169 /* PreferenceKeyEntity.swift */; };
+		BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */; };
+		BFFED4B726FB098100B9EBEC /* FolderLinkCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFED4B626FB098100B9EBEC /* FolderLinkCollectionViewDataSource.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
 		C44947762652A466004B4C8E /* BannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44947752652A466004B4C8E /* BannerType.swift */; };
 		C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */; };
@@ -4235,6 +4237,8 @@
 		BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodeClipboardOperationRepository.swift; sourceTree = "<group>"; };
 		BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeClipboardOperationUseCase.swift; sourceTree = "<group>"; };
 		BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantViewModelTests.swift; sourceTree = "<group>"; };
+		BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
+		BFFED4B626FB098100B9EBEC /* FolderLinkCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
 		C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+RemoteCommand.swift"; sourceTree = "<group>"; };
@@ -10113,6 +10117,8 @@
 				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
 				C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */,
 				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
+				BFFED4B626FB098100B9EBEC /* FolderLinkCollectionViewDataSource.swift */,
+				BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */,
 				83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */,
 				E85044C41A6D84620064B675 /* FileLinkViewController.h */,
 				E85044C51A6D84620064B675 /* FileLinkViewController.m */,
@@ -11083,6 +11089,7 @@
 				2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */,
 				5DB1F47C2489E5CC001C1D5D /* ParagraphStyle.swift in Sources */,
 				B67A2C7F251755FC00B40D89 /* PreferenceRepositoryProtocol.swift in Sources */,
+				BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */,
 				833003A424DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				BF66DF2C2612C4CF00066F35 /* ChatRoomUseCase.swift in Sources */,
@@ -11636,6 +11643,7 @@
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
 				C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */,
 				A86B9F812316D6AB00F35E7A /* FLEXHeapEnumerator.m in Sources */,
+				BFFED4B726FB098100B9EBEC /* FolderLinkCollectionViewDataSource.swift in Sources */,
 				C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */,
 				83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */,
 				BF782D71269BA4BB0001D169 /* InviteErrorEntity.swift in Sources */,

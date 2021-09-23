@@ -897,7 +897,6 @@
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="PTB-3G-3qq" id="ePh-nB-1gh"/>
                                     <outlet property="delegate" destination="PTB-3G-3qq" id="lTY-Ds-DXY"/>
                                 </connections>
                             </collectionView>

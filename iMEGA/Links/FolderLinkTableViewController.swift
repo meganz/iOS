@@ -63,7 +63,8 @@ class FolderLinkTableViewController: UIViewController  {
     }
     
     @objc func reload(node: MEGANode) {
-        guard let rowIndex = folderLink.searchController.isActive ? folderLink.searchNodesArray.firstIndex(of: node) : folderLink.nodesArray.firstIndex(of: node),
+        guard MEGAReachabilityManager.isReachable(),
+            let rowIndex = folderLink.searchController.isActive ? folderLink.searchNodesArray.firstIndex(of: node) : folderLink.nodesArray.firstIndex(of: node),
               tableView.hasRow(at: IndexPath(row: rowIndex, section: 0)) else { return }
         
         UIView.performWithoutAnimation {
