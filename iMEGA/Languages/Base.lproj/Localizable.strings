@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Your content will be deleted from this device when you log out.";
+"offline.logOut.warning.message"="Logging out deletes your offline content.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Share owner is over storage quota.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
