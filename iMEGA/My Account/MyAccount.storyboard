@@ -153,7 +153,7 @@
                                             <constraint firstItem="2wf-As-f4l" firstAttribute="top" secondItem="QRm-6M-zp1" secondAttribute="top" constant="12" id="9dH-LG-q22"/>
                                             <constraint firstAttribute="trailing" secondItem="2wf-As-f4l" secondAttribute="trailing" constant="12" id="PUn-oL-gAi"/>
                                             <constraint firstItem="2wf-As-f4l" firstAttribute="leading" secondItem="QRm-6M-zp1" secondAttribute="leading" constant="12" id="c2F-TS-2Bl"/>
-                                            <constraint firstAttribute="bottom" secondItem="2wf-As-f4l" secondAttribute="bottom" constant="13" id="t9f-BV-WMx"/>
+                                            <constraint firstAttribute="bottom" secondItem="2wf-As-f4l" secondAttribute="bottom" priority="999" constant="13" id="t9f-BV-WMx"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="gkI-IS-leI" appends="YES" id="x6j-Gp-l0g"/>
@@ -414,6 +414,9 @@
     <designables>
         <designable name="YqG-fz-6ti">
             <size key="intrinsicContentSize" width="643" height="37"/>
+        </designable>
+        <designable name="k9L-sP-xFg">
+            <size key="intrinsicContentSize" width="8" height="12"/>
         </designable>
     </designables>
     <resources>
