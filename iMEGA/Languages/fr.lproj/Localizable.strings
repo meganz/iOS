@@ -2637,11 +2637,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Veuillez surclasser votre compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-<<<<<<< HEAD
-"dialog.storage.almostFull.detail"="Votre disque nuagique est presque plein. Surclassez votre compte maintenant vers un compte Pro et obtenez jusqu’à %@ To (%@ Go) d’espace de stockage nuagique.";
-=======
 "dialog.storage.almostFull.detail"="Votre Disque nuagique est presque plein. Surclassez votre compte maintenant vers un compte Pro et obtenez jusqu’à %@ To (%@ Go) d’espace de stockage nuagique.";
->>>>>>> 3ee209728dbed1a337b8bd77ae37f8e7a410ba70
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Votre stockage nuagique est plein. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
 /* Over Disk Quota paywall not final title. */
