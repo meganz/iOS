@@ -123,6 +123,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Private functions
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
+        CrashlyticsLogger.log("[AudioPlayer] type: , \(playerType)")
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
         resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)

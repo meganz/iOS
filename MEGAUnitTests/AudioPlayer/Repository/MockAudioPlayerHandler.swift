@@ -30,8 +30,9 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         AudioPlayer()
     }
     
-    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool) {
+    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
         addPlayer_calledTimes += 1
+        addPlayerTracks_calledTimes += 1
     }
     
     func addPlayer(listener: AudioPlayerObserversProtocol) {

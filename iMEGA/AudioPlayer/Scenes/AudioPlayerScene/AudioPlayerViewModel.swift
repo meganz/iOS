@@ -39,7 +39,7 @@ protocol AudioPlayerViewRouting: Routing {
     case none, loop, repeatOne
 }
 
-enum PlayerType {
+enum PlayerType: String {
     case `default`, folderLink, fileLink, offline
 }
 
@@ -199,9 +199,10 @@ final class AudioPlayerViewModel: ViewModelType {
         var mutableTracks = tracks
         mutableTracks.bringToFront(item: currentTrack)
         
+        CrashlyticsLogger.log("[AudioPlayer] type: \(playerType)")
+        
         if !(playerHandler.isPlayerDefined()) {
-            playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil)
-            playerHandler.addPlayer(tracks: mutableTracks)
+            playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil, tracks: mutableTracks)
         } else {
             if shouldInitializePlayer() {
                 playerHandler.autoPlay(enable: playerType != .fileLink)

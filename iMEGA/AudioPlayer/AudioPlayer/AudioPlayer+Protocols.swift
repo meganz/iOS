@@ -152,7 +152,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
 
 //MARK: - Audio Player Configuration Functions
 @objc protocol AudioPlayerConfigurationProtocol: AnyObject {
-    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool)
+    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem])
     func addPlayer(tracks: [AudioPlayerItem])
     func addPlayer(listener: AudioPlayerObserversProtocol)
     func removePlayer(listener: AudioPlayerObserversProtocol)
