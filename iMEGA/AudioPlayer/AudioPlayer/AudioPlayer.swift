@@ -223,6 +223,8 @@ final class AudioPlayer: NSObject {
         beginBackgroundTask()
         self.tracks = tracks
         
+        CrashlyticsLogger.log("[AudioPlayer] Previous instance exists: \(queuePlayer != nil)")
+        
         if queuePlayer != nil {
             refreshPlayer(tracks: self.tracks)
             MEGALogDebug("[AudioPlayer] Refresh the current audio player")

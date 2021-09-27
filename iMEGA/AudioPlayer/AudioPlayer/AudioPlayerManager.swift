@@ -52,21 +52,25 @@ import Foundation
         return .none
     }
     
-    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool) {
+    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
         if self.player != nil {
+            CrashlyticsLogger.log("[AudioPlayer] current instance of the player \(String(describing: player)) need to be closed")
             player?.close() { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
-                self?.configure(player: player, autoPlayEnabled: autoPlayEnabled)
+                CrashlyticsLogger.log("[AudioPlayer] player closed")
+                self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
             }
         } else {
-            configure(player: player, autoPlayEnabled: autoPlayEnabled)
+            configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
         }
     }
     
-    private func configure(player: AudioPlayer?, autoPlayEnabled: Bool) {
+    private func configure(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
+        CrashlyticsLogger.log("[AudioPlayer] new player being configured: (autoPlayEnabled: \(autoPlayEnabled), tracks: \(tracks)")
         self.player = player
         self.player?.isAutoPlayEnabled = autoPlayEnabled
+        self.player?.add(tracks: tracks)
     }
     
     func addPlayer(listener: AudioPlayerObserversProtocol) {
@@ -78,6 +82,7 @@ import Foundation
     }
     
     func addPlayer(tracks: [AudioPlayerItem]) {
+        CrashlyticsLogger.log("[AudioPlayer] adding new tracks: \(tracks)")
         player?.add(tracks: tracks)
     }
     
