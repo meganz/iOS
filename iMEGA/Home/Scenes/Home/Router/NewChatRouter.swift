@@ -34,7 +34,7 @@ final class NewChatRouter {
     private func setupContactsSelection(for contactController: ContactsViewController) {
         contactController.userSelected = { [weak self] users in
             guard let self = self else { return }
-            guard let selectedUser: MEGAUser = users?.first as? MEGAUser else { return }
+            guard let selectedUser: MEGAUser = users?.first else { return }
             self.chatRoom(byUserHandle: selectedUser.handle) { chatRoom in
                 self.switchToChat(withChatID: chatRoom.chatId)
             }
