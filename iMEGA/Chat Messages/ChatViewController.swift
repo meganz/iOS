@@ -976,7 +976,7 @@ class ChatViewController: MessagesViewController {
                 guard let `self` = self else {
                     return
                 }
-                MEGASdkManager.sharedMEGAChatSdk().invite(toChat: self.chatRoom.chatId, user: (user as! MEGAUser).handle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
+                MEGASdkManager.sharedMEGAChatSdk().invite(toChat: self.chatRoom.chatId, user: (user).handle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
             })
         }
         present(viewController: navigationController)
