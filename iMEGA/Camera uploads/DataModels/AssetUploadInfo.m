@@ -15,6 +15,10 @@
     return self;
 }
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 #pragma mark - properties
 
 - (NSURL *)fileURL {
@@ -54,16 +58,19 @@
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
     self = [super init];
     if (self) {
-        _fileName = [aDecoder decodeObjectForKey:@"fileName"];
-        _fileSize = [[aDecoder decodeObjectForKey:@"fileSize"] unsignedLongLongValue];
-        _fingerprint = [aDecoder decodeObjectForKey:@"fingerprint"];
-        _originalFingerprint = [aDecoder decodeObjectForKey:@"originalFingerprint"];
-        _directoryURL = [aDecoder decodeObjectForKey:@"directoryURL"];
-        _parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:[[aDecoder decodeObjectForKey:@"parentHandle"] unsignedLongLongValue]];
-        NSData *serializedData = [aDecoder decodeObjectForKey:@"mediaUpload"];
-        _mediaUpload = [MEGABackgroundMediaUpload unserializByData:serializedData MEGASdk:MEGASdkManager.sharedMEGASdk];
-        _savedLocalIdentifier = [aDecoder decodeObjectForKey:@"savedLocalIdentifier"];
-        _encryptedChunksCount = [[aDecoder decodeObjectForKey:@"encryptedChunksCount"] unsignedIntegerValue];
+        _fileName = [aDecoder decodeObjectOfClass:NSString.class forKey:@"fileName"];
+        _fileSize = [[aDecoder decodeObjectOfClass:NSNumber.class forKey:@"fileSize"] unsignedLongLongValue];
+        _fingerprint = [aDecoder decodeObjectOfClass:NSString.class forKey:@"fingerprint"];
+        _originalFingerprint = [aDecoder decodeObjectOfClass:NSString.class forKey:@"originalFingerprint"];
+        _directoryURL = [aDecoder decodeObjectOfClass:NSURL.class forKey:@"directoryURL"];
+        NSNumber *parentHandle = [aDecoder decodeObjectOfClass:NSNumber.class forKey:@"parentHandle"];
+        _parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:parentHandle.unsignedLongLongValue];
+        NSData *serializedData = [aDecoder decodeObjectOfClass:NSData.class forKey:@"mediaUpload"];
+        if (serializedData) {
+            _mediaUpload = [MEGABackgroundMediaUpload unserializByData:serializedData MEGASdk:MEGASdkManager.sharedMEGASdk];
+        }
+        _savedLocalIdentifier = [aDecoder decodeObjectOfClass:NSString.class forKey:@"savedLocalIdentifier"];
+        _encryptedChunksCount = [[aDecoder decodeObjectOfClass:NSNumber.class forKey:@"encryptedChunksCount"] unsignedIntegerValue];
     }
     
     return self;

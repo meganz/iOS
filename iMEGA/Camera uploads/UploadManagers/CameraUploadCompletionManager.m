@@ -43,8 +43,11 @@
 
 - (void)handleEmptyTransferTokenInSessionTask:(NSURLSessionTask *)task {
     NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:task.taskDescription];
-    AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
-    if (uploadInfo.encryptedChunksCount == 1) {
+    NSError *error;
+    AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchivedObjectOfClass:AssetUploadInfo.class fromData:[NSData dataWithContentsOfURL:archivedURL] error:&error];
+    if (error) {
+        MEGALogError(@"[Camera Upload] failed to unarchive data with error: %@", error);
+    } else if (uploadInfo.encryptedChunksCount == 1) {
         MEGALogError(@"[Camera Upload] empty transfer token for single chunk %@, fileSize: %llu, response %@", task.taskDescription, uploadInfo.fileSize, task.response);
         [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
     }
@@ -67,7 +70,8 @@
     NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:localIdentifier];
     BOOL isDirectory;
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
-        AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
+        NSError *error;
+        AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchivedObjectOfClass:AssetUploadInfo.class fromData:[NSData dataWithContentsOfURL:archivedURL] error:&error];
         if (uploadInfo.mediaUpload) {
             [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
                 if (error || cameraUploadNode == nil) {
@@ -80,7 +84,7 @@
                 }
             }];
         } else {
-            MEGALogError(@"[Camera Upload] error when to unarchive upload info for asset: %@", localIdentifier);
+            MEGALogError(@"[Camera Upload] error when to unarchive upload info for asset: %@, error %@", localIdentifier, error);
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
         }
     } else {

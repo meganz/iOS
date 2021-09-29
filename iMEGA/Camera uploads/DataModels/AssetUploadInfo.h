@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AssetUploadInfo : NSObject <NSCoding>
+@interface AssetUploadInfo : NSObject <NSSecureCoding>
 
 @property (strong, nonatomic) PHAsset *asset;
 @property (strong, nonatomic) NSString *savedLocalIdentifier;

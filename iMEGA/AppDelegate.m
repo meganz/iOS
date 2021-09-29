@@ -1296,7 +1296,7 @@
     
 }
 
-- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type withCompletionHandler:(void (^)(void))completion {
     MEGALogDebug(@"Did receive incoming push with payload: %@ and type: %@", [payload dictionaryPayload], type);
     
     // Call
@@ -1307,7 +1307,9 @@
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
         uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
         
-        [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId];
+        [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId completion:^{
+            completion();
+        }];
     }
 }
 

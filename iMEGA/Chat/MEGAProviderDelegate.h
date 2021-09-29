@@ -11,7 +11,7 @@
 
 - (instancetype)initWithMEGACallManager:(MEGACallManager *)megaCallManager;
 
-- (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId;
+- (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId completion:(void (^)(void))completion;
 
 - (void)invalidateProvider;
 
