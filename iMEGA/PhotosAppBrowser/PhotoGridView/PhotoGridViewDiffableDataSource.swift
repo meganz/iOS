@@ -40,21 +40,7 @@ final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
                 return UICollectionViewCell()
             }
             
-            cell.asset = asset
-            cell.selectedIndex = self.selectedAssets.firstIndex(of: asset)
-            
-            cell.tapHandler = { instance, size, point in
-                guard let selectedAsset = instance.asset else {
-                    return
-                }
-                self.selectionHandler(selectedAsset, indexPath, size, point)
-            }
-            
-            cell.panSelectionHandler = { [weak self] isSelected, asset in
-                self?.handlePanSelection(isSelected: isSelected, asset: asset)
-            }
-            
-            cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
+            self.configureCell(cell: cell, indexPath: indexPath, asset: asset)
             return cell
         }
     }

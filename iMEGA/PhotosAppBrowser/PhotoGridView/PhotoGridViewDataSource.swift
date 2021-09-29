@@ -40,7 +40,7 @@ class PhotoGridViewDataSource: PhotoGridViewBaseDataSource {
     private func remove(asset: PHAsset, atIndex index: Int, selectedIndexPath: IndexPath) {
         selectedAssets.remove(at: index)
         updateCollectionCell(atIndexPath: selectedIndexPath, selectedIndex: nil)
-        updateSelectedAssetsIndex(fromIndex: index)
+        updateSelectedAssetsIndex(fromIndex: index, selectedAssets: selectedAssets)
     }
 }
 
@@ -59,23 +59,7 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
                                                                 
         }
         
-        let asset = album.asset(atIndex: indexPath.item)
-        cell.asset = asset
-        cell.selectedIndex = selectedAssets.firstIndex(of: asset)
-        
-        cell.tapHandler = { [weak self] instance, size, point in
-            guard let `self` = self,
-                let selectedAsset = instance.asset else {
-                return
-            }
-            self.selectionHandler(selectedAsset, IndexPath(item: self.album.index(asset: asset), section: 0), size, point)
-        }
-        
-        cell.panSelectionHandler = { [weak self] isSelected, asset in
-            self?.handlePanSelection(isSelected: isSelected, asset: asset)
-        }
-        
-        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
+        configureCell(cell: cell, indexPath: indexPath, asset: album.asset(atIndex: indexPath.item))
         return cell
     }
 }
