@@ -69,7 +69,7 @@
     [self.provider invalidate];
 }
 
-- (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
+- (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId completion:(void (^)(void))completion {
     MEGALogDebug(@"[CallKit] Report incoming call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
         
     // Callkit abnormal behaviour when trying to enable loudspeaker from the lock screen.
@@ -91,7 +91,8 @@
                                   callerName:chatRoom.title
                                     hasVideo:call.hasLocalVideo
                                         uuid:call.uuid
-                                      callId:callId];
+                                      callId:callId
+                                  completion:completion];
     } else {
         self.callId = @(callId);
         self.chatId = @(chatId);
@@ -102,13 +103,15 @@
                                       callerName:chatRoom.title
                                         hasVideo:NO
                                             uuid:uuid
-                                          callId:callId];
+                                          callId:callId
+                                      completion:completion];
         } else {
             [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatId]
                                       callerName:NSLocalizedString(@"connecting", nil)
                                         hasVideo:NO
                                             uuid:uuid
-                                          callId:callId];
+                                          callId:callId
+                                      completion:completion];
         }
     }
 }
@@ -184,7 +187,8 @@
                             callerName:(NSString *)callerName
                               hasVideo:(BOOL)hasVideo
                                   uuid:(NSUUID *)uuid
-                                callId:(uint64_t)callId {
+                                callId:(uint64_t)callId
+                            completion:(void (^)(void))completion {
     
     CXCallUpdate *update = [self callUpdateWithValue:value localizedCallerName:callerName hasVideo:hasVideo];
     
@@ -193,6 +197,7 @@
     MEGAChatCall *endedCall = self.endedCalls[@(callId)];
     if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground && endedCall) {
         MEGALogWarning(@"[CallKit] A VoIP push has been received for an ended call and the application is in foreground");
+        completion();
     } else {
         [self.provider reportNewIncomingCallWithUUID:uuid update:update completion:^(NSError * _Nullable error) {
             if (error) {
@@ -210,6 +215,7 @@
                     }
                 }
             }
+            completion();
         }];
     }
 }

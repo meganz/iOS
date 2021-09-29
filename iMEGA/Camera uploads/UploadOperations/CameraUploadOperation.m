@@ -322,7 +322,19 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }
     
     NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
-    return [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
+    
+    NSError *error;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.uploadInfo requiringSecureCoding:YES error:&error];
+    if (error) {
+        MEGALogError(@"[Camera Upload] failed to archive upload info with error: %@", error);
+        return NO;
+    } else {
+        BOOL result = [data writeToFile:archivedURL.path options:NSDataWritingAtomic error:&error];
+        if (error) {
+            MEGALogError(@"[Camera Upload] failed to write archived data to disk with error: %@", error);
+        }
+        return result;
+    }
 }
 
 #pragma mark - finish operation

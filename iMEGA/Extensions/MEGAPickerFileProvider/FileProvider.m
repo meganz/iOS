@@ -8,6 +8,7 @@
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
 #import "NSFileManager+MNZCategory.h"
+#import "MEGAPickerFileProvider-Swift.h"
 @import Firebase;
 
 @interface FileProvider () <MEGARequestDelegate, MEGATransferDelegate>
@@ -42,14 +43,13 @@
 
 - (void)providePlaceholderAtURL:(NSURL *)url completionHandler:(void (^)(NSError *error))completionHandler {
     // Should call + writePlaceholderAtURL:withMetadata:error: with the placeholder URL, then call the completion handler with the error if applicable.
-    NSString *fileName = [url lastPathComponent];
-    
-    NSURL *placeholderURL = [NSFileProviderManager placeholderURLForURL:[NSFileProviderManager.defaultManager.documentStorageURL URLByAppendingPathComponent:fileName]];
-    
-    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:nil][NSFileSize] unsignedIntegerValue];
-    NSDictionary *metadata = @{NSURLFileSizeKey : @(fileSize)};
-    // There is a warning in the following line, will be addressed when we support the new Files.app:
-    [NSFileProviderExtension writePlaceholderAtURL:placeholderURL withMetadata:metadata error:NULL];
+    FileProviderItem *metadata = [FileProviderItem.alloc initWithUrl:url];
+    NSURL *placeholderURL = [NSFileProviderManager placeholderURLForURL:[NSFileProviderManager.defaultManager.documentStorageURL URLByAppendingPathComponent:metadata.filename]];
+    NSError *error;
+    [NSFileProviderManager writePlaceholderAtURL:placeholderURL withMetadata:metadata error:&error];
+    if (error) {
+        MEGALogError(@"NSFileProviderManager failed to writePlaceholderAtURL withMetadata with error: %@", error);
+    }
     
     if (completionHandler) {
         completionHandler(nil);
