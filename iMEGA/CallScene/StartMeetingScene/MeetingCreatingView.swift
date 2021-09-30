@@ -265,7 +265,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     
     private func excuteCommand(_ command: MeetingCreatingViewModel.Command) {
         switch command {
-        case .configView(let title, let subtitle, let type, let isMicrophoneEnabled):
+        case .configView(let title, let type, let isMicrophoneEnabled):
             vc.title = title
             configurationType = type
             meetingNameInputTextfield.attributedPlaceholder = NSAttributedString(
@@ -278,7 +278,6 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             switch type {
             case .guestJoin:
                 meetingNameInputTextfield.isHidden = true
-                setNavigationTitle(title, subtitle: subtitle)
                 startMeetingButton.setTitle(NSLocalizedString("meetings.link.guest.joinButtonText", comment: ""), for: .normal)
                 startMeetingButton.isEnabled = false
                 startMeetingButton.alpha = 0.5
@@ -295,7 +294,6 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                                                 font: AvatarProperties.font)
             case .join:
                 meetingNameInputTextfield.isHidden = true
-                setNavigationTitle(title, subtitle: subtitle)
                 startMeetingButton.setTitle(NSLocalizedString("meetings.link.loggedInUser.joinButtonText", comment: ""), for: .normal)
                 
                 firstNameTextfield.flex.display(.none)

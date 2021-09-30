@@ -22,7 +22,7 @@ enum MeetingConfigurationType: Int {
 
 final class MeetingCreatingViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(title: String, subtitle: String, type: MeetingConfigurationType, isMicrophoneEnabled: Bool)
+        case configView(title: String, type: MeetingConfigurationType, isMicrophoneEnabled: Bool)
         case updateMeetingName(String)
         case updateAvatarImage(UIImage)
         case updateVideoButton(enabled: Bool)
@@ -116,7 +116,6 @@ final class MeetingCreatingViewModel: ViewModelType {
                 meetingName = defaultMeetingName
                 invokeCommand?(
                     .configView(title: meetingName,
-                                subtitle: "",
                                 type: type,
                                 isMicrophoneEnabled: isMicrophoneEnabled)
                 )
@@ -307,7 +306,6 @@ final class MeetingCreatingViewModel: ViewModelType {
                 self.invokeCommand?(
                     .configView(
                         title: chatRoom.title ?? "",
-                        subtitle: link,
                         type: self.type,
                         isMicrophoneEnabled: self.isMicrophoneEnabled)
                 )
