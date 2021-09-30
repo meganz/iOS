@@ -53,8 +53,6 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
         navigationController.navigationDelegate = self;
         UITabBarItem *tabBarItem = navigationController.tabBarItem;
         tabBarItem.title = nil;
-        tabBarItem.badgeColor = UIColor.clearColor;
-        [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
         tabBarItem.accessibilityLabel = [[Tab alloc] initWithTabType:i].title;
     }
@@ -74,6 +72,8 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     
     self.selectedViewController = [defaultViewControllersMutableArray objectAtIndex:[TabManager getPreferenceTab].tabType];
     [self showPSAViewIfNeeded];
+    
+     [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
 }
 
 - (void)tapProgressView {
@@ -130,9 +130,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
             [AppearanceManager setupAppearance:self.traitCollection];
             
            //Force appearance changes on the tab bar
-            self.tabBar.barTintColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-            self.tabBar.tintColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
-            self.tabBar.unselectedItemTintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+            [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
         }
     }
     

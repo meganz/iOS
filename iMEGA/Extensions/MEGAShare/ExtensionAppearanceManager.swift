@@ -35,6 +35,8 @@ class ExtensionAppearanceManager: NSObject {
         UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         self.setupThirdPartyAppereance(traitCollection)
+        
+        self.setupToolbar(traitCollection)
     }
     
     class func setupThirdPartyAppereance(_ traitCollection: UITraitCollection) {
@@ -120,6 +122,22 @@ class ExtensionAppearanceManager: NSObject {
             
             UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
             UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
+        }
+    }
+            
+    private class func setupToolbar(_ traitCollection: UITraitCollection) {
+        if #available(iOS 13, *) {
+            let toolbarAppearance = UIToolbarAppearance()
+            toolbarAppearance.configureWithDefaultBackground()
+            toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+            UIToolbar.appearance().standardAppearance = toolbarAppearance
+            if #available(iOS 15.0, *) {
+                UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
+            }
+        } else {
+            UIToolbar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+            UIToolbar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
+            UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         }
     }
 }

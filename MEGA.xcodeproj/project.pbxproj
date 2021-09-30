@@ -10408,7 +10408,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = MEGA;
 				TargetAttributes = {
 					137361891A6664C300B740E8 = {
@@ -11183,7 +11183,6 @@
 				B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */,
 				5DFBF1F024F4AEC700BB662B /* HomeUploadFilesUseCaseProtocol.swift in Sources */,
 				BF66DF162612C20200066F35 /* ChatRoomRepository.swift in Sources */,
-				5DFBF1F024F4AEC700BB662B /* HomeUploadFilesUseCaseProtocol.swift in Sources */,
 				BF782D69269BA4BB0001D169 /* RegionEntity.swift in Sources */,
 				B6AADEAF25188F8D009A874C /* SMSRepositoryProtocol.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
@@ -12761,7 +12760,6 @@
 				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				8393E32426C52884000AACFA /* CallParticipantEntity+Additions.swift in Sources */,
-				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
 				0D213EF8263B847200B43723 /* MockNodeActionUseCase.swift in Sources */,
 				5B8863232645A9680066778C /* TermsAndPoliciesViewModelTests.swift in Sources */,

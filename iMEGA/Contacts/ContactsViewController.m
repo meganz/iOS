@@ -150,6 +150,10 @@
     }
 
     [self updateAppearance];
+    
+    if (@available(iOS 15.0, *)) {
+        self.tableView.sectionHeaderTopPadding = 0.0f;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
