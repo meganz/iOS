@@ -40,7 +40,7 @@ git submodule update --init --recursive
 
 ##### Preparation:
 1. Clone this repo.
-2. Download the prebuilt third party dependencies from this link: https://mega.nz/file/ITZEEZKZ#T5LPjAMZAwFSPcFtl_sDl31NbwpuwqnzVLqGLYiLRDQ
+2. Download the prebuilt third party dependencies from this link: https://mega.nz/file/EYECGBDQ#2iFuoLVTqzXA2ARoNJr3tgM0eAlXoT_ce0skKycEF98
 3. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
 4. Open the terminal and run `pod install`
 5. Open `iMEGA.xcworkspace`.
