@@ -1,11 +1,38 @@
 @testable import MEGA
 
 final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
-    var nodeAccessLevel: NodeAccessTypeEntity = .unknown
+    var nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown
     
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
-        return nodeAccessLevel
+    var labelString: String = ""
+    
+    var filesAndFolders = (0, 0)
+    var versions: Bool = false
+    var beingDownloaded: Bool = false
+    var downloaded: Bool = false
+    
+    func nodeAccessLevel() -> NodeAccessTypeEntity {
+        return nodeAccessLevelVariable
     }
     
-    func downloadToOffline(nodeHandle: MEGAHandle) { }
+    func downloadToOffline() { }
+    
+    func labelString(label: NodeLabelTypeModel) -> String {
+        labelString
+    }
+    
+    func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int) {
+        filesAndFolders
+    }
+    
+    func hasVersions() -> Bool {
+        versions
+    }
+    
+    func isBeingDownloaded() -> Bool {
+        beingDownloaded
+    }
+    
+    func isDownloaded() -> Bool {
+        downloaded
+    }
 }

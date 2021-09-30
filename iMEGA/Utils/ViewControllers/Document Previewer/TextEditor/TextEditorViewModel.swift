@@ -235,8 +235,7 @@ final class TextEditorViewModel: ViewModelType {
     
     private func downloadToOffline() {
         invokeCommand?(.startDownload(status: TextEditorL10n.downloadMessage))
-        guard let nodeHandle = nodeHandle else { return }
-        nodeActionUseCase.downloadToOffline(nodeHandle: nodeHandle)
+        nodeActionUseCase.downloadToOffline()
     }
     
     private func downloadToTempFolder() {
@@ -312,10 +311,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func nodeAccessLevel() -> NodeAccessTypeEntity {
-        guard let nodeHandle = nodeHandle else {
-            return .unknown
-        }
-        return nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeHandle)
+        return nodeActionUseCase.nodeAccessLevel()
     }
     
     private func uploadTo(_ parentHandle: MEGAHandle) {

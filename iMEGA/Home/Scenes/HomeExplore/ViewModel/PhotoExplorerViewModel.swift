@@ -30,9 +30,8 @@ class PhotoExplorerViewModel: NSObject {
         return NSLocalizedString("All Images", comment: "Navigation title for the photo explorer view")
     }
     
-    var emptyStateViewModel: EmptyStateViewModel {
-        return EmptyStateViewModel(image: UIImage(named: "allPhotosEmptyState")!,
-                                   title: NSLocalizedString("No images found", comment: "Photo Explorer Screen: No images in the account"))
+    var emptyStateType: EmptyStateType {
+        return .photos
     }
     
     init(router: PhotosExplorerRouter,

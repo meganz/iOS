@@ -4,6 +4,8 @@ import Foundation
 protocol FavouriteNodesUseCaseProtocol {
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], QuickAccessWidgetErrorEntity>) -> Void)
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], QuickAccessWidgetErrorEntity>) -> Void)
+    func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
+    func unregisterOnNodesUpdate() -> Void
 }
 
 struct FavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
@@ -20,5 +22,13 @@ struct FavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
     
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], QuickAccessWidgetErrorEntity>) -> Void) {
         repo.getFavouriteNodes(limitCount: limitCount, completion: completion)
+    }
+    
+    func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
+        repo.registerOnNodesUpdate(callback: callback)
+    }
+    
+    func unregisterOnNodesUpdate() -> Void {
+        repo.unregisterOnNodesUpdate()
     }
 }

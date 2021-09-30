@@ -54,7 +54,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let uploadUC = UploadFileUseCase(repo: UploadFileRepository(sdk: sdk))
         let downloadUC = DownloadFileUseCase(repo: DownloadFileRepository(sdk: sdk))
-        let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk))
+        let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk, nodeHandle: nodeHandle))
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,

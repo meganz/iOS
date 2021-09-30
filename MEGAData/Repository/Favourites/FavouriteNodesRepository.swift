@@ -1,8 +1,11 @@
 import Foundation
 
-struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
+final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
     
     private let sdk: MEGASdk
+    private var onNodesUpdate: (([NodeEntity]) -> Void)?
+    
+    private var favouritesNodesEntityArray: [NodeEntity]?
 
     init(sdk: MEGASdk) {
         self.sdk = sdk
@@ -20,17 +23,55 @@ struct FavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
                     return
                 }
                 let favouritesNodesArray = favouritesHandleArray.compactMap { handle -> NodeEntity? in
-                    guard let node = sdk.node(forHandle: handle.uint64Value) else {
+                    guard let node = self.sdk.node(forHandle: handle.uint64Value) else {
                         return nil
                     }
                     return NodeEntity(node: node)
                 }
                 
+                self.favouritesNodesEntityArray = favouritesNodesArray
+                
                 completion(.success(favouritesNodesArray))
+                
             case .failure(_):
                 completion(.failure(.sdk))
             }
         })
     }
+    
+    func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
+        sdk.add(self)
+        
+        onNodesUpdate = callback
+    }
+    
+    func unregisterOnNodesUpdate() {
+        sdk.remove(self)
+        
+        onNodesUpdate = nil
+    }
+}
 
+extension FavouriteNodesRepository: MEGAGlobalDelegate {
+    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard let nodesUpdateArray = nodeList?.nodes else { return }
+        var shouldProcessOnNodesUpdate: Bool = false
+        
+        var favouritesDictionary: Dictionary<String, String> = Dictionary()
+        self.favouritesNodesEntityArray?.forEach({ nodeEntity in
+            favouritesDictionary[nodeEntity.base64Handle] = nodeEntity.base64Handle
+        })
+        
+        for nodeUpdated in nodesUpdateArray {
+            if nodeUpdated.hasChangedType(.attributes) || (favouritesDictionary[nodeUpdated.base64Handle] != nil) {
+                shouldProcessOnNodesUpdate = true
+                break
+            }
+        }
+        
+        if shouldProcessOnNodesUpdate {
+            guard let nodeEntities = nodeList?.toNodeEntities else { return }
+            self.onNodesUpdate?(nodeEntities)
+        }
+    }
 }

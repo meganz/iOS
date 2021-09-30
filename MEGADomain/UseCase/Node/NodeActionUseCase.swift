@@ -1,7 +1,12 @@
 // MARK: - Use case protocol -
 protocol NodeActionUseCaseProtocol {
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity
-    func downloadToOffline(nodeHandle: MEGAHandle)
+    func nodeAccessLevel() -> NodeAccessTypeEntity
+    func downloadToOffline()
+    func labelString(label: NodeLabelTypeModel) -> String
+    func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int)
+    func hasVersions() -> Bool
+    func isBeingDownloaded() -> Bool
+    func isDownloaded() -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -12,11 +17,32 @@ struct NodeActionUseCase: NodeActionUseCaseProtocol {
         self.repo = repo
     }
     
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
-        repo.nodeAccessLevel(nodeHandle: nodeHandle)
+    func nodeAccessLevel() -> NodeAccessTypeEntity {
+        repo.nodeAccessLevel()
     }
     
-    func downloadToOffline(nodeHandle: MEGAHandle) {
-        repo.downloadToOffline(nodeHandle: nodeHandle)
+    func downloadToOffline() {
+        repo.downloadToOffline()
+    }
+    
+    func labelString(label: NodeLabelTypeModel) -> String {
+        let nodeLabelTypeEntity = label.toNodeLabelTypeEntity()
+        return repo.labelString(label: nodeLabelTypeEntity)
+    }
+    
+    func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int) {
+        repo.getFilesAndFolders()
+    }
+    
+    func hasVersions() -> Bool {
+        repo.hasVersions()
+    }
+    
+    func isBeingDownloaded() -> Bool {
+        repo.isBeingDownloaded()
+    }
+    
+    func isDownloaded() -> Bool {
+        repo.isDownloaded()
     }
 }

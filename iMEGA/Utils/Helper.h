@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path;
 
 + (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
++ (NSString *)pathForHandle:(NSString *)base64Handle inSharedSandboxCacheDirectory:(NSString *)directory;
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 + (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory;

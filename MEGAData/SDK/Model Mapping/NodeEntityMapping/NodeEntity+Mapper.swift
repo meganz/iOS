@@ -25,7 +25,7 @@ extension NodeEntity {
             isFile                             : node.isFile(),
             isFolder                           : node.isFolder(),
             isRemoved                          : node.isRemoved(),
-            hasThumnail                        : node.hasThumbnail(),
+            hasThumbnail                       : node.hasThumbnail(),
             hasPreview                         : node.hasPreview(),
             isPublic                           : node.isPublic(),
             isShare                            : node.isShared(),
@@ -34,6 +34,8 @@ extension NodeEntity {
             isExported                         : node.isExported(),
             isExpired                          : node.isExpired(),
             isTakenDown                        : node.isTakenDown(),
+            isFavourite                        : node.isFavourite,
+            label                              : node.label.toNodeLabelTypeEntity(),
             
             // MARK: - Links
 

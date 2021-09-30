@@ -88,7 +88,7 @@ final class HomeScreenFactory: NSObject {
             ),
             nodeDetailUseCase: NodeDetailUseCase(
                 sdkNodeClient: .live,
-                nodeThumbnailUseCase: NodeThumbnailUseCase(
+                nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCase(
                     sdkNodeClient: .live,
                     fileSystemClient: .live,
                     filePathUseCase: MEGAAppGroupFilePathUseCase()

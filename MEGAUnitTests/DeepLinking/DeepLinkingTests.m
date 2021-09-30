@@ -244,9 +244,9 @@
     XCTAssertEqual([url mnz_type], URLTypeShowOffline);
 }
 
-- (void)testDeepLinkShouldReturnTypePresentNodeType {
+- (void)testDeepLinkShouldReturnType_presentFavouriteNode {
     NSURL *url = [NSURL URLWithString:@"mega://widget.quickaccess.favourites/aaaa"];
-    XCTAssertEqual([url mnz_type], URLTypePresentNode);
+    XCTAssertEqual([url mnz_type], URLTypePresentFavouritesNode);
 }
 
 - (void)testDeepLinkShouldReturnURLPresentOfflineFileType {

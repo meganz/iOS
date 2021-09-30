@@ -15,10 +15,10 @@ final class AudioPlayerItem: AVPlayerItem {
             "hasProtectedContent"
         ]
     
-    private lazy var nodeThumbnailUseCase: NodeThumbnailUseCaseProtocol = {
-        return NodeThumbnailUseCase(sdkNodeClient: .live,
-                                    fileSystemClient: .live,
-                                    filePathUseCase: MEGAAppGroupFilePathUseCase())
+    private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
+        return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
+                                        fileSystemClient: .live,
+                                        filePathUseCase: MEGAAppGroupFilePathUseCase())
     }()
     
     init(name: String, url: URL, node: MEGANode?, hasThumbnail: Bool = false) {
@@ -62,7 +62,7 @@ final class AudioPlayerItem: AVPlayerItem {
         if let artworkImage = artwork {
             completionBlock?(artworkImage, node.handle)
         } else {
-            nodeThumbnailUseCase.loadThumbnail(of: node.handle) { [weak self] in
+            nodeThumbnailHomeUseCase.loadThumbnail(of: node.handle) { [weak self] in
                 self?.artwork = $0
                 completionBlock?($0, node.handle)
             }

@@ -267,7 +267,7 @@ extension PhotosExplorerViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotosExplorerViewController: DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
-        return EmptyStateView(emptyStateViewModel: viewModel.emptyStateViewModel)
+        return EmptyStateView.create(for: .photos)
     }
 }
 

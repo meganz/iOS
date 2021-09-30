@@ -10,10 +10,10 @@ final class FileExplorerGridCellViewModel {
     typealias MoreInfoActionBlock = (MEGANode, UIButton) -> Void
     private let moreInfoAction: MoreInfoActionBlock?
     
-    private lazy var nodeThumbnailUseCase: NodeThumbnailUseCaseProtocol = {
-        return NodeThumbnailUseCase(sdkNodeClient: .live,
-                                    fileSystemClient: .live,
-                                    filePathUseCase: MEGAAppGroupFilePathUseCase())
+    private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
+        return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
+                                        fileSystemClient: .live,
+                                        filePathUseCase: MEGAAppGroupFilePathUseCase())
     }()
     
     private weak var delegate: FileExplorerGridCellViewModelDelegate?
@@ -67,7 +67,7 @@ final class FileExplorerGridCellViewModel {
     }
     
     func loadThumbnail(completionBlock: @escaping (UIImage?, UInt64) -> Void) {
-        nodeThumbnailUseCase.loadThumbnail(of: node.handle) { [weak self] image in
+        nodeThumbnailHomeUseCase.loadThumbnail(of: node.handle) { [weak self] image in
             guard let self = self else { return }
             completionBlock(image, self.node.handle)
         }

@@ -141,7 +141,7 @@ extension NSURL {
             return .showRecents
         } else if host == DeeplinkHostKey.shortcutFavourites.rawValue {
             guard let path = path, !path.isEmpty else { return .showFavourites }
-            return .presentNode
+            return .presentFavouritesNode
         } else if host == DeeplinkHostKey.shortcutOffline.rawValue  {
             guard let path = path, !path.isEmpty else { return .showOffline }
             return .presentOfflineFile

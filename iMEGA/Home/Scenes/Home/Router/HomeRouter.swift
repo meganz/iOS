@@ -4,6 +4,10 @@ import CoreServices
 protocol HomeRouterProtocol {
 
     func didTap(on source: HomeRoutingSource, with object: Any?)
+    
+    func showFavourites(navigationController: UINavigationController, homeViewController: HomeViewController, slidePanelView: SlidePanelView)
+    
+    func showNode(_ base64Handle: MEGABase64Handle)
 }
 
 enum HomeRoutingSource {
@@ -128,6 +132,16 @@ final class HomeRouter: HomeRouterProtocol {
         case .manageShare(let node):
             nodeShareRouter.showManageSharing(for: node)
         }
+    }
+    
+    func showFavourites(navigationController: UINavigationController, homeViewController: HomeViewController, slidePanelView: SlidePanelView) {
+        FavouritesRouter(navigationController: self.navigationController ?? UINavigationController(), homeViewController: homeViewController, slidePanelView: slidePanelView).start()
+    }
+    
+    func showNode(_ base64Handle: MEGABase64Handle) {
+        navigationController?.popToRootViewController(animated: false)
+        let handle = MEGASdk.handle(forBase64Handle: base64Handle)
+        NodeOpener(navigationController: navigationController).openNode(handle)
     }
     
     // MARK: - Show Photos Explorer View Controller

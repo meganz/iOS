@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
 - (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatNumber;
 
 - (void)showAchievements;
+- (void)showFavouritesNodeWithHandle:(NSString * _Nullable )base64handle;
 - (void)showOfflineAndPresentFileWithHandle:(NSString * _Nullable )base64handle;
 - (void)showRecents;
 - (void)showUploadFile;

@@ -23,15 +23,26 @@ final class NodeActionViewControllerGenericDelegate:
                 )
             }
             node.mnz_downloadNode()
+        
         case .copy, .move:
             showBrowserViewController(node: node, action: (action == .copy) ? .copy : .move)
 
         case .rename:
             node.mnz_renameNode(in: viewController)
+            
         case .share:
             let activityViewController = UIActivityViewController(forNodes: [node], sender: sender)
             viewController.present(activityViewController, animated: true, completion: nil)
 
+        case .shareFolder:
+            let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
+            guard let navigationController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? MEGANavigationController else { return }
+            let contactsViewController = navigationController.viewControllers.first as! ContactsViewController
+            contactsViewController.nodesArray = [node]
+            contactsViewController.contactsMode = .shareFoldersWith
+            
+            viewController.present(navigationController, animated: true)
+            
         case .manageShare:
             let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
             guard let contactsViewController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else { return }
@@ -44,7 +55,6 @@ final class NodeActionViewControllerGenericDelegate:
                 viewController.present(contactsViewController, animated: true)
             }
             
-
         case .info:
             showNodeInfo(node)
 

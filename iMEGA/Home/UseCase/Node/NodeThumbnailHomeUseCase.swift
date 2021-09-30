@@ -1,13 +1,13 @@
 import Foundation
 
-protocol NodeThumbnailUseCaseProtocol {
+protocol NodeThumbnailHomeUseCaseProtocol {
     func loadThumbnail(
         of nodeHandle: MEGAHandle,
         completion: @escaping (UIImage?) -> Void
     )
 }
 
-struct NodeThumbnailUseCase: NodeThumbnailUseCaseProtocol {
+struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
     private var sdkNodeClient: SDKNodeClient
     private var fileSystemClient: FileSystemImageCacheClient
@@ -37,7 +37,7 @@ struct NodeThumbnailUseCase: NodeThumbnailUseCaseProtocol {
     }
 
     fileprivate func downloadthumbnailForNode(_ node: NodeEntity, completion: @escaping (UIImage?) -> Void) {
-        switch node.hasThumnail {
+        switch node.hasThumbnail {
         case true:
             loadThumbnailForThumbnailedNode(of: node.handle, base64Handle: node.base64Handle, completion: completion)
         case false:

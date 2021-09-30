@@ -196,6 +196,17 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     }
 }
 
+- (void)showFavouritesNodeWithHandle:(NSString * _Nullable )base64handle {
+    self.selectedIndex = TabTypeHome;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
+    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
+    if (base64handle) {
+        [homeRouting showFavouritesNode:base64handle];
+    } else {
+        [homeRouting showFavourites];
+    }
+}
+
 - (void)showRecents {
     self.selectedIndex = TabTypeHome;
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];

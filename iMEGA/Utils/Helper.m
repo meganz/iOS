@@ -257,8 +257,12 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory {
+    return [self pathForHandle:node.base64Handle inSharedSandboxCacheDirectory:directory];
+}
+
++ (NSString *)pathForHandle:(NSString *)base64Handle inSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *destinationPath = [Helper pathForSharedSandboxCacheDirectory:directory];
-    return [destinationPath stringByAppendingPathComponent:[node base64Handle]];
+    return [destinationPath stringByAppendingPathComponent:base64Handle];
 }
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {

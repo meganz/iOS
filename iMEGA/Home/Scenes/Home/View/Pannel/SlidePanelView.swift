@@ -29,6 +29,12 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     public var recentScrollView: UIScrollView!
 
+    // MARK: - Favourites Tab
+
+    @IBOutlet private var favouritesContainerView: UIView!
+    
+    public var favouritesScrollView: UIScrollView!
+    
     // MARK: - Offlines Tab
 
     @IBOutlet private var offlineContainerView: UIView!
@@ -42,16 +48,25 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             switch currentDisplayTab {
             case .recents:
                 recentsContainerView.isHidden = false
+                favouritesContainerView.isHidden = true
                 offlineContainerView.isHidden = true
+                
+            case .favourites:
+                recentsContainerView.isHidden = true
+                favouritesContainerView.isHidden = false
+                offlineContainerView.isHidden = true
+                
             case .offline:
                 recentsContainerView.isHidden = true
+                favouritesContainerView.isHidden = true
                 offlineContainerView.isHidden = false
             }
         }
     }
 
-    enum DisplayTab {
+    enum DisplayTab: Int {
         case recents
+        case favourites
         case offline
     }
 
@@ -77,14 +92,15 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
 
     func showTab(_ tab: DisplayTab) {
         currentDisplayTab = tab
-        let index = tab == .recents ? 0 : 1
-        titleView.selectTab(index)
+        titleView.selectTab(currentDisplayTab.rawValue)
     }
     
     func isOverScroll() -> Bool {
         switch currentDisplayTab {
         case .offline:
             return offlineScrollView.contentOffset.y <= 0
+        case .favourites:
+            return favouritesScrollView.contentOffset.y <= 0
         case .recents:
             return recentScrollView.contentOffset.y <= 0
         }
@@ -103,7 +119,19 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         recentScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
     }
+    
+    func addFavouritesViewController(_ favouritesViewController: FavouritesViewController) {
+        move(favouritesViewController.view, toContainerView: favouritesContainerView)
+        let panGesture = UIPanGestureRecognizer()
+        panGesture.name = "Favourites Panel Pan Gesture"
+        panGesture.addTarget(self, action: #selector(didPan(_:)))
+        panGesture.delegate = self
 
+        let scrollView = firstScrollViewInSubviews(favouritesViewController.view.subviews)
+        favouritesScrollView = scrollView
+        scrollView?.addGestureRecognizer(panGesture)
+    }
+    
     func addOfflineViewController(_ offlineViewController: OfflineViewController) {
         move(offlineViewController.view, toContainerView: offlineContainerView)
         let panGesture = UIPanGestureRecognizer()
@@ -149,19 +177,29 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         switch currentDisplayTab {
         case .recents:
             recentsContainerView.isHidden = false
+            favouritesContainerView.isHidden = true
             offlineContainerView.isHidden = true
+            
+        case .favourites:
+            recentsContainerView.isHidden = true
+            offlineContainerView.isHidden = true
+            favouritesContainerView.isHidden = false
+            
         case .offline:
             recentsContainerView.isHidden = true
+            favouritesContainerView.isHidden = true
             offlineContainerView.isHidden = false
         }
     }
 
     private func setupSegmentTitle() {
         let recentsTitle = NSLocalizedString("Recents", comment: "")
+        let favouritesTitle = NSLocalizedString("Favourites", comment: "Text for title for favourite nodes")
         let offlineTitle = NSLocalizedString("offline", comment: "")
         titleView.setSegmentTitleViewModel(model: .init(titles: [
             .init(text: recentsTitle, index: 0),
-            .init(text: offlineTitle, index: 1),
+            .init(text: favouritesTitle, index: 1),
+            .init(text: offlineTitle, index: 2),
         ]))
 
         titleView.selectAction = { [weak self] title in
@@ -169,6 +207,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
 
             switch title.text {
             case recentsTitle: self.currentDisplayTab = .recents
+            case favouritesTitle: self.currentDisplayTab = .favourites
             case offlineTitle: self.currentDisplayTab = .offline
             default: fatalError()
             }
