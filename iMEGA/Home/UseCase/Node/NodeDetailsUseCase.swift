@@ -14,24 +14,25 @@ final class NodeDetailUseCase: NodeDetailUseCaseProtocol {
 
     private var sdkNodeClient: SDKNodeClient
 
-    private var nodeThumbnailUseCase: NodeThumbnailUseCaseProtocol
+    private var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol
 
     init(
         sdkNodeClient: SDKNodeClient,
-        nodeThumbnailUseCase: NodeThumbnailUseCaseProtocol
+        nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol
     ) {
         self.sdkNodeClient = sdkNodeClient
-        self.nodeThumbnailUseCase = nodeThumbnailUseCase
+        self.nodeThumbnailHomeUseCase = nodeThumbnailHomeUseCase
     }
 
     func ownerFolder(of node: MEGAHandle) -> NodeEntity? {
         return sdkNodeClient.findOwnerNode(node).map(NodeEntity.init(node: ))
     }
 
+    
     func loadThumbnail(
         of node: MEGAHandle,
         completion: @escaping (UIImage?) -> Void
     ) {
-        return nodeThumbnailUseCase.loadThumbnail(of: node, completion: completion)
+        return nodeThumbnailHomeUseCase.loadThumbnail(of: node, completion: completion)
     }
 }

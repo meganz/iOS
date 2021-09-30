@@ -9,6 +9,9 @@ protocol HomeRouting: NSObjectProtocol {
     func showOfflineFile(_ handle: String)
 
     func showRecents()
+    
+    func showFavourites()
+    func showFavouritesNode(_ base64Handle: MEGABase64Handle)
 }
 
 final class HomeViewController: UIViewController {
@@ -78,7 +81,7 @@ final class HomeViewController: UIViewController {
         recentsViewController.delegate = self
         return recentsViewController
     }()
-
+    
     private lazy var offlineViewController: OfflineViewController = {
         let offlineVC = UIStoryboard(name: "Offline", bundle: nil)
             .instantiateViewController(withIdentifier: "OfflineViewControllerID") as! OfflineViewController
@@ -138,8 +141,17 @@ final class HomeViewController: UIViewController {
             switch command {
             case .selectOfflineTab:
                 self?.slidePanelView.showTab(.offline)
+                
             case .selectRecentsTab:
                 self?.slidePanelView.showTab(.recents)
+                
+            case .selectFavouritesTab:
+                self?.slidePanelView.showTab(.favourites)
+                
+            case .presentFavouritesNode(let base64Handle):
+                self?.slidePanelView.showTab(.favourites)
+                self?.router.showNode(base64Handle)
+                
             case .presentOfflineFileWithPath(let path):
                 self?.navigationController?.popToRootViewController(animated: false)
                 self?.offlineViewController.openFileFromWidget(with: path)
@@ -217,6 +229,7 @@ final class HomeViewController: UIViewController {
         exploreView.delegate = self
 
         addContentViewController()
+        addFavouritesViewController()
         addOfflineViewController()
     }
 
@@ -281,7 +294,11 @@ final class HomeViewController: UIViewController {
         slidePanelView.addRecentsViewController(contentViewController)
         contentViewController.didMove(toParent: self)
     }
-
+    
+    private func addFavouritesViewController() {
+        router.showFavourites(navigationController: navigationController ?? UINavigationController(), homeViewController: self, slidePanelView: slidePanelView)
+    }
+    
     private func addOfflineViewController() {
         addChild(offlineViewController)
         slidePanelView.addOfflineViewController(offlineViewController)
@@ -508,6 +525,14 @@ extension HomeViewController: HomeRouting {
     
     func showRecents() {
         quickAccessWidgetViewModel.dispatch(.showRecents)
+    }
+    
+    func showFavourites() {
+        quickAccessWidgetViewModel.dispatch(.showFavourites)
+    }
+    
+    func showFavouritesNode(_ base64Handle: MEGABase64Handle) {
+        quickAccessWidgetViewModel.dispatch(.showFavouritesNode(base64Handle))
     }
 }
 

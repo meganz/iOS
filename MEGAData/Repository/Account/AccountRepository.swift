@@ -7,6 +7,22 @@ struct AccountRepository: AccountRepositoryProtocol {
         self.sdk = sdk
     }
     
+    func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
+        sdk.getMyChatFilesFolder(with: RequestDelegate { (result) in
+            switch result {
+            case .success(let request):
+                guard let node = sdk.node(forHandle: request.nodeHandle) else {
+                    completion(.failure(AccountErrorEntity.generic))
+                    return
+                }
+                completion(.success(NodeEntity(node: node)))
+                
+            case .failure(_):
+                completion(.failure(AccountErrorEntity.nodeNotFound))
+            }
+        })
+    }
+    
     func totalNodesCount() -> UInt {
         sdk.totalNodes
     }

@@ -2,16 +2,20 @@ import Foundation
 
 enum QuickAccessWidgetAction: ActionType {
     case managePendingAction
-    case showOffline
     case showRecents
+    case showFavourites
+    case showFavouritesNode(MEGABase64Handle)
+    case showOffline
     case showOfflineFile(String)
 }
 
 final class QuickAccessWidgetViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable {
-        case selectOfflineTab
         case selectRecentsTab
+        case selectFavouritesTab
+        case presentFavouritesNode(MEGABase64Handle)
+        case selectOfflineTab
         case presentOfflineFileWithPath(String)
     }
     
@@ -44,6 +48,10 @@ final class QuickAccessWidgetViewModel: ViewModelType {
                     return
                 }
                 invokeCommand(.presentOfflineFileWithPath(path))
+            case .showFavourites:
+                invokeCommand(.selectFavouritesTab)
+            case .showFavouritesNode(let base64Handle):
+                invokeCommand(.presentFavouritesNode(base64Handle))
             }
         } else {
             pendingQuickAccessWidgetAction = action

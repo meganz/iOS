@@ -4,10 +4,10 @@ final class VideoExplorerTableCellViewModel {
     private let node: MEGANode
     typealias MoreButtonTapHandler = (MEGANode, UIView) -> Void
     private let moreButtonTapHandler: MoreButtonTapHandler
-    private lazy var nodeThumbnailUseCase: NodeThumbnailUseCaseProtocol = {
-        return NodeThumbnailUseCase(sdkNodeClient: .live,
-                                    fileSystemClient: .live,
-                                    filePathUseCase: MEGAAppGroupFilePathUseCase())
+    private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
+        return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
+                                        fileSystemClient: .live,
+                                        filePathUseCase: MEGAAppGroupFilePathUseCase())
     }()
     
     var title: String {
@@ -36,7 +36,7 @@ final class VideoExplorerTableCellViewModel {
     }
     
     func loadThumbnail(completionBlock: @escaping (UIImage?, UInt64) -> Void) {
-        nodeThumbnailUseCase.loadThumbnail(of: node.handle) { [weak self] image in
+        nodeThumbnailHomeUseCase.loadThumbnail(of: node.handle) { [weak self] image in
             guard let self = self else { return }
             completionBlock(image, self.node.handle)
         }

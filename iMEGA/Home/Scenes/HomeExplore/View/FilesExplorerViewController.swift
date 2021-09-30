@@ -83,7 +83,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
 
 extension FilesExplorerViewController: DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
-        guard let emptyStateViewModel = configuration?.emptyStateViewModel else { return nil }
-        return EmptyStateView(emptyStateViewModel: emptyStateViewModel)
+        guard let emptyStateType = configuration?.emptyStateType else { return nil }
+        return EmptyStateView.create(for: emptyStateType)
     }
 }

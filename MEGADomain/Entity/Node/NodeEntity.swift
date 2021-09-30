@@ -23,7 +23,7 @@ struct NodeEntity {
     let isFile: Bool
     let isFolder: Bool
     let isRemoved: Bool
-    let hasThumnail: Bool
+    let hasThumbnail: Bool
     let hasPreview: Bool
     let isPublic: Bool
     let isShare: Bool
@@ -32,6 +32,8 @@ struct NodeEntity {
     let isExported: Bool
     let isExpired: Bool
     let isTakenDown: Bool
+    let isFavourite: Bool
+    let label: NodeLabelTypeEntity
 
     // MARK: - Link
 
@@ -57,4 +59,10 @@ struct NodeEntity {
 
     let latitude: Double?
     let longitude: Double?
+}
+
+extension NodeEntity: Equatable {
+    static func == (lhs: NodeEntity, rhs: NodeEntity) -> Bool {
+        lhs.handle == rhs.handle
+    }
 }

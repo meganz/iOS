@@ -10,7 +10,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadFileUC = MockDownloadFileUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevel = nodeAccessLevel
+        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
         let mockNodeHandle: MEGAHandle = 123
         
@@ -79,7 +79,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevel = nodeAccessLevel
+        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
         let textEditorMode: TextEditorMode = .load
         
@@ -156,7 +156,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevel = nodeAccessLevel
+        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
         let textEditorMode: TextEditorMode = .load
         
@@ -210,7 +210,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevel = nodeAccessLevel
+        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
         let textEditorMode: TextEditorMode = .load
         
@@ -265,7 +265,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadFileUC = MockDownloadFileUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevel = nodeAccessLevel
+        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
         let mockParentHandle: MEGAHandle = 123
         let mockNodeHandle: MEGAHandle = 123
@@ -872,7 +872,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadFileUC = MockDownloadFileUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevel = nodeAccessLevel
+        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
         let mockNodeHandle: MEGAHandle = 123
 

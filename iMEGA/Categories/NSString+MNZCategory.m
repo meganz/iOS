@@ -113,7 +113,6 @@ static NSString* const B = @"[B]";
                                                  @"bml",
                                                  @"cer",
                                                  @"cfm",
-                                                 @"cfm",
                                                  @"cgi",
                                                  @"css",
                                                  @"dhtml",
