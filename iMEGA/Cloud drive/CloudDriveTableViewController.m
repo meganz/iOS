@@ -312,10 +312,9 @@
         shareAction.backgroundColor = UIColor.systemOrangeColor;
         
         UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [node mnz_moveToTheRubbishBinWithCompletion:^{
-                [self setTableViewEditing:NO animated:YES];
-            }];
-        }];
+            [self.cloudDrive moveToRubbishBinFor:node];
+            [self setTableViewEditing:NO animated:YES];
+        }]; 
         if (@available(iOS 13.0, *)) {
             rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
         } else {
