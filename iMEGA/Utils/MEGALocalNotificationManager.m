@@ -17,19 +17,17 @@
 
 @property (nonatomic) MEGAChatMessage *message;
 @property (nonatomic) MEGAChatRoom *chatRoom;
-@property (nonatomic, getter=isSilent) BOOL silent;
 
 @end
 
 @implementation MEGALocalNotificationManager
 
-- (instancetype)initWithChatRoom:(MEGAChatRoom *)chatRoom message:(MEGAChatMessage *)message silent:(BOOL)silent {
+- (instancetype)initWithChatRoom:(MEGAChatRoom *)chatRoom message:(MEGAChatMessage *)message {
     self = [super init];
     
     if (self) {
         _chatRoom = chatRoom;
         _message = message;
-        _silent = silent;
     }
     
     return self;

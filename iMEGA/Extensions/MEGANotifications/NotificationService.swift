@@ -87,7 +87,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         guard let chatId = chatId, let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
             return false
         }
-        let notificationManager = MEGALocalNotificationManager(chatRoom: chatRoom, message: message, silent: false)
+        let notificationManager = MEGALocalNotificationManager(chatRoom: chatRoom, message: message)
         bestAttemptContent?.userInfo = ["chatId": chatId, "msgId": message.messageId]
         bestAttemptContent?.body = notificationManager.bodyString()
         bestAttemptContent?.sound = UNNotificationSound.default
