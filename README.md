@@ -23,15 +23,14 @@ In order to build MEGA for iOS locally, it is necessary to install the following
 
 ### Build & Run the application
 
-Get the source code
+Clone the project
 
-```
-git clone https://github.com/meganz/ios.git
-```
+If you are the general public user, please open .gitmodules file and:
 
-Open .gitmodules file and:
-1. Change url for karere submodule, use this one: https://github.com/meganz/MEGAchat.git
-2. Change url for SDK submodule, use this one: https://github.com/meganz/SDK.git
+1. Change url for karere submodule, [use this one](https://github.com/meganz/MEGAchat.git)
+2. Change url for SDK submodule, [use this one](https://github.com/meganz/SDK.git)
+
+Update submodule:
 
 ```
 cd ios
@@ -46,7 +45,14 @@ git submodule update --init --recursive
 5. Open `iMEGA.xcworkspace`.
 6. Make sure the `MEGA` target is selected.
 7. Build and run (⌘R).
-8. Enjoy!
+8. if you encouter `cmake command not found issue`, refer to [CMake](https://cmake.org/install/) page, there are multiple way to install it. 
+9. Enjoy!
+
+### M1 Mac specific
+
+1. You may have to install CMake by manually building it using `make install`; refer to **Linux, UNIX** section of above `CMake` link, and run commands locally.
+2. Right click Xcode icon and choose `Get Info`, and then tick `Open using Rosetta`, which can help us solve incompatible issues.
+
 
 If you want to build the third party dependencies by yourself: 
 - Open a terminal in the directory `iMEGA/sdk/bindings/ios/3rdparty`. 
