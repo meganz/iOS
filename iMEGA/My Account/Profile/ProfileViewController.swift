@@ -676,9 +676,6 @@ extension ProfileViewController: MEGARequestDelegate {
             avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
             configureGestures()
             
-        case .MEGARequestTypeGetUserEmail:
-            emailLabel.text = request.email
-            
         case .MEGARequestTypeCheckSMSVerificationCode, .MEGARequestTypeResetSmsVerifiedNumber:
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             
