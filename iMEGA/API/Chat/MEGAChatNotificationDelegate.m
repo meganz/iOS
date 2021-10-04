@@ -34,7 +34,7 @@
         }
         MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
         if (chatRoom && message) {
-            MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:YES];
+            MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message];
             [localNotificationManager processNotification];
         }
     }

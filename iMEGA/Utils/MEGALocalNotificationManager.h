@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MEGALocalNotificationManager : NSObject
 
-- (instancetype)initWithChatRoom:(MEGAChatRoom *)chatRoom message:(MEGAChatMessage *)message silent:(BOOL)silent;
+- (instancetype)initWithChatRoom:(MEGAChatRoom *)chatRoom message:(MEGAChatMessage *)message;
 
 #ifndef MNZ_APP_EXTENSION
 - (void)processNotification;
