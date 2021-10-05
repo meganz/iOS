@@ -30,6 +30,8 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
 
     @IBOutlet private var carouselPageControl: UIPageControl!
 
+    @IBOutlet weak var carouselCollectionViewHeightConstraint: NSLayoutConstraint!
+    
     weak var delegate: MEGABannerViewDelegate?
 
     private var bannerDataSource: [Banner] = []
@@ -104,9 +106,7 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         super.layoutSubviews()
 
         if itemSize == nil || itemSize != bounds.size {
-            let collectionViewSize = CGSize(width: bounds.size.width, height: 90)
-            itemSize = collectionViewSize
-            carouselCollectionViewLayout.itemSize = itemSize
+            calculateCarouselItemSize()
         }
     }
     
@@ -127,6 +127,7 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
             )
         }
         bannerDataSource = bannerCollectionModels
+        calculateCarouselItemSize()
         carouselCollectionView.reloadData()
         carouselPageControl.numberOfPages = bannerDataSource.count
         carouselPageControl.currentPage = 0
@@ -152,6 +153,20 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
             if bannerDataSourceWithoutDismissedBanner.isEmpty {
                 self.delegate?.hideMEGABannerView(self)
             }
+        }
+    }
+    
+    private func calculateCarouselItemSize() {
+        let collectionViewSize = CGSize(width: carouselCollectionView.bounds.width, height: calculateBannerMaxHeight(bannerDataSource))
+        itemSize = collectionViewSize
+        carouselCollectionViewLayout.itemSize = itemSize
+        carouselCollectionViewHeightConstraint.constant = itemSize.height
+        carouselCollectionView.layoutIfNeeded()
+    }
+    
+    private func calculateBannerMaxHeight(_ banners: [Banner]) -> CGFloat {
+        banners.reduce(0.0) {
+            max($0, BannerCarouselCollectionViewCell.height($1, width: carouselCollectionView.bounds.width))
         }
     }
 }
@@ -199,6 +214,11 @@ extension MEGABannerView: TraitEnviromentAware {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+        
+        if (traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory) {
+            calculateCarouselItemSize()
+            carouselCollectionView.reloadData()
+        }
     }
 
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
