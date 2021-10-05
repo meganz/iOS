@@ -446,11 +446,11 @@
             
         case MEGAChatCallStatusJoining:
             self.outgoingCall = NO;
-//            if (@available(iOS 14.0, *)) {
-//                if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
-//                    [self.megaCallManager answerCall:call];
-//                }
-//            }
+            if (@available(iOS 14.0, *)) {
+                if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
+                    [self.megaCallManager answerCall:call];
+                }
+            }
             break;
             
         case MEGAChatCallStatusInProgress: {
