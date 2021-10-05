@@ -13,4 +13,5 @@ enum PreferenceKeyEntity: String {
     case showRecents
     case lastRequestedVersionForRating
     case firstRun = "FirstRun"
+    case hasUpdatedBackupToFixExistingBackupNameStorageIssue
 }

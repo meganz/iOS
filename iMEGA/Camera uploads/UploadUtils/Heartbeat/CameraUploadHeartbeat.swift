@@ -47,6 +47,7 @@ final class CameraUploadHeartbeat: NSObject {
         setDeviceNameIfNeeded()
         recorder.startRecordingBackupUpdate()
         register.registerBackupIfNeeded()
+        register.updateBackupRetrospectivelyToFixExistingBackupNameEncodingAndStorageIssue()
         setupHeartbeatTimers()
     }
     
