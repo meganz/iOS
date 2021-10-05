@@ -13,6 +13,8 @@ final class BannerCarouselCollectionViewCell: UICollectionViewCell {
 
     private var bannerIdentifier: Int?
     private var dismissAction: ((Int) -> Void)?
+    
+    private static let sizingCell = UINib(nibName: "\(BannerCarouselCollectionViewCell.self)", bundle: nil).instantiate(withOwner: nil, options: nil).first as? BannerCarouselCollectionViewCell
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,6 +43,20 @@ final class BannerCarouselCollectionViewCell: UICollectionViewCell {
     @objc fileprivate func didTapDismissButton() {
         guard let bannerIdentifier = bannerIdentifier else { return }
         dismissAction?(bannerIdentifier)
+    }
+    
+    public static func height(_ banner: MEGABannerView.Banner, width: CGFloat) -> CGFloat {
+        sizingCell?.prepareForReuse()
+        sizingCell?.configure(with: banner)
+        sizingCell?.layoutIfNeeded()
+        
+        var fittingSize = UIView.layoutFittingCompressedSize
+        fittingSize.width = width
+        let size = sizingCell?.contentView.systemLayoutSizeFitting(fittingSize,
+                                                                   withHorizontalFittingPriority: .required,
+                                                                   verticalFittingPriority: .defaultLow)
+        
+        return size?.height ?? 0.0
     }
 }
 
