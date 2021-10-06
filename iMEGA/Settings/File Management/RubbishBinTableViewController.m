@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *removeFilesOlderThanLabel;
 @property (weak, nonatomic) IBOutlet UILabel *removeFilesOlderThanDetailLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *longerRetentionPeriodUpgradetoProView;
+@property (weak, nonatomic) IBOutlet UILabel *longerRetentionPeriodUpgradetoProLabel;
+
 @property NSInteger rubbishBinAutopurgePeriod;
 
 @end
@@ -38,6 +41,14 @@
     [super viewDidLoad];
     
     [self updateAppearance];
+    
+    if ([MEGASdkManager.sharedMEGASdk mnz_isProAccount]) {
+        self.tableView.tableFooterView = nil;
+    } else {
+        self.tableView.tableFooterView = self.longerRetentionPeriodUpgradetoProView;
+        [self setupTableViewHeaderAndFooter];
+        [self.longerRetentionPeriodUpgradetoProLabel addGestureRecognizer:[UITapGestureRecognizer.alloc initWithTarget:self action:@selector(showUpgradeToPro)]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -64,6 +75,17 @@
             [self updateAppearance];
         }
     }
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self setupTableViewHeaderAndFooter];
+    }
+}
+
+- (void)setupTableViewHeaderAndFooter {
+    if (![MEGASdkManager.sharedMEGASdk mnz_isProAccount]) {
+        [self setLongerRetentionPeriodUpgradetoProLabel];
+        [self.tableView sizeFooterToFit];
+    }
 }
 
 #pragma mark - Private
@@ -75,7 +97,32 @@
     self.clearRubbishBinLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
+    [self setupTableViewHeaderAndFooter];
+    
     [self.tableView reloadData];
+}
+
+- (void)setLongerRetentionPeriodUpgradetoProLabel {
+    NSString *longerRetentionUpgradeToProText = NSLocalizedString(@"settings.fileManagement.rubbishBin.longerRetentionUpgrade", @"This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear.");
+    
+    NSString *semiboldAndGreenText = [longerRetentionUpgradeToProText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
+    longerRetentionUpgradeToProText = longerRetentionUpgradeToProText.mnz_removeWebclientFormatters;
+    NSRange semiboldAndGreenTextRange = [longerRetentionUpgradeToProText rangeOfString:semiboldAndGreenText];
+
+    UIColor *secondaryGrayColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    NSMutableAttributedString *longerRetentionUpgradeToProMAS = [NSMutableAttributedString.alloc initWithString:longerRetentionUpgradeToProText attributes:@{NSForegroundColorAttributeName : secondaryGrayColor}];
+    
+    UIColor *turquoiseColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    UIFont *semiboldFont = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightSemibold];
+    [longerRetentionUpgradeToProMAS setAttributes:@{NSFontAttributeName : semiboldFont, NSForegroundColorAttributeName : turquoiseColor} range:semiboldAndGreenTextRange];
+
+    self.longerRetentionPeriodUpgradetoProLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightRegular];
+    self.longerRetentionPeriodUpgradetoProLabel.textColor = secondaryGrayColor;
+    self.longerRetentionPeriodUpgradetoProLabel.attributedText = longerRetentionUpgradeToProMAS;
+}
+
+- (void)showUpgradeToPro {
+    [UpgradeAccountRouter.new presentUpgradeTVC];
 }
 
 - (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)textField {
