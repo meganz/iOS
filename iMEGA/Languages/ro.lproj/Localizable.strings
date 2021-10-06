@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Anulează";
 /* Button title to accept something */
-"ok"="Ok";
+"ok"="OK";
 /* Button title to clear something */
 "clear"="Șterge";
 /*  */
@@ -9,7 +9,7 @@
 /*  */
 "no"="Nu";
 /*  */
-"upload"="Încărcare";
+"upload"="Încarcă";
 /*  */
 "error"="Eroare";
 /*  */
@@ -53,7 +53,7 @@
 /* Button title to try to decrypt the link */
 "decrypt"="Decriptează";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Cheie de decriptate nevalidă";
+"decryptionKeyNotValid"="Cheie de decriptare nevalidă";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
 "To access this link, you will need its password."="Pentru a accesa acest link, vei avea nevoie de parola sa.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
@@ -71,17 +71,17 @@
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Serverele sunt prea ocupate. Te rugăm să aștepți.";
+"serversAreTooBusy"="Serverele sunt prea ocupate. Te rugăm să aștepți…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Nu se poate accesa MEGA. Te rugăm să verifici conectivitatea sau încearcă din nou mai târziu.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Prea multe cereri. Te rugăm să aștepți.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="Te rugăm să te autentifici.";
+"pleaseLogInToYourAccount"="Te rugăm să te autentifici în cont.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat pentru a finaliza modificarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală și apoi dă clic pe linkul de confirmare din nou.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Autentificare";
+"login"="Autentifică-te";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Creează un cont";
 /* Message shown when the user writes a wrong email or password on login */
@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Te rugăm să verifici e-mailul și să urmezi linkul pentru a confirma contul.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Your account was terminated due to a breach of MEGA’s Terms of Service including, but not limited to, clause 15.";
+"accountBlocked"="Contul tău a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, inclusiv, dar fără a se limita la, clauza 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Introdu un e-mail valid";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -113,7 +113,7 @@
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="Medie";
 /*  */
-"passwordMedium"="Parola ta este suficientă de bună pentru a continua, dar este recomandat să o faci mai puternică parola pe viitor.";
+"passwordMedium"="Parola ta este suficientă de bună pentru a continua, dar este recomandat să întărești parola în continuare.";
 /*  */
 "good"="Bună";
 /*  */
@@ -173,11 +173,11 @@
 /* Title for the folder link view */
 "folderLink"="Linkul folderului";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Descărcare";
+"downloadButton"="Descarcă";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Folderul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="Folderul '%@' nu poate fi creat";
+"folderCreationError"="Folderul „%@” nu poate fi creat";
 /*  */
 "folderLinkUnavailableText1"="Acest lucru ar putea fi din cauza următoarelor motive:";
 /*  */
@@ -247,7 +247,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d foldere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 folder + 1 fișier";
+"folderAndFile"="1 folder • 1 fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
 "foldersAndFiles"="[A] foldere • [B] fișiere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
@@ -343,7 +343,7 @@
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Se generează linkul…";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="Se generează linkurile";
+"generatingLinks"="Se generează linkurile…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link copiat";
 /* Message shown when some links have been copied to the pasteboard */
@@ -357,11 +357,11 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA respectă drepturile de autor ale celorlalți și impune utilizatorilor serviciului de stocare în cloud MEGA să se conformeze cu legislațiile privind drepturile de autor.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Ai interdicția strică de a folosi serviciul de stocare în cloud MEGA pentru încălcarea drepturilor de autor. Nu poți încărca, descărca, stoca, partaja, afișa, distribui, reda în flux, trimite e-mail, oferi link, transmite sau altfel pune la dispoziție fișiere, date sau conținut care încalcă orice drept de autor sau alte drepturi de proprietate ale unei persoane sau entități.";
+"copyrightMessagePart2"="Îți este strict interzis să folosești serviciul de stocare în cloud MEGA pentru încălcarea drepturilor de autor. Nu poți încărca, descărca, stoca, partaja, afișa, distribui, reda în flux, trimite e-mail, oferi link, transmite sau altfel pune la dispoziție fișiere, date sau conținut care încalcă orice drept de autor sau alte drepturi de proprietate ale unei persoane sau entități.";
 /* button caption text that the user clicks when he agrees */
-"agree"="De acord";
+"agree"="Sunt de acord";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Dezacord";
+"disagree"="Nu sunt de acord";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Link fără cheie";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -369,7 +369,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="(NUMAI PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="Setează data de expirare";
+"setExpiryDate"="Setează o dată de expirare";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="Setează protecție prin parolă";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -649,7 +649,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii de utilizare a serviciului";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="Regulament privind protecția datelo";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Dezactivat";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -747,7 +747,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Modifică parola";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exportarea cheii de recuperare și păstrarea ei într-o locație sigură îți dă posibilitatea să setezi o parolă nouă fără pierderea datelor.";
+"exportMasterKeyFooter"="Exportarea cheii de recuperare și păstrarea ei într-o locație securizată îți dă posibilitatea să setezi o parolă nouă fără pierderea datelor.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="De ce am nevoie de o cheie de recuperare?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -851,7 +851,7 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Trimite";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="Cont parcat";
+"parkAccount"="Parchează contul";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="Iau la cunoștință faptul că încep un cont nou, gol și că voi pierde toate datele în contul meu prezent, cu excepția cazului în care îmi aduc aminte parola sau găsesc o cheie de recuperare exportată.";
 /* Caption of the button to proceed */
@@ -975,7 +975,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
+"account.achievement.mobileApp.title"="Instalează aplicația mobilă MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selectează un tip de cont:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Un abonament anual este cu 17% mai ieftin decât 12 plăți lunare";
+"twoMonthsFree"="Un abonament anual este cu 16% mai ieftin decât 12 plăți lunare";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1073,13 +1073,13 @@
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Upgradează la un plan personalizat";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți face upgrade la un plan personalizat";
+"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți face upgrade la un plan personalizat:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicită un plan";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selectează contul de membru:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Economisește 17%";
+"save17"="Economisește 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="ACHIZIȚIE GREȘITĂ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1111,7 +1111,7 @@
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Problemă de restaurare";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="Achiziționarea anterioră nu a putut fi găsită. Te rugăm să selectezi produsul achiziționat anterior pentru restabilire. NU vei fi taxat din nou.";
+"incompleteRestore_message"="Achiziționarea anterioară nu a putut fi găsită. Te rugăm să selectezi produsul achiziționat anterior pentru restabilire. NU vei fi taxat din nou.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
@@ -1153,7 +1153,7 @@
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Invită";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="Acest mesaj a fost șters.";
+"thisMessageHasBeenDeleted"="Acest mesaj a fost șters";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Eu";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
@@ -1167,9 +1167,9 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] a fost schimbat în [B] de către [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] a schimbat numele chatului de grup în '[B]'.";
+"changedGroupChatNameTo"="[A] a schimbat numele chatului de grup în „[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="Adaugă participant…";
+"addParticipant"="Adaugă un participant…";
 /* Menu item to add participants to a chat */
 "addParticipants"="Adaugă participanți";
 /* Title that refers to the status of the chat (Either Online or Offline) */
@@ -1217,13 +1217,13 @@
 /* Button title */
 "verified"="Verificat";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Golește istoricul chatului";
+"clearChatHistory"="Șterge istoricul chatului";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Sigur vrei să golești istoricul complet al mesajelor din această conversație?";
+"clearTheFullMessageHistory"="Sigur vrei să ștergi istoricul complet al mesajelor din această conversație?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Istoricul chatului a fost golit";
+"Chat History has Been Cleared"="Istoricul chatului a fost șters";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="S-a produs o eroare. Istoricul chatului nu a fost golit cu succes";
+"An error has occurred. The chat history has not been successfully cleared"="A apărut o eroare. Istoricul chatului nu a fost șters cu succes";
 /* 'Next' button in a dialog */
 "continue"="Continuă";
 /* Title of the incoming shared folders of a user. */
@@ -1291,7 +1291,7 @@
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
 "writeAMessage"="Scrie un mesaj către %s…";
 /* Information if there are no history messages in current chat conversation */
-"noConversationHistory"="Niciun istoric al conversațiilor";
+"noConversationHistory"="Niciun istoric al conversației";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="Reîncearcă";
 /* Button which allows to delete message in chat conversation. */
@@ -1357,7 +1357,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MESAJE NECITITE";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge la pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți selecta abonamentul MEGA Pro și să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge pe pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți selecta abonamentul MEGA Pro și să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschide MEGA și autentifică-te pentru a continua";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1513,9 +1513,9 @@
 /*  */
 "delete"="Șterge";
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
-"revert"="Revenire la versiunea anterioară";
+"revert"="Restabilește";
 /*  */
-"download"="Descărcare";
+"download"="Descarcă";
 /* Singular of file. 1 file */
 "file"="fișier";
 /* Label to desing a file matching */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Coșul de gunoi poate fi golit pentru tine automat. Perioada minimă este de 7 zile.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pentru a dezactiva planificatorul de golire a coșului de gunoi sau pentru a seta o perioadă de păstrare mai lungă, trebuie să te abonezi la un plan PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a Pro plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vrei să închizi toate celelalte sesiuni? Acest lucru te va deconecta din toate celelalte sesiuni active, cu excepția celei actuale.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1773,7 +1773,7 @@
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvat(ă) în Poze";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save Item"="Nu s-a putut salva elementul.";
+"Could not save Item"="Nu s-a putut salva elementul";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
 "Encrypted Key Rotation"="Rotația cheii de criptare";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
@@ -1915,7 +1915,7 @@
 /*  */
 "Yesterday"="Ieri";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send this location";
+"Send This Location"="Trimite această locație";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Setări pentru hartă";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -1937,7 +1937,7 @@
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="Glisează < pentru a anula";
+"< Slide to cancel"="< Glisează pentru a anula";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="Atinge și ține %@ pentru a înregistra, eliberează pentru a trimite";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
@@ -2047,11 +2047,11 @@
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
-"My chat files"="Fișierele mele chat";
+"My chat files"="Fișierele mele de chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="Plan";
 /*  */
-"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Dacă pierzi această cheie de recuperare și îți uiți parola, [B]toate fișierele, folderele și mesajele vor fi inaccesibile, chiar și prin MEGA[/B].";
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Dacă pierzi această cheie de recuperare și uiți parola, [B]toate fișierele, folderele și mesajele vor fi inaccesibile, chiar și de către MEGA[/B].";
 /*  */
 "Business"="Business";
 /*  */
@@ -2061,7 +2061,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferuri";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="Nu poți elimina pe %1$s ca contact, deoarece face parte din contul tău business.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="Nu poți elimina pe %1$s de la contacte, deoarece face parte din contul tău business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="Necesită cod de acces";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2073,23 +2073,23 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contestă eliminarea";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
-"User management is only available from a desktop web browser."="Gestionarea utilizatorilor este disponibilă doar de pe un browser web de desktop.";
+"User management is only available from a desktop web browser."="Gestionarea utilizatorilor este disponibilă doar de pe un browser web desktop.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
-"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="A fost o problemă cu ultima plată. Te rugăm să accesezi MEGA folosind un browser desktop pentru mai multe informații.";
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="A existat o problemă cu ultima plată. Te rugăm să accesezi MEGA folosind un browser desktop pentru mai multe informații.";
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Contul tău business a expirat";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="A apărut o problemă la procesarea plății. MEGA este limitat în modul numai vizualizare până când această problemă a fost rezolvată într-un browser web desktop.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="A existat o problemă la procesarea plății. MEGA este limitat în modul numai vizualizare până când această problemă a fost rezolvată într-un browser web desktop.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA nu îți poate accesa datele. Cu toate acestea, administratorul contului tău business îți poate accesa Încărcări cameră.";
 /*  */
 "Something went wrong"="Ceva a mers prost";
 /* Title of the "Links" Shared Items. */
 "Links"="Linkuri";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No public links";
+"No Public Links"="Niciun link public";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gestionează partajarea";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -2137,7 +2137,7 @@
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias sau pseudonim";
 /* Business expired account Overdue payment page header. */
-"Payment overdue"="Plată restantă";
+"Payment overdue"="Plata este întârziată";
 /* Business account status */
 "Active"="Activă";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
@@ -2245,21 +2245,21 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "settings.section.userInterface"="Interfața utilizatorului";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
-"Default Tab"="Default Tab";
+"Default Tab"="Fila implicită";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mod de sortare și vizualizare";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Hide Recent Activity";
+"settings.userInterface.hideRecentActivity"="Ascunde activitatea recentă";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
 "settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
-"Default"="Implicit";
+"Default"="Implicită";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
 "Day"="Zi";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Noapte";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
-"Minimal"="Minimal";
+"Minimal"="Minimală";
 /* Section title inside of Settings - User Interface, where you can change the app's launch. */
 "Launch"="Launch";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
@@ -2275,9 +2275,9 @@
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="La fel pentru toate";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"Sorting preference"="Preferințe pentru sortare";
+"Sorting preference"="Preferință pentru sortare";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"View mode preference"="Preferințe pentru modul de vizualizare";
+"View mode preference"="Preferință pentru modul de vizualizare";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurează ordinea de sortare a coloanelor pe o bază per folder sau folosește aceeași ordine pentru toate folderele.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
@@ -2385,11 +2385,11 @@
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Dată de expirare";
 /* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Setează dată de expirare";
+"Set Expiry Date"="Setează o dată de expirare";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Protecție prin parolă";
 /* Text for options in Get Link View to set password protection */
-"Set Password"="Setează parolă";
+"Set Password"="Setează o parolă";
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Exportă linkul și cheia de decriptare separat.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
@@ -2427,9 +2427,9 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="E-mail trimis deja. Te rugăm să aștepți câteva minute înainte de a încerca din nou.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Manage Chat History";
+"Manage Chat History"="Gestionează istoricul chatului";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="Curățarea istoricului";
+"History Clearing"="Ștergerea istoricului";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
 "Automatically delete messages older than a certain amount of time"="Șterge automat mesajele mai vechi de o anumită perioadă de timp.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
@@ -2453,9 +2453,9 @@
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
 "Custom..."="Personalizat…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] a modificat perioada de ștergere a mesajelor în [/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] a dezactivat ștergerea mesajelor.[/B]";
 /*  */
 "hour"="oră";
 /*  */
@@ -2469,9 +2469,9 @@
 /*  */
 "weeks"="săptămâni";
 /*  */
-"1 week"="1 week";
+"1 week"="1 săptămână";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
+"%1 weeks"="%1 săptămâni";
 /*  */
 "month"="lună";
 /*  */
@@ -2497,9 +2497,9 @@
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Încarcă fișier(e)";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Shortcuts";
+"Shortcuts"="Comenzi rapide";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="Lansează aplicația MEGA pentru a efectua o acțiune";
 /* Title for document explorer view */
 "Documents"="Documente";
 /* Title for audio explorer view */
@@ -2507,29 +2507,29 @@
 /* Title for video explorer view */
 "Videos"="Videoclipuri";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="No documents found";
+"No documents found"="Niciun document găsit";
 /* Audio Explorer Screen: No audio files in the account */
-"No audio files found"="No audio files found";
+"No audio files found"="Niciun fișier audio găsit";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="No videos found";
+"No videos found"="Niciun videoclip găsit";
 /* Navigation title for the photo explorer view */
-"All Images"="All Images";
+"All Images"="Toate imaginile";
 /* Section title for the photo explorer view */
-"TODAY"="TODAY";
+"TODAY"="ASTĂZI";
 /* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
+"YESTERDAY"="IERI";
 /* Photo Explorer Screen: No images in the accoun t */
-"No images found"="No images found";
+"No images found"="Nicio imagine găsită";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Start";
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="Documente";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="This link was shared without a decryption key. Do you want to share its key?";
+"This link was shared without a decryption key. Do you want to share its key?"="Acest link a fost partajat fără o cheie de decriptare. Vrei să îi partajezi cheia?";
 /* Title for password protect link alert */
-"Link Password"="Link Password";
+"Link Password"="Parolă a linkului";
 /* Message shown when a link is shared having a password */
-"Do you want to share the password for this link?"="Do you want to share the password for this link?";
+"Do you want to share the password for this link?"="Vrei să partajezi parola pentru acest link?";
 /* Accessibility message when a message is sent in chat */
 "message sent"="mesaj trimis";
 /* Accessibility message when a message sending fails in chat */
@@ -2539,7 +2539,7 @@
 /* Cookie dialog header */
 "Before You Continue"="Înainte de a continua";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Folosim spațiul de stocare local și tehnologii similare („Cookie-uri”) pentru a-ți oferi serviciile noastre, pentru a-ți îmbunătăți experiența cu serviciile noastre și pentru a personaliza anunțurile pe care le vezi, inclusiv prin intermediul unor terțe părți. Acceptă folosirea cookie-urilor de la începutul vizitei tale sau personalizează cookie-urile în Setări privind cookie-urile. Citește mai multe în [A]Politica noastră privind cookie-urile[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="Acceptă cookie-urile";
 /* Cookie settings dialog text. */
@@ -2549,7 +2549,7 @@
 /* Cookie settings dialog text. */
 "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Esențiale pentru furnizarea de funcționalități importante și acces securizat la serviciile noastre. Din acest motiv, ele nu necesită consimțământ.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Cookie-uri de preferință";
+"Preference Cookies"="Cookie-uri privind preferințele";
 /* Cookie settings dialog text. */
 "Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Permite-ne să ținem minte anumite setări de afișare și formatare pe care le alegi. Neacceptarea acestor cookie-uri va însemna că nu vom putea să ținem minte unele lucruri pentru tine, precum aspectul preferat al ecranului.";
 /* Cookie settings dialog text. */
@@ -2579,13 +2579,13 @@
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Contul meu";
 /* Text for title for favourite nodes */
-"Favourites"="Favourites";
+"Favourites"="Favorite";
 /* Text describing that there is not any node marked as favourite */
-"No Favourites"="No Favourites";
+"No Favourites"="Niciun favorit";
 /* Text indicating to the user that can perform an action to view more results */
-"VIEW MORE"="VIEW MORE";
+"VIEW MORE"="VEZI MAI MULTE";
 /* Title for the QuickAccess widget */
-"Quick Access"="Quick Access";
+"Quick Access"="Acces rapid";
 /* Text description for the QuickAccess widget */
 "Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or the Offline section";
 /* Text description for the Favourites QuickAccess widget */
@@ -2617,9 +2617,9 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Your content will be deleted from this device when you log out.";
+"offline.logOut.warning.message"="Logging out deletes your offline content.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
-"transfer.cell.shareOwnerStorageQuota.infoLabel"="Proprietarul partajării depăște cota de stocare.";
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="Proprietarul partajării depășește cota de stocare.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
 "dialog.shareOwnerStorageQuota.message"="Fișierul nu poate fi trimis deoarece utilizatorul țintă și-a depășit cota sa de stocare.";
 /* Hud info message when edit large text file. */
@@ -2681,9 +2681,9 @@
 /* Action of a call/meeting to share its link */
 "meetings.action.shareLink"="Share Meeting Link";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join…";
+"meetings.message.waitingOthers"="Se așteaptă ca alții să se alăture…";
 /* Message shown when the user is the only one left in the meeting */
-"meetings.message.noOtherParticipants"="You are the only one here…";
+"meetings.message.noOtherParticipants"="Ești singura persoană aici…";
 /* Message header when the user enters a invalid meeting URL */
 "meetings.joinMeeting.header"="Invalid Meeting URL";
 /* Message description when the user enters a invalid meeting URL */
@@ -2693,7 +2693,7 @@
 /* Button text to join a meeting for the logged in user */
 "meetings.link.loggedInUser.joinButtonText"="Alătură-te întâlnirii";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.guest.joinButtonText"="Join as guest";
+"meetings.link.guest.joinButtonText"="Alătură-te ca invitat";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Intimitatea ta contează";
 /* Guest user join Mega: paragraph 1 description */

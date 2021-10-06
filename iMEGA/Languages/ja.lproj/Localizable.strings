@@ -755,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="回復キーがエクスポートされました";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="回復キーは、MEGA-RECOVERYKEY.txtとしてオフラインセクションにエクスポートされました。注意：ログアウトすると削除されますので、安全な場所に保管してください。";
+"masterKeyExported_alertMessage"="回復キーは、MEGA-回復キー.txtとしてオフラインセクションにエクスポートされました。注意：ログアウトすると削除されますので、安全な場所に保管してください。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="ご自分のデバイス";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="1つのアカウントタイプを選択：";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="年間サブスクリプションは12回にわたり毎月お支払いいただくよりも17%安いです";
+"twoMonthsFree"="年間サブスクリプションは12回にわたり毎月お支払いいただくよりも16%安いです";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="あなたの現在のサブスクリプションをアップグレードするには、[A]カスタムプラン[/A]用にサポートにお問い合わせください。";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="メンバーシップを選択：";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="17%割引";
+"save17"="16%割引";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="ご購入エラー%@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="ごみ箱は自動的にきれいにできます。最小期間は7日間です。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="ごみ箱クリアスケジューラを無効にするか、より長い保存期間を設定するには、PROプランのご契約をしていただく必要がございます。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="ごみ箱クリアスケジューラを無効にするか、より長い保存期間を設定するには、Proプランのご契約をしていただく必要がございます。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="他のセッションをすべて終了しますか？　これにより、現在のセッション以外のすべてのアクティブなセッションでログアウトされます。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="設定の変更";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="ログアウトすると、この端末からあなたのコンテンツが削除されます。";
+"offline.logOut.warning.message"="ログアウトすると、オフラインのコンテンツが削除されます。";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="共有所有者はストレージ容量を超えています。";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */

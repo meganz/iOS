@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Per favore, controlla la tua email e clicca sul link per confermare l'account.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Your account was terminated due to a breach of MEGA’s Terms of Service including, but not limited to, clause 15.";
+"accountBlocked"="Il tuo account è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA incluso il, ma non limitato al, comma 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Inserisci una mail valida";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -755,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Chiave di recupero esportata";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.";
+"masterKeyExported_alertMessage"="La Chiave di Recupero è stata esportata nella sezione Offline come MEGA-CHIAVEDIRECUPERO.txt. Nota: verrà eliminata se effettui il logout, quindi per favore archiviala in un luogo sicuro.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sul dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -859,7 +859,7 @@
 /*  */
 "yourAccounHasBeenParked"="Il tuo vecchio account è stato sospeso con successo. Ora puoi accedere al tuo nuovo account.";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="New email address";
+"newEmail"="Nuovo indirizzo email";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confermare email";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -969,17 +969,17 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonus inviti";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install the MEGA desktop app";
+"account.achievement.desktopApp.title"="Installa l'app per desktop di MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA desktop app.";
+"account.achievement.desktopApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione per aver installato l'app per desktop di MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Quando installi l'app per desktop di MEGA ottieni %@ di spazio complementare di archiviazione, valido per 365 giorni. L'app per desktop di MEGA è disponibile per Windows, macOS e la maggior parte delle distribuzioni Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
+"account.achievement.mobileApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione per aver installato l'app per mobile di MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="Quando installi l'app per mobile di MEGA ottieni %@ di spazio complementare di archiviazione, valido per 365 giorni. L'app per mobile di MEGA è disponibile per iOS e per Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ di spazio di archiviazione. Valido per 365 giorni.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Seleziona un tipo di account:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="L'abbonamento annuale è il 17% meno costosi di 12 abbonamenti mensili";
+"twoMonthsFree"="L'abbonamento annuale è il 16% meno costosi di 12 abbonamenti mensili";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Per effettuare l’upgrade del tuo piano corrente, per favore contatta il supporto per un [A]piano personalizzato[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Scegli il tipo di abbonamento:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Risparmierai il 17%";
+"save17"="Risparmierai il 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="ACQUISTO ERRATO %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Il Cestino può essere svuotato per te automaticamente. Il periodo minimo è di 7 giorni.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Per disabilitare il calendario di pulizia automatica del Cestino o impostare un periodo di ritenzione, devi abbonarti ad un piano PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Per disabilitare lo svuotamento automatico del Cestino o per impostare un periodo pi lungo di retenzione, devi abbonarti ad un piano Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vuoi chiudere tutte le altre sessioni? Questo ti farà uscire da tutte le altre sessioni attive, fatta eccezione per quella corrente.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2045,7 +2045,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTATTI SU MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Hai una richiesta MEGA Chat in attesa. Registrati su MEGA ed ottieni 20GB di spazio di archiviazione gratuito per sempre.";
 /* Destination folder name of chat files */
 "My chat files"="File delle mie chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2083,7 +2083,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Il tuo account è [B]sospeso[/B] al momento. Puoi solo sfogliare tra i tuoi dati.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA non può accedere ai tuoi dati. Comunque, l'amministratore del tuo account Business può accedere ai tuoi Caricamenti da fotocamera.";
 /*  */
 "Something went wrong"="Qualcosa è andato storto";
 /* Title of the "Links" Shared Items. */
@@ -2135,7 +2135,7 @@
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Rimuovi nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or Nickname";
+"Alias/ Nickname"="Alias o nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Pagamento in ritardo";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Includi tag di posizione";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Questa opzione, se attivata, include nelle tue foto le informazioni riguardo la posizione. Per favore, fai attenzione quando le condividi.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Invia (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Cambia impostazioni";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Il tuo contenuto verrà eliminato da questo dispositivo quando effettuerai il logout.";
+"offline.logOut.warning.message"="Logging out deletes your offline content.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Il proprietario della condivisione ha superato il limite dello spazio di archiviazione.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2629,80 +2629,80 @@
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Proprietario)";
 /* Name for the recovery key file */
-"general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
+"general.security.recoveryKeyFile"="MEGA-CHIAVEDIRECUPERO";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"calls.incompatibility.warningMessage"="Stiamo aggiornando MEGAchat. Le tue chiamate potrebbero non essere connesse a causa di incompatibilità delle versioni, salvo che tutti i partecipanti aggiornino MEGA all'ultima versione.";
 /* Hint text to display user's current email */
-"account.changeEmail.currentEmail"="Current email address";
+"account.changeEmail.currentEmail"="Indirizzo email corrente";
 /* Title of Over Disk Quota dialog */
-"dialog.storage.odq.title"="Please Upgrade";
+"dialog.storage.odq.title"="Per favore, effettua l'upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+"dialog.storage.almostFull.detail"="Il tuo Cloud Drive è quasi pieno. Effettua adesso l'upgrade ad un account Pro ed ottieni fino a %@TB (%@GB) di spazio di archiviazione cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
+"dialog.storage.odq.detail"="Il tuo Cloud è pieno. Per favore, effettua l'upgrade ad un piano MEGA Pro per aumentare il tuo spazio di archiviazione ed ottenere benefici addizionali. Se rimani sopra il limite del tuo spazio di archiviazione e non effettui l'upgrade o elimini alcuni dati, il tuo account potrebbe essere bloccato. Per favore, vedi le email che ti abbiamo inviato per maggiori informazioni.";
 /* Over Disk Quota paywall not final title. */
-"dialog.storage.paywall.notFinal.title"="Account Locked";
+"dialog.storage.paywall.notFinal.title"="Account bloccato";
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="I tuoi dati sono a rischio!";
 /* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>Unfortunately you have not taken action in the <b>%@</b> since our emails were sent to <b>%@</b>, on <b>%@</b>. You are still using <b>%@</b> storage, which is over your free limit. Please see the emails we have sent you for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Sfortunatamente, non hai intrapreso alcuna azione durante i <b>%@</b> da quando le nostre email sono state mandate a <b>%@</b> il <b>%@</b>. Stai ancora utilizzando <b>%@</b> di spazio, che è oltre il tuo limite gratuito. Per favore, vedi le email che ti abbiamo inviato per maggiori informazioni su quel che devi fare.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Unfortunately you have not upgraded your account yet. If you do not upgrade now, your data will be deleted tomorrow. See your email for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Sfortunatamente non hai ancora effettuato l'upgrade del tuo account. Se non effettui l'upgrade adesso, i tuoi dati verranno eliminati domani. Vedi le tue email per maggiori informazioni su quel che devi fare.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Please upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Per favore, effettua l'upgrade entro <warn>%@</warn> per evitare l'eliminazione dei tuoi dati.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Please upgrade today if you wish to keep your data.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Per favore, effettua l'upgrade oggi se desideri tenere i tuoi dati.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Ottieni il bonus";
 /* Message to inform the local user that someone has joined the current group call */
-"meetings.message.joinedCall"="%@ joined the call";
+"meetings.message.joinedCall"="%@ adesso è nella chiamata";
 /* Message to inform the local user that someone has left the current group call */
-"meetings.message.leftCall"="%@ left the call";
+"meetings.message.leftCall"="%@ non è più nella chiamata";
 /* Title for Enter Meeting Link. */
-"meetings.enterMeetingLink.title"="Enter Meeting Link";
+"meetings.enterMeetingLink.title"="Inserisci link del meeting";
 /* Text button for init a Meeting. */
-"meetings.create.newMeeting"="New Meeting";
+"meetings.create.newMeeting"="Nuovo meeting";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@ Meeting";
+"meetings.createMeeting.defaultMeetingName"="Meeting %@";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end"="Meeting Ended";
+"meetings.alert.end"="Meeting terminato";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="View Meeting Chat";
+"meetings.alert.meetingchat"="Visualizza la chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end.description"="The meeting you’re trying to join has already ended. You can still view the meeting chat history.";
+"meetings.alert.end.description"="Il meeting a cui stai cercando di unirti è già terminato. Puoi ancora vedere la chat del meeting.";
 /* Contacts selection screen header: Invite contacts to meetings */
-"meetings.panel.InviteParticipants"="Invite Participants";
+"meetings.panel.InviteParticipants"="Invita partecipanti";
 /* Meetings: Floating panel participants count header */
-"meetings.panel.ParticipantsCount"="Participants (%d)";
+"meetings.panel.ParticipantsCount"="Partecipanti (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="MODERATOR";
+"meetings.participant.moderator"="MODERATORE";
 /* Action of a call/meeting to rename it */
-"meetings.action.rename"="Rename Meeting";
+"meetings.action.rename"="Rinomina meeting";
 /* Action of a call/meeting to share its link */
-"meetings.action.shareLink"="Share Meeting Link";
+"meetings.action.shareLink"="Condividi link del meeting";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join…";
+"meetings.message.waitingOthers"="In attesa che le altre persone si colleghino…";
 /* Message shown when the user is the only one left in the meeting */
-"meetings.message.noOtherParticipants"="You are the only one here…";
+"meetings.message.noOtherParticipants"="Sei l'unico utente qui…";
 /* Message header when the user enters a invalid meeting URL */
-"meetings.joinMeeting.header"="Invalid Meeting URL";
+"meetings.joinMeeting.header"="URL del meeting non valido";
 /* Message description when the user enters a invalid meeting URL */
-"meetings.joinMeeting.description"="Unable to join the meeting. Please check the link is valid.";
+"meetings.joinMeeting.description"="Impossibile unirsi al meeting. Per favore, controlla che il link sia valido.";
 /* Message shown when the meeting link cannot be generated */
-"meetings.sharelink.Error"="Meeting link could not be generated. Please try again.";
+"meetings.sharelink.Error"="Non è stato possibile generare il link del meeting. Per favore, riprova.";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.loggedInUser.joinButtonText"="Join meeting";
+"meetings.link.loggedInUser.joinButtonText"="Unisciti al meeting";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.guest.joinButtonText"="Join as guest";
+"meetings.link.guest.joinButtonText"="Unisciti come ospite";
 /* Guest user join Mega: paragraph 1 title */
-"meetings.joinMega.paragraph1.title"="Your privacy matters";
+"meetings.joinMega.paragraph1.title"="La tua privacy importa";
 /* Guest user join Mega: paragraph 1 description */
-"meetings.joinMega.paragraph1.description"="Join the largest secure cloud storage and collaboration platform in the world.";
+"meetings.joinMega.paragraph1.description"="Unisciti alla più grande piattaforma sicura di archiviazione cloud e collaborazione del mondo.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Get 20 GB for free";
+"meetings.joinMega.paragraph2.title"="Ottieni 20GB gratuitamente";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="Sign up now and enjoy advanced collaboration features for free.";
+"meetings.joinMega.paragraph2.description"="Registrati ora ed utilizza la collaborazione avanzata gratuitamente.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="You are the new call moderator";
+"meetings.notifications.moderatorPrivilege"="Adesso sei moderatore";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"meetings.incompatibility.warningMessage"="Stiamo aggiornando MEGAchat. Le tue chiamate potrebbero non essere connesse a causa di incompatibilità delle versioni, salvo che tutti i partecipanti aggiornino MEGA all'ultima versione.";

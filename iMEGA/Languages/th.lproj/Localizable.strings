@@ -65,7 +65,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่ออย่างปลอดภัยผ่าน SSL ได้ คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม";
+"sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่อผ่าน SSL ได้อย่างปลอดภัย คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="รายการเนื้อหาที่คุณพยายามเข้าถึงยังไม่พร้อมใช้งานกับบัญชีนี้ กรุณาลองเข้าสู่ระบบด้วยบัญชีเดียวกับในไคลเอนต์เว็บบนมือถือ";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="กรุณาตรวจสอบอีเมลของคุณและทำตามลิงก์เพื่อยืนยันบัญชีของคุณ";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Your account was terminated due to a breach of MEGA’s Terms of Service including, but not limited to, clause 15.";
+"accountBlocked"="บัญชีของคุณถูกยกเลิกเนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA รวมถึงแต่ไม่จำกัดเพียงข้อที่ 15";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="กรอกอีเมลให้ถูกต้อง";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -979,7 +979,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการติดตั้งแอป MEGA บนมือถือ";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="เมื่อคุณติดตั้งแอป MEGA บนมือถือ คุณจะได้รับพื้นที่เก็บข้อมูลฟรี %@ มีอายุการใช้งาน 365 วัน แอป MEGA บนมือถือ สามารถใช้ได้ทั้ง iOS และ Android";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="พื้นที่เก็บข้อมูล %@ มีอายุใช้งาน 365 วัน";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="เลือกบัญชีหนึ่งประเภท:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="การสมัครสมาชิกรายปีคือ 17% ถูกกว่าการชำระเงินรายเดือน 12 ครั้ง";
+"twoMonthsFree"="การสมัครสมาชิกรายปีคือ 16% ถูกกว่าการชำระเงินรายเดือน 12 ครั้ง";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="หากต้องการอัปเกรดการสมัครใช้งานปัจจุบันของคุณ กรุณาติดต่อฝ่ายสนับสนุนเพื่อ[A]กำหนดแผนเอง[/A]";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="เลือกประเภทสมาชิก:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="ประหยัด 17%";
+"save17"="ประหยัด 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="สั่งซื้อผิดรายการ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="ถังขยะสามารถล้างให้คุณได้โดยอัตโนมัติ ระยะเวลาขั้นต่ำคือ 7 วัน";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="หากต้องการปิดใช้งานตัวกำหนดเวลาทำความสะอาดถังขยะหรือตั้งระยะเวลาเก็บรักษาที่นานขึ้น คุณต้องสมัครแผน PRO";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="หากต้องการปิดใช้งานตัวกำหนดเวลาล้างถังขยะหรือกำหนดระยะเวลาเก็บรักษาไฟล์ให้นานขึ้น คุณต้องสมัครแผน Pro";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="คุณต้องการปิดเซสชันอื่นทั้งหมดหรือไม่ การดำเนินการนี้จะนำคุณออกจากเซสชันที่มีการใช้งานอื่น ๆ ทั้งหมดยกเว้นในปัจจุบัน";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2083,7 +2083,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="บัญชีของคุณ[B]ถูกระงับ[/B]ในขณะนี้ คุณสามารถเรียกดูได้แค่ข้อมูลของคุณเท่านั้น";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ไม่สามารถเข้าถึงข้อมูลของคุณได้ อย่างไรก็ตาม ผู้ดูแลระบบบัญชีธุรกิจของคุณจะยังสามารถเข้าถึงการอัปโหลดจากกล้องของคุณได้";
 /*  */
 "Something went wrong"="มีบางอย่างผิดพลาด";
 /* Title of the "Links" Shared Items. */
@@ -2135,7 +2135,7 @@
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="ลบชื่อเล่นออก";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or Nickname";
+"Alias/ Nickname"="นามแฝงหรือชื่อเล่น";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="การชำระเงินล่าช้า";
 /* Business account status */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="รวมแท็กสถานที่";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="หากเปิดใช้งาน ข้อมูลตำแหน่งที่ตั้งจะรวมอยู่ในรูปภาพของคุณด้วย กรุณาแชร์อย่างระมัดระวัง";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="ส่ง (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="เปลี่ยนการตั้งค่า";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="เมื่อคุณออกจากระบบ เนื้อหาของคุณจะถูกลบออกจากอุปกรณ์นี้ทันที";
+"offline.logOut.warning.message"="การออกจากระบบจะเป็นการลบเนื้อหาออฟไลน์ของคุณออก";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="เจ้าของการแชร์ได้ใช้พื้นที่เก็บข้อมูลเกินโควต้า";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2631,78 +2631,78 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-คีย์การกู้คืน";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"calls.incompatibility.warningMessage"="เรากำลังอัปเกรด MEGAchat การโทรของคุณอาจไม่ได้เชื่อมต่อเนื่องจากว่าเวอร์ชันที่เข้ากันไม่ได้ เว้นแต่ทุกฝ่ายจะอัปเดตแอป MEGA เป็นเวอร์ชันล่าสุดแล้ว";
 /* Hint text to display user's current email */
 "account.changeEmail.currentEmail"="ที่อยู่อีเมลปัจจุบัน";
 /* Title of Over Disk Quota dialog */
-"dialog.storage.odq.title"="Please Upgrade";
+"dialog.storage.odq.title"="กรุณาอัปเกรด";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+"dialog.storage.almostFull.detail"="คลาวด์ไดร์ฟของคุณใกล้จะเต็มแล้ว อัปเกรดตอนนี้เป็นบัญชี Pro และรับพื้นที่เก็บข้อมูลบนคลาวด์สูงสุด %@ TB (%@ GB)";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
+"dialog.storage.odq.detail"="ที่เก็บข้อมูลบนคลาวด์ของคุณเต็มแล้ว กรุณาอัปเกรดเป็นแผน MEGA Pro เพื่อเพิ่มพื้นที่และรับสิทธิประโยชน์เพิ่มเติมอีกมากมาย หากคุณใช้พื้นที่เกินขีดจำกัดและไม่อัปเกรดหรือลบข้อมูลบางอย่างออก บัญชีของคุณอาจถูกล็อก กรุณาดูอีเมลที่เราส่งข้อมูลเพิ่มเติมถึงคุณ";
 /* Over Disk Quota paywall not final title. */
-"dialog.storage.paywall.notFinal.title"="Account Locked";
+"dialog.storage.paywall.notFinal.title"="บัญชีถูกล็อกแล้ว";
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="ข้อมูลของคุณอยู่ในความเสี่ยง!";
 /* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>Unfortunately you have not taken action in the <b>%@</b> since our emails were sent to <b>%@</b>, on <b>%@</b>. You are still using <b>%@</b> storage, which is over your free limit. Please see the emails we have sent you for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.notFinal.detail"="<paragraph>ขออภัย คุณไม่ได้ดำเนินการใด ๆ มา <b>%@</b> วันแล้ว นับตั้งแต่ที่เราส่งอีเมลไปที่ <b>%@</b> เมื่อ <b>%@</b> คุณยังคงใช้พื้นที่เก็บข้อมูลขนาด <b>%@</b> ซึ่งเกินขีดจำกัดพื้นที่ว่างของคุณ กรุณาดูอีเมลที่เราส่งข้อมูลถึงคุณเพิ่มเติมเกี่ยวกับสิ่งที่คุณต้องทำ</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Unfortunately you have not upgraded your account yet. If you do not upgrade now, your data will be deleted tomorrow. See your email for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>ขออภัย คุณยังไม่ได้อัปเกรดบัญชีของคุณ ถ้าคุณไม่อัปเกรดตอนนี้ ข้อมูลของคุณจะถูกลบในวันพรุ่งนี้ ดูอีเมลของคุณเพื่อดูข้อมูลเพิ่มเติมเกี่ยวกับสิ่งที่คุณต้องทำ</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Please upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>กรุณาอัปเกรดภายใน <warn>%@</warn> วันเพื่อหลีกเลี่ยงไม่ให้ข้อมูลของคุณถูกลบ</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Please upgrade today if you wish to keep your data.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>กรุณาอัปเกรดวันนี้หากคุณต้องการเก็บข้อมูลของคุณไว้</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="รับโบนัส";
 /* Message to inform the local user that someone has joined the current group call */
-"meetings.message.joinedCall"="%@ joined the call";
+"meetings.message.joinedCall"="%@ เข้าร่วมการโทรแล้ว";
 /* Message to inform the local user that someone has left the current group call */
-"meetings.message.leftCall"="%@ left the call";
+"meetings.message.leftCall"="%@ วางสายแล้ว";
 /* Title for Enter Meeting Link. */
-"meetings.enterMeetingLink.title"="Enter Meeting Link";
+"meetings.enterMeetingLink.title"="กรอกลิงก์การประชุม";
 /* Text button for init a Meeting. */
-"meetings.create.newMeeting"="New Meeting";
+"meetings.create.newMeeting"="ประชุมใหม่";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@ Meeting";
+"meetings.createMeeting.defaultMeetingName"="ประชุมกับ %@";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end"="Meeting Ended";
+"meetings.alert.end"="สิ้นสุดการประชุม";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="View Meeting Chat";
+"meetings.alert.meetingchat"="ดูแชทการประชุม";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end.description"="The meeting you’re trying to join has already ended. You can still view the meeting chat history.";
+"meetings.alert.end.description"="การประชุมที่คุณพยายามเข้าร่วมได้สิ้นสุดลงแล้ว คุณยังสามารถดูประวัติการแชทของการประชุมได้อยู่";
 /* Contacts selection screen header: Invite contacts to meetings */
-"meetings.panel.InviteParticipants"="Invite Participants";
+"meetings.panel.InviteParticipants"="เชิญผู้เข้าร่วม";
 /* Meetings: Floating panel participants count header */
-"meetings.panel.ParticipantsCount"="Participants (%d)";
+"meetings.panel.ParticipantsCount"="ผู้เข้าร่วม (%d คน)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="MODERATOR";
+"meetings.participant.moderator"="ผู้ดูแล";
 /* Action of a call/meeting to rename it */
-"meetings.action.rename"="Rename Meeting";
+"meetings.action.rename"="เปลี่ยนชื่อการประชุม";
 /* Action of a call/meeting to share its link */
-"meetings.action.shareLink"="Share Meeting Link";
+"meetings.action.shareLink"="แชร์ลิงก์การประชุม";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join…";
+"meetings.message.waitingOthers"="กำลังรอให้คนอื่นเข้าร่วม…";
 /* Message shown when the user is the only one left in the meeting */
-"meetings.message.noOtherParticipants"="You are the only one here…";
+"meetings.message.noOtherParticipants"="มีคุณคนเดียวที่อยู่ที่นี่…";
 /* Message header when the user enters a invalid meeting URL */
-"meetings.joinMeeting.header"="Invalid Meeting URL";
+"meetings.joinMeeting.header"="URL การประชุมไม่ถูกต้อง";
 /* Message description when the user enters a invalid meeting URL */
-"meetings.joinMeeting.description"="Unable to join the meeting. Please check the link is valid.";
+"meetings.joinMeeting.description"="ไม่สามารถเข้าร่วมการประชุมได้ กรุณาตรวจสอบว่าลิงก์ถูกต้องหรือยัง";
 /* Message shown when the meeting link cannot be generated */
-"meetings.sharelink.Error"="Meeting link could not be generated. Please try again.";
+"meetings.sharelink.Error"="ไม่สามารถสร้างลิงก์การประชุมได้ กรุณาลองอีกครั้ง";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.loggedInUser.joinButtonText"="Join meeting";
+"meetings.link.loggedInUser.joinButtonText"="เข้าร่วมการประชุม";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.guest.joinButtonText"="Join as guest";
+"meetings.link.guest.joinButtonText"="เข้าร่วมในฐานะแขกรับเชิญ";
 /* Guest user join Mega: paragraph 1 title */
-"meetings.joinMega.paragraph1.title"="Your privacy matters";
+"meetings.joinMega.paragraph1.title"="ความเป็นส่วนตัวของคุณมีความสำคัญเป็นอันดับแรก";
 /* Guest user join Mega: paragraph 1 description */
-"meetings.joinMega.paragraph1.description"="Join the largest secure cloud storage and collaboration platform in the world.";
+"meetings.joinMega.paragraph1.description"="เข้าร่วมพื้นที่เก็บข้อมูลบนคลาวด์ที่ปลอดภัยและแพลตฟอร์มการทำงานร่วมกันที่ใหญ่ที่สุดในโลก";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Get 20 GB for free";
+"meetings.joinMega.paragraph2.title"="รับฟรี 20 GB";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="Sign up now and enjoy advanced collaboration features for free.";
+"meetings.joinMega.paragraph2.description"="ลงทะเบียนตอนนี้และเพลิดเพลินไปกับฟีเจอร์การทำงานร่วมกันขั้นสูงได้ฟรี";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="You are the new call moderator";
+"meetings.notifications.moderatorPrivilege"="คุณเป็นผู้ดูแลการโทรคนใหม่";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"meetings.incompatibility.warningMessage"="เรากำลังอัปเกรด MEGAchat การโทรของคุณอาจไม่ได้เชื่อมต่อเนื่องจากว่าเวอร์ชันที่เข้ากันไม่ได้ เว้นแต่ทุกฝ่ายจะอัปเดตแอป MEGA เป็นเวอร์ชันล่าสุดแล้ว";

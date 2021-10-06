@@ -755,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="恢复秘钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="恢复密钥已导出到您的离线，文件名为MEGA-RECOVERYKEY.txt。注意：登出账户后，您的离线文件会被删除，请妥善保管。";
+"masterKeyExported_alertMessage"="恢复密钥文件“MEGA-恢复密钥.txt”已导出到您的离线中。请注意：登出账户后，您的离线文件将会被删除，请妥善保存。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="于您的设备上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="选择一个账户类型：";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="年度订阅比12个月每月付款便宜17%";
+"twoMonthsFree"="年度订阅比12个月每月付款便宜16%";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="欲升级当前订阅，您可以联系支持了解[A]自定义会员方案[/A]。";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="选择会员资格:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="节省17%";
+"save17"="节省16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="选购出错%@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾箱可以设置自动清除。最短时隔为7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="如果您想要禁用垃圾桶定时清理或设置延长保留期限，您需要订阅PRO计划。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="如果您想要禁用垃圾桶定时清理或者设置延长保留期限，您需要订阅Pro会员方案。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="是否关闭所有其他会话？这会将您注销到除当前会话之外的所有其他活动会话。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="更改设置";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="当您登出帐户时，您保存在离线的文件将被删除。";
+"offline.logOut.warning.message"="登出帐户后，您保存在离线的内容将被删除。";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="共享所有者已超出其存储空间。";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
