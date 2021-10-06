@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selecione um tipo de conta:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Uma assinatura anual é 17% mais barata do que 12 pagamentos mensais";
+"twoMonthsFree"="Uma assinatura anual é 16% mais barata do que 12 pagamentos mensais";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Para fazer o upgrade do seu plano atual, entre em contato com a nossa equipe de suporte e solicite um [A]plano personalizado[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selecionar assinatura:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Economize 17%";
+"save17"="Economize 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="COMPRA INCORRETA %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="A Lixeira pode ser esvaziada de forma automática. O período mínimo é de 7 dias.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa assinar um plano PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa adquirir um plano Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Você quer fechar as demais sessões? Essa ação faráo  logout de todas as outras sessões ativas, exceto a atual.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Alterar as configurações";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="O seu conteúdo será deletado deste dispositivo quando você fizer logout.";
+"offline.logOut.warning.message"="Ao fazer logout, os seus arquivos offline serão deletados.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="O proprietário da pasta compartilhada excedeu a cota de armazenamento disponível";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2687,9 +2687,9 @@
 /* Message header when the user enters a invalid meeting URL */
 "meetings.joinMeeting.header"="O link da reunião não é válido";
 /* Message description when the user enters a invalid meeting URL */
-"meetings.joinMeeting.description"="Unable to join the meeting. Please check the link is valid.";
+"meetings.joinMeeting.description"="Não foi possível entrar na reunião. Por favor, verifique se o link é válido.";
 /* Message shown when the meeting link cannot be generated */
-"meetings.sharelink.Error"="Meeting link could not be generated. Please try again.";
+"meetings.sharelink.Error"="Não foi possível gerar o link da reunião - tente novamente.";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.loggedInUser.joinButtonText"="Entrar em uma reunião";
 /* Button text to join a meeting for the logged in user */

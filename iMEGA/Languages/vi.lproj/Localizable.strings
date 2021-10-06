@@ -899,7 +899,7 @@
 /* Action text to change to Custom Alphanumeric passcode type. */
 "Custom Alphanumeric Code"="Mã Chữ Số Tùy Ý";
 /* Menu item */
-"help"="Thắc Mắc Cần Trợ Giúp";
+"help"="Cần Trợ Giúp";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Thư Viện Hướng Dẫn";
 /* Section title that links you to the webpage that let you join and test the beta versions */
@@ -927,7 +927,7 @@
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="Bạn có muốn hủy TẤT CẢ truyền tải không?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="TẤT CẢ mục truyền tải";
+"allInUppercaseTransfers"="TẤT CẢ truyền tải";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
 "uploadInUppercaseTransfers"="Phiên TẢI LÊN";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Chọn dạng tài khoản:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Thuê bao thường niên rẻ hơn 17% so với chi trả 12 tháng riêng rẽ";
+"twoMonthsFree"="Thuê bao thường niên rẻ hơn 16% so với chi trả 12 tháng riêng rẽ";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói thuê bao hiện tại, xin liên hệ với đội hỗ trợ để có một [A]gói theo nhu cầu[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Chọn hạng thành viên:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Tiết kiệm 17%";
+"save17"="Tiết kiệm 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="GIAO DỊCH SAI %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1459,7 +1459,7 @@
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Cao";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Giữ nguyên gốc";
+"original"="Nguyên gốc";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Đang chuẩn bị…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Thùng Rác tự động được dọn dẹp. Thời gian chờ (ít nhất) cho mỗi lần dọn là 7 ngày.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Để tắt Lịch Dọn Dẹp Thùng Rác hay gia hạn chờ thời gian tự dọn dẹp được lâu hơn, tài khoản cần phải nâng cấp lên hạng PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Để tắt Lịch Dọn Dẹp Thùng Rác hay gia hạn chờ thời gian tự dọn dẹp được lâu hơn, tài khoản cần phải nâng cấp lên hạng Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Thao tác này sẽ đăng xuất tài khoản ra khỏi tất cả các thiết bị đang sử dụng, ngoại trừ phiên hiện hành. Có chắc muốn tiến hành?";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Thay đổi Thiết Đặt";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Nội dung lưu ngoại tuyến sẽ bị xóa khỏi thiết bị khi bạn đăng xuất.";
+"offline.logOut.warning.message"="Đăng xuất tài khoản sẽ xóa các mục đã được lưu về ngoại tuyến.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Chủ sở hữu dùng hết lượng băng thông.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2691,7 +2691,7 @@
 /* Message shown when the meeting link cannot be generated */
 "meetings.sharelink.Error"="Không tạo được đường liên kết cuộc họp mặt. Xin thử lại sau.";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.loggedInUser.joinButtonText"="Tham gia cuộc meeting";
+"meetings.link.loggedInUser.joinButtonText"="Tham gia họp mặt";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Tham gia với tư cách khách";
 /* Guest user join Mega: paragraph 1 title */

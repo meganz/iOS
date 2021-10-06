@@ -755,7 +755,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Klucz zapasowy został wyeksportowany";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Klucz odzyskiwania został wyeksportowany do sekcji Offline jako MEGA-RECOVERYKEY.txt. Uwaga: Zostanie on usunięty po wylogowaniu, proszę przechowywać go w bezpiecznym miejscu.";
+"masterKeyExported_alertMessage"="Klucz odzyskiwania został wyeksportowany do sekcji Offline jako MEGA-KLUCZODZYSKIWANIA.txt. Uwaga: Zostanie on usunięty po wylogowaniu, proszę przechowywać go w bezpiecznym miejscu.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Na Twoim urządzeniu";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Wybierz jeden rodzaj konta";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Roczna subskrypcja jest o 17% tańsza niż 12 pojedynczych płatności";
+"twoMonthsFree"="Roczna subskrypcja jest o 16% tańsza niż 12 pojedynczych płatności";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Aby zaktualizować swoją obecną subskrypcję, skontaktuj się z pomocą techniczną w sprawie [A]planu niestandardowego[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Wybierz konto:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Zaoszczędź 17%";
+"save17"="Zaoszczędź 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="BŁĄD ZAKUPU %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Kosz na śmieci można wyczyścić automatycznie. Minimalny okres wynosi 7 dni.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Aby wyłączyć harmonogram czyszczenia kosza lub ustawić dłuższy okres retencji, musisz wykupić plan Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Czy chcesz zamknąć wszystkie inne sesje? Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Zmień ustawienie";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Twoja zawartość zostanie usunięta z tego urządzenia po wylogowaniu.";
+"offline.logOut.warning.message"="Wylogowanie powoduje usunięcie zawartości offline.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Właściciel przekroczył limit pamięci.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2629,7 +2629,7 @@
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"=" %@(Właściciel)";
 /* Name for the recovery key file */
-"general.security.recoveryKeyFile"="MEGA-RECOVERYKEY";
+"general.security.recoveryKeyFile"="MEGA-KLUCZODZYSKIWANIA";
 /* This message is shown when calling and the receiver is not picking up the call */
 "calls.incompatibility.warningMessage"="Aktualizujemy MEGAchat. Twoje rozmowy mogą nie być połączone z powodu niezgodności wersji, chyba że wszystkie strony zaktualizują swoje aplikacje MEGA do najnowszej wersji.";
 /* Hint text to display user's current email */

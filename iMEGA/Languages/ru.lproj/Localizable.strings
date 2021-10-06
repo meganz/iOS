@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Выберите тип учётной записи:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Годовая подписка на 17% дешевле 12 месячных платежей";
+"twoMonthsFree"="Годовая подписка на 16% дешевле 12 месячных платежей";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Чтобы улучшить текущую подписку, обратитесь в службу поддержки за [A]индивидуальным планом[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Выберите тарифный план:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Экономия 17%";
+"save17"="Экономия 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="НЕВЕРНАЯ ПОКУПКА %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Корзина может очищаться автоматически. Минимальный период — 7 дней.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Чтобы отключить очистку корзины по расписанию или установить более длительный период хранения, нужно подписаться на план Pro.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Чтобы отключить очистку корзины по расписанию или выбрать более длительный период хранения, нужно подписаться на план Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Закрыть другие сеансы? Будет выполнен выход из системы для всех активных сеансов кроме этого.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2559,7 +2559,7 @@
 /* Cookie settings dialog text. */
 "Advertising Cookies"="Рекламные куки";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Используется нами и нашими утверждёнными рекламными партнерами для настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах на основе вашей истории просмотров. Непринятие этих куки, что мы можем показывать менее актуальную рекламу.";
+"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Используется нами и нашими утверждёнными рекламными партнерами для настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах на основе вашей истории просмотров. Если не принять эти куки, мы можем показывать менее актуальную рекламу.";
 /* Cookie settings dialog text. */
 "Third Party Cookies"="Сторонние куки";
 /* Cookie settings dialog text. */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Изменить";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Когда вы выйдете из системы, ваш контент будет удалён с этого устройства.";
+"offline.logOut.warning.message"="Выход из системы удалит локальный контент.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Владелец общего ресурса превысил квоту на хранение.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */

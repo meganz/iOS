@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Kategorie wählen:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Jährliche Vorauszahlung ist 17% günstiger als zwölf Monatsraten";
+"twoMonthsFree"="Jährliche Vorauszahlung ist 16% günstiger als zwölf Monatsraten";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Account-Typ auswählen:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Sparen Sie 17%";
+"save17"="Sparen Sie 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="KAUF FEHLGESCHLAGEN %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1427,21 +1427,21 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="Multi-factor authentication required";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Access denied for non-admin users";
+"Access denied for users"="Kein Zugriff für Nicht-Administratoren";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Business account has expired";
 /* SDK error returned when the credit card has been rejected */
-"Credit card rejected"="Credit card rejected";
+"Credit card rejected"="Kreditkarte abgelehnt";
 /* SDK error returned when the billing failed */
-"Billing failed"="Billing failed";
+"Billing failed"="Abrechnung fehlgeschlagen";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Rejected by fraud protection";
+"Rejected by fraud protection"="Ablehnung durch Betrugsschutz";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Zu viele Anfragen";
 /* SDK error returned when there is a balance error */
-"Balance error"="Balance error";
+"Balance error"="Saldofehler";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP Error";
+"HTTP error"="HTTP-Fehler";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Unbekannter Fehler";
 /* Label shown when you call someone (outgoing call), before the call starts. */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Der Papierkorb kann für Sie automatisch geleert werden. Die minimale Aufbewahrungsdauer beträgt sieben Tage.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Eine automatische Leerung nach mehr als 30 Tagen (oder das Abschalten derselben) erfordert Pro-Status.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a Pro plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Alle anderen Logins beenden? Sie werden überall außer auf diesem Gerät ausgeloggt.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1809,9 +1809,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Unable to start a call due to the participant limit having been exceeded.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="Beitreten…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="Verlassen…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="List View";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2061,7 +2061,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="Sie können %1$s nicht aus Ihren Kontakten entfernen, da diese Person Ihrem Business-Account angehört.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="Require Passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2079,11 +2079,11 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Ihr Business-Account ist abgelaufen";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Bei der Verarbeitung Ihrer Zahlung ist ein Problem aufgetreten. MEGA ist auf den Betrachtungsmodus beschränkt, bis dieses Problem in einem Desktop-Webbrowser behoben wurde.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Ihr Account ist [B]gesperrt[/B]. Sie können lediglich lesend auf Ihre Daten zugreifen.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA kann nicht auf Ihre Daten zugreifen. Der Administrator Ihres Business-Accounts kann jedoch auf Ihre Kamera-Uploads zugreifen.";
 /*  */
 "Something went wrong"="Ein Fehler ist aufgetreten";
 /* Title of the "Links" Shared Items. */
@@ -2145,7 +2145,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Include Location Tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Wenn diese Option aktiviert ist, werden in Ihren Bildern Standortinformationen gespeichert. Bitte denken Sie daran, wenn Sie Ihre Bilder teilen.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Send (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2425,7 +2425,7 @@
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Unavailable";
 /* Error text shown when requesting email for email verification within 10 minutes */
-"Email already sent. Please wait a few minutes before trying again."="Email already sent. Please wait a few minutes before trying again.";
+"Email already sent. Please wait a few minutes before trying again."="E-Mail bereits gesendet. Bitte warten Sie einige Minuten, bevor Sie es erneut versuchen.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
 "Manage Chat History"="Manage Chat History";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
@@ -2453,9 +2453,9 @@
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
 "Custom..."="Anderer Zeitraum…";
 /* System message displayed to all chat participants when one of them enables retention history */
-"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]";
+"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] hat die Lebensdauer von Chatnachrichten auf [/B][A] %2$s[/A][B] geändert.[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
-"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
+"[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] hat eine unbegrenzte Nachrichtenlebensdauer eingestellt.[/B]";
 /*  */
 "hour"="Stunde";
 /*  */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Your content will be deleted from this device when you log out.";
+"offline.logOut.warning.message"="Logging out deletes your offline content.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Der Eigentümer der Ordnerfreigabe hat sein Speicherplatzlimit überschritten.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2631,7 +2631,7 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-RETTUNGSSCHLUESSEL";
 /* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"calls.incompatibility.warningMessage"="Wir aktualisieren MEGAchat. Anrufe könnten aufgrund von Versionsinkompatibilitäten scheitern, wenn nicht alle Teilnehmer ihre MEGA-Apps auf die neueste Version aktualisiert haben.";
 /* Hint text to display user's current email */
 "account.changeEmail.currentEmail"="Current email address";
 /* Title of Over Disk Quota dialog */
@@ -2673,7 +2673,7 @@
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Invite Participants";
 /* Meetings: Floating panel participants count header */
-"meetings.panel.ParticipantsCount"="Participants (%d)";
+"meetings.panel.ParticipantsCount"="Teilnehmer (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATOR";
 /* Action of a call/meeting to rename it */
@@ -2681,9 +2681,9 @@
 /* Action of a call/meeting to share its link */
 "meetings.action.shareLink"="Share Meeting Link";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join…";
+"meetings.message.waitingOthers"="Warten auf weitere Teilnehmer…";
 /* Message shown when the user is the only one left in the meeting */
-"meetings.message.noOtherParticipants"="You are the only one here…";
+"meetings.message.noOtherParticipants"="Sie sind der einzige Teilnehmer…";
 /* Message header when the user enters a invalid meeting URL */
 "meetings.joinMeeting.header"="Invalid Meeting URL";
 /* Message description when the user enters a invalid meeting URL */
@@ -2691,18 +2691,18 @@
 /* Message shown when the meeting link cannot be generated */
 "meetings.sharelink.Error"="Meeting link could not be generated. Please try again.";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.loggedInUser.joinButtonText"="Join meeting";
+"meetings.link.loggedInUser.joinButtonText"="Meeting beitreten";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.guest.joinButtonText"="Join as guest";
+"meetings.link.guest.joinButtonText"="Als Gast teilnehmen";
 /* Guest user join Mega: paragraph 1 title */
-"meetings.joinMega.paragraph1.title"="Your privacy matters";
+"meetings.joinMega.paragraph1.title"="Ihre Privatsphäre ist wichtig";
 /* Guest user join Mega: paragraph 1 description */
-"meetings.joinMega.paragraph1.description"="Join the largest secure cloud storage and collaboration platform in the world.";
+"meetings.joinMega.paragraph1.description"="Treten Sie der größten sicheren Cloud-Storage- und Collaboration-Plattform der Welt bei.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Get 20 GB for free";
+"meetings.joinMega.paragraph2.title"="Erhalten Sie 20 GB kostenlos";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="Sign up now and enjoy advanced collaboration features for free.";
+"meetings.joinMega.paragraph2.description"="Melden Sie sich jetzt an und nutzen Sie erweiterte Collaboration-Funktionen kostenlos.";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="You are the new call moderator";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"meetings.incompatibility.warningMessage"="Wir aktualisieren MEGAchat. Anrufe könnten aufgrund von Versionsinkompatibilitäten scheitern, wenn nicht alle Teilnehmer ihre MEGA-Apps auf die neueste Version aktualisiert haben.";

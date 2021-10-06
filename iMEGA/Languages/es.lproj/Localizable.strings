@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selecciona el tipo de cuenta:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="La suscripción anual es un 17% más barata que 12 pagos mensuales";
+"twoMonthsFree"="La suscripción anual es un 16% más barata que 12 pagos mensuales";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Para ampliar tu suscripción, contacta con soporte para un [A]plan personalizado[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selecciona una suscripción:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Ahorra un 17%";
+"save17"="Ahorra un 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="Compra incorrecta %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La Papelera se puede vaciar de forma automática. El período mínimo es de 7 días.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desactivar la limpieza automática de la papelera o establecer un período de retención más largo, amplía tu cuenta.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desactivar la limpieza automática de la papelera o establecer un período de retención más largo, amplía tu cuenta a Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="¿Quieres cerrar las demás sesiones? Te desconectarás de todas sesiones activas excepto la actual.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Cambiar ajustes";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Si cierras sesión este contenido será eliminado de tu dispositivo.";
+"offline.logOut.warning.message"="Si cierras sesión, el contenido sin conexión será eliminado.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="El propietario de la carpeta compartida ha superado la cuota de almacenamiento disponible.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2645,13 +2645,13 @@
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="¡Tus datos están en riesgo!";
 /* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>Unfortunately you have not taken action in the <b>%@</b> since our emails were sent to <b>%@</b>, on <b>%@</b>. You are still using <b>%@</b> storage, which is over your free limit. Please see the emails we have sent you for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Lamentablemente no ha realizado ninguna acción en los últimos <b>%@</b>desde que te avisamos por correo electrónico a la dirección <b>%@</b>, el <b>%@</b>. Todavía estás usando <b>%@</b> de almacenamiento, y estás por encima de tu límite gratuito. Consulta los correos electrónicos que te enviamos para obtener más información sobre lo que debes hacer.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Unfortunately you have not upgraded your account yet. If you do not upgrade now, your data will be deleted tomorrow. See your email for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Lamentablemente aún no has ampliado tu cuenta. Si no lo haces ya, mañana eliminaremos tus datos. Consulta los correos electrónicos que te enviamos para obtener más información sobre lo que debes hacer.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Please upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Amplia tu cuenta dentro de <warn>%@</warn>para evitar que tus datos sean eliminados.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Please upgrade today if you wish to keep your data.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Amplía tu cuenta hoy si quieres conservar tus datos.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Obtén bono";
 /* Message to inform the local user that someone has joined the current group call */

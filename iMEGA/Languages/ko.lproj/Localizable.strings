@@ -1063,7 +1063,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="계정 유형 하나를 선택하세요:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="연간 구독이 12개월 결제보다 17% 저렴합니다";
+"twoMonthsFree"="연간 구독이 12개월 결제보다 16% 저렴합니다";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="현재 구독을 업그레이드하려면, 고객 지원에 [A]맞춤 요금제[/A]를 요청하세요.";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1079,7 +1079,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="멤버쉽 선택:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="17% 할인";
+"save17"="16% 할인";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="잘못된 결제 %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1747,7 +1747,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="휴지통은 자동으로 비워집니다. 최소 기간은 7일입니다.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="휴지통 비우기 스케줄러를 해제하거나 더 긴 보유 기간을 설정하려면, PRO 요금제를 구독하여야 합니다.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="휴지통 비우기 스케줄러를 해제하거나 더 긴 보유 기간을 설정하려면, Pro 요금제를 구독하여야 합니다.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="다른 모든 세션을 닫고 싶으신가요? 이것은 현재 세션을 제외한 모든 활성 세션에서 당신을 로그아웃 시킵니다.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2617,7 +2617,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="설정 변경";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="로그아웃하면 이 기기에서 당신의 콘텐츠가 삭제됩니다.";
+"offline.logOut.warning.message"="로그아웃 하면 오프라인 항목이 삭제됩니다.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="공유 소유자의 저장소 할당량 초과.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2701,7 +2701,7 @@
 /* Guest user join Mega: paragraph 2 title */
 "meetings.joinMega.paragraph2.title"="20GB를 무료로 받으세요";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="지금 가입하고 진보된 협업 기능을 무료로 즐기세요.";
+"meetings.joinMega.paragraph2.description"="지금 가입하고 고급 협업 기능을 무료로 즐기세요.";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="당신은 새 통화 중재자입니다";
 /* This message is shown when calling and the receiver is not picking up the call */

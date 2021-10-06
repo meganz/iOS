@@ -1065,7 +1065,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="An annual subscription is 16% cheaper than 12 monthly payments";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1081,7 +1081,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Select membership:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Save 17%";
+"save17"="Save 16%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="WRONG PURCHASE %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1751,7 +1751,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a Pro plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
 /* Message to inform the local user that someone has joined the current group call */
