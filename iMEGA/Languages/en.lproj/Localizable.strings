@@ -452,6 +452,8 @@
 "copyFilesFoldersMessage"="[A] files and [B] folders copied";
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Rename";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
+"general.error.charactersNotAllowed"="The following characters are not allowed: \" * / : < > ? \ |";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Enter the new name";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
