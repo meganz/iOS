@@ -1291,7 +1291,6 @@
 		A860C80F26BBDECF004BFD23 /* ReinstallationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */; };
 		A860C81026BBEA15004BFD23 /* ReinstallationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */; };
 		A860C81126BBEA17004BFD23 /* ReinstallationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */; };
-		A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8665F5020ADA1600044F8F6 /* PWProgressView.m */; };
 		A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86B9F252316D6AB00F35E7A /* FLEXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A86B9E472316D6AA00F35E7A /* FLEXTableViewController.m */; };
@@ -3421,8 +3420,6 @@
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReinstallationUseCase.swift; sourceTree = "<group>"; };
-		A8665F5020ADA1600044F8F6 /* PWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWProgressView.m; sourceTree = "<group>"; };
-		A8665F5120ADA1600044F8F6 /* PWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWProgressView.h; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86B9E452316D6AA00F35E7A /* FLEXManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEXManager.h; sourceTree = "<group>"; };
 		A86B9E472316D6AA00F35E7A /* FLEXTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLEXTableViewController.m; sourceTree = "<group>"; };
@@ -5113,7 +5110,6 @@
 				83C570C722E5BFCF00216896 /* PhoneNumberKit */,
 				A85A01D2228B0DA100C6ADBB /* FLEX */,
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
-				A8665F4F20ADA1600044F8F6 /* PWProgressView */,
 				5BD4A01B1F8385EC000E24E6 /* FrameAccessor */,
 				5B22F9721F8373EC00D2B156 /* VENTokenField */,
 				B695B5F4264B43160050DF09 /* SVProgressHUD */,
@@ -8060,16 +8056,6 @@
 			children = (
 			);
 			path = UseCases;
-			sourceTree = "<group>";
-		};
-		A8665F4F20ADA1600044F8F6 /* PWProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				A8665F5020ADA1600044F8F6 /* PWProgressView.m */,
-				A8665F5120ADA1600044F8F6 /* PWProgressView.h */,
-			);
-			name = PWProgressView;
-			path = Vendor/PWProgressView/PWProgressView;
 			sourceTree = "<group>";
 		};
 		A86AC4AA26710A9000E8E89A /* ChangeName */ = {
@@ -11284,7 +11270,6 @@
 				BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */,
 				5D64660624890BBE006030A5 /* ColorProviding.swift in Sources */,
 				7747B2D8208625B50011814E /* Reachability.m in Sources */,
-				A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */,
 				5DC4DE0B24DB7DF900D9AD16 /* ExploreButtonView.swift in Sources */,
 				0D7E5E0726311D9700C5CB2A /* TransferTypeEntity+Mapper.swift in Sources */,
 				A86B9F362316D6AB00F35E7A /* FLEXObjectExplorerViewController.m in Sources */,
