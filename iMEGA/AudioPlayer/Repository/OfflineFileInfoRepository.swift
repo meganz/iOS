@@ -20,9 +20,9 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
     }
     
     func localPath(fromNode: MEGANode) -> URL? {
-        let childQueueContext = megaStore.stack.newBackgroundContext()
+        guard let childQueueContext = megaStore.stack.newBackgroundContext() else { return nil }
         var url: URL?
-        childQueueContext?.performAndWait {
+        childQueueContext.performAndWait {
             if let offlineNode = megaStore.offlineNode(with: fromNode, context: childQueueContext) {
                 url = URL(fileURLWithPath: Helper.pathForOffline().append(pathComponent: offlineNode.localPath))
             } else {
