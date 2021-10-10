@@ -311,10 +311,19 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)startCameraUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] start camera upload if needed");
     
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
+    __weak typeof(self) weakSelf = self;
+    [MEGASdkManager.sharedMEGASdk isLoggedInWithCompletion:^(BOOL isLoggedIn) {
+        if (isLoggedIn) {
+            [weakSelf scanAndStartCameraUpload];
+        }
+    }];
+}
+
+- (void)scanAndStartCameraUpload {
     [self.cameraScanner scanMediaTypes:CameraUploadManager.enabledMediaTypes completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to scan image %@", error);
