@@ -938,7 +938,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if ([self isSharedFolderSection:section]) {
         GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
-        headerView.titleLabel.text = [NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
+        headerView.titleLabel.text = NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.").localizedUppercaseString;
         headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
         
         return headerView;

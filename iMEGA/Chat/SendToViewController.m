@@ -706,13 +706,13 @@
     headerView.titleLabel.font = [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
     switch (section) {
         case 0: {
-            headerView.titleLabel.text = self.searchController.isActive ? NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString : NSLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
+            headerView.titleLabel.text = self.searchController.isActive ? NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").localizedUppercaseString : NSLocalizedString(@"Recents", @"Title for the recents section").localizedUppercaseString;
             
             return headerView;
         }
             
         case 1: {
-            headerView.titleLabel.text = NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
+            headerView.titleLabel.text = NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").localizedUppercaseString;
             return headerView;
         }
             

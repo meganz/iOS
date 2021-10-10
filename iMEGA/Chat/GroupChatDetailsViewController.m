@@ -651,7 +651,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
         headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
         headerView.titleLabel.font = [UIFont systemFontOfSize:12.0f weight:UIFontWeightMedium];
-        headerView.titleLabel.text = [NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") uppercaseString];
+        headerView.titleLabel.text = NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString;
         
         return headerView;
     }
