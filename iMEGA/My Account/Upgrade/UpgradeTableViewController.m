@@ -355,7 +355,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 - (NSAttributedString *)freeTransferQuotaAttributedString {
     NSMutableAttributedString *transferQuotaString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", NSLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
-    NSString *limitedTransferQuotaString = [NSLocalizedString(@"limited", @" Label for any 'Limited' button, link, text, title, etc. - (String as short as possible).") uppercaseString];
+    NSString *limitedTransferQuotaString = NSLocalizedString(@"limited", @" Label for any 'Limited' button, link, text, title, etc. - (String as short as possible).").localizedUppercaseString;
     NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedTransferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
     [transferQuotaMutableAttributedString appendAttributedString:transferQuotaString];
     

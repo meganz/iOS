@@ -220,10 +220,10 @@
     versionsSize.textColor = UIColor.mnz_label;
     
     if (section == 0) {
-        titleSection.text = NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
+        titleSection.text = NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").localizedUppercaseString;
         versionsSize.text = nil;
     } else {
-        titleSection.text = NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
+        titleSection.text = NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").localizedUppercaseString;
         versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
     }
     
