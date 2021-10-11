@@ -38,9 +38,9 @@ extension UploadFromLocalFilePath {
             if node.parentHandle == parentNodeHandle {
                 // Same file, under same folder
                 try fileManager.removeItem(atPath: localFilePath)
-            } else {
+            } else if let name = node.name {
                 // The file exists but within a different folder, copy across with a same name
-                megaSDK.copy(node, newParent: parentNode, newName: node.name)
+                megaSDK.copy(node, newParent: parentNode, newName: name)
             }
         }
     }

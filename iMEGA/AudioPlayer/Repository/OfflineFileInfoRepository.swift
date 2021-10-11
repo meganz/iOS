@@ -25,9 +25,9 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
         childQueueContext.performAndWait {
             if let offlineNode = megaStore.offlineNode(with: fromNode, context: childQueueContext) {
                 url = URL(fileURLWithPath: Helper.pathForOffline().append(pathComponent: offlineNode.localPath))
-            } else {
-                let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: fromNode.base64Handle)
-                let tmpFilePath = nodeFolderPath.append(pathComponent: fromNode.name)
+            } else if let base64Handle = fromNode.base64Handle, let name = fromNode.name {
+                let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: base64Handle)
+                let tmpFilePath = nodeFolderPath.append(pathComponent: name)
             
                 url = fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath:tmpFilePath) : nil
             }
