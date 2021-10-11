@@ -346,11 +346,11 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     [MEGASdkManager.sharedMEGASdk isLoggedInWithCompletion:^(BOOL isLoggedIn) {
-        if (isLoggedIn && isFetchNodesDone) {
+        if (isLoggedIn && self->isFetchNodesDone) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
                 [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
-            })
+            });
         }
     }];
     
