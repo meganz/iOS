@@ -55,7 +55,7 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
         collectionView.decelerationRate = .fast
     }
 
-    private func updateLayout() {
+     func updateLayout() {
         guard let collectionView = collectionView else { return }
 
         let collectionViewSize = collectionView.bounds.size
