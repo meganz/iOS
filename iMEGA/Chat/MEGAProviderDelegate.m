@@ -21,7 +21,6 @@
 
 @property (strong, nonatomic) AVAudioPlayer *player;
 
-@property (getter=isOutgoingCall) BOOL outgoingCall;
 @property (getter=isCallKitAnsweredCall) BOOL callKitAnsweredCall;
 @property (nonatomic, strong) NSNumber *answeredChatId;
 
@@ -163,6 +162,7 @@
 
 - (void)stopDialerTone {
     [self.player stop];
+    self.player = nil;
 }
 
 - (void)disablePasscodeIfNeeded {
@@ -424,6 +424,12 @@
     if ([session hasChanged:MEGAChatSessionChangeRemoteAvFlags]) {
         MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
         [self callUpdateVideoForCall:chatCall];
+    } else if ([session hasChanged:MEGAChatSessionChangeStatus]
+               && session.status == MEGAChatSessionStatusInProgress
+               && self.isOutgoingCall
+               && [self isOneToOneChatRoom:[MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId]]) {
+        [self stopDialerTone];
+        self.outgoingCall = NO;
     }
 }
 
@@ -445,7 +451,6 @@
         }
             
         case MEGAChatCallStatusJoining:
-            self.outgoingCall = NO;
             if (@available(iOS 14.0, *)) {
                 if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
                     [self.megaCallManager answerCall:call];
@@ -454,11 +459,6 @@
             break;
             
         case MEGAChatCallStatusInProgress: {
-            if (self.isOutgoingCall) {
-                [self reportOutgoingCall:call];
-                self.outgoingCall = NO;
-            }
-            
             if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
                 [self callUpdateVideoForCall:call];
             }
@@ -489,6 +489,11 @@
                 if((call.termCode == MEGAChatCallTermCodeCallReject && !self.isOutgoingCall) || call.termCode == MEGAChatCallTermCodeError) {
                     [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
                 }
+            }
+            
+            if (self.isOutgoingCall) {
+                [self stopDialerTone];
+                self.outgoingCall = NO;
             }
             break;
             
