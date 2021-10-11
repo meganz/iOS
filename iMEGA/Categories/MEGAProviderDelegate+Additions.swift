@@ -20,4 +20,9 @@ extension MEGAProviderDelegate {
             audioSession.unlockForConfiguration()
         }
     }
+    
+    @objc func isOneToOneChatRoom(_ chatRoom: MEGAChatRoom?) -> Bool {
+        guard let chatRoom = chatRoom else { return false }
+        return ChatRoomEntity(with: chatRoom).chatType == .oneToOne
+    }
 }
