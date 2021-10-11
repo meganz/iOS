@@ -24,10 +24,10 @@ abstract_target 'iMEGA' do
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'CHTCollectionViewWaterfallLayout'
     pod 'Keyboard+LayoutGuide'
-
     pod 'YYCategories'
     
-    # Pods for MEGA
+    # Pods for Debug only
+    pod 'FLEX', :configurations => ['Debug']
     pod 'DoraemonKit/Core', '3.0.4', :configurations => ['Debug'] #Required
     pod 'DoraemonKit/WithGPS', '3.0.4', :configurations => ['Debug'] #Optional
     pod 'DoraemonKit/WithLoad', '3.0.4', :configurations => ['Debug'] #Optional
