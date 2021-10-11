@@ -105,4 +105,13 @@ final class PhotoGridViewCell: UICollectionViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        asset = nil
+        tapHandler = nil
+        panSelectionHandler = nil
+        selectedIndex = nil
+        durationString = nil
+        super.prepareForReuse()
+    }
+    
 }
