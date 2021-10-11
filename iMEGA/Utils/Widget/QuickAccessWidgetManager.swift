@@ -65,12 +65,14 @@ class QuickAccessWidgetManager: NSObject {
     }
     
     @objc func insertFavouriteItem(for node: MEGANode) {
-        favouriteItemsUseCase.insertFavouriteItem(FavouriteItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: Date()))
+        guard let base64Handle = node.base64Handle, let name = node.name else { return }
+        favouriteItemsUseCase.insertFavouriteItem(FavouriteItemEntity(base64Handle: base64Handle, name: name, timestamp: Date()))
         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
     
     @objc func deleteFavouriteItem(for node: MEGANode) {
-        favouriteItemsUseCase.deleteFavouriteItem(with: node.base64Handle)
+        guard let base64Handle = node.base64Handle else { return }
+        favouriteItemsUseCase.deleteFavouriteItem(with: base64Handle)
         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
     

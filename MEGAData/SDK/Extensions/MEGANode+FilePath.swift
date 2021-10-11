@@ -15,7 +15,8 @@ extension MEGANode {
                   includeRootFolderName: Bool,
                   excludeFileName: Bool) -> String {
         guard let parent = sdk.parentNode(for: self) else {
-            return (includeRootFolderName && !excludeFileName) ? name : ""
+            let nodeName = name ?? ""
+            return (includeRootFolderName && !excludeFileName) ? nodeName : ""
         }
         
         var path = parent.filePath(withDelimeter: delimeter,

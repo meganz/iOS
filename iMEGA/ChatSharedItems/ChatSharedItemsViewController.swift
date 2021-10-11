@@ -417,13 +417,16 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                 return
             }
             
-            if selectedNode.name.mnz_isImagePathExtension || selectedNode.name.mnz_isVideoPathExtension {
+            if let selectedNodeName = selectedNode.name,
+               (selectedNodeName.mnz_isImagePathExtension || selectedNodeName.mnz_isVideoPathExtension) {
                 let nodes = NSMutableArray()
                 messagesArray.forEach { message in
-                    guard let node = message.nodeList.node(at: 0) else {
-                        return
-                    }
-                    if node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension {
+                    guard let node = message.nodeList.node(at: 0),
+                          let name = node.name else {
+                              return
+                          }
+                    
+                    if name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension {
                         if chatRoom.isPreview {
                             guard let authNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) else { return }
                             nodes.add(authNode)

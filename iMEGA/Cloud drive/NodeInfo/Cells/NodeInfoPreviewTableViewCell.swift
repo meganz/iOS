@@ -20,7 +20,7 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
             sizeLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
             shareStackView.isHidden = true
             versionedView.isHidden = !MEGASdkManager.sharedMEGASdk().hasVersions(for: node)
-            playIconImage.isHidden = !node.name.mnz_isVideoPathExtension
+            playIconImage.isHidden = node.name?.mnz_isVideoPathExtension != true
         } else if (node.type == .folder) {
             previewImage.mnz_image(for: node)
             let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
