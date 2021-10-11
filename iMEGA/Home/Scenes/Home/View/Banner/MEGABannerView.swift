@@ -99,16 +99,6 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         carouselCollectionViewLayout.scrollDirection = .horizontal
         carouselCollectionViewLayout.delegate = self
     }
-
-    // MARK: - UIView overrides
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        if itemSize == nil || itemSize != bounds.size {
-            calculateCarouselItemSize()
-        }
-    }
     
     // MARK: - Public Interface
     
@@ -131,6 +121,12 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         carouselCollectionView.reloadData()
         carouselPageControl.numberOfPages = bannerDataSource.count
         carouselPageControl.currentPage = 0
+    }
+    
+    func refreshContainer() {
+        calculateCarouselItemSize()
+        carouselCollectionViewLayout.updateLayout()
+        carouselCollectionView.reloadData()
     }
 
     private func removeBanner(withIdentifier identifierOfToBeRemovedBanner: Int) {
