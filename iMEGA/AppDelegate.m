@@ -151,7 +151,6 @@
 #ifdef DEBUG
     [[DoraemonManager shareInstance] install];
 #endif
-    [self migrateExtensionCachesLocation];
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
@@ -868,32 +867,6 @@
             }
         }];
     }
-}
-
-- (void)migrateExtensionCachesLocation {
-    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
-    NSURL *oldDestinationURL = [containerURL URLByAppendingPathComponent:@"Library/Cache/" isDirectory:YES];
-    NSURL *newDestinationURL = [containerURL URLByAppendingPathComponent:MEGAExtensionCacheFolder isDirectory:YES];
-    
-    NSError *error;
-    
-    NSArray *files = [NSFileManager.defaultManager contentsOfDirectoryAtPath:oldDestinationURL.path error:&error];
-    
-    if (error) {
-        MEGALogError(@"Failed to locate/create Library/Cache/ with error: %@", error);
-    }
-    
-    for (NSString *file in files) {
-        [NSFileManager.defaultManager moveItemAtPath:[oldDestinationURL.path stringByAppendingPathComponent:file]
-                    toPath:[newDestinationURL.path stringByAppendingPathComponent:file]
-                     error:&error];
-        if (error) {
-            MEGALogError(@"Contents of directory at path failed with error: %@", error);
-        }
-    }
-    
-    [NSFileManager.defaultManager removeItemAtURL:oldDestinationURL error:&error];
-    
 }
 
 - (void)migrateLocalCachesLocation {
