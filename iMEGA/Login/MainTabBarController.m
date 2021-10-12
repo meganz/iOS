@@ -125,13 +125,11 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager setupAppearance:self.traitCollection];
-            
-           //Force appearance changes on the tab bar
-            [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager setupAppearance:self.traitCollection];
+        
+        //Force appearance changes on the tab bar
+        [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
     }
     
     [self configurePhoneImageBadge];

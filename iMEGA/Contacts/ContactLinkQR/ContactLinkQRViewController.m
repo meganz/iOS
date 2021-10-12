@@ -136,10 +136,8 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateAppearance];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [self updateAppearance];
     }
 }
 
@@ -151,11 +149,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
             self.view.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
             self.backButton.tintColor = self.moreButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             
-            if (@available(iOS 13.0, *)) {
-                [self.segmentedControl setTitleTextColor:UIColor.mnz_label selectedColor:UIColor.mnz_label];
-            } else {
-                self.segmentedControl.tintColor = UIColor.whiteColor;
-            }
+            [self.segmentedControl setTitleTextColor:UIColor.mnz_label selectedColor:UIColor.mnz_label];
             
             //The SVProgressHUD appearance is not updated when enabling/disabling dark mode. By updating the appearance and dismissing the HUD, it will have the correct configuration the next time is shown.
             [AppearanceManager setupThirdPartyAppereance:self.traitCollection];
@@ -168,13 +162,8 @@ typedef NS_ENUM(NSInteger, QRSection) {
             self.backButton.tintColor = UIColor.whiteColor;
             self.hintLabel.textColor = UIColor.whiteColor;
             
-            if (@available(iOS 13.0, *)) {
-                UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : UIColor.blackColor);
-                
-                [self.segmentedControl setTitleTextColor:UIColor.whiteColor selectedColor:scanCodeLabelTextColor];
-            } else {
-                self.segmentedControl.tintColor = UIColor.whiteColor;
-            }
+            UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : UIColor.blackColor);
+            [self.segmentedControl setTitleTextColor:UIColor.whiteColor selectedColor:scanCodeLabelTextColor];
             break;
         }
     }

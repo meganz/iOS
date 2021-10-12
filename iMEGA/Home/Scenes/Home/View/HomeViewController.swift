@@ -331,16 +331,8 @@ final class HomeViewController: UIViewController {
         case .dark:
             color = constraintToTopPosition.isActive ? .mnz_black1C1C1E() : .black
         }
-
-        let navigationBar = navigationController?.navigationBar
-        if #available(iOS 13, *) {
-            navigationBar?.standardAppearance.backgroundColor = color
-            navigationBar?.scrollEdgeAppearance?.backgroundColor = color
-            navigationBar?.isTranslucent = false
-        } else {
-            navigationBar?.backgroundColor = color
-            navigationBar?.barTintColor = color
-        }
+        
+        updateNavigationBarColor(color)
     }
 
     // MARK: - Tap Actions
@@ -384,14 +376,9 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
 
     private func updateNavigationBarColor(_ color: UIColor) {
         let navigationBar = navigationController?.navigationBar
-        if #available(iOS 13, *) {
-            navigationBar?.standardAppearance.backgroundColor = color
-            navigationBar?.scrollEdgeAppearance?.backgroundColor = color
-            navigationBar?.isTranslucent = false
-        } else {
-            navigationBar?.backgroundColor = color
-            navigationBar?.barTintColor = color
-        }
+        navigationBar?.standardAppearance.backgroundColor = color
+        navigationBar?.scrollEdgeAppearance?.backgroundColor = color
+        navigationBar?.isTranslucent = false
     }
 
     func didUpdateAnimationProgress(

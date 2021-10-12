@@ -73,11 +73,9 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-            [self.tableView reloadData];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+        [self.tableView reloadData];
     }
 }
 

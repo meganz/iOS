@@ -132,9 +132,7 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
+    [self configPreviewingRegistration];
     self.sortOrderType = [NSUserDefaults.standardUserDefaults integerForKey:@"SharedItemsSortOrderType"];
     if (self.sortOrderType == MEGASortOrderTypeNone) {
         self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
@@ -198,13 +196,11 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-            
-            [self updateAppearance];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        
+        [self updateAppearance];
     }
     
     [self configPreviewingRegistration];

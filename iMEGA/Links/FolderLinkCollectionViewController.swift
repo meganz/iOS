@@ -13,9 +13,7 @@ class FolderLinkCollectionViewController: UIViewController  {
     var fileList = [MEGANode]()
     var folderList = [MEGANode]()
     
-    @available(iOS 13.0, *)
     lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView)
-    lazy var dataSource = FolderLinkCollectionViewDataSource(controller: self)
     
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkCollectionViewController {
         guard let folderLinkCollectionVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkCollectionViewControllerID") as? FolderLinkCollectionViewController else {
@@ -35,11 +33,7 @@ class FolderLinkCollectionViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 13.0, *) {
-            diffableDataSource.configureDataSource()
-        } else {
-            collectionView.dataSource = dataSource
-        }
+        diffableDataSource.configureDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,11 +80,7 @@ class FolderLinkCollectionViewController: UIViewController  {
         
         folderLink.setViewEditing(editing)
         
-        if #available(iOS 13.0, *) {
-            diffableDataSource.reload(nodes: folderList + fileList)
-        } else {
-            collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-        }
+        diffableDataSource.reload(nodes: folderList + fileList)
     }
     
     @IBAction func nodeActionsTapped(_ sender: UIButton) {
@@ -108,17 +98,13 @@ class FolderLinkCollectionViewController: UIViewController  {
         fileList = buildNodeListFor(fileType: .file)
         folderList = buildNodeListFor(fileType: .folder)
         
-        if #available(iOS 13.0, *) {
-            if MEGAReachabilityManager.isReachable(),
-               folderList.count + fileList.count > 0 {
-                removeErrorViewIfRequired()
-                diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
-            } else {
-                diffableDataSource.load(data: [:], keys: [])
-                showErrorViewIfRequired()
-            }
+        if MEGAReachabilityManager.isReachable(),
+           folderList.count + fileList.count > 0 {
+            removeErrorViewIfRequired()
+            diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
         } else {
-            collectionView.reloadData()
+            diffableDataSource.load(data: [:], keys: [])
+            showErrorViewIfRequired()
         }
     }
     
@@ -127,26 +113,11 @@ class FolderLinkCollectionViewController: UIViewController  {
     }
     
     @objc func reload(node: MEGANode) {
-        guard let rowIndex = node.isFile() ?
-         fileList.firstIndex(where: { $0.handle == node.handle }) :
-         folderList.firstIndex(where: { $0.handle == node.handle }) else { return }
-        
-        if #available(iOS 13.0, *) {
-            if MEGAReachabilityManager.isReachable() {
-                diffableDataSource.reload(nodes: [node])
-            } else {
-                diffableDataSource.load(data: [:], keys: [])
-                showErrorViewIfRequired()
-            }
+        if MEGAReachabilityManager.isReachable() {
+            diffableDataSource.reload(nodes: [node])
         } else {
-            let indexPath = IndexPath(row: rowIndex, section: Int(node.isFile() ? ThumbnailSection.file.rawValue : ThumbnailSection.folder.rawValue))
-            
-            if collectionView.isValid(indexPath: indexPath),
-               MEGAReachabilityManager.isReachable() {
-                UIView.performWithoutAnimation {
-                    collectionView.reloadItems(at: [indexPath])
-                }
-            }
+            diffableDataSource.load(data: [:], keys: [])
+            showErrorViewIfRequired()
         }
     }
     

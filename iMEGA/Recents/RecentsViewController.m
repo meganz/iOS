@@ -72,12 +72,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateAppearanceWithTrait:self.traitCollection];
-            
-            [self.tableView reloadData];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [self updateAppearanceWithTrait:self.traitCollection];
+        
+        [self.tableView reloadData];
     }
 }
 

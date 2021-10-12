@@ -77,12 +77,10 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateAppearance];
-            
-            [self.tableView reloadData];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [self updateAppearance];
+        
+        [self.tableView reloadData];
     }
 }
 
@@ -251,11 +249,7 @@
         UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self removeAction:nil];
         }];
-        if (@available(iOS 13.0, *)) {
-            removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
-        } else {
-            removeAction.image = [UIImage imageNamed:@"delete"];
-        }
+        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
         removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
         [rightActions addObject:removeAction];
     }
@@ -265,12 +259,7 @@
             [self revertAction:nil];
         }];
         
-        if (@available(iOS 13.0, *)) {
-            revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:UIColor.whiteColor];
-        }
-        else {
-            revertAction.image = [UIImage imageNamed:@"history"];
-        }
+        revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:UIColor.whiteColor];
         revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         [rightActions addObject:revertAction];
     }

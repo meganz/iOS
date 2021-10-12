@@ -91,9 +91,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
+    [self configPreviewingRegistration];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -168,15 +166,13 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-            if (self.flavor == HomeScreen) {
-                self.view.backgroundColor = UIColor.mnz_black1C1C1E;
-            }
-            [self reloadData];
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        if (self.flavor == HomeScreen) {
+            self.view.backgroundColor = UIColor.mnz_black1C1C1E;
         }
+        [self reloadData];
     }
     
     [self configPreviewingRegistration];

@@ -1,6 +1,5 @@
 import Foundation
 
-@available(iOS 13.0, *)
 final class FolderLinkCollectionViewDiffableDataSource {
     private var dataSource: UICollectionViewDiffableDataSource<ThumbnailSection, MEGANode>?
     private weak var collectionView: UICollectionView?
