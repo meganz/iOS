@@ -72,8 +72,9 @@ class RichPreviewContentView: UIView {
                 descriptionLabel.text = Helper.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
                 linkLabel.text = "mega.nz"
                 iconImageView.image = UIImage(named: "favicon")
-                imageView.mnz_setThumbnail(by: node)
-                
+                if let node = node {
+                    imageView.mnz_setThumbnail(by: node)
+                }
             case .folderLink:
                 titleLabel.text = message.richTitle
                 descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", Helper.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))
