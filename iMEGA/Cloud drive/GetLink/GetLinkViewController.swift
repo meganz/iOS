@@ -129,11 +129,9 @@ class GetLinkViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateAppearance()
-                tableView.reloadData()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAppearance()
+            tableView.reloadData()
         }
     }
     

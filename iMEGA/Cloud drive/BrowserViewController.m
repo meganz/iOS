@@ -77,9 +77,7 @@
     
     [self setupBrowser];
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
+    [self configPreviewingRegistration];
     
     self.navigationController.presentationController.delegate = self;
     self.cloudDriveButton.titleLabel.adjustsFontForContentSizeCategory = YES;
@@ -132,24 +130,22 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
 #ifdef MNZ_SHARE_EXTENSION
-            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-            [ExtensionAppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
-            [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+        [ExtensionAppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+        [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 #elif MNZ_PICKER_EXTENSION
-            
+        
 #else
-            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-            [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
-            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 #endif
-            
-            [self updateAppearance];
-            
-            [self.tableView reloadData];
-        }
+        
+        [self updateAppearance];
+        
+        [self.tableView reloadData];
     }
     
     [self configPreviewingRegistration];

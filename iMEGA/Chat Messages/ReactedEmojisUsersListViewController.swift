@@ -55,12 +55,8 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         super.viewDidLoad()
         
         preferredContentSize = CGSize(width: 400, height: 600)
-
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
+        
+        view.backgroundColor = .systemBackground
         
         addHeaderView(emojiList: emojiList)
         let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatRoom.chatId, messageId: messageId)

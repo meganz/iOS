@@ -135,9 +135,7 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
+    [self configPreviewingRegistration];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
@@ -214,15 +212,13 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
-            [self updateAppearance];
-            
-            [self.tableView reloadData];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+        [self updateAppearance];
+        
+        [self.tableView reloadData];
     }
     
     [self configPreviewingRegistration];
