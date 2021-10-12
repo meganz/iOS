@@ -108,7 +108,7 @@ class ExplorerBaseViewController: UIViewController {
             MEGASdkManager.sharedMEGASdk().move(
                 $0,
                 newParent: rubbishBinNode,
-                delegate: moveRequestDelegate!
+                delegate: moveRequestDelegate
             ) }
     }
     
