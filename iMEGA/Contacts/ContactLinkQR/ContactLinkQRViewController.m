@@ -153,8 +153,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
             
             if (@available(iOS 13.0, *)) {
                 [self.segmentedControl setTitleTextColor:UIColor.mnz_label selectedColor:UIColor.mnz_label];
-            } else {
-                self.segmentedControl.tintColor = UIColor.whiteColor;
             }
             
             //The SVProgressHUD appearance is not updated when enabling/disabling dark mode. By updating the appearance and dismissing the HUD, it will have the correct configuration the next time is shown.
@@ -172,8 +170,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
                 UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : UIColor.blackColor);
                 
                 [self.segmentedControl setTitleTextColor:UIColor.whiteColor selectedColor:scanCodeLabelTextColor];
-            } else {
-                self.segmentedControl.tintColor = UIColor.whiteColor;
             }
             break;
         }
