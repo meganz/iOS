@@ -16,6 +16,7 @@ final class FolderLinkCollectionViewDiffableDataSource {
             snapshot.appendItems(data[key] ?? [])
         }
         dataSource?.apply(snapshot, animatingDifferences: true)
+        collectionView?.reloadEmptyDataSet()
     }
 
     func reload(nodes: [MEGANode]) {
