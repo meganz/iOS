@@ -57,11 +57,6 @@
 #import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
 #import <SDWebImage/SDWebImage.h>
 #import "MEGASdkManager+CleanUp.h"
-
-#ifdef DEBUG
-#import <DoraemonKit/DoraemonManager.h>
-#endif
-
 @import Firebase;
 
 #import "MEGA-Swift.h"
@@ -148,9 +143,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [FIRApp configure];
-#ifdef DEBUG
-    [[DoraemonManager shareInstance] install];
-#endif
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
