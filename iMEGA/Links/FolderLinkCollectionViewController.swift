@@ -84,14 +84,13 @@ class FolderLinkCollectionViewController: UIViewController  {
     }
     
     @IBAction func nodeActionsTapped(_ sender: UIButton) {
-        if collectionView.allowsMultipleSelection {
-            return
-        }
-        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)) else {
+        guard !collectionView.allowsMultipleSelection,
+              let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
+                let node = getNode(at: indexPath) else {
             return
         }
         
-        folderLink.showActions(for: getNode(at: indexPath), from: sender)
+        folderLink.showActions(for: node, from: sender)
     }
     
     @objc func reloadData() {
@@ -139,10 +138,10 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
         }
 
         if (collectionView.allowsMultipleSelection) {
-            folderLink.selectedNodesArray.add(node)
+            folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
             folderLink.setToolbarButtonsEnabled(true)
-            folderLink.areAllNodesSelected = folderLink.selectedNodesArray.count == folderLink.nodesArray.count
+            folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
             return
         }
         
@@ -158,12 +157,12 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
             selectedNodesCopy.forEach { (tempNode) in
                 if node.handle == tempNode.handle {
-                    folderLink.selectedNodesArray.remove(tempNode)
+                    folderLink.selectedNodesArray?.remove(tempNode)
                 }
             }
             
             folderLink.setNavigationBarTitleLabel()
-            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray.count != 0)
+            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray?.count != 0)
             folderLink.areAllNodesSelected = false
         }
     }

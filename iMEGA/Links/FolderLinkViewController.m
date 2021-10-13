@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
