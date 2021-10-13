@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - MOMediaDestination entity
 
-- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(NSNumber *)timescale;
+- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(nullable NSNumber *)timescale;
 - (void)deleteMediaDestinationWithFingerprint:(NSString *)fingerprint;
 - (nullable MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint;
 
