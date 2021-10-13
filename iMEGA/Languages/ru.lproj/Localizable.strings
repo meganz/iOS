@@ -102,6 +102,8 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Пароль";
+/* Account, Change Password view. Error shown when you type your current password. */
+"account.changePassword.error.currentPassword"="Вы ввели текущий пароль.";
 /*  */
 "pleaseStrengthenYourPassword"="Повысьте надежность пароля.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -452,6 +454,8 @@
 "rename"="Переименовать";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Введите новое имя";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
+"general.error.charactersNotAllowed"="Следующие символы не допускаются: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Переименовать файл %@?";
 /* Title for the action that allows you to replace a file. */
@@ -1357,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="НЕ ПРОЧИТАНО: %lu";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA Pro не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA Pro и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1740,6 +1744,8 @@
 "Rubbish-Bin Cleaning Scheduler:"="Планировщик очистки корзины";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Удалять файлы старше";
+/* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Для большего периода хранения [S]улучшите аккаунт до Pro[/S]";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="д.";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -2019,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Откройте доступ к вашей адресной книге";
+"Enable Access to Your Address Book"="Grant Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Легко находите контакты из своей адресной книги в MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2706,3 +2712,7 @@
 "meetings.notifications.moderatorPrivilege"="Вы новый модератор звонка";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Мы обновляем MEGAchat. Ваши звонки могут не быть соединены из-за несовместимости версий, пока все участники не обновят свои приложения MEGA до последней версии.";
+/* This is the button text for enabling the loud speaker in the floating panel for meetings */
+"meetings.quickAction.speaker"="Докладчик";
+/* This is the button text for flipping the front and back camera in the floating panel for meetings */
+"meetings.quickAction.flip"="Flip";

@@ -102,6 +102,8 @@
 "emailPlaceholder"="البريد الإلكتروني";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="كلمة المرور";
+/* Account, Change Password view. Error shown when you type your current password. */
+"account.changePassword.error.currentPassword"="لقد أدخلت كلمة مرورك الحالية.";
 /*  */
 "pleaseStrengthenYourPassword"="يرجى تقوية كلمة المرور الخاصة بك.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -452,6 +454,8 @@
 "rename"="تغيير الاسم";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="أدخل الاسم الجديد";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
+"general.error.charactersNotAllowed"="المحارف التالية غير مسموح بها: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="أعد تسمية الملفّ %@ ؟";
 /* Title for the action that allows you to replace a file. */
@@ -1357,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu رسائل غير مقروءة";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية لنفس المدة وبنفس سعر الفترة الأولية المختارة. يمكنك إيقاف التجديد التلقائي لاشتراكك ميغا برو MEGA Pro في موعد أقصاه 24 ساعة قبل أن يحين موعد سداد اشتراكك التالي عبر صفحة إعدادات الحساب iTunes اي تيونز الخاص بك. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة متجر التطبيقات App Store على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام رمز أبل Apple ID الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك بالفعل) ثم انقر فوق عرض الرمز ID. سيتم نقلك إلى صفحة حسابك حيث يمكنك التمرير لأسفل إلى مدير اشتراكات التطبيقات. من هناك ، يمكنك تحديد اشتراك ميغا برو MEGA Pro الخاص بك وعرض تاريخ التجديد المجدول، أو اختيار حزمة اشتراك مختلفة أو تبديل مفتاح التشغيل/الإيقاف إلى إيقاف التشغيل لتعطيل التجديد التلقائي لاشتراكك.";
+"autorenewableDescription"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية لنفس المدة وبنفس سعر الفترة الأولية المختارة. يمكنك إيقاف التجديد التلقائي لاشتراكك ميغا برو MEGA Pro في موعد أقصاه 24 ساعة قبل أن يحين موعد سداد اشتراكك التالي عبر صفحة إعدادات الحساب iTunes اي تيونز الخاص بك. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة متجر التطبيقات App Store على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل Apple ID الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك بالفعل) ثم انقر فوق عرض المعرف. سيتم نقلك إلى صفحة حسابك حيث يمكنك التمرير لأسفل إلى مدير اشتراكات التطبيقات. من هناك ، يمكنك تحديد اشتراك ميغا برو MEGA Pro الخاص بك وعرض تاريخ التجديد المجدول، أو اختيار حزمة اشتراك مختلفة أو تبديل مفتاح التشغيل/الإيقاف إلى إيقاف التشغيل لتعطيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="افتح ميغا MEGA و سجل دخولك للمتابعة";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1723,7 +1727,7 @@
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="تفعيل أو تعطيل النسخ المعدلة للملفات لكامل حسابك.\nتعطيل ميزة النسخ المعدلة للملفات لا تمنع جهات الاتصال الخاصة بك من إنشاء نسخ جديدة في الملفات المشاركة.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="عند تعطيل نسخ الملف، سيتم استبدال الإصدار الحالي بالإصدار الجديد بمجرد تحديث الملف (ولن يتم تسجيل التغييرات التي أجريتها على الملف). هل تريد بالتأكيد تعطيل نسخ الملفات؟";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="عند تعطيل نسخ الملف، سيتم استبدال النسخة الحالية بالنسخة الجديدة بمجرد تحديث الملف (ولن يتم تسجيل التغييرات التي أجريتها على الملف). هل تريد بالتأكيد تعطيل نسخ الملفات؟";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="نسخ الملف";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -1740,6 +1744,8 @@
 "Rubbish-Bin Cleaning Scheduler:"="جدولة افراغ سلة المحذوفات";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="أزل الملفات الأكبر من";
+/* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="لفترة احتفاظ أطول [S]قم بالترقية إلى برو Pr[/S]";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="أيام";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -1763,23 +1769,23 @@
 /* Message shown in a chat room for a one on one call */
 "Tap to return to call"="انقر للعودة الى المكالمة";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="احفظ مع الصور";
+"Save to Photos"="احفظ في تطبيق الصور";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="جاري الحفظ الى الصور…";
+"Saving to Photos…"="جاري الحفظ في تطبيق الصور…";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="كل الوسائط";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="جارى التنزيل %@";
+"Downloading %@"="جارى تنزيل %@";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="تم الحفظ بالصور";
+"Saved to Photos"="تم الحفظ في تطبيق الصور";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save Item"="فشل عملية الحفظ";
+"Could not save Item"="تعذر حفظ العنصر";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
 "Encrypted Key Rotation"="تدوير مفتاح التشفير";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="تمكين تدوير مفتاح التشفير";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="استخرج رابط المحادثة";
+"Get Chat Link"="احصل على رابط المحادثة";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="يعد تدوير مفتاح التشفير أكثر أمانًا إلى حد ما، ولكنه لا يسمح لك بإنشاء رابط محادثة ولن يرى المشاركون الجدد الرسائل السابقة.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
@@ -1797,11 +1803,11 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="قام %@ بتمكين تدوير مفتاح التشفير.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ قام بإنشاء رابط محادثة";
+"%@ created a public link for the chat."="قام %@ بإنشاء رابط محادثة";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ إزالة رابط المحادثة";
+"%@ removed a public link for the chat."="قام %@ بإزالة رابط المحادثة";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ انضم الى المجموعة";
+"%@ joined the group chat."="انضم %@ إلى المحادثة الجماعية.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="لا يمكنك الانضمام إلى هذه المكالمة لأنها بلغت الحد الأقصى لعدد المشاركين.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1809,9 +1815,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="تعذر بدء مكالمة بسبب تجاوز حد عدد المشتركين.";
 /* Label shown while joining a public chat */
-"Joining..."="انضمام…";
+"Joining..."="جاري الانضمام…";
 /* Label shown while leaving a public chat */
-"Leaving..."="مغادرة…";
+"Leaving..."="جاري المغادرة…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="طريقة عرض القائمة";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1821,45 +1827,45 @@
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="اتصال ضعيف.";
 /* There are no notifications to display. */
-"No notifications"="لا يوجد إشعارات جديدة";
+"No notifications"="لا يوجد إشعارات";
 /* The header of a notification related to payments */
 "Payment info"="معلومات الدفع";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً.";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="إحباط";
+"Takedown notice"="إشعار الإزالة";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
-"Takedown reinstated"="إعادة إنهاء الخدمة";
+"Takedown reinstated"="تمت إعادة الإزالة";
 /* Label shown inside an unseen notification */
 "New"="جديد";
 /* When a contact sent a contact/friend request */
-"Sent you a contact request"="طلبات الإضافة المرسلة";
+"Sent you a contact request"="أرسل إليك طلب تواصل";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
-"Cancelled their contact request"="إلغاء طلب جهات الاتصال الخاصة بهم";
+"Cancelled their contact request"="ألغوا طلبهم للتواصل";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="تذكير: لديك طلب اضافة جهة الاتصال";
+"Reminder: You have a contact request"="تذكير: لديك طلب تواصل";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
-"Deleted you as a contact"="تم حذفك من جهة الاتصال";
+"Deleted you as a contact"="تم حذفك من جهات الاتصال";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
-"Contact relationship established"="انتم الان متصلين";
+"Contact relationship established"="تم تأسيس علاقة تواصل";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
 "Account has been deleted/deactivated"="تم حذف/ إلغاء تفعيل الحساب";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
-"Blocked you as a contact"="تم حظرك كجهة اتصال";
+"Blocked you as a contact"="تم حظرك من جهات الاتصال";
 /* Response text after clicking Ignore on an incoming contact request notification. */
-"You ignored a contact request"="لقد تجاهلت طلب اضافة جهة  الاتصال";
+"You ignored a contact request"="لقد تجاهلت طلب تواصل";
 /* Response text after clicking Accept on an incoming contact request notification. */
-"You accepted a contact request"="هل قبلت طلب اضافة جهة الاتصال";
+"You accepted a contact request"="لقد قبلت طلب التواصل";
 /* Response text after clicking Deny on an incoming contact request notification. */
-"You denied a contact request"="لقد رفضت طلب اضافة جهة  الاتصال";
+"You denied a contact request"="لقد رفضت طلب التواصل";
 /* When somebody accepted your contact request */
-"Accepted your contact request"="تمت الموافقة على طلب أصافة جهة الاتصال";
+"Accepted your contact request"="قبل/ت طلب التواصل الخاص بك";
 /* When somebody denied your contact request */
-"Denied your contact request"="تم رفض طلب إضافة جهة الاتصال";
+"Denied your contact request"="رفض/ت طلب التواصل الخاص بك";
 /* notification text */
 "A user has left the shared folder {0}"="أحد المستخدمين غادر التشارك على المجلد {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
-"Access to folders was removed."="تمت الإزالة من الدخول إلى المجلدات";
+"Access to folders was removed."="تمت إزالة صلاحية الوصول إلى المجلدات";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added 1 file"="تم إضافة 1 ملف";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1881,9 +1887,9 @@
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="تم إزالة [X] عناصر من المشاركة";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
-"Your payment for the %1 plan was received."="تم استلام عملية الدفع الخاصة بك من اجل الخطة %1";
+"Your payment for the %1 plan was received."="تم استلام دفعتك للباقة %1.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="عملية الدفع للخطة %1 لم تنجح";
+"Your payment for the %1 plan was unsuccessful."="لم تنجح دفعتك للباقة %1";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="ستنتهي صلاحية اشتراك برو Pro الخاص بك غداً.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -1893,9 +1899,9 @@
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="لقد انتهت صلاحية إشتراك برو Pro الخاص بك منذ %1 يوم";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="لقد شاركت بشكل عام  %1 (%2)";
+"Your publicly shared %1 (%2) has been taken down."="تمت إزالة ملفك المشارك %1 (%2) بشكل عام";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="تم إعادة الخدمة ل %1 (%2)";
+"Your taken down %1 (%2) has been reinstated."="تمت إعادة %1 (%2) الذي تم إزالته.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="رسالة صوتية";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -1923,7 +1929,7 @@
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="الأقمار الصناعية";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="مختلط";
+"Hybrid"="مدمجة";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="دقيق حتى %d متر";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1933,9 +1939,9 @@
 /* Text shown in location-type messages */
 "Pinned Location"="موقع مثبت";
 /* Plural of participant. 2 participants */
-"%d participants"="%d المشاركون";
+"%d participants"="%d مشارك";
 /* Singular of participant. 1 participant */
-"%d participant"="%d المشارك";
+"%d participant"="%d مشارك";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< إزلق للإلغاء";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2019,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد أنك تريد التغيير إلى المخدم التجريبي؟ من الممكن ان يتعرض حسابك  لمشاكل غير قابلة للإصلاح.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="تمكين الوصول إلى دفتر العناوين الخاص بك";
+"Enable Access to Your Address Book"="منح حق الوصول إلى دفتر العناوين الخاص بك";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="اكتشف جهات الاتصال بسهولة من دفتر العناوين الخاص بك على ميغا MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2706,3 +2712,7 @@
 "meetings.notifications.moderatorPrivilege"="أنت مشرف الاتصال الجديد.";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="نحن بصدد ترقية محادثات ميغا MEGAchat. قد لا تكون مكالماتك متصلة بسبب عدم توافق الإصدار ما لم تقم جميع الأطراف بتحديث تطبيقات ميغا MEGA الخاصة بهم إلى أحدث إصدار.";
+/* This is the button text for enabling the loud speaker in the floating panel for meetings */
+"meetings.quickAction.speaker"="مكبر الصوت";
+/* This is the button text for flipping the front and back camera in the floating panel for meetings */
+"meetings.quickAction.flip"="Flip";

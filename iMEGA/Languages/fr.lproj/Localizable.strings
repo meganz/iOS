@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d’adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et recliquer ensuite sur le lien de confirmation.";
+"needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d’adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et retoucher ensuite le lien de confirmation.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Connexion";
 /* Button title which triggers the action to create a MEGA account */
@@ -102,6 +102,8 @@
 "emailPlaceholder"="Adresse courriel";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Mot de passe";
+/* Account, Change Password view. Error shown when you type your current password. */
+"account.changePassword.error.currentPassword"="Vous avez saisi votre mot de passe actuel.";
 /*  */
 "pleaseStrengthenYourPassword"="Veuillez renforcer votre mot de passe.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -295,7 +297,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Commencer un groupe";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Emplacement";
+"Location"="Position";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Insert parlé";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -452,6 +454,8 @@
 "rename"="Renommer";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Saisissez le nouveau nom";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
+"general.error.charactersNotAllowed"="Les caractères suivants ne sont pas autorisés : ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Renommer le fichier %@ ?";
 /* Title for the action that allows you to replace a file. */
@@ -873,7 +877,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Vous avez déjà demandé un lien de confirmation pour cette adresse courriel.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Veuillez aller dans votre boîte de réception et cliquer sur le lien pour confirmer votre nouvelle adresse courriel.";
+"emailIsChanging_description"="Veuillez aller dans votre boîte de réception et toucher le lien pour confirmer votre nouvelle adresse courriel.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Veuillez saisir votre mot de passe pour confirmer votre adresse courriel";
 /* The [X] will be replaced with the e-mail address. */
@@ -1335,7 +1339,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Voulez-vous vraiment abandonner l’inscription ?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
+"misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et touchez « Renvoyer ».";
 /* A button to resend the email confirmation. */
 "resend"="Renvoyer";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1357,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MESSAGES NON LUS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
+"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, touchez simplement l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et touchez Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrez MEGA et connectez-vous afin de poursuivre";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1455,7 +1459,7 @@
 /* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
 "low"="Basse";
 /* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Moyen";
+"medium"="Moyenne";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
 "high"="Haute";
 /* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
@@ -1740,6 +1744,8 @@
 "Rubbish-Bin Cleaning Scheduler:"="Programmateur de vidage de la Corbeille";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Supprimer les fichiers de plus de";
+/* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Pour une période de conservation plus longue, [S]Passez à un compte Pro[/S]";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="jours";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -1809,9 +1815,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Impossible de lancer l’appel, car le nombre de participants a été dépassé.";
 /* Label shown while joining a public chat */
-"Joining..."="Jonction…";
+"Joining..."="Connexion à la conversation…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Retrait…";
+"Leaving..."="Retrait de la conversation…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Vue en liste";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2007,7 +2013,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Veuillez vous rendre dans la section Confidentialité des réglages de votre appareil. Activez le service de localisation et définissez MEGA à Quand l’appli est active ou à Toujours.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accède à votre emplacement quand vous le partagez avec vos contacts dans une conversation ou quand vous activez « Téléverser en arrière-plan » pour Téléversements de l’appareil photo, afin que vos photos et vidéos soient téléversées quand votre emplacement géographique change.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accède à votre position quand vous le partagez avec vos contacts dans une conversation ou quand vous activez « Téléverser en arrière-plan » pour Téléversements de l’appareil photo, afin que vos photos et vidéos soient téléversées quand votre position géographique change.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Les données mobiles sont désactivées";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2019,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Voulez-vous vraiment changer vers un serveur de test ? Votre compte pourrait subir des problèmes irrécupérables.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Donner accès à votre carnet d’adresses";
+"Enable Access to Your Address Book"="Accorder l’accès à votre carnet d’adresses";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Trouvez facilement les contacts de votre carnet d’adresses sur MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2219,7 +2225,7 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatique";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Envoyer des images de plus petite taille par le réseau cellulaire et des images de taille originale par le Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Envoyer les images de plus petite taille avec les données mobiles et les images de taille originale par le Wi-Fi";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimisée";
 /* Description of Optimised Image Quality option */
@@ -2706,3 +2712,7 @@
 "meetings.notifications.moderatorPrivilege"="Vous êtes le nouveau modérateur de l’appel";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Nous mettons MEGAchat à niveau. Vos appels pourraient ne pas être connectés en raison d’incompatibilité des versions, à moins qu’appelant et appelés aient aussi mis à niveau leurs applis MEGA vers la version la plus récente.";
+/* This is the button text for enabling the loud speaker in the floating panel for meetings */
+"meetings.quickAction.speaker"="Haut-parleur";
+/* This is the button text for flipping the front and back camera in the floating panel for meetings */
+"meetings.quickAction.flip"="Flip";
