@@ -102,6 +102,8 @@
 "emailPlaceholder"="อีเมล";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="รหัสผ่าน";
+/* Account, Change Password view. Error shown when you type your current password. */
+"account.changePassword.error.currentPassword"="You have entered your current password.";
 /*  */
 "pleaseStrengthenYourPassword"="กรุณาใช้รหัสผ่านที่คาดเดาได้ยากแต่ง่ายต่อการจดจำของคุณ";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -452,6 +454,8 @@
 "rename"="เปลี่ยนชื่อ";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="กรอกชื่อใหม่";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
+"general.error.charactersNotAllowed"="ไม่อนุญาตให้ใช้อักขระต่อไปนี้: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="เปลี่ยนชื่อไฟล์ %@ หรือไม่";
 /* Title for the action that allows you to replace a file. */
@@ -1357,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ข้อความที่ยังไม่ได้อ่าน";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="การสมัครใช้งานจะได้รับการต่ออายุโดยอัตโนมัติตามระยะเวลาที่สมัครไว้แบบต่อเนื่องในระยะเวลาเดียวกันและในราคาเดียวกับช่วงเวลาเริ่มต้นที่เลือกไว้ คุณสามารถปิดการต่ออายุการสมัครใช้งาน MEGA Pro โดยอัตโนมัติได้ไม่เกิน 24 ชั่วโมงก่อนถึงกำหนดชำระเงินครั้งต่อไปผ่านหน้าการตั้งค่าบัญชี iTunes ของคุณ ในการจัดการการสมัครใช้งานของคุณเพียงคลิกที่ไอคอน App Store บนอุปกรณ์มือถือของคุณ ลงชื่อเข้าใช้ด้วย Apple ID ของคุณที่ด้านล่างของหน้า (กรณีที่ยังไม่ได้ลงชื่อเข้าใช้) จากนั้นคลิกดู ID คุณจะเข้าสู่หน้าบัญชีของคุณซึ่งคุณสามารถเลื่อนลงไปที่จัดการการสมัครใช้งานแอป จากตรงนั้นคุณสามารถเลือกการสมัครใช้งาน MEGA Pro แและสามารถดูกำหนดการต่ออายุ เลือกแพ็คเกจการสมัครใช้งานอื่น ๆ หรือสลับสวิตช์เปิด-ปิด เป็นปิด เพื่อปิดใช้งานการต่ออายุการสมัครใช้งานของคุณ";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="เปิด MEGA และลงชื่อเข้าใช้เพื่อดำเนินการต่อ";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1740,6 +1744,8 @@
 "Rubbish-Bin Cleaning Scheduler:"="ตัวกำหนดเวลาทำความสะอาดถังขยะ";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="ลบไฟล์ที่เก่ากว่า";
+/* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="เพื่อให้ระยะเวลาการเก็บรักษานานขึ้น [S]อัปเกรดเป็น Pro[/S]";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="วัน";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -2019,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนไปใช้เซิร์ฟเวอร์ทดสอบ บัญชีของคุณอาจประสบปัญหาไม่สามารถกู้คืนได้";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="เปิดใช้งานการเข้าถึงสมุดรายชื่อของคุณ";
+"Enable Access to Your Address Book"="Grant Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="ค้นหารายชื่อจากสมุดรายชื่อของคุณได้อย่างง่ายดายบน MEGA";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2706,3 +2712,7 @@
 "meetings.notifications.moderatorPrivilege"="คุณเป็นผู้ดูแลการโทรคนใหม่";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="เรากำลังอัปเกรด MEGAchat การโทรของคุณอาจไม่ได้เชื่อมต่อเนื่องจากว่าเวอร์ชันที่เข้ากันไม่ได้ เว้นแต่ทุกฝ่ายจะอัปเดตแอป MEGA เป็นเวอร์ชันล่าสุดแล้ว";
+/* This is the button text for enabling the loud speaker in the floating panel for meetings */
+"meetings.quickAction.speaker"="ลำโพง";
+/* This is the button text for flipping the front and back camera in the floating panel for meetings */
+"meetings.quickAction.flip"="Flip";

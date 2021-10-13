@@ -102,6 +102,8 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Senha";
+/* Account, Change Password view. Error shown when you type your current password. */
+"account.changePassword.error.currentPassword"="You have entered your current password.";
 /*  */
 "pleaseStrengthenYourPassword"="Escolha uma senha mais forte";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -452,6 +454,8 @@
 "rename"="Renomear";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Digite o novo nome";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
+"general.error.charactersNotAllowed"="The following characters are not allowed: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Renomear o arquivo %@?";
 /* Title for the action that allows you to replace a file. */
@@ -1357,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MENSAGENS NÃO LIDAS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura Pro no MEGA até 24 horas antes do próximo pagamento, por meio da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta clicar no ícone da App Store no seu dispositivo, fazer login com o seu Apple ID na parte inferior da página (se você ainda não tiver feito isso), e então clicar em Ver ID. Você será direcionado à página da sua conta, na qual deve ir até a opção Assinaturas. A continuação, você poderá selecionar a sua assinatura Pro do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão ON/OFF para desativar a renovação automática da sua assinatura.";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abra o MEGA e faça o login para continuar";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1740,6 +1744,8 @@
 "Rubbish-Bin Cleaning Scheduler:"="Planejador de limpeza da lixeira";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Remover arquivos com mais de";
+/* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="For a longer retention period [S]Upgrade to Pro[/S]";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="dias";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -2019,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Você tem certeza de que quer alterar para um servidor de teste? A sua conta pode sofrer danos irreparáveis.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Permitir o acesso ao seu catálogo de endereços";
+"Enable Access to Your Address Book"="Grant Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Descubra facilmente quais são os contatos do seu catálogo de endereços que já estão no MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2706,3 +2712,7 @@
 "meetings.notifications.moderatorPrivilege"="Você é o novo moderador da chamada";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Estamos atualizando o MEGAchat. As suas chamadas podem não ser estabelecidas devido a uma incompatibilidade com a versão do aplicativo, a menos que todos os participantes atualizem os seus aplicativos do MEGA à versão mais recente.";
+/* This is the button text for enabling the loud speaker in the floating panel for meetings */
+"meetings.quickAction.speaker"="Viva-voz";
+/* This is the button text for flipping the front and back camera in the floating panel for meetings */
+"meetings.quickAction.flip"="Flip";

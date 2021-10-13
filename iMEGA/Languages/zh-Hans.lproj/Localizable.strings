@@ -102,6 +102,8 @@
 "emailPlaceholder"="邮箱地址";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密码";
+/* Account, Change Password view. Error shown when you type your current password. */
+"account.changePassword.error.currentPassword"="You have entered your current password.";
 /*  */
 "pleaseStrengthenYourPassword"="请强化您的密码。";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -452,6 +454,8 @@
 "rename"="重命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="输入新名字";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
+"general.error.charactersNotAllowed"="不允许使用此类字符：” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="是否重命名文件%@？";
 /* Title for the action that allows you to replace a file. */
@@ -1357,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu未读消息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="此订阅将会自动更新续订，续订内容与您开始时选择的订阅时间与价格一致。您可以在您的iTunes账号设定中关闭MEGA Pro的订阅自动续订服务，您必须在下一个订阅支付期限的24小时前执行此操作。如需管理您的订阅内容，请点击您手机上的App Store图标，在页面下方使用您的Apple账号登入（如果您还没有这样做），然后点击查看账号。您将前往至您的账户页面，向下滚动至管理应用程序订阅。在那里，您可以选择您的MEGA Pro订阅并查看您的续订日期、选择其他订阅套餐或选择关闭以停止您的自动续订服务。";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1740,6 +1744,8 @@
 "Rubbish-Bin Cleaning Scheduler:"="垃圾桶定时清理";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="删除垃圾桶中的文件，时间早于";
+/* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="若需延长保留期限，请[S]升级到Pro会员帐户[/S]";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="天";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -2019,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？您的帐户可能会遇到一些问题。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="开启允许访问通讯录";
+"Enable Access to Your Address Book"="Grant Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="在您的MEGA通讯录中轻松找到联系人。";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2706,3 +2712,7 @@
 "meetings.notifications.moderatorPrivilege"="您是新的会议主持人";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="我们正在升级MEGAchat。请所有参会者将MEGA App更新至最新版本，否则您的通话可能无法连接。";
+/* This is the button text for enabling the loud speaker in the floating panel for meetings */
+"meetings.quickAction.speaker"="扬声器";
+/* This is the button text for flipping the front and back camera in the floating panel for meetings */
+"meetings.quickAction.flip"="Flip";
