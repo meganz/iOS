@@ -532,7 +532,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
         navigationController?.present(controller, animated: true, completion: nil)
     }
 
-    func showCustomActions(for node: MEGANode!, fromSender sender: Any!) {
+    func showCustomActions(for node: MEGANode, fromSender sender: Any) {
         let selectionAction: (MEGANode, MegaNodeActionType) -> Void = { [router, weak self] node, action in
             guard let self = self else { return }
             switch action {
