@@ -191,9 +191,16 @@
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
-    AppReinstallationCleaner *appReinstallationCleaner = AppReinstallationCleaner.alloc.init;
-    if ([appReinstallationCleaner cleanCredentialsIfNeeded]) {
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+    [sharedUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
+    
+    //Clear keychain (session) and delete passcode on first run in case of reinstallation
+    if (![NSUserDefaults.standardUserDefaults objectForKey:MEGAFirstRun]) {
         sessionV3 = nil;
+        [Helper clearEphemeralSession];
+        [Helper clearSession];
+        [Helper deletePasscode];
+        [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
     }
     
     [AppearanceManager setupAppearance:self.window.traitCollection];
