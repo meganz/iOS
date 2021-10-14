@@ -10,8 +10,6 @@ enum SortOrderEntity {
     case creationDesc
     case modificationAsc
     case modificationDesc
-    case alphabeticalAsc
-    case alphabeticalDesc
     case photoAsc
     case photoDesc
     case videoAsc
