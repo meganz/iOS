@@ -21,8 +21,11 @@ final class FolderLinkCollectionViewDiffableDataSource {
 
     func reload(nodes: [MEGANode]) {
         guard var newSnapshot = dataSource?.snapshot() else { return }
-        newSnapshot.reloadItems(nodes)
-        dataSource?.apply(newSnapshot)
+        let snapshotNodes = nodes.filter { newSnapshot.indexOfItem($0) != nil }
+        if !snapshotNodes.isEmpty {
+            newSnapshot.reloadItems(snapshotNodes)
+            dataSource?.apply(newSnapshot)
+        }
     }
 
     func configureDataSource() {
