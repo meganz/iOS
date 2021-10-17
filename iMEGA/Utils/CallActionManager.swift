@@ -123,6 +123,11 @@
         
     private func configureAudioSessionForStartCall(chatId: UInt64) {
         disableRTCAudio()
+        guard !isOneToOneChatRoom(forChatId: chatId) else {
+            enableRTCAudioExternally = true
+            return
+        }
+        
         self.callInProgressListener = CallInProgressListener(chatId: chatId, sdk: chatSdk) { [weak self] chatId, call in
             guard let self = self else { return }
             self.enableRTCAudio()
