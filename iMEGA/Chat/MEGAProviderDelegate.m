@@ -115,13 +115,6 @@
     }
 }
 
-- (void)reportOutgoingCall:(MEGAChatCall *)call {
-    MEGALogDebug(@"[CallKit] Report outgoing call %@", call);
-    
-    [self stopDialerTone];
-    [self.provider reportOutgoingCallWithUUID:call.uuid connectedAtDate:nil];
-}
-
 - (void)reportEndCall:(MEGAChatCall *)call {
     MEGALogDebug(@"[CallKit] Report end call %@", call);
     if (!call.uuid) return;
@@ -163,6 +156,7 @@
 - (void)stopDialerTone {
     [self.player stop];
     self.player = nil;
+    [[CallActionManager shared] enableRTCAudioIfRequired];
 }
 
 - (void)disablePasscodeIfNeeded {
@@ -384,7 +378,19 @@
 - (void)provider:(CXProvider *)provider didActivateAudioSession:(AVAudioSession *)audioSession {
     MEGALogDebug(@"[CallKit] Provider did activate audio session");
     
-    [[CallActionManager shared] enableRTCAudioIfRequired];
+    if (self.isOutgoingCall) {
+        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
+        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+        
+        self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+        self.player.volume = 1.0f;
+        self.player.numberOfLoops = -1;
+        
+        [self.player play];
+    } else {
+        [[CallActionManager shared] enableRTCAudioIfRequired];
+    }
+    
     self.isAudioSessionActive = YES;
 
     if (self.isCallKitAnsweredCall) {
@@ -395,16 +401,6 @@
             MEGALogDebug(@"[CallKit] Loud speaker is %d", chatRoom.isMeeting);
             [audioSession mnz_setSpeakerEnabled:chatRoom.isMeeting];
         }
-    }
-    
-    if (self.isOutgoingCall) {
-        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
-        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-        
-        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-        self.player.numberOfLoops = -1;
-        
-        [self.player play];
     }
 }
 
