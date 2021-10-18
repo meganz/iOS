@@ -1187,7 +1187,7 @@ static NSString *kisDirectory = @"kisDirectory";
             return nil;
         }
         NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath];
-        itemName = cell.nameLabel.text;
+        itemName = cell.itemName;
     }
     
     previewingContext.sourceRect = (self.viewModePreference == ViewModePreferenceList) ? [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.offlineCollectionView.collectionView convertRect:[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
