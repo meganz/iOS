@@ -68,6 +68,7 @@ PODS:
   - PinLayout (1.10.0)
   - PromisesObjC (2.0.0)
   - PureLayout (3.1.9)
+  - SAMKeychain (1.5.3)
   - SDWebImage/Core (5.12.0)
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
@@ -90,6 +91,7 @@ DEPENDENCIES:
   - PanModal (from `https://github.com/ilia3546/PanModal.git`, commit `ba721e8`)
   - PinLayout
   - PureLayout (from `https://github.com/PureLayout/PureLayout.git`)
+  - SAMKeychain
   - SDWebImageWebPCoder
   - YYCategories
 
@@ -113,6 +115,7 @@ SPEC REPOS:
     - nanopb
     - PinLayout
     - PromisesObjC
+    - SAMKeychain
     - SDWebImage
     - SDWebImageWebPCoder
     - YYCategories
@@ -173,10 +176,11 @@ SPEC CHECKSUMS:
   PinLayout: e50e9a748b632905fca6e67043ea4b05d6c92186
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   PureLayout: 5fb5e5429519627d60d079ccb1eaa7265ce7cf88
+  SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SDWebImage: 4ea20cca2986adc5aacde07aa686742fd4c67a37
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 1127f999f11e7564dc4ee8c41ae785e21d6cafc5
+PODFILE CHECKSUM: d92af1e10bd8b47c451656d343e3a68cce1353c9
 
 COCOAPODS: 1.11.2

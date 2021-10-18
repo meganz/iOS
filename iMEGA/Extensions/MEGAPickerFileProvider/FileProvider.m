@@ -1,8 +1,6 @@
 
 #import "FileProvider.h"
 
-#import "SAMKeychain.h"
-
 #import "MEGALogger.h"
 #import "MEGARequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -10,6 +8,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAPickerFileProvider-Swift.h"
 @import Firebase;
+@import SAMKeychain;
 
 @interface FileProvider () <MEGARequestDelegate, MEGATransferDelegate>
 

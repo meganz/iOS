@@ -25,6 +25,7 @@ abstract_target 'iMEGA' do
     pod 'CHTCollectionViewWaterfallLayout'
     pod 'Keyboard+LayoutGuide'
     pod 'YYCategories'
+    pod 'SAMKeychain'
     
     # Pods for Debug only
     pod 'FLEX', :configurations => ['Debug']
@@ -38,6 +39,7 @@ abstract_target 'iMEGA' do
 
   target 'MEGANotifications' do
     # Pods for MEGANotifications
+    pod 'SAMKeychain'
     
   end
 
@@ -45,11 +47,13 @@ abstract_target 'iMEGA' do
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGAPicker
     pod 'YYCategories'
+    pod 'SAMKeychain'
 
   end
 
   target 'MEGAPickerFileProvider' do
     # Pods for MEGAPickerFileProvider
+    pod 'SAMKeychain'
 
   end
 
@@ -57,6 +61,7 @@ abstract_target 'iMEGA' do
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGAShare
     pod 'YYCategories'
+    pod 'SAMKeychain'
 
   end
   
@@ -67,6 +72,7 @@ abstract_target 'iMEGA' do
 
   target 'MEGAWidgetExtension' do
     pod 'YYCategories'
+    pod 'SAMKeychain'
     # Pods for MEGAWidgetExtension
 
   end

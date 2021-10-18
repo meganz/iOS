@@ -10,9 +10,6 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/PieChartView"]
 	path = iMEGA/Vendor/PieChartView
 	url = https://github.com/astrokin/PieChart.git
-[submodule "iMEGA/Vendor/SAMKeychain"]
-	path = iMEGA/Vendor/SAMKeychain
-	url = https://github.com/soffes/SAMKeychain.git
 [submodule "iMEGA/Vendor/Karere"]
 	path = iMEGA/Vendor/Karere
 	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
