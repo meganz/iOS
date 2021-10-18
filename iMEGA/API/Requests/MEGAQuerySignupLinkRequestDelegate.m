@@ -12,7 +12,7 @@
 #import "OnboardingViewController.h"
 #import "UIApplication+MNZCategory.h"
 
-#import "SAMKeychain.h"
+@import SAMKeychain;
 
 @interface MEGAQuerySignupLinkRequestDelegate ()
 
