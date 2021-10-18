@@ -1,7 +1,6 @@
 
 import Foundation
 
-
 class FolderLinkCollectionViewController: UIViewController  {
    
     @IBOutlet weak var collectionView: UICollectionView!
@@ -13,7 +12,9 @@ class FolderLinkCollectionViewController: UIViewController  {
     var fileList = [MEGANode]()
     var folderList = [MEGANode]()
     
-    lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView)
+    var dtCollectionManager: DynamicTypeCollectionManager?
+    
+    lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView, controller: self)
     
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkCollectionViewController {
         guard let folderLinkCollectionVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkCollectionViewControllerID") as? FolderLinkCollectionViewController else {
@@ -51,13 +52,27 @@ class FolderLinkCollectionViewController: UIViewController  {
         }, completion: nil)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            dtCollectionManager?.resetCollectionItems()
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
     private func setupCollectionView() {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumColumnSpacing = 8
         layout.minimumInteritemSpacing = 8
         layout.configThumbnailListColumnCount()
         
+        collectionView.register(UINib(nibName: "FileNodeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NodeCollectionFileID")
+        collectionView.register(UINib(nibName: "FolderNodeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NodeCollectionFolderID")
+        
         collectionView.collectionViewLayout = layout
+        
+        dtCollectionManager = DynamicTypeCollectionManager(delegate: self)
     }
     
     private func buildNodeListFor(fileType: FileType) -> [MEGANode] {
@@ -81,16 +96,6 @@ class FolderLinkCollectionViewController: UIViewController  {
         folderLink.setViewEditing(editing)
         
         diffableDataSource.reload(nodes: folderList + fileList)
-    }
-    
-    @IBAction func nodeActionsTapped(_ sender: UIButton) {
-        guard !collectionView.allowsMultipleSelection,
-              let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
-                let node = getNode(at: indexPath) else {
-            return
-        }
-        
-        folderLink.showActions(for: node, from: sender)
     }
     
     @objc func reloadData() {
@@ -193,6 +198,20 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
 extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfallLayout {
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAt indexPath: IndexPath!) -> CGSize {
-        return indexPath.section == ThumbnailSection.file.rawValue ? CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFile.rawValue)) : CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFolder.rawValue))
+        dtCollectionManager?.currentItemSize(for: indexPath) ?? .zero
+    }
+}
+
+extension FolderLinkCollectionViewController: NodeCollectionViewCellDelegate {
+    func infoTouchUp(inside sender: UIButton) {
+        if collectionView.allowsMultipleSelection {
+            return
+        }
+        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
+              let node = getNode(at: indexPath) else {
+            return
+        }
+        
+        folderLink.showActions(for: node, from: sender)
     }
 }
