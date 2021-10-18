@@ -103,7 +103,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密码";
 /* Account, Change Password view. Error shown when you type your current password. */
-"account.changePassword.error.currentPassword"="You have entered your current password.";
+"account.changePassword.error.currentPassword"="您输入的密码与当前密码相同。";
 /*  */
 "pleaseStrengthenYourPassword"="请强化您的密码。";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -1361,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu未读消息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="此订阅将自动更新，续订内容与您开始时选择的订阅时间与价格一致。您可以在您的iTunes账号设定中关闭MEGA Pro会员的自动续订服务，您必须在下一个订阅支付期限的24小时前执行此操作。如需管理您的订阅内容，请点击您手机上的App Store图标，在页面下方使用您的Apple账号登录（如果您未登录），然后点击查看账号。您将前往至您的账户页面，向下滚动至管理应用程序订阅。在那里，您可以选择您的MEGA Pro会员订阅并查看您的续订日期、选择其他订阅套餐或选择关闭以停止您的自动续订服务。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2025,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？您的帐户可能会遇到一些问题。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Grant Access to Your Address Book";
+"Enable Access to Your Address Book"="授予允许访问您的通讯录";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="在您的MEGA通讯录中轻松找到联系人。";
 /* Detailed explanation about MEGA not using the contacts data without permision */
