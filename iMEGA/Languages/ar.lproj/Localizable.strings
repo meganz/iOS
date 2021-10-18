@@ -1735,7 +1735,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="حذف جميع النسخ القديمة لملفاتي";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete Previous Versions"="حذف الإصدارات السابقة";
+"Delete Previous Versions"="حذف النسخ السابقة";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1949,15 +1949,15 @@
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="لا يمكن تسجيل الرسائل الصوتية أثناء وجود مكالمة جارية.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
-"Recording..."="تسجيل…";
+"Recording..."="جاري التسجيل…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="مكالمة جارية";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
 "It is not possible to play content while there is a call in progress"="لا يمكن تشغيل ملفات الوسائط أثناء وجود مكالمة جارية.";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="المكالمة بدأت";
+"Call Started"="بدأت المكالمة";
 /* Title for feature Password Reminder */
-"Password Reminder"="استذكار كلمة المرور";
+"Password Reminder"="تذكير كلمة المرور";
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="رسالة";
 /* Title of the button in the contact info screen to start an audio call */
@@ -1989,7 +1989,7 @@
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 صورة و %2 فيديو";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 modified by %3"="%1 تم تعديلها من قبل %3";
+"%1 modified by %3"="تم تعديل %1  من قبل %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 و [A]%2 إضافية[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
@@ -1997,9 +1997,9 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="لا وجود لأي نشاط مؤخراً";
 /* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d عناصر";
+"%1$d items"="%1$d عنصر";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat Link Unavailable"="رابط الدردشة غير متوفر";
+"Chat Link Unavailable"="رابط المحادثة غير متاح";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="لم يعد رابط المحادثة هذا متاحاً";
 /* Text explaining users how the chat links work. */
@@ -2021,7 +2021,7 @@
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "You can turn on mobile data for this app in Settings."="يمكنك تشغيل بيانات الجوال لهذا التطبيق من خلال إعدادات الجهاز.";
 /* title of the alert dialog when the user is changing the API URL to staging */
-"Change to a test server?"="التغيير الى مخدم الاختبارات؟";
+"Change to a test server?"="التغيير الى مخدم تجريبي؟";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد أنك تريد التغيير إلى المخدم التجريبي؟ من الممكن ان يتعرض حسابك  لمشاكل غير قابلة للإصلاح.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
@@ -2035,7 +2035,7 @@
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] جهات اتصال وجدت على ميغا MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="تم العثور على جهة اتصال واحدة على ميغا MEGA";
+"1 contact found on MEGA"="تم العثور على 1 جهة اتصال على ميغا MEGA ";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="أفتح الإعدادات";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="أدخل البريد الإلكتروني";
 /* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="على MEGA";
+"On MEGA"="على ميغا MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="جهات الاتصال على ميغا MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2065,7 +2065,7 @@
 /* Business user role */
 "User"="مستخدم";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
-"Transfer"="التحميل";
+"Transfer"="تراسل المعطيات";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="لا يمكنك إزالة %1$s كجهة اتصال لأنها جزء من حساب الأعمال الخاص بك.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2073,11 +2073,11 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="فوراً";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="ملف تحت موضوع إشعار إنهاء الخدمة";
+"This file has been the subject of a takedown notice."="هذا الملف خاضع لموضوع إشعار إنهاء الخدمة.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="مجلد خاضع لموضوع إشعار إنهاء الخدمة";
+"This folder has been the subject of a takedown notice."="هذا المجلد خاضع لموضوع إشعار إنهاء الخدمة.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="تمت إزالته لشكوى";
+"Dispute Takedown"="الاعتراض على الإزالة";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="إدارة المستخدم متاحة فقط من متصفح سطح المكتب.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -2129,7 +2129,7 @@
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="تم كتم صوت الإشعارات";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="إعادة اتصال …";
+"Reconnecting..."="جاري إعادة اتصال …";
 /* Title shown when the user reconnect in a call. */
 "You are back!"="لقد عدت.";
 /* Subtitle of chat screen when the chat is inactive */
@@ -2139,7 +2139,7 @@
 /* Contact details screen: Edit the alias(nickname) for a user */
 "Edit Nickname"="تعديل الاسم مستعار";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="أزالة الاسم مستعار";
+"Remove Nickname"="إزالة الاسم مستعار";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="اسم المستعار أو لقب";
 /* Business expired account Overdue payment page header. */
@@ -2155,7 +2155,7 @@
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="إرسال (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="تحميل (%d)";
+"Upload (%d)"="ترفيع (%d)";
 /* Used in Photos app browser album listing screen. */
 "Albums"="ألبومات";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
@@ -2169,7 +2169,7 @@
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="ادعو جهات الاتصال الآن";
 /* Text showing the user one contact would be invited */
-"Invite 1 contact"="دعوة جهة اتصال واحدة";
+"Invite 1 contact"="دعوة 1 جهة اتصال";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="يرجى تقديم رقم هاتف صالح.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -2191,7 +2191,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="الرجاء إدخال رمز التحقق الذي تم إرساله إلى";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="لم تتلقى رمز؟";
+"You didn't receive a code?"="لم تتلقى الرمز؟";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="تم التحقق من رقم هاتفك بنجاح";
 /* Text describing account suspended state to the user */
@@ -2219,7 +2219,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="مسح الكل";
 /* Alert header for asking permission to resume transfers */
-"Resume Transfers?"="استئناف عمليات النقل؟";
+"Resume Transfers?"="استئناف عمليات التراسل؟";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="جودة الصورة";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
@@ -2323,7 +2323,7 @@
 /* Title for action to modify the registered phone number. */
 "Modify Phone Number"="تعديل رقم الهاتف";
 /* Title for action to remove the registered phone number. */
-"Remove Phone Number"="أزالة رقم الهاتف";
+"Remove Phone Number"="إزالة رقم الهاتف";
 /* Message for action to remove the registered phone number. */
 "This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="سيؤدي هذا إلى إزالة رقم هاتفك المرتبط من حسابك. إذا اخترت لاحقاً إضافة رقم هاتف، فستتم مطالبتك بالتحقق منه.";
 /* Message for action to modify the registered phone number. */
@@ -2341,11 +2341,11 @@
 /* Label to indicate not to use any proxy. String as short as possible. */
 "No proxy"="لا يوجد بروكسي";
 /* Label to indicate the server IP to be used. String as short as possible. */
-"Server:"="الخادم:";
+"Server:"="المخدم:";
 /* Label to indicate a server port to be used. String as short as possible. */
 "Port"="منفذ";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
-"Proxy server requires a password"="خادم البروكسي يتطلب كلمة مرور";
+"Proxy server requires a password"="مخدم البروكسي يتطلب كلمة مرور";
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="اسم المستخدم:";
 /* Text used for a title or header listing the details of something. */
@@ -2359,17 +2359,17 @@
 /* Text used for a title or header to list pending users whom you are sharing something. */
 "PENDING"="قيد الانتظار";
 /* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="الإصدارات";
+"VERSIONS"="النسخ";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="مفضلة";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="إزالة من المفضلة";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="صنف";
+"Label"="وسم";
 /* Context menu item which allows to mark folders with own color label */
 "Label..."="تمييز لوني…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="إزالة العلامة المميزة";
+"Remove Label"="إزالة الوسم";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="أحمر";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
@@ -2395,7 +2395,7 @@
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="حماية كلمة المرور";
 /* Text for options in Get Link View to set password protection */
-"Set Password"="ضبط كلمة السر";
+"Set Password"="ضبط كلمة المرور";
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="قم بتصدير الرابط ومفتاح فك التشفير بشكل منفصل.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
@@ -2447,7 +2447,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "Automatically delete messages older than %1"="احذف الرسائل الأقدم من %1 تلقائيًا";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="احذف جميع الرسائل والملفات المشتركة في هذه المحادثة. هذا الإجراء لا رجوع فيه.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="احذف جميع الرسائل والملفات المشاركة في هذه المحادثة. هذا الإجراء لا رجوع فيه.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="مسح الرسائل الأقدم من";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2469,23 +2469,23 @@
 /*  */
 "day"="يوم";
 /*  */
-"1 day"="يوم واحد";
+"1 day"="1 يوم";
 /*  */
 "week"="أسبوع";
 /*  */
 "weeks"="أسابيع";
 /*  */
-"1 week"="أسبوع واحد";
+"1 week"="1 أسبوع";
 /* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 أسابيع";
+"%1 weeks"="%1 أسبوع";
 /*  */
 "month"="شهر";
 /*  */
-"1 month"="شهر واحد";
+"1 month"="1 شهر";
 /* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 شهور";
+"%1 months"="%1 شهر";
 /*  */
-"1 year"="سنة واحدة";
+"1 year"="1 سنة";
 /*  */
 "year"="سنة";
 /* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
@@ -2499,7 +2499,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="تشغيل";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="هل أنت متأكد أنك تريد نقل مجلد ترفيعات الكاميرا إلى سلة المهملات؟ إذا كان الأمر كذلك، فسيتم إنشاء مجلد جديد تلقائيًا لترفيعات الكاميرا.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="هل أنت متأكد أنك تريد نقل مجلد ترفيعات الكاميرا إلى سلة المحذوفات؟ إذا كان الأمر كذلك، فسيتم إنشاء مجلد جديد تلقائيًا لترفيعات الكاميرا.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="رفع ملف";
 /* Text title for shortcuts, ie in the widget */
@@ -2545,7 +2545,7 @@
 /* Cookie dialog header */
 "Before You Continue"="قبل المتابعة";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="نستخدم التخزين المحلي والتقنيات المماثلة (”ملفات تعريف الارتباط”) لتقديم خدماتنا لك، وتعزيز تجربتك مع خدماتنا، وتخصيص الإعلانات التي تراها، بما في ذلك من خلال جهات خارجية. اقبل استخدامنا لملفات تعريف الارتباط من بداية زيارتك أو قم بتخصيص ملفات تعريف الارتباط في إعدادات ملفات تعريف الارتباط. اقرأ المزيد في [A]سياسة ملفات تعريف الارتباط الخاصة بنا[/A].";
+"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="نستخدم التخزين المحلي والتقنيات المماثلة (”ملفات تعريف الارتباط Cookies”) لتقديم خدماتنا لك، وتعزيز تجربتك مع خدماتنا، وتخصيص الإعلانات التي تراها، بما في ذلك من خلال جهات خارجية. اقبل استخدامنا لملفات تعريف الارتباط Cookies من بداية زيارتك أو قم بتخصيص ملفات تعريف الارتباط Cookies في إعدادات ملفات تعريف الارتباط Cookies . اقرأ المزيد في [A]سياسة ملفات تعريف الارتباط Cookies الخاصة بنا[/A].";
 /* Cookie dialog button label. */
 "Accept Cookies"="قبول ملفات تعريف الارتباط Cookies";
 /* Cookie settings dialog text. */
@@ -2567,27 +2567,27 @@
 /* Cookie settings dialog text. */
 "Cookie settings dialog text -- Used by us and our approved advertising partners..."="مستخدمة من قبلنا  ومن قبل شركاؤنا الإعلانيون المعتمدون لتخصيص الإعلانات التي تراها على خدماتنا وعلى مواقع الويب الأخرى بناءً على سجل التصفح الخاص بك. يعني عدم قبول ملفات تعريف الارتباط هذه أننا قد نعرض إعلانات أقل صلة.";
 /* Cookie settings dialog text. */
-"Third Party Cookies"="ملفات تعريف ارتباط Cookies تعود لطرف ثالث Cookies";
+"Third Party Cookies"="ملفات تعريف ارتباط لجهات خارجية Cookies";
 /* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="هذه ملفات تعريف الارتباط Cookies المتحكم بها من قبل شخص آخر غيرنا؛ نستخدم ملفات تعريف الارتباط هذه لتوفير أنواع الوظائف الموضحة أعلاه. سيكون لعدم قبول ملفات تعريف الارتباط هذه آثار مختلفة اعتمادًا على نوع ملفات تعريف الارتباط لكل ملف تعريف ارتباط تابع لجهة خارجية. انقر فوق ”مزيد من المعلومات” أدناه للحصول على تفاصيل حول جميع ملفات تعريف الارتباط للجهات الخارجية التي نستخدمها.";
+"Cookie settings dialog text -- These are Cookies which are controlled by..."="هذه ملفات تعريف الارتباط Cookies المتحكم بها من قبل شخص آخر غيرنا؛ نستخدم ملفات تعريف الارتباط Cookies هذه لتوفير أنواع الوظائف الموضحة أعلاه. سيكون لعدم قبول ملفات تعريف الارتباط هذه آثار مختلفة اعتمادًا على نوع ملفات تعريف الارتباط لكل ملف تعريف ارتباط تابع لجهة خارجية. انقر فوق ”مزيد من المعلومات“ أدناه للحصول على تفاصيل حول جميع ملفات تعريف الارتباط Cookies للجهات الخارجية التي نستخدمها.";
 /* Cookie settings dialog link label. Should be same as in “24659” string. */
 "More Information"="معلومات اكثر";
 /* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
 "No Third Party Cookies in use"="لا توجد ملفات تعريف ارتباط Cookies خاصة بطرف ثالث قيد الاستخدام";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="تم إنشاء إصدار كملف جديد بنجاح.";
+"Version created as a new file successfully."="تم إنشاء النسخة كملف جديد بنجاح.";
 /* Text shown for the action create new file */
 "Create new file"="إنشاء ملف جديد";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="ليس لديك الأذونات اللازمة لإعادة هذا الملف. للمتابعة، يمكننا إنشاء ملف جديد بالبيانات التي تم إرجاعها. هل ترغب في المتابعة؟";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="برو لايت";
+"Pro Lite"="برو لايت Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="حسابي";
 /* Text for title for favourite nodes */
-"Favourites"="مفضلات";
+"Favourites"="المفضلة";
 /* Text describing that there is not any node marked as favourite */
-"No Favourites"="لا يوجد مفضلات";
+"No Favourites"="المفضلة فارغة";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="عرض المزيد";
 /* Title for the QuickAccess widget */

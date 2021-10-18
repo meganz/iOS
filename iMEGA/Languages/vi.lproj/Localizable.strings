@@ -2649,7 +2649,7 @@
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Tài Khoản Bị Khóa";
 /* Over Disk Quota paywall final title. */
-"dialog.storage.paywall.final.title"="Dữ Liệu Sắp Bị Mất!";
+"dialog.storage.paywall.final.title"="Dữ Liệu Đang Gặp Rủi Ro!";
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Quý khách đã không giải quyết tình trạng tài khoản của mình trong <b>%@</b> từ khi chúng tôi gửi email thông báo tới địa chỉ <b>%@</b> của quý khách, vào ngày <b>%@</b>. Quý khách hiện vẫn đang dùng <b>%@</b> trong không gian lưu trữ, vượt quá mức hạn của tài khoản miễn phí. Xin kiểm tra hộp thư email để xem thư chúng tôi đã gửi để biết thêm chi tiết và các cách xử lý.</paragraph>";
 /* Over Disk Quota paywall final detail message. */

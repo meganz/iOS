@@ -103,7 +103,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Hasło";
 /* Account, Change Password view. Error shown when you type your current password. */
-"account.changePassword.error.currentPassword"="You have entered your current password.";
+"account.changePassword.error.currentPassword"="Wprowadziłeś swoje aktualne hasło.";
 /*  */
 "pleaseStrengthenYourPassword"="Wprowadź bezpieczniejsze hasło.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -1361,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu NIEODCZYTANE WIADOMOŚCI";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Subskrypcje są automatycznie odnawiane na kolejne okresy subskrypcji o tym samym czasie trwania i po tej samej cenie, co wybrany okres początkowy. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA Pro nie później niż 24 godziny przed terminem kolejnej płatności za subskrypcję na stronie ustawień konta iTunes. Aby zarządzać swoją subskrypcją, po prostu stuknij w ikonę App Store na swoim urządzeniu mobilnym, zaloguj się za pomocą swojego Apple ID na dole strony (jeśli jeszcze tego nie zrobiłeś), a następnie kliknij Pokaż ID. Zostaniesz przeniesiony na stronę swojego konta, gdzie możesz przewinąć w dół do sekcji Zarządzaj subskrypcjami aplikacji. Stamtąd możesz wybrać swoją subskrypcję MEGA Pro i zobaczyć zaplanowaną datę odnowienia, wybrać inny pakiet subskrypcji lub przełączyć przełącznik on-off na off, aby wyłączyć automatyczne odnawianie subskrypcji.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Otwórz MEGA i zapisz się aby kontynuować";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2025,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Czy na pewno chcesz przejść na serwer testowy? Twoje konto może mieć nieodwracalne problemy.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Grant Access to Your Address Book";
+"Enable Access to Your Address Book"="Udzielanie dostępu do książki adresowej";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Łatwo odkrywaj kontakty z książki adresowej na MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
