@@ -21,10 +21,6 @@ extension SortOrderEntity {
             return .modificationAsc
         case .modificationDesc:
             return .modificationDesc
-        case .alphabeticalAsc:
-            return .alphabeticalAsc
-        case .alphabeticalDesc:
-            return .alphabeticalDesc
         case .photoAsc:
             return .photoAsc
         case .photoDesc:
@@ -70,10 +66,6 @@ extension MEGASortOrderType {
             return .modificationAsc
         case .modificationDesc:
             return .modificationDesc
-        case .alphabeticalAsc:
-            return .alphabeticalAsc
-        case .alphabeticalDesc:
-            return .alphabeticalDesc
         case .photoAsc:
             return .photoAsc
         case .photoDesc:

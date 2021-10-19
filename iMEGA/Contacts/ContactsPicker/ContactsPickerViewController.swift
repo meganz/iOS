@@ -53,12 +53,10 @@ class ContactsPickerViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if #available(iOS 13, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
-
-                updateAppearance()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+            
+            updateAppearance()
         }
     }
     

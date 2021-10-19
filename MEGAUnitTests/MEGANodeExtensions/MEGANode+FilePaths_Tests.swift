@@ -8,7 +8,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let sdk = MockSDK(withNodes: nodes)
         let leafNode = try XCTUnwrap(nodes.last)
         
-        let path = leafNode.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
+        let path = leafNode.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
         XCTAssertEqual(path.components(separatedBy: ">").count, 5)
     }
     
@@ -17,7 +17,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let sdk = MockSDK(withNodes: nodes)
         let leafNode = try XCTUnwrap(nodes.last)
 
-        let path = leafNode.filePath(withDelimeter: " / ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
+        let path = leafNode.filePath(delimeter: " / ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
         XCTAssertEqual(path.components(separatedBy: "/").count, 5)
     }
     
@@ -26,7 +26,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let sdk = MockSDK(withNodes: nodes)
         let leafNode = try XCTUnwrap(nodes.last)
 
-        let path = leafNode.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
+        let path = leafNode.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
         XCTAssertEqual(path, "Test1 > Test2 > Test3 > Test4 > Test5")
     }
     
@@ -35,7 +35,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let sdk = MockSDK(withNodes: nodes)
         let leafNode = try XCTUnwrap(nodes.last)
 
-        let path = leafNode.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: false, excludeFileName: false)
+        let path = leafNode.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: false, excludeFileName: false)
         XCTAssertEqual(path, "Test2 > Test3 > Test4 > Test5")
     }
     
@@ -44,7 +44,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let sdk = MockSDK(withNodes: nodes)
         let leafNode = try XCTUnwrap(nodes.last)
 
-        let path = leafNode.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
+        let path = leafNode.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
         XCTAssertEqual(path, "Test1 > Test2 > Test3 > Test4")
     }
     
@@ -53,7 +53,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let sdk = MockSDK(withNodes: nodes)
         let leafNode = try XCTUnwrap(nodes.last)
 
-        let path = leafNode.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: false, excludeFileName: true)
+        let path = leafNode.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: false, excludeFileName: true)
         XCTAssertEqual(path, "Test2 > Test3 > Test4")
     }
     
@@ -61,7 +61,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
         let sdk = MockSDK(withNodes: [node])
         
-        let path = node.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
+        let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
         XCTAssertEqual(path, "Test1")
     }
     
@@ -69,7 +69,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
         let sdk = MockSDK(withNodes: [node])
         
-        let path = node.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: false, excludeFileName: true)
+        let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: false, excludeFileName: true)
         XCTAssertEqual(path, "")
     }
     
@@ -77,7 +77,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
         let sdk = MockSDK(withNodes: [node])
         
-        let path = node.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
+        let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
         XCTAssertEqual(path, "")
     }
     
@@ -85,7 +85,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
         let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
         let sdk = MockSDK(withNodes: [node])
         
-        let path = node.filePath(withDelimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
+        let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
         XCTAssertEqual(path, "")
     }
     

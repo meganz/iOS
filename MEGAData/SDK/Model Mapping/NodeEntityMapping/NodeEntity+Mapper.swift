@@ -1,3 +1,4 @@
+import Foundation
 extension NodeEntity {
     init(node: MEGANode) {
         self.init(
@@ -8,14 +9,14 @@ extension NodeEntity {
             
             // MARK: - Identification
             
-            name                               : node.name,
+            name                               : node.name ?? "",
             fingerprint                        : node.fingerprint,
             tag                                : node.tag,
             
             // MARK: - Handles
             
             handle                             : node.handle,
-            base64Handle                       : node.base64Handle,
+            base64Handle                       : node.base64Handle ?? "",
             restoreParentHandle                : node.restoreHandle,
             ownerHandle                        : node.owner,
             parentHandle                       : node.parentHandle,
@@ -45,9 +46,9 @@ extension NodeEntity {
 
             // MARK: - Files
 
-            size                               : node.size.uint64Value,
+            size                               : node.size?.uint64Value ?? 0,
             createTime                         : node.creationTime,
-            modificationTime                   : node.modificationTime,
+            modificationTime                   : node.modificationTime ?? Date(),
 
             // MARK: - Media
 

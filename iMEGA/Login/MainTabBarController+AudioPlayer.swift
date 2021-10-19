@@ -11,7 +11,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
         
         bottomViewBottomConstraint = miniPlayerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabBar.frame.size.height)
-        bottomViewBottomConstraint.isActive = true
+        bottomViewBottomConstraint?.isActive = true
         
         miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
         miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
@@ -50,7 +50,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     @objc func refreshBottomConstraint() {
         guard bottomView != nil else { return }
         
-        bottomViewBottomConstraint.constant = -tabBar.frame.size.height
+        bottomViewBottomConstraint?.constant = -tabBar.frame.size.height
         bottomView?.layoutIfNeeded()
     }
     

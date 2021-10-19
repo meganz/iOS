@@ -69,6 +69,14 @@ final class MeetingFloatingPanelViewController: UIViewController {
         let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
         quickActions.forEach { $0?.properties = quickActionProperties }
         
+        [cameraQuickActionView: "Camera",
+           muteQuickActionView: "mute",
+        speakerQuickActionView: "meetings.quickAction.speaker",
+           flipQuickActionView: "meetings.quickAction.flip"
+        ].forEach { (view, key) in
+            view?.name = NSLocalizedString(key, comment: "")
+        }
+        
         viewModel.invokeCommand = { [weak self] in
             self?.executeCommand($0)
         }

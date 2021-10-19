@@ -173,7 +173,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
                 imageView.sd_setImage(with: URL(fileURLWithPath: originalImagePath))
                 
                 downloadGifIcon.isHidden = true
-            } else if node.size.doubleValue < autoDownloadThresholdSize {
+            } else if node.size?.doubleValue ?? 0 < autoDownloadThresholdSize {
                 MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: node, localPath: originalImagePath, appData: nil)
                 downloadGifIcon.isHidden = true
             } else {

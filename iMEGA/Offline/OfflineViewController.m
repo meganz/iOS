@@ -91,9 +91,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
+    [self configPreviewingRegistration];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -168,15 +166,13 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-            if (self.flavor == HomeScreen) {
-                self.view.backgroundColor = UIColor.mnz_black1C1C1E;
-            }
-            [self reloadData];
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        if (self.flavor == HomeScreen) {
+            self.view.backgroundColor = UIColor.mnz_black1C1C1E;
         }
+        [self reloadData];
     }
     
     [self configPreviewingRegistration];
@@ -1191,7 +1187,7 @@ static NSString *kisDirectory = @"kisDirectory";
             return nil;
         }
         NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath];
-        itemName = cell.nameLabel.text;
+        itemName = cell.itemName;
     }
     
     previewingContext.sourceRect = (self.viewModePreference == ViewModePreferenceList) ? [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.offlineCollectionView.collectionView convertRect:[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
