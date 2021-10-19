@@ -122,12 +122,12 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-
+    
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
     
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
-
+    
     [self setupContacts];
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
@@ -140,17 +140,20 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
-
+    
     if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.enterGroupNameTextField.placeholder = NSLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
         self.enterGroupNameTextFieldDelegate = EnterGroupNameTextFieldDelegate.new;
         self.enterGroupNameTextField.delegate = self.enterGroupNameTextFieldDelegate;
     }
-
+    
     [self updateAppearance];
     
+    // available check will work if it's the only condition here; should define macro later.
     if (@available(iOS 15.0, *)) {
-        self.tableView.sectionHeaderTopPadding = 0.0f;
+        if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 15) {
+            self.tableView.sectionHeaderTopPadding = 0.0f;
+        }
     }
 }
 
@@ -158,12 +161,12 @@
     [super viewWillAppear:animated];
     
     self.navigationController.presentationController.delegate = self;
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [self addNicknamesLoadedNotification];
-
+    
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -178,7 +181,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [self removeNicknamesLoadedNotification];
-
+    
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
@@ -354,7 +357,7 @@
             if (self.getChatLinkEnabled) {
                 self.optionsStackView.hidden = self.getChatLinkEnabled;
                 self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 60);
-            } else {          
+            } else {
                 UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
                 [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
             }
@@ -429,7 +432,7 @@
             self.visibleUsersArray = [[usersArray sortedArrayUsingComparator:self.userSortComparator] mutableCopy];
             break;
         }
-        
+            
         case ContactsModeFolderSharedWith: {
             self.pendingShareUsersArray = NSMutableArray.new;
             
@@ -455,7 +458,7 @@
             }
             break;
         }
-        
+            
         case ContactsModeChatAddParticipant:
         case ContactsModeInviteParticipants: {
             for (MEGAUser *user in visibleContactsArray) {
@@ -579,7 +582,7 @@
 
 - (ActionSheetViewController *)prepareShareFolderAlertControllerFromSender:(id)sender {
     __weak __typeof__(self) weakSelf = self;
-
+    
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
@@ -591,7 +594,7 @@
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
     }]];
     ActionSheetViewController *shareFolderActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:NSLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") dismissCompletion:nil sender:sender];
-
+    
     return shareFolderActionSheet;
 }
 
@@ -812,7 +815,7 @@
             }
             break;
         }
-           
+            
         case ContactsModeFolderSharedWith: {
             if (indexPath.section == 0 && indexPath.row > 0) {
                 user = [self.visibleUsersArray objectOrNilAtIndex:indexPath.row - 1];
@@ -894,7 +897,7 @@
         }];
     }
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-            self.shareFolderWithBarButtonItem.enabled = YES;
+        self.shareFolderWithBarButtonItem.enabled = YES;
     }
 }
 
@@ -949,7 +952,7 @@
             self.navigationItem.hidesSearchBarWhenScrolling = NO;
             break;
         }
-           
+            
         case ContactsModeFolderSharedWith:
         case ContactsModeChatNamingGroup:
             break;
@@ -1327,7 +1330,7 @@
 }
 
 - (IBAction)groupNameCanged:(UITextField *)sender {
-    self.insertedGroupName = sender.text;    
+    self.insertedGroupName = sender.text;
 }
 
 - (IBAction)keyRotationSwitchValueChanged:(UISwitch *)sender {
@@ -1436,7 +1439,7 @@
         case ContactsModeChatStartConversation:
             numberOfSections = 3;
             break;
-        
+            
         default: //ContactsModeShareFoldersWith, ContactsModeChatAddParticipant, ContactsModeChatAttachParticipant, ContactsModeChatCreateGroup and ContactsModeChatNamingGroup
             numberOfSections = 1;
             break;
@@ -1451,7 +1454,7 @@
     if (cell == nil) {
         cell = [UITableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-
+    
     return cell;
 }
 
@@ -1573,7 +1576,7 @@
                 headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold];
                 headerView.titleLabel.textColor = UIColor.mnz_label;
                 headerView.titleLabel.text = [UILocalizedIndexedCollation.currentCollation.sectionTitles objectAtIndex:[self currentIndexedSection:section]];
-
+                
                 return headerView;
             }
         }
@@ -1623,14 +1626,14 @@
             }
             break;
         }
-
+            
         case ContactsModeShareFoldersWith: {
             if (section == 0) {
                 sectionHeaderNeeded = YES;
             }
             break;
         }
-
+            
         case ContactsModeFolderSharedWith: {
             if ((section == 0) ||
                 (section == 1 && self.pendingShareUsersArray.count > 0)) {
@@ -1638,14 +1641,14 @@
             }
             break;
         }
-
+            
         case ContactsModeChatStartConversation: {
             if (section == 1 || section == 2) {
                 sectionHeaderNeeded = YES;
             }
             break;
         }
-
+            
         case ContactsModeChatAddParticipant:
         case ContactsModeChatAttachParticipant: {
             if (section == 1) {
@@ -1653,7 +1656,7 @@
             }
             break;
         }
-
+            
         case ContactsModeChatCreateGroup:
         case ContactsModeChatNamingGroup: {
             if (section == 0 || section == 1) {
@@ -1661,11 +1664,11 @@
             }
             break;
         }
-
+            
         default:
             break;
     }
-
+    
     return sectionHeaderNeeded ? UITableViewAutomaticDimension : 0.0;
 }
 
@@ -1820,7 +1823,7 @@
     }
     
     MEGAUser *user;
-
+    
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         if (indexPath.section == 0) {
             if (indexPath.row == 0) {
@@ -1995,7 +1998,7 @@
     if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
     } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;
@@ -2056,7 +2059,7 @@
             NSPredicate *nicknamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_nickname contains[c] %@", searchString];
             NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF.email contains[c] %@", searchString];
             NSPredicate *resultPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[fullnamePredicate, nicknamePredicate, emailPredicate]];
-
+            
             self.searchVisibleUsersArray = [self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
         }
     }
@@ -2238,7 +2241,7 @@
     if (inProgress) {
         return;
     }
-
+    
     if (userHandle != api.myUserHandle) {
         NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
         NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
@@ -2254,7 +2257,7 @@
 }
 
 - (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
-
+    
     if (userHandle != api.myUserHandle && (self.contactsMode != ContactsModeFolderSharedWith)) {
         MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle];
         if (chatStatus < MEGAChatStatusOnline) {
