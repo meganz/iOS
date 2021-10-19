@@ -50,7 +50,7 @@ class QuickAccessWidgetManager: NSObject {
                 shouldCreateRecentItems = true
             }
             
-            if node.hasChangedType(.attributes) && node.isRemoteChange() {
+            if node.hasChangedType(.attributes) {
                 shouldCreateFavouriteItems = true
             }
         }
