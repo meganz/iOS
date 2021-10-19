@@ -65,8 +65,8 @@ class NodeActionViewController: ActionSheetViewController {
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-            .setIsMediaFile(node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable()))
-            .setIsEditableTextFile(node.isFile() && node.name.mnz_isEditableTextFilePathExtension)
+            .setIsMediaFile(node.isFile() && (node.name?.mnz_isImagePathExtension == true || node.name?.mnz_isVideoPathExtension == true) && node.mnz_isPlayable())
+            .setIsEditableTextFile(node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true)
             .setIsFile(node.isFile())
             .setIsFavourite(node.isFavourite)
             .setLabel(node.label)
@@ -108,7 +108,7 @@ class NodeActionViewController: ActionSheetViewController {
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(self.displayMode)
-            .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
+            .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
             .setIsLink(isLink)
             .setIsPageView(isPageView)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
@@ -133,10 +133,8 @@ class NodeActionViewController: ActionSheetViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if #available(iOS 13.0, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateAppearance()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAppearance()
         }
     }
     

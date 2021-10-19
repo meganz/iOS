@@ -6,12 +6,20 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     }
     
     func downloadToTempFolder(nodeHandle: MEGAHandle, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let node = sdk.node(forHandle: nodeHandle) else {
-            completion(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
+        guard let node = sdk.node(forHandle: nodeHandle),
+              let base64Handle = node.base64Handle else {
+                  completion(.failure(.couldNotFindNodeByHandle))
+                  return
+              }
+        
+        let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: base64Handle)
+        
+        guard let name = node.name else {
+            completion(.failure(.generic))
             return
         }
-        let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: node.base64Handle)
-        let nodeFilePath = nodeFolderPath.append(pathComponent: node.name)
+        
+        let nodeFilePath = nodeFolderPath.append(pathComponent: name)
         
         do {
             try FileManager.default.createDirectory(atPath: nodeFolderPath, withIntermediateDirectories: true, attributes: nil)

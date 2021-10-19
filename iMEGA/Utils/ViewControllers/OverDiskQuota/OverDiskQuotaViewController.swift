@@ -216,10 +216,8 @@ final class OverDiskQuotaViewController: UIViewController {
         guard let navigationController = navigationController else { return }
         let upgradeViewController = UIStoryboard(name: "UpgradeAccount", bundle: nil)
             .instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
-        if #available(iOS 13.0, *) {
             AppearanceManager.forceNavigationBarUpdate(navigationController.navigationBar,
                                                        traitCollection: traitCollection)
-        }
         navigationController.pushViewController(upgradeViewController, animated: true)
     }
 

@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-final class MEGALabel: UILabel, DynamicTypeProtocol {
+final class MEGALabel: UILabel, DynamicTypeComponentProtocol {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     

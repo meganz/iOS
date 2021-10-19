@@ -158,8 +158,8 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
 
                 }
                 
-                if let node = node,
-                    (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                if let name = node?.name,
+                    (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) {
                     var mediaNodesArrayIndex = 0
                     var foundIndex: Int?
                     let mediaNodesArray = messages.compactMap { message -> MEGANode? in
@@ -167,7 +167,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                               localChatMessage.message.type == .attachment,
                               localChatMessage.message.nodeList.size.intValue > 0,
                               let node = localChatMessage.message.nodeList.node(at: 0),
-                              (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) else {
+                              (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) else {
                             return nil
                         }
                         

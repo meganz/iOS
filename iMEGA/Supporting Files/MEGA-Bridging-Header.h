@@ -158,3 +158,5 @@
 #import "ProductDetailViewController.h"
 #import "ContactsViewController.h"
 #import "AchievementsViewController.h"
+#import "CloudDriveCollectionViewController.h"
+#import "OfflineCollectionViewController.h"

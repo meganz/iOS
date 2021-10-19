@@ -1,7 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '12.1'
+platform :ios, '13.0'
 inhibit_all_warnings!
 use_frameworks!
 
@@ -24,15 +24,10 @@ abstract_target 'iMEGA' do
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'CHTCollectionViewWaterfallLayout'
     pod 'Keyboard+LayoutGuide'
-
     pod 'YYCategories'
     
-    # Pods for MEGA
-    pod 'DoraemonKit/Core', '3.0.4', :configurations => ['Debug'] #Required
-    pod 'DoraemonKit/WithGPS', '3.0.4', :configurations => ['Debug'] #Optional
-    pod 'DoraemonKit/WithLoad', '3.0.4', :configurations => ['Debug'] #Optional
-    pod 'GCDWebServer', :configurations => ['Debug']
-    pod 'FMDB', :configurations => ['Debug']
+    # Pods for Debug only
+    pod 'FLEX', :configurations => ['Debug']
 
     target 'MEGAUnitTests' do
       inherit! :search_paths

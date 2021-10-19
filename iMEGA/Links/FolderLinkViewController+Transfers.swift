@@ -32,7 +32,7 @@ extension FolderLinkViewController: MEGATransferDelegate {
     
     private func isFromFolderLink(node: MEGANode?) -> Bool {
         guard let node = node else { return false }
-        return nodesArray?.contains(node) ?? false
+        return nodesArray.contains(node)
     }
 }
 
