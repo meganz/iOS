@@ -95,27 +95,38 @@ class AppearanceManager: NSObject {
     
     
     @objc class func setupTabbar(_ tabBar: UITabBar, traitCollection: UITraitCollection) {
-        let appearance = UITabBarAppearance()
-        appearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        
-        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
-        appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
-        appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
-        
-        appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
-        appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
-        appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
-        
-        appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
-        appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
-        appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
-        
-        tabBar.standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            tabBar.scrollEdgeAppearance = appearance
+        if #available(iOS 13, *) {
+            let appearance = UITabBarAppearance()
+            appearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+            
+            appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+            appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
+            appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+            appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+            
+            appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+            appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
+            appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+            appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+            
+            appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+            appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
+            appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+            appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+            
+            tabBar.standardAppearance = appearance
+            if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
+                tabBar.scrollEdgeAppearance = appearance
+            }
+        } else {
+            tabBar.unselectedItemTintColor = UIColor.mnz_primaryGray(for: traitCollection)
+            tabBar.tintColor = UIColor.mnz_red(for: traitCollection)
+            tabBar.barTintColor = UIColor.mnz_mainBars(for: traitCollection)
+            guard let tabBarItems = tabBar.items else { return }
+            for tabBarItem in tabBarItems {
+                tabBarItem.badgeColor = .clear
+                tabBarItem.setBadgeTextAttributes([.foregroundColor : UIColor.mnz_red(for: traitCollection)], for: .normal)
+            }
         }
     }
     
