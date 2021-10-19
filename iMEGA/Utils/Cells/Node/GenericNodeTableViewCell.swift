@@ -43,7 +43,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
             labelImageView.image = labelImage
             
         case .setThumbnail(let thumbnailFilePath):
-            let thumbnailImage = UIImage(contentsOfFile: thumbnailFilePath)!
+            guard let thumbnailImage = UIImage(contentsOfFile: thumbnailFilePath) else { return }
             thumbnailImageView.image = thumbnailImage
             
         case .setIcon(let iconName):
