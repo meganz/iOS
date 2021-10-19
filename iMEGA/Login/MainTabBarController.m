@@ -277,18 +277,22 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
 }
 
 - (void)shouldUpdateProgressViewLocation {
-    for (UIView *subview in self.view.subviews) {
-        if ([subview isKindOfClass:[ProgressIndicatorView class]]) {
-            if ([AudioPlayerManager.shared isPlayerAlive]) {
-                self.progressViewBottomConstraint.constant = -120.0;
-            } else {
-                self.progressViewBottomConstraint.constant = -60.0;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (UIView *subview in self.view.subviews) {
+            if ([subview isKindOfClass:[ProgressIndicatorView class]]) {
+            
+                if ([AudioPlayerManager.shared isPlayerAlive]) {
+                    self.progressViewBottomConstraint.constant = -120.0;
+                } else {
+                    self.progressViewBottomConstraint.constant = -60.0;
+                }
+                [UIView animateWithDuration:0.3 animations:^{
+                    [subview layoutIfNeeded];
+                }];
+            
             }
-            [UIView animateWithDuration:0.3 animations:^{
-                [subview layoutIfNeeded];
-            }];
         }
-    }
+    });
 }
 
 #pragma mark - Private
