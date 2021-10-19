@@ -205,7 +205,8 @@ final class HomeViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] (_) in
-            self?.bannerCollectionView.refreshContainer()
+            guard let bannerCollectionView = self?.bannerCollectionView else { return }
+            bannerCollectionView.refreshContainer()
         }, completion: nil)
     }
 
