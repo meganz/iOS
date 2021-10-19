@@ -11,7 +11,6 @@ extension NodeEntity {
             
             name                               : node.name ?? "",
             fingerprint                        : node.fingerprint,
-            tag                                : node.tag,
             
             // MARK: - Handles
             
