@@ -2361,7 +2361,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIUNI";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Adaugă la favorite";
+"Favourite"="Favorit";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Elimină de la favorite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */

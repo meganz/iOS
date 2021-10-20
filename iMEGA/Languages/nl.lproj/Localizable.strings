@@ -103,7 +103,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Wachtwoord";
 /* Account, Change Password view. Error shown when you type your current password. */
-"account.changePassword.error.currentPassword"="You have entered your current password.";
+"account.changePassword.error.currentPassword"="U heeft uw huidige wachtwoord ingevoerd.";
 /*  */
 "pleaseStrengthenYourPassword"="Kies een sterker wachtwoord.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -455,7 +455,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Vul de nieuwe naam in";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="De volgende tekens zijn niet toegestaan: ” * / : < > ? \\ |";
+"general.error.charactersNotAllowed"="De volgende tekens zijn niet toegestaan: ” * / : < > ? |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Bestand %@ Hernoemen?";
 /* Title for the action that allows you to replace a file. */
@@ -1361,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ONGELEZEN BERICHTEN";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, tikt u op de Applicatie Winkel-pictogram op uw mobiele apparaat, logt u in met uw Apple ID onderaan de pagina (als u dat nog niet hebt gedaan) en klikt u vervolgens op ID bekijken. U wordt naar uw accountpagina geleid waar u omlaag kunt scrollen naar Applicatie-abonnementen beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA en login om door te gaan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2025,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server?Uw account kan onherstelbare problemen ondervinden.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Grant Access to Your Address Book";
+"Enable Access to Your Address Book"="Toegang Verlenen tot Uw Adresboek";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Ontdek gemakkelijk contacten vanuit uw adresboek op MEGA";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2715,4 +2715,4 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Luidspreker";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Flip";
+"meetings.quickAction.flip"="Omslaan";
