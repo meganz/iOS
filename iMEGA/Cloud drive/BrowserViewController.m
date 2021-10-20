@@ -354,8 +354,8 @@
                 self.navigationItem.title = [NSString stringWithFormat:@"(%@)", accessTypeString];
             }
         } else {
-            if (self.browserAction == BrowserActionDocumentProvider) {
-                self.navigationItem.title = self.parentNode.name;
+            if (!self.parentNode || self.parentNode.type == MEGANodeTypeRoot) {
+                self.navigationItem.title = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
             } else {
                 self.navigationItem.title = self.parentNode.name;
             }
