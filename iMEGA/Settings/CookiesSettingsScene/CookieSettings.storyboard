@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,12 +13,12 @@
         <scene sceneID="M4o-Xc-Vl3">
             <objects>
                 <tableViewController storyboardIdentifier="CookieSettingsTableViewControllerID" id="oqn-M7-ZsL" customClass="CookieSettingsTableViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="SQz-Cg-l9F">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="SQz-Cg-l9F">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="fkw-cY-ho8">
-                            <rect key="frame" x="0.0" y="746.5" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="748" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXP-hz-5H9">
@@ -35,7 +35,7 @@
                         <sections>
                             <tableViewSection id="DM1-6i-sd4">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="Eni-If-96i">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Eni-If-96i">
                                         <rect key="frame" x="0.0" y="18" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Eni-If-96i" id="KYo-6x-TTS">
@@ -52,7 +52,7 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accept Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd4-xW-2Pe">
-                                                    <rect key="frame" x="20" y="13.5" width="101.5" height="17"/>
+                                                    <rect key="frame" x="20" y="13.5" width="101.5" height="17.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -60,12 +60,13 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="K6C-ga-zqF" firstAttribute="centerY" secondItem="KYo-6x-TTS" secondAttribute="centerY" id="92w-48-JYu"/>
+                                                <constraint firstItem="xd4-xW-2Pe" firstAttribute="top" secondItem="KYo-6x-TTS" secondAttribute="top" constant="13.5" id="Lqv-oH-BBP"/>
                                                 <constraint firstItem="K6C-ga-zqF" firstAttribute="trailing" secondItem="KYo-6x-TTS" secondAttribute="trailingMargin" id="Nxh-UV-8hU"/>
                                                 <constraint firstItem="xd4-xW-2Pe" firstAttribute="leading" secondItem="KYo-6x-TTS" secondAttribute="leadingMargin" constant="15" id="bXm-bE-NQW"/>
+                                                <constraint firstAttribute="bottom" secondItem="xd4-xW-2Pe" secondAttribute="bottom" constant="13" id="bgB-g8-vXx"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="K6C-ga-zqF" secondAttribute="trailing" id="cXR-oM-HmZ"/>
                                                 <constraint firstItem="K6C-ga-zqF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xd4-xW-2Pe" secondAttribute="trailing" constant="8" id="irU-rz-hth"/>
                                                 <constraint firstItem="xd4-xW-2Pe" firstAttribute="leading" secondItem="KYo-6x-TTS" secondAttribute="leadingMargin" id="tmF-sv-kXU"/>
-                                                <constraint firstItem="xd4-xW-2Pe" firstAttribute="centerY" secondItem="KYo-6x-TTS" secondAttribute="centerY" id="tmz-Jc-Hzh"/>
                                                 <constraint firstItem="xd4-xW-2Pe" firstAttribute="trailing" secondItem="KYo-6x-TTS" secondAttribute="trailingMargin" id="txX-4u-vW3"/>
                                             </constraints>
                                             <variation key="default">
@@ -83,11 +84,11 @@
                             <tableViewSection id="AAu-iP-LJi">
                                 <string key="footerTitle">Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.</string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="zTK-5B-dCd" detailTextLabel="flH-7k-eOO" rowHeight="44" style="IBUITableViewCellStyleValue1" id="w7x-qq-TUi">
-                                        <rect key="frame" x="0.0" y="98" width="414" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="zTK-5B-dCd" detailTextLabel="flH-7k-eOO" style="IBUITableViewCellStyleValue1" id="w7x-qq-TUi">
+                                        <rect key="frame" x="0.0" y="98" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="w7x-qq-TUi" id="np7-eH-9Tq">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Essential Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="zTK-5B-dCd">
@@ -113,15 +114,15 @@
                             <tableViewSection id="1mc-ZW-Tkk">
                                 <string key="footerTitle">Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.</string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="Uml-7Y-w1D">
-                                        <rect key="frame" x="0.0" y="214.5" width="414" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Uml-7Y-w1D">
+                                        <rect key="frame" x="0.0" y="214" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Uml-7Y-w1D" id="5Pf-bp-Q9b">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2vn-KV-3bf">
-                                                    <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="COz-De-EVA"/>
                                                     </constraints>
@@ -130,7 +131,7 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preference Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJc-M2-udG">
-                                                    <rect key="frame" x="20" y="13.5" width="126.5" height="17"/>
+                                                    <rect key="frame" x="20" y="13.5" width="126.5" height="17.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -140,11 +141,12 @@
                                                 <constraint firstItem="2vn-KV-3bf" firstAttribute="trailing" secondItem="5Pf-bp-Q9b" secondAttribute="trailingMargin" id="IJu-nq-c5M"/>
                                                 <constraint firstItem="rJc-M2-udG" firstAttribute="trailing" secondItem="5Pf-bp-Q9b" secondAttribute="trailingMargin" id="K8H-0q-JV4"/>
                                                 <constraint firstItem="2vn-KV-3bf" firstAttribute="centerY" secondItem="5Pf-bp-Q9b" secondAttribute="centerY" id="NUD-aF-np0"/>
-                                                <constraint firstItem="rJc-M2-udG" firstAttribute="centerY" secondItem="5Pf-bp-Q9b" secondAttribute="centerY" id="ZA2-4Z-IUs"/>
                                                 <constraint firstItem="2vn-KV-3bf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rJc-M2-udG" secondAttribute="trailing" constant="8" id="fXS-3j-J50"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="2vn-KV-3bf" secondAttribute="trailing" id="p1B-sC-3e9"/>
+                                                <constraint firstItem="rJc-M2-udG" firstAttribute="top" secondItem="5Pf-bp-Q9b" secondAttribute="top" constant="13.5" id="rwr-tg-NRk"/>
                                                 <constraint firstItem="rJc-M2-udG" firstAttribute="leading" secondItem="5Pf-bp-Q9b" secondAttribute="leadingMargin" id="tmd-5m-qcr"/>
                                                 <constraint firstItem="rJc-M2-udG" firstAttribute="leading" secondItem="5Pf-bp-Q9b" secondAttribute="leadingMargin" constant="15" id="uLB-lK-Ito"/>
+                                                <constraint firstAttribute="bottom" secondItem="rJc-M2-udG" secondAttribute="bottom" constant="13.5" id="xPc-sG-7Lp"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -161,15 +163,15 @@
                             <tableViewSection id="EHM-OQ-3Yh">
                                 <string key="footerTitle">Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements. </string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="WxE-fY-4YZ">
-                                        <rect key="frame" x="0.0" y="345" width="414" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="WxE-fY-4YZ">
+                                        <rect key="frame" x="0.0" y="345" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="WxE-fY-4YZ" id="a9I-Zw-tfK">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Rhg-kL-7jv">
-                                                    <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="Sd7-W2-vxs"/>
                                                     </constraints>
@@ -177,8 +179,8 @@
                                                         <action selector="performanceAndAnalyticsSwitchValueChanged:" destination="oqn-M7-ZsL" eventType="valueChanged" id="yiz-nb-3Wx"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Performance &amp; Analytics Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcm-kQ-mo0">
-                                                    <rect key="frame" x="20" y="13.5" width="215.5" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Performance &amp; Analytics Cookies" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcm-kQ-mo0">
+                                                    <rect key="frame" x="20" y="13.5" width="215.5" height="17.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -186,11 +188,12 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Rhg-kL-7jv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bcm-kQ-mo0" secondAttribute="trailing" constant="8" id="5S2-o4-6QV"/>
-                                                <constraint firstItem="bcm-kQ-mo0" firstAttribute="centerY" secondItem="a9I-Zw-tfK" secondAttribute="centerY" id="8bG-u8-5oT"/>
                                                 <constraint firstItem="Rhg-kL-7jv" firstAttribute="centerY" secondItem="a9I-Zw-tfK" secondAttribute="centerY" id="CfO-xy-DaD"/>
+                                                <constraint firstItem="bcm-kQ-mo0" firstAttribute="top" secondItem="a9I-Zw-tfK" secondAttribute="top" constant="13.5" id="Guq-tZ-DIw"/>
                                                 <constraint firstItem="bcm-kQ-mo0" firstAttribute="leading" secondItem="a9I-Zw-tfK" secondAttribute="leadingMargin" constant="15" id="VEC-E9-H7o"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Rhg-kL-7jv" secondAttribute="trailing" id="aVy-l1-CNc"/>
                                                 <constraint firstItem="Rhg-kL-7jv" firstAttribute="trailing" secondItem="a9I-Zw-tfK" secondAttribute="trailingMargin" id="gbn-23-yst"/>
+                                                <constraint firstAttribute="bottom" secondItem="bcm-kQ-mo0" secondAttribute="bottom" constant="13.5" id="jql-HR-ggM"/>
                                                 <constraint firstItem="bcm-kQ-mo0" firstAttribute="leading" secondItem="a9I-Zw-tfK" secondAttribute="leadingMargin" id="lRc-Ro-LgH"/>
                                                 <constraint firstItem="bcm-kQ-mo0" firstAttribute="trailing" secondItem="a9I-Zw-tfK" secondAttribute="trailingMargin" id="zYx-zY-b7G"/>
                                             </constraints>
@@ -209,15 +212,15 @@
                             <tableViewSection id="8fg-5s-RZ4">
                                 <string key="footerTitle">Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant.</string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="aja-7D-gSN">
-                                        <rect key="frame" x="0.0" y="475.5" width="414" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="aja-7D-gSN">
+                                        <rect key="frame" x="0.0" y="476" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="aja-7D-gSN" id="3nK-sd-rtT">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bEx-Wt-6YY">
-                                                    <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="InZ-aI-w0J"/>
                                                     </constraints>
@@ -226,7 +229,7 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advertising Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJ1-o8-gOf">
-                                                    <rect key="frame" x="20" y="13.5" width="129" height="17"/>
+                                                    <rect key="frame" x="20" y="13.5" width="129" height="17.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -234,13 +237,14 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="AJ1-o8-gOf" firstAttribute="trailing" secondItem="3nK-sd-rtT" secondAttribute="trailingMargin" id="2X0-EH-GXY"/>
+                                                <constraint firstItem="AJ1-o8-gOf" firstAttribute="top" secondItem="3nK-sd-rtT" secondAttribute="top" constant="13.5" id="3fM-kR-8qv"/>
+                                                <constraint firstAttribute="bottom" secondItem="AJ1-o8-gOf" secondAttribute="bottom" constant="13.5" id="6fx-AR-SEo"/>
                                                 <constraint firstItem="bEx-Wt-6YY" firstAttribute="trailing" secondItem="3nK-sd-rtT" secondAttribute="trailingMargin" id="bde-rr-di4"/>
                                                 <constraint firstItem="AJ1-o8-gOf" firstAttribute="leading" secondItem="3nK-sd-rtT" secondAttribute="leadingMargin" id="e8S-Qr-Pi1"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="bEx-Wt-6YY" secondAttribute="trailing" id="m2V-M1-PZ6"/>
                                                 <constraint firstItem="bEx-Wt-6YY" firstAttribute="centerY" secondItem="3nK-sd-rtT" secondAttribute="centerY" id="oce-KP-kNI"/>
                                                 <constraint firstItem="bEx-Wt-6YY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AJ1-o8-gOf" secondAttribute="trailing" constant="8" id="yy2-JT-4QY"/>
                                                 <constraint firstItem="AJ1-o8-gOf" firstAttribute="leading" secondItem="3nK-sd-rtT" secondAttribute="leadingMargin" constant="15" id="zQh-Is-kCT"/>
-                                                <constraint firstItem="AJ1-o8-gOf" firstAttribute="centerY" secondItem="3nK-sd-rtT" secondAttribute="centerY" id="ztW-zR-eDp"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -257,15 +261,15 @@
                             <tableViewSection id="D5a-QD-vBF">
                                 <string key="footerTitle">These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information' below for details on all the third party Cookies we use. </string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="1Hp-1p-ezo">
-                                        <rect key="frame" x="0.0" y="606" width="414" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="1Hp-1p-ezo">
+                                        <rect key="frame" x="0.0" y="607" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="1Hp-1p-ezo" id="6ay-gf-0AD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EMy-hH-KmG">
-                                                    <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="mBZ-Ed-EKA"/>
                                                     </constraints>
@@ -274,7 +278,7 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Third Party Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qzu-QL-Vp3">
-                                                    <rect key="frame" x="20" y="13.5" width="127.5" height="17"/>
+                                                    <rect key="frame" x="20" y="13.5" width="127.5" height="17.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -284,11 +288,12 @@
                                                 <constraint firstItem="Qzu-QL-Vp3" firstAttribute="trailing" secondItem="6ay-gf-0AD" secondAttribute="trailingMargin" id="1hJ-hn-Ba3"/>
                                                 <constraint firstItem="EMy-hH-KmG" firstAttribute="trailing" secondItem="6ay-gf-0AD" secondAttribute="trailingMargin" id="Bau-X9-h4O"/>
                                                 <constraint firstItem="EMy-hH-KmG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Qzu-QL-Vp3" secondAttribute="trailing" constant="8" id="CUc-mM-mNp"/>
+                                                <constraint firstItem="Qzu-QL-Vp3" firstAttribute="top" secondItem="6ay-gf-0AD" secondAttribute="top" constant="13.5" id="Op1-14-5xD"/>
                                                 <constraint firstItem="Qzu-QL-Vp3" firstAttribute="leading" secondItem="6ay-gf-0AD" secondAttribute="leadingMargin" id="T11-IL-YFp"/>
                                                 <constraint firstItem="EMy-hH-KmG" firstAttribute="centerY" secondItem="6ay-gf-0AD" secondAttribute="centerY" id="Tlu-c1-0J0"/>
-                                                <constraint firstItem="Qzu-QL-Vp3" firstAttribute="centerY" secondItem="6ay-gf-0AD" secondAttribute="centerY" id="VW2-hf-zhL"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="EMy-hH-KmG" secondAttribute="trailing" id="fjK-Qa-z9l"/>
                                                 <constraint firstItem="Qzu-QL-Vp3" firstAttribute="leading" secondItem="6ay-gf-0AD" secondAttribute="leadingMargin" constant="15" id="giB-Yi-o43"/>
+                                                <constraint firstAttribute="bottom" secondItem="Qzu-QL-Vp3" secondAttribute="bottom" constant="13.5" id="iFY-FL-pR6"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -412,6 +417,11 @@
             <point key="canvasLocation" x="-381.15942028985512" y="-410.49107142857139"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="uc9-ND-xZC">
+            <size key="intrinsicContentSize" width="198.5" height="17"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

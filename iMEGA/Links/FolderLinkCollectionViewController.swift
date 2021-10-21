@@ -1,7 +1,6 @@
 
 import Foundation
 
-
 class FolderLinkCollectionViewController: UIViewController  {
    
     @IBOutlet weak var collectionView: UICollectionView!
@@ -13,9 +12,9 @@ class FolderLinkCollectionViewController: UIViewController  {
     var fileList = [MEGANode]()
     var folderList = [MEGANode]()
     
-    @available(iOS 13.0, *)
-    lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView)
-    lazy var dataSource = FolderLinkCollectionViewDataSource(controller: self)
+    var dtCollectionManager: DynamicTypeCollectionManager?
+    
+    lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView, controller: self)
     
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkCollectionViewController {
         guard let folderLinkCollectionVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkCollectionViewControllerID") as? FolderLinkCollectionViewController else {
@@ -35,11 +34,7 @@ class FolderLinkCollectionViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 13.0, *) {
-            diffableDataSource.configureDataSource()
-        } else {
-            collectionView.dataSource = dataSource
-        }
+        diffableDataSource.configureDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,13 +52,27 @@ class FolderLinkCollectionViewController: UIViewController  {
         }, completion: nil)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            dtCollectionManager?.resetCollectionItems()
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
     private func setupCollectionView() {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumColumnSpacing = 8
         layout.minimumInteritemSpacing = 8
         layout.configThumbnailListColumnCount()
         
+        collectionView.register(UINib(nibName: "FileNodeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NodeCollectionFileID")
+        collectionView.register(UINib(nibName: "FolderNodeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NodeCollectionFolderID")
+        
         collectionView.collectionViewLayout = layout
+        
+        dtCollectionManager = DynamicTypeCollectionManager(delegate: self)
     }
     
     private func buildNodeListFor(fileType: FileType) -> [MEGANode] {
@@ -86,39 +95,20 @@ class FolderLinkCollectionViewController: UIViewController  {
         
         folderLink.setViewEditing(editing)
         
-        if #available(iOS 13.0, *) {
-            diffableDataSource.reload(nodes: folderList + fileList)
-        } else {
-            collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-        }
-    }
-    
-    @IBAction func nodeActionsTapped(_ sender: UIButton) {
-        if collectionView.allowsMultipleSelection {
-            return
-        }
-        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)) else {
-            return
-        }
-        
-        folderLink.showActions(for: getNode(at: indexPath), from: sender)
+        diffableDataSource.reload(nodes: folderList + fileList)
     }
     
     @objc func reloadData() {
         fileList = buildNodeListFor(fileType: .file)
         folderList = buildNodeListFor(fileType: .folder)
         
-        if #available(iOS 13.0, *) {
-            if MEGAReachabilityManager.isReachable(),
-               folderList.count + fileList.count > 0 {
-                removeErrorViewIfRequired()
-                diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
-            } else {
-                diffableDataSource.load(data: [:], keys: [])
-                showErrorViewIfRequired()
-            }
+        if MEGAReachabilityManager.isReachable(),
+           folderList.count + fileList.count > 0 {
+            removeErrorViewIfRequired()
+            diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
         } else {
-            collectionView.reloadData()
+            diffableDataSource.load(data: [:], keys: [])
+            showErrorViewIfRequired()
         }
     }
     
@@ -127,26 +117,11 @@ class FolderLinkCollectionViewController: UIViewController  {
     }
     
     @objc func reload(node: MEGANode) {
-        guard let rowIndex = node.isFile() ?
-         fileList.firstIndex(where: { $0.handle == node.handle }) :
-         folderList.firstIndex(where: { $0.handle == node.handle }) else { return }
-        
-        if #available(iOS 13.0, *) {
-            if MEGAReachabilityManager.isReachable() {
-                diffableDataSource.reload(nodes: [node])
-            } else {
-                diffableDataSource.load(data: [:], keys: [])
-                showErrorViewIfRequired()
-            }
+        if MEGAReachabilityManager.isReachable() {
+            diffableDataSource.reload(nodes: [node])
         } else {
-            let indexPath = IndexPath(row: rowIndex, section: Int(node.isFile() ? ThumbnailSection.file.rawValue : ThumbnailSection.folder.rawValue))
-            
-            if collectionView.isValid(indexPath: indexPath),
-               MEGAReachabilityManager.isReachable() {
-                UIView.performWithoutAnimation {
-                    collectionView.reloadItems(at: [indexPath])
-                }
-            }
+            diffableDataSource.load(data: [:], keys: [])
+            showErrorViewIfRequired()
         }
     }
     
@@ -168,10 +143,10 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
         }
 
         if (collectionView.allowsMultipleSelection) {
-            folderLink.selectedNodesArray.add(node)
+            folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
             folderLink.setToolbarButtonsEnabled(true)
-            folderLink.areAllNodesSelected = folderLink.selectedNodesArray.count == folderLink.nodesArray.count
+            folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
             return
         }
         
@@ -187,12 +162,12 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
             selectedNodesCopy.forEach { (tempNode) in
                 if node.handle == tempNode.handle {
-                    folderLink.selectedNodesArray.remove(tempNode)
+                    folderLink.selectedNodesArray?.remove(tempNode)
                 }
             }
             
             folderLink.setNavigationBarTitleLabel()
-            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray.count != 0)
+            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray?.count != 0)
             folderLink.areAllNodesSelected = false
         }
     }
@@ -223,6 +198,20 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
 extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfallLayout {
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAt indexPath: IndexPath!) -> CGSize {
-        return indexPath.section == ThumbnailSection.file.rawValue ? CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFile.rawValue)) : CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFolder.rawValue))
+        dtCollectionManager?.currentItemSize(for: indexPath) ?? .zero
+    }
+}
+
+extension FolderLinkCollectionViewController: NodeCollectionViewCellDelegate {
+    func infoTouchUp(inside sender: UIButton) {
+        if collectionView.allowsMultipleSelection {
+            return
+        }
+        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
+              let node = getNode(at: indexPath) else {
+            return
+        }
+        
+        folderLink.showActions(for: node, from: sender)
     }
 }

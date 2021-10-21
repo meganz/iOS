@@ -132,21 +132,19 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
 #ifdef MNZ_SHARE_EXTENSION
-            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-            [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+        [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 #elif MNZ_PICKER_EXTENSION
-            
+        
 #else
-            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 #endif
-            
-            [self updateAppearance];
-            
-            [self.tableView reloadData];
-        }
+        
+        [self updateAppearance];
+        
+        [self.tableView reloadData];
     }
 }
 
@@ -706,13 +704,13 @@
     headerView.titleLabel.font = [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
     switch (section) {
         case 0: {
-            headerView.titleLabel.text = self.searchController.isActive ? NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString : NSLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
+            headerView.titleLabel.text = self.searchController.isActive ? NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").localizedUppercaseString : NSLocalizedString(@"Recents", @"Title for the recents section").localizedUppercaseString;
             
             return headerView;
         }
             
         case 1: {
-            headerView.titleLabel.text = NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
+            headerView.titleLabel.text = NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").localizedUppercaseString;
             return headerView;
         }
             

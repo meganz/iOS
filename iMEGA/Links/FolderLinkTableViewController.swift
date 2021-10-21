@@ -27,16 +27,12 @@ class FolderLinkTableViewController: UIViewController  {
     }
     
     @IBAction func nodeActionsTapped(_ sender: UIButton) {
-        if tableView.isEditing {
+        guard !tableView.isEditing,
+                let indexPath = tableView.indexPathForRow(at: sender.convert(CGPoint.zero, to: tableView)),
+                let node = getNode(at: indexPath) else {
             return
         }
         
-        guard let indexPath = tableView.indexPathForRow(at: sender.convert(CGPoint.zero, to: tableView)) else {
-            return
-        }
-        
-        let node = getNode(at: indexPath)
-
         folderLink.showActions(for: node, from: sender)
     }
     
@@ -64,7 +60,7 @@ class FolderLinkTableViewController: UIViewController  {
     
     @objc func reload(node: MEGANode) {
         guard MEGAReachabilityManager.isReachable(),
-            let rowIndex = folderLink.searchController.isActive ? folderLink.searchNodesArray.firstIndex(of: node) : folderLink.nodesArray.firstIndex(of: node),
+              let rowIndex = folderLink.searchController.isActive ? folderLink.searchNodesArray?.firstIndex(of: node) : folderLink.nodesArray.firstIndex(of: node),
               tableView.hasRow(at: IndexPath(row: rowIndex, section: 0)) else { return }
         
         UIView.performWithoutAnimation {
@@ -73,7 +69,7 @@ class FolderLinkTableViewController: UIViewController  {
     }
     
     private func getNode(at indexPath: IndexPath) -> MEGANode? {
-        folderLink.searchController.isActive ? folderLink.searchNodesArray[safe: indexPath.row] : folderLink.nodesArray[safe: indexPath.row]
+        folderLink.searchController.isActive ? folderLink.searchNodesArray?[safe: indexPath.row] : folderLink.nodesArray[safe: indexPath.row]
     }
 }
 
@@ -86,7 +82,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
                 if folderLink.isFolderLinkNotValid {
                     return 0
                 } else {
-                    return folderLink.nodesArray?.count ?? 0
+                    return folderLink.nodesArray.count
                 }
             }
         } else {
@@ -117,13 +113,13 @@ extension FolderLinkTableViewController: UITableViewDataSource {
             cell.infoLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdkFolder())
         }
         
-        cell.thumbnailPlayImageView.isHidden = !node.name.mnz_isVideoPathExtension
+        cell.thumbnailPlayImageView.isHidden = node.name?.mnz_isVideoPathExtension != true
         cell.nameLabel.text = node.name
         cell.nameLabel.textColor = UIColor.mnz_label()
         cell.node = node
         
         if tableView.isEditing {
-            folderLink.selectedNodesArray.forEach {
+            folderLink.selectedNodesArray?.forEach {
                 if let tempNode = $0 as? MEGANode, tempNode.handle == node.handle {
                     tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
                 }
@@ -160,10 +156,10 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             return
         }
         if tableView.isEditing {
-            folderLink.selectedNodesArray.add(node)
+            folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
             folderLink.setToolbarButtonsEnabled(true)
-            folderLink.areAllNodesSelected = folderLink.selectedNodesArray.count == folderLink.nodesArray.count
+            folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
             return
         }
         
@@ -180,12 +176,12 @@ extension FolderLinkTableViewController: UITableViewDelegate {
 
             selectedNodesCopy.forEach { (tempNode) in
                 if node.handle == tempNode.handle {
-                    folderLink.selectedNodesArray.remove(tempNode)
+                    folderLink.selectedNodesArray?.remove(tempNode)
                 }
             }
             
             folderLink.setNavigationBarTitleLabel()
-            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray.count != 0)
+            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray?.count != 0)
             folderLink.areAllNodesSelected = false
         }
     }

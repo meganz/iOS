@@ -8,26 +8,28 @@
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CloudDriveViewController : UIViewController
 
-@property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, strong) MEGAUser *user;
+@property (nonatomic, strong, nullable) MEGANode *parentNode;
+@property (nonatomic, strong, nullable) MEGAUser *user;
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
 
-@property (nonatomic, strong) MEGANodeList *nodes;
-@property (nonatomic, strong) NSMutableArray<MEGANode *> *searchNodesArray;
+@property (nonatomic, strong, nullable) MEGANodeList *nodes;
+@property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *searchNodesArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *selectedNodesArray;
-@property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
+@property (nonatomic, strong, nullable) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
-@property (nonatomic, strong) MEGARecentActionBucket *recentActionBucket;
+@property (nonatomic, strong, nullable) MEGARecentActionBucket *recentActionBucket;
 
-@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic, nullable) UISearchController *searchController;
 
 @property (assign, nonatomic) BOOL allNodesSelected;
 @property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
 
-@property (nonatomic, strong) MyAvatarManager * _Nullable myAvatarManager;
+@property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 
 - (void)presentUploadAlertController;
 - (void)presentScanDocument;
@@ -42,3 +44,5 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
+
+NS_ASSUME_NONNULL_END

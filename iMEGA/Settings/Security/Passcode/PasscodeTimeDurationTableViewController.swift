@@ -36,10 +36,8 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if #available(iOS 13, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                self.updateAppearance()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            self.updateAppearance()
         }
     }
     
@@ -61,7 +59,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseId, for: indexPath)
         cell.textLabel?.textColor = UIColor.mnz_label()
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         cell.textLabel?.text = passcodeDurationInfoArray[indexPath.row].title
 
         let timerDuration = LTHPasscodeViewController.timerDuration()
