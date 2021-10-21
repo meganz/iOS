@@ -1,7 +1,6 @@
 import UIKit
 import Photos
 
-@available(iOS 13.0, *)
 final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
     private enum Section {
         case main

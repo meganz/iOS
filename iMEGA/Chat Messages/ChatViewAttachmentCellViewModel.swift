@@ -56,8 +56,7 @@ class ChatViewAttachmentCellViewModel {
     
     private func titleForAttachment() -> String {
         if message.nodeList.size.uintValue == 1 {
-            let node = message.nodeList.node(at: 0)!
-            return node.name
+            return message.nodeList.node(at: 0)?.name ?? ""
         } else {
             return String(format: NSLocalizedString("files", comment: ""), message.nodeList.size.uintValue)
         }
@@ -65,11 +64,11 @@ class ChatViewAttachmentCellViewModel {
     
     private func subtitleForAttachment() -> String {
         if message.nodeList.size.uintValue == 1 {
-            let node = message.nodeList.node(at: 0)!
-            return Helper.memoryStyleString(fromByteCount: node.size.int64Value)
+            let size = message.nodeList.node(at: 0)?.size ?? 0
+            return Helper.memoryStyleString(fromByteCount: size.int64Value)
         } else {
             let totalSize = (0..<message.nodeList.size.intValue)
-                .map({ message.nodeList.node(at: $0)!.size.int64Value })
+                .compactMap({ message.nodeList.node(at: $0)?.size?.int64Value })
                 .reduce(0, +)
             return Helper.memoryStyleString(fromByteCount: totalSize)
         }

@@ -77,10 +77,8 @@ class AppearanceTableViewController: UITableViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if #available(iOS 13, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateAppearance()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAppearance()
         }
     }
     
@@ -118,7 +116,7 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     private func changeLabelWeight(to label: UILabel) {
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = UIFont.preferredFont(style: .caption1, weight: .bold)
         label.textColor = UIColor.white
     }
     
@@ -126,19 +124,19 @@ class AppearanceTableViewController: UITableViewController {
         switch name {
         case IconName.day.rawValue:
             dayIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            dayIconLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+            dayIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
             
         case IconName.night.rawValue:
             nightIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            nightIconLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+            nightIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
             
         case IconName.minimal.rawValue:
             minimalIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            minimalIconLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+            minimalIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
             
         default:
             defaultIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            defaultIconLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+            defaultIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
         }
     }
     

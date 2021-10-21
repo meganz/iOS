@@ -132,12 +132,10 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
+    [self configPreviewingRegistration];
     self.sortOrderType = [NSUserDefaults.standardUserDefaults integerForKey:@"SharedItemsSortOrderType"];
     if (self.sortOrderType == MEGASortOrderTypeNone) {
-        self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
+        self.sortOrderType = MEGASortOrderTypeDefaultAsc;
     }
     
     self.navigationController.delegate = self;
@@ -198,13 +196,11 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-            
-            [self updateAppearance];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        
+        [self updateAppearance];
     }
     
     [self configPreviewingRegistration];
@@ -605,13 +601,13 @@
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
         [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
             NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
-                weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+                weakSelf.sortOrderType = MEGASortOrderTypeDefaultAsc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
-                weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+                weakSelf.sortOrderType = MEGASortOrderTypeDefaultDesc;
                 [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }]];

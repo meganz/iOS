@@ -77,7 +77,7 @@ extension MEGAStore {
             MEGALogDebug("Delete CloudAppearancePreference \(cloudAppearancePreference)")
             context.delete(cloudAppearancePreference)
             
-            MEGAStore.shareInstance().save(stack.viewContext)
+            MEGAStore.shareInstance().save(context)
         } else {
             MEGALogError("Failed to delete CloudAppearancePreference \(handle), it does not exist on Core Data.")
         }
