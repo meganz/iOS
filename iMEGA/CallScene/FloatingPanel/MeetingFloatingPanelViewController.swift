@@ -57,7 +57,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = UIImage(named: "hangCallMeetingAction")
-        endQuickActionView.name = NSLocalizedString("Leave", comment: "")
+        endQuickActionView.name = NSLocalizedString("leave", comment: "")
         updateInTheMeetingLabel()
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
         flipQuickActionView.disabled = true
