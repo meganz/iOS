@@ -27,6 +27,7 @@ abstract_target 'iMEGA' do
     pod 'YYCategories'
     pod 'SAMKeychain'
     pod 'DateTools'
+    pod 'PhoneNumberKit', '~> 3.3'
     
     # Pods for Debug only
     pod 'FLEX', :configurations => ['Debug']
