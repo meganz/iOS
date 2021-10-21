@@ -110,18 +110,13 @@ class ExtensionAppearanceManager: NSObject {
     }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {
-        if #available(iOS 13, *) {
-            let toolbarAppearance = UIToolbarAppearance()
-            toolbarAppearance.configureWithDefaultBackground()
-            toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().standardAppearance = toolbarAppearance
-            if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
-                UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
-            }
-        } else {
-            UIToolbar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        let toolbarAppearance = UIToolbarAppearance()
+        toolbarAppearance.configureWithDefaultBackground()
+        toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        UIToolbar.appearance().standardAppearance = toolbarAppearance
+        
+        if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
+            UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
         }
     }
 }
