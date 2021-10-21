@@ -1,4 +1,5 @@
 import Foundation
+import PhoneNumberKit
 
 // MARK: - Use case protocol -
 protocol CheckSMSUseCaseProtocol {
