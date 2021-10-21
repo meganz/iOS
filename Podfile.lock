@@ -66,6 +66,12 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PanModal (1.2.7)
+  - PhoneNumberKit (3.3.3):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
+    - PhoneNumberKit/UIKit (= 3.3.3)
+  - PhoneNumberKit/PhoneNumberKitCore (3.3.3)
+  - PhoneNumberKit/UIKit (3.3.3):
+    - PhoneNumberKit/PhoneNumberKitCore
   - PinLayout (1.10.0)
   - PromisesObjC (2.0.0)
   - PureLayout (3.1.9)
@@ -91,6 +97,7 @@ DEPENDENCIES:
   - "Keyboard+LayoutGuide"
   - MessageKit
   - PanModal (from `https://github.com/ilia3546/PanModal.git`, commit `ba721e8`)
+  - PhoneNumberKit (~> 3.3)
   - PinLayout
   - PureLayout (from `https://github.com/PureLayout/PureLayout.git`)
   - SAMKeychain
@@ -116,6 +123,7 @@ SPEC REPOS:
     - libwebp
     - MessageKit
     - nanopb
+    - PhoneNumberKit
     - PinLayout
     - PromisesObjC
     - SAMKeychain
@@ -177,6 +185,7 @@ SPEC CHECKSUMS:
   MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
+  PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
   PinLayout: e50e9a748b632905fca6e67043ea4b05d6c92186
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   PureLayout: 5fb5e5429519627d60d079ccb1eaa7265ce7cf88
@@ -185,6 +194,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 910183f19f4f71130cb956f34cf754cae130c006
+PODFILE CHECKSUM: 1fa28b75307e214579edc25eaac6cb59ce8f1fd7
 
 COCOAPODS: 1.11.2
