@@ -335,6 +335,7 @@
         UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:NSLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = self.name;
             textField.text = self.name;
             textField.returnKeyType = UIReturnKeyDone;
             textField.delegate = self;
