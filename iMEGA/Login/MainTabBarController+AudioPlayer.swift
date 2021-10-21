@@ -33,7 +33,9 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func hideMiniPlayer() {
-        bottomView?.isHidden = true
+        DispatchQueue.main.async {
+            self.bottomView?.isHidden = true
+        }
     }
     
     func closeMiniPlayer() {
@@ -43,8 +45,10 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func resetMiniPlayerContainer() {
-        bottomView?.removeFromSuperview()
-        bottomView = nil
+        DispatchQueue.main.async {
+            self.bottomView?.removeFromSuperview()
+            self.bottomView = nil
+        }
     }
     
     @objc func refreshBottomConstraint() {
