@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +27,7 @@
                     </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jOP-gA-9dj">
-                    <rect key="frame" x="124.66666666666669" y="389.33333333333331" width="165" height="49"/>
+                    <rect key="frame" x="124.66666666666669" y="369.33333333333331" width="165" height="49"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-3x-tfh">
                             <rect key="frame" x="0.0" y="0.0" width="165" height="22"/>
@@ -80,7 +80,7 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="K3f-lP-shF"/>
             <constraints>
-                <constraint firstItem="jOP-gA-9dj" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="35" id="0My-MF-KVQ"/>
+                <constraint firstItem="jOP-gA-9dj" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="15" id="0My-MF-KVQ"/>
                 <constraint firstItem="XtC-yn-6bx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jOP-gA-9dj" secondAttribute="bottom" constant="16" id="0T9-9L-mwL"/>
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="centerY" secondItem="K3f-lP-shF" secondAttribute="centerY" multiplier="0.4" id="1yy-54-HyZ"/>
                 <constraint firstItem="jOP-gA-9dj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="K3f-lP-shF" secondAttribute="leading" constant="40" id="6lU-By-guf"/>

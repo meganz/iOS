@@ -22,7 +22,7 @@ final class OverDiskQuotaWarningView: UIView, NibOwnerLoadable {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13, *), previousTraitCollection != traitCollection {
+        if previousTraitCollection != traitCollection {
             setupTraitCollectionAwareView(with: traitCollection)
         }
     }

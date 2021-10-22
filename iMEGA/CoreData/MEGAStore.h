@@ -12,6 +12,8 @@
 
 @class TransferRecordDTO;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MEGAStore : NSObject
 
 #pragma mark - store stack
@@ -20,22 +22,22 @@
 
 #pragma mark - Singleton Lifecycle
 
-+ (nonnull MEGAStore *)shareInstance;
++ (MEGAStore *)shareInstance;
 
 #pragma mark - MOOfflineNode entity
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path;
-- (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path;
-- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node;
-- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node context:(NSManagedObjectContext *)context;
-- (MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle;
-- (void)removeOfflineNode:(nonnull MOOfflineNode *)offlineNode;
+- (nullable MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path;
+- (nullable MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node;
+- (nullable MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node context:(NSManagedObjectContext *)context;
+- (nullable MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle;
+- (void)removeOfflineNode:(MOOfflineNode *)offlineNode;
 - (void)removeAllOfflineNodes;
-- (NSArray<MOOfflineNode *> *)fetchOfflineNodes:(NSNumber* _Nullable)fetchLimit inRootFolder:(BOOL)inRootFolder;
+- (nullable NSArray<MOOfflineNode *> *)fetchOfflineNodes:(nullable NSNumber *)fetchLimit inRootFolder:(BOOL)inRootFolder;
 
 #pragma mark - MOUser entity
 
-- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname nickname:(NSString *)nickname email:(NSString *)email;
+- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(nullable NSString *)firstname lastname:(nullable NSString *)lastname nickname:(nullable NSString *)nickname email:(nullable NSString *)email;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
@@ -43,27 +45,27 @@
 - (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname;
 - (void)updateUserWithEmail:(NSString *)email lastname:(NSString *)lastname;
 - (void)updateUserWithEmail:(NSString *)email nickname:(NSString *)nickname;
-- (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
-- (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle context:(NSManagedObjectContext *)context;
-- (MOUser *)fetchUserWithEmail:(NSString *)email;
+- (nullable MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
+- (nullable MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle context:(NSManagedObjectContext *)context;
+- (nullable MOUser *)fetchUserWithEmail:(NSString *)email;
 
 #pragma mark - MOChatDraft entity
 
 - (void)insertOrUpdateChatDraftWithChatId:(uint64_t)chatId text:(NSString *)text;
-- (MOChatDraft *)fetchChatDraftWithChatId:(uint64_t)chatId;
+- (nullable MOChatDraft *)fetchChatDraftWithChatId:(uint64_t)chatId;
 
 #pragma mark - MOMediaDestination entity
 
-- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(NSNumber *)timescale;
+- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(nullable NSNumber *)timescale;
 - (void)deleteMediaDestinationWithFingerprint:(NSString *)fingerprint;
-- (MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint;
+- (nullable MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint;
 
 #pragma mark - MOUploadTransfer entity
 
 - (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle;
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer;
 - (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
-- (NSArray<TransferRecordDTO *> *)fetchUploadTransfers;
+- (nullable NSArray<TransferRecordDTO *> *)fetchUploadTransfers;
 - (void)removeAllUploadTransfers;
 
 #pragma mark - MOMessage entity
@@ -71,7 +73,7 @@
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId;
 - (void)deleteMessage:(MOMessage *)message;
 - (void)deleteAllMessagesWithContext:(NSManagedObjectContext *)context;
-- (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId;
+- (nullable MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId;
 - (BOOL)areTherePendingMessages;
 
 #pragma mark - Context Save
@@ -79,3 +81,5 @@
 - (void)saveContext:(NSManagedObjectContext *)context;
 
 @end
+
+NS_ASSUME_NONNULL_END

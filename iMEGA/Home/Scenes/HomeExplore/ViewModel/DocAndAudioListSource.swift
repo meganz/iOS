@@ -223,9 +223,7 @@ extension DocAndAudioListSource {
         }
 
         action.image = UIImage(named: imageName)
-        if #available(iOS 13.0, *) {
-            action.image = action.image?.withTintColor(.white)
-        }
+        action.image = action.image?.withTintColor(.white)
 
         action.backgroundColor = backgroundColor
         return action

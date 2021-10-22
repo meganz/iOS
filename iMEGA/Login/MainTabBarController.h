@@ -11,19 +11,21 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
     MovementDirectionDown
 };
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 
-@property (nonatomic, strong) UIView * _Nullable bottomView;
-@property (strong, nonatomic) NSLayoutConstraint *bottomViewBottomConstraint;
-@property (nonatomic, strong) AudioPlayer * _Nullable player;
-@property (nonatomic, strong) MiniPlayerViewRouter * _Nullable miniPlayerRouter;
+@property (nonatomic, strong, nullable) UIView *bottomView;
+@property (nonatomic, strong, nullable) NSLayoutConstraint *bottomViewBottomConstraint;
+@property (nonatomic, strong, nullable) AudioPlayer *player;
+@property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
 
-- (void)openChatRoomNumber:(NSNumber *)chatNumber;
+- (void)openChatRoomNumber:(nullable NSNumber *)chatNumber;
 - (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatNumber;
 
 - (void)showAchievements;
-- (void)showFavouritesNodeWithHandle:(NSString * _Nullable )base64handle;
-- (void)showOfflineAndPresentFileWithHandle:(NSString * _Nullable )base64handle;
+- (void)showFavouritesNodeWithHandle:(nullable NSString *)base64handle;
+- (void)showOfflineAndPresentFileWithHandle:(nullable NSString *)base64handle;
 - (void)showRecents;
 - (void)showUploadFile;
 - (void)showScanDocument;
@@ -33,3 +35,5 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
 - (void)setBadgeValueForChats;
 - (void)shouldUpdateProgressViewLocation;
 @end
+
+NS_ASSUME_NONNULL_END

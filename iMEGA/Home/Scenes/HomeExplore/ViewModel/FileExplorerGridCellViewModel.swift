@@ -31,7 +31,7 @@ final class FileExplorerGridCellViewModel {
     }
     
     var name: String {
-        return node.name
+        return node.name ?? ""
     }
     
     var nodeHandle: UInt64 {
