@@ -62,8 +62,6 @@ extension GiphySelectionViewController: TraitEnviromentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        if #available(iOS 13, *) {
-            AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: currentTrait)
-        }
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: currentTrait)
     }
 }

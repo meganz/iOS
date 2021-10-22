@@ -1,12 +1,13 @@
 import Foundation
 
-@available(iOS 13.0, *)
 final class FolderLinkCollectionViewDiffableDataSource {
     private var dataSource: UICollectionViewDiffableDataSource<ThumbnailSection, MEGANode>?
     private weak var collectionView: UICollectionView?
+    private weak var controller: FolderLinkCollectionViewController?
     
-    init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView, controller: FolderLinkCollectionViewController?) {
         self.collectionView = collectionView
+        self.controller = controller
     }
 
     func load(data: [ThumbnailSection: [MEGANode]], keys: [ThumbnailSection]) {
@@ -39,15 +40,7 @@ final class FolderLinkCollectionViewDiffableDataSource {
                 fatalError("Could not instantiate NodeCollectionViewCell or Node at index")
             }
             
-            cell.configureCell(for: node, api:MEGASdkManager.sharedMEGASdkFolder())
-            cell.selectImageView?.isHidden = !collectionView.allowsMultipleSelection
-            cell.moreButton?.isHidden = collectionView.allowsMultipleSelection
-            
-            if node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil {
-                cell.downloadedImageView?.isHidden = false
-            } else {
-                cell.downloadedImageView?.isHidden = true
-            }
+            cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdkManager.sharedMEGASdkFolder(), delegate: self.controller)
             
             return cell
         }

@@ -38,10 +38,8 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateAppearance];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [self updateAppearance];
     }
 }
 
@@ -118,7 +116,7 @@
     
     if (newUser) {
         self.contactNewView.hidden = NO;
-        self.contactNewLabel.text = NSLocalizedString(@"New", @"Label shown inside an unseen notification").uppercaseString;
+        self.contactNewLabel.text = NSLocalizedString(@"New", @"Label shown inside an unseen notification").localizedUppercaseString;
         self.contactNewLabel.textColor = UIColor.whiteColor;
         self.contactNewLabelView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     } else {

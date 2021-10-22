@@ -129,11 +129,9 @@ class GetLinkViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateAppearance()
-                tableView.reloadData()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAppearance()
+            tableView.reloadData()
         }
     }
     
@@ -221,7 +219,7 @@ class GetLinkViewController: UIViewController {
             var sectionsToReload = IndexSet()
             
             if getLinkVM.link.isEmpty {
-                getLinkVM.link = node.publicLink
+                getLinkVM.link = node.publicLink ?? ""
                 guard let linkSection = sections().firstIndex(of: .link) else {
                     return
                 }
@@ -353,8 +351,8 @@ class GetLinkViewController: UIViewController {
                 return
             }
             
-            if self?.getLinkVM.passwordProtect ?? false, let password = self?.getLinkVM.password {
-                self?.encrypt(link: nodeUpdated.publicLink, with: password)
+            if self?.getLinkVM.passwordProtect ?? false, let password = self?.getLinkVM.password, let publicLink = nodeUpdated.publicLink {
+                self?.encrypt(link: publicLink, with: password)
             } else {
                 SVProgressHUD.dismiss()
                 self?.updateModel(forNode: nodeUpdated)
@@ -538,7 +536,9 @@ class GetLinkViewController: UIViewController {
         }
         
         if getLinkVM.multilink {
-            cell.configureLinkCell(link: nodes[indexPath.section].isExported() ? nodes[indexPath.section].publicLink : "")
+            let node = nodes[indexPath.section]
+            let publicLink = node.publicLink ?? ""
+            cell.configureLinkCell(link: node.isExported() ? publicLink : "")
         } else {
             if getLinkVM.separateKey {
                 cell.configureLinkCell(link: getLinkVM.linkWithoutKey)
@@ -811,7 +811,7 @@ extension GetLinkViewController: UITableViewDelegate {
                 case .removePassword:
                     getLinkVM.passwordProtect = false
                     getLinkVM.password = nil
-                    getLinkVM.link = nodes[0].publicLink
+                    getLinkVM.link = nodes[0].publicLink ?? ""
                     tableView.reloadData()
                 }
                 break
@@ -847,7 +847,9 @@ extension GetLinkViewController: MEGARequestDelegate {
 extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String) {
         setLinkPassword.dismissView()
-        encrypt(link: nodes[0].publicLink, with: password)
+        if let publicLink = nodes[0].publicLink {
+            encrypt(link: publicLink, with: password)
+        }
     }
     
     func setLinkPasswordCanceled(_ setLinkPassword: SetLinkPasswordViewController) {

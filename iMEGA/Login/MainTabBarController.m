@@ -41,7 +41,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     [super viewDidLoad];
     
     NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:5];
-
+    
     [defaultViewControllersMutableArray addObject:[self cloudDriveViewController]];
     [defaultViewControllersMutableArray addObject:[self photosViewController]];
     [defaultViewControllersMutableArray addObject:[self homeViewController]];
@@ -63,7 +63,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
-
+    
     [self defineProgressView];
     [self.progressView addGestureRecognizer:[UIPanGestureRecognizer.alloc initWithTarget:self action:@selector(dragTransferWidget:)]];
     
@@ -73,7 +73,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     self.selectedViewController = [defaultViewControllersMutableArray objectAtIndex:[TabManager getPreferenceTab].tabType];
     [self showPSAViewIfNeeded];
     
-     [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
+    [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
 }
 
 - (void)tapProgressView {
@@ -92,6 +92,8 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     if (self.psaViewModel != nil) {
         [self adjustPSAFrameIfNeededWithPsaViewModel:self.psaViewModel];
     }
+    
+    [self updatePhoneImageBadgeFrame];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,13 +127,11 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager setupAppearance:self.traitCollection];
-            
-           //Force appearance changes on the tab bar
-            [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
-        }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager setupAppearance:self.traitCollection];
+        
+        //Force appearance changes on the tab bar
+        [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
     }
     
     [self configurePhoneImageBadge];
@@ -163,7 +163,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     self.selectedIndex = TabTypeChat;
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
     ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
-
+    
     UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
     if (rootViewController.presentedViewController) {
         [rootViewController dismissViewControllerAnimated:YES completion:^{
@@ -178,7 +178,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     if (![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
         return;
     }
-
+    
     self.selectedIndex = TabTypeHome;
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
@@ -250,7 +250,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
         [self.progressView removeFromSuperview];
         
         [self.view addSubview:view];
-    
+        
         self.progressViewWidthConstraint = [view.widthAnchor constraintEqualToConstant:70.0];
         self.progressViewHeightConstraint = [view.heightAnchor constraintEqualToConstant:70.0];
         self.progressViewBottomConstraint = [view.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-60.0];
@@ -337,7 +337,6 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
         self.phoneBadgeImageView.hidden = YES;
         [self.tabBar addSubview:self.phoneBadgeImageView];
     }
-    self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 4 * 3 - 10, 6, 10, 10);
 }
 
 - (UIViewController *)cloudDriveViewController {
@@ -414,10 +413,34 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
                 [self.view layoutIfNeeded];
             }];
         }
-
+            
         default:
             break;
     }
+}
+
+- (void)updatePhoneImageBadgeFrame {
+    UITabBarItem *item = self.tabBar.items[TabTypeChat];
+    CGFloat iconWidth = item.image.size.width;
+    CGRect frame = [self frameForTabInTabBar:self.tabBar withIndex: TabTypeChat];
+    CGFloat originX = frame.origin.x + (frame.size.width-iconWidth) / 2 + iconWidth;
+    
+    self.phoneBadgeImageView.frame = CGRectMake(originX-6, 6, 10, 10);
+}
+
+- (CGRect)frameForTabInTabBar:(UITabBar*)tabBar withIndex:(NSUInteger)index {
+    NSUInteger currentTabIndex = 0;
+    
+    for (UIView* subView in tabBar.subviews) {
+        if ([subView isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
+            if (currentTabIndex == index)
+                return subView.frame;
+            else
+                currentTabIndex++;
+        }
+    }
+    
+    return CGRectNull;
 }
 
 #pragma mark - MEGAChatDelegate
@@ -429,7 +452,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
         if ([[self.selectedViewController visibleViewController] isKindOfClass:[ChatViewController class]]) {
             ChatViewController *chatViewController = (ChatViewController *)[self.selectedViewController visibleViewController];
             [chatViewController updateUnreadLabel];
-        }        
+        }
     }
 }
 

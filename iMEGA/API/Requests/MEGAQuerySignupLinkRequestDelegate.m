@@ -12,7 +12,7 @@
 #import "OnboardingViewController.h"
 #import "UIApplication+MNZCategory.h"
 
-#import "SAMKeychain.h"
+@import SAMKeychain;
 
 @interface MEGAQuerySignupLinkRequestDelegate ()
 
@@ -61,9 +61,7 @@
                         UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
                         LoginViewController *loginVC = loginNC.viewControllers.firstObject;
                         loginVC.emailString = request.email;
-                        if (@available(iOS 13.0, *)) {
-                            loginVC.modalPresentationStyle = UIModalPresentationFullScreen;
-                        }
+                        loginVC.modalPresentationStyle = UIModalPresentationFullScreen;
                         
                         [UIApplication.mnz_presentingViewController presentViewController:loginNC animated:YES completion:nil];
                     }
@@ -90,9 +88,7 @@
             UINavigationController *createNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
             CreateAccountViewController *createAccountVC = createNC.viewControllers.firstObject;
             createAccountVC.emailString = MEGALinkManager.emailOfNewSignUpLink;
-            if (@available(iOS 13.0, *)) {
-                createAccountVC.modalPresentationStyle = UIModalPresentationFullScreen;
-            }
+            createAccountVC.modalPresentationStyle = UIModalPresentationFullScreen;
             
             [UIApplication.mnz_presentingViewController presentViewController:createNC animated:YES completion:nil];
             

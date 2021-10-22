@@ -570,11 +570,19 @@ function getSourceLanguageFile($resources)
 
     mergePlurals($originalPluralSourceLanguages,$sourceLanguages['pluralSource'],false);
 
+    $pathOverride = false;
+    if(count($finalContent) > 1 && $finalContent['localizable'] !== null) {
+        $pathOverride = true;
+    }
+
     //strings format
     foreach ($finalContent as $branchResource => $res) {
         foreach ($res as $language => $content) {
             $resourceName = str_replace(array_keys(REMAPPED_RESOURCE_NAMES), array_values(REMAPPED_RESOURCE_NAMES), explode("-", $branchResource)[0]);
             $path = "Translations-" . TIME . "/{$branchResource}";
+            if ($pathOverride && $branchResource == 'infoplist') {
+                $path = "Translations-" . TIME . "/localizable";
+            }
             if(!file_exists($path)){
                 mkdir($path, 0777, true);
             }
@@ -747,12 +755,20 @@ function getTranslations($resources, $languages)
     // Merge plurals
     mergePlurals($originalPluralTranslations,$translations['pluralTranslation'],true);
 
+    // move infoplist into same folder as localizable
+    $pathOverride = false;
+    if(count($finalContent) > 1 && $finalContent['localizable'] !== null) {
+        $pathOverride = true;
+    }
     // strings format creation
     foreach ($finalContent as $branchResource => $res) {
         foreach ($res as $language => $content) {
             $languageName = str_replace(array_keys(REMAPPED_LANG_CODES), array_values(REMAPPED_LANG_CODES), explode(":", $language)[1]);
             $resourceName = str_replace(array_keys(REMAPPED_RESOURCE_NAMES), array_values(REMAPPED_RESOURCE_NAMES), explode("-", $branchResource)[0]);
             $path = "Translations-" . TIME . "/{$branchResource}";
+            if ($pathOverride && $branchResource == 'infoplist') {
+                $path = "Translations-" . TIME . "/localizable";
+            }
             if(!file_exists($path)){
                 mkdir($path, 0777, true);
             }

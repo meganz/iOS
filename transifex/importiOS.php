@@ -569,7 +569,10 @@ if($fileParts['extension'] == "strings"){
 // TODO stringsdict format
     die("Stringsdict not supported yet");
 }
-
+$shouldLock = true;
+if($argv[1] && $argv[1] === 'nolock'){
+    $shouldLock = false;
+}
 // TODO stringsdict file when they upload to gitlab
 if (getResourceDetails(strtolower($fileParts['filename']))) {
     if ($fileParts['extension'] == "strings") {
@@ -579,11 +582,13 @@ if (getResourceDetails(strtolower($fileParts['filename']))) {
         createNewResource($branchResourceName,true);
         addNewSourceFile($filePath, $branchResourceName,true);
     }
-    sleep(5);
-    $stringsToPushKeys = array_keys(parseAppleStrings($stringsToPush));
-    $hashes = getStringHash($stringsToPushKeys, $branchResourceName);
-    $arrLangCodes = getLockedLangCodes();
-    updateStringLock($hashes,$arrLangCodes);
+    if ($shouldLock) {
+        sleep(5);
+        $stringsToPushKeys = array_keys(parseAppleStrings($stringsToPush));
+        $hashes = getStringHash($stringsToPushKeys, $branchResourceName);
+        $arrLangCodes = getLockedLangCodes();
+        updateStringLock($hashes, $arrLangCodes);
+    }
 } else {
     echo "File name should be the name of the resource (Case Sensitive).\n";
     die();
