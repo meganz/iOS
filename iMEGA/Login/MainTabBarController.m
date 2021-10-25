@@ -20,6 +20,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate>
 
+@property (nonatomic, assign) NSInteger unreadMessages;
 @property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
 
@@ -309,6 +310,9 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].unreadChats : 0;
     NSInteger numCalls = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].numCalls : 0;
     
+    self.unreadMessages = unreadChats;
+    self.phoneBadgeImageView.hidden = self.unreadMessages > 0;
+    
     NSString *badgeValue;
     self.phoneBadgeImageView.hidden = YES;
     if (MEGAReachabilityManager.isReachable && numCalls > 0) {
@@ -461,7 +465,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     switch (call.status) {
         case MEGAChatCallStatusInProgress:
-            self.phoneBadgeImageView.hidden = NO;
+            self.phoneBadgeImageView.hidden = self.unreadMessages > 0;
             break;
             
         case MEGAChatCallStatusDestroyed:
