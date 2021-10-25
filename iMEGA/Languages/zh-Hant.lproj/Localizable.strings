@@ -1361,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu則未讀訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="訂閱將會自動更新，續期與第一次訂閱的相同，價格也相同。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的自動更新訂閱，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，可以在頁面下方以您的Apple ID登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下捲動到管理應用程式訂閱。在那裡您可以選擇你的MEGA Pro訂閱和查看您預定的續訂日期，選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2025,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您確定要更改至測試伺服器？您的帳戶可能會遇到無法恢復的問題。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Grant Access to Your Address Book";
+"Enable Access to Your Address Book"="授權存取您的通訊錄";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="輕易的在您通訊錄中找到有在使用MEGA的聯絡人。";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2715,4 +2715,4 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="喇叭";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Flip";
+"meetings.quickAction.flip"="翻轉";
