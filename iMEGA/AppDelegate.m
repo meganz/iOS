@@ -315,10 +315,11 @@
 
     [LTHPasscodeViewController.sharedUser setDelegate:self];
 
-    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
-    if (pendingTasks) {
-        [self beginBackgroundTaskWithName:@"PendingTasks"];
-    }
+    [MEGASdkManager.sharedMEGASdk areTherePendingTransfersWithCompletion:^(BOOL pendingTransfers) {
+        if (pendingTransfers) {
+            [self beginBackgroundTaskWithName:@"PendingTasks"];
+        }
+    }];
     
     if (self.privacyView == nil) {
         UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
