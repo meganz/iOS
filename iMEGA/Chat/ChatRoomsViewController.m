@@ -1161,7 +1161,7 @@
         return configuration;
 }
 
-- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator API_AVAILABLE(ios(13.0)){
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
     ChatViewController *previewViewController = (ChatViewController *)animator.previewViewController;
     [animator addCompletion:^{
         [self.navigationController pushViewController:previewViewController animated:NO];
