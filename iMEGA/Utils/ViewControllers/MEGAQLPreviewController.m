@@ -68,7 +68,7 @@
     return NO;
 }
 
-- (QLPreviewItemEditingMode)previewController:(QLPreviewController *)controller editingModeForPreviewItem:(id<QLPreviewItem>)previewItem   API_AVAILABLE(ios(13.0)) {
+- (QLPreviewItemEditingMode)previewController:(QLPreviewController *)controller editingModeForPreviewItem:(id<QLPreviewItem>)previewItem {
     return QLPreviewItemEditingModeCreateCopy;
 }
 
