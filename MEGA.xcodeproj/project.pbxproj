@@ -352,7 +352,6 @@
 		5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E126CE635B0010115B /* MockFavouritesRouter.swift */; };
 		5BBC13E626CE64F50010115B /* NodeCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E526CE64F50010115B /* NodeCellViewModelTests.swift */; };
 		5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E726CE68380010115B /* MockFavouriteNodesUseCase.swift */; };
-		5BBC13EC26CE86D80010115B /* MockAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13EB26CE86D80010115B /* MockAccountUseCase.swift */; };
 		5BC1276E2375A73000CCAF26 /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
 		5BC1276F2375A75600CCAF26 /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
 		5BC25725220080FD0098E781 /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
@@ -1181,6 +1180,12 @@
 		A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */; };
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
+		A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81971D026FB81C6007DC7B1 /* FileVersioning.storyboard */; };
+		A81971E126FCD118007DC7B1 /* FileVersionErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E026FCD118007DC7B1 /* FileVersionErrorEntity.swift */; };
+		A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E326FDBE82007DC7B1 /* FileVersioningViewModelTests.swift */; };
+		A81971E626FDD85A007DC7B1 /* MockFileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E526FDD85A007DC7B1 /* MockFileVersionsRepository.swift */; };
+		A81971E826FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */; };
+		A81971EA26FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E926FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift */; };
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
@@ -1237,9 +1242,13 @@
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
+		A837E62C27070A370069AB30 /* AccountDetailsErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837E62B27070A370069AB30 /* AccountDetailsErrorEntity.swift */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A83CFEA025DAAAF300622675 /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83CFE9F25DAAAF300622675 /* ThrottlerTest.swift */; };
 		A84533DF25ECF028007E0751 /* MEGANodeList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */; };
+		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
+		A84E92E626FB708D00606AA7 /* FileVersionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */; };
+		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C62032F6E70033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
@@ -1250,12 +1259,18 @@
 		A860C80F26BBDECF004BFD23 /* ReinstallationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */; };
 		A860C81026BBEA15004BFD23 /* ReinstallationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */; };
 		A860C81126BBEA17004BFD23 /* ReinstallationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */; };
+		A866D9A1271D806000146302 /* MockAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13EB26CE86D80010115B /* MockAccountUseCase.swift */; };
+		A866D9A6271D8AB800146302 /* AccountDetailsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866D9A5271D8AB800146302 /* AccountDetailsEntity.swift */; };
+		A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */; };
+		A866D9AC271D92C200146302 /* AccountDetailsEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866D9AA271D8CE200146302 /* AccountDetailsEntity+Additions.swift */; };
 		A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A873E84426E117A400CBB174 /* AppReinstallationCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */; };
 		A873E84526E117A400CBB174 /* AppReinstallationCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */; };
 		A873E84626E117A400CBB174 /* AppReinstallationCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */; };
+		A873E85B26E2228400CBB174 /* FileVersioningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E85A26E2228400CBB174 /* FileVersioningViewModel.swift */; };
+		A873E85D26E2248E00CBB174 /* FileVersioningViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E85C26E2248E00CBB174 /* FileVersioningViewRouter.swift */; };
 		A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
@@ -1306,6 +1321,8 @@
 		A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
 		A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */; };
 		A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */; };
+		A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */; };
+		A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
 		A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */; };
 		A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */; };
@@ -1315,6 +1332,7 @@
 		A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
+		A8E1CFA326EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
@@ -3214,6 +3232,12 @@
 		A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+MNZCategory.m"; sourceTree = "<group>"; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
 		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
+		A81971D026FB81C6007DC7B1 /* FileVersioning.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FileVersioning.storyboard; sourceTree = "<group>"; };
+		A81971E026FCD118007DC7B1 /* FileVersionErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileVersionErrorEntity.swift; sourceTree = "<group>"; };
+		A81971E326FDBE82007DC7B1 /* FileVersioningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewModelTests.swift; sourceTree = "<group>"; };
+		A81971E526FDD85A007DC7B1 /* MockFileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileVersionsRepository.swift; sourceTree = "<group>"; };
+		A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileVersionsUseCase.swift; sourceTree = "<group>"; };
+		A81971E926FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsUseCaseTests.swift; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomModalAlertViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomModalAlertViewController.xib; sourceTree = "<group>"; };
 		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
@@ -3237,10 +3261,14 @@
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
 		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
+		A837E62B27070A370069AB30 /* AccountDetailsErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsErrorEntity.swift; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A83CFE9F25DAAAF300622675 /* ThrottlerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThrottlerTest.swift; sourceTree = "<group>"; };
 		A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+Mapper.swift"; sourceTree = "<group>"; };
+		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
+		A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsUseCase.swift; sourceTree = "<group>"; };
+		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
 		A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -3249,10 +3277,15 @@
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReinstallationUseCase.swift; sourceTree = "<group>"; };
+		A866D9A5271D8AB800146302 /* AccountDetailsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsEntity.swift; sourceTree = "<group>"; };
+		A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountDetailsEntity+Mapper.swift"; sourceTree = "<group>"; };
+		A866D9AA271D8CE200146302 /* AccountDetailsEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountDetailsEntity+Additions.swift"; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
 		A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReinstallationCleaner.swift; sourceTree = "<group>"; };
+		A873E85A26E2228400CBB174 /* FileVersioningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewModel.swift; sourceTree = "<group>"; };
+		A873E85C26E2248E00CBB174 /* FileVersioningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewRouter.swift; sourceTree = "<group>"; };
 		A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnOnNotificationsViewModelTests.swift; sourceTree = "<group>"; };
 		A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTimeDurationTableViewController.swift; sourceTree = "<group>"; };
@@ -3295,6 +3328,8 @@
 		A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGARemoteImageView.m; sourceTree = "<group>"; };
 		A8C262AE1FA1D876006172CE /* MEGALocalImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocalImageView.h; sourceTree = "<group>"; };
 		A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocalImageView.m; sourceTree = "<group>"; };
+		A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAccountType+Mapper.swift"; sourceTree = "<group>"; };
+		A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASubscriptionStatus+Mapper.swift"; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -3305,6 +3340,7 @@
 		A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
+		A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileVersionsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetPreviewRequestDelegate.h; path = API/Requests/MEGAGetPreviewRequestDelegate.h; sourceTree = "<group>"; };
 		A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPreviewRequestDelegate.m; path = API/Requests/MEGAGetPreviewRequestDelegate.m; sourceTree = "<group>"; };
 		A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocalNotificationManager.h; sourceTree = "<group>"; };
@@ -5318,6 +5354,7 @@
 		5B00B6E52107457D0076D5BB /* File Management */ = {
 			isa = PBXGroup;
 			children = (
+				A873E85526E21DF700CBB174 /* File versioning */,
 				5B00B6E6210745BF0076D5BB /* FileManagementTableViewController.h */,
 				5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */,
 				5B5A983B212EF29500FDBC79 /* RubbishBinTableViewController.h */,
@@ -7516,6 +7553,14 @@
 			path = Operations;
 			sourceTree = "<group>";
 		};
+		A81971E226FDBE4E007DC7B1 /* File Versioning */ = {
+			isa = PBXGroup;
+			children = (
+				A81971E326FDBE82007DC7B1 /* FileVersioningViewModelTests.swift */,
+			);
+			path = "File Versioning";
+			sourceTree = "<group>";
+		};
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -7569,6 +7614,22 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
+		A84E92E126FB5F6300606AA7 /* Versions */ = {
+			isa = PBXGroup;
+			children = (
+				A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */,
+			);
+			path = Versions;
+			sourceTree = "<group>";
+		};
+		A84E92E426FB706E00606AA7 /* Versions */ = {
+			isa = PBXGroup;
+			children = (
+				A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */,
+			);
+			path = Versions;
+			sourceTree = "<group>";
+		};
 		A860C80D26BBDECF004BFD23 /* Reinstallation */ = {
 			isa = PBXGroup;
 			children = (
@@ -7590,6 +7651,16 @@
 			children = (
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		A866D9A7271D8B0600146302 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */,
+				A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */,
+				A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		A86AC4AA26710A9000E8E89A /* ChangeName */ = {
@@ -7621,6 +7692,17 @@
 				A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */,
 			);
 			path = Reinstallation;
+			sourceTree = "<group>";
+		};
+		A873E85526E21DF700CBB174 /* File versioning */ = {
+			isa = PBXGroup;
+			children = (
+				A873E85A26E2228400CBB174 /* FileVersioningViewModel.swift */,
+				A873E85C26E2248E00CBB174 /* FileVersioningViewRouter.swift */,
+				A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */,
+				A81971D026FB81C6007DC7B1 /* FileVersioning.storyboard */,
+			);
+			path = "File versioning";
 			sourceTree = "<group>";
 		};
 		A874D305263FF683000861DB /* ViewControllers */ = {
@@ -7770,6 +7852,14 @@
 				A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */,
 			);
 			path = BusinessExpiredViewController;
+			sourceTree = "<group>";
+		};
+		A8E1CFA126EA655A00EB7D3A /* Versions */ = {
+			isa = PBXGroup;
+			children = (
+				A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */,
+			);
+			path = Versions;
 			sourceTree = "<group>";
 		};
 		B616D82B2550C11F00712012 /* SDK */ = {
@@ -8066,6 +8156,7 @@
 		B662B84C24EC6F790089376A /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				A84E92E126FB5F6300606AA7 /* Versions */,
 				838A84992631C94C004804A4 /* Karere */,
 				BFAC873525FEF1F3009CA3F6 /* AudioVideo */,
 				8396FBC525D6894D00EB50FD /* User */,
@@ -8088,6 +8179,7 @@
 		B662B84D24EC6F810089376A /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				A84E92E426FB706E00606AA7 /* Versions */,
 				BFAC87B2260006E5009CA3F6 /* AudioVideo */,
 				838A7B5225D55EE200767DB0 /* Calls */,
 				BF90C789260406AF006061F8 /* User */,
@@ -8111,6 +8203,7 @@
 		B662B86F24F331D50089376A /* Model Mapping */ = {
 			isa = PBXGroup;
 			children = (
+				A866D9A7271D8B0600146302 /* Account */,
 				0D7E5ED926322BFB00C5CB2A /* NodeEntityMapping */,
 				0D7E5F1826322DFA00C5CB2A /* TransferEntityMapping */,
 				A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */,
@@ -8150,6 +8243,7 @@
 				BFAC874A25FEF713009CA3F6 /* AudioVideo */,
 				8396FBE225D68E4C00EB50FD /* User */,
 				838A7B7A25D5679100767DB0 /* Calls */,
+				A8E1CFA126EA655A00EB7D3A /* Versions */,
 				0D213E79263A609D00B43723 /* Node */,
 				0D7E5FB72634E4CA00C5CB2A /* Transfer */,
 				830C28FC25E6A19A00E9B56E /* Data */,
@@ -8258,6 +8352,7 @@
 				B6FD6516268D821D00988A17 /* RatingRequestBaseConditionsUseCaseTests.swift */,
 				B6FD6518268D8A2300988A17 /* RatingRequestingTests.swift */,
 				A8AAE6B826C2AA38002243C0 /* ReinstallationUseCaseTests.swift */,
+				A81971E926FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -8322,6 +8417,7 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				A81971E226FDBE4E007DC7B1 /* File Versioning */,
 				5B9FBDE9264925900014B7FD /* Settings */,
 				0D2E4AFC2623B2CC00F4804A /* TextEditor */,
 				B67B18EF25CB80690022D6C0 /* MEGA.xctestplan */,
@@ -8459,6 +8555,7 @@
 				B6AADF112518BB67009A874C /* MockAchievementRepository.swift */,
 				B6FD6511268D80CB00988A17 /* MockAccountRepository.swift */,
 				A8AAE6BA26C2AC20002243C0 /* MockCredentialRepository.swift */,
+				A81971E526FDD85A007DC7B1 /* MockFileVersionsRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -8479,6 +8576,7 @@
 				5BBC13EB26CE86D80010115B /* MockAccountUseCase.swift */,
 				B6FD6514268D818D00988A17 /* MockShareUseCase.swift */,
 				B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */,
+				A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -8493,6 +8591,7 @@
 				83993CF826B9471D00223C92 /* ChatRoomEntity+Additions.swift */,
 				83993CFC26B9630D00223C92 /* ChatSessionEntity+Additions.swift */,
 				8393E32326C52884000AACFA /* CallParticipantEntity+Additions.swift */,
+				A866D9AA271D8CE200146302 /* AccountDetailsEntity+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -8698,6 +8797,7 @@
 				BF782D3E269BA4BA0001D169 /* SMS */,
 				BF782D41269BA4BA0001D169 /* PSAEntity.swift */,
 				5B87B3B12701E5FA00D98554 /* AccountErrorEntity.swift */,
+				A866D9A5271D8AB800146302 /* AccountDetailsEntity.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -8714,6 +8814,7 @@
 		BF782D42269BA4BA0001D169 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				A81971E026FCD118007DC7B1 /* FileVersionErrorEntity.swift */,
 				5B8B3DE126FE4C1400882245 /* GetThumbnailErrorEntity.swift */,
 				BF782D43269BA4BA0001D169 /* QuickAccessWidgetErrorEntity.swift */,
 				BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */,
@@ -8728,6 +8829,7 @@
 				BF782D4F269BA4BA0001D169 /* CallErrorEntity.swift */,
 				BFBE04C726AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift */,
 				BF782D50269BA4BA0001D169 /* AudioSessionErrorEntity.swift */,
+				A837E62B27070A370069AB30 /* AccountDetailsErrorEntity.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -10001,6 +10103,7 @@
 				83C49BA3265261B900A7764B /* MeetingParticipantsLayoutViewController.xib in Resources */,
 				BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */,
 				834EFDC224D9B373004BFECA /* Node.storyboard in Resources */,
+				A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */,
 				BFAB113E23CEA5C300BCE72D /* PhotoGridViewCell.xib in Resources */,
 				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
 				5B72739E240D4310005816AB /* defaultIcon@3x.png in Resources */,
@@ -10425,6 +10528,7 @@
 				B6AADEAF25188F8D009A874C /* SMSRepositoryProtocol.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
 				5B9199F426E7CAF600402358 /* NodeThumbnailRepository.swift in Sources */,
+				A81971E126FCD118007DC7B1 /* FileVersionErrorEntity.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				BF7EBD24244E8AFC0015255F /* UIImageView+Additions.swift in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
@@ -10551,6 +10655,7 @@
 				B654BF5D24FF4D7B00A3CBC8 /* PreferenceUseCase.swift in Sources */,
 				5D8303BC256262350082CA18 /* BannerRepository.swift in Sources */,
 				B662B87524F70A570089376A /* GetSMSUseCase.swift in Sources */,
+				A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */,
 				8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */,
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				BFB463FB243456D900FB90B9 /* ChatViewIntroductionHeaderView.swift in Sources */,
@@ -10586,6 +10691,7 @@
 				B6AADEA825188D77009A874C /* SMSRepository.swift in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
+				A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */,
 				5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
@@ -10635,6 +10741,7 @@
 				83C1B25225A7349000814074 /* QuickAccessWidgetViewModel.swift in Sources */,
 				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
+				A873E85D26E2248E00CBB174 /* FileVersioningViewRouter.swift in Sources */,
 				5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */,
 				BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
 				5D31674024FC97810032492F /* ErrorHandling.swift in Sources */,
@@ -10650,6 +10757,7 @@
 				BF46B81C25A6B09A008641BB /* PSAUseCase.swift in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
+				A81971E626FDD85A007DC7B1 /* MockFileVersionsRepository.swift in Sources */,
 				2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */,
 				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
 				0D877F7C261BD23700A3698C /* TextEditorViewController.swift in Sources */,
@@ -10659,6 +10767,7 @@
 				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
 				B6C9596E2689B7DE00CF73A8 /* ShareRepositoryProtocol.swift in Sources */,
+				A81971E826FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift in Sources */,
 				BF33EF70243DA31D00CD35AC /* ChatViewAttachmentCellViewModel.swift in Sources */,
 				A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */,
 				5DC0FD4D24D903A4004DB649 /* ButtonStyleFactory.swift in Sources */,
@@ -10736,6 +10845,7 @@
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
 				BF3809E82577494700689A63 /* UITableView+Additions.swift in Sources */,
 				5D92DD1124BFE2B200D7D13B /* DateFormatting.swift in Sources */,
+				A84E92E626FB708D00606AA7 /* FileVersionsUseCase.swift in Sources */,
 				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
 				5D667EEC24ECF9400092474D /* StoreUser.swift in Sources */,
@@ -10798,10 +10908,12 @@
 				BFE6E55E25535DEB00050DCA /* UITableViewCell+Additions.swift in Sources */,
 				B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
+				A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */,
 				BF782D68269BA4BB0001D169 /* AchievementTypeEntity.swift in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
 				5D8303E7256270800082CA18 /* BannerEntity.swift in Sources */,
 				5D4244D22512005500EE544D /* NodeSearchRepository.swift in Sources */,
+				A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */,
 				830C26AF25DFCE5300E9B56E /* FavouriteNodesUseCase.swift in Sources */,
 				5D79EDD4251C71B500C0307A /* SearchHintTableViewCell.swift in Sources */,
 				83113495223900CB00647AB4 /* GradientView.m in Sources */,
@@ -10886,6 +10998,7 @@
 				5DC4DE0D24DBC27900D9AD16 /* ExploreViewStack.swift in Sources */,
 				83BD328025DD3C7200F8B91D /* FavouriteItemsUseCase.swift in Sources */,
 				B6C959702689C3D400CF73A8 /* ShareRepository.swift in Sources */,
+				A866D9A1271D806000146302 /* MockAccountUseCase.swift in Sources */,
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
 				5B9FBDFD26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift in Sources */,
 				5D8303F5256367D60082CA18 /* BannerErrorEntity.swift in Sources */,
@@ -11113,6 +11226,7 @@
 				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				BFAB113D23CEA5C300BCE72D /* PhotoGridViewCell.swift in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
+				A837E62C27070A370069AB30 /* AccountDetailsErrorEntity.swift in Sources */,
 				C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */,
 				BF9457CE24FF02360048F82B /* PhotoExplorerCollectionSectionHeaderView.swift in Sources */,
 				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
@@ -11195,6 +11309,7 @@
 				B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */,
 				834EFDBF24D9AF64004BFECA /* NodeInfoViewController.swift in Sources */,
 				411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */,
+				A873E85B26E2228400CBB174 /* FileVersioningViewModel.swift in Sources */,
 				BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */,
 				B662B88F24FC3FFE0089376A /* RegionListSearchSource.swift in Sources */,
 				832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
@@ -11326,6 +11441,7 @@
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
+				A8E1CFA326EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				5D73F50E24F74F850041D9FB /* ImagePickerViewController.swift in Sources */,
 				5DA32DBC24EA49600075B613 /* UIImage+Manipulate.swift in Sources */,
@@ -11360,6 +11476,7 @@
 				BF782D79269BA4BB0001D169 /* OfflineFileEntity.swift in Sources */,
 				B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */,
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
+				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
 				830C26D825DFDDE800E9B56E /* RecentNodesUseCase.swift in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				B6B278DC24E1E89C00BB3E9A /* SMSUseCase.swift in Sources */,
@@ -11435,6 +11552,7 @@
 				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
 				BF782D57269BA4BB0001D169 /* ReachabilityApproachEntity.swift in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
+				A866D9A6271D8AB800146302 /* AccountDetailsEntity.swift in Sources */,
 				BF66DFC82613E6AC00066F35 /* MeetingFloatingPanelRouter.swift in Sources */,
 				B6E7A8E12503622200CD6AC2 /* PreferenceRepository.swift in Sources */,
 				8330A9F322F41F470059B39C /* Array+Additions.swift in Sources */,
@@ -11918,6 +12036,7 @@
 				A83CFEA025DAAAF300622675 /* ThrottlerTest.swift in Sources */,
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
+				A866D9AC271D92C200146302 /* AccountDetailsEntity+Additions.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
 				83993CF926B9471D00223C92 /* ChatRoomEntity+Additions.swift in Sources */,
@@ -11947,7 +12066,7 @@
 				B6AADEF82518A39D009A874C /* MockL10nRepository.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6AADF0B2518BB0E009A874C /* AchievementUseCaseTests.swift in Sources */,
-				5BBC13EC26CE86D80010115B /* MockAccountUseCase.swift in Sources */,
+				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
 				5D0C56E324BC17A800EF40B4 /* DateFormatter_SystemRelativeFormatter+ConvientTests.swift in Sources */,
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
@@ -11989,6 +12108,7 @@
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				B6AADEDF2518A323009A874C /* GetSMSUseCaseTests.swift in Sources */,
 				B66BA26325155FC3009787BD /* MockAuthUseCase.swift in Sources */,
+				A81971EA26FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift in Sources */,
 				B6FD6513268D80D100988A17 /* MockAccountRepository.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				0D7E5FF22635029C00C5CB2A /* MockDownloadFileUseCase.swift in Sources */,

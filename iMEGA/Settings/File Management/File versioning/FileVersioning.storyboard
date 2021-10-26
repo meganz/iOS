@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--File Versioning Table View Controller-->
+        <scene sceneID="Yjx-qE-EAu">
+            <objects>
+                <tableViewController storyboardIdentifier="FileVersioningTableViewControllerID" id="anM-1Z-bTw" customClass="FileVersioningTableViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="pr0-Oz-s4b">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="U5b-6Q-5iy" userLabel="File Versioning">
+                                <string key="footerTitle">Enable or disable file versioning for your entire account.
+You may still receive file versions from shared folders if your contacts have this enabled.</string>
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="uWY-Mp-D0C" userLabel="File Versioning Table View Cell">
+                                        <rect key="frame" x="0.0" y="18" width="414" height="44.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="uWY-Mp-D0C" id="L2P-LJ-Lc8">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Versioning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEd-lD-Ga1">
+                                                    <rect key="frame" x="20" y="13.5" width="94.5" height="17.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SD4-ue-toW" userLabel="File Versioning Switch">
+                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="fileVersioningSwitchValueChanged:" destination="anM-1Z-bTw" eventType="valueChanged" id="LcD-aB-FjP"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ZEd-lD-Ga1" firstAttribute="trailing" secondItem="L2P-LJ-Lc8" secondAttribute="trailingMargin" id="0ra-YP-N7J"/>
+                                                <constraint firstItem="ZEd-lD-Ga1" firstAttribute="top" secondItem="L2P-LJ-Lc8" secondAttribute="top" constant="13.5" id="0wx-87-tRL"/>
+                                                <constraint firstAttribute="bottom" secondItem="ZEd-lD-Ga1" secondAttribute="bottom" constant="13.5" id="BWr-JS-HNu"/>
+                                                <constraint firstItem="SD4-ue-toW" firstAttribute="trailing" secondItem="L2P-LJ-Lc8" secondAttribute="trailingMargin" id="JcM-Qw-afO"/>
+                                                <constraint firstItem="ZEd-lD-Ga1" firstAttribute="leading" secondItem="L2P-LJ-Lc8" secondAttribute="leadingMargin" id="VPq-AC-AdB"/>
+                                                <constraint firstItem="SD4-ue-toW" firstAttribute="centerY" secondItem="L2P-LJ-Lc8" secondAttribute="centerY" id="Xdc-7s-67T"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="SD4-ue-toW" secondAttribute="trailing" id="Zy3-9R-9PA"/>
+                                                <constraint firstItem="SD4-ue-toW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZEd-lD-Ga1" secondAttribute="trailing" constant="8" id="osf-Af-et6"/>
+                                                <constraint firstItem="ZEd-lD-Ga1" firstAttribute="leading" secondItem="L2P-LJ-Lc8" secondAttribute="leadingMargin" constant="15" id="wTK-T8-qno"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="0ra-YP-N7J"/>
+                                                    <exclude reference="wTK-T8-qno"/>
+                                                    <exclude reference="JcM-Qw-afO"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" footerTitle="Taking up a total of 112 MB" id="rIF-Ii-ynJ" userLabel="File Versions">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="lYf-US-wg4" detailTextLabel="uO5-8Q-FQN" style="IBUITableViewCellStyleValue1" id="sxl-Pe-8HF" userLabel="File Versions Table View Cell">
+                                        <rect key="frame" x="0.0" y="142" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sxl-Pe-8HF" id="BD6-DZ-ek2">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Files versions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="lYf-US-wg4">
+                                                    <rect key="frame" x="20" y="14" width="87.5" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="uO5-8Q-FQN">
+                                                    <rect key="frame" x="359" y="15" width="35" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Delete all my older versions of files" footerTitle="All current files will remain. Only historic versions of your files will be deleted." id="yNW-By-3Nc" userLabel="Delete Old Versions">
+                                <cells>
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="djk-74-Ioo" style="IBUITableViewCellStyleDefault" id="ORf-7F-Bc4" userLabel="Delete Old Versions Table View Cell">
+                                        <rect key="frame" x="0.0" y="251.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ORf-7F-Bc4" id="dgS-Yp-h6i">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Delete Old Versions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="djk-74-Ioo">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="anM-1Z-bTw" id="9DV-eQ-l6A"/>
+                            <outlet property="delegate" destination="anM-1Z-bTw" id="qTS-eF-KfT"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="deleteOldVersionsCell" destination="ORf-7F-Bc4" id="gqH-PE-Vta"/>
+                        <outlet property="deleteOldVersionsLabel" destination="djk-74-Ioo" id="WK7-Ue-Aqo"/>
+                        <outlet property="detailLabel" destination="uO5-8Q-FQN" id="f5t-ks-PYI"/>
+                        <outlet property="fileVersioningLabel" destination="ZEd-lD-Ga1" id="trn-xk-bqz"/>
+                        <outlet property="fileVersioningSwitch" destination="SD4-ue-toW" id="gOz-u4-J5x"/>
+                        <outlet property="fileVersionsLabel" destination="lYf-US-wg4" id="0HB-eh-1Xn"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hr6-oW-I4i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-26" y="69"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tableCellGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
