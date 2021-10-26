@@ -26,4 +26,15 @@ struct AccountRepository: AccountRepositoryProtocol {
     func totalNodesCount() -> UInt {
         sdk.totalNodes
     }
+    
+    func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void) {
+        sdk.getAccountDetails(with: RequestDelegate { (result) in
+            switch result {
+            case .success(let request):
+                completion(.success(AccountDetailsEntity(accountDetails: request.megaAccountDetails)))
+            case .failure:
+                completion(.failure(.generic))
+            }
+        })
+    }
 }
