@@ -311,18 +311,19 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     NSInteger numCalls = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].numCalls : 0;
     
     self.unreadMessages = unreadChats;
-    self.phoneBadgeImageView.hidden = self.unreadMessages > 0;
     
     NSString *badgeValue;
-    self.phoneBadgeImageView.hidden = YES;
+
     if (MEGAReachabilityManager.isReachable && numCalls > 0) {
         MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-        self.phoneBadgeImageView.hidden = (chatRoomIDsWithCallInProgress.size > 0);
+        self.phoneBadgeImageView.hidden = !(chatRoomIDsWithCallInProgress.size > 0) || self.unreadMessages > 0;
         
         badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
     } else {
+        self.phoneBadgeImageView.hidden = YES;
         badgeValue = unreadChats ? @"⦁" : nil;
     }
+
     [self setBadgeValue:badgeValue tabPosition:TabTypeChat];
 }
 
