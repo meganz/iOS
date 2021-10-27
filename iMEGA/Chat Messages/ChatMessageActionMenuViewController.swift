@@ -319,10 +319,13 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     
     
     @objc func emojiPress(_ sender: UIButton) {
-        let emoji = sender.attributedTitle(for: .normal)?.string
-        let megaMessage = chatMessage?.message
-
-        MEGASdkManager.sharedMEGAChatSdk().addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+        guard let emoji = sender.attributedTitle(for: .normal)?.string,
+              let messageId = chatMessage?.message.messageId else {
+                  dismiss(animated: true, completion: nil)
+                  return
+              }
+        
+        MEGASdkManager.sharedMEGAChatSdk().addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: messageId, reaction: emoji)
         dismiss(animated: true, completion: nil)
     }
     

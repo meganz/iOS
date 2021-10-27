@@ -649,7 +649,7 @@
         [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
     } else {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-        NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:[chatRoom peerHandleAtIndex:0]];
+        NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contactEmailByHandle:[chatRoom peerHandleAtIndex:0]];
         uint64_t peerHandle     = [chatRoom peerHandleAtIndex:0];
         
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
