@@ -7,8 +7,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     var arrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "transfersDownload"))
     var stateBadge: UIImageView = UIImageView()
     var transferStatus: Int?
-    var transfers = [MEGATransfer]()
-    var transfersDic = [Int: MEGATransfer]()
+    var transfers = [TransferEntity]()
     var transfersPaused: Bool {
         get {
             UserDefaults.standard.bool(forKey: "TransfersPaused")
@@ -40,6 +39,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     
+    private let transfersUseCase = TransfersUseCase(repo: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+    private let sharedFolderTransfersUseCase = TransfersUseCase(repo: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()))
+
     @objc func animate(progress: CGFloat, duration: TimeInterval) {
         guard let progressLayer = progressLayer else {
             return
@@ -160,27 +162,19 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }
         
         transfers.removeAll()
-        var transferList = MEGASdkManager.sharedMEGASdk().transfers
-        if ((transferList.size.intValue) != 0) {
-            transfers.append(contentsOf: transferList.mnz_transfersArrayFromTranferList())
-        }
-        transferList =  MEGASdkManager.sharedMEGASdkFolder().transfers
-        if ((transferList.size.intValue) != 0) {
-            transfers.append(contentsOf: transferList.mnz_transfersArrayFromTranferList())
-        }
+        transfers = transfersUseCase.transfers(filteringUserTransfers: true) + sharedFolderTransfersUseCase.transfers(filteringUserTransfers: true)
         
-        let failedTransfer = MEGASdkManager.sharedMEGASdk().completedTransfers.first(where: { (transfer) -> Bool in
-            guard let transfer = transfer as? MEGATransfer else {
-                return false
-            }
+        if let failedTransfer = transfersUseCase.completedTransfers(filteringUserTransfers: true).first(where: { (transfer) -> Bool in
             return transfer.state != .complete && transfer.state != .cancelled
-        })
-        
-        if let failedTransfer = failedTransfer as? MEGATransfer {
-            if failedTransfer.lastErrorExtended.type == .apiEOverQuota {
-                stateBadge.image = #imageLiteral(resourceName: "overquota")
-            } else if failedTransfer.lastErrorExtended.type != .apiOk {
-                stateBadge.image = #imageLiteral(resourceName: "errorBadge")
+        }) {
+            if let lastErrorExtended = failedTransfer.lastErrorExtended {
+                if lastErrorExtended == .overquota {
+                    stateBadge.image = #imageLiteral(resourceName: "overquota")
+                } else if lastErrorExtended != .generic {
+                    stateBadge.image = #imageLiteral(resourceName: "errorBadge")
+                }
+            } else {
+                stateBadge.image = nil
             }
         } else {
             stateBadge.image = nil
@@ -204,17 +198,26 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
                 stateBadge.image = #imageLiteral(resourceName: "Combined Shape")
             }
         } else {
-            if (MEGASdkManager.sharedMEGASdk().completedTransfers.count) > 0 {
+            let completedTransfers = transfersUseCase.completedTransfers(filteringUserTransfers: true)
+            if (completedTransfers.count) > 0 {
                 progress = 1
                 self.isHidden = false
                 
-                if let failedTransfer = failedTransfer as? MEGATransfer {
-                    if failedTransfer.lastErrorExtended.type == .apiEOverQuota {
-                        stateBadge.image = #imageLiteral(resourceName: "overquota")
-                        self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
-                    } else if failedTransfer.lastErrorExtended.type != .apiOk {
-                        stateBadge.image = #imageLiteral(resourceName: "errorBadge")
-                        self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
+                if let failedTransfer = completedTransfers.first(where: { (transfer) -> Bool in
+                    return transfer.state != .complete && transfer.state != .cancelled
+                }) {
+                    if let lastErrorExtended = failedTransfer.lastErrorExtended {
+                        if lastErrorExtended == .overquota {
+                            stateBadge.image = #imageLiteral(resourceName: "overquota")
+                            self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+                        } else if lastErrorExtended != .generic {
+                            stateBadge.image = #imageLiteral(resourceName: "errorBadge")
+                            self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
+                        }
+                    } else {
+                        stateBadge.image = #imageLiteral(resourceName: "completedBadge")
+                        self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+                        dismissWidget()
                     }
                 } else {
                     stateBadge.image = #imageLiteral(resourceName: "completedBadge")
@@ -226,6 +229,10 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
                 self.isHidden = true
             }
         }
+    }
+    
+    private func filterUserManualDownloads(_ transfers: [MEGATransfer]) -> [MEGATransfer] {
+        return transfers.filter { $0.path.hasPrefix(Helper.relativePathForOffline()) }
     }
     
     private func addBackgroundLayer() {

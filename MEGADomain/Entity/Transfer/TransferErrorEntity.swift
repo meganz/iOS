@@ -4,4 +4,5 @@ enum TransferErrorEntity: Error {
     case download
     case createDirectory
     case couldNotFindNodeByHandle
+    case overquota
 }

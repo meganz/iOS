@@ -986,6 +986,9 @@
 		839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
+		83A49E79270475AB00FD0D85 /* TransfersRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A49E78270475AB00FD0D85 /* TransfersRepositoryProtocol.swift */; };
+		83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A49E7C270476A300FD0D85 /* TransfersRepository.swift */; };
+		83A49E7F2704783A00FD0D85 /* TransfersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A49E7E2704783A00FD0D85 /* TransfersUseCase.swift */; };
 		83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B0B45C242CC1DB00468191 /* ChatSharedItemTableViewCell.swift */; };
 		83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B0B45E242CC21800468191 /* ChatSharedItemsViewController.swift */; };
 		83B0B461242CC24E00468191 /* ChatSharedItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83B0B460242CC24E00468191 /* ChatSharedItems.storyboard */; };
@@ -3113,6 +3116,9 @@
 		839999F6264AE6A300520F38 /* MeetingOptionsMenuRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingOptionsMenuRouter.swift; sourceTree = "<group>"; };
 		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
 		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
+		83A49E78270475AB00FD0D85 /* TransfersRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersRepositoryProtocol.swift; sourceTree = "<group>"; };
+		83A49E7C270476A300FD0D85 /* TransfersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersRepository.swift; sourceTree = "<group>"; };
+		83A49E7E2704783A00FD0D85 /* TransfersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersUseCase.swift; sourceTree = "<group>"; };
 		83AB5A8125598CE200A04232 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerVideo.h; sourceTree = "<group>"; };
 		83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerAudio.h; sourceTree = "<group>"; };
@@ -4454,6 +4460,7 @@
 			children = (
 				0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */,
 				0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */,
+				83A49E7C270476A300FD0D85 /* TransfersRepository.swift */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -4463,6 +4470,7 @@
 			children = (
 				0D0B53802625585600E9BB16 /* UploadFileRespositoryProtocol.swift */,
 				0D7E5FB82634E4E300C5CB2A /* DownloadFileRepositoryProtocol.swift */,
+				83A49E78270475AB00FD0D85 /* TransfersRepositoryProtocol.swift */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -4472,6 +4480,7 @@
 			children = (
 				0D0B536D262557B200E9BB16 /* UploadFileUseCase.swift */,
 				0D7E5FCB2634F07F00C5CB2A /* DownloadFileUseCase.swift */,
+				83A49E7E2704783A00FD0D85 /* TransfersUseCase.swift */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -10708,6 +10717,7 @@
 				B6FD64F5268AABC000988A17 /* MEGAShareList+Mapper.swift in Sources */,
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				B695B608264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
+				83A49E7F2704783A00FD0D85 /* TransfersUseCase.swift in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				5BE689AA2419135400462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */,
@@ -11345,6 +11355,7 @@
 				5DFBF1F324F4BE8A00BB662B /* UploadFromURL.swift in Sources */,
 				5BC609E226B9475D002F12A4 /* NodeOpener.swift in Sources */,
 				BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */,
+				83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */,
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				B6E7A8D92500D7A800CD6AC2 /* UIView+Layout.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
@@ -11476,6 +11487,7 @@
 				BF782D79269BA4BB0001D169 /* OfflineFileEntity.swift in Sources */,
 				B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */,
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
+				83A49E79270475AB00FD0D85 /* TransfersRepositoryProtocol.swift in Sources */,
 				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
 				830C26D825DFDDE800E9B56E /* RecentNodesUseCase.swift in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
