@@ -712,7 +712,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         contactsViewController.contactsMode = .chatAttachParticipant
 
         contactsViewController.userSelected = { [weak self] users in
-            guard let `self` = self else {
+            guard let self = self, let users = users else {
                 return
             }
             
