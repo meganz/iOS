@@ -25,6 +25,8 @@ struct TransferEntity {
     let updateTime: Date?
     let publicNode: NodeEntity?
     let isStreamingTransfer: Bool
+    let isForeignOverquota: Bool
+    let lastErrorExtended: TransferErrorEntity?
     let isFolderTransfer: Bool
     let folderTransferTag: Int
     let appData: String?
