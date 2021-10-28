@@ -219,7 +219,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     self.selectedIndex = TabTypeCloudDrive;
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
     CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
-    [cloudDriveVC presentUploadAlertController];
+    [cloudDriveVC presentUploadOptions];
 }
 
 - (void)showScanDocument {
