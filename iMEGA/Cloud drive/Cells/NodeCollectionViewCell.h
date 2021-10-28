@@ -3,17 +3,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol NodeCollectionViewCellDelegate <NSObject>
-- (void)infoTouchUpInside:(UIButton *)sender;
-@end
-
 @interface NodeCollectionViewCell : UICollectionViewCell
 
-- (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
-- (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
-- (void)configureCellForOfflineItem:(NSDictionary *)item itemPath:(NSString *)pathForItem allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailIconView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
+@property (weak, nonatomic) IBOutlet UIImageView *selectImageView;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
+@property (weak, nonatomic) IBOutlet UIView *downloadedView;
+
+- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api;
 - (void)setupAppearance;
-- (NSString *)itemName;
 
 @end
 

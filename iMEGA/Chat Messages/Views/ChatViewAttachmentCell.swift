@@ -76,6 +76,9 @@ class ChatViewAttachmentCell: MessageContentCell {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
+        guard #available(iOS 13, *) else {
+            return
+        }
         titleLabel.textColor = UIColor.mnz_label()
         detailLabel.textColor = UIColor.mnz_subtitles(for: UIScreen.main.traitCollection)
     }

@@ -72,10 +72,12 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearanceWithTrait:self.traitCollection];
-        
-        [self.tableView reloadData];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearanceWithTrait:self.traitCollection];
+            
+            [self.tableView reloadData];
+        }
     }
 }
 
@@ -175,9 +177,9 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     }
     
     if (recentActionBucket.timestamp.isToday) {
-        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Today", @"").localizedUppercaseString;
+        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Today", @"").uppercaseString;
     } else if (recentActionBucket.timestamp.isYesterday) {
-        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
+        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Yesterday", @"").uppercaseString;
     } else {
         NSString *dateString = [self.dateFormatter stringFromDate:recentActionBucket.timestamp];
         recentsTVHFV.dateLabel.text = dateString.uppercaseString;

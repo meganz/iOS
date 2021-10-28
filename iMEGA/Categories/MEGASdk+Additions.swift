@@ -39,20 +39,4 @@ extension MEGASdk {
             completion(self.isLoggedIn() != 0)
         }
     }
-    
-    /// An async way to check if there are pending transfers.
-    /// - Parameters:
-    ///   - completion: Callback closure upon completion. The completion closure will be called from an arbitrary background thread.
-    @objc(areTherePendingTransfersWithCompletion:)
-    func areTherePendingTransfers(completion: @escaping (Bool) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else {
-                completion(false)
-                return
-            }
-            
-            completion(MEGASdkManager.sharedMEGASdk().transfers.size.intValue > 0 ||
-                       MEGASdkManager.sharedMEGASdkFolder().transfers.size.intValue > 0)
-        }
-    }
 }

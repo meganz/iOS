@@ -45,8 +45,14 @@ class MeetingCreatingViewController: UIViewController {
     }
     
     private func forceDarkNavigationUI() {
-        guard let navigationBar = navigationController?.navigationBar else  { return }
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        if #available(iOS 13.0, *) {
+            guard let navigationBar = navigationController?.navigationBar else  { return }
+            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        } else {
+            navigationController?.navigationBar.barTintColor = .black
+            navigationController?.navigationBar.tintColor = .white
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        }
     }
 }
 
@@ -57,7 +63,9 @@ extension MeetingCreatingViewController: TraitEnviromentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        guard let navigationBar = navigationController?.navigationBar else  { return }
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        if #available(iOS 13.0, *) {
+            guard let navigationBar = navigationController?.navigationBar else  { return }
+            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        }
     }
 }

@@ -34,10 +34,12 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+
+            [self updateAppearance];
+        }
     }
 }
 
@@ -72,7 +74,9 @@
         [self.delegate setupFinished];
         [self.delegate readyToShowRecommendations];
     };
-    setupVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    if (@available(iOS 13.0, *)) {
+        setupVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
     
     [self presentViewController:setupVC animated:NO completion:^{
         self.titleLabel.hidden = self.descriptionLabel.hidden = YES;

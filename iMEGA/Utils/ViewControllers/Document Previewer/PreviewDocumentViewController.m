@@ -132,11 +132,13 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
     }
 }
 
@@ -515,8 +517,10 @@
         doubleTap.delegate = self;
         doubleTap.numberOfTapsRequired = 2;
         
-        UIGestureRecognizer *defaultDoubleTapGesture = [self.pdfView mnz_firstTapGestureWithNumberOfTaps:2];
-        [defaultDoubleTapGesture requireGestureRecognizerToFail:doubleTap];
+        if (@available(iOS 13.0, *)) {
+            UIGestureRecognizer *defaultDoubleTapGesture = [self.pdfView mnz_firstTapGestureWithNumberOfTaps:2];
+            [defaultDoubleTapGesture requireGestureRecognizerToFail:doubleTap];
+        }
         
         [self.pdfView addGestureRecognizer:doubleTap];
         

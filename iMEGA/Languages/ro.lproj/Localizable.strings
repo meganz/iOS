@@ -2361,7 +2361,7 @@
 /* Text used as title or header to display number of all historical versions of files. */
 "VERSIONS"="VERSIUNI";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="Favorit";
+"Favourite"="Adaugă la favorite";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Elimină de la favorite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
@@ -2715,4 +2715,4 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Difuzor";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Switch";
+"meetings.quickAction.flip"="Flip";

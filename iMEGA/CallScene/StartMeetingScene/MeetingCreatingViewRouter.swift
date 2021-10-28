@@ -52,7 +52,9 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             return
         }
         let nav = UINavigationController(rootViewController: build())
-        nav.overrideUserInterfaceStyle = .dark
+        if #available(iOS 13.0, *) {
+            nav.overrideUserInterfaceStyle = .dark
+        }
         nav.modalPresentationStyle = .fullScreen
         viewControllerToPresent.present(nav, animated: true, completion: nil)
     }

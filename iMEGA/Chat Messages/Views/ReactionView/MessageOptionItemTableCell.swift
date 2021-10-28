@@ -34,7 +34,8 @@ class MessageOptionItemTableCell: UITableViewCell {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
         }
     }

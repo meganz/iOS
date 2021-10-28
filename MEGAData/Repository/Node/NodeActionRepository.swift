@@ -23,7 +23,7 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
     
     func labelString(label: NodeLabelTypeEntity) -> String {
         let nodeLabel = MEGANodeLabel(nodeLabelTypeEntity: label) ?? .unknown
-        return MEGANode.string(for: nodeLabel) ?? "" + "Small"
+        return MEGANode.string(for: nodeLabel) + "Small"
     }
     
     func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int) {

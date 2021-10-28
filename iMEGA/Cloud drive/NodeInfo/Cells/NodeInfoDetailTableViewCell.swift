@@ -50,10 +50,10 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
             valueLabel.text = NSString.mnz_string(byFiles: folderInfo?.files ?? 0, andFolders: folderInfo?.folders ?? 0)
         case .addedDate:
             keyLabel.text = NSLocalizedString("Added", comment: "A label for any ‘Added’ text or title. For example to show the upload date of a file/folder.")
-            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.creationTime ?? Date())
+            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.creationTime)
         case .modificationDate:
             keyLabel.text = NSLocalizedString("modified", comment: "A label for any 'Modified' text or title.")
-            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.modificationTime ?? Date())
+            valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.modificationTime)
         case .linkCreationDate:
             keyLabel.text = NSLocalizedString("Link Creation", comment: "Text referencing the date of creation of a link")
             valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.publicLinkCreationTime ?? Date())

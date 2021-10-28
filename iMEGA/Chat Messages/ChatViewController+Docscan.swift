@@ -2,6 +2,7 @@ import Foundation
 import VisionKit
 
 extension ChatViewController: VNDocumentCameraViewControllerDelegate {
+    @available(iOS 13.0, *)
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
         var docs = [UIImage]()
         for idx in 0 ..< scan.pageCount {

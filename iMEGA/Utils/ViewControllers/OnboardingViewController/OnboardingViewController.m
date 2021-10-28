@@ -116,10 +116,12 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            
+            [self updateAppearance];
+        }
     }
 }
 
@@ -182,7 +184,9 @@
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *createAccountNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
-            createAccountNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            if (@available(iOS 13.0, *)) {
+                createAccountNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
             [self presentViewController:createAccountNC animated:YES completion:nil];
             break;
         }
@@ -240,7 +244,9 @@
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
-            loginNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            if (@available(iOS 13.0, *)) {
+                loginNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
             [self presentViewController:loginNC animated:YES completion:nil];
             break;
         }

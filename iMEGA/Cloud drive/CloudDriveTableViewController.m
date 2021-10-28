@@ -50,9 +50,9 @@
     if (self.cloudDrive.recentActionBucket) {
         NSString *dateString;
         if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
-            dateString = NSLocalizedString(@"Today", @"").localizedUppercaseString;
+            dateString = NSLocalizedString(@"Today", @"").uppercaseString;
         } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
-            dateString = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
+            dateString = NSLocalizedString(@"Yesterday", @"").uppercaseString;
         } else {
             dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
         }
@@ -67,10 +67,12 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
     }
 }
 
@@ -287,7 +289,11 @@
                 [node mnz_restore];
                 [self setTableViewEditing:NO animated:YES];
             }];
-            restoreAction.image = [[UIImage imageNamed:@"restore"] imageWithTintColor:UIColor.whiteColor];
+            if (@available(iOS 13.0, *)) {
+                restoreAction.image = [[UIImage imageNamed:@"restore"] imageWithTintColor:UIColor.whiteColor];
+            } else {
+                restoreAction.image = [UIImage imageNamed:@"restore"];
+            }
             restoreAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection] ;
             
             return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
@@ -298,14 +304,22 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             [self setTableViewEditing:NO animated:YES];
         }];
-        shareAction.image = [[UIImage imageNamed:@"share"] imageWithTintColor:UIColor.whiteColor];
+        if (@available(iOS 13.0, *)) {
+            shareAction.image = [[UIImage imageNamed:@"share"] imageWithTintColor:UIColor.whiteColor];
+        } else {
+            shareAction.image = [UIImage imageNamed:@"share"];
+        }
         shareAction.backgroundColor = UIColor.systemOrangeColor;
         
         UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self.cloudDrive moveToRubbishBinFor:node];
             [self setTableViewEditing:NO animated:YES];
-        }];
-        rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
+        }]; 
+        if (@available(iOS 13.0, *)) {
+            rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
+        } else {
+            rubbishBinAction.image = [UIImage imageNamed:@"rubbishBin"];
+        }
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
         
         if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {

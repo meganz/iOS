@@ -130,7 +130,9 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     
-    [self configPreviewingRegistration];
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
     
     [self updateAppearance];
 }
@@ -218,9 +220,11 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        }
     }
     
     [self configPreviewingRegistration];
@@ -1099,7 +1103,8 @@
     }
 }
 
-- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point  API_AVAILABLE(ios(13.0)){
+    if (@available(iOS 13.0, *)) {
         MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
         
@@ -1159,6 +1164,9 @@
             return [UIMenu menuWithTitle:@"" children:menus];
         }];
         return configuration;
+        
+    }
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator API_AVAILABLE(ios(13.0)){

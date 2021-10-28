@@ -1,6 +1,7 @@
 
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "ChangePasswordViewController.h"
@@ -12,8 +13,6 @@
 #import "TwoFactorAuthenticationViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
-
-@import SAMKeychain;
 
 @interface MEGAQueryRecoveryLinkRequestDelegate ()
 

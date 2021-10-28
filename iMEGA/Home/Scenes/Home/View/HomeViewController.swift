@@ -339,8 +339,16 @@ final class HomeViewController: UIViewController {
         case .dark:
             color = constraintToTopPosition.isActive ? .mnz_black1C1C1E() : .black
         }
-        
-        updateNavigationBarColor(color)
+
+        let navigationBar = navigationController?.navigationBar
+        if #available(iOS 13, *) {
+            navigationBar?.standardAppearance.backgroundColor = color
+            navigationBar?.scrollEdgeAppearance?.backgroundColor = color
+            navigationBar?.isTranslucent = false
+        } else {
+            navigationBar?.backgroundColor = color
+            navigationBar?.barTintColor = color
+        }
     }
 
     // MARK: - Tap Actions
@@ -384,9 +392,14 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
 
     private func updateNavigationBarColor(_ color: UIColor) {
         let navigationBar = navigationController?.navigationBar
-        navigationBar?.standardAppearance.backgroundColor = color
-        navigationBar?.scrollEdgeAppearance?.backgroundColor = color
-        navigationBar?.isTranslucent = false
+        if #available(iOS 13, *) {
+            navigationBar?.standardAppearance.backgroundColor = color
+            navigationBar?.scrollEdgeAppearance?.backgroundColor = color
+            navigationBar?.isTranslucent = false
+        } else {
+            navigationBar?.backgroundColor = color
+            navigationBar?.barTintColor = color
+        }
     }
 
     func didUpdateAnimationProgress(
@@ -540,7 +553,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
         navigationController?.present(controller, animated: true, completion: nil)
     }
 
-    func showCustomActions(for node: MEGANode, fromSender sender: Any) {
+    func showCustomActions(for node: MEGANode!, fromSender sender: Any!) {
         let selectionAction: (MEGANode, MegaNodeActionType) -> Void = { [router, weak self] node, action in
             guard let self = self else { return }
             switch action {

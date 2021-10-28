@@ -78,9 +78,10 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
         }
     }
     
@@ -88,14 +89,19 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     private func updateAppearance() {
         backgroundLayer?.fillColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection).cgColor
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05)
-            
-        case .dark:
-            progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.33)
-            
-        @unknown default:
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05)
+                
+            case .dark:
+                progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.33)
+                
+            @unknown default:
+                progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05)
+                
+            }
+        } else {
             progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05)
             
         }

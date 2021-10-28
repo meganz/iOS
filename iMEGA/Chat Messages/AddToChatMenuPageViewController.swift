@@ -33,7 +33,20 @@ class AddToChatMenuPageViewController: UIPageViewController {
     private var menuPerRow = 4
     private var currentPage = 0
     
-    private lazy var menus = AddToChatMenu.menus()
+    private lazy var menus: [AddToChatMenu]? = {
+        let menus = AddToChatMenu.menus()?.filter({ (menu) -> Bool in
+            if menu.menuNameKey == .scanDoc {
+                if #available(iOS 13, *) {
+                    return true
+                } else {
+                  return false
+                }
+            }
+            return true
+            
+        })
+        return menus
+    }()
     
     private var numberOfPagesRequired: Int {
         guard let menus = menus else {

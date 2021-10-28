@@ -36,9 +36,11 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance:self.traitCollection];
+
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance:self.traitCollection];
+        }
     }
 }
 
@@ -46,15 +48,19 @@
 
 - (void)updateAppearance:(UITraitCollection *)currentTraitCollection{
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    switch (currentTraitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            self.backgroundColor = UIColor.whiteColor;
+    if (@available(iOS 13.0, *)) {
+        switch (currentTraitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.backgroundColor = UIColor.whiteColor;
+            }
+                break;
+            case UIUserInterfaceStyleDark: {
+                self.backgroundColor = UIColor.mnz_black1C1C1E;
+            }
         }
-            break;
-        case UIUserInterfaceStyleDark: {
-            self.backgroundColor = UIColor.mnz_black1C1C1E;
-        }
+    } else {
+        self.backgroundColor = UIColor.whiteColor;
     }
 }
 

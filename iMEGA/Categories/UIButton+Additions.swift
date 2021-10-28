@@ -50,8 +50,10 @@ extension UIButton {
     
     @objc func mnz_setupPrimary_disabled(_ traitCollection: UITraitCollection) {
         var darkMode = false
-        if traitCollection.userInterfaceStyle == .dark {
-            darkMode = true
+        if #available(iOS 13.0, *) {
+            if traitCollection.userInterfaceStyle == .dark {
+                darkMode = true
+            }
         }
         backgroundColor = UIColor.mnz_turquoise(for: traitCollection).withAlphaComponent(darkMode ? 0.2 : 0.3)
         setTitleColor(UIColor.white.withAlphaComponent(darkMode ? 0.2 : 0.7), for: UIControl.State.normal)

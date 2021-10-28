@@ -94,7 +94,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     self.currentState = MEGACameraUploadsStateLoading;
     
-    [self configPreviewingRegistration];
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
     
     [self updateAppearance];
 }
@@ -160,10 +162,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
     }
     
     [self configPreviewingRegistration];

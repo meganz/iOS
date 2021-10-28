@@ -1,6 +1,7 @@
 
 #import "MEGALoginRequestDelegate.h"
 
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "DevicePermissionsHelper.h"
@@ -8,7 +9,6 @@
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-@import SAMKeychain;
 
 @interface MEGALoginRequestDelegate ()
 

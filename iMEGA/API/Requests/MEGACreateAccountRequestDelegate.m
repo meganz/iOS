@@ -2,10 +2,10 @@
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGALoginRequestDelegate.h"
 
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "UIApplication+MNZCategory.h"
-@import SAMKeychain;
 
 @interface MEGACreateAccountRequestDelegate ()
 

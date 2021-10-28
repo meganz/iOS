@@ -34,7 +34,11 @@ protocol HomeUploadFilesUseCaseProtocol {
 final class HomeUploadFileUseCase: HomeUploadFilesUseCaseProtocol {
 
     func uploadOptions() -> [FileUploadOption] {
-        return [.photos, .textFile, .documentScan, .camera, .imports]
+        if #available(iOS 13, *) {
+            return [.photos, .textFile, .documentScan, .camera, .imports]
+        } else {
+            return [.photos, .textFile, .camera, .imports]
+        }
     }
 
     func upload(photoIdentifiers: [String], to parentHandle: MEGAHandle) throws {

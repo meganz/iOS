@@ -14,14 +14,14 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     }
     
     func getUsername() -> String {
-        if let email = sdk.myEmail,
-            let user = MEGAStore.shareInstance().fetchUser(withEmail: email),
-            case let userName = user.displayName,
+        let user = MEGAStore.shareInstance().fetchUser(withEmail: sdk.myEmail)
+        if let userName = user?.displayName,
             userName.count > 0 {
             return userName
         }
         
         return chatSdk.userFullnameFromCache(byUserHandle:  sdk.myUser?.handle ?? 0) ?? ""
+
     }
     
     func getCall(forChatId chatId: UInt64) -> CallEntity? {

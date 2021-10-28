@@ -48,7 +48,7 @@
         
         MEGALogInfo("[ChatUploader] uploading File path \(filepath)")
         cleanupDatabaseIfRequired()
-        guard let context = store.stack.newBackgroundContext() else { return }
+        guard let context = store.stack?.newBackgroundContext() else { return }
         
         context.performAndWait {
             MEGALogInfo("[ChatUploader] inserted new entry File path \(filepath)")
@@ -77,7 +77,7 @@
     }
     
     private func cleanupDatabase() {
-        guard let context = store.stack.newBackgroundContext() else  { return }
+        guard let context = store.stack?.newBackgroundContext() else  { return }
         
         context.performAndWait {
             let transferList = MEGASdkManager.sharedMEGASdk().transfers
@@ -152,7 +152,7 @@ extension ChatUploader: MEGATransferDelegate {
         uploaderQueue.async {
             guard transfer.type == .upload,
                   let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
-                  let context = self.store.stack.newBackgroundContext() else {
+                  let context = self.store.stack?.newBackgroundContext() else {
                 return
             }
             
@@ -181,7 +181,7 @@ extension ChatUploader: MEGATransferDelegate {
         uploaderQueue.async {
             guard transfer.type == .upload,
                   let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
-                  let context = self.store.stack.newBackgroundContext() else {
+                  let context = self.store.stack?.newBackgroundContext() else {
                 return
             }
             

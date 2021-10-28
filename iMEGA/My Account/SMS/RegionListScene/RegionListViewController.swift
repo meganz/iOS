@@ -59,13 +59,15 @@ final class RegionListViewController: UIViewController, ViewType {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                if navigationController != nil {
+                    AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                }
+                AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+                
+                updateAppearance()
             }
-            AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
-            
-            updateAppearance()
         }
     }
     

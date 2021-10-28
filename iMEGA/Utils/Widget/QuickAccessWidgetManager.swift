@@ -50,7 +50,7 @@ class QuickAccessWidgetManager: NSObject {
                 shouldCreateRecentItems = true
             }
             
-            if node.hasChangedType(.attributes) {
+            if node.hasChangedType(.attributes) && node.isRemoteChange() {
                 shouldCreateFavouriteItems = true
             }
         }
@@ -65,14 +65,12 @@ class QuickAccessWidgetManager: NSObject {
     }
     
     @objc func insertFavouriteItem(for node: MEGANode) {
-        guard let base64Handle = node.base64Handle, let name = node.name else { return }
-        favouriteItemsUseCase.insertFavouriteItem(FavouriteItemEntity(base64Handle: base64Handle, name: name, timestamp: Date()))
+        favouriteItemsUseCase.insertFavouriteItem(FavouriteItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: Date()))
         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
     
     @objc func deleteFavouriteItem(for node: MEGANode) {
-        guard let base64Handle = node.base64Handle else { return }
-        favouriteItemsUseCase.deleteFavouriteItem(with: base64Handle)
+        favouriteItemsUseCase.deleteFavouriteItem(with: node.base64Handle)
         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
     

@@ -124,11 +124,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
     }
     
     if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
@@ -397,7 +399,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                 [SVProgressHUD dismiss];
                 if (error.type == MEGAErrorTypeApiOk) {
                     CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
-                    checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                    if (@available(iOS 13.0, *)) {
+                        checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                    }
                     [self dismissViewControllerAnimated:YES completion:^{
                         [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
                     }];

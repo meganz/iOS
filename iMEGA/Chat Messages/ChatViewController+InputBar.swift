@@ -103,7 +103,7 @@ extension ChatViewController {
             return
         }
         
-        MEGAStore.shareInstance().insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : (chatInputBar.text ?? ""))
+        MEGAStore.shareInstance().insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : chatInputBar.text)
     }
     
     func presentShareLocation(editing:Bool = false) {
@@ -621,9 +621,11 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
 
 extension ChatViewController: AddToChatViewControllerDelegate {
     func showScanDoc() {
-        let vc = VNDocumentCameraViewController()
-        vc.delegate = self
-        present(viewController: vc)
+        if #available(iOS 13.0, *) {
+            let vc = VNDocumentCameraViewController()
+            vc.delegate = self
+            present(viewController: vc)
+        }
     }
     
     func send(asset: PHAsset) {

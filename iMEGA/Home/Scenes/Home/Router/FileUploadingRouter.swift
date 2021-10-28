@@ -5,6 +5,7 @@ import VisionKit
 final class FileUploadingRouter {
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     
+    @available(iOS 13.0, *)
     private lazy var vNDocumentCameraVCDelegate: VNDocumentCameraVCDelegate? = nil
     
     func upload(from source: FileUploadSource) {
@@ -18,7 +19,9 @@ final class FileUploadingRouter {
         case .imports(let completion):
             presentImportSelection(withCompletion: completion)
         case .documentScan:
-            presentDocumentScanViewController()
+            if #available(iOS 13, *) {
+                presentDocumentScanViewController()
+            }
         }
     }
 
@@ -111,6 +114,8 @@ final class FileUploadingRouter {
     }
 
     // MARK: - Display Document Scan View Controller
+
+    @available(iOS 13, *)
     private func presentDocumentScanViewController() {
         asyncOnMain { [weak self] in
             guard let self = self else { return }
@@ -131,6 +136,7 @@ final class FileUploadingRouter {
         }
     }
 
+    @available(iOS 13, *)
     private func documentScanerSaveSettingViewController(parentNode: MEGANode?, images: [UIImage]) -> UIViewController {
         let docScanSettingViewController = UIStoryboard(name: "Cloud", bundle: nil)
             .instantiateViewController(identifier: "DocScannerSaveSettingTableViewController")
@@ -214,6 +220,7 @@ final class TargetFolderBrowserVCDelegate: NSObject, BrowserViewControllerDelega
     }
 }
 
+@available(iOS 13, *)
 fileprivate final class VNDocumentCameraVCDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
     var completion: (([UIImage]) -> Void)?
 

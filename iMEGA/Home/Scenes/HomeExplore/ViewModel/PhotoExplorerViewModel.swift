@@ -127,9 +127,7 @@ class PhotoExplorerViewModel: NSObject {
             if index == 0 {
                 sectionMarker.append(index)
             } else {
-                if let previousModificationTime = nodes[index - 1].modificationTime,
-                   let currentModificationTime = element.modificationTime,
-                   !previousModificationTime.isSameDay(date: currentModificationTime) {
+                if !nodes[index - 1].modificationTime.isSameDay(date: element.modificationTime) {
                     sectionMarker.append(index)
                 }
             }

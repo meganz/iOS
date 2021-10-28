@@ -81,10 +81,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-            
-            tableView.reloadData()
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+                
+                tableView.reloadData()
+            }
         }
     }
     

@@ -50,13 +50,15 @@ final class AudioPlaylistViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                if navigationController != nil {
+                    AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                }
+                
+                updateAppearance()
+                reloadData()
             }
-            
-            updateAppearance()
-            reloadData()
         }
     }
     
@@ -164,7 +166,11 @@ final class AudioPlaylistViewController: UIViewController {
         
         toolbarView.backgroundColor = .clear
         
-        toolbarBlurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
+        if #available(iOS 13.0, *) {
+            toolbarBlurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
+        } else {
+            toolbarBlurView.effect = UIBlurEffect(style: .extraLight)
+        }
         
         titleLabel.textColor = UIColor.mnz_label()
         
