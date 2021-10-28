@@ -27,7 +27,7 @@
 #import "TransfersWidgetViewController.h"
 #import "MEGA-Swift.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -129,9 +129,7 @@
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
-    
-    [self configPreviewingRegistration];
-    
+        
     [self updateAppearance];
 }
 
@@ -222,8 +220,6 @@
         [self updateAppearance];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
     }
-    
-    [self configPreviewingRegistration];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -341,7 +337,7 @@
                 return nil;
             }
         } else {
-            if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation) && UIDevice.currentDevice.iPhoneDevice) {
+            if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
                 return nil;
             } else {
                 switch (self.chatRoomsType) {
@@ -1229,36 +1225,6 @@
     }
 }
 
-- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-
-    switch (self.chatRoomsType) {
-        case ChatRoomsTypeDefault: {
-            UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                [self showOptionsForChatAtIndexPath:indexPath];
-            }];
-            infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-            
-            UITableViewRowAction *archiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:YES];
-            }];
-            archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-
-            return @[archiveAction, infoAction];
-        }
-            
-        case ChatRoomsTypeArchived: {
-            UITableViewRowAction *unarchiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
-            }];
-            unarchiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-            
-            return @[unarchiveAction];
-        }
-    }
-}
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
 
@@ -1356,36 +1322,6 @@
     
     [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
-}
-
-#pragma mark - UIViewControllerPreviewingDelegate
-
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || (self.tableView.numberOfSections == 2 && indexPath.section == 0)) {
-        return nil;
-    }
-    
-    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
-    
-    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-    
-    if (chatRoom != nil) {
-        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
-        chatViewController.previewMode = YES;
-        return chatViewController;
-    }
-    
-    return nil;
-}
-
-- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    ChatViewController *chatViewController = (ChatViewController *)viewControllerToCommit;
-    chatViewController.previewMode = NO;
-
-    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 #pragma mark - MEGAChatDelegate
