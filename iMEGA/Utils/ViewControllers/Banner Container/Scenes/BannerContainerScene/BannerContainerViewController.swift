@@ -28,11 +28,9 @@ final class BannerContainerViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-    
-        if #available(iOS 13, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                viewModel.dispatch(.onTraitCollectionDidChange(traitCollection))
-            }
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            viewModel.dispatch(.onTraitCollectionDidChange(traitCollection))
         }
         
         if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {

@@ -12,7 +12,8 @@ extension ChatViewController {
         } else if megaMessage.type == .attachment {
             if megaMessage.nodeList.size.uintValue == 1,
                let node = megaMessage.nodeList.node(at: 0),
-               node.name.mnz_isImagePathExtension {
+               let name = node.name,
+               name.mnz_isImagePathExtension {
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
                 let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
                 if FileManager.default.fileExists(atPath: originalImagePath), let originalImage = UIImage(contentsOfFile: originalImagePath) {
@@ -165,7 +166,8 @@ extension ChatViewController {
         for chatMessage in messages {
             if chatMessage.message.nodeList.size.uintValue == 1,
                var node = chatMessage.message.nodeList.node(at: 0),
-               (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+               let name = node.name,
+               (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) {
                 if chatRoom.isPreview,
                    let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
                     node = authorizedNode

@@ -84,9 +84,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     func inviteParticipants(excludeParticpants: NSMutableDictionary, selectedUsersHandler: @escaping (([UInt64]) -> Void)) {
         let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
         guard let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController else { fatalError("no contacts navigation view controller found") }
-        if #available(iOS 13.0, *) {
-            contactsNavigationController.overrideUserInterfaceStyle = .dark
-        }
+        contactsNavigationController.overrideUserInterfaceStyle = .dark
         guard let contactController = contactsNavigationController.viewControllers.first as? ContactsViewController else { fatalError("no contact view controller found") }
         contactController.contactsMode = .inviteParticipants
         contactController.participantsMutableDictionary = excludeParticpants

@@ -455,7 +455,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Nuovo nome del file";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="I seguenti caratteri non sono ammessi: ” * / : < > ? \\ |";
+"general.error.charactersNotAllowed"="I seguenti caratteri non sono ammessi: ” * / : < > ? |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Rinominare il file %@?";
 /* Title for the action that allows you to replace a file. */
@@ -2715,4 +2715,4 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Altoparlante";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Flip";
+"meetings.quickAction.flip"="Switch";

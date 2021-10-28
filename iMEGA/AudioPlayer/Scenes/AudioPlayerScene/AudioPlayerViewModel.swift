@@ -388,7 +388,7 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
         if fileLink != nil, !isFolderLink {
-            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: node?.size.int64Value ?? Int64(0))))
+            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: node?.size?.int64Value ?? Int64(0))))
         } else {
             self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: Int64(0))))
         }

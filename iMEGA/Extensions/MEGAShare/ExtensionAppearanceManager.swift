@@ -51,9 +51,7 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setShadowOpacity(0.15)
         SVProgressHUD.setShadowRadius(8)
         SVProgressHUD.setShadowColor(UIColor.black)
-        if #available(iOS 13.0, *) {
-            SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
-        }
+        SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
         SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
         SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray(for: traitCollection))
@@ -64,7 +62,6 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setErrorImage(UIImage(named: "hudError")!)
     }
     
-    @available(iOS 13.0, *)
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
         navigationBar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
@@ -74,13 +71,11 @@ class ExtensionAppearanceManager: NSObject {
         navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
     }
     
-    @available(iOS 13.0, *)
     @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar, traitCollection: UITraitCollection) {
         searchBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         searchBar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
     }
     
-    @available(iOS 13.0, *)
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
         toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
@@ -100,44 +95,28 @@ class ExtensionAppearanceManager: NSObject {
         UINavigationBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UINavigationBar.appearance().isTranslucent = false
 
-        if #available(iOS 13.0, *) {
-            let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            
-            navigationBarAppearance.shadowImage = nil
-            navigationBarAppearance.shadowColor = nil
-            
-            let backArrowImage = UIImage(named: "backArrow")
-            navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
-            
-            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-        } else {
-            UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
-            UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            
-            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-            UINavigationBar.appearance().shadowImage = UIImage()
-            
-            UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
-            UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
-        }
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        
+        navigationBarAppearance.shadowImage = nil
+        navigationBarAppearance.shadowColor = nil
+        
+        let backArrowImage = UIImage(named: "backArrow")
+        navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
+        
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
     }
-            
+    
     private class func setupToolbar(_ traitCollection: UITraitCollection) {
-        if #available(iOS 13, *) {
-            let toolbarAppearance = UIToolbarAppearance()
-            toolbarAppearance.configureWithDefaultBackground()
-            toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().standardAppearance = toolbarAppearance
-            if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
-                UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
-            }
-        } else {
-            UIToolbar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        let toolbarAppearance = UIToolbarAppearance()
+        toolbarAppearance.configureWithDefaultBackground()
+        toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        UIToolbar.appearance().standardAppearance = toolbarAppearance
+        
+        if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
+            UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
         }
     }
 }

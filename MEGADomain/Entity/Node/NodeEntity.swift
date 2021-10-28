@@ -8,7 +8,6 @@ struct NodeEntity {
 
     let name: String
     let fingerprint: String?
-    let tag: Int
 
     // MARK: - Handles
 

@@ -22,10 +22,6 @@ extension MEGANode {
             return parent.isDescendant(of: node, in: sdk)
         }
     }
-    
-    @objc func isRemoteChange() -> Bool {
-        self.tag == 0
-    }
 }
 
 

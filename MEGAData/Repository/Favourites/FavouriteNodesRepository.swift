@@ -63,7 +63,8 @@ extension FavouriteNodesRepository: MEGAGlobalDelegate {
         })
         
         for nodeUpdated in nodesUpdateArray {
-            if nodeUpdated.hasChangedType(.attributes) || (favouritesDictionary[nodeUpdated.base64Handle] != nil) {
+            if let base64Handle = nodeUpdated.base64Handle,
+               (nodeUpdated.hasChangedType(.attributes) || favouritesDictionary[base64Handle] != nil) {
                 shouldProcessOnNodesUpdate = true
                 break
             }
