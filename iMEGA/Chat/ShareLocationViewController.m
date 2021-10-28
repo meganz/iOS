@@ -123,7 +123,7 @@
     mapSnapshotOptions.scale = UIScreen.mainScreen.scale;
     mapSnapshotOptions.size = CGSizeMake(750 / UIScreen.mainScreen.scale, 750 / UIScreen.mainScreen.scale);
     mapSnapshotOptions.showsBuildings = YES;
-    mapSnapshotOptions.showsPointsOfInterest = YES;
+    mapSnapshotOptions.pointOfInterestFilter = [MKPointOfInterestFilter filterIncludingAllCategories];
     
     MKMapSnapshotter *snapShotter = [[MKMapSnapshotter alloc] initWithOptions:mapSnapshotOptions];
     [snapShotter startWithCompletionHandler:^(MKMapSnapshot * _Nullable snapshot, NSError * _Nullable error) {
