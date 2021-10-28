@@ -7,7 +7,6 @@ extension NodeEntity {
                   nodeType: nil,
                   name: "",
                   fingerprint: nil,
-                  tag: 0,
                   handle: 0,
                   base64Handle: "",
                   restoreParentHandle: 0,

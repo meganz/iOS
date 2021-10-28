@@ -1813,7 +1813,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - VNDocumentCameraViewControllerDelegate
 
-- (void)documentCameraViewController:(VNDocumentCameraViewController *)controller didFinishWithScan:(VNDocumentCameraScan *)scan  API_AVAILABLE(ios(13.0)){
+- (void)documentCameraViewController:(VNDocumentCameraViewController *)controller didFinishWithScan:(VNDocumentCameraScan *)scan {
     [controller dismissViewControllerAnimated:YES completion:^{
         
         DocScannerSaveSettingTableViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DocScannerSaveSettingTableViewController"];

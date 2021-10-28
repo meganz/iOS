@@ -39,9 +39,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     @objc var parentNode: MEGANode?
     @objc var docs: [UIImage]?
     @objc var chatRoom: MEGAChatRoom?
+    var charactersNotAllowed: Bool = false
+    
     @IBOutlet weak var sendButton: UIBarButtonItem!
     
-    var fileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
+    var originalFileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
+    var currentFileName: String?
     
     private struct TableViewConfiguration {
         static let numberOfSections = 3
@@ -58,6 +61,9 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = NSLocalizedString("Save Settings", comment: "Setting title for Doc scan view")
+        
+        currentFileName = originalFileName
+        
         let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
         let quality = UserDefaults.standard.string(forKey: keys.docScanQualityKey)
         if fileType == nil || docs?.count ?? 0 > 1  {
@@ -117,9 +123,13 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     }
     
     private func isValidName() -> Bool {
-        fileName = fileName.trimmingCharacters(in: .whitespaces)
-        let containsInvalidChars = fileName.mnz_containsInvalidChars()
-        let empty = fileName.mnz_isEmpty()
+        guard var currentFileName = currentFileName else {
+            return false
+        }
+        
+        currentFileName = currentFileName.trimmingCharacters(in: .whitespaces)
+        let containsInvalidChars = currentFileName.mnz_containsInvalidChars()
+        let empty = currentFileName.mnz_isEmpty()
         if containsInvalidChars || empty {
             let element = self.view.subviews.first(where: { $0 is DocScannerFileNameTableCell })
             let cell = element as? DocScannerFileNameTableCell
@@ -163,8 +173,14 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             if let filenameCell = tableView.dequeueReusableCell(withIdentifier: DocScannerFileNameTableCell.reuseIdentifier, for: indexPath) as? DocScannerFileNameTableCell {
                 let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
                 filenameCell.delegate = self
-                filenameCell.configure(filename: fileName, fileType: fileType)
+                filenameCell.configure(filename: originalFileName, fileType: fileType)
                 cell = filenameCell
+                
+                if originalFileName != currentFileName {
+                    filenameCell.filenameTextField.text = currentFileName
+                }
+                let containsInvalidChars = filenameCell.filenameTextField.text?.mnz_containsInvalidChars() ?? false
+                filenameCell.filenameTextField.textColor = containsInvalidChars ? .mnz_redError() : .mnz_label()
             }
         } else if indexPath.section == 1 {
             if let detailCell = tableView.dequeueReusableCell(withIdentifier: DocScannerDetailTableCell.reuseIdentifier, for: indexPath) as? DocScannerDetailTableCell,
@@ -189,7 +205,8 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case 0:
-            return NSLocalizedString("tapFileToRename", comment: "")
+            return charactersNotAllowed ? NSLocalizedString("general.error.charactersNotAllowed", comment: "Error message shown when trying to rename or create a folder with characters that are not allowed. We need the '\' before quotation mark, so it can be shown on code") : NSLocalizedString("tapFileToRename", comment: "")
+            
         default:
             return nil
         }
@@ -303,7 +320,14 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
 
 extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellDelegate {
     func filenameChanged(_ newFilename: String) {
-        fileName = newFilename
+        currentFileName = newFilename
+    }
+    
+    func containsCharactersNotAllowed() {
+        if !charactersNotAllowed {
+            charactersNotAllowed = true
+            tableView.reloadSections(IndexSet.init(integer: 0), with: .none)
+        }
     }
 }
 
@@ -373,7 +397,7 @@ extension DocScannerSaveSettingTableViewController {
             }
             
             if let data = pdfDoc.dataRepresentation() {
-                let fileName = "\(self.fileName).pdf"
+                let fileName = "\(currentFileName).pdf"
                 let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                 do {
                     try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
@@ -387,7 +411,7 @@ extension DocScannerSaveSettingTableViewController {
         } else if fileType == .jpg {
             docs?.enumerated().forEach {
                 if let data = $0.element.shrinkedImageData(docScanQuality: scanQuality) {
-                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(self.fileName) \($0.offset + 1).jpg" : "\(self.fileName).jpg"
+                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(currentFileName) \($0.offset + 1).jpg" : "\(currentFileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
                         try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)

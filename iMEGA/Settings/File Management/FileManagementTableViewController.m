@@ -20,13 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *rubbishBinLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *fileVersioningLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *fileVersioningSwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *fileVersionsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fileVersionsDetailLabel;
-
-@property (weak, nonatomic) IBOutlet UITableViewCell *deleteOldVersionCell;
-@property (weak, nonatomic) IBOutlet UILabel *deleteOldVersionsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fileVersioningDetail;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
@@ -58,14 +52,6 @@
     
     self.fileVersioningLabel.text = NSLocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
     [[MEGASdkManager sharedMEGASdk] getFileVersionsOptionWithDelegate:self];
-    
-    self.fileVersionsLabel.text = NSLocalizedString(@"File Versions", @"Settings preference title to show file versions info of the account");
-    long long totalNumberOfVersions = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] numberOfVersionFilesForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
-    self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
-    [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
-    
-    self.deleteOldVersionsLabel.text = NSLocalizedString(@"Delete Previous Versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
-    [self updateDeleteVersionsUIBy:[self totalNumberOfFileVersionsOfCurrentAccount]];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
@@ -101,9 +87,6 @@
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.fileVersionsDetailLabel.textColor = UIColor.mnz_secondaryLabel;
-    self.deleteOldVersionsLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
-    
     [self.tableView reloadData];
 }
 
@@ -128,43 +111,12 @@
     });
 }
 
-- (long long)totalNumberOfFileVersionsOfCurrentAccount {
-    return [MEGASdkManager.sharedMEGASdk.mnz_accountDetails numberOfVersionFilesForHandle:MEGASdkManager.sharedMEGASdk.rootNode.handle];
-}
-
-- (void)updateDeleteVersionsUIBy:(long long)totalNumberOfVersions {
-    self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
-    BOOL shouldEnableDeleteVersionsCell = totalNumberOfVersions > 0;
-    self.deleteOldVersionCell.userInteractionEnabled = shouldEnableDeleteVersionsCell;
-    self.deleteOldVersionsLabel.enabled = shouldEnableDeleteVersionsCell;
-}
-
 - (void)removeGroupSharedDirectoryContents {
     //Remove only the contents of some folders located inside of the group shared directory. The 'GroupSupport' directory contents are not deleted because is where the SDK databases are located.
     NSString *groupSharedDirectoryPath = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAExtensionLogsFolder]];
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAFileExtensionStorageFolder]];
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAShareExtensionStorageFolder]];
-}
-
-#pragma mark - IBActions
-
-- (IBAction)fileVersioningSwitchTouchUpInside:(UIButton *)sender {
-    if (self.fileVersioningSwitch.isOn) {
-        UIAlertController *enableOrDisableFileVersioningAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?", @"A confirmation message when the user chooses to disable file versioning.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [enableOrDisableFileVersioningAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [enableOrDisableFileVersioningAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                [[MEGASdkManager sharedMEGASdk] setFileVersionsOption:YES delegate:self];
-            }
-        }]];
-        
-        [self presentViewController:enableOrDisableFileVersioningAlertController animated:YES completion:nil];
-    } else {
-        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            [[MEGASdkManager sharedMEGASdk] setFileVersionsOption:NO delegate:self];
-        }
-    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -178,14 +130,6 @@
             
         case 2: //On MEGA
             titleHeader = NSLocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
-            break;
-            
-        case 3: //File Versioning
-            titleHeader = NSLocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
-            break;
-            
-        case 5: //Delete all my older versions of files
-            titleHeader = NSLocalizedString(@"Delete all older versions of my files", @"The title of the section about deleting file versions in the settings.");
             break;
     }
     
@@ -216,26 +160,6 @@
             NSString *currentlyUsingString = NSLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:stringFromByteCount];
             titleFooter = currentlyUsingString;
-            break;
-        }
-            
-        case 3: { //File Versioning - File Versioning
-            NSString *fileVersioningDescription = NSLocalizedString(@"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled.", @"Subtitle of the option to enable or disable file versioning on Settings section");
-            titleFooter = [fileVersioningDescription stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-            break;
-        }
-            
-        case 4: { //File Versioning - File Versions
-            long long totalNumberOfVersionsSize = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] versionStorageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
-            NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:totalNumberOfVersionsSize];
-            stringFromByteCount = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
-            NSString *totalFileVersionsSize = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Total size taken up by file versions:", @"A title message in the user’s account settings for showing the storage used for file versions."), stringFromByteCount];
-            titleFooter = totalFileVersionsSize;
-            break;
-        }
-            
-        case 5: { //File Versioning - Delete Old Versions
-            titleFooter = NSLocalizedString(@"All current files will remain. Only historic versions of your files will be deleted.", @"A warning note about deleting all file versions in the settings section.");
             break;
         }
     }
@@ -287,26 +211,10 @@
             break;
         }
             
-        case 2: //On MEGA - Rubbish Bin
-        case 3: //File Versioning - File Versioning
-        case 4: //File Versioning - File Versions
+        case 2:
             break;
-            
-        case 5: { //File Versioning - Delete all file versions
-            NSString *alertMessage = NSLocalizedString(@"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted.", @"Text of the dialog to delete all the file versions of the account");
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
-            
-            UIAlertController *deleteAllFileVersionsAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete all older versions of my files", @"The title of the section about deleting file versions in the settings.") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-            [deleteAllFileVersionsAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [deleteAllFileVersionsAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    [MEGASdkManager.sharedMEGASdk removeVersionsWithDelegate:self];
-                }
-            }]];
-            
-            [self presentViewController:deleteAllFileVersionsAlertController animated:YES completion:nil];
-            break;
-        }
+        case 3:
+            [[FileVersioningViewRouter.alloc initWithNavigationController:self.navigationController] start];
             
         default:
             break;
@@ -337,30 +245,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ((request.type == MEGARequestTypeGetAttrUser) && (request.paramType == MEGAUserAttributeDisableVersions)) {
         if (!error.type || error.type == MEGAErrorTypeApiENoent) {
-            self.fileVersioningSwitch.on = self.fileVersioningEnabled = !request.flag;
-            
-            [self.tableView reloadData];
-        }
-    }
-    
-    if (request.type == MEGARequestTypeRemoveVersions) {
-        if (!error.type) {
-            [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
-        }
-    }
-    
-    if (request.type == MEGARequestTypeAccountDetails) {
-        if (!error.type) {
-            [self updateDeleteVersionsUIBy:[self totalNumberOfFileVersionsOfCurrentAccount]];
-            [self.tableView reloadData];
-        }
-    }
-    
-    if ((request.type == MEGARequestTypeSetAttrUser) && (request.paramType == MEGAUserAttributeDisableVersions)) {
-        if (!error.type) {
-            self.fileVersioningSwitch.on = self.fileVersioningEnabled = ![request.text isEqualToString:@"1"];
-            
-            [self.tableView reloadData];
+            self.fileVersioningDetail.text = !request.flag ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
         }
     }
 }

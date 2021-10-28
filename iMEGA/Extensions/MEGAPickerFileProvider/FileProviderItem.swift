@@ -1,5 +1,6 @@
 import Foundation
 import FileProvider
+import MobileCoreServices
 
 @objc final class FileProviderItem: NSObject, NSFileProviderItem {
     var itemIdentifier: NSFileProviderItemIdentifier
@@ -9,6 +10,8 @@ import FileProvider
     var filename: String
     
     var documentSize: NSNumber?
+    
+    var typeIdentifier: String
     
     private let url: URL
     
@@ -28,5 +31,19 @@ import FileProvider
         }
         
         documentSize = try? FileManager.default.attributesOfItem(atPath: url.path)[FileAttributeKey.size] as? NSNumber
+        
+        if url.hasDirectoryPath {
+            typeIdentifier = kUTTypeFolder as String
+        } else {
+            let pathExtension = url.pathExtension
+            let unmanaged = UTTypeCreatePreferredIdentifierForTag(
+              kUTTagClassFilenameExtension,
+              pathExtension as CFString,
+              nil
+            )
+            let retained = unmanaged?.takeRetainedValue()
+            
+            typeIdentifier = (retained as String?) ?? ""
+        }
     }
 }

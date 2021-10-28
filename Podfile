@@ -26,6 +26,8 @@ abstract_target 'iMEGA' do
     pod 'Keyboard+LayoutGuide'
     pod 'YYCategories'
     pod 'SAMKeychain'
+    pod 'DateTools'
+    pod 'PhoneNumberKit', '~> 3.3'
     
     # Pods for Debug only
     pod 'FLEX', :configurations => ['Debug']
@@ -40,14 +42,16 @@ abstract_target 'iMEGA' do
   target 'MEGANotifications' do
     # Pods for MEGANotifications
     pod 'SAMKeychain'
+    pod 'DateTools'
     
   end
 
   target 'MEGAPicker' do
-    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGAPicker
+    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'YYCategories'
     pod 'SAMKeychain'
+    pod 'DateTools'
 
   end
 
@@ -58,10 +62,11 @@ abstract_target 'iMEGA' do
   end
 
   target 'MEGAShare' do
-    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     # Pods for MEGAShare
+    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'YYCategories'
     pod 'SAMKeychain'
+    pod 'DateTools'
 
   end
   
@@ -71,9 +76,10 @@ abstract_target 'iMEGA' do
   end
 
   target 'MEGAWidgetExtension' do
+    # Pods for MEGAWidgetExtension
     pod 'YYCategories'
     pod 'SAMKeychain'
-    # Pods for MEGAWidgetExtension
+    pod 'DateTools'
 
   end
 end

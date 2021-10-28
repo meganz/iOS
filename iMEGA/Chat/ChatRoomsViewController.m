@@ -649,7 +649,7 @@
         [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
     } else {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-        NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:[chatRoom peerHandleAtIndex:0]];
+        NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contactEmailByHandle:[chatRoom peerHandleAtIndex:0]];
         uint64_t peerHandle     = [chatRoom peerHandleAtIndex:0];
         
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
@@ -1161,7 +1161,7 @@
         return configuration;
 }
 
-- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator API_AVAILABLE(ios(13.0)){
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
     ChatViewController *previewViewController = (ChatViewController *)animator.previewViewController;
     [animator addCompletion:^{
         [self.navigationController pushViewController:previewViewController animated:NO];
