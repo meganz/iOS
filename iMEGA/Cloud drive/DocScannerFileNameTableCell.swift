@@ -3,6 +3,7 @@ import UIKit
 
 protocol DocScannerFileInfoTableCellDelegate: AnyObject {
     func filenameChanged(_ newFilename: String)
+    func containsCharactersNotAllowed()
 }
 
 class DocScannerFileNameTableCell: UITableViewCell {
@@ -40,6 +41,7 @@ extension DocScannerFileNameTableCell: UITextFieldDelegate {
                 return true
             }
             textField.text = originalFileName
+            textField.textColor = .mnz_label()
         }
         
         return true
@@ -60,6 +62,9 @@ extension DocScannerFileNameTableCell: UITextFieldDelegate {
             textField.textColor = containsInvalidChars ? UIColor.mnz_redError() : UIColor.mnz_label()
             currentFilename = text
             delegate?.filenameChanged(text)
+            if containsInvalidChars {
+                delegate?.containsCharactersNotAllowed()
+            }
         }
     }
 }

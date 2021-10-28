@@ -1609,106 +1609,26 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="FILE VERSIONING" id="ye3-UW-pSH" userLabel="File Versioning">
-                                <string key="footerTitle">Enable or disable file versioning for your entire account.
-You may still receive file versions from shared folders if your contacts have this enabled.</string>
+                            <tableViewSection id="ye3-UW-pSH" userLabel="File Versioning">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="218-HR-YXu" userLabel="File Versioning Table View Cell">
-                                        <rect key="frame" x="0.0" y="361.66667175292969" width="414" height="44.666667938232422"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="YTy-SK-XyD" detailTextLabel="Ump-rj-lFn" style="IBUITableViewCellStyleValue1" id="218-HR-YXu" userLabel="File Versioning Table View Cell">
+                                        <rect key="frame" x="0.0" y="340.66667175292969" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="218-HR-YXu" id="fyk-cC-KcH">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Versioning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTR-ca-8uK">
-                                                    <rect key="frame" x="19.999999999999993" y="13.666666666666666" width="94.333333333333314" height="17.333333333333336"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="File Versioning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="YTy-SK-XyD">
+                                                    <rect key="frame" x="19.999999999999993" y="14" width="94.333333333333329" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DdX-Za-PDc" userLabel="File Versioning Switch">
-                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
-                                                </switch>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXc-nc-xOp">
-                                                    <rect key="frame" x="345" y="7" width="49" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="v8I-aj-6i2"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="fileVersioningSwitchTouchUpInside:" destination="z1p-YM-xge" eventType="touchUpInside" id="Lz4-Ql-tph"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="RXc-nc-xOp" firstAttribute="centerY" secondItem="DdX-Za-PDc" secondAttribute="centerY" id="4db-SG-JLb"/>
-                                                <constraint firstAttribute="bottom" secondItem="pTR-ca-8uK" secondAttribute="bottom" constant="13.666666666666664" id="99H-kU-hXi"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="DdX-Za-PDc" secondAttribute="trailing" id="Db4-Hu-p2H"/>
-                                                <constraint firstItem="DdX-Za-PDc" firstAttribute="trailing" secondItem="fyk-cC-KcH" secondAttribute="trailingMargin" id="K23-Qe-IJE"/>
-                                                <constraint firstItem="pTR-ca-8uK" firstAttribute="leading" secondItem="fyk-cC-KcH" secondAttribute="leadingMargin" constant="15" id="Mup-7Y-k4g"/>
-                                                <constraint firstItem="pTR-ca-8uK" firstAttribute="centerY" secondItem="fyk-cC-KcH" secondAttribute="centerY" id="OuW-5g-frw"/>
-                                                <constraint firstItem="RXc-nc-xOp" firstAttribute="height" secondItem="DdX-Za-PDc" secondAttribute="height" id="PzH-wH-bQf"/>
-                                                <constraint firstItem="RXc-nc-xOp" firstAttribute="width" secondItem="DdX-Za-PDc" secondAttribute="width" id="UxJ-al-WGA"/>
-                                                <constraint firstItem="pTR-ca-8uK" firstAttribute="top" secondItem="fyk-cC-KcH" secondAttribute="top" constant="13.666666666666664" id="Xjv-aH-Kjy"/>
-                                                <constraint firstItem="DdX-Za-PDc" firstAttribute="centerY" secondItem="fyk-cC-KcH" secondAttribute="centerY" id="aBP-BT-NOz"/>
-                                                <constraint firstItem="RXc-nc-xOp" firstAttribute="centerX" secondItem="DdX-Za-PDc" secondAttribute="centerX" id="cqF-lW-cip"/>
-                                                <constraint firstItem="pTR-ca-8uK" firstAttribute="leading" secondItem="fyk-cC-KcH" secondAttribute="leadingMargin" id="evt-L3-mXB"/>
-                                                <constraint firstItem="DdX-Za-PDc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pTR-ca-8uK" secondAttribute="trailing" constant="8" id="o6x-nK-Dp0"/>
-                                                <constraint firstItem="pTR-ca-8uK" firstAttribute="trailing" secondItem="fyk-cC-KcH" secondAttribute="trailingMargin" id="rsM-x0-f12"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Mup-7Y-k4g"/>
-                                                    <exclude reference="rsM-x0-f12"/>
-                                                    <exclude reference="K23-Qe-IJE"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="" footerTitle="Taking up a total of 112 MB" id="TKW-yU-TXG" userLabel="File Versions">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="AlG-OX-0LI" detailTextLabel="Pb2-l5-GHa" style="IBUITableViewCellStyleValue1" id="bLM-5W-t3d" userLabel="File Versions Table View Cell">
-                                        <rect key="frame" x="0.0" y="485.33333969116211" width="414" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bLM-5W-t3d" id="H7Z-r3-Otm">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Files versions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="AlG-OX-0LI">
-                                                    <rect key="frame" x="20" y="14" width="87.333333333333329" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="Pb2-l5-GHa">
-                                                    <rect key="frame" x="359" y="15" width="35" height="15.666666666666666"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="On" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="Ump-rj-lFn">
+                                                    <rect key="frame" x="358.66666666666663" y="15" width="17.666666666666668" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Delete all my older versions of files" footerTitle="All current files will remain. Only historic versions of your files will be deleted." id="lCq-Ah-82B" userLabel="Delete Old Versions">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="82S-4G-jFG" style="IBUITableViewCellStyleDefault" id="UHz-cJ-fhW" userLabel="Delete Old Versions Table View Cell">
-                                        <rect key="frame" x="0.0" y="594.33334159851074" width="414" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UHz-cJ-fhW" id="bB6-rY-be0">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Delete Old Versions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="82S-4G-jFG">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1730,12 +1650,8 @@ You may still receive file versions from shared folders if your contacts have th
                     <connections>
                         <outlet property="clearCacheLabel" destination="3R5-CK-znG" id="jhC-mb-6WK"/>
                         <outlet property="clearOfflineFilesLabel" destination="WbE-QH-DWS" id="u6w-OJ-Oug"/>
-                        <outlet property="deleteOldVersionCell" destination="UHz-cJ-fhW" id="o06-UF-cQ1"/>
-                        <outlet property="deleteOldVersionsLabel" destination="82S-4G-jFG" id="tWy-zy-JSy"/>
-                        <outlet property="fileVersioningLabel" destination="pTR-ca-8uK" id="Fn2-fU-Jj9"/>
-                        <outlet property="fileVersioningSwitch" destination="DdX-Za-PDc" id="hHr-Xp-gwp"/>
-                        <outlet property="fileVersionsDetailLabel" destination="Pb2-l5-GHa" id="qW4-g8-ybI"/>
-                        <outlet property="fileVersionsLabel" destination="AlG-OX-0LI" id="Jam-bh-fgQ"/>
+                        <outlet property="fileVersioningDetail" destination="Ump-rj-lFn" id="j11-Zd-g95"/>
+                        <outlet property="fileVersioningLabel" destination="YTy-SK-XyD" id="GzD-WL-MmY"/>
                         <outlet property="rubbishBinLabel" destination="YM7-sM-FPb" id="6kT-Cl-Zob"/>
                     </connections>
                 </tableViewController>

@@ -227,8 +227,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             let chatViewController = chatViewController,
             !chatViewController.previewMode {
             MEGASdkManager.sharedMEGAChatSdk().setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
-        } else {
-            chatRoom = api.chatRoom(forChatId: chatRoom.chatId)
+        } else if let chatRoom = api.chatRoom(forChatId: chatRoom.chatId) {
+            self.chatRoom = chatRoom
         }
 
         if message.type == .truncate {

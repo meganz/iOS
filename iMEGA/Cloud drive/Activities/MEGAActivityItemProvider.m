@@ -162,7 +162,7 @@
     return [UIImage imageNamed:@"AppIcon"];
 }
 
-- (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController  API_AVAILABLE(ios(13.0)) {
+- (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController {
     LPLinkMetadata *metadata = LPLinkMetadata.new;
     metadata.title = self.node.name;
 

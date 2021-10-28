@@ -3,10 +3,7 @@
 	url = https://code.developers.mega.co.nz/sdk/sdk.git
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
-url=https://github.com/meganz/LTHPasscodeViewController.git
-[submodule "iMEGA/Vendor/DateTools"]
-	path = iMEGA/Vendor/DateTools
-	url = https://github.com/MatthewYork/DateTools.git
+	url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/PieChartView"]
 	path = iMEGA/Vendor/PieChartView
 	url = https://github.com/astrokin/PieChart.git
@@ -22,9 +19,6 @@ url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/SDAVAssetExportSession"]
 	path = iMEGA/Vendor/SDAVAssetExportSession
 	url = https://github.com/meganz/SDAVAssetExportSession.git
-[submodule "iMEGA/Vendor/PhoneNumberKit"]
-	path = iMEGA/Vendor/PhoneNumberKit
-	url = https://github.com/marmelroy/PhoneNumberKit.git
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
 	url = https://github.com/SVProgressHUD/SVProgressHUD.git

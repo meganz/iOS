@@ -114,7 +114,7 @@ class AppearanceManager: NSObject {
         appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
         
         tabBar.standardAppearance = appearance
-        
+
         if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
             tabBar.scrollEdgeAppearance = appearance
         }

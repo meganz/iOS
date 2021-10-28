@@ -30,6 +30,21 @@ extension TransferEntity {
             self.publicNode = nil
         }
         self.isStreamingTransfer = transfer.isStreamingTransfer
+        self.isForeignOverquota = transfer.isForeignOverquota
+       
+        if transfer.lastErrorExtended != nil {
+            switch transfer.lastErrorExtended.type {
+            case .apiOk:
+                self.lastErrorExtended = nil
+            case .apiEOverQuota:
+                self.lastErrorExtended = .overquota
+            default:
+                self.lastErrorExtended = .generic
+            }
+        } else {
+            self.lastErrorExtended = nil
+        }
+        
         self.isFolderTransfer = transfer.isFolderTransfer
         self.folderTransferTag = transfer.folderTransferTag
         self.appData = transfer.appData

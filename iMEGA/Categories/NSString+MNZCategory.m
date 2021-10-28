@@ -978,13 +978,9 @@ static NSString* const B = @"[B]";
     }
     
     if (recentActionBucket.isUpdate) {
-        addebByString = NSLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
-        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
-        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+        addebByString = [NSString stringWithFormat:NSLocalizedString(@"home.recent.modifiedByLabel", @"Label that indicates who modified a file into a recents bucket. %1 is a placeholder for a name, eg: Haley"), userNameThatMadeTheAction];
     } else {
-        addebByString = NSLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
-        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
-        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+        addebByString = [NSString stringWithFormat:NSLocalizedString(@"home.recent.createdByLabel", @"Label that indicates who uploaded a file into a recents bucket. %1 is a placeholder for a name, eg: Haley"), userNameThatMadeTheAction];
     }
     
     return addebByString;
