@@ -18,12 +18,23 @@ static NSString *kDuration = @"kDuration";
 
 @interface NodeCollectionViewCell ()
 
+@property (weak, nonatomic) IBOutlet UIView *topNodeIconsView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailIconView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIView *labelView;
+@property (weak, nonatomic) IBOutlet UIImageView *labelImageView;
+
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) IBOutlet UIImageView *selectImageView;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UIView *favouriteView;
+@property (weak, nonatomic) IBOutlet UIImageView *favouriteImageView;
+@property (weak, nonatomic) IBOutlet UIView *versionedView;
+@property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;
+@property (weak, nonatomic) IBOutlet UIView *linkView;
+@property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
 @property (weak, nonatomic) IBOutlet UIView *downloadedView;
@@ -89,6 +100,20 @@ static NSString *kDuration = @"kDuration";
             self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:sdk];
         }
     }
+    
+    self.labelView.hidden = (node.label == MEGANodeLabelUnknown);
+    if (node.label != MEGANodeLabelUnknown) {
+        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
+        self.labelImageView.image = [UIImage imageNamed:labelString];
+    }
+    
+    BOOL favouriteIsHidden = !node.isFavourite;
+    self.favouriteView.hidden = favouriteIsHidden;
+    BOOL versionedIsHidden = ![MEGASdkManager.sharedMEGASdk hasVersionsForNode:node];
+    self.versionedView.hidden = versionedIsHidden;
+    BOOL linkIsHidden = !node.isExported;
+    self.linkView.hidden = linkIsHidden;
+    self.topNodeIconsView.hidden = favouriteIsHidden && versionedIsHidden && linkIsHidden;
     
     self.durationLabel.hidden = !node.name.mnz_isVideoPathExtension;
     if (!self.durationLabel.hidden) {
@@ -211,10 +236,12 @@ static NSString *kDuration = @"kDuration";
     switch (self.traitCollection.userInterfaceStyle) {
         case UIUserInterfaceStyleUnspecified:
         case UIUserInterfaceStyleLight: {
+            self.topNodeIconsView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.3];
             self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"F7F7F7"];
         }
             break;
         case UIUserInterfaceStyleDark: {
+            self.topNodeIconsView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
             self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"1C1C1E"];
         }
     }
