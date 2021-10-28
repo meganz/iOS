@@ -91,6 +91,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 @property (strong, nonatomic) Throttler *throttler;
 
+@property (nonatomic, assign) BOOL onlyUploadOptions;
+
 @end
 
 @implementation CloudDriveViewController
@@ -764,7 +766,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (MEGAReachabilityManager.isReachable) {
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
-                [self presentUploadAlertController];
+                [self presentUploadOptions];
                 break;
             }
                 
@@ -1080,6 +1082,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
+}
+
+- (void)presentUploadOptions {
+    self.onlyUploadOptions = YES;
+    [self moreAction:self.moreBarButtonItem];
+    self.onlyUploadOptions = NO;
 }
 
 - (void)presentUploadAlertController {
@@ -1435,7 +1443,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
     }]];
     
-    if ([self numberOfRows]) {
+    if ([self numberOfRows] && !self.onlyUploadOptions) {
         NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
         UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
@@ -1451,13 +1459,15 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }]];
     }
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
-        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-        cloudDriveVC.displayMode = DisplayModeRubbishBin;
-        cloudDriveVC.title = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-        [weakSelf.navigationController pushViewController:cloudDriveVC animated:YES];
-    }]];
+    if (!self.onlyUploadOptions) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+            cloudDriveVC.displayMode = DisplayModeRubbishBin;
+            cloudDriveVC.title = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+            [weakSelf.navigationController pushViewController:cloudDriveVC animated:YES];
+        }]];
+    }
     
     ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
     [self presentViewController:moreActionSheet animated:YES completion:nil];

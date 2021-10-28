@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 
-- (void)presentUploadAlertController;
+- (void)presentUploadOptions;
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)updateNavigationBarTitle;

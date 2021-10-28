@@ -697,7 +697,7 @@
         self.mainTBC.selectedIndex = TabTypeCloudDrive;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeCloudDrive];
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
-        [cloudDriveVC presentUploadAlertController];
+        [cloudDriveVC presentUploadOptions];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
         [self.mainTBC showOfflineAndPresentFileWithHandle:nil];
     } else {
