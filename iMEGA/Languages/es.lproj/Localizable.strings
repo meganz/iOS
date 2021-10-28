@@ -2715,4 +2715,4 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Altavoz";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Switch";
+"meetings.quickAction.flip"="Flip";

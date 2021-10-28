@@ -133,9 +133,11 @@ static TransfersWidgetViewController* instance = nil;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self reloadView];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self reloadView];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+        }
     }
 }
 

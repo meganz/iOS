@@ -64,12 +64,14 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if navigationController != nil {
-                AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                if navigationController != nil {
+                    AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                }
+                
+                updateAppearance()
             }
-            
-            updateAppearance()
         }
     }
     

@@ -3,8 +3,6 @@
 
 @class CloudDriveViewController;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @protocol RecentNodeActionDelegate <NSObject>
 
 - (void)showCustomActionsForNode:(MEGANode *)node fromSender:(id)sender;
@@ -15,13 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecentsViewController : UIViewController
 
-@property (nonatomic, weak, nullable) CloudDriveViewController *cloudDrive;
+@property (nonatomic, weak) CloudDriveViewController *cloudDrive;
 
-@property (nonatomic, weak, nullable) id<RecentNodeActionDelegate> delegate;
+@property (nonatomic, weak) id<RecentNodeActionDelegate> delegate;
 
-@property (weak, nonatomic, nullable) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 
 @end
-
-NS_ASSUME_NONNULL_END

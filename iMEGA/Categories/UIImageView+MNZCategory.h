@@ -1,7 +1,5 @@
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 typedef void (^MNZWebImageCompletionBlock)(MEGARequest *request);
 
 @interface UIImageView (MNZCategory)
@@ -11,7 +9,7 @@ typedef void (^MNZWebImageCompletionBlock)(MEGARequest *request);
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle;
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle name:(NSString *)name;
 
-- (void)mnz_setImageForExtension:(nullable NSString *)extension;
+- (void)mnz_setImageForExtension:(NSString *)extension;
 - (void)mnz_imageForNode:(MEGANode *)node;
 
 /**
@@ -35,5 +33,3 @@ If the node doesn't have preview, we will set some predefined placeholder images
 - (void)mnz_setPreviewByNode:(MEGANode *)node completion:(nullable MNZWebImageCompletionBlock)completion;
 
 @end
-
-NS_ASSUME_NONNULL_END

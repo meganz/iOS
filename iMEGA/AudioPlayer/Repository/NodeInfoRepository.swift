@@ -30,18 +30,18 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         guard let parentNode = sdk.node(forHandle: parent) else { return nil }
         
         return sdk.children(forParent: parentNode).nodes
-            .filter{ $0.name?.mnz_isMultimediaPathExtension == true &&
-                $0.name?.mnz_isVideoPathExtension == false &&
-                $0.mnz_isPlayable() }
+                                                    .filter{ $0.name.mnz_isMultimediaPathExtension &&
+                                                                !$0.name.mnz_isVideoPathExtension &&
+                                                                $0.mnz_isPlayable() }
     }
     
     private func folderPlayableChildren(of parent: MEGAHandle) -> [MEGANode]? {
         guard let parentNode = folderNode(fromHandle: parent) else { return nil }
         
         return folderSDK.children(forParent: parentNode).nodes
-            .filter{ $0.name?.mnz_isMultimediaPathExtension == true &&
-                $0.name?.mnz_isVideoPathExtension == false &&
-                $0.mnz_isPlayable() }
+                                                            .filter{ $0.name.mnz_isMultimediaPathExtension &&
+                                                                        !$0.name.mnz_isVideoPathExtension &&
+                                                                        $0.mnz_isPlayable() }
     }
     
     //MARK: - Public functions
@@ -57,18 +57,16 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     
     func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
         return fromNodes?.compactMap {
-            guard let url = path(fromHandle: $0.handle),
-                  let name = $0.name else { return nil }
-            return AudioPlayerItem(name: name, url: url, node: $0, hasThumbnail: $0.hasThumbnail())
+            guard let url = path(fromHandle: $0.handle) else { return nil }
+            return AudioPlayerItem(name: $0.name, url: url, node: $0, hasThumbnail: $0.hasThumbnail())
         }
     }
     
     func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
         return fromNodes?.compactMap {
             guard let node = folderAuthNode(fromNode: $0),
-                  let name = node.name,
-                  let url = streamingInfoRepository.path(fromNode: node) else { return nil }
-            return AudioPlayerItem(name: name, url: url, node: node, hasThumbnail: $0.hasThumbnail())
+                let url = streamingInfoRepository.path(fromNode: node) else { return nil }
+            return AudioPlayerItem(name: node.name, url: url, node: node, hasThumbnail: $0.hasThumbnail())
         }
     }
     

@@ -20,7 +20,9 @@ class MeetingOptionsMenuViewController: ActionSheetViewController, ViewType {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        overrideUserInterfaceStyle = .dark
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .dark
+        }
         viewModel?.invokeCommand = { [weak self] in
             self?.executeCommand($0)
         }

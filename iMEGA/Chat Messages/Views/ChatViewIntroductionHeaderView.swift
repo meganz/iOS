@@ -102,6 +102,9 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
+        guard #available(iOS 13, *) else {
+            return
+        }
         updateAppearance()
     }
     

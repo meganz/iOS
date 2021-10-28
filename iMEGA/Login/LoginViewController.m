@@ -1,5 +1,7 @@
 #import "LoginViewController.h"
 
+#import "SAMKeychain.h"
+
 #import "Helper.h"
 #import "InputView.h"
 #import "MEGALoginRequestDelegate.h"
@@ -102,11 +104,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
     }
 }
 

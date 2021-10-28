@@ -23,6 +23,9 @@ class RichPreviewContentView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
+        guard #available(iOS 13, *) else {
+            return
+        }
         updateAppearance()
     }
     
@@ -72,9 +75,8 @@ class RichPreviewContentView: UIView {
                 descriptionLabel.text = Helper.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
                 linkLabel.text = "mega.nz"
                 iconImageView.image = UIImage(named: "favicon")
-                if let node = node {
-                    imageView.mnz_setThumbnail(by: node)
-                }
+                imageView.mnz_setThumbnail(by: node)
+                
             case .folderLink:
                 titleLabel.text = message.richTitle
                 descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", Helper.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))

@@ -33,7 +33,7 @@ extension Array {
 }
 
 extension Array where Element: Hashable {
-    func removeDuplicatesWhileKeepingTheOriginalOrder() -> [Element] {
+    func removeDuplicates() -> [Element] {
         NSOrderedSet(array: self).array as? [Element] ?? []
     }
 }

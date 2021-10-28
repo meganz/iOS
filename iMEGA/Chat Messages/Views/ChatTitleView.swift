@@ -102,8 +102,10 @@ class ChatTitleView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(traitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance()
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
         }
     }
 }

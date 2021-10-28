@@ -11,7 +11,7 @@ final class VideoExplorerTableCellViewModel {
     }()
     
     var title: String {
-        return node.name ?? ""
+        return node.name
     }
     
     var duration: String? {
@@ -19,7 +19,7 @@ final class VideoExplorerTableCellViewModel {
     }
     
     var parentFolderName: String {
-        return node.parent.name ?? ""
+        return node.parent.name
     }
     
     var hasThumbnail: Bool {

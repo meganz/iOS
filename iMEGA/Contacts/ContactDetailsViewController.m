@@ -220,8 +220,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
     }
 }
 
@@ -936,7 +938,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if ([self isSharedFolderSection:section]) {
         GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
-        headerView.titleLabel.text = NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.").localizedUppercaseString;
+        headerView.titleLabel.text = [NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
         headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
         
         return headerView;

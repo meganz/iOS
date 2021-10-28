@@ -243,7 +243,11 @@ static NSString *kPath = @"kPath";
             [self.offline setEditMode:NO];
         }];
     }];
-    deleteAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+    if (@available(iOS 13.0, *)) {
+        deleteAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+    } else {
+        deleteAction.image = [UIImage imageNamed:@"delete"];
+    }
     deleteAction.backgroundColor = UIColor.mnz_redError;
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
 }
@@ -254,15 +258,19 @@ static NSString *kPath = @"kPath";
 }
 
 - (void)updateAppearance:(UITraitCollection *)currentTraitCollection{
-    switch (currentTraitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            self.tableView.backgroundColor = UIColor.whiteColor;
+    if (@available(iOS 13.0, *)) {
+        switch (currentTraitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.tableView.backgroundColor = UIColor.whiteColor;
+            }
+                break;
+            case UIUserInterfaceStyleDark: {
+                self.tableView.backgroundColor = UIColor.mnz_black1C1C1E;
+            }
         }
-            break;
-        case UIUserInterfaceStyleDark: {
-            self.tableView.backgroundColor = UIColor.mnz_black1C1C1E;
-        }
+    } else {
+        self.tableView.backgroundColor = UIColor.whiteColor;
     }
 }
 

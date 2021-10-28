@@ -145,15 +145,3 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
         return cell
     }
 }
-
-//MARK: - Manage CollectionViewCells size with
-extension FilesExplorerGridSource: DynamicTypeCollectionViewSizing {
-    func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell? {
-        guard let nodes = nodes else { return nil }
-        
-        let cell = FileExplorerGridCell.instanceFromNib
-        cell.viewModel = viewModel(forNode: nodes[indexPath.item], cell: cell)
-        
-        return cell
-    }
-}

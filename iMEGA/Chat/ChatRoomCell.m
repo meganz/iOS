@@ -64,8 +64,10 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
     }
 }
 
@@ -76,7 +78,7 @@
     
     self.chatLastTime.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:NSLocalizedString(@"archived", @"Title of flag of archived chats.").localizedUppercaseString];
+    BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:NSLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString];
     self.unreadView.backgroundColor = chatRoomsTypeArchived ? [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.unreadCount.textColor = UIColor.whiteColor;
     
@@ -117,7 +119,7 @@
     self.unreadView.hidden = NO;
     self.unreadView.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     self.unreadCount.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
-    self.unreadCount.text = NSLocalizedString(@"archived", @"Title of flag of archived chats.").localizedUppercaseString;
+    self.unreadCount.text = NSLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
     self.unreadCountLabelHorizontalMarginConstraint.constant = 7;
     self.activeCallImageView.hidden = YES;
 }

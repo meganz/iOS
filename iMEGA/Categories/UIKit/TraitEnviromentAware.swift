@@ -31,7 +31,7 @@ extension TraitEnviromentAware {
         to currentTrait: UITraitCollection,
         from previousTrait: UITraitCollection?
     ) {
-        if currentTrait.hasDifferentColorAppearance(comparedTo: previousTrait) {
+        if #available(iOS 13, *), currentTrait.hasDifferentColorAppearance(comparedTo: previousTrait) {
             colorAppearanceDidChange(to: currentTrait, from: previousTrait)
         }
 

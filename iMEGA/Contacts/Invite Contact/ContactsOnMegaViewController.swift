@@ -80,8 +80,10 @@ import UIKit
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance()
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
         }
     }
     

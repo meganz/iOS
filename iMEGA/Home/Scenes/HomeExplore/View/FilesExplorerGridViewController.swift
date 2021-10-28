@@ -20,11 +20,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             collectionView.emptyDataSetSource = self
             collectionView.reloadData()
             collectionView.reloadEmptyDataSet()
-            dtCollectionManager = DynamicTypeCollectionManager(delegate: gridSource)
         }
     }
-    
-    private var dtCollectionManager: DynamicTypeCollectionManager?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,15 +40,6 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         delegate?.updateSearchResults()
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            dtCollectionManager?.resetCollectionItems()
-            collectionView.collectionViewLayout.invalidateLayout()
-        }
     }
     
     override func toggleSelectAllNodes() {
@@ -211,6 +199,6 @@ extension FilesExplorerGridViewController: CHTCollectionViewDelegateWaterfallLay
     // ** Size for the cells in the Waterfall Layout */
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // create a cell size from the image size, and return the size
-        return dtCollectionManager?.currentItemSize(for: indexPath) ?? .zero
+        return CGSize(width: CGFloat(ThumbnailSize.width.rawValue), height: CGFloat(ThumbnailSize.heightFile.rawValue))
     }
 }

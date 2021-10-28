@@ -291,8 +291,10 @@ extension FilesExplorerContainerViewController: TraitEnviromentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                               traitCollection: traitCollection)
+        if #available(iOS 13.0, *) {
+            AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
+                                                   traitCollection: traitCollection)
+        }
     }
 }
 

@@ -59,8 +59,10 @@ class EnterEmailViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance(shouldClearExistingText: false)
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
         }
     }
     
@@ -97,28 +99,28 @@ class EnterEmailViewController: UIViewController {
 
     // MARK: Private
     
-    private func updateAppearance(shouldClearExistingText: Bool = true) {
+    func updateAppearance() {
         view.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_backgroundGroupedElevated(traitCollection)
         
         tokenFieldView.backgroundColor = (presentingViewController == nil) ? .mnz_secondaryBackgroundGrouped(traitCollection) : .mnz_secondaryBackgroundElevated(traitCollection)
         
-        customizeTokenField(shouldClearExistingText: shouldClearExistingText)
+        customizeTokenField()
         tokenFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
     
-    private func updateBottomConstraint(_ newValue:CGFloat) {
+    func updateBottomConstraint(_ newValue:CGFloat) {
         inviteContactsButtonBottomConstraint.constant = newValue
         view.layoutIfNeeded()
     }
 
-    private func disableInviteContactsButton() {
+    func disableInviteContactsButton() {
         inviteContactsButton.setTitle(NSLocalizedString("invite", comment: "A button on a dialog which invites a contact to join MEGA."), for: .normal)
         inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
 
-    private func enableInviteContactsButton() {
+    func enableInviteContactsButton() {
         inviteContactsButton.mnz_setupPrimary(traitCollection)
         let inputText = tokenField.inputText()!
         let tokensNumber = tokens.count + (inputText.mnz_isValidEmail() ? 1 : 0)
@@ -128,7 +130,7 @@ class EnterEmailViewController: UIViewController {
         inviteContactsButton.setTitle(inviteContactsString, for: .normal)
     }
 
-    private func customizeTokenField(shouldClearExistingText: Bool = true) {
+    func customizeTokenField() {
         tokenField.dataSource = self
         tokenField.delegate = self
 
@@ -139,10 +141,7 @@ class EnterEmailViewController: UIViewController {
         tokenField.inputTextFieldKeyboardType = .emailAddress
         tokenField.autocapitalizationType = .none
         
-        if shouldClearExistingText {
-            tokenField.toLabelText = ""
-        }
-        
+        tokenField.toLabelText = "";
         tokenField.inputTextFieldTextColor = UIColor.mnz_label()
         tokenField.inputTextFieldFont = UIFont.preferredFont(forTextStyle: .body)
         

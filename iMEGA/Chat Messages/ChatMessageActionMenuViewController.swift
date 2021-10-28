@@ -137,8 +137,10 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
         }
     }
     
@@ -211,10 +213,10 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [saveForOfflineAction, forwardAction, shareAction, selectAction]
             
             if chatMessage.message.nodeList.size.uintValue == 1,
-               let name = chatMessage.message.nodeList.node(at: 0)?.name,
-                (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) {
+                let node = chatMessage.message.nodeList.node(at: 0),
+                (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 actions.append(saveToPhotosAction)
-                if name.mnz_isImagePathExtension {
+                if node.name.mnz_isImagePathExtension {
                     actions.append(copyAction)
                 }
             }

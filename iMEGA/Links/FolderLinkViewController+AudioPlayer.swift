@@ -25,21 +25,17 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
     }
     
     func hideMiniPlayer() {
-        DispatchQueue.main.async {
-            self.bottomView?.isHidden = true
-        }
+        bottomView?.isHidden = true
     }
     
     func closeMiniPlayer() {
-        hideMiniPlayer()
+        bottomView?.isHidden = true
         resetMiniPlayerContainer()
     }
     
     func resetMiniPlayerContainer() {
-        DispatchQueue.main.async {
-            self.bottomView?.removeFromSuperview()
-            self.bottomView = nil
-        }
+        bottomView?.removeFromSuperview()
+        bottomView = nil
     }
     
     @objc func shouldShowMiniPlayer() {

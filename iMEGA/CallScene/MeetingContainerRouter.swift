@@ -120,7 +120,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
             customModalAlertViewController?.dismiss(animated: true, completion: nil)
         }
-        customModalAlertViewController.overrideUserInterfaceStyle = .dark
+        if #available(iOS 13.0, *) {
+            customModalAlertViewController.overrideUserInterfaceStyle = .dark
+        }
         UIApplication.mnz_presentingViewController().present(customModalAlertViewController, animated: true)
     }
     
@@ -167,7 +169,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             MEGALogError("Parameter sender has a not allowed type")
             return
         }
-        activityViewController.overrideUserInterfaceStyle = .dark
+        if #available(iOS 13.0, *) {
+            activityViewController.overrideUserInterfaceStyle = .dark
+        }
         activityViewController.completionWithItemsHandler = completion
         
         if let presenter = presenter {

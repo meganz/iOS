@@ -243,12 +243,14 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
+
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
     }
     
     if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {

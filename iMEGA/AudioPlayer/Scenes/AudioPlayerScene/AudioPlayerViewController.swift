@@ -59,13 +59,15 @@ final class AudioPlayerViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let navController = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(navController.navigationBar, traitCollection: traitCollection)
-                AppearanceManager.forceToolbarUpdate(navController.toolbar, traitCollection: traitCollection)
+    
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                if let navController = navigationController {
+                    AppearanceManager.forceNavigationBarUpdate(navController.navigationBar, traitCollection: traitCollection)
+                    AppearanceManager.forceToolbarUpdate(navController.toolbar, traitCollection: traitCollection)
+                }
+                updateAppearance()
             }
-            updateAppearance()
         }
     }
     
@@ -221,7 +223,11 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func updateCloseButtonState() {
-        closeButton.isHidden = !(UIDevice.current.iPhoneDevice && (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight))
+        if #available(iOS 13.0, *) {
+            closeButton.isHidden = !(UIDevice.current.iPhoneDevice && (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight))
+        } else {
+            closeButton.isHidden = false
+        }
         
         if !closeButton.isHidden {
             closeButton.setTitle(NSLocalizedString("close", comment: "Title for close button"), for: .normal)

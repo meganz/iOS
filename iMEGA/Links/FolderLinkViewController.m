@@ -42,7 +42,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
@@ -178,12 +177,14 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
-        
-        [self reloadData];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+            
+            [self reloadData];
+        }
     }
 }
 

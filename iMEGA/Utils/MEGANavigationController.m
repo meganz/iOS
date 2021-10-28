@@ -27,16 +27,18 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-#ifdef MNZ_SHARE_EXTENSION
-        [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
-        [ExtensionAppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-#elif MNZ_PICKER_EXTENSION
-        
-#else
-        [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-#endif
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            #ifdef MNZ_SHARE_EXTENSION
+            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
+            [ExtensionAppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            #elif MNZ_PICKER_EXTENSION
+            
+            #else
+            [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            #endif
+        }
     }
 }
 

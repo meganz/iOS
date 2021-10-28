@@ -1,10 +1,10 @@
 
 #import "MEGASendSignupLinkRequestDelegate.h"
 
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "UIApplication+MNZCategory.h"
-@import SAMKeychain;
 
 @implementation MEGASendSignupLinkRequestDelegate
 

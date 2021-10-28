@@ -142,10 +142,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 return readyToPost
             }
 
-            
             MEGASdkManager.sharedMEGASdk().getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
-                if let base64Handle = node.base64Handle,
-                   let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier:base64Handle) {
+                if let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: node.base64Handle) {
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
                     self?.waitingForThumbnail = false
                     if !(self?.waitingForUserAttributes ?? true) {
@@ -287,14 +285,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         guard let destinationURL = containerURL?.appendingPathComponent(MEGAExtensionCacheFolder, isDirectory: true).appendingPathComponent(sharedSandboxCacheDirectory, isDirectory: true) else {
             return nil
         }
-        
-        guard let base64Handle = node.base64Handle else {
-            return nil
-        }
-        
         do {
             try FileManager.default.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
-            return destinationURL.appendingPathComponent(base64Handle).path
+            return destinationURL.appendingPathComponent(node.base64Handle).path
         } catch {
             return nil
         }

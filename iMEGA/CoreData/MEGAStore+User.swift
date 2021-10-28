@@ -14,9 +14,7 @@ extension MEGAStore {
                     DispatchQueue.main.async {
                         if let user = self.fetchUser(withUserHandle: handle) {
                             user.nickname = nickname
-                            if let context = self.stack.viewContext {
-                                self.save(context)
-                            }
+                            self.save(self.stack.viewContext)
                         } else {
                             self.insertUser(withUserHandle: handle, firstname: nil, lastname: nil, nickname: nickname, email: nil)
                         }

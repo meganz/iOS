@@ -37,8 +37,8 @@ final class NodeOpener {
     //MARK: - Private
     
     private func openFileNode(_ node: MEGANode, allNodes: [MEGANode]?) {
-        if let nodeName = node.name as NSString?,
-           (nodeName.mnz_isImagePathExtension || nodeName.mnz_isVideoPathExtension) {
+        let nodeName = (node.name as NSString)
+        if nodeName.mnz_isImagePathExtension || nodeName.mnz_isVideoPathExtension {
             let nodes = allNodes ?? [node]
             let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
             let mediaNodes = NSMutableArray(array: nodes)

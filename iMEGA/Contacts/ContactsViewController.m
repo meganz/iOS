@@ -135,7 +135,9 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    [self configPreviewingRegistration];
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
     
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
@@ -215,13 +217,15 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
     }
     
     [self configPreviewingRegistration];
@@ -1567,7 +1571,7 @@
         if (section == 0) {
             if (self.recentlyAddedUsersArray.count > 0) {
                 headerView.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-                headerView.titleLabel.text = NSLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts").localizedUppercaseString;
+                headerView.titleLabel.text = NSLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts").uppercaseString;
                 
                 return headerView;
             }
@@ -1584,9 +1588,9 @@
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         if (section == 0) {
-            headerView.titleLabel.text = NSLocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder").localizedUppercaseString;
+            headerView.titleLabel.text = NSLocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder").uppercaseString;
         } else if (section == 1) {
-            headerView.titleLabel.text = NSLocalizedString(@"pending", @"Label shown when a contact request is pending").localizedUppercaseString;
+            headerView.titleLabel.text = NSLocalizedString(@"pending", @"Label shown when a contact request is pending").uppercaseString;
         }
         return headerView;
     }
@@ -1594,22 +1598,22 @@
         && (self.contactsMode == ContactsModeChatCreateGroup
             || self.contactsMode == ContactsModeShareFoldersWith
             || self.contactsMode == ContactsModeInviteParticipants)) {
-        headerView.titleLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").localizedUppercaseString;
+        headerView.titleLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         headerView.backgroundColorView.backgroundColor = UIColor.mnz_background;
         headerView.topSeparatorView.hidden = YES;
         return headerView;
     }
     if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
         headerView.topSeparatorView.hidden = YES;
-        headerView.titleLabel.text = NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString;
+        headerView.titleLabel.text = NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
         return headerView;
     }
     if (section == 1 && self.contactsMode == ContactsModeChatStartConversation) {
-        headerView.titleLabel.text = NSLocalizedString(@"Recents", @"Title for the recents section").localizedUppercaseString;
+        headerView.titleLabel.text = NSLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
         return headerView;
     }
     if ((section == 2 && self.contactsMode == ContactsModeChatStartConversation) || (section == 1 && self.contactsMode > ContactsModeChatStartConversation)) {
-        headerView.titleLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").localizedUppercaseString;
+        headerView.titleLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         return headerView;
     }
     

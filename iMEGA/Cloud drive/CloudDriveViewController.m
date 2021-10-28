@@ -157,7 +157,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
     
-    [self configPreviewingRegistration];
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
     
     StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
     [warningVC showStorageAlertIfNeeded];
@@ -232,12 +234,14 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-        
-        [self reloadData];
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+            
+            [self reloadData];
+        }
     }
     
     [self configPreviewingRegistration];
@@ -1115,16 +1119,18 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)presentScanDocument {
-    if (!VNDocumentCameraViewController.isSupported) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Document scanning is not available", @"A tooltip message which is shown when device does not support document scanning")];
-        return;
+    if (@available(iOS 13.0, *)) {
+        if (!VNDocumentCameraViewController.isSupported) {
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Document scanning is not available", @"A tooltip message which is shown when device does not support document scanning")];
+            return;
+        }
+        
+        [self presentViewController:({
+            VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
+            scanVC.delegate = self;
+            scanVC;
+        }) animated:YES completion:nil];
     }
-    
-    [self presentViewController:({
-        VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
-        scanVC.delegate = self;
-        scanVC;
-    }) animated:YES completion:nil];
 }
 
 - (void)updateNavigationBarTitle {
@@ -1393,9 +1399,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [weakSelf presentUploadAlertController];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-        [self presentScanDocument];
-    }]];
+    if (@available(iOS 13.0, *)) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self presentScanDocument];
+        }]];
+    }
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
         UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];

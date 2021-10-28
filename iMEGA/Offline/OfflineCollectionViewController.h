@@ -1,6 +1,5 @@
 
 #import <UIKit/UIKit.h>
-#import "NodeCollectionViewCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCollectionViewEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath;
 - (void)reloadData;
-- (nullable NSDictionary *)getItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
