@@ -455,7 +455,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="새 이름을 입력하세요";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="다음의 문자는 허용되지 않습니다: ” * / : < > ? \\ |";
+"general.error.charactersNotAllowed"="다음의 문자는 허용되지 않습니다: ” * / : < > ? |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="%@ 파일의 이름을 바꿀까요?";
 /* Title for the action that allows you to replace a file. */
@@ -2715,4 +2715,4 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Speaker";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Flip";
+"meetings.quickAction.flip"="Switch";

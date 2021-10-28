@@ -818,8 +818,6 @@ static MEGAIndexer *indexer;
 }
 
 + (void)deleteUserData {
-    // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
-    
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     [NSFileManager.defaultManager mnz_removeItemAtPath:thumbsDirectory];
     

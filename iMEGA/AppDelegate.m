@@ -57,11 +57,6 @@
 #import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
 #import <SDWebImage/SDWebImage.h>
 #import "MEGASdkManager+CleanUp.h"
-
-#ifdef DEBUG
-#import <DoraemonKit/DoraemonManager.h>
-#endif
-
 @import Firebase;
 
 #import "MEGA-Swift.h"
@@ -148,10 +143,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [FIRApp configure];
-#ifdef DEBUG
-    [[DoraemonManager shareInstance] install];
-#endif
-    [self migrateExtensionCachesLocation];
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
@@ -271,9 +262,7 @@
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
                 CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
-                if (@available(iOS 13.0, *)) {
-                    checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
-                }
+                checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
                 [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
@@ -326,10 +315,11 @@
 
     [LTHPasscodeViewController.sharedUser setDelegate:self];
 
-    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
-    if (pendingTasks) {
-        [self beginBackgroundTaskWithName:@"PendingTasks"];
-    }
+    [MEGASdkManager.sharedMEGASdk areTherePendingTransfersWithCompletion:^(BOOL pendingTransfers) {
+        if (pendingTransfers) {
+            [self beginBackgroundTaskWithName:@"PendingTasks"];
+        }
+    }];
     
     if (self.privacyView == nil) {
         UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
@@ -880,32 +870,6 @@
             }
         }];
     }
-}
-
-- (void)migrateExtensionCachesLocation {
-    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
-    NSURL *oldDestinationURL = [containerURL URLByAppendingPathComponent:@"Library/Cache/" isDirectory:YES];
-    NSURL *newDestinationURL = [containerURL URLByAppendingPathComponent:MEGAExtensionCacheFolder isDirectory:YES];
-    
-    NSError *error;
-    
-    NSArray *files = [NSFileManager.defaultManager contentsOfDirectoryAtPath:oldDestinationURL.path error:&error];
-    
-    if (error) {
-        MEGALogError(@"Failed to locate/create Library/Cache/ with error: %@", error);
-    }
-    
-    for (NSString *file in files) {
-        [NSFileManager.defaultManager moveItemAtPath:[oldDestinationURL.path stringByAppendingPathComponent:file]
-                    toPath:[newDestinationURL.path stringByAppendingPathComponent:file]
-                     error:&error];
-        if (error) {
-            MEGALogError(@"Contents of directory at path failed with error: %@", error);
-        }
-    }
-    
-    [NSFileManager.defaultManager removeItemAtURL:oldDestinationURL error:&error];
-    
 }
 
 - (void)migrateLocalCachesLocation {

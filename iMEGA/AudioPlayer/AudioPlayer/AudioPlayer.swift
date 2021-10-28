@@ -161,12 +161,14 @@ final class AudioPlayer: NSObject {
             self.audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
             self.queuePlayer?.pause()
             
-            self.queuePlayer?.replaceCurrentItem(with: tracks.first)
+            CrashlyticsLogger.log("[AudioPlayer] Player replaced Items: \(String(describing: self.queuePlayer?.items()))")
+            self.secureReplaceCurrentItem(with: tracks.first)
             self.queuePlayer?.items().filter({$0 != self.queuePlayer?.items().first}).forEach {
                 self.queuePlayer?.remove($0)
             }
             self.tracks.forEach { self.queuePlayer?.secureInsert($0, after: self.queuePlayer?.items().last) }
             
+            CrashlyticsLogger.log("[AudioPlayer] Player new Items: \(String(describing: self.queuePlayer?.items()))")
             self.register()
             
             self.configurePlayer()
@@ -192,6 +194,17 @@ final class AudioPlayer: NSObject {
             UIApplication.shared.endBackgroundTask(self.taskId ?? .invalid)
             self.taskId = .invalid
         }
+    }
+    
+    private func secureReplaceCurrentItem(with item: AudioPlayerItem?) {
+        guard let newItem = item else { return }
+        
+        self.queuePlayer?.items().filter({$0 == newItem}).forEach {
+            CrashlyticsLogger.log("[AudioPlayer] Item removed: \(newItem)")
+            self.queuePlayer?.remove($0)
+        }
+        
+        self.queuePlayer?.replaceCurrentItem(with: newItem)
     }
 
     //MARK: - Internal Functions

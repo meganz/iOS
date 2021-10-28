@@ -9,15 +9,15 @@
 #import "MEGASdkManager.h"
 
 #import "CloudDriveViewController.h"
-#import "NodeCollectionViewCell.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "MEGA-Swift.h"
 
-@interface CloudDriveCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
+@interface CloudDriveCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout, NodeCollectionViewCellDelegate>
 
 @property (nonatomic, strong) NSArray<MEGANode *> *fileList;
 @property (nonatomic, strong) NSArray<MEGANode *> *folderList;
 @property (strong, nonatomic) CHTCollectionViewWaterfallLayout *layout;
+@property (strong, nonatomic) DynamicTypeCollectionManager *dtCollectionManager;
 
 @end
 
@@ -37,6 +37,15 @@
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self.dtCollectionManager resetCollectionItems];
+        [self.collectionView.collectionViewLayout invalidateLayout];
+    }
+}
+
 #pragma mark - CollectionView UI Setup
 
 - (void)setupCollectionView {
@@ -46,7 +55,12 @@
     self.layout.minimumInteritemSpacing = 8;
     [self.layout configThumbnailListColumnCount];
     
+    [self.collectionView registerNib:[UINib nibWithNibName:@"FileNodeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NodeCollectionFileID"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"FolderNodeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NodeCollectionFolderID"];
+    
     self.collectionView.collectionViewLayout = self.layout;
+    
+    self.dtCollectionManager = [DynamicTypeCollectionManager.alloc initWithDelegate:self];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -62,9 +76,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
     NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
-    [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
-    cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
-    cell.moreButton.hidden = self.collectionView.allowsMultipleSelection;
+    [cell configureCellForNode:node allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:MEGASdkManager.sharedMEGASdk delegate:self];
+    
     return cell;
 }
 
@@ -154,12 +167,12 @@
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == ThumbnailSectionFile ? CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFile) : CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFolder);
+    return [self.dtCollectionManager currentItemSizeFor:indexPath];
 }
 
-#pragma mark - Actions
+#pragma mark - NodeCollectionViewCellDelegate
 
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
+- (void)infoTouchUpInside:(UIButton *)sender {
     if (self.collectionView.allowsMultipleSelection) {
         return;
     }

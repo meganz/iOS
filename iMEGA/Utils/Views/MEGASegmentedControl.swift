@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-final class MEGASegmentedControl: UISegmentedControl, DynamicTypeProtocol {
+final class MEGASegmentedControl: UISegmentedControl, DynamicTypeComponentProtocol {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     @IBInspectable var selectedTextStyle: String?

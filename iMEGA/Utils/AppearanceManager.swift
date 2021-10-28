@@ -56,9 +56,7 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setShadowOpacity(0.15)
         SVProgressHUD.setShadowRadius(8)
         SVProgressHUD.setShadowColor(UIColor.black)
-        if #available(iOS 13.0, *) {
-            SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
-        }
+        SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
         SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
         SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray(for: traitCollection))
@@ -69,7 +67,6 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setErrorImage(UIImage(named: "hudError")!)
     }
     
-    @available(iOS 13.0, *)
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
         navigationBar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
@@ -79,13 +76,11 @@ class AppearanceManager: NSObject {
         navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
     }
     
-    @available(iOS 13.0, *)
     @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar, traitCollection: UITraitCollection) {
         searchBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         searchBar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
     }
     
-    @available(iOS 13.0, *)
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
         toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
@@ -100,38 +95,28 @@ class AppearanceManager: NSObject {
     
     
     @objc class func setupTabbar(_ tabBar: UITabBar, traitCollection: UITraitCollection) {
-        if #available(iOS 13, *) {
-            let appearance = UITabBarAppearance()
-            appearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            
-            appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
-            appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
-            appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
-            appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
-            
-            appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
-            appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-            appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
-            appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
-            
-            appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
-            appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-            appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
-            appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
-            
-            tabBar.standardAppearance = appearance
-            if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
-                tabBar.scrollEdgeAppearance = appearance
-            }
-        } else {
-            tabBar.unselectedItemTintColor = UIColor.mnz_primaryGray(for: traitCollection)
-            tabBar.tintColor = UIColor.mnz_red(for: traitCollection)
-            tabBar.barTintColor = UIColor.mnz_mainBars(for: traitCollection)
-            guard let tabBarItems = tabBar.items else { return }
-            for tabBarItem in tabBarItems {
-                tabBarItem.badgeColor = .clear
-                tabBarItem.setBadgeTextAttributes([.foregroundColor : UIColor.mnz_red(for: traitCollection)], for: .normal)
-            }
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+        appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
+        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+        
+        appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+        appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
+        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+        appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+        
+        appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+        appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
+        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+        appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+        
+        tabBar.standardAppearance = appearance
+        
+        if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
+            tabBar.scrollEdgeAppearance = appearance
         }
     }
     
@@ -141,56 +126,34 @@ class AppearanceManager: NSObject {
         UINavigationBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UINavigationBar.appearance().isTranslucent = false
         
-        if #available(iOS 13.0, *) {
-            let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            
-            navigationBarAppearance.shadowImage = nil
-            navigationBarAppearance.shadowColor = nil
-            
-            let backArrowImage = UIImage(named: "backArrow")
-            navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
-            
-            let barButtonItemAppearance = UIBarButtonItemAppearance()
-            barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
-            navigationBarAppearance.buttonAppearance = barButtonItemAppearance
-            navigationBarAppearance.doneButtonAppearance = barButtonItemAppearance
-            
-            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-        } else {
-            UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
-            UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            
-            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-            UINavigationBar.appearance().shadowImage = UIImage()
-            
-            UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
-            UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
-        }
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        
+        navigationBarAppearance.shadowImage = nil
+        navigationBarAppearance.shadowColor = nil
+        
+        let backArrowImage = UIImage(named: "backArrow")
+        navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
+        
+        let barButtonItemAppearance = UIBarButtonItemAppearance()
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
+        navigationBarAppearance.buttonAppearance = barButtonItemAppearance
+        navigationBarAppearance.doneButtonAppearance = barButtonItemAppearance
+        
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
     }
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
-        if #available(iOS 13.0, *) {
-            UIActivityIndicatorView.appearance().style = .medium
-            UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.white : UIColor.mnz_primaryGray(for: traitCollection)
-        } else {
-            UIActivityIndicatorView.appearance().style = .gray
-            UIActivityIndicatorView.appearance().color = UIColor.mnz_primaryGray(for: traitCollection)
-        }
+        UIActivityIndicatorView.appearance().style = .medium
+        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.white : UIColor.mnz_primaryGray(for: traitCollection)
     }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {
-        if #available(iOS 13, *) {
-            let toolbarAppearance = UIToolbarAppearance.init()
-            toolbarAppearance.configureWithDefaultBackground()
-            toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().standardAppearance = toolbarAppearance
-        } else {
-            UIToolbar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
-            UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        }
+        let toolbarAppearance = UIToolbarAppearance.init()
+        toolbarAppearance.configureWithDefaultBackground()
+        toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        UIToolbar.appearance().standardAppearance = toolbarAppearance
     }
 }

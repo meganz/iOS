@@ -16,14 +16,13 @@
 #import "MEGA-Swift.h"
 
 static NSString *kFileName = @"kFileName";
-static NSString *kFileSize = @"kFileSize";
-static NSString *kDuration = @"kDuration";
 static NSString *kPath = @"kPath";
 
-@interface OfflineCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
+@interface OfflineCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout, NodeCollectionViewCellDelegate>
 @property (nonatomic, strong) NSArray *fileList;
 @property (nonatomic, strong) NSArray *folderList;
 @property (strong, nonatomic) CHTCollectionViewWaterfallLayout *layout;
+@property (strong, nonatomic) DynamicTypeCollectionManager *dtCollectionManager;
 
 @end
 
@@ -44,6 +43,15 @@ static NSString *kPath = @"kPath";
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self.dtCollectionManager resetCollectionItems];
+        [self.collectionView.collectionViewLayout invalidateLayout];
+    }
+}
+
 #pragma mark - CollectionView UI Setup
 
 - (void)setupCollectionView {
@@ -53,7 +61,12 @@ static NSString *kPath = @"kPath";
     self.layout.minimumInteritemSpacing = 8;
     [self.layout configThumbnailListColumnCount];
     
+    [self.collectionView registerNib:[UINib nibWithNibName:@"FileNodeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NodeCollectionFileID"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"FolderNodeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NodeCollectionFolderID"];
+    
     self.collectionView.collectionViewLayout = self.layout;
+    
+    self.dtCollectionManager = [DynamicTypeCollectionManager.alloc initWithDelegate:self];
 }
 
 #pragma mark - Public
@@ -106,82 +119,9 @@ static NSString *kPath = @"kPath";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NodeCollectionViewCell *cell = indexPath.section == ThumbnailSectionFile ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
-    
+   
     NSDictionary *item = [self getItemAtIndexPath:indexPath];
-    NSString *nameString = item[kFileName];
-    NSString *pathForItem = [[self.offline currentOfflinePath] stringByAppendingPathComponent:nameString];
-    
-    MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
-    
-    cell.nameLabel.text = nameString;
-    
-    NSString *handleString = [offNode base64Handle];
-    
-    BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
-    if (isDirectory) {
-        cell.thumbnailIconView.image = UIImage.mnz_folderImage;
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^(void){
-            // heavy non-UI work
-            FolderContentStat *folderContentStat = [[NSFileManager defaultManager] mnz_folderContentStatWithPathForItem:pathForItem];
-            NSInteger files = folderContentStat.fileCount;
-            NSInteger folders = folderContentStat.folderCount;
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                // update UI
-                cell.infoLabel.text = [NSString mnz_stringByFiles:files andFolders:folders];
-            });
-        });
-    } else {
-        cell.infoLabel.text = [Helper memoryStyleStringFromByteCount:[item[kFileSize] longLongValue]];
-        NSString *extension = nameString.pathExtension.lowercaseString;
-        
-        if (!handleString) {
-            NSString *fpLocal = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:pathForItem];
-            if (fpLocal) {
-                MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fpLocal];
-                if (node) {
-                    handleString = node.base64Handle;
-                    [[MEGAStore shareInstance] insertOfflineNode:node api:[MEGASdkManager sharedMEGASdk] path:[[Helper pathRelativeToOfflineDirectory:pathForItem] decomposedStringWithCanonicalMapping]];
-                }
-            }
-        }
-        
-        NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
-            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            if (thumbnailImage) {
-                cell.thumbnailImageView.image = thumbnailImage;
-            }
-            cell.thumbnailIconView.hidden = YES;
-        } else {
-            if (nameString.mnz_isImagePathExtension) {
-                if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                    [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
-                }
-                cell.thumbnailIconView.hidden = YES;
-            } else {
-                cell.thumbnailIconView.hidden = NO;
-                [cell.thumbnailIconView mnz_setImageForExtension:extension];
-                cell.thumbnailImageView.image = nil;
-            }
-        }
-    
-    }
-    cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
-    
-    cell.selectImageView.hidden = !self.collectionView.allowsMultipleSelection;
-    cell.moreButton.hidden = self.collectionView.allowsMultipleSelection;
-    cell.durationLabel.hidden = !nameString.mnz_isVideoPathExtension;
-    if (!cell.durationLabel.hidden) {
-        cell.durationLabel.layer.cornerRadius = 4;
-        cell.durationLabel.layer.masksToBounds = true;
-        cell.durationLabel.text = nameString.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
-    }
-
-    cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    [cell setupAppearance];
+    [cell configureCellForOfflineItem:item itemPath:[[self.offline currentOfflinePath] stringByAppendingPathComponent:item[kFileName]] allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:[MEGASdkManager sharedMEGASdk] delegate: self];
     
     return cell;
 }
@@ -203,7 +143,7 @@ static NSString *kPath = @"kPath";
     }
     
     NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [self.offline itemTapped:cell.nameLabel.text atIndexPath:indexPath];
+    [self.offline itemTapped:cell.itemName atIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -237,12 +177,12 @@ static NSString *kPath = @"kPath";
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == ThumbnailSectionFile ? CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFile) : CGSizeMake(ThumbnailSizeWidth, ThumbnailSizeHeightFolder);
+    return [self.dtCollectionManager currentItemSizeFor:indexPath];
 }
 
-#pragma mark - Actions
+#pragma mark - NodeCollectionViewCell
 
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
+- (void)infoTouchUpInside:(UIButton *)sender {
     if (self.collectionView.allowsMultipleSelection) {
         return;
     }
@@ -251,7 +191,7 @@ static NSString *kPath = @"kPath";
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
     NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.nameLabel.text];
+    NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.itemName];
     
     [self.offline showInfoFilePath:itemPath at:indexPath from:sender];
 }

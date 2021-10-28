@@ -1,7 +1,6 @@
 import UIKit
 import Photos
 
-@available(iOS 13.0, *)
 final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
     private enum Section {
         case main
@@ -10,15 +9,16 @@ final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
     private var dataSource: UICollectionViewDiffableDataSource<Section, PHAsset>?
     
     func load(assets: [PHAsset]) {
+        let uniqueAssets = assets.removeDuplicatesWhileKeepingTheOriginalOrder()
         selectedAssets = selectedAssets.reduce(into: []) { result, asset in
-            if assets.contains(asset) {
+            if uniqueAssets.contains(asset) {
                 result.append(asset)
             }
         }
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, PHAsset>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(assets)
+        snapshot.appendItems(uniqueAssets)
         snapshot.reloadItems(selectedAssets)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }

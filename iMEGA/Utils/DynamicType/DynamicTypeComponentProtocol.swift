@@ -1,11 +1,11 @@
 
-protocol DynamicTypeProtocol where Self: UIView {
+protocol DynamicTypeComponentProtocol where Self: UIView {
     func observeContentSizeUpdates()
     func removeObserver()
     func applyFontSizes()
 }
 
-extension DynamicTypeProtocol {
+extension DynamicTypeComponentProtocol {
     func observeContentSizeUpdates() {
         NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.applyFontSizes()

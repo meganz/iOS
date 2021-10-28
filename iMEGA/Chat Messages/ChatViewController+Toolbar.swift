@@ -222,8 +222,8 @@ extension ChatViewController {
             }
             if chatMessage.message.type == .attachment || chatMessage.message.type == .voiceClip {
                 if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1,
-                   let node = chatMessage.message.nodeList.node(at: 0),
-                   (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                   let name = chatMessage.message.nodeList.node(at: 0)?.name,
+                   (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) {
                     hasPhoto = true
                 } else {
                     hasAttachments = true
