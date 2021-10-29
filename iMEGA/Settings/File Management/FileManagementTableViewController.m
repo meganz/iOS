@@ -201,6 +201,14 @@
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
                 [self removeGroupSharedDirectoryContents];
+                                
+                if (MEGASdkManager.sharedMEGASdk.downloadTransfers.size.integerValue == 0) {
+                    [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[Helper pathForOffline] forItemsExtension:@"mega"];
+                    [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager downloadsDirectory]];
+                }
+                if (MEGASdkManager.sharedMEGASdk.uploadTransfers.size.integerValue == 0) {
+                    [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
