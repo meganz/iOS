@@ -19,13 +19,13 @@ final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
         var snapshot = NSDiffableDataSourceSnapshot<Section, PHAsset>()
         snapshot.appendSections([.main])
         snapshot.appendItems(uniqueAssets)
-        snapshot.reloadItems(selectedAssets)
+        snapshot.reloadItems(selectedAssets.removeDuplicatesWhileKeepingTheOriginalOrder())
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     func reload(assets: [PHAsset]) {
         guard var newSnapshot = dataSource?.snapshot() else { return }
-        newSnapshot.reloadItems(assets)
+        newSnapshot.reloadItems(assets.removeDuplicatesWhileKeepingTheOriginalOrder())
         dataSource?.apply(newSnapshot)
     }
     
