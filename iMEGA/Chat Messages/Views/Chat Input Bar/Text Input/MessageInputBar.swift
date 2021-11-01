@@ -271,10 +271,11 @@ class MessageInputBar: UIView {
     
     override var keyCommands: [UIKeyCommand]? {
       return [
-        UIKeyCommand(input: kMEGAUIKeyInputCarriageReturn,
-          modifierFlags: [],
-          action: #selector(MessageInputBar.sendButtonTapped),
-          discoverabilityTitle: NSLocalizedString("send", comment: ""))
+        UIKeyCommand(
+           action: #selector(MessageInputBar.sendButtonTapped),
+           input: kMEGAUIKeyInputCarriageReturn,
+           discoverabilityTitle: NSLocalizedString("send", comment: "")
+       )
       ]
     }
     
