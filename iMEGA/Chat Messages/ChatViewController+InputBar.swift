@@ -167,7 +167,6 @@ extension ChatViewController {
             }
             
             self.addToChatViewController = nil
-            self.adjustMessageCollectionBottomInset()
         }
         
         chatInputBar?.dismissKeyboard()
@@ -197,29 +196,6 @@ extension ChatViewController {
                 present(viewController: addToChatViewController)
             }
             
-        }
-    }
-    
-    // This method has be added to overcome this issue. https://github.com/MessageKit/MessageKit/issues/993
-    // The fix is suppose to be added in the milestone https://github.com/MessageKit/MessageKit/milestone/22
-    // Once Messagekit 4.0 is released try removing this method.
-    private func adjustMessageCollectionBottomInset() {
-        guard let accessoryView = inputAccessoryView,
-            let window = view.window else {
-                return
-        }
-        
-        let collectionViewInset = accessoryView.frame.height - window.safeAreaInsets.bottom
-        
-        if messagesCollectionView.contentInset.bottom != collectionViewInset {
-            let oldInset = messagesCollectionView.adjustedContentInset.bottom
-            
-            messagesCollectionView.contentInset.bottom = collectionViewInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = collectionViewInset
-            
-            var contentOffset = messagesCollectionView.contentOffset
-            contentOffset.y += (messagesCollectionView.contentInset.bottom + oldInset)
-            messagesCollectionView.contentOffset = contentOffset
         }
     }
     
