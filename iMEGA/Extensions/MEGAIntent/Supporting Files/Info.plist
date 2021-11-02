@@ -32,6 +32,7 @@
 			<array>
 				<string>SelectSectionIntent</string>
 				<string>SelectShortcutIntent</string>
+				<string>INStartCallIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
