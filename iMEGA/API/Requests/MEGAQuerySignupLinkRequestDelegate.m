@@ -56,7 +56,7 @@
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
+                    UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
                     if ([rootViewController isKindOfClass:OnboardingViewController.class]) {
                         UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
                         LoginViewController *loginVC = loginNC.viewControllers.firstObject;
@@ -83,7 +83,7 @@
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:MEGALinkManager.linkURL.absoluteString email:self.email];
         }
     } else if (self.urlType == URLTypeNewSignUpLink && MEGALinkManager.emailOfNewSignUpLink)  {
-        UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
+        UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
         if ([rootViewController isKindOfClass:OnboardingViewController.class]) {
             UINavigationController *createNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
             CreateAccountViewController *createAccountVC = createNC.viewControllers.firstObject;

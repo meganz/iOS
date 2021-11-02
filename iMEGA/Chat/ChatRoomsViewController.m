@@ -129,7 +129,7 @@
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
-        
+    
     [self updateAppearance];
 }
 

@@ -25,7 +25,7 @@
 #import "UIViewController+MNZCategory.h"
 #import "NodeTableViewCell.h"
 
-@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
+@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
 
@@ -76,8 +76,6 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupBrowser];
-    
-    [self configPreviewingRegistration];
     
     self.navigationController.presentationController.delegate = self;
     self.cloudDriveButton.titleLabel.adjustsFontForContentSizeCategory = YES;
@@ -147,8 +145,6 @@
         
         [self.tableView reloadData];
     }
-    
-    [self configPreviewingRegistration];
 }
 
 #pragma mark - Private
@@ -882,46 +878,6 @@
 - (void)didPresentSearchController:(UISearchController *)searchController {
     float yPosition = self.selectorView.hidden ? 0 : self.selectorViewHeightConstraint.constant;
     self.searchController.searchBar.superview.frame = CGRectMake(0, yPosition, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
-}
-
-#pragma mark - UIViewControllerPreviewingDelegate
-
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
-        return nil;
-    }
-    
-    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
-    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
-    
-    switch (node.type) {
-        case MEGANodeTypeFolder: {
-            BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
-            browserVC.browserAction = self.browserAction;
-            browserVC.childBrowser = YES;
-            browserVC.childBrowserFromIncoming = (self.incomingButton.selected || self.isChildBrowserFromIncoming) ? YES : NO;
-            browserVC.localpath = self.localpath;
-            browserVC.parentNode = node;
-            browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
-            browserVC.selectedNodesArray = self.selectedNodesArray;
-            browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
-            
-            return browserVC;
-        }
-            
-        default:
-            break;
-    }
-    
-    return nil;
-}
-
-- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == BrowserViewController.class) {
-        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-    }
 }
 
 #pragma mark - UIAdaptivePresentationControllerDelegate

@@ -206,7 +206,6 @@
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
         if ([restoreDelegate respondsToSelector:@selector(failedRestore:message:)]) {
             [restoreDelegate failedRestore:error.code message:error.localizedDescription];

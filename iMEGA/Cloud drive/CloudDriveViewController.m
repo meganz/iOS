@@ -57,7 +57,7 @@
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -159,8 +159,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
     
-    [self configPreviewingRegistration];
-    
     StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
     [warningVC showStorageAlertIfNeeded];
     
@@ -241,8 +239,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         
         [self reloadData];
     }
-    
-    [self configPreviewingRegistration];
 }
 
 #pragma mark - Layout
@@ -352,237 +348,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
-}
-
-#pragma mark - UIViewControllerPreviewingDelegate
-
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    
-    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
-        return nil;
-    }
-    
-    NSIndexPath *indexPath;
-    if (self.viewModePreference == ViewModePreferenceList) {
-        CGPoint cellPoint = [self.view convertPoint:location toView:self.cdTableView.tableView];
-        indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:cellPoint];
-        if (!indexPath || ![self.cdTableView.tableView numberOfRowsInSection:indexPath.section]) {
-            return nil;
-        }
-    } else {
-        CGPoint cellPoint = [self.view convertPoint:location toView:self.cdCollectionView.collectionView];
-        indexPath = [self.cdCollectionView.collectionView indexPathForItemAtPoint:cellPoint];
-        if (!indexPath || ![self.cdCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
-            return nil;
-        }
-    }
-    
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
-    if (node == nil) {
-        return nil;
-    }
-    
-    previewingContext.sourceRect = (self.viewModePreference == ViewModePreferenceList) ? [self.cdTableView.tableView convertRect:[self.cdTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.cdCollectionView.collectionView convertRect:[self.cdCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
-    
-    switch (node.type) {
-        case MEGANodeTypeFolder: {
-            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            if (self.displayMode == DisplayModeRubbishBin) {
-                cloudDriveVC.displayMode = self.displayMode;
-            }
-            return cloudDriveVC;
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                return [self photoBrowserForMediaNode:node];
-            } else {
-                if (!node.mnz_isPlayable || (node.mnz_isPlayable && node.name.mnz_isVideoPathExtension)) {
-                    UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:self];
-                    return viewController;
-                }
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-    
-    return nil;
-}
-
-- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == CloudDriveViewController.class) {
-        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-    } else if (viewControllerToCommit.class == PreviewDocumentViewController.class) {
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewControllerToCommit];
-        [self.navigationController presentViewController:navigationController animated:YES completion:nil];
-    } else {
-        if (viewControllerToCommit.isBeingPresented || viewControllerToCommit.presentingViewController != nil) {
-            return;
-        }
-        [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
-    }
-}
-
-- (NSArray<id<UIPreviewActionItem>> *)previewActions {
-    UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
-    
-    UIPreviewAction *saveForOfflineAction =
-    [UIPreviewAction actionWithTitle:NSLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder")
-                               style:UIPreviewActionStyleDefault
-                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                 CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                 self.selectedNodesArray = [NSMutableArray new];
-                                 [self.selectedNodesArray addObject:cloudDriveVC.parentNode];
-                                 [self downloadAction:nil];
-                             }];
-    
-    UIPreviewAction *copyAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"copy", @"List option shown on the details of a file or folder")
-                                                             style:UIPreviewActionStyleDefault
-                                                           handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                               CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                               [cloudDriveVC.parentNode mnz_copyInViewController:rootViewController];
-                                                           }];
-    
-    NSString *deletePreviewActionTitle;
-    UITabBarController *tabBarController = (UITabBarController *)self.presentingViewController;
-    UINavigationController *navigationController = tabBarController.selectedViewController;
-    if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
-        MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-        if (shareType == MEGAShareTypeAccessOwner) {
-            deletePreviewActionTitle = NSLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
-        }
-    } else {
-        if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeSharedItem) {
-            deletePreviewActionTitle = NSLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
-        } else if (self.displayMode == DisplayModeRubbishBin) {
-            deletePreviewActionTitle = NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
-        }
-    }
-    UIPreviewAction *deleteAction =
-    [UIPreviewAction actionWithTitle:deletePreviewActionTitle
-                               style:UIPreviewActionStyleDestructive
-                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                 CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                 MEGANode *parentNode = cloudDriveVC.parentNode;
-                                 MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:parentNode];
-                                 if (accessType == MEGAShareTypeAccessOwner) {
-                                     if (self.displayMode == DisplayModeCloudDrive) {
-                                         if (navigationController.viewControllers.lastObject.class == CloudDriveViewController.class) {
-                                             [parentNode mnz_moveToTheRubbishBinWithCompletion:^{
-                                                 [self setEditMode:NO];
-                                             }];
-                                         } else if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
-                                             NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
-                                             MEGAShareList *shareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.parentNode];
-                                             NSUInteger outSharesForNodeCount = shareList.size.unsignedIntegerValue;
-                                             for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
-                                                 MEGAShare *share = [shareList shareAtIndex:i];
-                                                 if (share.user != nil) {
-                                                     [outSharesForNodeMutableArray addObject:share];
-                                                 }
-                                             }
-                                             
-                                             MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
-                                             for (MEGAShare *share in outSharesForNodeMutableArray) {
-                                                 [[MEGASdkManager sharedMEGASdk] shareNode:self.parentNode withEmail:share.user level:MEGANodeAccessLevelAccessUnknown delegate:shareRequestDelegate];
-                                             }
-                                         }
-                                     } else { //DisplayModeRubbishBin (Remove)
-                                         MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin files:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
-                                             [MEGAStore.shareInstance deleteCloudAppearancePreferenceWithHandle:parentNode.handle];
-                                             
-                                             [self setEditMode:NO];
-                                         }];
-                                         [[MEGASdkManager sharedMEGASdk] removeNode:parentNode delegate:removeRequestDelegate];
-                                     }
-                                 } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
-                                     [parentNode mnz_moveToTheRubbishBinWithCompletion:^{
-                                         [self setEditMode:NO];
-                                     }];
-                                 }
-    }];
-    
-    MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-    NSArray<id<UIPreviewActionItem>> *previewActions;
-    switch (shareType) {
-        case MEGAShareTypeAccessRead:
-        case MEGAShareTypeAccessReadWrite:
-        case MEGAShareTypeAccessFull: {
-            if (navigationController.viewControllers.lastObject.class == CloudDriveViewController.class) {
-                previewActions = (shareType == MEGAShareTypeAccessFull) ? @[saveForOfflineAction, copyAction, deleteAction] : @[saveForOfflineAction, copyAction];
-            } else if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
-                UIPreviewAction *leaveShareAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"leave", @"A button label. The button allows the user to leave the group conversation.")
-                                                                               style:UIPreviewActionStyleDestructive
-                                                                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                                 CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                                 
-                                                                                 NSString *alertMessage = (cloudDriveVC.selectedNodesArray.count > 1) ? NSLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : NSLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
-                                                                                 UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-                                                                                 [leaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                                                                                 
-                                                                                 [leaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                                                                     MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem files:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
-                                                                                         [self setEditMode:NO];
-                                                                                     }];
-                                                                                     [[MEGASdkManager sharedMEGASdk] removeNode:self.parentNode delegate:removeRequestDelegate];
-                                                                                 }]];
-                                                                                 
-                                                                                 [rootViewController presentViewController:leaveAlertController animated:YES completion:nil];
-                                                                             }];
-                previewActions = @[saveForOfflineAction, copyAction, leaveShareAction];
-            }
-            break;
-        }
-            
-        case MEGAShareTypeAccessOwner: {
-            UIPreviewAction *shareAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ")
-                                                                      style:UIPreviewActionStyleDefault
-                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                        UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[cloudDriveVC.parentNode] sender:nil];
-                                                                        [rootViewController presentViewController:activityVC animated:YES completion:nil];
-                                                                    }];
-            
-            UIPreviewAction *moveAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"move", @"Title for the action that allows you to move a file or folder")
-                                                                     style:UIPreviewActionStyleDefault
-                                                                   handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                       CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                       [cloudDriveVC.parentNode mnz_moveInViewController:rootViewController];
-                                                                   }];
-            
-            if (self.displayMode == DisplayModeCloudDrive) {
-                if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
-                    UIPreviewAction *shareFolderPreviewAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive")
-                                                                                           style:UIPreviewActionStyleDefault
-                                                                                         handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                                             CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                                             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-                                                                                             ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-                                                                                             contactsVC.contactsMode = ContactsModeShareFoldersWith;
-                                                                                             contactsVC.nodesArray = @[cloudDriveVC.parentNode];
-                                                                                             [rootViewController presentViewController:navigationController animated:YES completion:nil];
-                                                                                         }];
-                    
-                    previewActions = @[shareAction, shareFolderPreviewAction, copyAction, deleteAction];
-                } else if (navigationController.viewControllers.lastObject.class == CloudDriveViewController.class) {
-                    previewActions = @[saveForOfflineAction, shareAction, moveAction, copyAction, deleteAction];
-                }
-            } else if (self.displayMode == DisplayModeRubbishBin) {
-                previewActions = @[saveForOfflineAction, moveAction, copyAction, deleteAction];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-    
-    return previewActions;
 }
 
 #pragma mark - UILongPressGestureRecognizer

@@ -172,7 +172,6 @@ class ChatViewController: MessagesViewController {
         update()
         
         messagesCollectionView.allowsMultipleSelection = true
-        configureMenus()
         configureJoinCallButton()
         configurePreviewerButton()
         addObservers()
@@ -649,23 +648,6 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.emptyDataSetDelegate = self
         
         maintainPositionOnKeyboardFrameChanged = true
-    }
-    
-    private func configureMenus() {
-        let forwardMenuItem = UIMenuItem(title:NSLocalizedString("forward", comment: "Item of a menu to forward a message chat to another chatroom"), action: #selector(MessageCollectionViewCell.forward(_:)))
-        
-        let importMenuItem = UIMenuItem(title:NSLocalizedString("Import to Cloud Drive", comment: "Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
-        
-        let editMenuItem = UIMenuItem(title:NSLocalizedString("edit", comment: "Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.edit(_:)))
-
-        let downloadMenuItem = UIMenuItem(title:NSLocalizedString("saveForOffline", comment: "Caption of a button to download the files that are selected"), action: #selector(MessageCollectionViewCell.download(_:)))
-
-        let addContactMenuItem = UIMenuItem(title:NSLocalizedString("addContact", comment: "Alert title shown when you select to add a contact inserting his/her email"), action: #selector(MessageCollectionViewCell.addContact(_:)))
-
-        let removeRichLinkMenuItem = UIMenuItem(title:NSLocalizedString("removePreview", comment: "Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases)."), action: #selector(MessageCollectionViewCell.removeRichPreview(_:)))
-
-        
-        UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
     }
     
     private func configureJoinCallButton() {

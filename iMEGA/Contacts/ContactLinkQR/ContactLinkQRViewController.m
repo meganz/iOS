@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
     [self stopRecognizingCodes];
     self.cameraMaskView.hidden = YES;
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        [self.videoPreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
+        [self.videoPreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation) self.view.window.windowScene.interfaceOrientation];
         [self setupCameraMask];
         [self startRecognizingCodes];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
@@ -290,7 +290,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 
         self.videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
         self.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        self.videoPreviewLayer.connection.videoOrientation = (AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation];
+        self.videoPreviewLayer.connection.videoOrientation = (AVCaptureVideoOrientation)self.view.window.windowScene.interfaceOrientation;
         self.videoPreviewLayer.frame = self.cameraView.layer.bounds;
         [self.cameraView.layer addSublayer:self.videoPreviewLayer];
         

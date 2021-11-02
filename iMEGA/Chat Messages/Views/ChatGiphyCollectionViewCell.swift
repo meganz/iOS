@@ -9,7 +9,7 @@ class ChatGiphyCollectionViewCell: MessageContentCell {
     }()
 
     open var loadingIndicator: UIActivityIndicatorView = {
-        let loadingIndicator = UIActivityIndicatorView(style: .gray)
+        let loadingIndicator = UIActivityIndicatorView(style: .medium)
         loadingIndicator.startAnimating()
         loadingIndicator.hidesWhenStopped = true
         return loadingIndicator

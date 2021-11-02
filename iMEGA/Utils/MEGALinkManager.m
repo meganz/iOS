@@ -248,7 +248,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     uint64_t handle = [MEGASdk handleForBase64Handle:nodeToPresentBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
     if (node) {
-        if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+        if ([UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
             [node navigateToParentAndPresent];
         }
     } else {
@@ -373,8 +373,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             
         case URLTypeOpenChatSectionLink: {
             if ([Helper hasSession_alertIfNot]) {
-                if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                if ([UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                     mainTBC.selectedIndex = TabTypeChat;
                 }
             }
@@ -398,8 +398,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             
         case URLTypeAchievementsLink: {
             if ([Helper hasSession_alertIfNot]) {
-                if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                if ([UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                     [mainTBC showAchievements];
                 }
             }
@@ -420,29 +420,29 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
             
         case URLTypeUploadFile:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 [mainTBC showUploadFile];
             }
             break;
             
         case URLTypeScanDocument:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 [mainTBC showScanDocument];
             }
             break;
             
         case URLTypeStartConversation:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 [mainTBC showStartConversation];
             }
             break;
             
         case URLTypeAddContact:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 [mainTBC showAddContact];
             }
             break;
@@ -454,30 +454,30 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
             
         case URLTypeShowOffline:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 [mainTBC showOfflineAndPresentFileWithHandle:nil];
             }
             break;
             
         case URLTypePresentOfflineFile:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 [mainTBC showOfflineAndPresentFileWithHandle:url.lastPathComponent];
             }
             break;
             
         case URLTypeShowFavourites:
         case URLTypePresentFavouritesNode:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 (MEGALinkManager.urlType == URLTypeShowFavourites) ? [mainTBC showFavouritesNodeWithHandle:nil] : [mainTBC showFavouritesNodeWithHandle:url.lastPathComponent];
             }
             break;
             
         case URLTypeShowRecents:
-            if ([Helper hasSession_alertIfNot] && [UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+            if ([Helper hasSession_alertIfNot] && [UIApplication.mnz_keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.mnz_keyWindow.rootViewController;
                 [mainTBC showRecents];
             }
             break;
@@ -880,7 +880,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)createMeetingAndShow:(uint64_t)chatId userhandle:(uint64_t)userHandle publicChatLink:(NSURL *)publicChatLink {
     
-    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     if (chatRoom == nil) {
         return;
@@ -925,7 +925,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }
     
-    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     if (chatRoom == nil) {
         return;

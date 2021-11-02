@@ -156,7 +156,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     }()
     
     private lazy var loadingIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .whiteLarge)
+        let indicator = UIActivityIndicatorView(style: .large)
         indicator.hidesWhenStopped = true
         return indicator
     }()

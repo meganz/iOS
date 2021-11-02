@@ -62,7 +62,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         }
     };
     
-    self.imageRequestId = [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+    self.imageRequestId = [[PHImageManager defaultManager] requestImageDataAndOrientationForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, CGImagePropertyOrientation orientation, NSDictionary * _Nullable info) {
         if (weakSelf.isFinished) {
             return;
         }

@@ -84,7 +84,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color;
 
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
-+ (void)resetFrameForSearchController:(UISearchController *)searchController;
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;

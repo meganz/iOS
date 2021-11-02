@@ -1016,7 +1016,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             UIScreen *secondScreen = [[UIScreen screens] objectOrNilAtIndex:1];
             CGRect screenBounds = secondScreen.bounds;
             self.secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
-            self.secondWindow.screen = secondScreen;
+            self.secondWindow.windowScene = secondScreen;
             self.secondWindow.hidden = NO;
         }
         

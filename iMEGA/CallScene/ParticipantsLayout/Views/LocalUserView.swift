@@ -40,9 +40,10 @@ class LocalUserView: UIView {
             return
         }
         let location = touch.location(in: superview)
-        UIView.beginAnimations("Dragging", context: nil)
-        center = CGPoint(x: location.x - offset.x + frame.size.width / 2, y: location.y - offset.y + frame.size.height / 2)
-        UIView.commitAnimations()
+        UIView.animate(withDuration: 0.0) { [weak self] in
+            guard let self = self else { return }
+            self.center = CGPoint(x: location.x - self.offset.x + self.frame.size.width / 2, y: location.y - self.offset.y + self.frame.size.height / 2)
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -108,8 +109,6 @@ class LocalUserView: UIView {
     //MARK: - Private
     private func positionView(by center: CGPoint, animated: Bool = true) {
         if animated {
-            UIView.beginAnimations("Dragging", context: nil)
-
             guard let superview = superview else { return }
             if center.x > superview.frame.size.width / 2 {
                 if center.y > superview.frame.size.height / 2 {
@@ -125,8 +124,11 @@ class LocalUserView: UIView {
                 }
             }
             let point = startingPoint()
-            self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
-            UIView.commitAnimations()
+            
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self = self else { return }                
+                self.center = CGPoint(x: point.x + self.frame.size.width / 2, y: point.y + self.frame.size.height / 2)
+            }
         } else {
             let point = startingPoint()
             self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)

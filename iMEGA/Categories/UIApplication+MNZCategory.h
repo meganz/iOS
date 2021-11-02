@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 /* The visible view controller */
 + (UIViewController *)mnz_visibleViewController;
 
++ (nullable UIWindow * )mnz_keyWindow;
+
 @end
 
 NS_ASSUME_NONNULL_END

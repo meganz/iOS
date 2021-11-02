@@ -31,7 +31,7 @@ class ChatSharedItemsViewController: UIViewController {
     private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "import"), style: .plain, target: self, action: #selector(importTapped)
     )
     
-    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
+    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
 
     // MARK: - Init methods
     
