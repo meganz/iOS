@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,27 +25,35 @@
                         <constraint firstAttribute="width" constant="44" id="qDk-FG-ygj"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="You have 46 days left to upgrade." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W08-Hj-Nir">
-                    <rect key="frame" x="64" y="37" width="197.5" height="14.5"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="You have 46 days left to upgrade." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W08-Hj-Nir" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                    <rect key="frame" x="64" y="37" width="190.5" height="14"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="semibold"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
             </subviews>
             <color key="backgroundColor" red="0.99607843137254903" green="0.97076636549999995" blue="0.8508112431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="W08-Hj-Nir" secondAttribute="trailing" constant="16" id="0FY-n7-cN8"/>
-                <constraint firstAttribute="bottom" secondItem="oJU-ZV-wDr" secondAttribute="bottom" constant="22" id="3gk-r8-TzO"/>
                 <constraint firstItem="oJU-ZV-wDr" firstAttribute="leading" secondItem="VXP-TM-imT" secondAttribute="leading" constant="12" id="FOj-ck-AFL"/>
-                <constraint firstItem="oJU-ZV-wDr" firstAttribute="top" secondItem="VXP-TM-imT" secondAttribute="top" constant="22" id="I4P-OD-bEj"/>
                 <constraint firstItem="oJU-ZV-wDr" firstAttribute="centerY" secondItem="VXP-TM-imT" secondAttribute="centerY" id="UV4-VJ-oJM"/>
+                <constraint firstAttribute="bottom" secondItem="W08-Hj-Nir" secondAttribute="bottom" constant="37" id="Udt-s7-iwk"/>
                 <constraint firstItem="W08-Hj-Nir" firstAttribute="leading" secondItem="oJU-ZV-wDr" secondAttribute="trailing" constant="8" id="cK4-NS-Oet"/>
-                <constraint firstItem="W08-Hj-Nir" firstAttribute="centerY" secondItem="VXP-TM-imT" secondAttribute="centerY" id="ujZ-Q6-EGP"/>
+                <constraint firstItem="W08-Hj-Nir" firstAttribute="top" secondItem="VXP-TM-imT" secondAttribute="top" constant="37" id="ffe-5q-tHu"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="57.971014492753625" y="180.80357142857142"/>
         </view>
     </objects>
+    <designables>
+        <designable name="W08-Hj-Nir">
+            <size key="intrinsicContentSize" width="190.5" height="14.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="warning" width="146" height="122"/>
     </resources>

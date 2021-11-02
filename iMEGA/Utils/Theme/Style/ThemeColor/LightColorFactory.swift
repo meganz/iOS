@@ -17,7 +17,7 @@ struct LightColorThemeFactory: ColorFactory {
         case .primary: return Color(red: 255, green: 255, blue: 255)
         case .secondary: return Color(red: 196, green: 204, blue: 204, alpha: 255)
 
-        case .warning: return Color(red: 255, green: 204, blue: 0, alpha: 38)
+        case .warning: return Color(red: 255, green: 204, blue: 0, alpha: 8)
         case .enabled: return Color(red: 0, green: 168, blue: 134, alpha: 255)
         case .disabled: return Color(red: 153, green: 153, blue: 153, alpha: 255)
         case .highlighted: return Color(red: 0, green: 168, blue: 134, alpha: 204)

@@ -66,7 +66,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
         func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
             let formattedTitleMessage = warningMessage(for: overDiskQuotaData.deadline)
-            let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized(.captionSemibold)]
+            let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized(.subheadlineSemibold)]
             return formattedTitleMessage.attributedString(
                 with: styleMarks,
                 attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory

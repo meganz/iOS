@@ -14,6 +14,7 @@ enum MEGATextStyle: Hashable {
     case subheadline //Regular by default
     case subheadlineMedium
     case subheadlineBold
+    case subheadlineSemibold
     
     case footnoteBold
     case footnoteSemibold
@@ -41,6 +42,7 @@ private struct TextStyleFactoryImpl: TextStyleFactory {
             
         case .subheadline: return TextStyle(font: Font(style: .subheadline))
         case .subheadlineBold: return TextStyle(font: Font(style: .subheadline, weight: .bold))
+        case .subheadlineSemibold: return TextStyle(font: Font(style: .subheadline, weight: .semibold))
         case .subheadlineMedium: return TextStyle(font: Font(style: .headline, weight: .medium))
             
         case .footnoteBold: return TextStyle(font: Font(style: .footnote, weight: .bold))
