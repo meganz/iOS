@@ -249,7 +249,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
         NSError *error = [NSError errorWithDomain:@"activity.nz.mega" code:0 userInfo:@{@"callStack": [NSThread callStackSymbols]}];
         [[FIRCrashlytics crashlytics] recordError:error];
         
-        [self configPopoverForActivityViewController:activityVC senderView:UIApplication.sharedApplication.keyWindow];
+        [self configPopoverForActivityViewController:activityVC senderView:UIApplication.mnz_keyWindow];
     }
 }
 

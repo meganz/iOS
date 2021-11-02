@@ -171,7 +171,7 @@
 }
 
 - (void)arrangeLogoutButton {
-    if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation) && (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone)) {
+    if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
         [self.centerStackView addArrangedSubview:self.logoutButton];
     } else {
         [self.bottomStackView addArrangedSubview:self.logoutButton];
@@ -224,13 +224,13 @@
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification {
-    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)) {
+    if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.descriptionLabelHeightConstraint.constant = 0;
     }
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification {
-    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)) {
+    if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.descriptionLabelHeightConstraint.constant = self.descriptionLabelHeight;
     }
 }

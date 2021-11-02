@@ -4,7 +4,7 @@
 @implementation UIApplication (MNZCategory)
 
 + (UIViewController *)mnz_presentingViewController {
-    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
     
     while (rootViewController.presentedViewController) {
         rootViewController = rootViewController.presentedViewController;
@@ -38,6 +38,18 @@
     }
     
     return rootViewController;
+}
+
++ (UIWindow *)mnz_keyWindow {
+    UIWindow *keyWindow;
+    NSArray *windows = UIApplication.sharedApplication.windows;
+    for (UIWindow *window in windows) {
+        if (window.isKeyWindow) {
+            keyWindow = window;
+            break;
+        }
+    }
+    return keyWindow;
 }
 
 @end

@@ -16,4 +16,8 @@ extension UIApplication {
         guard let w = self.delegate?.window, let window = w else { return false }
         return !window.frame.equalTo(window.screen.bounds)
     }
+    
+    var keyWindow: UIWindow? {
+        UIApplication.shared.windows.first(where: \.isKeyWindow)
+    }
 }

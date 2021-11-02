@@ -32,7 +32,7 @@ static NSString *kFileSize = @"kFileSize";
 static NSString *kDuration = @"kDuration";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
@@ -90,8 +90,6 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController.delegate = self;
 
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
-    
-    [self configPreviewingRegistration];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -174,8 +172,6 @@ static NSString *kisDirectory = @"kisDirectory";
         }
         [self reloadData];
     }
-    
-    [self configPreviewingRegistration];
 }
 
 #pragma mark - Layout
@@ -1161,86 +1157,6 @@ static NSString *kisDirectory = @"kisDirectory";
     if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [self.offlineTableView.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
-}
-
-#pragma mark - UIViewControllerPreviewingDelegate
-
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    if (self.offlineTableView.tableView.isEditing || self.offlineCollectionView.collectionView.allowsMultipleSelection) {
-        return nil;
-    }
-    
-    NSIndexPath *indexPath;
-    NSString *itemName;
-    if (self.viewModePreference == ViewModePreferenceList) {
-        CGPoint rowPoint = [self.offlineTableView.tableView convertPoint:location fromView:self.view];
-        indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:rowPoint];
-        if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
-            return nil;
-        }
-        OfflineTableViewCell *cell = (OfflineTableViewCell *)[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath];
-        itemName = cell.itemNameString;
-    } else {
-        CGPoint rowPoint = [self.offlineCollectionView.collectionView convertPoint:location fromView:self.view];
-        indexPath = [self.offlineCollectionView.collectionView indexPathForItemAtPoint:rowPoint];
-        if (!indexPath || ![self.offlineCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
-            return nil;
-        }
-        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath];
-        itemName = cell.itemName;
-    }
-    
-    previewingContext.sourceRect = (self.viewModePreference == ViewModePreferenceList) ? [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.offlineCollectionView.collectionView convertRect:[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
-    
-    self.previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemName];
-    
-    BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:self.previewDocumentPath isDirectory:&isDirectory];
-    if (isDirectory) {
-        NSString *folderPathFromOffline = [self folderPathFromOffline:self.previewDocumentPath folder:itemName];
-        
-        OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
-        offlineVC.folderPathFromOffline = folderPathFromOffline;
-        offlineVC.peekIndexPath = indexPath;
-        
-        return offlineVC;
-    } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
-        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
-        
-        if (asset.playable) {
-            if (self.previewDocumentPath.mnz_isVideoPathExtension) {
-                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
-                return megaAVViewController;
-            } else {
-                return nil;
-            }
-        }
-    }
-    
-    return [self previewDocumentViewControllerForIndexPath:indexPath];
-}
-
-- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == OfflineViewController.class) {
-        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-    } else {
-        if (viewControllerToCommit.isBeingPresented || viewControllerToCommit.presentingViewController != nil) {
-            return;
-        }
-
-        [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
-    }
-}
-
-- (NSArray<id<UIPreviewActionItem>> *)previewActionItems {
-    UIPreviewAction *deleteAction = [UIPreviewAction actionWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder")
-                                                               style:UIPreviewActionStyleDestructive
-                                                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                 if ([self removeOfflineNodeCell:[self currentOfflinePath]]) {
-                                                                     [self reloadData];
-                                                                 }
-                                                             }];
-    return @[deleteAction];
 }
 
 #pragma mark - DZNEmptyDataSetSource

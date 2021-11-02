@@ -378,7 +378,7 @@ enum SessionSectionRow: Int {
             cell.accessoryView = nil
         case .querying:
             cell.nameLabel?.isEnabled = false
-            let activityIndicator = UIActivityIndicatorView(style: .gray)
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
             activityIndicator.startAnimating()
             cell.accessoryView = activityIndicator
         }

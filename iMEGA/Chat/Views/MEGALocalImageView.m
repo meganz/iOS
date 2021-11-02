@@ -32,9 +32,9 @@ static const CGFloat BOTTOM_HEIGHT = 210;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:self.superview];
-    [UIView beginAnimations:@"Dragging" context:nil];
-    self.center = CGPointMake(location.x - self.offset.x + self.frame.size.width / 2, location.y - self.offset.y + self.frame.size.height / 2);
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.0 animations:^{
+        self.center = CGPointMake(location.x - self.offset.x + self.frame.size.width / 2, location.y - self.offset.y + self.frame.size.height / 2);
+    }];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
@@ -44,8 +44,6 @@ static const CGFloat BOTTOM_HEIGHT = 210;
 }
 
 - (void)positionViewByCenter:(CGPoint)center {
-    [UIView beginAnimations:@"Dragging" context:nil];
-    
     if (center.x > self.superview.frame.size.width / 2) {
         if (center.y > self.superview.frame.size.height / 2) {
             self.corner = CornerBottonRight;
@@ -61,9 +59,9 @@ static const CGFloat BOTTOM_HEIGHT = 210;
     }
 
     CGPoint point = [self startingPoint];
-    self.center = CGPointMake(point.x + self.frame.size.width / 2, point.y + self.frame.size.height / 2);
-    [UIView commitAnimations];
-    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.center = CGPointMake(point.x + self.frame.size.width / 2, point.y + self.frame.size.height / 2);
+    }];
 }
 
 - (void)rotate {

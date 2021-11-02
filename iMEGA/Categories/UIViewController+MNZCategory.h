@@ -5,7 +5,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (MNZCategory)
 
-- (void)configPreviewingRegistration;
 - (void)openURL:(nullable NSURL *)url;
 
 @end

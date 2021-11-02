@@ -41,12 +41,11 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     if ([self isFirstResponder]) {
         self.highlighted = NO;
-        [UIMenuController.sharedMenuController setMenuVisible:NO animated:YES];
+        [UIMenuController.sharedMenuController hideMenuFromView:self];
         [UIMenuController.sharedMenuController update];
         [self resignFirstResponder];
     } else if ([self becomeFirstResponder]) {
-        [UIMenuController.sharedMenuController setTargetRect:self.bounds inView:self];
-        [UIMenuController.sharedMenuController setMenuVisible:YES animated:YES];
+        [UIMenuController.sharedMenuController showMenuFromView:self rect:self.bounds];
     }
 }
 

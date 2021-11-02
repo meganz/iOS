@@ -52,7 +52,7 @@ extension EnterMeetingLinkControllerWrapper: UITextFieldDelegate {
         OperationQueue.main.addOperation {
             textField.select(nil)
             let menuController = UIMenuController.shared
-            menuController.setMenuVisible(true, animated: true)
+            menuController.showMenu(from: textField, rect: textField.bounds)
         }
     }
 }

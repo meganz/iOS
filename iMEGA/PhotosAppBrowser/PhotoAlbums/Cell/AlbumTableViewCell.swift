@@ -8,7 +8,7 @@ final class AlbumTableViewCell: UITableViewCell {
     @IBOutlet weak var albumTitleLabel: UILabel!
     @IBOutlet weak var albumPhotosCount: UILabel!
     
-    private let activityIndicator = UIActivityIndicatorView(style: .gray)
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
     private var assetDownloaders: [AssetDownloader] = []
     
     var album: Album? {

@@ -274,7 +274,7 @@ extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     func customView(forEmptyDataSet _: UIScrollView) -> UIView? {
         if requestTask?.state == .running {
-            let activityView = UIActivityIndicatorView(style: .gray)
+            let activityView = UIActivityIndicatorView(style: .medium)
             activityView.startAnimating()
             return activityView
         } else {

@@ -243,9 +243,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 // Request image and don't downscale it
 - (void)requestImageForAsset:(PHAsset *)asset options:(PHImageRequestOptions *)options {
     [[PHImageManager defaultManager]
-     requestImageDataForAsset:asset
+     requestImageDataAndOrientationForAsset:asset
      options:options
-     resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+     resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, CGImagePropertyOrientation orientation, NSDictionary * _Nullable info) {
          NSData *data;
          if (self.shareThroughChat && [dataUTI isEqualToString:@"public.heic"]) {
              UIImage *image = [UIImage imageWithData:imageData];

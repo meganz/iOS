@@ -32,7 +32,7 @@
 static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
 static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate, BrowserViewControllerDelegate> {
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate, BrowserViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -93,8 +93,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     
     self.currentState = MEGACameraUploadsStateLoading;
-    
-    [self configPreviewingRegistration];
     
     [self updateAppearance];
 }
@@ -165,8 +163,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         [self updateAppearance];
     }
-    
-    [self configPreviewingRegistration];
 }
 
 #pragma mark - load Camera Uploads target folder
@@ -873,42 +869,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [self.photosCollectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
         }
     }
-}
-
-#pragma mark - UIViewControllerPreviewingDelegate
-
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    if ([self.photosCollectionView allowsMultipleSelection]) {
-        return nil;
-    }
-    
-    CGPoint itemPoint = [self.photosCollectionView convertPoint:location fromView:self.view];
-    NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:itemPoint];
-    if (!indexPath || ![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
-        return nil;
-    }
-    
-    previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
-    
-    NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
-    if (monthPhotosDictionary == nil) {return nil;}
-    NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
-    NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
-    MEGANode *node = [monthPhotosArray objectOrNilAtIndex:indexPath.row];
-    if (node == nil) {return nil;}
-    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
-        
-        return photoBrowserVC;
-    } else {
-        return [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
-    }
-    
-    return nil;
-}
-
-- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
 }
 
 #pragma mark - DZNEmptyDataSetSource
