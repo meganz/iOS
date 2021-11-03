@@ -12366,6 +12366,7 @@
 					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
+				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
