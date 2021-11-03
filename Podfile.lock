@@ -80,6 +80,7 @@ PODS:
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
+  - WSTagsField (5.4.0)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
   - YYCategories/no-arc (1.0.4)
@@ -102,6 +103,7 @@ DEPENDENCIES:
   - PureLayout (from `https://github.com/PureLayout/PureLayout.git`)
   - SAMKeychain
   - SDWebImageWebPCoder
+  - WSTagsField
   - YYCategories
 
 SPEC REPOS:
@@ -129,6 +131,7 @@ SPEC REPOS:
     - SAMKeychain
     - SDWebImage
     - SDWebImageWebPCoder
+    - WSTagsField
     - YYCategories
 
 EXTERNAL SOURCES:
@@ -192,8 +195,9 @@ SPEC CHECKSUMS:
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
+  WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 1fa28b75307e214579edc25eaac6cb59ce8f1fd7
+PODFILE CHECKSUM: ba9ef5022942c4574539f838fe100b5b8ed34a66
 
 COCOAPODS: 1.11.2
