@@ -119,6 +119,36 @@
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAShareExtensionStorageFolder]];
 }
 
+- (void)showClearAllOfflineFilesActionSheet {
+    UIAlertController *clearAllOfflineFilesAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"settings.fileManagement.alert.clearAllOfflineFiles", @"Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [clearAllOfflineFilesAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *clearAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"clear", @"Button title to clear something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self clearOfflineFiles];
+    }];
+    [clearAllOfflineFilesAlertController addAction:clearAlertAction];
+    
+    [self presentViewController:clearAllOfflineFilesAlertController animated:YES completion:nil];
+}
+
+- (void)clearOfflineFiles {
+    NSString *offlinePathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlinePathString];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [SVProgressHUD dismiss];
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [[MEGAStore shareInstance] removeAllOfflineNodes];
+            if (@available(iOS 14.0, *)) {
+                [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
+            }
+            [self reloadUI];
+        });
+    });
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -176,21 +206,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0: { //On your device - Offline
-            NSString *offlinePathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            [SVProgressHUD show];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlinePathString];
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [SVProgressHUD dismiss];
-                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [[MEGAStore shareInstance] removeAllOfflineNodes];
-                    if (@available(iOS 14.0, *)) {
-                        [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
-                    }
-                    [self reloadUI];
-                });
-            });
+            [self showClearAllOfflineFilesActionSheet];
             break;
         }
             

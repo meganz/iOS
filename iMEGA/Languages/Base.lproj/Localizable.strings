@@ -764,6 +764,8 @@
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Clear Offline Files";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="Clear all offline files?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Clear Cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
