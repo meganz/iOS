@@ -12645,6 +12645,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					iMEGA/Vendor/SDK/bindings/ios,
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Debug;
@@ -12703,6 +12704,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					iMEGA/Vendor/SDK/bindings/ios,
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Release;
@@ -12924,7 +12926,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 6.1.2;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAPicker";
@@ -13175,6 +13177,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Debug;
@@ -13224,6 +13227,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Release;
