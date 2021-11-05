@@ -103,7 +103,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="รหัสผ่าน";
 /* Account, Change Password view. Error shown when you type your current password. */
-"account.changePassword.error.currentPassword"="You have entered your current password.";
+"account.changePassword.error.currentPassword"="คุณกรอกรหัสผ่านเดิมของคุณ";
 /*  */
 "pleaseStrengthenYourPassword"="กรุณาใช้รหัสผ่านที่คาดเดาได้ยากแต่ง่ายต่อการจดจำของคุณ";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -1331,7 +1331,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="ละทิ้ง";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="คุณอาจมีข้อความใหม่";
+"You may have new messages"="You have new messages";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="คำขอติดต่อ";
 /* Notification text body shown when you have received a new shared folder */
@@ -1361,7 +1361,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ข้อความที่ยังไม่ได้อ่าน";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="การสมัครใช้งานจะเป็นการต่ออายุตามระยะเวลาที่สมัครไว้แบบต่อเนื่องโดยอัตโนมัติ คุณสามารถปิดใช้การต่ออายุ MEGA Pro ใหม่อัตโนมัติภายใน 24 ชั่วโมงก่อนการสมัครใช้งานรอบปัจจุบันจะสิ้นสุด ผ่านหน้าการตั้งค่าบัญชี iTunes ของคุณ ในการจัดการการสมัครใช้งานของคุณเพียงแตะที่ไอคอน App Store บนอุปกรณ์มือถือของคุณ ลงชื่อเข้าใช้ด้วย Apple ID ของคุณที่ด้านล่างของหน้า (กรณีที่ยังไม่ได้ลงชื่อเข้าใช้) จากนั้นคลิกดู ID คุณจะเข้าสู่หน้าบัญชีของคุณซึ่งคุณสามารถเลื่อนลงไปที่จัดการการสมัครใช้งานแอป จากตรงนั้นคุณสามารถเลือกการสมัครใช้งาน MEGA Pro และสามารถดูกำหนดการต่ออายุ เลือกแพ็คเกจการสมัครใช้งานอื่น ๆ หรือสลับสวิตช์เปิด-ปิดเป็นปิดเพื่อปิดใช้งานการต่ออายุการสมัครใช้งานของคุณ";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="เปิด MEGA และลงชื่อเข้าใช้เพื่อดำเนินการต่อ";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1988,12 +1988,12 @@
 "%1 Images and 1 Video"="รูปภาพ %1 ภาพและวิดีโอ 1 รายการ";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="รูปภาพ %1 ภาพและวิดีโอ %2 รายการ";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 modified by %3"="%1 แก้ไขโดย %3";
+/* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.modifiedByLabel"="ปรับเปลี่ยนโดย %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 และอื่น ๆ อีก[A]%2 รายการ[/A]";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 created by %3"="%1 สร้างโดย %3";
+/* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.createdByLabel"="สร้างโดย %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="ไม่มีกิจกรรมล่าสุด";
 /* Plural of items which contains a folder. 2 items */
@@ -2025,7 +2025,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนไปใช้เซิร์ฟเวอร์ทดสอบ บัญชีของคุณอาจประสบปัญหาไม่สามารถกู้คืนได้";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Grant Access to Your Address Book";
+"Enable Access to Your Address Book"="ให้สิทธิ์เข้าถึงสมุดรายชื่อของคุณ";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="ค้นหารายชื่อจากสมุดรายชื่อของคุณได้อย่างง่ายดายบน MEGA";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2715,4 +2715,4 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="ลำโพง";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Switch";
+"meetings.quickAction.flip"="สลับ";
