@@ -1,3 +1,4 @@
+
 def callSlack(String buildResult) {
     if ( buildResult == "SUCCESS" ) {
         slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
@@ -9,7 +10,7 @@ def callSlack(String buildResult) {
         slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable"
     }
     else {
-        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear"	
+        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear"    
     }
 }
 
@@ -118,5 +119,5 @@ pipeline {
                 }
             }
         }
-   }
+    }
 }
