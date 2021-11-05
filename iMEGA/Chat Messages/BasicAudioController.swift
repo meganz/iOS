@@ -95,12 +95,14 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
            let collectionView = messageCollectionView,
            let player = audioPlayer {
             playingCell = cell
-            cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
-            cell.playButton.isSelected = (player.isPlaying == true) ? true : false
+            let playerCurrentTime = Float(player.currentTime)
+            let playerDuration = Float(player.duration)
+            cell.progressView.progress = (playerDuration == 0) ? 0 : playerCurrentTime/playerDuration
+            cell.playButton.isSelected = player.isPlaying
             guard let displayDelegate = collectionView.messagesDisplayDelegate else {
                 fatalError("MessagesDisplayDelegate has not been set.")
             }
-            cell.durationLabel.text = displayDelegate.audioProgressTextFormat(Float(player.currentTime), for: cell, in: collectionView)
+            cell.durationLabel.text = displayDelegate.audioProgressTextFormat(playerCurrentTime, for: cell, in: collectionView)
         }
     }
 

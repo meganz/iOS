@@ -61,32 +61,34 @@ open class ChatGiphyCollectionViewSizeCalculator: MessageSizeCalculator {
     override open func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
         case .custom:
-            let maxWidth = min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), messageContainerMaxWidth(for: message))
-            let maxHeight = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
-            guard let chatMessage = message as? ChatMessage else {
-                return .zero
-            }
-
-            let megaMessage = chatMessage.message
-            guard let giphy = megaMessage.containsMeta.giphy else {
-                return .zero
-            }
-            var width = CGFloat(giphy.width)
-            var height = CGFloat(giphy.height)
-
-            let ratio = width / height
-            if ratio > 1 {
-                width = min(maxWidth, width)
-                height = width / ratio
-            } else {
-                height = min(maxHeight, height)
-                width = height * ratio
-            }
-
-            return CGSize(width: width, height: height)
-
+            return size(for: message)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
+    }
+    
+    private func size(for message: MessageType) -> CGSize {
+        let maxHeight = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
+        let maxWidth = min(maxHeight, messageContainerMaxWidth(for: message))
+        
+        guard let chatMessage = message as? ChatMessage,
+                case let megaMessage = chatMessage.message,
+                let giphy = megaMessage.containsMeta.giphy else {
+            return .zero
+        }
+        
+        var width = CGFloat(giphy.width)
+        var height = CGFloat(giphy.height)
+
+        let ratio = width / height
+        if ratio > 1 {
+            width = min(maxWidth, width)
+            height = width / ratio
+        } else {
+            height = min(maxHeight, height)
+            width = height * ratio
+        }
+
+        return CGSize(width: width, height: height)
     }
 }
