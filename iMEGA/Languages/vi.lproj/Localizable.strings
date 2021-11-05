@@ -1331,7 +1331,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Đã đọc";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="Có vài tin nhắn mới";
+"You may have new messages"="You have new messages";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Có lời mời thêm vào Sổ Liên Lạc";
 /* Notification text body shown when you have received a new shared folder */
@@ -1988,12 +1988,12 @@
 "%1 Images and 1 Video"="%1 Hình và 1 Video";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 Hình và %2 Videos";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 modified by %3"="%1 đã chỉnh sửa bởi %3";
+/* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.modifiedByLabel"="Chỉnh sửa bởi %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 và [A]%2 mục nữa[/A]";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 created by %3"="%1 tạo bởi %3";
+/* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.createdByLabel"="Đã tạo bởi %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Không Có Hoạt Động Gần Đây";
 /* Plural of items which contains a folder. 2 items */
