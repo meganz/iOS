@@ -64,11 +64,7 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     self.statusPersistenceLabel.text = NSLocalizedString(@"statusPersistence", nil);
     [self.autoAwayTimeSaveButton setTitle:NSLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
-    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont italicSystemFontOfSize:17.0]}];
-    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", NSLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
-    [showLastSeenAttributedString appendAttributedString:lastSeenString];
-    
-    self.lastActiveLabel.attributedText = showLastSeenAttributedString;
+    [self setLastActiveLabelAttributedText];
     
     [self updateAppearance];
 }
@@ -99,6 +95,10 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
+    }
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self setLastActiveLabelAttributedText];
     }
 }
 
@@ -132,6 +132,14 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     self.lastActiveSwitch.on = self.presenceConfig.isLastGreenVisible;
     
     [self.tableView reloadData];
+}
+
+- (void)setLastActiveLabelAttributedText {
+    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightRegular].fontWithItalic}];
+    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", NSLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
+    [showLastSeenAttributedString appendAttributedString:lastSeenString];
+    
+    self.lastActiveLabel.attributedText = showLastSeenAttributedString;
 }
 
 - (void)deselectRowWithPreviousStatus {
