@@ -397,7 +397,7 @@ extension DocScannerSaveSettingTableViewController {
             }
             
             if let data = pdfDoc.dataRepresentation() {
-                let fileName = "\(currentFileName).pdf"
+                let fileName = "\(currentFileName ?? originalFileName).pdf"
                 let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                 do {
                     try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
@@ -411,7 +411,7 @@ extension DocScannerSaveSettingTableViewController {
         } else if fileType == .jpg {
             docs?.enumerated().forEach {
                 if let data = $0.element.shrinkedImageData(docScanQuality: scanQuality) {
-                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(currentFileName) \($0.offset + 1).jpg" : "\(currentFileName).jpg"
+                    let fileName = (self.docs?.count ?? 1 > 1) ? "\(currentFileName ?? originalFileName) \($0.offset + 1).jpg" : "\(currentFileName ?? originalFileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
                         try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
