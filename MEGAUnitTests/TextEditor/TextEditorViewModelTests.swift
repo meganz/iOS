@@ -998,6 +998,8 @@ final class TextEditorViewModelTests: XCTestCase {
             updateTime: nil,
             publicNode: nil,
             isStreamingTransfer: false,
+            isForeignOverquota: false,
+            lastErrorExtended: nil,
             isFolderTransfer: false,
             folderTransferTag: .zero,
             appData: nil,

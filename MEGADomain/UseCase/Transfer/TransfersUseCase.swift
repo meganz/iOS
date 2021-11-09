@@ -52,6 +52,8 @@ struct TransfersUseCase: TransfersUseCaseProtocol {
     }
     
     private func filterUserTransfers(_ transfers: [TransferEntity]) -> [TransferEntity] {
-        return transfers.filter { $0.path?.hasPrefix(Helper.relativePathForOffline()) ?? false }
+        transfers.filter {
+            $0.type == .upload || $0.path?.hasPrefix(Helper.relativePathForOffline()) ?? false
+        }
     }
 }
