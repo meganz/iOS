@@ -43,7 +43,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     @IBOutlet weak var sendButton: UIBarButtonItem!
     
-    var originalFileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
+    var originalFileName = NSLocalizedString("cloudDrive.scanDocument.defaultName", comment: "Default title given to the document created when you use the option 'Scan Document' in the app. For example: 'Scan 2021-11-09 14.40.41'")
     var currentFileName: String?
     
     private struct TableViewConfiguration {
@@ -62,6 +62,8 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         super.viewDidLoad()
         title = NSLocalizedString("Save Settings", comment: "Setting title for Doc scan view")
         
+        let currentDate = NSDate().mnz_formattedDefaultNameForMedia()
+        originalFileName = originalFileName.replacingOccurrences(of: "%@", with: currentDate)
         currentFileName = originalFileName
         
         let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)

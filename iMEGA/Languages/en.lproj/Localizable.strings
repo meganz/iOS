@@ -2242,6 +2242,8 @@
 "Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
+/* Default title given to the document created when you use the option 'Scan Document' in the app. For example: 'Scan 2021-11-09 14.40.41' */
+"cloudDrive.scanDocument.defaultName"="Scan %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="File Type";
 /* export Quality Option for Scan document */
