@@ -966,8 +966,16 @@
 "unlockedBonuses"="Unlocked bonuses:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Storage Quota";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="%@ Storage";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="[B]20 GB+[/B] Storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Transfer Quota";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="%@ Transfer";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="[B]Limited[/B] Transfer";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Registration Bonus";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1058,8 +1066,6 @@
 "cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Storage";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Limited";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
