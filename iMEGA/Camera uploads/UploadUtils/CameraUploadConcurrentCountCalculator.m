@@ -120,16 +120,12 @@
     switch (thermalState) {
         case NSProcessInfoThermalStateCritical:
             return MakeCounts(PhotoUploadConcurrentCountInThermalStateCritical, VideoUploadConcurrentCountInThermalStateCritical);
-            break;
         case NSProcessInfoThermalStateSerious:
             return MakeCounts(PhotoUploadConcurrentCountInThermalStateSerious, VideoUploadConcurrentCountInThermalStateSerious);
-            break;
         case NSProcessInfoThermalStateFair:
             return MakeCounts(PhotoUploadConcurrentCountInThermalStateFair, VideoUploadConcurrentCountInThermalStateFair);
-            break;
         case NSProcessInfoThermalStateNominal:
             return MakeCounts(PhotoUploadConcurrentCountInDefaultMaximum, VideoUploadConcurrentCountInDefaultMaximum);
-            break;
     }
 }
 
