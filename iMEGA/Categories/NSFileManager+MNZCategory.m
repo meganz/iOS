@@ -117,14 +117,49 @@
 
 - (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsExtension:(NSString *)itemsExtension {
     NSArray *directoryContentsArray = [self contentsOfDirectoryAtPath:folderPath error:nil];
-    for (NSString *itemName in directoryContentsArray) {
-        NSDictionary *attributesDictionary = [self attributesOfItemAtPath:[folderPath stringByAppendingPathComponent:itemName] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            [self mnz_removeFolderContentsRecursivelyAtPath:[folderPath stringByAppendingPathComponent:itemName] forItemsExtension:itemsExtension];
-        } else {
-            if ([itemName.pathExtension.lowercaseString isEqualToString:itemsExtension]) {
-                [self mnz_removeItemAtPath:[folderPath stringByAppendingPathComponent:itemName]];
+    NSString *currentPath = folderPath;
+    NSEnumerator *enumerator = [directoryContentsArray objectEnumerator];
+    NSMutableArray *stack = [NSMutableArray array];
+    
+    if (enumerator) {
+        [stack addObject:enumerator];
+    }
+    
+    /*
+     Using Stack Depth-First-Search(DFS) to replace normal recursion
+     Memory allocation can't be released asap in normal recursion way, so
+     here is using local stack to maintain enumerators(pointers) to avoid
+     high space complexity.
+     */
+    while([stack count] > 0) {
+        NSEnumerator *top = stack.lastObject;
+        NSString *fileName = [top nextObject];
+        
+        if (fileName) {
+            NSDictionary *attributesDictionary = [self attributesOfItemAtPath:[currentPath stringByAppendingPathComponent:fileName] error:nil];
+            
+            if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+                currentPath = [currentPath stringByAppendingPathComponent:fileName];
+                NSArray *contents = [self contentsOfDirectoryAtPath: currentPath error:nil];
+                NSEnumerator *enumerator = [contents objectEnumerator];
+                
+                if (enumerator) {
+                    [stack addObject:enumerator];
+                }
+            } else {
+                if ([fileName.pathExtension.lowercaseString isEqualToString:itemsExtension]) {
+                    [self mnz_removeItemAtPath:[currentPath stringByAppendingPathComponent:fileName]];
+                }
             }
+        } else {
+            NSArray *contents = [self contentsOfDirectoryAtPath:currentPath error:nil];
+            
+            if (contents.count == 0 && currentPath != folderPath) {
+                [self mnz_removeItemAtPath:currentPath];
+            }
+            
+            currentPath = [currentPath stringByDeletingLastPathComponent];
+            [stack removeLastObject];
         }
     }
 }
