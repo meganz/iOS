@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]Il tuo Cloud Drive è pieno.[/S] [A]Fai l’upgrade adesso[/A] ad un account Pro ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Archivio";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Limitata";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Soggetto alla tua partecipazione nel nostro programma di obiettivi.";
 /* Price asociated with the MEGA PRO account level you can subscribe */

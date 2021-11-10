@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]至Pro会员帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="储存空间";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="限制";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="取决于您所达成的奖励挑战。";
 /* Price asociated with the MEGA PRO account level you can subscribe */

@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]Ổ Mây đã bị đầy.[/S] [A]Nâng cấp ngay[/A] lên hạng Pro để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Lưu Trữ";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Bị giới hạn";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Tùy thuộc vào việc tham gia của người sử dụng dịch vụ khi thực hiện các nhiệm vụ phần thưởng thành tích.";
 /* Price asociated with the MEGA PRO account level you can subscribe */

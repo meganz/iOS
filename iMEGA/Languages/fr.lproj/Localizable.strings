@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]Votre Disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Espace de stockage";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Limité";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation à notre programme d’objectifs.";
 /* Price asociated with the MEGA PRO account level you can subscribe */

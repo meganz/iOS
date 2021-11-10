@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]あなたのクラウドドライブはいっぱいです。[/S]Proアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="ストレージ";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="制限付き";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="当社の達成プログラムにご参加いただくことを条件とします。";
 /* Price asociated with the MEGA PRO account level you can subscribe */
