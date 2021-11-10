@@ -270,16 +270,16 @@
             
         case ContactsModeShareFoldersWith: {
             self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
-            [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
+            [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
             
             self.shareFolderWithBarButtonItem.title = NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
-            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
+            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.shareFolderWithBarButtonItem];
             self.shareFolderWithBarButtonItem.enabled = NO;
             
             self.insertAnEmailBarButtonItem.title = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
+            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.insertAnEmailBarButtonItem];
@@ -298,7 +298,7 @@
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.deleteBarButtonItem.title = NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
-            [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
+            [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
             break;
         }
@@ -330,7 +330,7 @@
         case ContactsModeChatCreateGroup: {
             [self setTableViewEditing:YES animated:NO];
             self.createGroupBarButtonItem.title = NSLocalizedString(@"next", nil);
-            [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17.f weight:UIFontWeightMedium], NSFontAttributeName, nil] forState:UIControlStateNormal];
+            [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSFontAttributeName, nil] forState:UIControlStateNormal];
             self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
@@ -344,7 +344,7 @@
             self.encryptedKeyRotationLabel.text = NSLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             self.getChatLinkLabel.text = NSLocalizedString(@"Get Chat Link", @"Label in a cell where you can get the chat link");
             self.keyRotationFooterLabel.text = NSLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
-            [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17.f weight:UIFontWeightMedium], NSFontAttributeName, nil] forState:UIControlStateNormal];
+            [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSFontAttributeName, nil] forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             [self.tableView setEditing:NO animated:YES];
             [self.enterGroupNameTextField becomeFirstResponder];
@@ -367,7 +367,7 @@
 - (void)showInviteToolbarButton {
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     self.inviteBarButtonItem.title = NSLocalizedString(@"inviteContact", nil);
-    [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f]} forState:UIControlStateNormal];
+    [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
     self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.inviteBarButtonItem];
     [self.navigationController setToolbarHidden:NO];
 }

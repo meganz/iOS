@@ -116,7 +116,7 @@
     
     self.unreadView.hidden = NO;
     self.unreadView.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    self.unreadCount.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
+    self.unreadCount.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
     self.unreadCount.text = NSLocalizedString(@"archived", @"Title of flag of archived chats.").localizedUppercaseString;
     self.unreadCountLabelHorizontalMarginConstraint.constant = 7;
     self.activeCallImageView.hidden = YES;
