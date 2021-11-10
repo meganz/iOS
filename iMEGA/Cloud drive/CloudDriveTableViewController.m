@@ -32,7 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self registerNibWithName:@"NodeTableViewCell" andReuseIdentifier:@"nodeCell"];
     [self registerNibWithName:@"DownloadingNodeCell" andReuseIdentifier:@"downloadingNodeCell"];
     
@@ -148,7 +148,7 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     } else {
         [self.cloudDrive.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
-
+        
         if ([Helper.downloadingNodes objectForKey:node.base64Handle]) {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
         } else {
@@ -164,7 +164,7 @@
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
     cell.cellFlavor = NodeTableViewCellFlavorCloudDrive;
     [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
- 
+    
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView
         for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
@@ -202,7 +202,7 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     }
-
+    
     if (tableView.isEditing) {
         
         for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
@@ -214,9 +214,9 @@
         [self.cloudDrive.selectedNodesArray addObject:node];
         
         [self.cloudDrive updateNavigationBarTitle];
-
+        
         [self.cloudDrive toolbarActionsForNodeArray:self.cloudDrive.selectedNodesArray];
-
+        
         [self.cloudDrive setToolbarActionsEnabled:YES];
         
         if (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size.integerValue) {
@@ -309,7 +309,6 @@
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
         
         if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-            
             UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 if ([node mnz_downloadNode]) {
                     [self.tableView reloadData];
@@ -324,8 +323,6 @@
         } else {
             return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
         }
-
-        return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
     }
     
     return [UISwipeActionsConfiguration configurationWithActions:@[]];

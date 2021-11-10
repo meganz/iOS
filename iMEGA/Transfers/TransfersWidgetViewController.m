@@ -271,6 +271,7 @@ static TransfersWidgetViewController* instance = nil;
         MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
         
         MEGANode *node = transfer.node;
+        
         if (transfer.state == MEGATransferStateComplete) {
             NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
             cell.selectedBackgroundView = UIView.new;
@@ -284,8 +285,6 @@ static TransfersWidgetViewController* instance = nil;
             [cell configureCellForTransfer:transfer delegate:self];
             return cell;
         }
-        
-        return nil;
     }
 }
 
