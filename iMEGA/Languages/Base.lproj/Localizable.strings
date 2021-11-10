@@ -2718,3 +2718,7 @@
 "meetings.quickAction.speaker"="Speaker";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Switch";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="Preview high resolution images";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
