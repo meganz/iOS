@@ -64,10 +64,9 @@
         case OnboardingTypePermissions:
             self.scrollView.userInteractionEnabled = NO;
             self.pageControl.hidden = YES;
+            self.secondaryButton.hidden = YES;
             self.thirdButton.hidden = YES;
-            [self.primaryButton setTitle:NSLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand") forState:UIControlStateNormal];
-            
-            [self.secondaryButton setTitle:NSLocalizedString(@"notNow", nil) forState:UIControlStateNormal];
+            [self.primaryButton setTitle:NSLocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
             
             int nextIndex = 0;
             if (DevicePermissionsHelper.shouldAskForPhotosPermissions) {
@@ -246,7 +245,6 @@
         }
             
         case OnboardingTypePermissions:
-            [self nextPageOrDismiss];
             break;
     }
 }
