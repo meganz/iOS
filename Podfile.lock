@@ -48,6 +48,7 @@ PODS:
     - InputBarAccessoryView/Core (= 5.4.0)
   - InputBarAccessoryView/Core (5.4.0)
   - ISEmojiView (0.2.6)
+  - JustPieChart (0.1.0)
   - "Keyboard+LayoutGuide (1.6.0)"
   - libwebp (1.2.1):
     - libwebp/demux (= 1.2.1)
@@ -95,6 +96,7 @@ DEPENDENCIES:
   - GKContactImage (from `https://github.com/meganz/GKContactImage.git`)
   - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
+  - JustPieChart
   - "Keyboard+LayoutGuide"
   - MessageKit
   - PanModal (from `https://github.com/ilia3546/PanModal.git`, commit `ba721e8`)
@@ -121,6 +123,7 @@ SPEC REPOS:
     - GoogleUtilities
     - Haptica
     - InputBarAccessoryView
+    - JustPieChart
     - "Keyboard+LayoutGuide"
     - libwebp
     - MessageKit
@@ -183,6 +186,7 @@ SPEC CHECKSUMS:
   Haptica: 23497230b2d7476621f7860263ae0667279a0a89
   InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
+  JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
   "Keyboard+LayoutGuide": db44b1764e2bb5d9824cc9cea9d9006cd4442045
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
@@ -198,6 +202,6 @@ SPEC CHECKSUMS:
   WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: ba9ef5022942c4574539f838fe100b5b8ed34a66
+PODFILE CHECKSUM: 728bda164a236f6a3b4821f8f74fdac139bc3fd6
 
 COCOAPODS: 1.11.2
