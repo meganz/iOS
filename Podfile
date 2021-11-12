@@ -28,6 +28,8 @@ abstract_target 'iMEGA' do
     pod 'SAMKeychain'
     pod 'DateTools'
     pod 'PhoneNumberKit', '~> 3.3'
+    pod 'WSTagsField'
+    pod 'JustPieChart'
     
     # Pods for Debug only
     pod 'FLEX', :configurations => ['Debug']

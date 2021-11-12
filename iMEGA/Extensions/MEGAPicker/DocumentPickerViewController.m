@@ -206,7 +206,7 @@
 }
 
 - (void)configureProgressHUD {
-    [SVProgressHUD setFont:[UIFont systemFontOfSize:12.0f]];
+    [SVProgressHUD setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1]];
     [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setRingNoTextRadius:18.0];
     [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];

@@ -90,14 +90,12 @@ class ChatViewAttachmentCellViewModel {
     }
     
     private func subtitleForContact() -> String {
-        if message.usersCount == 1 {
+        guard message.usersCount != 1 else {
             return message.userEmail(at: 0)
-        } else {
-            let emails = (0..<message.usersCount)
-                .map({ (message.usersCount - 1 == $0) ? message.userEmail(at: $0)! : "\(message.userEmail(at: $0)!) " })
-                .reduce("", +)
-            return emails
         }
+        
+        let userEmailArray = (0..<message.usersCount).map({ (message.usersCount - 1 == $0) ? message.userEmail(at: $0)! : "\(message.userEmail(at: $0)!) " })
+        return userEmailArray.reduce("", +)
     }
     
     private func setImageForContact(imageView: UIImageView) {

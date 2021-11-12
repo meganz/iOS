@@ -51,7 +51,7 @@
     
     self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
     [self.saveButton setTitle:NSLocalizedString(@"save", @"Button title to 'Save' the selected option")];
-    [self.saveButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
+    [self.saveButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium]} forState:UIControlStateNormal];
     
     [self updateAppearance];
 }

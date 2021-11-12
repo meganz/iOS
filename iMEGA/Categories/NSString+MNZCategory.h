@@ -82,6 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_fileNameWithLowercaseExtension;
 - (NSString *)mnz_lastExtensionInLowercase;
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;
+- (NSString *)mnz_fileNameWithoutExtension;
 
 /**
  Remove invalid file characters from a string. So we can use the new string safely as a folder name or file name

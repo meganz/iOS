@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Хранилище";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Ограничено";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="При условии вашего участия в программе достижений.";
 /* Price asociated with the MEGA PRO account level you can subscribe */

@@ -1009,7 +1009,7 @@
         
         if (self.isFile || self.isFolder) {
             BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars) {
+            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars || (self.isFile && [newName.mnz_fileNameWithoutExtension isEqualToString:@""])) {
                 enableRightButton = NO;
                 if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
                     renameAlertController.title = NSLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder");
