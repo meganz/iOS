@@ -1011,12 +1011,19 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - AirPlay
 
 - (void)airplayDisplayCurrentImage {
-    if ([[UIScreen screens] count] > 1) {
+    NSSet <UIScene *> *connectedScenes = UIApplication.sharedApplication.connectedScenes;
+    if (connectedScenes.count > 1 && UIScreen.screens.count > 1) {
+        UIScreen *secondScreen = [UIScreen.screens objectOrNilAtIndex:1];
         if (!self.secondWindow) {
-            UIScreen *secondScreen = [[UIScreen screens] objectOrNilAtIndex:1];
-            CGRect screenBounds = secondScreen.bounds;
-            self.secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
-            self.secondWindow.windowScene = secondScreen;
+            UIWindowScene *secondWindowsScene;
+            for (UIWindowScene *scene in connectedScenes) {
+                if (scene.screen == secondScreen) {
+                    secondWindowsScene = scene;
+                    break;
+                }
+            }
+            self.secondWindow = [UIWindow.alloc initWithFrame:secondScreen.bounds];
+            self.secondWindow.windowScene = secondWindowsScene;
             self.secondWindow.hidden = NO;
         }
         
