@@ -87,8 +87,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
     
-    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
-    
     self.cellInset = 1.0f;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     
@@ -834,41 +832,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)showLocalDiskIsFullWarningScreen {
     StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
     [warningVC show];
-}
-
-#pragma mark - UILongPressGestureRecognizer
-
-- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.photosCollectionView];
-        NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:touchPoint];
-        
-        if (!indexPath || ![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
-            return;
-        }
-        
-        if (self.isEditing) {
-            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
-            if (self.selectedItemsDictionary.count == 0) {
-                [self setEditing:NO animated:YES];
-            }
-            if (self.selectedItemsDictionary.count == 1) {
-                NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
-                if (monthPhotosDictionary == nil) {return;}
-                NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
-                NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
-                MEGANode *nodeSelected = [monthPhotosArray objectOrNilAtIndex:indexPath.row];
-                if (nodeSelected == nil) {return;}
-                if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodeSelected.handle]]) {
-                    [self setEditing:NO animated:YES];
-                }
-            }
-        } else {
-            [self setEditing:YES animated:YES];
-            [self collectionView:self.photosCollectionView didSelectItemAtIndexPath:indexPath];
-            [self.photosCollectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-        }
-    }
 }
 
 #pragma mark - DZNEmptyDataSetSource

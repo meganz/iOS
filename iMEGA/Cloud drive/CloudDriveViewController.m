@@ -150,8 +150,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
-    
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     _searchQueue = NSOperationQueue.new;
@@ -348,51 +346,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
-}
-
-#pragma mark - UILongPressGestureRecognizer
-
-- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    UIView *view = self.cdTableView ? self.cdTableView.tableView : self.cdCollectionView.collectionView;
-    CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
-    
-    NSIndexPath *indexPath;
-    
-    if (self.viewModePreference == ViewModePreferenceList) {
-        indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:touchPoint];
-        if (!indexPath || ![self.cdTableView.tableView numberOfRowsInSection:indexPath.section]) {
-            return;
-        }
-    } else {
-        indexPath = [self.cdCollectionView.collectionView indexPathForItemAtPoint:touchPoint];
-        if (!indexPath || ![self.cdCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
-            return;
-        }
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        BOOL editing = self.cdTableView ? self.cdTableView.tableView.isEditing : self.cdCollectionView.collectionView.allowsMultipleSelection;
-        if (editing) {
-            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
-            if (self.selectedNodesArray.count == 0) {
-                [self setEditMode:NO];
-            }
-            if (self.selectedNodesArray.count == 1) {
-                MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = [self nodeAtIndexPath:indexPath];
-                if (nodeSelected.handle == nodePressed.handle) {
-                    [self setEditMode:NO];
-                }
-            }
-        } else {
-            [self setEditMode:YES];
-            [self selectIndexPath:indexPath];
-        }
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self.cdTableView.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -1011,16 +964,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self.cdTableView setTableViewEditing:editMode animated:YES];
     } else {
         [self.cdCollectionView setCollectionViewEditing:editMode animated:YES];
-    }
-}
-
-- (void)selectIndexPath:(NSIndexPath *)indexPath {
-    if (self.viewModePreference == ViewModePreferenceList) {
-        [self.cdTableView tableViewSelectIndexPath:indexPath];
-        [self.cdTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    } else {
-        [self.cdCollectionView collectionViewSelectIndexPath:indexPath];
-        [self.cdCollectionView.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
 }
 
