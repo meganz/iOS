@@ -80,8 +80,6 @@ static NSString *kisDirectory = @"kisDirectory";
     self.definesPresentationContext = YES;
     
     if (self.flavor == AccountScreen) {
-        [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                                                      action:@selector(longPress:)]];
         self.offlineTableView.tableView.allowsMultipleSelectionDuringEditing = YES;
     }
     
@@ -604,16 +602,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
-- (void)selectIndexPath:(NSIndexPath *)indexPath {
-    if (self.viewModePreference == ViewModePreferenceList) {
-        [self.offlineTableView tableViewSelectIndexPath:indexPath];
-        [self.offlineTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    } else {
-        [self.offlineCollectionView collectionViewSelectIndexPath:indexPath];
-        [self.offlineCollectionView.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-    }
-}
-
 - (NSInteger)numberOfRows {
     NSInteger numberOfRows = 0;
     if (self.viewModePreference == ViewModePreferenceList) {
@@ -1114,49 +1102,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     [self reloadData];
-}
-
-#pragma mark - UILongPressGestureRecognizer
-
-- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    UIView *view = self.offlineTableView ? self.offlineTableView.tableView : self.offlineCollectionView.collectionView;
-    CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
-    NSIndexPath *indexPath;
-    
-    if (self.viewModePreference == ViewModePreferenceList) {
-        indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:touchPoint];
-        if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
-            return;
-        }
-    } else {
-        indexPath = [self.offlineCollectionView.collectionView indexPathForItemAtPoint:touchPoint];
-        if (!indexPath || ![self.offlineCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
-            return;
-        }
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {        
-        if (self.offlineTableView.tableView.isEditing) {
-            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
-            if (self.selectedItems.count == 0) {
-                [self setEditMode:NO];
-            }
-            if (self.selectedItems.count == 1) {
-                NSURL *offlineUrlSelected = self.selectedItems.firstObject;
-                NSURL *offlineUrlPressed = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kPath];
-                if ([[offlineUrlPressed path] compare:[offlineUrlSelected path]] == NSOrderedSame) {
-                    [self setEditMode:NO];
-                }
-            }
-        } else {
-            [self setEditMode:YES];
-            [self selectIndexPath:indexPath];
-        }
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self.offlineTableView.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
 }
 
 #pragma mark - DZNEmptyDataSetSource

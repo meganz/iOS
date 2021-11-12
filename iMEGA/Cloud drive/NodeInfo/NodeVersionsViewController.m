@@ -50,8 +50,6 @@
     
     [self reloadUI];
     
-    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
-    
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
@@ -342,41 +340,6 @@
         return self.node.mnz_versions.firstObject;
     } else {
         return [self.nodeVersionsMutableArray objectAtIndex:indexPath.row + 1];
-    }
-}
-
-#pragma mark - UILongPressGestureRecognizer
-
-- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-    
-    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || indexPath.section == 0) {
-        return;
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {        
-        if (self.isEditing) {
-            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
-            if (self.selectedNodesArray.count == 0) {
-                [self setEditing:NO animated:YES];
-            }
-            if (self.selectedNodesArray.count == 1) {
-                MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = [self nodeForIndexPath:indexPath];
-                if (nodeSelected.handle == nodePressed.handle) {
-                    [self setEditing:NO animated:YES];
-                }
-            }
-        } else {
-            [self setEditing:YES animated:YES];
-            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-        }
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
