@@ -176,3 +176,7 @@ NSString * const MEGARecentsQuickAccessWidget = @"MEGARecentsQuickAccessWidget";
 NSString * const MEGAOfflineQuickAccessWidget = @"MEGAOfflineQuickAccessWidget";
 
 const NSInteger MEGAQuickAccessWidgetMaxDisplayItems = 8;
+
+#pragma mark - Photo Browser
+
+NSString * const MEGAUseMobileDataForPreviewingOriginalPhoto = @"MEGAUseMobileDataForPreviewingOriginalPhoto";

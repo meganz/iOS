@@ -223,10 +223,6 @@
 		5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
 		5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */; };
 		5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
-		5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B22F9771F8374C400D2B156 /* VENToken.xib */; };
-		5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F9781F8374C400D2B156 /* VENToken.m */; };
-		5B22F97E1F8374C500D2B156 /* VENTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F97A1F8374C400D2B156 /* VENTokenField.m */; };
-		5B22F97F1F8374C500D2B156 /* VENBackspaceTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F97B1F8374C500D2B156 /* VENBackspaceTextField.m */; };
 		5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */; };
 		5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
@@ -365,8 +361,6 @@
 		5BCF7E43263170E900BE769B /* TermsAndPoliciesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF7E42263170E900BE769B /* TermsAndPoliciesTableViewController.swift */; };
 		5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */; };
 		5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */; };
-		5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A01F1F838606000E24E6 /* ViewFrameAccessor.m */; };
-		5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
 		5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BE484BE215BB3CD003B291D /* ChatSettings.storyboard */; };
 		5BE689872417C91500462134 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
@@ -1348,7 +1342,6 @@
 		A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */; };
 		A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */; };
 		A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */; };
-		A8F43939218726690054472A /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F43937218726690054472A /* PieChartView.m */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */; };
 		A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -2433,13 +2426,6 @@
 		5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedNodesViewController.m; path = Chat/ChatAttachedNodesViewController.m; sourceTree = "<group>"; };
 		5B222A72205A9CD30083D433 /* MEGAChatAttachNodeRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatAttachNodeRequestDelegate.h; sourceTree = "<group>"; };
 		5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAChatAttachNodeRequestDelegate.m; sourceTree = "<group>"; };
-		5B22F9751F8374C400D2B156 /* VENTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENTokenField.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENTokenField.h; sourceTree = SOURCE_ROOT; };
-		5B22F9761F8374C400D2B156 /* VENToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENToken.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENToken.h; sourceTree = SOURCE_ROOT; };
-		5B22F9771F8374C400D2B156 /* VENToken.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VENToken.xib; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENToken.xib; sourceTree = SOURCE_ROOT; };
-		5B22F9781F8374C400D2B156 /* VENToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENToken.m; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENToken.m; sourceTree = SOURCE_ROOT; };
-		5B22F9791F8374C400D2B156 /* VENBackspaceTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENBackspaceTextField.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENBackspaceTextField.h; sourceTree = SOURCE_ROOT; };
-		5B22F97A1F8374C400D2B156 /* VENTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENTokenField.m; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENTokenField.m; sourceTree = SOURCE_ROOT; };
-		5B22F97B1F8374C500D2B156 /* VENBackspaceTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENBackspaceTextField.m; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENBackspaceTextField.m; sourceTree = SOURCE_ROOT; };
 		5B2417E720527FB800C8DDE2 /* DisplayMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
 		5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAImagePickerController.h; sourceTree = "<group>"; };
 		5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAImagePickerController.m; sourceTree = "<group>"; };
@@ -2581,11 +2567,6 @@
 		5BCF7E42263170E900BE769B /* TermsAndPoliciesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPoliciesTableViewController.swift; sourceTree = "<group>"; };
 		5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndPoliciesRouter.swift; sourceTree = "<group>"; };
 		5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewHeader.swift; sourceTree = "<group>"; };
-		5BD4A01C1F838605000E24E6 /* ViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewFrameAccessor.h; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/ViewFrameAccessor.h; sourceTree = SOURCE_ROOT; };
-		5BD4A01D1F838605000E24E6 /* ScrollViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrollViewFrameAccessor.h; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/ScrollViewFrameAccessor.h; sourceTree = SOURCE_ROOT; };
-		5BD4A01E1F838605000E24E6 /* FrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameAccessor.h; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/FrameAccessor.h; sourceTree = SOURCE_ROOT; };
-		5BD4A01F1F838606000E24E6 /* ViewFrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewFrameAccessor.m; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/ViewFrameAccessor.m; sourceTree = SOURCE_ROOT; };
-		5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrollViewFrameAccessor.m; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/ScrollViewFrameAccessor.m; sourceTree = SOURCE_ROOT; };
 		5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameViewController.h; sourceTree = "<group>"; };
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
 		5BE08A0820F4DB0100950D30 /* LinkOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinkOption.h; sourceTree = "<group>"; };
@@ -3365,8 +3346,6 @@
 		A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocationSearchTableViewCell.m; path = Chat/LocationSearchTableViewCell.m; sourceTree = "<group>"; };
 		A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call.mp3; sourceTree = "<group>"; };
 		A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hang_out.mp3; sourceTree = "<group>"; };
-		A8F43937218726690054472A /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartView.m; sourceTree = "<group>"; };
-		A8F43938218726690054472A /* PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartView.h; sourceTree = "<group>"; };
 		A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailAndFollowTheLinkViewController.h; sourceTree = "<group>"; };
 		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
 		A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGASendSignupLinkRequestDelegate.h; path = API/Requests/MEGASendSignupLinkRequestDelegate.h; sourceTree = "<group>"; };
@@ -4770,10 +4749,7 @@
 				2F28019C24455A4900C160D0 /* Karere.xcodeproj */,
 				2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */,
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
-				5BD4A01B1F8385EC000E24E6 /* FrameAccessor */,
-				5B22F9721F8373EC00D2B156 /* VENTokenField */,
 				B695B5F4264B43160050DF09 /* SVProgressHUD */,
-				41EC68561D76E101003EC803 /* PieChartView */,
 				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
 			);
 			name = Vendor;
@@ -5338,16 +5314,6 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
-		41EC68561D76E101003EC803 /* PieChartView */ = {
-			isa = PBXGroup;
-			children = (
-				A8F43938218726690054472A /* PieChartView.h */,
-				A8F43937218726690054472A /* PieChartView.m */,
-			);
-			name = PieChartView;
-			path = Vendor/PieChartView/JustPieChart/JustPieChart/Classes;
-			sourceTree = "<group>";
-		};
 		41FC83BC1AAE0559008FA551 /* Camera Uploads */ = {
 			isa = PBXGroup;
 			children = (
@@ -5413,21 +5379,6 @@
 				5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */,
 			);
 			path = AwaitingEmailConfirmation;
-			sourceTree = "<group>";
-		};
-		5B22F9721F8373EC00D2B156 /* VENTokenField */ = {
-			isa = PBXGroup;
-			children = (
-				5B22F9791F8374C400D2B156 /* VENBackspaceTextField.h */,
-				5B22F97B1F8374C500D2B156 /* VENBackspaceTextField.m */,
-				5B22F9761F8374C400D2B156 /* VENToken.h */,
-				5B22F9781F8374C400D2B156 /* VENToken.m */,
-				5B22F9771F8374C400D2B156 /* VENToken.xib */,
-				5B22F9751F8374C400D2B156 /* VENTokenField.h */,
-				5B22F97A1F8374C400D2B156 /* VENTokenField.m */,
-			);
-			name = VENTokenField;
-			path = Vendor/VENTokenField;
 			sourceTree = "<group>";
 		};
 		5B2417E620527F5900C8DDE2 /* Headers */ = {
@@ -5767,19 +5718,6 @@
 				5BF59EA8263C551C00A7CF9D /* TermsAndPoliciesViewModel.swift */,
 			);
 			path = TermsAndPoliciesScene;
-			sourceTree = "<group>";
-		};
-		5BD4A01B1F8385EC000E24E6 /* FrameAccessor */ = {
-			isa = PBXGroup;
-			children = (
-				5BD4A01E1F838605000E24E6 /* FrameAccessor.h */,
-				5BD4A01D1F838605000E24E6 /* ScrollViewFrameAccessor.h */,
-				5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */,
-				5BD4A01C1F838605000E24E6 /* ViewFrameAccessor.h */,
-				5BD4A01F1F838606000E24E6 /* ViewFrameAccessor.m */,
-			);
-			name = FrameAccessor;
-			path = Vendor/FrameAccessor/FrameAccessor;
 			sourceTree = "<group>";
 		};
 		5BE7BEE123745F9D00BBD23F /* EmptyState */ = {
@@ -10108,7 +10046,6 @@
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
 				BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */,
 				83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */,
-				5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */,
 				BFB33D91263B922F006E203D /* EndMeetingOptionsViewViewController.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
 				BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */,
@@ -10475,7 +10412,6 @@
 				5B5E591320EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m in Sources */,
 				77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */,
 				0D213E7B263A60B700B43723 /* NodeActionRepositoryProtocol.swift in Sources */,
-				5B22F97F1F8374C500D2B156 /* VENBackspaceTextField.m in Sources */,
 				77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */,
 				5D166B89252198A7004F4F4A /* HomeSearchResultFileViewModel.swift in Sources */,
 				A873E84426E117A400CBB174 /* AppReinstallationCleaner.swift in Sources */,
@@ -10716,7 +10652,6 @@
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
 				2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */,
 				2F9F11292508A43300896DFF /* Constant.swift in Sources */,
-				5B22F97E1F8374C500D2B156 /* VENTokenField.m in Sources */,
 				2FBBE87325E5D54200B760BC /* ImportTextActivity.swift in Sources */,
 				B6FD6502268B391900988A17 /* AccountRepositoryProtocol.swift in Sources */,
 				5D92DD1624BFE2B200D7D13B /* DateFormatter+TemplateFormatter.swift in Sources */,
@@ -10995,7 +10930,6 @@
 				5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */,
 				BF46B7F225A68316008641BB /* PSARepository.swift in Sources */,
 				BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */,
-				5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */,
 				5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				5D568207252FEA8C00FE7F9C /* Aggregatable.swift in Sources */,
@@ -11314,7 +11248,6 @@
 				A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				5B8B3DDD26FE47FA00882245 /* NodeLabelTypeEntity.swift in Sources */,
-				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */,
@@ -11506,7 +11439,6 @@
 				5B5A983C212EF29500FDBC79 /* RubbishBinTableViewController.m in Sources */,
 				5D8303D2256266A80082CA18 /* GeneralDomainError.swift in Sources */,
 				BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */,
-				5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */,
 				830C26CD25DFDD3000E9B56E /* RecentNodesRepository.swift in Sources */,
 				8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */,
 				BFAB113F23CEA5C300BCE72D /* AssetDownloader.swift in Sources */,
@@ -11610,7 +11542,6 @@
 				BFCB81112505A8D90096BD57 /* FilesExplorerListViewController.swift in Sources */,
 				BF90C795260406FC006061F8 /* UserImageUseCase.swift in Sources */,
 				5D31674B24FCA9330032492F /* DevicePermissionAlerting.swift in Sources */,
-				A8F43939218726690054472A /* PieChartView.m in Sources */,
 				835223B42059588300A47438 /* ItemListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -12428,6 +12359,7 @@
 					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
+				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12706,6 +12638,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					iMEGA/Vendor/SDK/bindings/ios,
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Debug;
@@ -12764,6 +12697,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					iMEGA/Vendor/SDK/bindings/ios,
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Release;
@@ -13236,6 +13170,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Debug;
@@ -13285,6 +13220,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
+					"$(inherited)",
 				);
 			};
 			name = Release;

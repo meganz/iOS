@@ -35,7 +35,12 @@ Upload to Appcenter
 ```
 fastlane ios upload_symbols
 ```
-build a app store release version
+Upload symbols to crashlytics after running the gym
+### ios upload_symbols_with_dsym_path
+```
+fastlane ios upload_symbols_with_dsym_path
+```
+Upload symbols to crashlytics with dsym path as parameter
 ### ios build_release
 ```
 fastlane ios build_release
@@ -59,6 +64,6 @@ MEGA unit tests
 
 ----
 
-This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 More information about fastlane can be found on [fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [docs.fastlane.tools](https://docs.fastlane.tools).

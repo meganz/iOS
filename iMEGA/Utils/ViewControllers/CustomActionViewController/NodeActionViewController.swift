@@ -62,11 +62,14 @@ class NodeActionViewController: ActionSheetViewController {
         
         configurePresentationStyle(from: sender)
         
+        let isImageOrVideoFile = node.name?.mnz_isImagePathExtension == true || node.name?.mnz_isVideoPathExtension == true
+        let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
+        let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-            .setIsMediaFile(node.isFile() && (node.name?.mnz_isImagePathExtension == true || node.name?.mnz_isVideoPathExtension == true) && node.mnz_isPlayable())
-            .setIsEditableTextFile(node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true)
+            .setIsMediaFile(isMediaFile)
+            .setIsEditableTextFile(isEditableTextFile)
             .setIsFile(node.isFile())
             .setIsFavourite(node.isFavourite)
             .setLabel(node.label)

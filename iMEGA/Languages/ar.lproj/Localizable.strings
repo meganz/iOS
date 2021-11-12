@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]السواقة السحابية الخاصة بك ممتلئة.[/S] [A]قم بالترقية الآن[/A] إلى حساب برو Pro واحصل على [S]ما يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة التخزين السحابية.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="مساحة التخزين";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="محدود";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="خاضع لمشاركتك في برنامج الإنجازات الخاص بنا.";
 /* Price asociated with the MEGA PRO account level you can subscribe */

@@ -12,6 +12,14 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
+typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
+    FileManagementTableSectionMobileData = 0,
+    FileManagementTableSectionOnYourDevice,
+    FileManagementTableSectionClearCache,
+    FileManagementTableSectionOnMEGA,
+    FileManagementTableSectionFileVersioning
+};
+
 @interface FileManagementTableViewController () <MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *clearOfflineFilesLabel;
@@ -26,6 +34,9 @@
 @property (nonatomic, copy) NSString *cacheSizeString;
 
 @property (nonatomic, getter=isFileVersioningEnabled) BOOL fileVersioningEnabled;
+
+@property (weak, nonatomic) IBOutlet UILabel *useMobileDataLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *useMobileDataSwitch;
 
 @end
 
@@ -52,6 +63,9 @@
     
     self.fileVersioningLabel.text = NSLocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
     [[MEGASdkManager sharedMEGASdk] getFileVersionsOptionWithDelegate:self];
+    
+    self.useMobileDataLabel.text = NSLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
+    self.useMobileDataSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
@@ -119,16 +133,55 @@
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAShareExtensionStorageFolder]];
 }
 
+- (void)showClearAllOfflineFilesActionSheet {
+    UIAlertController *clearAllOfflineFilesAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"settings.fileManagement.alert.clearAllOfflineFiles", @"Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [clearAllOfflineFilesAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *clearAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"clear", @"Button title to clear something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self clearOfflineFiles];
+    }];
+    [clearAllOfflineFilesAlertController addAction:clearAlertAction];
+    
+    [self presentViewController:clearAllOfflineFilesAlertController animated:YES completion:nil];
+}
+
+- (void)clearOfflineFiles {
+    NSString *offlinePathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlinePathString];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [SVProgressHUD dismiss];
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [[MEGAStore shareInstance] removeAllOfflineNodes];
+            if (@available(iOS 14.0, *)) {
+                [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
+            }
+            [self reloadUI];
+        });
+    });
+}
+
+#pragma mark - IBAction
+
+- (IBAction)useMobileDataSwitchChanged:(UISwitch *)sender {
+    [NSUserDefaults.standardUserDefaults setBool:sender.on forKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleHeader;
     switch (section) {
-        case 0: //On your device
+        case FileManagementTableSectionMobileData:
+            titleHeader = NSLocalizedString(@"settings.fileManagement.useMobileData.header", @"Header of a Use Mobile Data setting to load preview of images in hight resolution");
+            break;
+        case FileManagementTableSectionOnYourDevice:
             titleHeader = NSLocalizedString(@"onYourDevice", @"Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section");
             break;
             
-        case 2: //On MEGA
+        case FileManagementTableSectionOnMEGA:
             titleHeader = NSLocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
             break;
     }
@@ -139,21 +192,25 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *titleFooter;
     switch (section) {
-        case 0: { //On your device - Offline
+        case FileManagementTableSectionMobileData: {
+            titleFooter = NSLocalizedString(@"settings.fileManagement.useMobileData.footer", @"Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works");
+            break;
+        }
+        case FileManagementTableSectionOnYourDevice: {
             NSString *currentlyUsingString = NSLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.offlineSizeString];
             titleFooter = currentlyUsingString;
             break;
         }
             
-        case 1: { //On your device - Clear cache
+        case FileManagementTableSectionClearCache: {
             NSString *currentlyUsingString = NSLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.cacheSizeString];
             titleFooter = currentlyUsingString;
             break;
         }
             
-        case 2: { //On MEGA - Rubbish Bin
+        case FileManagementTableSectionOnMEGA: {
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
             stringFromByteCount = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
@@ -175,26 +232,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 0: { //On your device - Offline
-            NSString *offlinePathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            [SVProgressHUD show];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlinePathString];
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [SVProgressHUD dismiss];
-                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [[MEGAStore shareInstance] removeAllOfflineNodes];
-                    if (@available(iOS 14.0, *)) {
-                        [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
-                    }
-                    [self reloadUI];
-                });
-            });
+        case FileManagementTableSectionOnYourDevice: {
+            [self showClearAllOfflineFilesActionSheet];
             break;
         }
             
-        case 1: { //On your device - Clear cache
+        case FileManagementTableSectionClearCache: {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
@@ -219,9 +262,9 @@
             break;
         }
             
-        case 2:
+        case FileManagementTableSectionOnMEGA:
             break;
-        case 3:
+        case FileManagementTableSectionFileVersioning:
             [[FileVersioningViewRouter.alloc initWithNavigationController:self.navigationController] start];
             
         default:
