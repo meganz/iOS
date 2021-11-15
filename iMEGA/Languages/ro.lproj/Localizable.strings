@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont Pro și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Spațiu de stocare";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Limitat";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Obiectul participării tale în programul nostru de realizări";
 /* Price asociated with the MEGA PRO account level you can subscribe */

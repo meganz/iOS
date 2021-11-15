@@ -4,18 +4,9 @@
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 	url=https://github.com/meganz/LTHPasscodeViewController.git
-[submodule "iMEGA/Vendor/PieChartView"]
-	path = iMEGA/Vendor/PieChartView
-	url = https://github.com/astrokin/PieChart.git
 [submodule "iMEGA/Vendor/Karere"]
 	path = iMEGA/Vendor/Karere
 	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
-[submodule "iMEGA/Vendor/VENTokenField"]
-	path = iMEGA/Vendor/VENTokenField
-	url = https://github.com/meganz/VENTokenField.git
-[submodule "iMEGA/Vendor/FrameAccessor"]
-	path = iMEGA/Vendor/FrameAccessor
-	url = https://github.com/AlexDenisov/FrameAccessor.git
 [submodule "iMEGA/Vendor/SDAVAssetExportSession"]
 	path = iMEGA/Vendor/SDAVAssetExportSession
 	url = https://github.com/meganz/SDAVAssetExportSession.git

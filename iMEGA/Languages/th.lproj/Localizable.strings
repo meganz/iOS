@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี Pro และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="ที่เก็บข้อมูล";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="ถูกจำกัด";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="ขึ้นอยู่กับการมีส่วนร่วมในโครงการความสำเร็จของเรา";
 /* Price asociated with the MEGA PRO account level you can subscribe */

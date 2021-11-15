@@ -317,45 +317,56 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 }
 
 - (NSAttributedString *)storageAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).")] attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSString *storageString = NSLocalizedString(@"account.storageQuota", @"Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'.");
+    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
-    NSString *storageFormattedString = [self storageAndUnitsByProduct:product];
-    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageFormattedString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
-    [storageMutableAttributedString appendAttributedString:storageString];
+    NSString *storageValueString = [self storageAndUnitsByProduct:product];
+    NSMutableAttributedString *storageValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSRange storageValueRange = [storageString rangeOfString:@"%@"];
+    [storageMutableAttributedString replaceCharactersInRange:storageValueRange withAttributedString:storageValueMutableAttributedString];
     
     return storageMutableAttributedString;
 }
 
 - (NSAttributedString *)bandwidthAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSMutableAttributedString *bandwidthString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", NSLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSString *transferQuotaString = NSLocalizedString(@"account.transferQuota.perMonth", @"Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'.");
+    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
-    NSString *bandwidthFormattedString = [self transferAndUnitsByProduct:product];
-    NSMutableAttributedString *bandwidthMutableAttributedString = [NSMutableAttributedString.alloc initWithString:bandwidthFormattedString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
-    [bandwidthMutableAttributedString appendAttributedString:bandwidthString];
+    NSString *transferQuotaValueString = [self transferAndUnitsByProduct:product];
+    NSMutableAttributedString *transferQuotaValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSRange transferQuotaValueRange = [transferQuotaString rangeOfString:@"%@"];
+    [transferQuotaMutableAttributedString replaceCharactersInRange:transferQuotaValueRange withAttributedString:transferQuotaValueMutableAttributedString];
     
-    return bandwidthMutableAttributedString;
+    return transferQuotaMutableAttributedString;
 }
 
 - (NSAttributedString *)freeStorageAttributedString {
-    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).")] attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSString *freeStorageString = NSLocalizedString(@"account.storage.freePlan", @"Text listed that includes the amount of storage that a free user gets");
+    NSString *freeStorageValueString = [freeStorageString mnz_stringBetweenString:@"[B]" andString:@"[/B]"];
+    freeStorageString = freeStorageString.mnz_removeWebclientFormatters;
+    NSMutableAttributedString *freeStorageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
-    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"20 GB+" attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
-    [storageMutableAttributedString appendAttributedString:storageString];
+    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSRange freeStorageValueRange = [freeStorageString rangeOfString:freeStorageValueString];
+    [freeStorageMutableAttributedString replaceCharactersInRange:freeStorageValueRange withAttributedString:storageMutableAttributedString];
     
     NSAttributedString *superscriptOneAttributedString = [NSAttributedString.alloc initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
-    [storageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
+    [freeStorageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
     
-    return storageMutableAttributedString;
+    return freeStorageMutableAttributedString;
 }
 
 - (NSAttributedString *)freeTransferQuotaAttributedString {
-    NSMutableAttributedString *transferQuotaString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", NSLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSString *transferQuotaString = NSLocalizedString(@"account.transferQuota.freePlan", @"Text listed that explain that a free user gets a limited amount of transfer quota.");
+    NSString *limitedString = [transferQuotaString mnz_stringBetweenString:@"[B]" andString:@"[/B]"];
+    transferQuotaString = transferQuotaString.mnz_removeWebclientFormatters;
+    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
-    NSString *limitedTransferQuotaString = NSLocalizedString(@"limited", @" Label for any 'Limited' button, link, text, title, etc. - (String as short as possible).").localizedUppercaseString;
-    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedTransferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
-    [transferQuotaMutableAttributedString appendAttributedString:transferQuotaString];
+    NSMutableAttributedString *limitedTransferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSRange limitedStringRange = [transferQuotaString rangeOfString:limitedString];
+    [transferQuotaMutableAttributedString replaceCharactersInRange:limitedStringRange withAttributedString:limitedTransferQuotaMutableAttributedString];
     
     return transferQuotaMutableAttributedString;
 }

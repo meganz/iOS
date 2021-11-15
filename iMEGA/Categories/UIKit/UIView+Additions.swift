@@ -1,6 +1,6 @@
 
 extension UIView {
-    @IBInspectable var cornerRadius: CGFloat {
+    @IBInspectable var mnz_cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
         }

@@ -1031,6 +1031,18 @@ static NSString* const B = @"[B]";
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
+- (NSString *)mnz_fileNameWithoutExtension {
+    NSString *fileName;
+    
+    NSMutableArray<NSString *> *fileNameComponents = [[self componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        [fileNameComponents removeLastObject];
+    }
+    fileName = [fileNameComponents componentsJoinedByString:@"."];
+    
+    return fileName;
+}
+
 - (NSString *)mnz_stringByRemovingInvalidFileCharacters {
     NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@":/\\"];
     return [[self componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];

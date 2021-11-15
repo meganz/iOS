@@ -127,48 +127,16 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     // MARK: - Private
     
     private func setupViews() {
-        view.addSubview(headerImageView)
+        addHeaderImageView()
         
-        [headerImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.size.height * 0.05),
-         headerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)].activate()
-        
-        let stepOneStack = UIStackView(arrangedSubviews: [openSettingsImageView, openSettingsLabel])
-        stepOneStack.axis = .horizontal
-        stepOneStack.alignment = .center
-        stepOneStack.distribution = .fillProportionally
-        stepOneStack.translatesAutoresizingMaskIntoConstraints = false
-        stepOneStack.spacing = 16
-        
-        let stepTwoStack = UIStackView(arrangedSubviews: [tapNotificationsImageView, tapNotificationsLabel])
-        stepTwoStack.axis = .horizontal
-        stepTwoStack.alignment = .center
-        stepTwoStack.distribution = .fillProportionally
-        stepTwoStack.translatesAutoresizingMaskIntoConstraints = false
-        stepTwoStack.spacing = 16
-        
-        let stepThreeStack = UIStackView(arrangedSubviews: [turnOnAllowNotificationsImageView, turnOnAllowNotificationsLabel])
-        stepThreeStack.axis = .horizontal
-        stepThreeStack.alignment = .center
-        stepThreeStack.distribution = .fillProportionally
-        stepThreeStack.translatesAutoresizingMaskIntoConstraints = false
-        stepThreeStack.spacing = 16
-        
-        let stepsStack = UIStackView(arrangedSubviews: [stepOneStack, stepTwoStack, stepThreeStack])
-        stepsStack.axis = .vertical
-        stepsStack.translatesAutoresizingMaskIntoConstraints = false
-        stepsStack.spacing = 16
-        stepsStack.layoutMargins = UIEdgeInsets(top: 4, left: 20, bottom: 0, right: 20)
-        stepsStack.isLayoutMarginsRelativeArrangement = true
-        
-        let contentStack = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel, stepsStack, UIView.makeFlexiView(for: .vertical), openSettingsButton, dismissButton])
-        contentStack.axis = .vertical
-        contentStack.translatesAutoresizingMaskIntoConstraints = false
-        contentStack.spacing = 16
-        view.addSubview(contentStack)
-        [contentStack.topAnchor.constraint(equalTo: headerImageView.bottomAnchor, constant: 30),
-         contentStack.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
-         contentStack.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-         contentStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -35)].activate()
+        addContentStack(
+            withStepsStack:
+                createStepsStack(
+                    withStepOneStack: createStepOneStack(),
+                    stepTwoStack: createStepTwoStack(),
+                    stepThreeStack: createStepThreeStack()
+                )
+        )
     }
     
     // MARK: - UI actions
@@ -211,6 +179,67 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
             openSettingsButton.setTitle(turnOnNotificationsModel.openSettingsTitle, for: .normal)
             dismissButton.setTitle(turnOnNotificationsModel.dismissTitle, for: .normal)
         }
+    }
+    
+    // MARK:- Private methods
+    
+    private func addHeaderImageView() {
+        view.addSubview(headerImageView)
+        let topAnchorConstant = view.frame.size.height * 0.05
+        [headerImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topAnchorConstant),
+         headerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)].activate()
+    }
+    
+    private func createStepOneStack() -> UIStackView {
+        let stepOneStack = UIStackView(arrangedSubviews: [openSettingsImageView, openSettingsLabel])
+        stepOneStack.axis = .horizontal
+        stepOneStack.alignment = .center
+        stepOneStack.distribution = .fillProportionally
+        stepOneStack.translatesAutoresizingMaskIntoConstraints = false
+        stepOneStack.spacing = 16
+        return stepOneStack
+    }
+    
+    private func createStepTwoStack() -> UIStackView {
+        let stepTwoStack = UIStackView(arrangedSubviews: [tapNotificationsImageView, tapNotificationsLabel])
+        stepTwoStack.axis = .horizontal
+        stepTwoStack.alignment = .center
+        stepTwoStack.distribution = .fillProportionally
+        stepTwoStack.translatesAutoresizingMaskIntoConstraints = false
+        stepTwoStack.spacing = 16
+        return stepTwoStack
+    }
+    
+    private func createStepThreeStack() -> UIStackView {
+        let stepThreeStack = UIStackView(arrangedSubviews: [turnOnAllowNotificationsImageView, turnOnAllowNotificationsLabel])
+        stepThreeStack.axis = .horizontal
+        stepThreeStack.alignment = .center
+        stepThreeStack.distribution = .fillProportionally
+        stepThreeStack.translatesAutoresizingMaskIntoConstraints = false
+        stepThreeStack.spacing = 16
+        return stepThreeStack
+    }
+    
+    private func createStepsStack(withStepOneStack stepOneStack: UIStackView, stepTwoStack: UIStackView, stepThreeStack: UIStackView) -> UIStackView {
+        let stepsStack = UIStackView(arrangedSubviews: [stepOneStack, stepTwoStack, stepThreeStack])
+        stepsStack.axis = .vertical
+        stepsStack.translatesAutoresizingMaskIntoConstraints = false
+        stepsStack.spacing = 16
+        stepsStack.layoutMargins = UIEdgeInsets(top: 4, left: 20, bottom: 0, right: 20)
+        stepsStack.isLayoutMarginsRelativeArrangement = true
+        return stepsStack
+    }
+    
+    private func addContentStack(withStepsStack stepsStack: UIStackView) {
+        let contentStack = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel, stepsStack, UIView.makeFlexiView(for: .vertical), openSettingsButton, dismissButton])
+        contentStack.axis = .vertical
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+        contentStack.spacing = 16
+        view.addSubview(contentStack)
+        [contentStack.topAnchor.constraint(equalTo: headerImageView.bottomAnchor, constant: 30),
+         contentStack.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+         contentStack.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+         contentStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -35)].activate()
     }
 }
 

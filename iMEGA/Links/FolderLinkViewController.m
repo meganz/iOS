@@ -117,8 +117,6 @@
         [self determineViewMode];
     }
     
-    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
-    
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     [self updateAppearance];
@@ -852,57 +850,6 @@
         self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
     }
     [self reloadData];
-}
-
-#pragma mark - UILongPressGestureRecognizer
-
-- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    UIView *view = self.flTableView ? self.flTableView.tableView : self.flCollectionView.collectionView;
-    CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
-
-    NSIndexPath *indexPath;
-
-    if (self.viewModePreference == ViewModePreferenceList) {
-        indexPath = [self.flTableView.tableView indexPathForRowAtPoint:touchPoint];
-        if (!indexPath || ![self.flTableView.tableView numberOfRowsInSection:indexPath.section]) {
-            return;
-        }
-    } else {
-        indexPath = [self.flCollectionView.collectionView indexPathForItemAtPoint:touchPoint];
-        if (!indexPath || ![self.flCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
-            return;
-        }
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        BOOL editing = self.flTableView ? self.flTableView.tableView.isEditing : self.flCollectionView.collectionView.allowsMultipleSelection;
-        if (editing) {
-            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
-            if (self.selectedNodesArray.count == 0) {
-                [self setEditMode:NO];
-            }
-            if (self.selectedNodesArray.count == 1) {
-                MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
-                if (nodeSelected.handle == nodePressed.handle) {
-                    [self setEditMode:NO];
-                }
-            }
-        } else {
-            [self setEditMode:YES];
-            [self selectIndexPath:indexPath];
-        }
-    }
-}
-
-- (void)selectIndexPath:(NSIndexPath *)indexPath {
-    if (self.viewModePreference == ViewModePreferenceList) {
-        [self.flTableView tableViewSelectIndexPath:indexPath];
-        [self.flTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    } else {
-        [self.flCollectionView collectionViewSelectIndexPath:indexPath];
-        [self.flCollectionView.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-    }
 }
 
 #pragma mark - DZNEmptyDataSetSource

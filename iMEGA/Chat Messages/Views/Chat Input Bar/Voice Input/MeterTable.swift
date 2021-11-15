@@ -64,17 +64,7 @@ class MeterTable {
         decibelResolution = minDecibels / size
         scaleFactor = 1.0 / decibelResolution
         
-        let minAmp = dbToAmp(Double(minDecibels))
-        let ampRange = 1.0 - minAmp
-        let invAmpRange = 1.0 / ampRange
-
-        let rroot: Double = 1.0 / root
-        table = (0..<tableSize).map { index in
-            let decibels = Double(index) * Double(decibelResolution)
-            let amp = dbToAmp(decibels)
-            let adjAmp = (amp - minAmp) * Double(invAmpRange)
-            return Float(pow(adjAmp, rroot))
-        }
+        populateTable(withSize: tableSize, root: root)
     }
 
     subscript(index: Float) -> Float {
@@ -90,5 +80,19 @@ class MeterTable {
     
     private func dbToAmp(_ db: Double) -> Double {
         return pow(10.0, 0.05 * db)
+    }
+    
+    private func populateTable(withSize tableSize: Int, root: Double) {
+        let minAmp = dbToAmp(Double(minDecibels))
+        let ampRange = 1.0 - minAmp
+        let invAmpRange = 1.0 / ampRange
+        let rroot: Double = 1.0 / root
+        
+        table = (0..<tableSize).map { index in
+            let decibels = Double(index) * Double(decibelResolution)
+            let amp = dbToAmp(decibels)
+            let adjAmp = (amp - minAmp) * Double(invAmpRange)
+            return Float(pow(adjAmp, rroot))
+        }
     }
 }

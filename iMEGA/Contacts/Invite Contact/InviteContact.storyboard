@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -84,7 +84,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="contactOnMegaCell" id="Pfd-Un-pkc" customClass="ContactOnMegaTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="59.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="59.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Pfd-Un-pkc" id="2Qb-7j-b5q">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.666667938232422"/>
@@ -181,8 +181,8 @@
                     <connections>
                         <outlet property="inviteContactLabel" destination="BTR-eF-60E" id="hk1-kp-C21"/>
                         <outlet property="inviteContactView" destination="vQg-Tw-mTR" id="hXa-wF-snD"/>
-                        <outlet property="tableView" destination="pgB-IN-pdt" id="tfl-qH-dvZ"/>
                         <outlet property="searchFixedView" destination="ehf-ps-u3s" id="bAh-nb-s8t"/>
+                        <outlet property="tableView" destination="pgB-IN-pdt" id="tfl-qH-dvZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7G6-4a-ePW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -622,7 +622,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VDd-Rp-2U0">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter one or more email addresses" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mm-gZ-cRE" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter one or more email addresses" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mm-gZ-cRE" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                         <rect key="frame" x="10" y="24" width="394" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                         <nil key="textColor"/>
@@ -650,8 +650,8 @@
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="NVU-uo-cGY">
                                                 <rect key="frame" x="0.0" y="67" width="414" height="60"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wii-HB-ehB" customClass="VENTokenField">
-                                                        <rect key="frame" x="20" y="15" width="342" height="30"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wii-HB-ehB" customClass="WSTagsField" customModule="WSTagsField">
+                                                        <rect key="frame" x="10" y="15" width="352" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="1UB-50-DG4"/>
                                                         </constraints>
@@ -661,7 +661,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="Wii-HB-ehB" secondAttribute="trailing" constant="52" id="Lop-7v-7nh"/>
                                                     <constraint firstAttribute="bottom" secondItem="Wii-HB-ehB" secondAttribute="bottom" constant="15" id="hGL-Ba-6fl"/>
                                                     <constraint firstItem="Wii-HB-ehB" firstAttribute="top" secondItem="NVU-uo-cGY" secondAttribute="top" constant="15" id="hkC-k1-aOn"/>
-                                                    <constraint firstItem="Wii-HB-ehB" firstAttribute="leading" secondItem="NVU-uo-cGY" secondAttribute="leading" constant="20" id="rIx-Td-ISq"/>
+                                                    <constraint firstItem="Wii-HB-ehB" firstAttribute="leading" secondItem="NVU-uo-cGY" secondAttribute="leading" constant="10" id="rIx-Td-ISq"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nhk-D2-q92">
@@ -762,11 +762,10 @@
                         <outlet property="instructionsLabel" destination="BNI-oV-pBa" id="boS-DU-HeY"/>
                         <outlet property="inviteContactsButton" destination="GhC-PG-pnt" id="GSn-VF-16g"/>
                         <outlet property="inviteContactsButtonBottomConstraint" destination="n0k-u9-jQw" id="scb-dU-K7D"/>
-                        <outlet property="tokenField" destination="Wii-HB-ehB" id="ul6-ob-uvn"/>
-                        <outlet property="tokenFieldBottomSeparatorView" destination="vWS-W2-IoN" id="sm3-u5-puG"/>
-                        <outlet property="tokenFieldButton" destination="Nhk-D2-q92" id="QyU-cQ-ugv"/>
-                        <outlet property="tokenFieldHeightLayoutConstraint" destination="1UB-50-DG4" id="1Pr-L8-PNV"/>
-                        <outlet property="tokenFieldView" destination="NVU-uo-cGY" id="jcv-Xh-dKl"/>
+                        <outlet property="tagsField" destination="Wii-HB-ehB" id="ul6-ob-uvn"/>
+                        <outlet property="tagsFieldButton" destination="Nhk-D2-q92" id="QyU-cQ-ugv"/>
+                        <outlet property="tagsFieldHeightLayoutConstraint" destination="1UB-50-DG4" id="1Pr-L8-PNV"/>
+                        <outlet property="tagsFieldView" destination="NVU-uo-cGY" id="jcv-Xh-dKl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bMQ-8n-B1v" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -798,6 +797,9 @@
         </designable>
         <designable name="Z0A-eS-9IX">
             <size key="intrinsicContentSize" width="100.66666666666667" height="18"/>
+        </designable>
+        <designable name="lKT-mP-lgf">
+            <size key="intrinsicContentSize" width="30" height="30"/>
         </designable>
     </designables>
     <resources>
