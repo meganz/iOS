@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (nonatomic, readonly, nullable) MEGAProviderDelegate *megaProviderDelegate;
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 
+- (void)showMainTabBar;
 - (void)showOnboardingWithCompletion:(nullable void (^)(void))completion;
 
 @end

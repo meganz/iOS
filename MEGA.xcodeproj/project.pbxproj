@@ -273,6 +273,8 @@
 		5B594C2F2541DEBD00A43507 /* HistoryRetentionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B594C2E2541DEBD00A43507 /* HistoryRetentionUseCase.swift */; };
 		5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5974E2202858050011E819 /* SafariServices.framework */; };
 		5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B59B4CE236726D100A57229 /* DocumentPreviewer.storyboard */; };
+		5B5A18BD2732B47F00DE8619 /* CustomModalAlertViewController+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A18BC2732B47F00DE8619 /* CustomModalAlertViewController+Business.swift */; };
+		5B5A18C72732F70C00DE8619 /* CustomModalAlertViewController+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A18C62732F70C00DE8619 /* CustomModalAlertViewController+Contacts.swift */; };
 		5B5A983C212EF29500FDBC79 /* RubbishBinTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A983A212EF29500FDBC79 /* RubbishBinTableViewController.m */; };
 		5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		5B5C7B29264A92410087200D /* RecentsPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C7B26264A92410087200D /* RecentsPreference.swift */; };
@@ -302,6 +304,7 @@
 		5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */; };
 		5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B80B1BA245B2B9700110335 /* MEGASdk+Additions.swift */; };
+		5B8187D92643F4E800A401B0 /* CustomModalAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8187D82643F4E700A401B0 /* CustomModalAlertRouter.swift */; };
 		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
 		5B86D7C5248957E100B7888D /* ContactsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B86D7C4248957E100B7888D /* ContactsTableViewHeader.xib */; };
@@ -337,6 +340,10 @@
 		5BAC7CAE2677C00200F8C305 /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		5BAF2FEA25AF5C9100EBCA6B /* CustomModalAlertViewController+CookieDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */; };
+		5BB49DE8273D423300D4BD1F /* CustomModalAlertContactsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB49DE7273D423300D4BD1F /* CustomModalAlertContactsRouter.swift */; };
+		5BB49DEA273D47AF00D4BD1F /* CustomModalAlertViewController+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB49DE9273D47AF00D4BD1F /* CustomModalAlertViewController+Storage.swift */; };
+		5BB49DEC273D494600D4BD1F /* CustomModalAlertStorageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB49DEB273D494600D4BD1F /* CustomModalAlertStorageRouter.swift */; };
+		5BB49DEE273D550200D4BD1F /* CustomModalAlertViewController+Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB49DED273D550200D4BD1F /* CustomModalAlertViewController+Config.swift */; };
 		5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */; };
 		5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */; };
@@ -2478,6 +2485,8 @@
 		5B594C2E2541DEBD00A43507 /* HistoryRetentionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRetentionUseCase.swift; sourceTree = "<group>"; };
 		5B5974E2202858050011E819 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		5B59B4CE236726D100A57229 /* DocumentPreviewer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DocumentPreviewer.storyboard; sourceTree = "<group>"; };
+		5B5A18BC2732B47F00DE8619 /* CustomModalAlertViewController+Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Business.swift"; sourceTree = "<group>"; };
+		5B5A18C62732F70C00DE8619 /* CustomModalAlertViewController+Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Contacts.swift"; sourceTree = "<group>"; };
 		5B5A983A212EF29500FDBC79 /* RubbishBinTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RubbishBinTableViewController.m; sourceTree = "<group>"; };
 		5B5A983B212EF29500FDBC79 /* RubbishBinTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RubbishBinTableViewController.h; sourceTree = "<group>"; };
 		5B5B4FFD1E681BAC00DBEB3B /* UIFont+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+MNZCategory.h"; sourceTree = "<group>"; };
@@ -2514,6 +2523,7 @@
 		5B7B4CA01EE5AC1200DA6A8D /* MEGAShareRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAShareRequestDelegate.h; path = API/Requests/MEGAShareRequestDelegate.h; sourceTree = "<group>"; };
 		5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAShareRequestDelegate.m; path = API/Requests/MEGAShareRequestDelegate.m; sourceTree = "<group>"; };
 		5B80B1BA245B2B9700110335 /* MEGASdk+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+Additions.swift"; sourceTree = "<group>"; };
+		5B8187D82643F4E700A401B0 /* CustomModalAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertRouter.swift; sourceTree = "<group>"; };
 		5B8281461E7BE8300079C1BB /* SelectableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectableTableViewCell.h; sourceTree = "<group>"; };
 		5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectableTableViewCell.m; sourceTree = "<group>"; };
 		5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectableTableViewCell.xib; sourceTree = "<group>"; };
@@ -2541,6 +2551,10 @@
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
 		5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+CookieDialog.swift"; sourceTree = "<group>"; };
+		5BB49DE7273D423300D4BD1F /* CustomModalAlertContactsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModalAlertContactsRouter.swift; sourceTree = "<group>"; };
+		5BB49DE9273D47AF00D4BD1F /* CustomModalAlertViewController+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Storage.swift"; sourceTree = "<group>"; };
+		5BB49DEB273D494600D4BD1F /* CustomModalAlertStorageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertStorageRouter.swift; sourceTree = "<group>"; };
+		5BB49DED273D550200D4BD1F /* CustomModalAlertViewController+Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Config.swift"; sourceTree = "<group>"; };
 		5BB50E071F20E840000CA24D /* MEGACreateFolderRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateFolderRequestDelegate.h; path = API/Requests/MEGACreateFolderRequestDelegate.h; sourceTree = "<group>"; };
 		5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateFolderRequestDelegate.m; path = API/Requests/MEGACreateFolderRequestDelegate.m; sourceTree = "<group>"; };
 		5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -5620,6 +5634,31 @@
 			path = "Invite Contact";
 			sourceTree = "<group>";
 		};
+		5BB49DE6273D3DBE00D4BD1F /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+				5B8187D82643F4E700A401B0 /* CustomModalAlertRouter.swift */,
+				5BB49DEB273D494600D4BD1F /* CustomModalAlertStorageRouter.swift */,
+				5BB49DE7273D423300D4BD1F /* CustomModalAlertContactsRouter.swift */,
+			);
+			path = Routers;
+			sourceTree = "<group>";
+		};
+		5BB49DEF273D564B00D4BD1F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */,
+				5B5512DB25DB0E9F0010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift */,
+				5BB49DED273D550200D4BD1F /* CustomModalAlertViewController+Config.swift */,
+				5BB49DE9273D47AF00D4BD1F /* CustomModalAlertViewController+Storage.swift */,
+				83DF6571262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift */,
+				5B5A18BC2732B47F00DE8619 /* CustomModalAlertViewController+Business.swift */,
+				838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */,
+				5B5A18C62732F70C00DE8619 /* CustomModalAlertViewController+Contacts.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		5BB68C9D203599EC00B03C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -5748,12 +5787,11 @@
 		5BF4EEDC2432039C00D39415 /* CustomModalAlert */ = {
 			isa = PBXGroup;
 			children = (
-				5BAF2FE725AF5C9000EBCA6B /* CustomModalAlertViewController+CookieDialog.swift */,
-				5B5512DB25DB0E9F0010D4AE /* CustomModalAlertViewController+UpgradeToPro.swift */,
+				5BB49DEF273D564B00D4BD1F /* Extensions */,
+				5BB49DE6273D3DBE00D4BD1F /* Routers */,
 				5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
-				83DF6571262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift */,
 			);
 			path = CustomModalAlert;
 			sourceTree = "<group>";
@@ -7530,7 +7568,6 @@
 				83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */,
 				83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */,
 				2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */,
-				838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -10590,6 +10627,7 @@
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */,
 				BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */,
+				5BB49DEC273D494600D4BD1F /* CustomModalAlertStorageRouter.swift in Sources */,
 				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
 				BF99A41F24B2AD040035A183 /* ChatUploadTransfer+CoreDataClass.swift in Sources */,
@@ -10767,6 +10805,7 @@
 				C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */,
 				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
 				5BB8448B259CA85F008BDD2A /* CookieSettingsFactory.swift in Sources */,
+				5B5A18C72732F70C00DE8619 /* CustomModalAlertViewController+Contacts.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
 				B662B89124FC40090089376A /* RegionListIndexedSource.swift in Sources */,
@@ -10813,6 +10852,7 @@
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
+				5B8187D92643F4E800A401B0 /* CustomModalAlertRouter.swift in Sources */,
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
 				0D0B54912627D0BB00E9BB16 /* TextEditorL10n.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
@@ -10820,6 +10860,7 @@
 				5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */,
 				0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */,
 				B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */,
+				5BB49DEE273D550200D4BD1F /* CustomModalAlertViewController+Config.swift in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */,
@@ -10903,6 +10944,7 @@
 				A81C6589254B2D3000105BF4 /* GiphySelectionView.swift in Sources */,
 				83DF6572262DD08100F607A6 /* CustomModalAlertViewController+LaunchTab.swift in Sources */,
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
+				5BB49DEA273D47AF00D4BD1F /* CustomModalAlertViewController+Storage.swift in Sources */,
 				BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */,
 				A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */,
 				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,
@@ -11239,6 +11281,7 @@
 				BF782D5F269BA4BB0001D169 /* ChatRoomEntity.swift in Sources */,
 				5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */,
 				BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */,
+				5BB49DE8273D423300D4BD1F /* CustomModalAlertContactsRouter.swift in Sources */,
 				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
 				BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */,
 				B67A2C8D2517EE6600B40D89 /* L10nRepository.swift in Sources */,
@@ -11362,6 +11405,7 @@
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
+				5B5A18BD2732B47F00DE8619 /* CustomModalAlertViewController+Business.swift in Sources */,
 				BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */,
 				BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */,
 				5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */,
