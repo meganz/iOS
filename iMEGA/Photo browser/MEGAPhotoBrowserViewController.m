@@ -539,13 +539,14 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
                 [imageView sd_setImageWithURL:[NSURL fileURLWithPath:temporaryImagePath] placeholderImage:placeHolderImage];
             } else {
-                if ([MEGAReachabilityManager isReachableViaWiFi] && node.name.mnz_isImagePathExtension && node.size.longLongValue < MaxSizeToDownloadOriginal) {
+                BOOL loadOriginalWithMobileData = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
+                if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData) && node.name.mnz_isImagePathExtension && node.size.longLongValue < MaxSizeToDownloadOriginal) {
                     [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
                 }
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
                 } else if (node.hasPreview) {
-                    if ([MEGAReachabilityManager isReachableViaWiFi]) {
+                    if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData)) {
                         if (node.size.longLongValue > MinSizeToRequestThePreview) {
                             [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                         }

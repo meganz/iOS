@@ -12,7 +12,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
-#import "VENTokenField.h"
 
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"

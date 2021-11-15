@@ -82,11 +82,9 @@
     switch (section) {
         case 0:
             return NSLocalizedString(@"whatIsTwoFactorAuthentication", @"Text shown as explanation of what is Two-Factor Authentication");
-            break;
             
         default:
             return @"";
-            break;
     }
 }
 

@@ -55,8 +55,6 @@ class ChatSharedItemsViewController: UIViewController {
         
         updateAppearance()
         loadMoreFiles()
-        
-        view.addGestureRecognizer(UILongPressGestureRecognizer.init(target: self, action: #selector(longPress(recognizer:))))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -245,23 +243,6 @@ class ChatSharedItemsViewController: UIViewController {
         nodes.forEach { $0.mnz_downloadNode() }
         
         cancelSelectTapped()
-    }
-    
-    @objc private func longPress(recognizer: UILongPressGestureRecognizer) {
-        let touchPoint = recognizer.location(in: tableView)
-        guard let indexPath = tableView.indexPathForRow(at: touchPoint) else {
-            return
-        }
-        
-        if recognizer.state == .began {
-            if tableView.isEditing {
-                cancelSelectTapped()
-            } else {
-                selectTapped()
-                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-                tableView(tableView, didSelectRowAt: indexPath)
-            }
-        }
     }
     
     @objc private func loadVisibleParticipants() {

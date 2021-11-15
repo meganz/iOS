@@ -120,8 +120,6 @@
     self.outgoingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
     self.outgoingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
     
-    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
-    
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
@@ -1168,39 +1166,6 @@
 - (void)didPresentSearchController:(UISearchController *)searchController {
     if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.searchController.searchBar.superview.frame = CGRectMake(0, self.selectorView.frame.size.height + self.navigationController.navigationBar.frame.size.height, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
-    }
-}
-
-#pragma mark - UILongPressGestureRecognizer
-
-- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-    
-    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
-        return;
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {        
-        if (self.isEditing) {
-            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
-            if (self.selectedNodesMutableArray.count == 0) {
-                [self endEditingMode];
-            }
-            if (self.selectedNodesMutableArray.count == 1) {
-                MEGANode *nodeSelected = self.selectedNodesMutableArray.firstObject;
-                MEGANode *nodePressed = self.incomingButton.selected ? [self.incomingNodesMutableArray objectOrNilAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectOrNilAtIndex:indexPath.row];
-                if (nodeSelected.handle == nodePressed.handle) {
-                    [self endEditingMode];
-                }
-            }
-        } else {
-            [self startEditingModeAtIndex:indexPath];
-        }
-    }
-    
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

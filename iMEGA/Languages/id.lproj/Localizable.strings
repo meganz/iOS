@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Gudang";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Terbatas";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Subject pada partisipasi anda dalam achievements program kami";
 /* Price asociated with the MEGA PRO account level you can subscribe */

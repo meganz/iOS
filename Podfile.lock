@@ -48,6 +48,7 @@ PODS:
     - InputBarAccessoryView/Core (= 5.4.0)
   - InputBarAccessoryView/Core (5.4.0)
   - ISEmojiView (0.2.6)
+  - JustPieChart (0.1.0)
   - "Keyboard+LayoutGuide (1.6.0)"
   - libwebp (1.2.1):
     - libwebp/demux (= 1.2.1)
@@ -80,6 +81,7 @@ PODS:
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
+  - WSTagsField (5.4.0)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
   - YYCategories/no-arc (1.0.4)
@@ -94,6 +96,7 @@ DEPENDENCIES:
   - GKContactImage (from `https://github.com/meganz/GKContactImage.git`)
   - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
+  - JustPieChart
   - "Keyboard+LayoutGuide"
   - MessageKit
   - PanModal (from `https://github.com/ilia3546/PanModal.git`, commit `ba721e8`)
@@ -102,6 +105,7 @@ DEPENDENCIES:
   - PureLayout (from `https://github.com/PureLayout/PureLayout.git`)
   - SAMKeychain
   - SDWebImageWebPCoder
+  - WSTagsField
   - YYCategories
 
 SPEC REPOS:
@@ -119,6 +123,7 @@ SPEC REPOS:
     - GoogleUtilities
     - Haptica
     - InputBarAccessoryView
+    - JustPieChart
     - "Keyboard+LayoutGuide"
     - libwebp
     - MessageKit
@@ -129,6 +134,7 @@ SPEC REPOS:
     - SAMKeychain
     - SDWebImage
     - SDWebImageWebPCoder
+    - WSTagsField
     - YYCategories
 
 EXTERNAL SOURCES:
@@ -180,6 +186,7 @@ SPEC CHECKSUMS:
   Haptica: 23497230b2d7476621f7860263ae0667279a0a89
   InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
+  JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
   "Keyboard+LayoutGuide": db44b1764e2bb5d9824cc9cea9d9006cd4442045
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
@@ -192,8 +199,9 @@ SPEC CHECKSUMS:
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
+  WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 1fa28b75307e214579edc25eaac6cb59ce8f1fd7
+PODFILE CHECKSUM: 728bda164a236f6a3b4821f8f74fdac139bc3fd6
 
 COCOAPODS: 1.11.2

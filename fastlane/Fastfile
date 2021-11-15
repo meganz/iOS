@@ -124,13 +124,31 @@ platform :ios do
     )
   end
 
-  desc "build a app store release version"
-  lane :upload_symbols do |options|
-    upload_symbols_to_crashlytics(
-      dsym_path: lane_context[SharedValues::DSYM_OUTPUT_PATH],
-      gsp_path:"./iMEGA/Supporting Files/GoogleService-Info.plist"    
+  desc "Upload symbols to crashlytics after running the gym"
+  lane :upload_symbols do
+    upload_symbols_with_dsym_path(
+      dsym_path: lane_context[SharedValues::DSYM_OUTPUT_PATH]
     )
+  end
 
+  desc "Upload symbols to crashlytics with dsym path as parameter"
+  lane :upload_symbols_with_dsym_path do |options|
+    paths = {
+      "MEGA": "./iMEGA/Supporting Files/GoogleService-Info.plist",
+      "MEGANotifications": "./iMEGA/Extensions/MEGANotifications/GoogleService-Info.plist",
+      "MEGAIntent": "./iMEGA/Extensions/MEGAIntent/Supporting Files/GoogleService-Info.plist",
+      "MEGAPicker": "./iMEGA/Extensions/MEGAPicker/GoogleService-Info.plist",
+      "MEGAPickerFileProvider": "./iMEGA/Extensions/MEGAPickerFileProvider/GoogleService-Info.plist",
+      "MEGAShare": "./iMEGA/Extensions/MEGAShare/Supporting Files/GoogleService-Info.plist",
+      "MEGAWidget": "./iMEGA/Extensions/MEGAWidget/Supporting Files/GoogleService-Info.plist"
+    }
+    paths.each_with_index do |(target, path), index|
+      upload_symbols_to_crashlytics(
+        dsym_path: options[:dsym_path],
+        gsp_path: path,
+        step_name: "Uploading dsym #{index + 1} of #{paths.keys.count} - target is #{target}"
+      )
+    end
   end
 
   desc "build a app store release version"

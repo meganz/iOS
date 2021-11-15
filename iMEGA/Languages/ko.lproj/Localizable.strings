@@ -1056,8 +1056,6 @@
 "cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] Pro 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="저장소";
-/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="제한됨";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="도전 과제 프로그램에 참여할 수 있습니다.";
 /* Price asociated with the MEGA PRO account level you can subscribe */

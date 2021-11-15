@@ -51,8 +51,7 @@ extension MEGASdk {
                 return
             }
             
-            completion(MEGASdkManager.sharedMEGASdk().transfers.size.intValue > 0 ||
-                       MEGASdkManager.sharedMEGASdkFolder().transfers.size.intValue > 0)
+            completion(self.transfers.size.intValue > 0 || self.transfers.size.intValue > 0)
         }
     }
 }
