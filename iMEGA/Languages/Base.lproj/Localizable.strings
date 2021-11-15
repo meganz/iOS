@@ -214,6 +214,8 @@
 "addContacts"="Add contacts";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Invite to MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invite Sent";
 /* Button title to allow the user postpone an action */
@@ -586,8 +588,8 @@
 "addContactButton"="Add";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="There’s no need to add your own email address";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="The user has been invited and will appear in your contact list once accepted.";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="The user [X] has been invited and will appear in your contact list once accepted.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="The users have been invited and will appear in your contact list once accepted.";
 /* Alert title shown when you want to remove one or more contacts */

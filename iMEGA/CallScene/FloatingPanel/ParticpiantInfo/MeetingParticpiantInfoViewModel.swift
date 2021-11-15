@@ -139,7 +139,8 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         case .alreadyAContact:
             errorString = NSLocalizedString("alreadyAContact", comment: "").replacingOccurrences(of: "%s", with: email)
         case .isInOutgoingContactRequest:
-            errorString = NSLocalizedString("theUserHasBeenInvited", comment: "")
+            errorString = NSLocalizedString("dialog.inviteContact.outgoingContactRequest", comment: "Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user")
+            errorString = errorString.replacingOccurrences(of: "[X]", with: email)
         }
         self.router.showInviteErrorMessage(errorString)
     }

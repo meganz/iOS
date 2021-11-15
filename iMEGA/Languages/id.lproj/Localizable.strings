@@ -586,8 +586,6 @@
 "addContactButton"="Tambah";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri.";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Pengguna telah diundang dan akan muncul di daftar kontak anda setelah diterima.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Pengguna telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Alert title shown when you want to remove one or more contacts */

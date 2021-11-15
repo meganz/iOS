@@ -586,8 +586,6 @@
 "addContactButton"="เพิ่ม";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="ไม่มีความจำเป็นที่จะเพิ่มที่อยู่อีเมลของคุณเอง";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="ได้เชิญผู้ใช้แล้ว และจะปรากฏในรายชื่อผู้ติดต่อของคุณเมื่ออีกฝ่ายกดยอมรับ";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="ผู้ใช้งานไดรับคำเชิญแล้วและจะปรากฎบนรายชื่อผู้ติดต่อของคุณ";
 /* Alert title shown when you want to remove one or more contacts */

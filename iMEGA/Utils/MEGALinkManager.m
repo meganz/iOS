@@ -722,7 +722,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         if (isInOutgoingContactRequest) {
             inviteOrDismissModal.image = [UIImage imageNamed:@"inviteSent"];
             inviteOrDismissModal.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-            NSString *detailText = NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            NSString *detailText = NSLocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
             inviteOrDismissModal.detail = detailText;
             inviteOrDismissModal.boldInDetail = email;
