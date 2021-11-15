@@ -36,12 +36,9 @@
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
 #import "ContactRequestsViewController.h"
-#import "CustomModalAlertViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
 #import "OnboardingViewController.h"
-#import "ProductDetailViewController.h"
-#import "UpgradeTableViewController.h"
 
 #import "MEGAChatNotificationDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
@@ -89,7 +86,6 @@
 
 @property (nonatomic) NSMutableDictionary *backgroundTaskMutableDictionary;
 
-@property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 @property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 
@@ -948,8 +944,6 @@
 }
 
 - (void)presentInviteContactCustomAlertViewController {
-    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    
     BOOL isInOutgoingContactRequest = NO;
     MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
     for (NSInteger i = 0; i < [[outgoingContactRequestList size] integerValue]; i++) {
@@ -960,35 +954,11 @@
         }
     }
     
-    customModalAlertVC.boldInDetail = self.email;
-    
     if (isInOutgoingContactRequest) {
-        customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
-        customModalAlertVC.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-        NSString *detailText = NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
-        detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:self.email];
-        customModalAlertVC.detail = detailText;
-        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"close", nil);
-        customModalAlertVC.dismissButtonTitle = nil;
-        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.firstCompletion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:nil];
-        };
+        [[CustomModalAlertContactsRouter.alloc init:CustomModalAlertModeOutgoingContactRequest email:self.email presenter:UIApplication.mnz_presentingViewController] start];
     } else {
-        customModalAlertVC.image = [UIImage imageNamed:@"groupChat"];
-        customModalAlertVC.viewTitle = NSLocalizedString(@"inviteContact", @"Title shown when the user tries to make a call and the destination is not in the contact list");
-        customModalAlertVC.detail = [NSString stringWithFormat:@"Your contact %@ is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact", self.email];
-        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-        customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"later", @"Button title to allow the user postpone an action");
-        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.firstCompletion = ^{
-            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:self.email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-            [weakCustom dismissViewControllerAnimated:YES completion:nil];
-        };
+        [[CustomModalAlertContactsRouter.alloc init:CustomModalAlertModeContactNotInMEGA email:self.email presenter:UIApplication.mnz_presentingViewController] start];
     }
-    
-    [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     
     self.presentInviteContactVCLater = NO;
 }
@@ -1031,98 +1001,36 @@
     }];
 }
 
-- (void)handleTransferQuotaError:(MEGAError *)error transfer:(MEGATransfer *)transfer sdk:(MEGASdk *)sdk {
+- (void)handleTransferQuotaError:(MEGAError *)error transfer:(MEGATransfer *)transfer {
     switch (transfer.type) {
         case MEGATransferTypeDownload:
-            [self handleDownloadQuotaError:error sdk:sdk];
+            [self handleDownloadQuotaError:error];
             break;
         case MEGATransferTypeUpload:
-            [self handleStorageQuotaError:error sdk:sdk];
+            [self handleStorageQuotaError:error];
             break;
         default:
             break;
     }
 }
 
-- (void)handleDownloadQuotaError:(MEGAError *)error sdk:(MEGASdk *)sdk {
+- (void)handleDownloadQuotaError:(MEGAError *)error {
     if (error.type == MEGAErrorTypeApiEOverQuota) {
         [SVProgressHUD dismiss];
         if (error.value != 0) {
-            NSString *title = NSLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
-            NSString *detail = NSLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
-            UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
-            NSString *base64handle = [MEGASdk base64HandleForUserHandle:sdk.myUser.handle];
-            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:base64handle image:image hasBonusButton:NO];
+            [[CustomModalAlertRouter.alloc init:CustomModalAlertModeStorageDownloadQuotaError presenter:UIApplication.mnz_presentingViewController] start];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
         }
     }
 }
 
-- (void)handleStorageQuotaError:(MEGAError *)error sdk:(MEGASdk *)sdk {
+- (void)handleStorageQuotaError:(MEGAError *)error {
     if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
         [SVProgressHUD dismiss];
         if (error.value == 0) {
-            NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-            NSString *detail = NSLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
-            UIImage *image = [sdk mnz_accountDetails].storageMax.longLongValue > [sdk mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-            [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
+            [[CustomModalAlertRouter.alloc init:CustomModalAlertModeStorageUploadQuotaError presenter:UIApplication.mnz_presentingViewController] start];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
         }
-    }
-}
-
-- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail monospaceDetail:(NSString *)monospaceDetail image:(UIImage *)image {
-    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:monospaceDetail image:image hasBonusButton:YES];
-}
-
-- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail monospaceDetail:(NSString *)monospaceDetail image:(UIImage *)image hasBonusButton:(BOOL) hasBonusButton {
-    if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
-        CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.image = image;
-        customModalAlertVC.viewTitle = title;
-        if (monospaceDetail) {
-            customModalAlertVC.detail = [NSString stringWithFormat:@"%@ (ID: %@)", detail, monospaceDetail];
-            customModalAlertVC.monospaceDetail = monospaceDetail;
-        } else {
-            customModalAlertVC.detail = detail;
-        }
-        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        
-        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"upgrade", @"");
-        customModalAlertVC.firstCompletion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:^{
-                self.upgradeVCPresented = NO;
-                if ([MEGAPurchase sharedInstance].products.count > 0) {
-                    [UpgradeAccountRouter.new presentUpgradeTVC];
-                } else {
-                    // Redirect to my account if the products are not available
-                    [self.mainTBC setSelectedIndex:4];
-                }
-            }];
-        };
-        
-        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled] && hasBonusButton) {
-            customModalAlertVC.secondButtonTitle = NSLocalizedString(@"general.button.getBonus", @"");
-            customModalAlertVC.secondCompletion = ^{
-                [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    self.upgradeVCPresented = NO;
-                    AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
-                    achievementsVC.enableCloseBarButton = YES;
-                    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-                    [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
-                }];
-            };
-        }
-        
-        customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-        customModalAlertVC.dismissCompletion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:^{
-                self.upgradeVCPresented = NO;
-            }];
-        };
-        
-        self.upgradeVCPresented = YES;
-        [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     }
 }
 
@@ -1182,21 +1090,7 @@
     
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-            CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
-            customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
-            customModalAlertVC.viewTitle = NSLocalizedString(@"Something went wrong", @"");
-            customModalAlertVC.detail = NSLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
-            customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"");
-            __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-            customModalAlertVC.dismissCompletion = ^{
-                [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    if (![self.window.rootViewController isKindOfClass:MainTabBarController.class] && ![self.window.rootViewController isKindOfClass:InitialLaunchViewController.class]) {
-                        [self showMainTabBar];
-                    }
-                }];
-            };
-            
-            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            [[CustomModalAlertRouter.alloc init:CustomModalAlertModeBusinessGracePeriod presenter:UIApplication.mnz_presentingViewController] start];
         }
     }
     
@@ -1460,24 +1354,9 @@
             } else {
                 static BOOL alreadyPresented = NO;
                 if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
-                    NSString *detail;
-                    NSString *title;
-                    UIImage *image;
-                    
-                    if (event.number == StorageStateOrange) {
-                        NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
-                        NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
-                        detail = [NSString stringWithFormat:NSLocalizedString(@"dialog.storage.almostFull.detail", @""), maxStorageTB, maxStorage];
-                        title = NSLocalizedString(@"upgradeAccount", @"");
-                        image = [UIImage imageNamed:@"storage_almost_full"];
-                    } else {
-                        detail = NSLocalizedString(@"dialog.storage.odq.detail", @"");
-                        title = NSLocalizedString(@"dialog.storage.odq.title", @"");
-                        image = [UIImage imageNamed:@"storage_full"];
-                    }
-                    
                     alreadyPresented = YES;
-                    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
+                    
+                    [[CustomModalAlertStorageRouter.alloc init:CustomModalAlertModeStorageEvent event:event presenter:UIApplication.mnz_presentingViewController] start];
                 }
             }
             break;
@@ -1560,6 +1439,8 @@
                 
             case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
+                
                 if ([api isForeignNode:request.parentHandle]) {
                     if (![UIApplication.mnz_presentingViewController isKindOfClass:UIAlertController.class]) {
                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"dialog.shareOwnerStorageQuota.message", nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -1568,13 +1449,8 @@
                     }
                 } else {
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
-                    
-                    NSString *title = NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                    NSString *detail = NSLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
-                    UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                    [self presentUpgradeViewControllerTitle:title detail:detail monospaceDetail:nil image:image];
+                    [[CustomModalAlertRouter.alloc init:CustomModalAlertModeStorageQuotaError presenter:UIApplication.mnz_presentingViewController] start];
                 }
-                
                 break;
             }
                 
@@ -1935,7 +1811,7 @@
 - (void)onTransferTemporaryError:(MEGASdk *)sdk transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     MEGALogDebug(@"onTransferTemporaryError %td", error.type)
     if (!transfer.isForeignOverquota) {
-        [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
+        [self handleTransferQuotaError:error transfer:transfer];
     }
 }
 
@@ -1981,7 +1857,7 @@
             case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota:
                 if (!transfer.isForeignOverquota) {
-                    [self handleTransferQuotaError:error transfer:transfer sdk:sdk];
+                    [self handleTransferQuotaError:error transfer:transfer];
                 }
                 break;
             case MEGAErrorTypeApiEBusinessPastDue:
