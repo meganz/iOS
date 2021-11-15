@@ -586,8 +586,6 @@
 "addContactButton"="Toevoegen";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Het is niet noodzakelijk uw eigen e-mailadres toe te voegen";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="De gebruiker is uitgenodigd en verschijnt in uw contactlijst zodra die geaccepteerd is.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="De gebruikers zijn uitgenodigd en zullen, eenmaal geaccepteerd, in uw lijst met contactpersonen verschijnen.";
 /* Alert title shown when you want to remove one or more contacts */

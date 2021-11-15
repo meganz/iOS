@@ -75,9 +75,9 @@
                         }
                     }
                     if (isInOutgoingContactRequest) {
-                        [SVProgressHUD showErrorWithStatus:({
-                            [NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-                        })];
+                        NSString *statusText = NSLocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
+                        statusText = [statusText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                        [SVProgressHUD showErrorWithStatus:statusText];
                     }
                     
                 }
@@ -101,7 +101,7 @@
         if (self.totalRequests > 1) {
             detailText = NSLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
         } else {
-            detailText = NSLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            detailText = NSLocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
         }
         

@@ -586,8 +586,6 @@
 "addContactButton"="اضافة";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="لاحاجة لإضافة بريدك الإلكتروني";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="المستخدم الذي قمت بدعوته سوف يظهر في قائمة الاتصال الخاصة بك فور موافقته على طلب الإضافة.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="لقد تمت دعوة المستخدمين وسوف تجدهم في جهات الاتصال عند موافقتهم.";
 /* Alert title shown when you want to remove one or more contacts */
