@@ -764,6 +764,8 @@
 "onYourDevice"="在您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="清除可離線存取檔案";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="清除所有離線存取檔案？";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="清除快取";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -964,8 +966,16 @@
 "unlockedBonuses"="待解任務與獎勵挑戰：";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="空間使用量";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="%@儲存空間";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="[B]20 GB+[/B]儲存空間";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="傳輸配額";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="%@傳輸配額";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="[B]有限制的[/B]傳輸配額";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="註冊獎勵";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -2714,3 +2724,7 @@
 "meetings.quickAction.speaker"="喇叭";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="翻轉";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="預覽高解析度影像";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="預覽時使用行動數據網路載入高解析度影像。如果停用，則只會在放大檢視時載入高解析度影像。";

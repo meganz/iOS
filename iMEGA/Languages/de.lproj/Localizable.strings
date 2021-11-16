@@ -764,6 +764,8 @@
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Löschung der Offline-Daten";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="Alle Offline-Dateien löschen?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Zwischenspeicher leeren";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -964,8 +966,16 @@
 "unlockedBonuses"="Erhaltene Boni:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Speicherplatz";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="%@ Storage";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="[B]20 GB[/B] Speicherplatz";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Übertragungsvolumen";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="%@ Transfer";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="[B]Limited[/B] Transfer";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bonus für neue Nutzer";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -2714,3 +2724,7 @@
 "meetings.quickAction.speaker"="Lautsprecher";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Umschalten";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="Preview high resolution images";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";

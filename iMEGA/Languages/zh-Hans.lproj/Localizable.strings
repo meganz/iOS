@@ -764,6 +764,8 @@
 "onYourDevice"="于您的设备上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="清除离线文件";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="清除所有离线文件？";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="清除缓存";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -964,8 +966,16 @@
 "unlockedBonuses"="已解锁奖励：";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="空间使用量";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="%@存储空间";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="[B]20GB+[/B]存储空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="流量限制";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="%@传输流量";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="[B]有限[/B]传输流量";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="注册奖励";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1329,7 +1339,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="解除";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="You have new messages";
+"You may have new messages"="您收到了新消息";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="联系人邀请";
 /* Notification text body shown when you have received a new shared folder */
@@ -2714,3 +2724,7 @@
 "meetings.quickAction.speaker"="扬声器";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="翻转";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="预览高分辨率图片";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="预览时使用移动数据加载高分辨率图片。若关闭此选项，则只有在放大时才会加载高分辨率图片。";

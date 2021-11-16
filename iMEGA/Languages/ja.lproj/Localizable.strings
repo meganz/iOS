@@ -764,6 +764,8 @@
 "onYourDevice"="ご自分のデバイス";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="オフラインのファイルをクリア";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="オフラインファイルをすべて消去しますか？";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="キャッシュ消去";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -964,8 +966,16 @@
 "unlockedBonuses"="解除ボーナス：";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="ストレージ容量";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="%@のストレージ";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="[B]20 GB以上[/B]のストレージ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="転送容量";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="%@の転送";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="[B]限定された[/B]転送";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="ご登録ボーナス";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -2714,3 +2724,7 @@
 "meetings.quickAction.speaker"="スピーカー";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="フリップ";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="高解像度画像のプレビュー";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="モバイルデータを利用して、プレビュー時に高解像度の画像を読み込みます。無効にした場合、高解像度の画像はズームインしたときにのみ読み込まれます。";

@@ -764,6 +764,8 @@
 "onYourDevice"="Sul dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Elimina file Offline";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="Eliminare tutti i file salvati offline?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Svuota cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -964,8 +966,16 @@
 "unlockedBonuses"="Bonus sbloccati:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Quota di archiviazione";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="Spazio di %@";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="Spazio di [B]20+ GB[/B]";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Quota di trasferimento";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="Trasferimimento di %@";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="Trasferimento [B]limitato[/B]";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bonus registrazione";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1329,7 +1339,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Annulla";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="You have new messages";
+"You may have new messages"="Hai nuovi messaggi";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Richiesta di contatto";
 /* Notification text body shown when you have received a new shared folder */
@@ -2714,3 +2724,7 @@
 "meetings.quickAction.speaker"="Altoparlante";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Cambia";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="Anteprima di immagini ad alta risoluzione";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="Utilizza i dati mobili per caricare immagini ad alta risoluzione quando le vedi. Se disabilitato, l'immagine ad alta risoluzione verrà caricata solo quando fai lo zoom.";

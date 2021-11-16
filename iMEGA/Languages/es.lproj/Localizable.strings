@@ -239,7 +239,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No hay Subidas";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Mi nube";
+"cloudDrive"="Nube";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d archivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -764,6 +764,8 @@
 "onYourDevice"="En el dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Eliminar archivos sin conexión";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="¿Eliminar todos los archivos sin conexión?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Borrar caché";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -964,8 +966,16 @@
 "unlockedBonuses"="Bonos desbloqueados:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Cuota de almacenamiento";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="%@ de almacenamiento ";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="[B]20 GB+[/B] de almacenamiento ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Cuota de transferencia";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="%@ de transferencia ";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="Transferencia [B]limitada[/B]";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bono por registro de cuenta";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1299,7 +1309,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Eliminar mensaje";
 /*  */
-"fromCloudDrive"="Desde Mi nube";
+"fromCloudDrive"="Desde la Nube";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contacto";
 /*  */
@@ -1329,7 +1339,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Descartar";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="You have new messages";
+"You may have new messages"="Tienes mensajes nuevos";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Solicitud de contacto";
 /* Notification text body shown when you have received a new shared folder */
@@ -1683,7 +1693,7 @@
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Chat cifrado";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat totalmente cifrado con llamadas y videollamadas, chat de grupo y capacidad de compartir archivos con tu Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat totalmente cifrado con llamadas y videollamadas, chat de grupo y capacidad de compartir archivos con tu Nube.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Crea tu propia red";
 /* Description shown in a page of the onboarding screens explaining contacts */
@@ -2617,7 +2627,7 @@
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Cambiar la pestaña de inicio";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Selecciona la sección que quieres que se abra al iniciarse la aplicación. Elige la que mejor se adapte a tus necesidades, ya sea el chat, la nube o la pestaña de inicio. ";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Selecciona la sección que quieres que se abra al iniciarse la aplicación. Elige la que mejor se adapte a tus necesidades, ya sea el chat, la Nube o la pestaña de inicio. ";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Cambiar ajustes";
 /* Offline log out warning message */
@@ -2714,3 +2724,7 @@
 "meetings.quickAction.speaker"="Altavoz";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Cambiar";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="Vista previa de imágenes de alta resolución";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
