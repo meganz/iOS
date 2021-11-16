@@ -17,8 +17,7 @@ import Foundation
         case .storageEvent:
             customModalAlertVC.configureForStorageEvent(event)
             
-        default:
-            super.build()
+        default: break
         }
         
         return customModalAlertVC
