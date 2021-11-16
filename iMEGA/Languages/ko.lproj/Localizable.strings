@@ -764,6 +764,8 @@
 "onYourDevice"="기기에서";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="오프라인 파일 삭제";
+/* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
+"settings.fileManagement.alert.clearAllOfflineFiles"="Clear all offline files?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="캐시 지우기";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -964,8 +966,16 @@
 "unlockedBonuses"="해제된 보너스:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="저장공간 할당량";
+/* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
+"account.storageQuota"="%@ 저장소";
+/* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
+"account.storage.freePlan"="[B]20GB 이상[/B]의 저장소";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="전송 할당량";
+/* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
+"account.transferQuota.perMonth"="%@ 전송";
+/* Text listed that explain that a free user gets a limited amount of transfer quota. */
+"account.transferQuota.freePlan"="[B]제한된[/B] 전송";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="가입 보너스";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1329,7 +1339,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="해제";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="You have new messages";
+"You may have new messages"="새 메시지가 있습니다";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="연락처 요청";
 /* Notification text body shown when you have received a new shared folder */
@@ -2711,6 +2721,10 @@
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="MEGAchat을 업그레이드하고 있습니다. 모든 참가자들이 MEGA 앱을 최신 버전으로 업데이트할 때까지 버전 호환성 문제로 통화가 연결되지 않을 수 있습니다.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
-"meetings.quickAction.speaker"="Speaker";
+"meetings.quickAction.speaker"="스피커";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="전환";
+/* Header of a Use Mobile Data setting to load preview of images in hight resolution */
+"settings.fileManagement.useMobileData.header"="고해상도 이미지 미리 보기";
+/* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
+"settings.fileManagement.useMobileData.footer"="미리 보기를 할 때 고해상도 이미지를 불러오기 위해 모바일 데이터를 사용합니다. 만약 비활성화 하면, 확대할 때만 고해상도 이미지를 불러옵니다.";
