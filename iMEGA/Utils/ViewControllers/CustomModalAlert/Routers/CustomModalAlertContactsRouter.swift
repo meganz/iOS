@@ -20,8 +20,7 @@ import Foundation
         case .contactNotInMEGA:
             customModalAlertVC.configureContactNotInMEGA(email)
             
-        default:
-            super.build()
+        default: break
         }
         
         return customModalAlertVC
