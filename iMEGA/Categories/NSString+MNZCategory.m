@@ -43,6 +43,8 @@ static NSString* const B = @"[B]";
                                                  @"raf",
                                                  @"rw2",
                                                  @"rwl",
+                                                 @"svg",
+                                                 @"svgz",
                                                  @"tga",
                                                  @"tif",
                                                  @"webp",
