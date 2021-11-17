@@ -164,6 +164,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool)
     func playerHidden(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()
+    func presentMiniPlayer(_ viewController: UIViewController)
     func audioInterruptionDidStart()
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)
     func remoteCommandEnabled(_ enabled: Bool)
@@ -172,7 +173,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
 
 //MARK: - Mini Audio Player Handlers Functions
 @objc protocol AudioMiniPlayerHandlerProtocol: AudioPlayerProtocol {
-    func initMiniPlayer(viewController: UIViewController)
+    func presentMiniPlayer(_ viewController: UIViewController)
     func showMiniPlayer()
     func hideMiniPlayer()
     func closeMiniPlayer()
