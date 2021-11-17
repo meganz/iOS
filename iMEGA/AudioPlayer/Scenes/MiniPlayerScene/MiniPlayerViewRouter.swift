@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     private weak var baseViewController: UIViewController?
@@ -56,7 +57,9 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         return vc
     }
 
-    @objc func start() {}
+    @objc func start() {
+        playerHandler.presentMiniPlayer(build())
+    }
     
     @objc func updatePresenter(_ presenter: UIViewController) {
         self.presenter = presenter
