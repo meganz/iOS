@@ -135,8 +135,8 @@ static NSString *kDuration = @"kDuration";
 }
 
 - (void)configureCellForOfflineItem:(NSDictionary *)item itemPath:(NSString *)pathForItem allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
-    self.downloadedImageView.hidden = YES;
-    self.downloadedView.hidden = YES;
+    self.favouriteView.hidden = self.linkView.hidden = self.versionedView.hidden = self.topNodeIconsView.hidden = YES;
+    self.labelView.hidden = self.downloadedImageView.hidden = self.downloadedView.hidden = YES;
     self.delegate = delegate;
     
     NSString *nameString = item[kFileName];
