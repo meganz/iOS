@@ -139,6 +139,7 @@ class EnterEmailViewController: UIViewController {
         tagsField.textField.textColor = .mnz_label()
         tagsField.textField.keyboardType = .emailAddress
         tagsField.textField.returnKeyType = .next
+        tagsField.acceptTagOption = .space
         
         tagsField.cornerRadius = 16
         
