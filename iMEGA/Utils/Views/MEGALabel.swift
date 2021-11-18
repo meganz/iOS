@@ -27,10 +27,6 @@ final class MEGALabel: UILabel, DynamicTypeComponentProtocol {
         applyFontSizes()
     }
     
-    func apply(style: MEGALabelStyle) {
-        traitCollection.theme.labelStyleFactory.styler(of: style)(self)
-    }
-    
     func applyFontSizes() {
         guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
         font = Font(style: textStyle, weight: weight).value

@@ -1915,6 +1915,10 @@
 		BFFED4A326F944F500B9EBEC /* PreferenceKeyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D30269BA4BA0001D169 /* PreferenceKeyEntity.swift */; };
 		BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
+		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
+		C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
+		C43817B92746925E00EA82A8 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
+		C43817BA2746926A00EA82A8 /* UIFont+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB733266550A5006A114F /* UIFont+Additions.swift */; };
 		C44947762652A466004B4C8E /* BannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44947752652A466004B4C8E /* BannerType.swift */; };
 		C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */; };
 		C44CE0112590C66F00313719 /* AudioPlayer+EventObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */; };
@@ -11885,6 +11889,7 @@
 				BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */,
 				A82D5CE326BC083600E73D27 /* PreferenceRepository.swift in Sources */,
 				A860C81126BBEA17004BFD23 /* ReinstallationUseCase.swift in Sources */,
+				C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */,
 				BFFED4A226F944F400B9EBEC /* PreferenceKeyEntity.swift in Sources */,
 				773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */,
 				777AC33F21AD420F00E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
@@ -11919,6 +11924,7 @@
 				5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */,
+				C43817B92746925E00EA82A8 /* Font.swift in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				B695B607264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				BF08AA0925CA28AF009DE3D2 /* MEGANode+FilePath.swift in Sources */,
@@ -11931,6 +11937,7 @@
 				83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
 				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
 				838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */,
+				C43817BA2746926A00EA82A8 /* UIFont+Additions.swift in Sources */,
 				83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */,
 				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
@@ -11965,6 +11972,7 @@
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */,
+				C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				A81DF35F2508FDE6009C8B60 /* DateFormatting.swift in Sources */,
 				BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */,

@@ -701,15 +701,18 @@
     
     GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     headerView.topSeparatorView.hidden = YES;
+    headerView.titleLabelTopDistanceConstraint.active = YES;
     headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightMedium];
     switch (section) {
         case 0: {
+            headerView.titleLabelTopDistanceConstraint.constant = 17.0;
             headerView.titleLabel.text = self.searchController.isActive ? NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").localizedUppercaseString : NSLocalizedString(@"Recents", @"Title for the recents section").localizedUppercaseString;
             
             return headerView;
         }
             
         case 1: {
+            headerView.titleLabelTopDistanceConstraint.constant = 10.0;
             headerView.titleLabel.text = NSLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").localizedUppercaseString;
             return headerView;
         }
@@ -717,10 +720,6 @@
         default:
             return nil;
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 24;
 }
 
 #pragma mark - UITableViewDelegate
