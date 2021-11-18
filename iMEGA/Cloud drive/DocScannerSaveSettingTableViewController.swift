@@ -140,6 +140,17 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         }
     }
     
+    private func putOriginalNameIfTextFieldIsEmpty() {
+        let element = self.view.subviews.first(where: { $0 is DocScannerFileNameTableCell })
+        let filenameTVC = element as? DocScannerFileNameTableCell
+        guard let isFileNameTextFieldEmpty = filenameTVC?.filenameTextField.text?.isEmpty else { return }
+        if isFileNameTextFieldEmpty {
+            filenameTVC?.filenameTextField.text = originalFileName
+        }
+        
+        filenameTVC?.filenameTextField.resignFirstResponder()
+    }
+    
     private func updateAppearance() {
         tableView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
         tableView.separatorColor = .mnz_separator(for: traitCollection)
@@ -293,6 +304,9 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             guard isValidName() else {
                 return
             }
+            
+            putOriginalNameIfTextFieldIsEmpty()
+            
             switch indexPath.row {
             case 0:
                 let storyboard = UIStoryboard(name: "Cloud", bundle: Bundle(for: BrowserViewController.self))
