@@ -2732,6 +2732,10 @@
 "settings.fileManagement.useMobileData.header"="Preview high resolution images";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin" = "End and join";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.3DModel"="3D Model";
 /* File extension. Commercial names should be stay on English */

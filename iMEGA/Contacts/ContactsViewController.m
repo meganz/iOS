@@ -108,6 +108,8 @@
 
 @property (nonatomic) EnterGroupNameTextFieldDelegate *enterGroupNameTextFieldDelegate;
 
+@property (nonatomic, strong) NSArray<NSNumber *> *startConversationOptions;
+
 @end
 
 @implementation ContactsViewController
@@ -382,6 +384,13 @@
         self.searchController.searchBar.text = self.currentSearch;
         self.currentSearch = nil;
     }
+    
+    self.startConversationOptions = @[
+        @(ContactsStartConversationNewGroupChat),
+        @(ContactsStartConversationNewChatLink),
+        @(ContactsStartConversationNewMeeting),
+        @(ContactsStartConversationJoinMeeting)
+    ];
     
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     [self.indexPathsMutableDictionary removeAllObjects];
@@ -1000,15 +1009,23 @@
 }
 
 - (void)newMeeting {
-    __weak typeof(UIViewController) *weakPresentingViewController = self.presentingViewController;
-    [self dismissViewControllerAnimated:YES completion:^{
-        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:weakPresentingViewController type:MeetingConfigurationTypeStart link:nil userhandle:0];
-        [router start];
-    }];
+    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+        [MeetingAlreadyExistsAlert showWithPresenter:self];
+    } else {
+        __weak typeof(UIViewController) *weakPresentingViewController = self.presentingViewController;
+        [self dismissViewControllerAnimated:YES completion:^{
+            MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:weakPresentingViewController type:MeetingConfigurationTypeStart link:nil userhandle:0];
+            [router start];
+        }];
+    }
 }
 
 - (void)joinMeeting {
-    [[[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO] start];
+    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+        [MeetingAlreadyExistsAlert showWithPresenter:self];
+    } else {
+        [[[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO] start];
+    }
 }
 
 - (void)showEmailContactPicker {
@@ -1385,7 +1402,7 @@
             
         case ContactsModeChatStartConversation: {
             if (section == 0) {
-                numberOfRows = 4;
+                numberOfRows = self.startConversationOptions.count;
             } else if (section == 1) {
                 if (self.recentsArray.count > 3) {
                     numberOfRows = 3;
@@ -1489,7 +1506,7 @@
         case ContactsModeChatStartConversation: {
             if (indexPath.section == 0) {
                 ContactTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" indexPath:indexPath];
-                [cell configureCellForContactsModeChatStartConversation:indexPath];
+                [cell configureCellForContactsModeChatStartConversation:self.startConversationOptions[indexPath.row].intValue];
                 
                 return cell;
             } if (indexPath.section == 1) {
@@ -1751,7 +1768,7 @@
             
         case ContactsModeChatStartConversation: {
             if (indexPath.section == 0) {
-                switch (indexPath.row) {
+                switch (self.startConversationOptions[indexPath.row].intValue) {
                     case ContactsStartConversationNewGroupChat:
                         [self startGroup];
                         break;
