@@ -884,6 +884,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     if (chatRoom == nil) {
         return;
+    } else if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+        [MeetingAlreadyExistsAlert showWithPresenter:rootViewController];
+        return;
     }
     
     // If the application was deleted when the user is logged and then reinstalled.

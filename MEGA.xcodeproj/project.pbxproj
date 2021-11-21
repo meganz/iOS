@@ -1639,6 +1639,9 @@
 		BF4D8D4B269FD5AE004C512A /* MeetingCompatibilityWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF4D8D46269FD5AD004C512A /* MeetingCompatibilityWarningView.xib */; };
 		BF4D8D4C269FD5AE004C512A /* MeetingCompatibilityWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D47269FD5AD004C512A /* MeetingCompatibilityWarningView.swift */; };
 		BF4D8D4D269FD5AE004C512A /* MeetingCompatibilityWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D48269FD5AD004C512A /* MeetingCompatibilityWarning.swift */; };
+		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
+		BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
+		BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
 		BF5BC7682611681000716CD6 /* UserInviteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */; };
 		BF5BC7742611687A00716CD6 /* UserInviteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */; };
 		BF5BC77E2611693800716CD6 /* UserInviteRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC77D2611693800716CD6 /* UserInviteRepositoryProtocol.swift */; };
@@ -3699,6 +3702,8 @@
 		BF4D8D46269FD5AD004C512A /* MeetingCompatibilityWarningView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingCompatibilityWarningView.xib; sourceTree = "<group>"; };
 		BF4D8D47269FD5AD004C512A /* MeetingCompatibilityWarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCompatibilityWarningView.swift; sourceTree = "<group>"; };
 		BF4D8D48269FD5AD004C512A /* MeetingCompatibilityWarning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCompatibilityWarning.swift; sourceTree = "<group>"; };
+		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
+		BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatCall+Additions.swift"; sourceTree = "<group>"; };
 		BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteUseCase.swift; sourceTree = "<group>"; };
 		BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteRepository.swift; sourceTree = "<group>"; };
 		BF5BC77D2611693800716CD6 /* UserInviteRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -4817,6 +4822,7 @@
 				E8CA8AAF1DF17F7500C205DE /* ContactDetailsViewController.h */,
 				E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */,
 				BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */,
+				BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */,
 				E85EB30B1DF58EBA0066AC68 /* VerifyCredentialsViewController.h */,
 				E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */,
 				BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */,
@@ -5212,6 +5218,7 @@
 				8330A9F222F41F470059B39C /* Array+Additions.swift */,
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,
 				83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */,
+				BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */,
 				BFB463EC2433FD9C00FB90B9 /* Date+Additions.swift */,
 				BFB463F22434296000FB90B9 /* IndexPath+Additions.swift */,
 				BF7EBD23244E8AFC0015255F /* UIImageView+Additions.swift */,
@@ -10717,6 +10724,7 @@
 				5D6D0F5325270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift in Sources */,
 				BF782D66269BA4BB0001D169 /* NodeEntity.swift in Sources */,
 				83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */,
+				BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				BFAB115323CEA5C300BCE72D /* AlbumsTableViewDataSource.swift in Sources */,
 				0D0B54D82629069D00E9BB16 /* CreateTextFileAlertViewRouter.swift in Sources */,
@@ -11247,6 +11255,7 @@
 				B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
 				BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */,
+				BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */,
 				8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */,
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
 				5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */,
@@ -11868,6 +11877,7 @@
 				5BE689B82419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */,
 				BF943E9623554054001C18E0 /* String+Additions.swift in Sources */,
+				BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */,
 				5B205D1A2449AD1A00EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,

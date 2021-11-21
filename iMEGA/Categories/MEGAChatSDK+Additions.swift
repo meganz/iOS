@@ -1,9 +1,18 @@
 extension MEGAChatSdk {
+    var firstActiveCall: MEGAChatCall? {
+        guard let callIds = chatCallsIds() else { return nil }
+        let calls = (0..<callIds.size)
+            .compactMap { chatCall(forCallId: callIds.megaHandle(at: $0)) }
+        return calls.first { $0.isActiveCall }
+    }
+    
     @objc var mnz_existsActiveCall: Bool {
-        var totalCalls = chatCalls(withState: .inProgress)?.size ?? 0
-        totalCalls += chatCalls(withState: .connecting)?.size ?? 0
-        totalCalls += chatCalls(withState: .joining)?.size ?? 0
-        return totalCalls > 0
+        return firstActiveCall != nil
+    }
+    
+    func isCallActive(forChatRoomId chatRoomId: UInt64) -> Bool {
+        guard let call = chatCall(forChatId: chatRoomId) else { return false }
+        return call.isActiveCall
     }
     
     @objc func mnz_createChatRoom(userHandle: UInt64, completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) {
