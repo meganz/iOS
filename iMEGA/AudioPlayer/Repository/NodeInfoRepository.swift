@@ -17,19 +17,27 @@ protocol NodeInfoRepositoryProtocol {
 final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private let sdk: MEGASdk
     private let folderSDK: MEGASdk
+    private let megaStore: MEGAStore
     private var streamingInfoRepository = StreamingInfoRepository()
     private var offlineFileInfoRepository = OfflineInfoRepository()
+   
+    @PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder)
+    private var sortingPreference: SortingPreference
     
-    init(sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(), folderSDK: MEGASdk = MEGASdkManager.sharedMEGASdkFolder()) {
+    @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc)
+    private var sortingType: MEGASortOrderType
+    
+    init(sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(), folderSDK: MEGASdk = MEGASdkManager.sharedMEGASdkFolder(), megaStore: MEGAStore = MEGAStore.shareInstance()) {
         self.sdk = sdk
         self.folderSDK = folderSDK
+        self.megaStore = megaStore
     }
     
     //MARK: - Private functions
     private func playableChildren(of parent: MEGAHandle) -> [MEGANode]? {
         guard let parentNode = sdk.node(forHandle: parent) else { return nil }
         
-        return sdk.children(forParent: parentNode).nodes
+        return sdk.children(forParent: parentNode, order: sortType(for: parent)).nodes
             .filter{ $0.name?.mnz_isMultimediaPathExtension == true &&
                 $0.name?.mnz_isVideoPathExtension == false &&
                 $0.mnz_isPlayable() }
@@ -38,10 +46,24 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private func folderPlayableChildren(of parent: MEGAHandle) -> [MEGANode]? {
         guard let parentNode = folderNode(fromHandle: parent) else { return nil }
         
-        return folderSDK.children(forParent: parentNode).nodes
+        return folderSDK.children(forParent: parentNode, order: sortType(for: parent)).nodes
             .filter{ $0.name?.mnz_isMultimediaPathExtension == true &&
                 $0.name?.mnz_isVideoPathExtension == false &&
                 $0.mnz_isPlayable() }
+    }
+    
+    private func sortType(for parent: MEGAHandle) -> Int {
+        guard let context = megaStore.stack.newBackgroundContext() else { return MEGASortOrderType.defaultAsc.rawValue }
+        
+        var sortType: Int = MEGASortOrderType.defaultAsc.rawValue
+        
+        context.performAndWait {
+            sortType = sortingPreference == .perFolder ?
+            megaStore.fetchCloudAppearancePreference(handle: parent, context: context)?.sortType?.intValue ?? MEGASortOrderType.defaultAsc.rawValue :
+                                                    sortingType.rawValue
+        }
+        
+        return sortType
     }
     
     //MARK: - Public functions

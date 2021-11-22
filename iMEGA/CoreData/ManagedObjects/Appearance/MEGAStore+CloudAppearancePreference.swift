@@ -34,6 +34,10 @@ extension MEGAStore {
     @objc func fetchCloudAppearancePreference(handle: UInt64) -> CloudAppearancePreference? {
         guard let context = stack.viewContext else { return nil }
         
+        return fetchCloudAppearancePreference(handle: handle, context: context)
+    }
+    
+    @objc func fetchCloudAppearancePreference(handle: UInt64, context: NSManagedObjectContext) -> CloudAppearancePreference? {
         let fetchRequest = NSFetchRequest<CloudAppearancePreference>(entityName: "CloudAppearancePreference")
         fetchRequest.predicate = NSPredicate(format: "handle == %@", handle as NSNumber)
         
