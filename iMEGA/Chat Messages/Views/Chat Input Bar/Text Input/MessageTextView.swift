@@ -43,7 +43,7 @@ class MessageTextView: UITextView {
         textView.font = font
         textView.isUserInteractionEnabled = false
         textView.isScrollEnabled = false
-        textView.text = NSLocalizedString("Message...", comment: "Chat: This is the placeholder text for text view when keyboard is shown")
+        textView.text = Strings.Localizable.Chat.Message.placeholder
 
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView

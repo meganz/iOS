@@ -299,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Start Group";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Location";
+"chat.map.location"="Location";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -1081,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Current Plan:";
+"inAppPurchase.upgrade.label.currentPlan"="Current Plan:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Current plan";
+"inAppPurchase.productDetail.navigation.currentPlan"="Current plan";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Upgrade to a custom plan";
 /* Mail subject to upgrade to a custom plan */
@@ -1503,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versions";
 /* Title label of a node property. */
-"location"="Location";
+"cloudDrive.info.node.location"="Location";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Total size";
 /* Refers to the type of a file or folder. */
@@ -1533,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="file";
 /* Label to desing a file matching */
-"File"="File";
+"chat.match.file"="File";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Current Version";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1756,8 +1756,6 @@
 "Remove files older than"="Remove files older than";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="For a longer retention period [S]Upgrade to Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1934,8 +1932,6 @@
 "Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Map settings";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satellite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2056,8 +2052,6 @@
 "Tap space to enter multiple emails"="Tap space to enter multiple emails";
 /* Text used as a section title or similar */
 "Enter Email"="Enter Email";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="On MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS ON MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2072,8 +2066,6 @@
 "Business"="Business";
 /*  */
 "Administrator"="Administrator";
-/* Business user role */
-"User"="User";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2120,8 +2112,6 @@
 "Until I turn it back on"="Until I turn them back on";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 hour";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 hours";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2257,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Enter group name";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Message…";
+"chat.message.placeholder"="Message…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2272,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Default";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="Day";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Night";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2366,20 +2354,14 @@
 "LINK"="LINK";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Link Creation";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="SHARE WITH";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="PENDING";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="VERSIONS";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Favourite";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Remove Favourite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Label";
+"cloudDrive.sort.label"="Label";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"general.chooseLabel.title"="Label…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Remove Label";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2402,8 +2384,6 @@
 "Send Decryption Key Separately"="Send Decryption Key Separately";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Expiry Date";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Set Expiry Date";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Password Protection";
 /* Text for options in Get Link View to set password protection */
@@ -2430,8 +2410,6 @@
 "Password Copied to Clipboard"="Password Copied to Clipboard";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="Decryption Key";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Remove Password";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2500,8 +2478,6 @@
 "1 year"="1 year";
 /*  */
 "year"="year";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="SHARE";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Search Your Files";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2532,10 +2508,6 @@
 "No videos found"="No videos found";
 /* Navigation title for the photo explorer view */
 "All Images"="All Images";
-/* Section title for the photo explorer view */
-"TODAY"="TODAY";
-/* Section title for the photo explorer view */
-"YESTERDAY"="YESTERDAY";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="No images found";
 /* Accessibility label for Home section in tabbar item */

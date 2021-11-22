@@ -422,7 +422,7 @@ static NSString* const B = @"[B]";
     if (hoursModulo == 0) {
         NSUInteger hours = seconds / secondsInAHour;
         if (hours == 1) {
-            return NSLocalizedString(@"1 hour", @"");
+            return NSLocalizedString(@"1hour", @"");
         } else {
             NSString *string = NSLocalizedString(@"xHours", @"");
             NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)hours];
@@ -451,7 +451,7 @@ static NSString* const B = @"[B]";
             return NSLocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first");
             
         case MEGASortOrderTypeLabelAsc:
-            return NSLocalizedString(@"Label", @"A menu item in the left panel drop down menu to allow sorting by label.");
+            return NSLocalizedString(@"cloudDrive.sort.label", @"A menu item in the left panel drop down menu to allow sorting by label.");
             
         case MEGASortOrderTypeFavouriteAsc:
             return NSLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites");
