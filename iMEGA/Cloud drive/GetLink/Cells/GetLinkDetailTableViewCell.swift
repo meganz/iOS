@@ -34,7 +34,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
     }
     
     func configureExpiryDateCell(date: Date?, dateSelected: Bool) {
-        nameLabel.text = NSLocalizedString("Set Expiry Date", comment: "Text for options in Get Link View to set expiry date")
+        nameLabel.text =  Strings.Localizable.setExpiryDate
         nameLabel.textColor = UIColor.mnz_label()
         if let date = date {
             detailLabel.text = dateFormatter.localisedString(from: date)

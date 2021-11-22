@@ -525,11 +525,11 @@ extension NodeInfoViewController: UITableViewDelegate {
         case .link:
             header.titleLabel.text = NSLocalizedString("LINK", comment: "Text used as title or header for reference an url, for instance, a node link.")
         case .versions:
-            header.titleLabel.text = NSLocalizedString("VERSIONS", comment: "Text used as title or header to display number of all historical versions of files.")
+            header.titleLabel.text = NSLocalizedString("versions", comment: "Text used as title or header to display number of all historical versions of files.").localizedUppercase
         case .sharing:
-            header.titleLabel.text = NSLocalizedString("SHARE WITH", comment: "Text used for a title or header to list users whom you are sharing something.")
+            header.titleLabel.text = NSLocalizedString("Share with", comment: "Text used for a title or header to list users whom you are sharing something.").localizedUppercase
         case .pendingSharing:
-            header.titleLabel.text = NSLocalizedString("PENDING", comment: "Text used for a title or header to list pending users whom you are sharing something.")
+            header.titleLabel.text = NSLocalizedString("pending", comment: "Text used for a title or header to list pending users whom you are sharing something.").localizedUppercase
         case .removeSharing, .info:
             header.titleLabel.text = ""
         }

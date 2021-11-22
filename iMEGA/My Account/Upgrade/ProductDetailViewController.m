@@ -64,7 +64,7 @@
     }
     
     if (self.currentAccountType == self.megaAccountType) {
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"Current plan", @"A label which shows the user's current PRO plan.") subtitle:title];
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"inAppPurchase.productDetail.navigation.currentPlan", @"A label which shows the user's current PRO plan.") subtitle:title];
         label.adjustsFontSizeToFitWidth = YES;
         label.minimumScaleFactor = 0.8f;
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
