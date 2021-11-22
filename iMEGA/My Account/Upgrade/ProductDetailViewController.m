@@ -138,6 +138,36 @@
     [UIApplication openAppleIDSubscriptionsPage];
 }
 
+- (void)presentAlreadyHaveActiveSubscriptionAlertWithProduct:(SKProduct *)product {
+    MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+    
+    NSString *title = NSLocalizedString(@"account.upgrade.alreadyHaveASubscription.title", nil);
+    NSString *message;
+    BOOL canCancelSubscription = (accountDetails.subscriptionMethodId == MEGAPaymentMethodECP) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodSabadell) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodStripe);
+    
+    if (canCancelSubscription) {
+        message = NSLocalizedString(@"account.upgrade.alreadyHaveACancellableSubscription.message", nil);
+    } else {
+        message = NSLocalizedString(@"account.upgrade.alreadyHaveASubscription.message", nil);
+    }
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    if (canCancelSubscription) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [MEGASdkManager.sharedMEGASdk creditCardCancelSubscriptions:nil delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                if (error.type == MEGAErrorTypeApiOk) {
+                    [[MEGAPurchase sharedInstance] purchaseProduct:product];
+                }
+            }]];
+        }]];
+    } else {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    }
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -160,17 +190,27 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    SKProduct *product;
     if (indexPath.row == 0) {
         if (self.monthlyProduct) {
-            [[MEGAPurchase sharedInstance] purchaseProduct:self.monthlyProduct];
-        } else {
-            [self presentProductUnavailableAlertController];
+            product = self.monthlyProduct;
         }
     } else {
-        if (self.yearlyProduct) {
-            [[MEGAPurchase sharedInstance] purchaseProduct:self.yearlyProduct];
+        if (self.monthlyProduct) {
+            product = self.yearlyProduct;
+        }
+    }
+    
+    if (product == nil) {
+        [self presentProductUnavailableAlertController];
+    } else {
+        MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+        if (accountDetails.type != MEGAAccountTypeFree &&
+            accountDetails.subscriptionStatus == MEGASubscriptionStatusValid &&
+            accountDetails.subscriptionMethodId != MEGAPaymentMethodItunes) {
+            [self presentAlreadyHaveActiveSubscriptionAlertWithProduct:product];
         } else {
-            [self presentProductUnavailableAlertController];
+            [[MEGAPurchase sharedInstance] purchaseProduct:product];
         }
     }
 

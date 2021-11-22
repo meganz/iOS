@@ -2704,6 +2704,12 @@
 "settings.fileManagement.useMobileData.header"="Preview high resolution images";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform.*/
+"account.upgrade.alreadyHaveASubscription.title"="You already have an active subscription";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase.*/
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
