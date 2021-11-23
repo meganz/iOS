@@ -281,13 +281,17 @@ import Foundation
         handler.resetMiniPlayerContainer()
     }
     
+    func presentMiniPlayer(_ viewController: UIViewController) {
+        miniPlayerVC = viewController as? MiniPlayerViewController
+        miniPlayerHandlerListenerManager.notify{$0.presentMiniPlayer(viewController)}
+    }
+    
     func showMiniPlayer() {
-        if miniPlayerVC == nil {
-            miniPlayerVC = miniPlayerRouter?.build() as? MiniPlayerViewController
+        guard let miniPlayerVC = miniPlayerVC else {
+            miniPlayerRouter?.start()
+            return
         }
-        guard let miniPlayerVC = miniPlayerVC else { return }
-        
-        miniPlayerHandlerListenerManager.notify{$0.initMiniPlayer(viewController: miniPlayerVC)}
+        miniPlayerHandlerListenerManager.notify{$0.presentMiniPlayer(miniPlayerVC)}
     }
     
     func audioInterruptionDidStart() {

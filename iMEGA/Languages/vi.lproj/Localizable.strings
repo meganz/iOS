@@ -586,8 +586,6 @@
 "addContactButton"="Thêm";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Không cần phải nhập chính email của mình vào sổ liên lạc";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Đối tượng đã được mời và sẽ xuất hiện trong sổ liên lạc khi họ chấp nhận lời mời của bạn.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Tên của những người quý khách vừa mời sẽ xuất hiện trong sổ liên lạc sau khi họ dùng lời mời của quý khách để tạo tài khoản.";
 /* Alert title shown when you want to remove one or more contacts */

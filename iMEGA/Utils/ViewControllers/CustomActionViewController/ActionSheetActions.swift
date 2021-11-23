@@ -222,7 +222,7 @@ extension NodeAction {
         let detailText = NSLocalizedString(labelString!, comment: "")
         let image = UIImage(named: labelString!)
         
-        return NodeAction(title: NSLocalizedString("Label...", comment: "Context menu item which allows to mark folders with own color label"), detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : nil), image: UIImage(named: "label"), type: .label)
+        return NodeAction(title: NSLocalizedString("general.chooseLabel.title", comment: "Context menu item which allows to mark folders with own color label"), detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : nil), image: UIImage(named: "label"), type: .label)
     }
     
     class func listAction() -> NodeAction {

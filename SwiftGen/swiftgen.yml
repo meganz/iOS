@@ -1,0 +1,24 @@
+input_dir: ../iMEGA/
+output_dir: ../iMEGA/SwiftGen/
+
+## Strings
+strings:
+  inputs:
+    - Languages/Base.lproj
+  outputs:
+    - templateName: structured-swift5
+      params:
+        publicAccess: true
+        enumName: Strings
+      output: Strings+Generated.swift
+
+## XCAssets
+xcassets:
+ inputs:
+   - Images.xcassets
+ outputs:
+    templateName: swift5
+    params:
+       forceProvidesNamespaces: true
+       forceFileNameEnum: true
+    output: XCAssets+Generated.swift

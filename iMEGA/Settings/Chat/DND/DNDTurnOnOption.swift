@@ -57,7 +57,7 @@ enum DNDTurnOnOption {
         case .thirtyMinutes:
             return NSLocalizedString("30 minutes", comment: "Chat Notifications DND: Option that deactivates DND after 30 minutes")
         case .oneHour:
-            return NSLocalizedString("1 hour", comment: "")
+            return NSLocalizedString("1hour", comment: "")
         case .sixHours:
             return NSLocalizedString("6 hours", comment: "")
         case .twentyFourHours:

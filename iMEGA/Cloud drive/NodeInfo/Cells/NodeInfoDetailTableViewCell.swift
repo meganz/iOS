@@ -39,7 +39,7 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     //MARK:- Private methods
     
     private func configureAsLocation(withNode node: MEGANode) {
-        keyLabel.text = NSLocalizedString("location", comment: "Title label of a node property.")
+        keyLabel.text = Strings.Localizable.CloudDrive.Info.Node.location
         guard let parentNode = MEGASdkManager.sharedMEGASdk().parentNode(for: node) else {
             return
         }

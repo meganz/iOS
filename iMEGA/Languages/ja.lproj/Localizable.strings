@@ -586,8 +586,6 @@
 "addContactButton"="追加";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="あなたご自身のメールアドレスを追加する必要はありません";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="そのユーザーさんは招待済みで、受け入れられ次第すぐにあなたの連絡先リストに表示されます。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="複数のユーザーが招待されています。承認されると連絡先リストに表示されます。";
 /* Alert title shown when you want to remove one or more contacts */

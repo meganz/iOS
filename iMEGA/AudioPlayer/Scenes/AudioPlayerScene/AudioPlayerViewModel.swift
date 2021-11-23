@@ -196,9 +196,7 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
-        var mutableTracks = tracks
-        mutableTracks.bringToFront(item: currentTrack)
-        
+        let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
         CrashlyticsLogger.log("[AudioPlayer] type: \(playerType)")
         
         if !(playerHandler.isPlayerDefined()) {
@@ -217,6 +215,11 @@ final class AudioPlayerViewModel: ViewModelType {
         }
         
         configurePlayerType(tracks: tracks, currentTrack: currentTrack)
+    }
+    
+    private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
+        guard tracks.contains(startItem) else { return tracks }
+        return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
     }
     
     private func updateTracksActionStatus(enabled: Bool) {

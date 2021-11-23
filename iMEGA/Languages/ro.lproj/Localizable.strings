@@ -586,8 +586,6 @@
 "addContactButton"="Adaugă";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Nu este nevoie să adaugi adresa de e-mail proprie";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Utilizatorul a fost invitat și va apărea în lista de contacte de îndată ce a acceptat invitația.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Utilizatorii au fost invitați și vor apărea în lista de contacte de îndată ce au acceptat invitația.";
 /* Alert title shown when you want to remove one or more contacts */
