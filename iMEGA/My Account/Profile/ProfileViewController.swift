@@ -545,7 +545,7 @@ extension ProfileViewController: UITableViewDataSource {
                 if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
                     cell.detailLabel.text = NSLocalizedString("Administrator", comment: "")
                 } else {
-                    cell.detailLabel.text = NSLocalizedString("User", comment: "Business user role")
+                    cell.detailLabel.text = NSLocalizedString("user", comment: "Business user role").localizedCapitalized
                 }
                 cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 cell.nameLabel.text = NSLocalizedString("Role:", comment: "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")

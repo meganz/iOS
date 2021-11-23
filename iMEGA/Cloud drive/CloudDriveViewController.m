@@ -777,7 +777,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self reloadUI];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Label", @"A menu item in the left panel drop down menu to allow sorting by label.") detail:nil accessoryView:sortType == MEGASortOrderTypeLabelAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"label"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"cloudDrive.sort.label", @"A menu item in the left panel drop down menu to allow sorting by label.") detail:nil accessoryView:sortType == MEGASortOrderTypeLabelAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"label"] style:UIAlertActionStyleDefault actionHandler:^{
         [Helper saveSortOrder:MEGASortOrderTypeLabelAsc for:self.parentNode];
         [self reloadUI];
     }]];

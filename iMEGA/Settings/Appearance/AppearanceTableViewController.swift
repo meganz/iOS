@@ -54,7 +54,7 @@ class AppearanceTableViewController: UITableViewController {
         hideRecentActivitySwitch.isOn = !RecentsPreferenceManager.showRecents()
         
         defaultIconLabel.text = NSLocalizedString("Default", comment: "Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible).")
-        dayIconLabel.text = NSLocalizedString("Day", comment: "Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible).")
+        dayIconLabel.text = NSLocalizedString("day", comment: "Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible).").localizedCapitalized
         nightIconLabel.text = NSLocalizedString("Night", comment: "Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible).")
         minimalIconLabel.text = NSLocalizedString("Minimal", comment: "Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible).")
         

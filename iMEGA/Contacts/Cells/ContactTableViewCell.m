@@ -151,9 +151,9 @@
     }
 }
 
-- (void)configureCellForContactsModeChatStartConversation:(NSIndexPath *)indexPath {
+- (void)configureCellForContactsModeChatStartConversation:(ContactsStartConversation)option {
     self.permissionsImageView.hidden = YES;
-    switch (indexPath.row) {
+    switch (option) {
         case ContactsStartConversationNewGroupChat:
             self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
             self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];

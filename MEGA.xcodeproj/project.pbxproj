@@ -45,6 +45,8 @@
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
 		0DE3037826B25AA100E4A66B /* FileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE3035F26B11E7800E4A66B /* FileProviderItem.swift */; };
 		0DE914D6260AD4080036E63E /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE914D5260AD4080036E63E /* TextFile.swift */; };
+		120B4A7927430F3E00312B35 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
+		120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
@@ -1639,6 +1641,9 @@
 		BF4D8D4B269FD5AE004C512A /* MeetingCompatibilityWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF4D8D46269FD5AD004C512A /* MeetingCompatibilityWarningView.xib */; };
 		BF4D8D4C269FD5AE004C512A /* MeetingCompatibilityWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D47269FD5AD004C512A /* MeetingCompatibilityWarningView.swift */; };
 		BF4D8D4D269FD5AE004C512A /* MeetingCompatibilityWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D48269FD5AD004C512A /* MeetingCompatibilityWarning.swift */; };
+		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
+		BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
+		BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
 		BF5BC7682611681000716CD6 /* UserInviteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */; };
 		BF5BC7742611687A00716CD6 /* UserInviteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */; };
 		BF5BC77E2611693800716CD6 /* UserInviteRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC77D2611693800716CD6 /* UserInviteRepositoryProtocol.swift */; };
@@ -2185,6 +2190,8 @@
 		0DE914D5260AD4080036E63E /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
 		0E09DE516BF65F4D90B64B2C /* Pods_iMEGA_MEGAShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		120B4A7827430F3E00312B35 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
+		120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -3703,6 +3710,8 @@
 		BF4D8D46269FD5AD004C512A /* MeetingCompatibilityWarningView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingCompatibilityWarningView.xib; sourceTree = "<group>"; };
 		BF4D8D47269FD5AD004C512A /* MeetingCompatibilityWarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCompatibilityWarningView.swift; sourceTree = "<group>"; };
 		BF4D8D48269FD5AD004C512A /* MeetingCompatibilityWarning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCompatibilityWarning.swift; sourceTree = "<group>"; };
+		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
+		BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatCall+Additions.swift"; sourceTree = "<group>"; };
 		BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteUseCase.swift; sourceTree = "<group>"; };
 		BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteRepository.swift; sourceTree = "<group>"; };
 		BF5BC77D2611693800716CD6 /* UserInviteRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -4502,6 +4511,15 @@
 			path = TextEditor;
 			sourceTree = "<group>";
 		};
+		120B4A732742442400312B35 /* SwiftGen */ = {
+			isa = PBXGroup;
+			children = (
+				120B4A7827430F3E00312B35 /* Strings+Generated.swift */,
+				120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */,
+			);
+			path = SwiftGen;
+			sourceTree = "<group>";
+		};
 		137361811A6664C300B740E8 = {
 			isa = PBXGroup;
 			children = (
@@ -4568,6 +4586,7 @@
 				415226671A692EBD00EC7BB6 /* Vendor */,
 				1373619D1A6664C300B740E8 /* Images.xcassets */,
 				1373618D1A6664C300B740E8 /* Supporting Files */,
+				120B4A732742442400312B35 /* SwiftGen */,
 				A8AA4F6D1ED4295800E7BA23 /* API */,
 			);
 			path = iMEGA;
@@ -4821,6 +4840,7 @@
 				E8CA8AAF1DF17F7500C205DE /* ContactDetailsViewController.h */,
 				E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */,
 				BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */,
+				BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */,
 				E85EB30B1DF58EBA0066AC68 /* VerifyCredentialsViewController.h */,
 				E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */,
 				BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */,
@@ -5216,6 +5236,7 @@
 				8330A9F222F41F470059B39C /* Array+Additions.swift */,
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,
 				83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */,
+				BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */,
 				BFB463EC2433FD9C00FB90B9 /* Date+Additions.swift */,
 				BFB463F22434296000FB90B9 /* IndexPath+Additions.swift */,
 				BF7EBD23244E8AFC0015255F /* UIImageView+Additions.swift */,
@@ -10581,6 +10602,7 @@
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
 				5D3AD46F252C370C006986AF /* CellConfiguration.swift in Sources */,
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
+				120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */,
 				5D8A76F224FCD0C900C0610C /* MEGAAvatarUserCase.swift in Sources */,
 				BF5E345F255A2E1A0055395E /* FilesExplorerGridSource.swift in Sources */,
 				83E345BA25B59FB4006F2AD6 /* RecentItemsUseCase.swift in Sources */,
@@ -10721,6 +10743,7 @@
 				5D6D0F5325270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift in Sources */,
 				BF782D66269BA4BB0001D169 /* NodeEntity.swift in Sources */,
 				83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */,
+				BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				BFAB115323CEA5C300BCE72D /* AlbumsTableViewDataSource.swift in Sources */,
 				0D0B54D82629069D00E9BB16 /* CreateTextFileAlertViewRouter.swift in Sources */,
@@ -11065,6 +11088,7 @@
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
 				0D4A123B2689921E0024997E /* GlobalDelegate.swift in Sources */,
 				BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */,
+				120B4A7927430F3E00312B35 /* Strings+Generated.swift in Sources */,
 				B616D8342550C16700712012 /* NodeHandle+Additions.swift in Sources */,
 				BF1589222435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift in Sources */,
 				83143B5C2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift in Sources */,
@@ -11251,6 +11275,7 @@
 				B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
 				BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */,
+				BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */,
 				8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */,
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
 				5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */,
@@ -11872,6 +11897,7 @@
 				5BE689B82419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */,
 				BF943E9623554054001C18E0 /* String+Additions.swift in Sources */,
+				BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */,
 				5B205D1A2449AD1A00EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,

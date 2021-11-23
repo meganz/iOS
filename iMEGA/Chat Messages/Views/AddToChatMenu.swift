@@ -2,13 +2,13 @@
 struct AddToChatMenu: Codable {
     enum MenuNameKey: String {
         case photos = "Photos"
-        case file = "File"
+        case file = "chat.match.file"
         case voice = "Voice"
         case video = "Video"
         case contact = "Contact"
         case scanDoc = "Scan Document"
         case startGroup = "Start Group"
-        case location = "Location"
+        case location = "chat.map.location"
         case voiceClip = "Voice Clip"
         case giphy = "GIF"
     }

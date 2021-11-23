@@ -88,7 +88,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     
     self.chooseFromOneOfThePlansProLabel.text = NSLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
-    self.currentPlanLabel.text = NSLocalizedString(@"currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
+    self.currentPlanLabel.text = NSLocalizedString(@"inAppPurchase.upgrade.label.currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
     
     _autorenewableDescriptionLabel.text = NSLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     

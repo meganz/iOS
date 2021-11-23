@@ -30,6 +30,7 @@ abstract_target 'iMEGA' do
     pod 'PhoneNumberKit', '~> 3.3'
     pod 'WSTagsField'
     pod 'JustPieChart'
+    pod 'SwiftGen'
     
     # Pods for Debug only
     pod 'FLEX', :configurations => ['Debug']
