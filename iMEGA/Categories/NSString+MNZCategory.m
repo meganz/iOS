@@ -243,6 +243,12 @@ static NSString* const B = @"[B]";
     return countString;
 }
 
++ (BOOL)mnz_isByteCountEmpty:(NSString *)stringFromByteCount {
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
+    return [countString isEqual: @"0"];
+}
+
 - (NSString *_Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {
     NSScanner* scanner = [NSScanner scannerWithString:self];
     [scanner setCharactersToBeSkipped:nil];
