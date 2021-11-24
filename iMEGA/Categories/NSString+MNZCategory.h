@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray;
 + (NSString *)mnz_stringWithoutCountOfComponents:(NSArray *)componentsSeparatedByStringArray;
 + (NSString *)mnz_formatStringFromByteCountFormatter:(NSString *)stringFromByteCount;
++ (BOOL)mnz_isByteCountEmpty:(NSString *)stringFromByteCount;
 
 - (NSString * _Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end;
 + (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders;
