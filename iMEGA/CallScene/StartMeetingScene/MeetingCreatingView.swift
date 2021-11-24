@@ -149,7 +149,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     }()
     private lazy var startMeetingButton: UIButton  = {
         let button = UIButton()
-        button.setTitle(NSLocalizedString("Start Meeting", comment: ""), for: .normal)
+        button.setTitle(Strings.Localizable.Meetings.CreateMeeting.startMeeting.localizedCapitalized, for: .normal)
         button.mnz_setupPrimary(traitCollection)
         button.titleLabel?.font = Constants.bottomBarButtonText
         return button
