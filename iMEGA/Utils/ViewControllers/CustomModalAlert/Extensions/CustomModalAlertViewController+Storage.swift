@@ -31,7 +31,7 @@ extension CustomModalAlertViewController {
         let imageName = "transfer-quota-empty"
         let title = NSLocalizedString("depletedTransferQuota_title", comment: "Title shown when you almost had used your available transfer quota.")
         let detailText = NSLocalizedString("depletedTransferQuota_message", comment: "Description shown when you almost had used your available transfer quota.")
-        let base64Handle = MEGASdk.base64Handle(forUserHandle: (MEGASdkManager.sharedMEGASdk().myUser?.handle)!)
+        let base64Handle = MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
         
         configureUpgradeAccountThreeButtons(title, detailText, base64Handle, imageName, hasBonusButton: false)
     }
