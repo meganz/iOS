@@ -2654,6 +2654,8 @@
 "meetings.create.newMeeting"="New Meeting";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="%@ Meeting";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="Start meeting";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Meeting Ended";
 /* Meeting ended Alert button -- View Meeting Chat history. */

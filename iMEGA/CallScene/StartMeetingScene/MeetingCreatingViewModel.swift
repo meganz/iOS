@@ -61,7 +61,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     private var defaultMeetingName: String {
-        return String(format: NSLocalizedString("%@ Meeting", comment: "Meeting Title"), meetingUseCase.getUsername())
+        Strings.Localizable.Meetings.CreateMeeting.defaultMeetingName(meetingUseCase.getUsername())
     }
     
     // MARK: - Init
