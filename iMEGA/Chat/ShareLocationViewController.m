@@ -178,7 +178,7 @@
 - (IBAction)infoButtonTouchUpInside:(UIButton *)sender {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Map settings", @"Title of the alert that allows change between different maps: Standar, Satellite or Hybrid.") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     if (self.mapView.mapType != MKMapTypeStandard) {
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Standard", @"Standard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"standard", @"Standard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.mapView.mapType = MKMapTypeStandard;
         }]];
     }

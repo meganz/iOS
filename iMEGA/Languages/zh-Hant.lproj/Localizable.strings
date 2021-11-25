@@ -586,8 +586,6 @@
 "addContactButton"="新增";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您無須加入您自己的電子郵件";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="使用者已被邀請且一旦邀請被接受，對方將會出現在您的聯絡人列表。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="使用者已被邀請且一旦邀請被接受，對方將會出現在您的聯絡人列表。";
 /* Alert title shown when you want to remove one or more contacts */

@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
+@property (nonatomic) BOOL isOfflineSizeEmpty;
+@property (nonatomic) BOOL isCacheSizeEmpty;
 
 @property (nonatomic, getter=isFileVersioningEnabled) BOOL fileVersioningEnabled;
 
@@ -109,6 +111,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         unsigned long long offlineSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
         self.offlineSizeString = [Helper memoryStyleStringFromByteCount:offlineSize];
         self.offlineSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.offlineSizeString];
+        self.isOfflineSizeEmpty = [NSString mnz_isByteCountEmpty:self.offlineSizeString];
         
         unsigned long long cachesFolderSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
 
@@ -118,6 +121,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         
         self.cacheSizeString = [Helper memoryStyleStringFromByteCount:cacheSize];
         self.cacheSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.cacheSizeString];
+        self.isCacheSizeEmpty = [NSString mnz_isByteCountEmpty:self.cacheSizeString];
         
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [self.tableView reloadData];
@@ -151,7 +155,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     [SVProgressHUD show];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlinePathString];
-        dispatch_async(dispatch_get_main_queue(), ^(void){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [[MEGAStore shareInstance] removeAllOfflineNodes];
@@ -233,11 +237,19 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case FileManagementTableSectionOnYourDevice: {
+            if (_isOfflineSizeEmpty) {
+                break;
+            }
+            
             [self showClearAllOfflineFilesActionSheet];
             break;
         }
             
         case FileManagementTableSectionClearCache: {
+            if (_isCacheSizeEmpty) {
+                break;
+            }
+
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
@@ -253,7 +265,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
                     [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), ^(void){
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                     [self reloadUI];

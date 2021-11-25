@@ -1,7 +1,7 @@
 import Foundation
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
-    func initMiniPlayer(viewController: UIViewController) {
+    func presentMiniPlayer(_ viewController: UIViewController) {
         guard let miniPlayerView = viewController.view else { return }
         
         bottomView?.removeFromSuperview()
@@ -28,7 +28,9 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
                 AudioPlayerManager.shared.showMiniPlayer()
             }
             
-            bottomView?.isHidden = false
+            DispatchQueue.main.async {
+                self.bottomView?.isHidden = false
+            }
         }
     }
     

@@ -43,7 +43,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     @IBOutlet weak var sendButton: UIBarButtonItem!
     
-    var originalFileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
+    var originalFileName = NSLocalizedString("cloudDrive.scanDocument.defaultName", comment: "Default title given to the document created when you use the option 'Scan Document' in the app. For example: 'Scan 2021-11-09 14.40.41'")
     var currentFileName: String?
     
     private struct TableViewConfiguration {
@@ -62,6 +62,8 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         super.viewDidLoad()
         title = NSLocalizedString("Save Settings", comment: "Setting title for Doc scan view")
         
+        let currentDate = NSDate().mnz_formattedDefaultNameForMedia()
+        originalFileName = originalFileName.replacingOccurrences(of: "%@", with: currentDate)
         currentFileName = originalFileName
         
         let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
@@ -138,6 +140,17 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         } else {
             return true
         }
+    }
+    
+    private func putOriginalNameIfTextFieldIsEmpty() {
+        let element = self.view.subviews.first(where: { $0 is DocScannerFileNameTableCell })
+        let filenameTVC = element as? DocScannerFileNameTableCell
+        guard let isFileNameTextFieldEmpty = filenameTVC?.filenameTextField.text?.isEmpty else { return }
+        if isFileNameTextFieldEmpty {
+            filenameTVC?.filenameTextField.text = originalFileName
+        }
+        
+        filenameTVC?.filenameTextField.resignFirstResponder()
     }
     
     private func updateAppearance() {
@@ -293,6 +306,9 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             guard isValidName() else {
                 return
             }
+            
+            putOriginalNameIfTextFieldIsEmpty()
+            
             switch indexPath.row {
             case 0:
                 let storyboard = UIStoryboard(name: "Cloud", bundle: Bundle(for: BrowserViewController.self))

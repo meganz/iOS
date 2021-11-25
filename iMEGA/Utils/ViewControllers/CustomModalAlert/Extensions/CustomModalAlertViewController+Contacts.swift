@@ -6,7 +6,7 @@ extension CustomModalAlertViewController {
     func configureOutgoingContactRequest(_ email: String) {
         image = UIImage(named: "inviteSent")
         viewTitle = NSLocalizedString("inviteSent", comment: "Title shown when the user sends a contact invitation")
-        var detailText = NSLocalizedString("theUserHasBeenInvited", comment: "Success message shown when a contact has been invited")
+        var detailText = NSLocalizedString("dialog.inviteContact.outgoingContactRequest", comment: "Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user")
         detailText = detailText.replacingOccurrences(of: "[X]", with: email)
         detail = detailText
         
@@ -24,8 +24,8 @@ extension CustomModalAlertViewController {
         image = UIImage(named: "groupChat")
         viewTitle = NSLocalizedString("inviteContact", comment: "Title shown when the user tries to make a call and the destination is not in the contact list")
         
-        var detailText = "Your contact %@ is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact"
-        detailText = detailText.replacingOccurrences(of: "%@", with: email)
+        var detailText = NSLocalizedString("dialog.callAttempt.contactNotInMEGA", comment: "Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user")
+        detailText = detailText.replacingOccurrences(of: "[X]", with: email)
         detail = detailText
         
         boldInDetail = email
