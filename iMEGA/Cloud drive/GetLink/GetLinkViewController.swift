@@ -441,7 +441,7 @@ class GetLinkViewController: UIViewController {
         
         showShareActivity(sender, textToShare: textToShare) { [weak self] in
             if self?.getLinkVM.separateKey ?? false {
-                self?.showIncompleteShareLinkAlert(title: NSLocalizedString("Decryption Key", comment: "Hint text to suggest that the user has to write the decryption key"), message: NSLocalizedString("This link was shared without a decryption key. Do you want to share its key?", comment: "Message shown when a link is shared with separated key")) {
+                self?.showIncompleteShareLinkAlert(title: NSLocalizedString("decryptionKey", comment: "Hint text to suggest that the user has to write the decryption key"), message: NSLocalizedString("This link was shared without a decryption key. Do you want to share its key?", comment: "Message shown when a link is shared with separated key").localizedCapitalized) {
                     guard let key = self?.getLinkVM.key else {
                         return
                     }

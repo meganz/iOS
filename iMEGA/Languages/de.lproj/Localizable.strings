@@ -586,8 +586,6 @@
 "addContactButton"="Hinzufügen";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Ihre eigene E-Mail-Adresse muss nicht hinzugefügt werden";
-/* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Der Benutzer wurde eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Die Benutzer wurden eingeladen und werden in Ihrer Kontaktliste auftauchen, sobald sie die Einladung annehmen.";
 /* Alert title shown when you want to remove one or more contacts */

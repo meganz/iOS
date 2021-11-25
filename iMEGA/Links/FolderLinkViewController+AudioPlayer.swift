@@ -1,7 +1,7 @@
 import Foundation
 
 extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
-    func initMiniPlayer(viewController: UIViewController) {
+    func presentMiniPlayer(_ viewController: UIViewController) {
         guard let miniPlayerView = viewController.view else { return }
         
         bottomView?.removeFromSuperview()
@@ -20,8 +20,9 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
         if bottomView == nil {
             AudioPlayerManager.shared.showMiniPlayer()
         }
-        
-        bottomView?.isHidden = false
+        DispatchQueue.main.async {
+            self.bottomView?.isHidden = false
+        }
     }
     
     func hideMiniPlayer() {

@@ -123,9 +123,8 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Private functions
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
+        let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
         CrashlyticsLogger.log("[AudioPlayer] type: , \(playerType)")
-        var mutableTracks = tracks
-        mutableTracks.bringToFront(item: currentTrack)
         resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
         playerHandler.autoPlay(enable: playerType != .fileLink)
         playerHandler.addPlayer(tracks: mutableTracks)
@@ -155,6 +154,11 @@ final class MiniPlayerViewModel: ViewModelType {
         playerHandler.resetAudioPlayerConfiguration()
     }
 
+    private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
+        guard tracks.contains(startItem) else { return tracks }
+        return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
+    }
+    
     private func preparePlayer() {
         if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
             streamingInfoUseCase?.startServer()

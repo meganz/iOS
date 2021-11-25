@@ -54,6 +54,29 @@ extension ChatViewController {
     }
         
     @objc func didTapJoinCall() {
+        guard !MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall ||
+                MEGASdkManager.sharedMEGAChatSdk().isCallActive(forChatRoomId: chatRoom.chatId) else {
+            MeetingAlreadyExistsAlert.show(presenter: self) { [weak self] in
+                guard let self = self else { return }
+                self.endActiveCallAndJoinCurrentChatroomCall()
+            }
+            return
+        }
+        
+        joinCall()
+    }
+    
+    private func endActiveCallAndJoinCurrentChatroomCall() {
+        if let activeCall = MEGASdkManager.sharedMEGAChatSdk().firstActiveCall {
+            let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
+            CallUseCase(repository: callRepository).hangCall(for: activeCall.callId)
+            CallManagerUseCase().endCall(CallEntity(with: activeCall))
+        }
+        
+        joinCall()
+    }
+    
+    private func joinCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { granted in
             if granted {
                 self.timer?.invalidate()

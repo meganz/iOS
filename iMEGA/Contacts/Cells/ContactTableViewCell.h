@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, ContactsStartConversation) {
 @property (weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 
 - (void)configureDefaultCellForUser:(MEGAUser *)user newUser:(BOOL)newUser;
-- (void)configureCellForContactsModeChatStartConversation:(NSIndexPath *)indexPath;
+- (void)configureCellForContactsModeChatStartConversation:(ContactsStartConversation)option;
 - (void)configureCellForContactsModeFolderSharedWith:(MEGAUser *)user indexPath:(NSIndexPath *)indexPath;
 
 @end

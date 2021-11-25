@@ -217,7 +217,7 @@ struct FileUploadingSourceItem {
         case .textFile: return UIImage(named: "textfile")!
         case .capture: return UIImage(named: "capture")!
         case .imports: return UIImage(named: "import")!
-        case .documentScan: return UIImage(named: "scanDocument")!
+        case .documentScan: return Asset.Images.ActionSheetIcons.scanDocument.image
         }
     }
 

@@ -24,6 +24,19 @@ extension Array where Element: Equatable {
     mutating func sendToBack(item: Element) {
         move(item, to: endIndex-1)
     }
+    
+    func shifted(_ distance: Int = 1) -> Array<Element> {
+        let offsetIndex = distance >= 0 ?
+                                index(startIndex, offsetBy: distance, limitedBy: endIndex) :
+                                index(endIndex, offsetBy: distance, limitedBy: startIndex)
+
+        guard let index = offsetIndex else { return self }
+        return Array(self[index ..< endIndex] + self[startIndex ..< index])
+    }
+
+    mutating func shift(_ distance: Int = 1) {
+        self = shifted(distance)
+    }
 }
 
 extension Array {
