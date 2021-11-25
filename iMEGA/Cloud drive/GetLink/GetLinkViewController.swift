@@ -114,6 +114,10 @@ class GetLinkViewController: UIViewController {
         copyKeyBarButton.title = NSLocalizedString("copyKey", comment: "")
         
         updateAppearance()
+        
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
