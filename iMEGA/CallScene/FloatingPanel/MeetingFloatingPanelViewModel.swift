@@ -114,7 +114,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             
             dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? true)))
-            updateSpeakerInfo()
+            if isSpeakerEnabled {
+                enableLoudSpeaker()
+            } else {
+                updateSpeakerInfo()
+            }
         case .hangCall(let presenter, let sender):
             if let call = call {
                 if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),

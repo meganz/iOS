@@ -929,7 +929,7 @@
         if (error.type == MEGAErrorTypeApiOk) {
             [self performCallWithPresenter:self.mainTBC
                                   chatRoom:self.chatRoom
-                          isSpeakerEnabled:self.chatRoom.isMeeting];
+                          isSpeakerEnabled:self.chatRoom.isMeeting || self.videoCall];
         }
         self.chatRoom = nil;
     }];

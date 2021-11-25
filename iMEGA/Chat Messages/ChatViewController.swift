@@ -978,7 +978,8 @@ class ChatViewController: MessagesViewController {
                 return
             }
             
-            self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: self.chatRoom.isMeeting)
+            self.startMeetingUI(isVideoEnabled: isVideoEnabled,
+                                isSpeakerEnabled: self.chatRoom.isMeeting || isVideoEnabled)
         }
         
         shouldDisableAudioVideoCalling = true
