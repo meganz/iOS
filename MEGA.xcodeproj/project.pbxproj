@@ -12,7 +12,6 @@
 		0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */; };
 		0D0B53B626264B3200E9BB16 /* TransferEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B53B526264B3200E9BB16 /* TransferEntity+Mapper.swift */; };
 		0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */; };
-		0D0B54912627D0BB00E9BB16 /* TextEditorL10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B547F2627CEF600E9BB16 /* TextEditorL10n.swift */; };
 		0D0B54C72629068E00E9BB16 /* CreateTextFileAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B54BD262904EE00E9BB16 /* CreateTextFileAlertViewModel.swift */; };
 		0D0B54D82629069D00E9BB16 /* CreateTextFileAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B54AB262904CD00E9BB16 /* CreateTextFileAlertViewRouter.swift */; };
 		0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */; };
@@ -2216,7 +2215,6 @@
 		0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileRepository.swift; sourceTree = "<group>"; };
 		0D0B53B526264B3200E9BB16 /* TransferEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferEntity+Mapper.swift"; sourceTree = "<group>"; };
 		0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUploadFileUseCase.swift; sourceTree = "<group>"; };
-		0D0B547F2627CEF600E9BB16 /* TextEditorL10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorL10n.swift; sourceTree = "<group>"; };
 		0D0B54AB262904CD00E9BB16 /* CreateTextFileAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewRouter.swift; sourceTree = "<group>"; };
 		0D0B54BD262904EE00E9BB16 /* CreateTextFileAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewModel.swift; sourceTree = "<group>"; };
 		0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CHTCollectionViewWaterfallLayout+Additions.swift"; sourceTree = "<group>"; };
@@ -4570,7 +4568,6 @@
 			children = (
 				0DE914D5260AD4080036E63E /* TextFile.swift */,
 				0D877F5D261BCD4F00A3698C /* TextEditorModel.swift */,
-				0D0B547F2627CEF600E9BB16 /* TextEditorL10n.swift */,
 				0D877F67261BCE1800A3698C /* TextEditorViewRouter.swift */,
 				0D877F71261BCE8A00A3698C /* TextEditorViewModel.swift */,
 				0D877F7B261BD23700A3698C /* TextEditorViewController.swift */,
@@ -10985,7 +10982,6 @@
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
 				5B8187D92643F4E800A401B0 /* CustomModalAlertRouter.swift in Sources */,
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
-				0D0B54912627D0BB00E9BB16 /* TextEditorL10n.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
 				B67A2C862517EABE00B40D89 /* CredentialRepositoryProtocol.swift in Sources */,
 				5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */,
