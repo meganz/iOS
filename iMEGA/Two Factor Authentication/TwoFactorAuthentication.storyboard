@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -322,7 +322,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tef-3w-SBY">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l4U-lC-Vjz">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4U-lC-Vjz">
                                         <rect key="frame" x="20" y="16" width="335" height="46.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
@@ -454,10 +454,10 @@ opqr stuv wxyz</string>
                             <tableViewSection headerTitle="" footerTitle="Two-factor authentication is a second layer of security for your account. " id="Gc6-hj-Zsa">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="xVd-Fy-72f" userLabel="Save photos to gallery Table View Cell">
-                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="xVd-Fy-72f" id="X0d-Zv-xxR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lIM-cp-2SU">
@@ -558,13 +558,13 @@ opqr stuv wxyz</string>
                                             <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRi-Uo-bUM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRi-Uo-bUM">
                                         <rect key="frame" x="20" y="179.5" width="335" height="30.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e4P-aS-ggI">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4P-aS-ggI">
                                         <rect key="frame" x="20" y="226" width="335" height="62.5"/>
                                         <string key="text">If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
 Back up your recovery key.</string>
@@ -583,8 +583,8 @@ Back up your recovery key.</string>
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="MEGA-RECOVERYKEY.txt" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xf6-Kr-ff4">
-                                                <rect key="frame" x="60" y="20.5" width="179" height="19"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <rect key="frame" x="60" y="22" width="144" height="16"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -708,6 +708,26 @@ Back up your recovery key.</string>
             <point key="canvasLocation" x="1609" y="-982"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="2UG-fV-LZb">
+            <size key="intrinsicContentSize" width="165" height="33"/>
+        </designable>
+        <designable name="4g7-EC-3dP">
+            <size key="intrinsicContentSize" width="262" height="19.5"/>
+        </designable>
+        <designable name="9PD-cE-xf4">
+            <size key="intrinsicContentSize" width="191" height="28"/>
+        </designable>
+        <designable name="K5t-8t-WXX">
+            <size key="intrinsicContentSize" width="77" height="33"/>
+        </designable>
+        <designable name="ZPw-hy-opU">
+            <size key="intrinsicContentSize" width="38" height="33"/>
+        </designable>
+        <designable name="lSy-RT-s5a">
+            <size key="intrinsicContentSize" width="45" height="33"/>
+        </designable>
+    </designables>
     <resources>
         <image name="2FASetup" width="128" height="128"/>
         <image name="achievementsCheck" width="32" height="32"/>
