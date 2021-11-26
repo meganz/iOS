@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,10 +20,10 @@
                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactReferralAchievementTableViewCellID" id="8Zv-kB-rbB" customClass="AchievementsTableViewCell">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="59.666667938232422"/>
+                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Zv-kB-rbB" id="f0O-pY-X8D">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="59.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wpv-6R-5XR">
@@ -34,13 +34,13 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAt-m7-ejj">
-                                            <rect key="frame" x="60" y="12" width="31" height="14.666666666666664"/>
+                                            <rect key="frame" x="60" y="12" width="31" height="15"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uA7-3n-N8C" userLabel="Storage Quota View">
-                                            <rect key="frame" x="60" y="28.666666666666671" width="18" height="18"/>
+                                            <rect key="frame" x="60" y="29" width="18" height="18"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUX-K6-rg5" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                     <rect key="frame" x="4" y="3" width="10" height="12"/>
@@ -69,7 +69,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-9u-i2r">
-                                            <rect key="frame" x="363" y="22.666666666666668" width="31" height="14.333333333333332"/>
+                                            <rect key="frame" x="363" y="23" width="31" height="14.333333333333336"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -217,7 +217,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5F-3C-wdv" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5F-3C-wdv" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                     <rect key="frame" x="186" y="69.000000000000014" width="42" height="39"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="32"/>
                                                     <nil key="textColor"/>
@@ -227,7 +227,7 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="weight" value="light"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Storage Quota" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G01-TJ-l1d">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Storage Quota" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G01-TJ-l1d">
                                                     <rect key="frame" x="166" y="119.00000000000001" width="82.333333333333314" height="14.333333333333329"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
@@ -269,7 +269,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AchievementsTableViewCellID" id="SaK-WX-ue7" customClass="AchievementsTableViewCell">
-                                        <rect key="frame" x="0.0" y="324.33333396911621" width="414" height="56.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="344.66666603088379" width="414" height="56.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SaK-WX-ue7" id="pZV-dp-ZFx">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="56.666667938232422"/>
@@ -334,7 +334,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AchievementsWithSubtitleTableViewCellID" id="IEf-S7-Hhx" customClass="AchievementsTableViewCell">
-                                        <rect key="frame" x="0.0" y="381.00000190734863" width="414" height="56.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="401.33333396911621" width="414" height="56.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IEf-S7-Hhx" id="2Z6-2D-Ed0">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="56.666667938232422"/>
@@ -640,7 +640,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5GB of storage for each referral. Valid for 365 days." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qs1-Qd-9mY">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5GB of storage for each referral. Valid for 365 days." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qs1-Qd-9mY">
                                                         <rect key="frame" x="98" y="59.000000000000007" width="292.66666666666669" height="14.333333333333336"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                         <nil key="textColor"/>
@@ -789,6 +789,9 @@
         <designable name="O5F-3C-wdv">
             <size key="intrinsicContentSize" width="41.666666666666664" height="38.333333333333336"/>
         </designable>
+        <designable name="PwH-3o-Frw">
+            <size key="intrinsicContentSize" width="44" height="33"/>
+        </designable>
         <designable name="TUX-K6-rg5">
             <size key="intrinsicContentSize" width="7.666666666666667" height="12"/>
         </designable>
@@ -797,6 +800,9 @@
         </designable>
         <designable name="gaL-7e-CiB">
             <size key="intrinsicContentSize" width="140.33333333333334" height="20.333333333333332"/>
+        </designable>
+        <designable name="kFj-Kh-Kdm">
+            <size key="intrinsicContentSize" width="155" height="33"/>
         </designable>
     </designables>
     <resources>
