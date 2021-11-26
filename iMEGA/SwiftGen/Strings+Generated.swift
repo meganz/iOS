@@ -3153,8 +3153,6 @@ public enum Strings {
         public static let bz2 = Strings.tr("Localizable", "general.filetype.bz2")
         /// C/C++ Source Code
         public static let c = Strings.tr("Localizable", "general.filetype.c")
-        /// C++ Source Code
-        public static let c = Strings.tr("Localizable", "general.filetype.c++")
         /// CorelDRAW Image
         public static let cdr = Strings.tr("Localizable", "general.filetype.cdr")
         /// Java Class
@@ -3163,6 +3161,8 @@ public enum Strings {
         public static let com = Strings.tr("Localizable", "general.filetype.com")
         /// Compressed
         public static let compressed = Strings.tr("Localizable", "general.filetype.compressed")
+        /// C++ Source Code
+        public static let cpp = Strings.tr("Localizable", "general.filetype.cpp")
         /// CSS Style Sheet
         public static let css = Strings.tr("Localizable", "general.filetype.css")
         /// Database
