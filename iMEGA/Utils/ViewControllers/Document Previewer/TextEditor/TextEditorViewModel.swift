@@ -151,10 +151,10 @@ final class TextEditorViewModel: ViewModelType {
     
     private func makeTextEditorRenameAlertModel() -> TextEditorRenameAlertModel {
         TextEditorRenameAlertModel(
-            alertTitle: TextEditorL10n.rename,
-            alertMessage: TextEditorL10n.renameAlertMessage,
-            cancelButtonTitle: TextEditorL10n.cancel,
-            renameButtonTitle: TextEditorL10n.rename,
+            alertTitle: Strings.Localizable.rename,
+            alertMessage: Strings.Localizable.renameNodeMessage,
+            cancelButtonTitle: Strings.Localizable.cancel,
+            renameButtonTitle: Strings.Localizable.rename,
             textFileName: textFile.fileName
         )
     }
@@ -179,7 +179,7 @@ final class TextEditorViewModel: ViewModelType {
                 
                 switch result {
                 case .failure(_):
-                    self.invokeCommand?(.showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.upload))
+                    self.invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload))
                 case .success(_):
                     if self.textEditorMode == .edit {
                         self.textEditorMode = .view
@@ -201,9 +201,9 @@ final class TextEditorViewModel: ViewModelType {
             setupView(shallUpdateContent: shallUpdateContent)
         } else {
             if invokeCommand != nil {
-                invokeCommand?(.showError(message: TextEditorL10n.uneditableLargeFileMessage))
+                invokeCommand?(.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile))
             } else {
-                showErrorWhenToSetupView = .showError(message: TextEditorL10n.uneditableLargeFileMessage)
+                showErrorWhenToSetupView = .showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)
             }
         }
     }
@@ -234,7 +234,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func downloadToOffline() {
-        invokeCommand?(.startDownload(status: TextEditorL10n.downloadMessage))
+        invokeCommand?(.startDownload(status: Strings.Localizable.downloadStarted))
         nodeActionUseCase.downloadToOffline()
     }
     
@@ -246,7 +246,7 @@ final class TextEditorViewModel: ViewModelType {
         } completion: { (result) in
             switch result {
             case .failure(_):
-                self.invokeCommand?(.showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.download))
+                self.invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download))
             case .success(let transferEntity):
                 guard let path = transferEntity.path else { return }
                 do {
@@ -290,21 +290,21 @@ final class TextEditorViewModel: ViewModelType {
         switch textEditorMode {
         case .load:
             return TextEditorNavbarItemsModel (
-                leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+                leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
                 rightItem: nil,
                 textEditorMode: textEditorMode
             )
             case .view:
             return TextEditorNavbarItemsModel (
-                leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+                leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
                 rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
                 textEditorMode: textEditorMode
             )
         case .edit,
              .create:
             return TextEditorNavbarItemsModel (
-                leftItem: NavbarItemModel(title: TextEditorL10n.cancel, imageName: nil),
-                rightItem: NavbarItemModel(title: TextEditorL10n.save, imageName: nil),
+                leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
+                rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
                 textEditorMode: textEditorMode
             )
         }
@@ -320,11 +320,11 @@ final class TextEditorViewModel: ViewModelType {
         if isFileNameDuplicated {
             invokeCommand?(.showDuplicateNameAlert(
                 TextEditorDuplicateNameAlertModel(
-                    alertTitle: String(format: TextEditorL10n.duplicateNameAlertTitle, textFile.fileName),
-                    alertMessage: TextEditorL10n.duplicateNameAlertMessage,
-                    cancelButtonTitle: TextEditorL10n.cancel,
-                    replaceButtonTitle: TextEditorL10n.replace,
-                    renameButtonTitle: TextEditorL10n.rename)
+                    alertTitle: Strings.Localizable.renameFileAlertTitle(textFile.fileName),
+                    alertMessage: Strings.Localizable.thereIsAlreadyAFileWithTheSameName,
+                    cancelButtonTitle: Strings.Localizable.cancel,
+                    replaceButtonTitle: Strings.Localizable.replace,
+                    renameButtonTitle: Strings.Localizable.rename)
             ))
         } else {
             uploadFile()

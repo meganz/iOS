@@ -237,13 +237,13 @@ extension TextEditorViewController: ViewType {
         }
         renameAC.addAction(
             UIAlertAction(
-                title: TextEditorL10n.cancel,
+                title: Strings.Localizable.cancel,
                 style: .cancel,
                 handler: nil
             )
         )
         let renameAction = UIAlertAction(
-            title: TextEditorL10n.rename,
+            title: Strings.Localizable.rename,
             style: .default,
             handler: { _ in
                 guard let newInputName = renameAC.textFields?.first?.text else { return }
