@@ -2,18 +2,18 @@ final class CreateTextFileAlertViewController: UIAlertController {
     var viewModel: CreateTextFileAlertViewModel!
     
     func configView() {
-        title = TextEditorL10n.textFile
+        title = Strings.Localizable.newTextFile
         addTextField { (textField) in
             textField.text = ".txt"
-            textField.placeholder = TextEditorL10n.fileName
+            textField.placeholder = Strings.Localizable.fileName
             textField.addTarget(self, action: #selector(self.createTextFileAlertTextFieldBeginEdit), for: .editingDidBegin)
             textField.addTarget(self, action: #selector(self.createTextFileAlertTextFieldDidChange), for: .editingChanged)
             textField.shouldReturnCompletion = {(textField) -> Bool in
                 return (!(textField?.text?.mnz_isEmpty() ?? true) && !(textField?.text?.mnz_containsInvalidChars() ?? false));
             }
         }
-        addAction(UIAlertAction(title: TextEditorL10n.cancel, style: .cancel, handler: nil))
-        let createFileAlertAction = UIAlertAction(title: TextEditorL10n.create, style: .default) {_ in
+        addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
+        let createFileAlertAction = UIAlertAction(title: Strings.Localizable.createFolderButton, style: .default) {_ in
             if MEGAReachabilityManager.isReachableHUDIfNot() {
                 let textField = self.textFields?.first
                 if let inputFileName = textField?.text {
