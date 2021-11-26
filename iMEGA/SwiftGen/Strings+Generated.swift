@@ -3112,6 +3112,8 @@ public enum Strings {
       }
     }
     public enum General {
+      /// Choose
+      public static let choose = Strings.tr("Localizable", "general.choose")
       public enum Button {
         /// Get Bonus
         public static let getBonus = Strings.tr("Localizable", "general.button.getBonus")

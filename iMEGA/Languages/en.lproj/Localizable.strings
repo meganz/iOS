@@ -2878,3 +2878,5 @@
 "general.filetype.xml"="XML Document";
 /* File extension: .zip. Commercial names should be stay on English */
 "general.filetype.zip"="ZIP Archive";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Choose";
