@@ -3124,6 +3124,170 @@ public enum Strings {
         /// The following characters are not allowed: ” * / : < > ? \ |
         public static let charactersNotAllowed = Strings.tr("Localizable", "general.error.charactersNotAllowed")
       }
+      public enum Filetype {
+        /// 3D Model
+        public static let _3DModel = Strings.tr("Localizable", "general.filetype.3DModel")
+        /// 3D Scene
+        public static let _3ds = Strings.tr("Localizable", "general.filetype.3ds")
+        /// Multimedia
+        public static let _3g2 = Strings.tr("Localizable", "general.filetype.3g2")
+        /// 7-Zip Compressed
+        public static let _7z = Strings.tr("Localizable", "general.filetype.7z")
+        /// ANSI Text File
+        public static let ans = Strings.tr("Localizable", "general.filetype.ans")
+        /// Android App
+        public static let apk = Strings.tr("Localizable", "general.filetype.apk")
+        /// Mac OS X App
+        public static let app = Strings.tr("Localizable", "general.filetype.app")
+        /// ASCII Text
+        public static let ascii = Strings.tr("Localizable", "general.filetype.ascii")
+        /// Streaming Video
+        public static let asf = Strings.tr("Localizable", "general.filetype.asf")
+        /// Casio RAW Image
+        public static let bay = Strings.tr("Localizable", "general.filetype.bay")
+        /// Bitmap Image
+        public static let bmp = Strings.tr("Localizable", "general.filetype.bmp")
+        /// UNIX Compressed
+        public static let bz2 = Strings.tr("Localizable", "general.filetype.bz2")
+        /// C/C++ Source Code
+        public static let c = Strings.tr("Localizable", "general.filetype.c")
+        /// C++ Source Code
+        public static let c = Strings.tr("Localizable", "general.filetype.c++")
+        /// CorelDRAW Image
+        public static let cdr = Strings.tr("Localizable", "general.filetype.cdr")
+        /// Java Class
+        public static let `class` = Strings.tr("Localizable", "general.filetype.class")
+        /// DOS Command
+        public static let com = Strings.tr("Localizable", "general.filetype.com")
+        /// Compressed
+        public static let compressed = Strings.tr("Localizable", "general.filetype.compressed")
+        /// CSS Style Sheet
+        public static let css = Strings.tr("Localizable", "general.filetype.css")
+        /// Database
+        public static let database = Strings.tr("Localizable", "general.filetype.database")
+        /// DXF Image
+        public static let dxf = Strings.tr("Localizable", "general.filetype.dxf")
+        /// EPS Image
+        public static let eps = Strings.tr("Localizable", "general.filetype.eps")
+        /// Executable
+        public static let exe = Strings.tr("Localizable", "general.filetype.exe")
+        /// Lossless Audio
+        public static let flac = Strings.tr("Localizable", "general.filetype.flac")
+        /// Flash Video
+        public static let flv = Strings.tr("Localizable", "general.filetype.flv")
+        /// Windows Font
+        public static let fnt = Strings.tr("Localizable", "general.filetype.fnt")
+        /// Font
+        public static let fon = Strings.tr("Localizable", "general.filetype.fon")
+        /// Windows Gadget
+        public static let gadget = Strings.tr("Localizable", "general.filetype.gadget")
+        /// GIF Image
+        public static let gif = Strings.tr("Localizable", "general.filetype.gif")
+        /// GPS Exchange
+        public static let gpx = Strings.tr("Localizable", "general.filetype.gpx")
+        /// Gnu Compressed
+        public static let gz = Strings.tr("Localizable", "general.filetype.gz")
+        /// Header
+        public static let header = Strings.tr("Localizable", "general.filetype.header")
+        /// HTML Document
+        public static let htmlDocument = Strings.tr("Localizable", "general.filetype.htmlDocument")
+        /// Interchange File Format
+        public static let iff = Strings.tr("Localizable", "general.filetype.iff")
+        /// ISO Image
+        public static let iso = Strings.tr("Localizable", "general.filetype.iso")
+        /// Java Archive
+        public static let jar = Strings.tr("Localizable", "general.filetype.jar")
+        /// Java Code
+        public static let java = Strings.tr("Localizable", "general.filetype.java")
+        /// JPEG Image
+        public static let jpeg = Strings.tr("Localizable", "general.filetype.jpeg")
+        /// Log
+        public static let log = Strings.tr("Localizable", "general.filetype.log")
+        /// Media Playlist
+        public static let m3u = Strings.tr("Localizable", "general.filetype.m3u")
+        /// MPEG-4 Audio
+        public static let m4a = Strings.tr("Localizable", "general.filetype.m4a")
+        /// 3ds Max Scene
+        public static let max = Strings.tr("Localizable", "general.filetype.max")
+        /// MS Access
+        public static let mdb = Strings.tr("Localizable", "general.filetype.mdb")
+        /// MIDI Audio
+        public static let mid = Strings.tr("Localizable", "general.filetype.mid")
+        /// MKV Video
+        public static let mkv = Strings.tr("Localizable", "general.filetype.mkv")
+        /// QuickTime Movie
+        public static let mov = Strings.tr("Localizable", "general.filetype.mov")
+        /// MP3 Audio
+        public static let mp3 = Strings.tr("Localizable", "general.filetype.mp3")
+        /// MP4 Video
+        public static let mp4 = Strings.tr("Localizable", "general.filetype.mp4")
+        /// MPEG Movie
+        public static let mpeg = Strings.tr("Localizable", "general.filetype.mpeg")
+        /// MS Installer
+        public static let msi = Strings.tr("Localizable", "general.filetype.msi")
+        /// OpenType Font
+        public static let otf = Strings.tr("Localizable", "general.filetype.otf")
+        /// Pages
+        public static let pages = Strings.tr("Localizable", "general.filetype.pages")
+        /// PDF Document
+        public static let pdf = Strings.tr("Localizable", "general.filetype.pdf")
+        /// PHP Code
+        public static let php = Strings.tr("Localizable", "general.filetype.php")
+        /// Audio Playlist
+        public static let pls = Strings.tr("Localizable", "general.filetype.pls")
+        /// PNG Image
+        public static let png = Strings.tr("Localizable", "general.filetype.png")
+        /// Podcast
+        public static let podcast = Strings.tr("Localizable", "general.filetype.podcast")
+        /// RAR Compressed
+        public static let rar = Strings.tr("Localizable", "general.filetype.rar")
+        /// RAW Image
+        public static let rawImage = Strings.tr("Localizable", "general.filetype.rawImage")
+        /// Rich Text
+        public static let rtf = Strings.tr("Localizable", "general.filetype.rtf")
+        /// Panasonic RAW Image
+        public static let rw2 = Strings.tr("Localizable", "general.filetype.rw2")
+        /// Server HTML
+        public static let shtml = Strings.tr("Localizable", "general.filetype.shtml")
+        /// X Compressed
+        public static let sitx = Strings.tr("Localizable", "general.filetype.sitx")
+        /// Spreadsheet
+        public static let spreadsheet = Strings.tr("Localizable", "general.filetype.spreadsheet")
+        /// SQL Database
+        public static let sql = Strings.tr("Localizable", "general.filetype.sql")
+        /// Sony RAW Image
+        public static let srf = Strings.tr("Localizable", "general.filetype.srf")
+        /// Subtitle
+        public static let subtitle = Strings.tr("Localizable", "general.filetype.subtitle")
+        /// Flash Movie
+        public static let swf = Strings.tr("Localizable", "general.filetype.swf")
+        /// Archive
+        public static let tar = Strings.tr("Localizable", "general.filetype.tar")
+        /// Text Document
+        public static let textDocument = Strings.tr("Localizable", "general.filetype.textDocument")
+        /// TIF Image
+        public static let tif = Strings.tr("Localizable", "general.filetype.tif")
+        /// TIFF Image
+        public static let tiff = Strings.tr("Localizable", "general.filetype.tiff")
+        /// TrueType Font
+        public static let ttf = Strings.tr("Localizable", "general.filetype.ttf")
+        /// Vector Image
+        public static let vectorImage = Strings.tr("Localizable", "general.filetype.vectorImage")
+        /// Wave Audio
+        public static let wav = Strings.tr("Localizable", "general.filetype.wav")
+        /// WebM Video
+        public static let webm = Strings.tr("Localizable", "general.filetype.webm")
+        /// WM Audio
+        public static let wma = Strings.tr("Localizable", "general.filetype.wma")
+        /// WM Video
+        public static let wmv = Strings.tr("Localizable", "general.filetype.wmv")
+        /// MS Word Template
+        public static let wordTemplate = Strings.tr("Localizable", "general.filetype.wordTemplate")
+        /// XML Document
+        public static let xml = Strings.tr("Localizable", "general.filetype.xml")
+        /// ZIP Archive
+        public static let zip = Strings.tr("Localizable", "general.filetype.zip")
+      }
       public enum Security {
         /// MEGA-RECOVERYKEY
         public static let recoveryKeyFile = Strings.tr("Localizable", "general.security.recoveryKeyFile")
