@@ -4,7 +4,7 @@ final class EnterMeetingLinkControllerWrapper: NSObject {
 
     private let viewModel: EnterMeetingLinkViewModel
     private var link: String?
-    private lazy var joinButton = UIAlertAction(title: NSLocalizedString("join", comment: ""), style: .default) { (action) in
+    private lazy var joinButton = UIAlertAction(title: Strings.Localizable.join, style: .default) { (action) in
         guard let link = self.link else { return }
         self.viewModel.dispatch(.didTapJoinButton(link))
     }
