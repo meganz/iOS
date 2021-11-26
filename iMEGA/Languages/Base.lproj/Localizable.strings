@@ -2747,7 +2747,7 @@
 /* File extension: .c. Commercial names should be stay on English */
 "general.filetype.c"="C/C++ Source Code";
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
-"general.filetype.c++"="C++ Source Code";
+"general.filetype.cpp"="C++ Source Code";
 /* File extension: .cdr. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW Image";
 /* File extension: .class. Commercial names should be stay on English */
