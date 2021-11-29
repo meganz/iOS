@@ -204,22 +204,19 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [self.view sendSubviewToBack:placeholderCurrentImageView];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        if (!self.presentedViewController) {
-            [self.view layoutIfNeeded];
-            [self reloadUI];
-            
-            // The scrollview animation is not aligning with placeholderImageView animation.
-            // So hiding the scroll when the animation is in progress.
-            self.scrollView.hidden = YES;
-            CGPoint center = CGPointMake(size.width/2, size.height/2.0);
-            
-            [UIView animateWithDuration:context.transitionDuration
-                             animations:^{
-                                 placeholderCurrentImageView.frame = CGRectMake(0, 0, size.width, size.height);
-                                 placeholderPlayImageView.center = center;
-                                 activityIndicatorView.center = center;
-                             }];
-        }
+        [self.view layoutIfNeeded];
+        [self reloadUI];
+        // The scrollview animation is not aligning with placeholderImageView animation.
+        // So hiding the scroll when the animation is in progress.
+        self.scrollView.hidden = YES;
+        CGPoint center = CGPointMake(size.width/2, size.height/2.0);
+        
+        [UIView animateWithDuration:context.transitionDuration
+                         animations:^{
+            placeholderCurrentImageView.frame = CGRectMake(0, 0, size.width, size.height);
+            placeholderPlayImageView.center = center;
+            activityIndicatorView.center = center;
+        }];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         self.scrollView.hidden = NO;
         [activityIndicatorView removeFromSuperview];
