@@ -5,7 +5,7 @@ extension ChatViewController {
     
     func copyMessage(_ message: ChatMessage) {
         let megaMessage = message.message
-        if megaMessage.type == .normal {
+        if megaMessage.type == .normal || megaMessage.type == .containsMeta {
             if let content = megaMessage.content {
                 UIPasteboard.general.string = content
             }
