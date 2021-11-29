@@ -15,7 +15,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
 
-@interface CustomModalAlertViewController ()
+@interface CustomModalAlertViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
@@ -126,6 +126,12 @@
         self.linkView.hidden = YES;
     }
     
+    if (self.confirmationPlaceholder) {
+        [self configureDetailTextField];
+    } else {
+        self.detailTextField.hidden = YES;
+    }
+    
     [self updateAppearance];
 }
 
@@ -165,10 +171,27 @@
     self.firstButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 }
 
+- (void)configureDetailTextField {
+    self.detailTextField.placeholder = self.confirmationPlaceholder;
+    self.detailTextField.delegate = self;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+}
+
+- (void)dismissKeyboard {
+    [self.detailTextField resignFirstResponder];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)firstButtonTouchUpInside:(UIButton *)sender {
-    if (self.firstCompletion) self.firstCompletion();
+    if ((self.confirmationPlaceholder && [self.detailTextField.placeholder isEqualToString:self.detailTextField.text]) ||
+        (!self.confirmationPlaceholder && self.firstCompletion)) {
+        self.firstCompletion();
+    } else if (self.confirmationPlaceholder && ![self.detailTextField.placeholder isEqualToString:self.detailTextField.text]) {
+        [self showConfirmationTextError];
+    }
 }
 
 - (IBAction)dismissTouchUpInside:(UIButton *)sender {

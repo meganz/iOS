@@ -37,4 +37,5 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 @property (nonatomic, weak) id<ContatctsViewControllerDelegate> contatctsViewControllerDelegate;
 
+- (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes;
 @end

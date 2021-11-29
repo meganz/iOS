@@ -226,6 +226,14 @@
     return [UIImage imageNamed:@"folder_chat"];
 }
 
++ (UIImage *)mnz_folderBackUpImage {
+    return [UIImage imageNamed:@"folder_sync"];
+}
+
++ (UIImage *)mnz_rootFolderBackUpImage {
+    return [UIImage imageNamed:@"folder_backup"];
+}
+
 + (UIImage *)mnz_defaultPhotoImage {
     return [UIImage imageNamed:@"image"];
 }

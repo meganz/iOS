@@ -14,6 +14,7 @@ enum PreferenceKeyEntity: String {
     case lastRequestedVersionForRating
     case firstRun = "FirstRun"
     case hasUpdatedBackupToFixExistingBackupNameStorageIssue
+    case rootBackupFolder
     case sortingPreference = "MEGASortingPreference"
     case sortingPreferenceType = "SortOrderType"
 }

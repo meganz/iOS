@@ -1279,6 +1279,9 @@
                     if ([user hasChangedType:MEGAUserChangeTypeCameraUploadsFolder]) {
                         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTargetFolderChangedInRemoteNotification object:nil];
                     }
+                    if ([user hasChangedType:MEGAUserChangeTypeBackupFolder]) {
+                        [NSNotificationCenter.defaultCenter postNotificationName:MEGABackupRootFolderUpdatedInRemoteNotification object:nil];
+                    }
                 } else {
                     [user resetAvatarIfNeededInSdk:sdk];
                     

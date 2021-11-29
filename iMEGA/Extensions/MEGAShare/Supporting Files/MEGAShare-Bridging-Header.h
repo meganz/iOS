@@ -32,5 +32,8 @@
 
 #import "SAMKeychain.h"
 #import "LTHPasscodeViewController.h"
+#import "BrowserViewController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGAOperation.h"
 
 #endif /* MEGAShare_Bridging_Header_h */

@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender;
 - (void)didSelectNode:(MEGANode *)node;
+- (void)moveNode:(MEGANode * _Nonnull)node;
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
 - (void)setEditMode:(BOOL)editMode;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;

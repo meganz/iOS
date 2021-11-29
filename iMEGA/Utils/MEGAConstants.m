@@ -67,6 +67,11 @@ NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUp
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
 NSString * const MEGANodeHandleKey = @"nz.mega.nodeHandleKey";
 
+#pragma mark - backups in fm notifications
+
+NSString * const MEGABackupRootFolderUpdatedInMemoryNotification = @"nz.mega.backup.rootFolderUpdatedInMemory";
+NSString * const MEGABackupRootFolderUpdatedInRemoteNotification = @"nz.mega.backup.rootFolderUpdatedInRemote";
+
 #pragma mark - audio player notification keys
 
 NSString * const MEGAAudioPlayerShouldUpdateContainerNotification = @"nz.mega.audioplayer.updateContainerView";
