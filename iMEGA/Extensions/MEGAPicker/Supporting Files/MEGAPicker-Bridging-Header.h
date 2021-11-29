@@ -23,3 +23,7 @@
 
 #import "SAMKeychain.h"
 #import "LTHPasscodeViewController.h"
+#import "BrowserViewController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGAGenericRequestDelegate.h"
+#import "MEGAOperation.h"

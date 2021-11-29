@@ -531,6 +531,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     return node;
 }
 
+- (void)moveNode:(MEGANode * _Nonnull)node {
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    [self moveAction:nil];
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -1101,54 +1106,89 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self reloadData];
 }
 
+- (void)createNewFolderAction {
+    __weak __typeof__(self) weakSelf = self;
+    
+    UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
+        [textField addTarget:weakSelf action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
+        };
+    }];
+    
+    [newFolderAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            UITextField *textField = [[newFolderAlertController textFields] firstObject];
+            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:weakSelf.parentNode searchString:textField.text recursive:NO];
+            if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+            } else {
+                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                    [self didSelectNode:newFolderNode];
+                }];
+                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
+            }
+        }
+    }];
+    createFolderAlertAction.enabled = NO;
+    [newFolderAlertController addAction:createFolderAlertAction];
+    
+    [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
+}
+
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
     __weak __typeof__(self) weakSelf = self;
+    
+    if ([weakSelf.parentNode isBackupRootNode]) {
+        [self showSetupBackupAlert];
+        return;
+    }
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf presentUploadAlertController];
+        if ([weakSelf.parentNode isBackupNode]) {
+            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
+                [weakSelf presentUploadAlertController];
+            }];
+        } else {
+            [weakSelf presentUploadAlertController];
+        }
     }]];
-    
+
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-        [self presentScanDocument];
+        if ([weakSelf.parentNode isBackupNode]) {
+            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
+                [weakSelf presentScanDocument];
+            }];
+        } else {
+            [weakSelf presentScanDocument];
+        }
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
-        UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        
-        [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = NSLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
-            [textField addTarget:weakSelf action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
-                return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
-            };
-        }];
-        
-        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UITextField *textField = [[newFolderAlertController textFields] firstObject];
-                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:weakSelf.parentNode searchString:textField.text recursive:NO];
-                if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
-                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
-                } else {
-                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-                        [self didSelectNode:newFolderNode];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
-                }
-            }
-        }];
-        createFolderAlertAction.enabled = NO;
-        [newFolderAlertController addAction:createFolderAlertAction];
-        
-        [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
+        if ([weakSelf.parentNode isBackupNode]) {
+            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
+                [weakSelf createNewFolderAction];
+            }];
+        } else {
+            [weakSelf createNewFolderAction];
+        }
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
-        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
+        if ([weakSelf.parentNode isBackupNode]) {
+            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
+                [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
+            }];
+        } else {
+            [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
+        }
     }]];
     
     if ([self numberOfRows] && !self.onlyUploadOptions) {
@@ -1574,8 +1614,14 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeMove:
-            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self moveAction:nil];
+            if ([node isBackupRootNode] || [node isBackupNode]) {
+                __weak __typeof__(self) weakSelf = self;
+                [self moveBackupNode:node completion:^{
+                    [weakSelf moveNode:node];
+                }];
+            } else {
+                [self moveNode:node];
+            }
             break;
             
         case MegaNodeActionTypeRename:
@@ -1649,7 +1695,14 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case MegaNodeActionTypeMoveToRubbishBin:
-            [self moveToRubbishBinFor:node];
+            if ([node isBackupRootNode] || [node isBackupNode]) {
+                __weak __typeof__(self) weakSelf = self;
+                [self moveToRubbishBinBackupNode:node completion:^{
+                    [weakSelf moveToRubbishBinFor:node];
+                }];
+            } else {
+                [self moveToRubbishBinFor:node];
+            }
             break;
             
         case MegaNodeActionTypeRemove:

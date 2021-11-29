@@ -151,6 +151,18 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     // MARK: - UITableViewDelegate
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if node.isBackupRootNode() || node.isBackupNode(),
+           let action = actions[indexPath.row] as? NodeAction,
+           (action.type == .move || action.type == .moveToRubbishBin) {
+            let cell: WarningActionSheetCell = tableView.dequeueReusableCell(withIdentifier:"ActionSheetCell") as? WarningActionSheetCell ?? WarningActionSheetCell(style: .value1, reuseIdentifier: "WarningActionSheetCell")
+            cell.configureCell(action: action)
+
+            return cell
+        } else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let action = actions[indexPath.row] as? NodeAction else {

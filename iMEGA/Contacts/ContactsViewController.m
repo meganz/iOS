@@ -590,10 +590,10 @@
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
+        [weakSelf isAnyBackupNodeBeingManaged] ? [weakSelf shareBackupAndNonBackupNodesWithLevel:MEGAShareTypeAccessFull] : [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
+        [weakSelf isAnyBackupNodeBeingManaged] ? [weakSelf shareBackupAndNonBackupNodesWithLevel:MEGAShareTypeAccessReadWrite] : [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
@@ -603,13 +603,13 @@
     return shareFolderActionSheet;
 }
 
-- (void)shareNodesWithLevel:(MEGAShareType)shareType {
+- (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     [self.contatctsViewControllerDelegate nodeEditCompleted:YES];
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initWithNumberOfRequests:self.nodesArray.count completion:^{
+        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initWithNumberOfRequests:nodes.count completion:^{
             if (self.searchController.isActive) {
                 [self.searchController dismissViewControllerAnimated:YES completion:^{
                     [self dismissViewControllerAnimated:YES completion:nil];
@@ -621,11 +621,11 @@
         for (id userToShare in self.selectedUsersArray) {
             if ([userToShare isKindOfClass:MEGAUser.class]) {
                 MEGAUser *user = (MEGAUser *)userToShare;
-                for (MEGANode *node in self.nodesArray) {
+                for (MEGANode *node in nodes) {
                     [MEGASdkManager.sharedMEGASdk shareNode:node withUser:user level:shareType delegate:shareRequestDelegate];
                 }
             } else if ([userToShare isKindOfClass:NSString.class]) {
-                for (MEGANode *node in self.nodesArray) {
+                for (MEGANode *node in nodes) {
                     [MEGASdkManager.sharedMEGASdk shareNode:node withEmail:userToShare level:shareType delegate:shareRequestDelegate];
                 }
             }
@@ -655,6 +655,10 @@
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:1 completion:completion];
         [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:self.userTapped level:shareType delegate:shareRequestDelegate];
     }
+}
+
+- (void)shareNodesWithLevel:(MEGAShareType)shareType {
+    [self shareNodesWithLevel:shareType nodes:self.nodesArray];
 }
 
 - (BOOL)userTypeHasChanged:(MEGAUser *)user {
@@ -1294,7 +1298,21 @@
         self.searchController.active = NO;
     }
     
-    [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
+    if ([self isAnyBackupNodeBeingManaged]) {
+        __weak __typeof__(self) weakSelf = self;
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            [weakSelf prepareSharedBackupFolderAlertWithCompletion:^{
+                if ([weakSelf areAllShareNodesBackupNodes]) {
+                    [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
+                } else {
+                    [weakSelf selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
+                }
+            }];
+        }
+    } else {
+        [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
+    }
+
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
@@ -1731,7 +1749,7 @@
             if (indexPath.section == 0) {
                 if (indexPath.row == 0) {
                     [self addShareWith:nil];
-                } else {
+                } else if (![self isAnyBackupNodeBeingManaged]) {
                     MEGAUser *user = self.visibleUsersArray[indexPath.row - 1];
                     if (!user) {
                         [SVProgressHUD showErrorWithStatus:@"Invalid user"];

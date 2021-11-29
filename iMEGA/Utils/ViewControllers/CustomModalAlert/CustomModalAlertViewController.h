@@ -3,6 +3,9 @@
 
 @interface CustomModalAlertViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *detailErrorLabel;
+@property (weak, nonatomic) IBOutlet UITextField *detailTextField;
+
 @property (nonatomic, strong) void (^firstCompletion)(void);
 @property (nonatomic, strong) void (^secondCompletion)(void);
 @property (nonatomic, strong) void (^dismissCompletion)(void);
@@ -16,6 +19,7 @@
 @property (nonatomic) NSString *monospaceDetail;
 @property (nonatomic) NSAttributedString *detailAttributed;
 @property (nonatomic) UITapGestureRecognizer *detailTapGestureRecognizer;
+@property (nonatomic) NSString *confirmationPlaceholder;
 
 @property (nonatomic) NSString *firstButtonTitle;
 @property (nonatomic) NSInteger firstButtonStyle;

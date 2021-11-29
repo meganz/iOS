@@ -6,11 +6,16 @@
 #import "UIImage+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
+#import "MEGAGenericRequestDelegate.h"
 #import <SDWebImage/SDWebImage.h>
 #import <objc/runtime.h>
 #import "MEGASdk+MNZCategory.h"
 
-#ifdef MAIN_APP_TARGET
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
 #import "MEGA-Swift.h"
 #endif
 
@@ -141,6 +146,10 @@ static const void *base64HandleKey = &base64HandleKey;
                         [self mnz_commonFolderImageForNode:node];
                     }
                 }];
+            } else if ([node isBackupNode]) {
+                self.image = UIImage.mnz_folderBackUpImage;
+            } else if ([node isBackupRootNode]) {
+                self.image = UIImage.mnz_rootFolderBackUpImage;
             } else {
                 [self mnz_commonFolderImageForNode:node];
             }
