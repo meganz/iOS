@@ -1355,6 +1355,12 @@
 		A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */; };
+		B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
+		B5300AF32754A098001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
+		B5300AF42754A09C001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
+		B5300AF52754A0A1001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
+		B5300AF62754A0A5001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
+		B5300AF72754A0AA001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
@@ -11752,6 +11758,7 @@
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
 				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
 				5B784DBF259A0E8E00CE752B /* NSDate+MNZCategory.m in Sources */,
+				B5300AF52754A0A1001E516B /* Strings+Generated.swift in Sources */,
 				774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */,
@@ -11842,6 +11849,7 @@
 				83655A8C25938546001A0846 /* MOChatDraft+CoreDataClass.m in Sources */,
 				8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */,
 				BF782D7D269BA5AD0001D169 /* OfflineFileEntity.swift in Sources */,
+				B5300AF62754A0A5001E516B /* Strings+Generated.swift in Sources */,
 				83655ACC25938568001A0846 /* MOMessage+CoreDataClass.m in Sources */,
 				83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */,
 				A82D5CDE26BC07AB00E73D27 /* PreferenceRepositoryProtocol.swift in Sources */,
@@ -11860,6 +11868,7 @@
 			files = (
 				83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				831B4911256FED6F0086002B /* IntentHandler.swift in Sources */,
+				B5300AF72754A0AA001E516B /* Strings+Generated.swift in Sources */,
 				831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -11987,6 +11996,7 @@
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				BF08AA0025CA28AD009DE3D2 /* MEGANode+FilePath.swift in Sources */,
+				B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */,
 				A8F0A1DA2178B41900575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				C46517A3272C9DC8004F27A0 /* MEGANodeList+Mapper.swift in Sources */,
 				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
@@ -12001,6 +12011,7 @@
 			files = (
 				944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */,
 				B60D527625F8888F003E9829 /* UIDevice+MNZCategory.m in Sources */,
+				B5300AF32754A098001E516B /* Strings+Generated.swift in Sources */,
 				B6451650223201A2001680BC /* MEGAConstants.m in Sources */,
 				77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */,
 				942255041EDC04080074C51A /* FileProvider.m in Sources */,
@@ -12047,6 +12058,7 @@
 				A81DF35E2508FDE3009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */,
 				BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */,
 				A82D5CE326BC083600E73D27 /* PreferenceRepository.swift in Sources */,
+				B5300AF42754A09C001E516B /* Strings+Generated.swift in Sources */,
 				A860C81126BBEA17004BFD23 /* ReinstallationUseCase.swift in Sources */,
 				C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */,
 				BFFED4A226F944F400B9EBEC /* PreferenceKeyEntity.swift in Sources */,
