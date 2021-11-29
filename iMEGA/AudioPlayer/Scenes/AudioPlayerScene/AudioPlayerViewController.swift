@@ -152,7 +152,7 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func configureNavigationBar(title: String, subtitle: String) {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close", comment: "A button label. The button allows the user to close the conversation."), style: .done, target: self, action: #selector(closeButtonAction))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(closeButtonAction))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(moreButtonAction(_:)))
         
         let titleView = CustomTitleView.instanceFromNib
@@ -224,7 +224,7 @@ final class AudioPlayerViewController: UIViewController {
         closeButton.isHidden = !(UIDevice.current.iPhoneDevice && (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight))
         
         if !closeButton.isHidden {
-            closeButton.setTitle(NSLocalizedString("close", comment: "Title for close button"), for: .normal)
+            closeButton.setTitle(Strings.Localizable.close, for: .normal)
             closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         }
     }
