@@ -14,7 +14,7 @@
 		<key>imageKey</key>
 		<string>attachCloud</string>
 		<key>nameKey</key>
-		<string>File</string>
+		<string>chat.match.file</string>
 		<key>dynamicKey</key>
 		<false/>
 	</dict>
@@ -54,7 +54,7 @@
 		<key>imageKey</key>
 		<string>attachLocation</string>
 		<key>nameKey</key>
-		<string>Location</string>
+		<string>chat.map.location</string>
 		<key>dynamicKey</key>
 		<false/>
 	</dict>
