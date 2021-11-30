@@ -2893,13 +2893,13 @@
 /* File extension. Commercial names should be stay on English */
 "general.filetype.subtitle"="Subtitle";
 /* File extension. Commercial names should be stay on English */
-"general.filetype.svg"="Vector Image";
+"general.filetype.vectorImage"="Vector Image";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.swf"="Flash Movie";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.tar"="Archive";
 /* File extension. Commercial names should be stay on English */
-"general.filetype.tbz"="Compressed";
+"general.filetype.compressed"="Compressed";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension. Commercial names should be stay on English */
