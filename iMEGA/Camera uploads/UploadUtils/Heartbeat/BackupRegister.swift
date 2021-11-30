@@ -43,7 +43,7 @@ final class BackupRegister {
             self.sdk.registerBackup(.cameraUploads,
                                     targetNode: node,
                                     folderPath: MEGACameraUploadsFolderPath,
-                                    name: NSLocalizedString("cameraUploadsLabel", comment: ""),
+                                    name: Strings.Localizable.cameraUploadsLabel,
                                     state: .active,
                                     delegate: HeartbeatRequestDelegate { [weak self, sdkType = type(of: self.sdk)] result in
                 switch result {
@@ -100,7 +100,7 @@ final class BackupRegister {
                                   backupType: .cameraUploads,
                                   targetNode: node,
                                   folderPath: MEGACameraUploadsFolderPath,
-                                  backupName: NSLocalizedString("cameraUploadsLabel", comment: ""),
+                                  backupName: Strings.Localizable.cameraUploadsLabel,
                                   state: .active,
                                   delegate: HeartbeatRequestDelegate { [sdkType = type(of: self.sdk), weak self] result in
                 
