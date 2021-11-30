@@ -32,9 +32,9 @@ struct VerificationCodeViewModel: ViewModelType {
     private var screenTitle: String {
         switch verificationType {
         case .addPhoneNumber:
-            return NSLocalizedString("Add Phone Number", comment: "")
+            return Strings.Localizable.addPhoneNumber
         case .unblockAccount:
-            return NSLocalizedString("Verify Your Account", comment: "")
+            return Strings.Localizable.verifyYourAccount
         }
     }
     
@@ -89,13 +89,13 @@ struct VerificationCodeViewModel: ViewModelType {
                 var message: String
                 switch error {
                 case .reachedDailyLimit:
-                    message = NSLocalizedString("You have reached the daily limit", comment: "")
+                    message = Strings.Localizable.youHaveReachedTheDailyLimit
                 case .codeDoesNotMatch:
-                    message = NSLocalizedString("The verification code doesn't match.", comment: "")
+                    message = Strings.Localizable.theVerificationCodeDoesnTMatch
                 case .alreadyVerifiedWithAnotherAccount:
-                    message = NSLocalizedString("Your account is already verified", comment: "")
+                    message = Strings.Localizable.yourAccountIsAlreadyVerified
                 default:
-                    message = NSLocalizedString("Unknown error", comment: "")
+                    message = Strings.Localizable.unknownError
                 }
                 self.invokeCommand?(.checkCodeError(message: message))
             }
