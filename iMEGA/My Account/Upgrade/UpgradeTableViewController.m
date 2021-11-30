@@ -76,8 +76,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     
     self.numberFormatter = NSNumberFormatter.alloc.init;
     self.numberFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
-    SKProduct *product = MEGAPurchase.sharedInstance.products.firstObject;
-    self.numberFormatter.locale = product.priceLocale;
+    self.numberFormatter.locale = NSLocale.currentLocale;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
