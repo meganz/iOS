@@ -2740,167 +2740,167 @@
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError.endAndJoin" = "End and join";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
 "general.filetype.3DModel"="3D Model";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .3ds. Commercial names should be stay on English */
 "general.filetype.3ds"="3D Scene";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
 "general.filetype.rawImage"="RAW Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .3g2. Commercial names should be stay on English */
 "general.filetype.3g2"="Multimedia";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .7z. Commercial names should be stay on English */
 "general.filetype.7z"="7-Zip Compressed";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI Text File";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Android App";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .app. Commercial names should be stay on English */
 "general.filetype.app"="Mac OS X App";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCII Text";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .bmp. Commercial names should be stay on English */
 "general.filetype.bmp"="Bitmap Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .bz2. Commercial names should be stay on English */
 "general.filetype.bz2"="UNIX Compressed";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .c. Commercial names should be stay on English */
 "general.filetype.c"="C/C++ Source Code";
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
 "general.filetype.cpp"="C++ Source Code";
 /* File extension: .cdr. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS Command";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Template";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .dxf. Commercial names should be stay on English */
 "general.filetype.dxf"="DXF Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .eps. Commercial names should be stay on English */
 "general.filetype.eps"="EPS Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .exe. Commercial names should be stay on English */
 "general.filetype.exe"="Executable";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .flac. Commercial names should be stay on English */
 "general.filetype.flac"="Lossless Audio";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .flv. Commercial names should be stay on English */
 "general.filetype.flv"="Flash Video";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .fnt. Commercial names should be stay on English */
 "general.filetype.fnt"="Windows Font";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .fon. Commercial names should be stay on English */
 "general.filetype.fon"="Font";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .gadget. Commercial names should be stay on English */
 "general.filetype.gadget"="Windows Gadget";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="GIF Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .gpx. Commercial names should be stay on English */
 "general.filetype.gpx"="GPS Exchange";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="Spreadsheet";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .gz. Commercial names should be stay on English */
 "general.filetype.gz"="Gnu Compressed";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
 "general.filetype.header"="Header";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .htm and .html. Commercial names should be stay on English */
 "general.filetype.htmlDocument"="HTML Document";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .iff. Commercial names should be stay on English */
 "general.filetype.iff"="Interchange File Format";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .iso. Commercial names should be stay on English */
 "general.filetype.iso"="ISO Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .jar. Commercial names should be stay on English */
 "general.filetype.jar"="Java Archive";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .java. Commercial names should be stay on English */
 "general.filetype.java"="Java Code";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
 "general.filetype.jpeg"="JPEG Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .log. Commercial names should be stay on English */
 "general.filetype.log"="Log";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .3mu. Commercial names should be stay on English */
 "general.filetype.m3u"="Media Playlist";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .m4a. Commercial names should be stay on English */
 "general.filetype.m4a"="MPEG-4 Audio";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .max. Commercial names should be stay on English */
 "general.filetype.max"="3ds Max Scene";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .mdb. Commercial names should be stay on English */
 "general.filetype.mdb"="MS Access";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
 "general.filetype.mid"="MIDI Audio";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .mkv. Commercial names should be stay on English */
 "general.filetype.mkv"="MKV Video";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .mov. Commercial names should be stay on English */
 "general.filetype.mov"="QuickTime Movie";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .mp3. Commercial names should be stay on English */
 "general.filetype.mp3"="MP3 Audio";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .mp4. Commercial names should be stay on English */
 "general.filetype.mp4"="MP4 Video";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
 "general.filetype.mpeg"="MPEG Movie";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .msi. Commercial names should be stay on English */
 "general.filetype.msi"="MS Installer";
-/* File extension. Commercial names should be stay on English */
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
 "general.filetype.textDocument"="Text Document";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .otf. Commercial names should be stay on English */
 "general.filetype.otf"="OpenType Font";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .pages. Commercial names should be stay on English */
 "general.filetype.pages"="Pages";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .pcast. Commercial names should be stay on English */
 "general.filetype.podcast"="Podcast";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .pdf. Commercial names should be stay on English */
 "general.filetype.pdf"="PDF Document";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP Code";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Audio Playlist";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR Compressed";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Compressed";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .sql. Commercial names should be stay on English */
 "general.filetype.sql"="SQL Database";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Sony RAW Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .srt. Commercial names should be stay on English */
 "general.filetype.subtitle"="Subtitle";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
 "general.filetype.vectorImage"="Vector Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .swf. Commercial names should be stay on English */
 "general.filetype.swf"="Flash Movie";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .tar. Commercial names should be stay on English */
 "general.filetype.tar"="Archive";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .tiff. Commercial names should be stay on English */
 "general.filetype.tiff"="TIFF Image";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .ttf. Commercial names should be stay on English */
 "general.filetype.ttf"="TrueType Font";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .wav. Commercial names should be stay on English */
 "general.filetype.wav"="Wave Audio";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .webm. Commercial names should be stay on English */
 "general.filetype.webm"="WebM Video";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .wma. Commercial names should be stay on English */
 "general.filetype.wma"="WM Audio";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .wmv. Commercial names should be stay on English */
 "general.filetype.wmv"="WM Video";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .xml. Commercial names should be stay on English */
 "general.filetype.xml"="XML Document";
-/* File extension. Commercial names should be stay on English */
+/* File extension: .zip. Commercial names should be stay on English */
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Choose";
