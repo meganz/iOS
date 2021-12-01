@@ -27,14 +27,14 @@ class PasteImagePreviewView: UIView {
     
     lazy var sendButton: UIButton  = {
         let button = UIButton()
-        button.setTitle(NSLocalizedString("send", comment: ""), for: .normal)
+        button.setTitle(Strings.Localizable.send, for: .normal)
         button.mnz_setupPrimary(traitCollection)
         return button
     }()
     
     lazy var cancelButton: UIButton  = {
         let button = UIButton()
-        button.setTitle(NSLocalizedString("Cancel", comment: ""), for: .normal)
+        button.setTitle(Strings.Localizable.cancel, for: .normal)
         button.mnz_setupCancel(traitCollection)
         return button
     }()

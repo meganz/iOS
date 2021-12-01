@@ -21,7 +21,7 @@ final class BadgeButton: UIButton {
     // MARK: - Publics
 
     func setBadgeText(_ text: String?) {
-        accessibilityLabel = NSLocalizedString("My Account", comment: "")
+        accessibilityLabel = Strings.Localizable.myAccount
         guard let text = text, !text.isEmpty else {
             badgeLabel?.isHidden = true
             accessibilityValue = nil
@@ -29,7 +29,7 @@ final class BadgeButton: UIButton {
         }
         badgeLabel?.isHidden = false
         badgeLabel?.text = text
-        accessibilityValue = NSLocalizedString("notifications", comment: "") + text
+        accessibilityValue = Strings.Localizable.notifications
     }
 
     // MARK: - Privates

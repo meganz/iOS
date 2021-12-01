@@ -93,20 +93,20 @@ class VerifyEmailViewController: UIViewController {
         let customModal = CustomModalAlertViewController.init()
 
         customModal.image = UIImage(named: "lockedAccounts")
-        customModal.viewTitle = NSLocalizedString("Locked Accounts", comment: "Title of a helping view about locked accounts")
-        customModal.detail = NSLocalizedString("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.", comment: "Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description.") + "\n\n" + NSLocalizedString("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.", comment: "Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description.")
-        customModal.dismissButtonTitle = NSLocalizedString("close", comment: "A button label. The button allows the user to close the conversation.")
+        customModal.viewTitle = Strings.Localizable.lockedAccounts
+        customModal.detail = Strings.Localizable.itIsPossibleThatYouAreUsingTheSamePasswordForYourMEGAAccountAsForOtherServicesAndThatAtLeastOneOfTheseOtherServicesHasSufferedADataBreach + "\n\n" + Strings.Localizable.yourPasswordLeakedAndIsNowBeingUsedByBadActorsToLogIntoYourAccountsIncludingButNotLimitedToYourMEGAAccount
+        customModal.dismissButtonTitle = Strings.Localizable.close
 
         present(customModal, animated: true, completion: nil)
     }
 
     func localizeLabels() {
-        topDescriptionLabel.text = NSLocalizedString("Your account has been temporarily suspended for your safety.", comment: "Text describing account suspended state to the user")
-        bottomDescriptionLabel.text = NSLocalizedString("[S]Please verify your email[/S] and follow its steps to unlock your account.", comment: "Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text.")
-        resendButton.setTitle(NSLocalizedString("resend", comment: "A button to resend the email confirmation."), for: .normal)
-        logoutButton.setTitle(NSLocalizedString("logoutLabel", comment: "Title of the button which logs out from your account."), for: .normal)
-        hintButton.setTitle(NSLocalizedString("Why am I seeing this?", comment: "Text for button to open an helping view"), for: .normal)
-        hintLabel.text = NSLocalizedString("Email sent", comment: "Text to notify user an email has been sent")
+        topDescriptionLabel.text = Strings.Localizable.yourAccountHasBeenTemporarilySuspendedForYourSafety
+        bottomDescriptionLabel.text = Strings.Localizable.sPleaseVerifyYourEmailSAndFollowItsStepsToUnlockYourAccount
+        resendButton.setTitle(Strings.Localizable.resend, for: .normal)
+        logoutButton.setTitle(Strings.Localizable.logoutLabel, for: .normal)
+        hintButton.setTitle(Strings.Localizable.whyAmISeeingThis, for: .normal)
+        hintLabel.text = Strings.Localizable.emailSent
     }
 
     @objc func checkIfBlocked() {
@@ -140,7 +140,7 @@ class VerifyEmailViewController: UIViewController {
                 if error.type == .apiOk || error.type == .apiEArgs {
                     self.hintLabel.isHidden = false
                 } else {
-                    SVProgressHUD.showError(withStatus: NSLocalizedString("Email already sent. Please wait a few minutes before trying again.", comment: "Error text shown when requesting email for email verification within 10 minutes"))
+                    SVProgressHUD.showError(withStatus: Strings.Localizable.EmailAlreadySent.pleaseWaitAFewMinutesBeforeTryingAgain)
                 }
             }
             MEGASdkManager.sharedMEGASdk().resendVerificationEmail(with: resendVerificationEmailDelegate)

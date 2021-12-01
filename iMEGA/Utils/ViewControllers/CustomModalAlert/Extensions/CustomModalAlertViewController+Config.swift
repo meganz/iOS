@@ -12,11 +12,11 @@ extension CustomModalAlertViewController {
             detail = detailText
         }
         
-        firstButtonTitle = NSLocalizedString("seePlans", comment: "Button title to see the available pro plans in MEGA")
+        firstButtonTitle = Strings.Localizable.seePlans
         if MEGASdkManager.sharedMEGASdk().isAchievementsEnabled && hasBonusButton {
-            secondButtonTitle = NSLocalizedString("general.button.getBonus", comment: "")
+            secondButtonTitle = Strings.Localizable.General.Button.getBonus
         }
-        dismissButtonTitle = NSLocalizedString("dismiss", comment: "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
+        dismissButtonTitle = Strings.Localizable.dismiss
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {

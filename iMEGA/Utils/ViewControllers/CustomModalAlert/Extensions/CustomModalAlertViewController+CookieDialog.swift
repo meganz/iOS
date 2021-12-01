@@ -3,16 +3,16 @@ import Foundation
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {
         image = UIImage(named: "cookie")
-        viewTitle = NSLocalizedString("Before You Continue", comment: "")
+        viewTitle = Strings.Localizable.beforeYouContinue
         detailAttributed = detailTextAttributedString()
         
         let detailTapGR = UITapGestureRecognizer(target: self, action: #selector(cookiePolicyTouchUpInside))
         detailTapGR.cancelsTouchesInView = false
         detailTapGestureRecognizer = detailTapGR
         
-        firstButtonTitle = NSLocalizedString("Accept Cookies", comment: "")
+        firstButtonTitle = Strings.Localizable.acceptCookies
         dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
-        dismissButtonTitle = NSLocalizedString("Cookie Settings", comment: "")
+        dismissButtonTitle = Strings.Localizable.cookieSettings
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
@@ -50,7 +50,7 @@ extension CustomModalAlertViewController {
     }
     
     @objc func detailTextAttributedString() -> NSAttributedString {
-        var detailText = NSLocalizedString("Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)...", comment: "") as NSString
+        var detailText = Strings.Localizable.cookieDialogTextWeUseCookiesAndSimilarTechnologiesCookies as NSString
         let cookiePolicy = detailText.mnz_stringBetweenString("[A]", andString: "[/A]")
         detailText = detailText.mnz_removeWebclientFormatters() as NSString
         
