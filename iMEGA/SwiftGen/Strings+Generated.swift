@@ -2223,8 +2223,6 @@ public enum Strings {
     public static let thereIsAlreadyAFileWithTheSameName = Strings.tr("Localizable", "There is already a file with the same name")
     /// There is already a folder with the same name
     public static let thereIsAlreadyAFolderWithTheSameName = Strings.tr("Localizable", "There is already a folder with the same name")
-    /// The user has been invited and will appear in your contact list once accepted.
-    public static let theUserHasBeenInvited = Strings.tr("Localizable", "theUserHasBeenInvited")
     /// The users have been invited and will appear in your contact list once accepted.
     public static let theUsersHaveBeenInvited = Strings.tr("Localizable", "theUsersHaveBeenInvited")
     /// Third Party Cookies
@@ -3006,6 +3004,18 @@ public enum Strings {
           return Strings.tr("Localizable", "account.transferQuota.perMonth", String(describing: p1))
         }
       }
+      public enum Upgrade {
+        public enum AlreadyHaveACancellableSubscription {
+          /// Do you want to cancel your current subscription and continue with the purchase?
+          public static let message = Strings.tr("Localizable", "account.upgrade.alreadyHaveACancellableSubscription.message")
+        }
+        public enum AlreadyHaveASubscription {
+          /// You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.
+          public static let message = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.message")
+          /// You already have an active subscription
+          public static let title = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.title")
+        }
+      }
     }
     public enum Calls {
       public enum Incompatibility {
@@ -3040,6 +3050,12 @@ public enum Strings {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
         }
       }
+      public enum ScanDocument {
+        /// Scan %@
+        public static func defaultName(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "cloudDrive.scanDocument.defaultName", String(describing: p1))
+        }
+      }
       public enum Sort {
         /// Label
         public static let label = Strings.tr("Localizable", "cloudDrive.sort.label")
@@ -3052,6 +3068,148 @@ public enum Strings {
       }
     }
     public enum Dialog {
+      public enum Add {
+        public enum Items {
+          public enum Backup {
+            public enum Action {
+              /// Add
+              public static let title = Strings.tr("Localizable", "dialog.add.items.backup.action.title")
+            }
+            public enum Folder {
+              public enum Warning {
+                /// Adding items to this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enable with the MEGA Desktop App.
+                public static let message = Strings.tr("Localizable", "dialog.add.items.backup.folder.warning.message")
+                /// Add Item to “%@”
+                public static func title(_ p1: Any) -> String {
+                  return Strings.tr("Localizable", "dialog.add.items.backup.folder.warning.title", String(describing: p1))
+                }
+              }
+            }
+          }
+        }
+      }
+      public enum Backup {
+        public enum Folder {
+          public enum Location {
+            public enum Warning {
+              /// Moving this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.
+              public static let message = Strings.tr("Localizable", "dialog.backup.folder.location.warning.message")
+              /// Move “%@”
+              public static func title(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "dialog.backup.folder.location.warning.title", String(describing: p1))
+              }
+            }
+          }
+        }
+        public enum Setup {
+          /// Use our Desktop App to ensure your backup folder is synchronised with your MEGA Cloud.
+          public static let message = Strings.tr("Localizable", "dialog.backup.setup.message")
+          /// Setup Backup
+          public static let title = Strings.tr("Localizable", "dialog.backup.setup.title")
+        }
+        public enum Warning {
+          public enum Confirm {
+            /// Please type “%@” to confirm this action
+            public static func message(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "dialog.backup.warning.confirm.message", String(describing: p1))
+            }
+          }
+        }
+      }
+      public enum CallAttempt {
+        /// Your contact [X] is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact
+        public static let contactNotInMEGA = Strings.tr("Localizable", "dialog.callAttempt.contactNotInMEGA")
+      }
+      public enum Confirmation {
+        public enum Error {
+          /// Text entered does not match
+          public static let message = Strings.tr("Localizable", "dialog.confirmation.error.message")
+        }
+      }
+      public enum Delete {
+        public enum Backup {
+          /// delete backup
+          public static let placeholder = Strings.tr("Localizable", "dialog.delete.backup.placeholder")
+          public enum Action {
+            /// Move to Rubbish Bin
+            public static let title = Strings.tr("Localizable", "dialog.delete.backup.action.title")
+          }
+          public enum Folder {
+            public enum Warning {
+              /// Are you sure you want to delete your backup folder and disable backup you set?
+              public static let message = Strings.tr("Localizable", "dialog.delete.backup.folder.warning.message")
+              /// Move “%@” to Rubbish Bin
+              public static func title(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "dialog.delete.backup.folder.warning.title", String(describing: p1))
+              }
+            }
+          }
+        }
+        public enum Root {
+          public enum Backup {
+            public enum Folder {
+              public enum Warning {
+                /// You are deleting your backups folder. This will remove all the backups you have set. Are you sure you want to do this?
+                public static let message = Strings.tr("Localizable", "dialog.delete.root.backup.folder.warning.message")
+              }
+            }
+          }
+        }
+      }
+      public enum Disable {
+        public enum Backup {
+          /// disable backup
+          public static let placeholder = Strings.tr("Localizable", "dialog.disable.backup.placeholder")
+        }
+      }
+      public enum InviteContact {
+        /// The user [X] has been invited and will appear in your contact list once accepted.
+        public static let outgoingContactRequest = Strings.tr("Localizable", "dialog.inviteContact.outgoingContactRequest")
+      }
+      public enum Move {
+        public enum Backup {
+          /// move backup
+          public static let placeholder = Strings.tr("Localizable", "dialog.move.backup.placeholder")
+        }
+      }
+      public enum Root {
+        public enum Backup {
+          public enum Folder {
+            public enum Location {
+              public enum Warning {
+                /// You are changing a default backup folder location. This may affect your ability to find your backup folder in the future. Please remember where it is located so that you can find it in the future.
+                public static let message = Strings.tr("Localizable", "dialog.root.backup.folder.location.warning.message")
+              }
+            }
+          }
+        }
+      }
+      public enum Share {
+        public enum Backup {
+          public enum Folder {
+            public enum Warning {
+              /// This folder can only be shared as read-only, as this is a backup folder, any changes to its content could disable the backup.
+              public static let message = Strings.tr("Localizable", "dialog.share.backup.folder.warning.message")
+            }
+          }
+          public enum Folders {
+            public enum Warning {
+              /// These folders can only be shared as read-only, as they are backup folders, any changes to their content could disable the backups.
+              public static let message = Strings.tr("Localizable", "dialog.share.backup.folders.warning.message")
+            }
+          }
+          public enum Non {
+            public enum Backup {
+              public enum Folders {
+                public enum Warning {
+                  /// Some folders shared are backup folders and read-only. Do you wish to continue?
+                  public static let message = Strings.tr("Localizable", "dialog.share.backup.non.backup.folders.warning.message")
+                }
+              }
+            }
+          }
+        }
+      }
       public enum ShareOwnerStorageQuota {
         /// The file cannot be sent as the target user is over their storage quota.
         public static let message = Strings.tr("Localizable", "dialog.shareOwnerStorageQuota.message")
@@ -3419,6 +3577,14 @@ public enum Strings {
         public static let noOtherParticipants = Strings.tr("Localizable", "meetings.message.noOtherParticipants")
         /// Waiting for others to join…
         public static let waitingOthers = Strings.tr("Localizable", "meetings.message.waitingOthers")
+      }
+      public enum New {
+        /// Another call in progress. Please end your current call before making another.
+        public static let anotherAlreadyExistsError = Strings.tr("Localizable", "meetings.new.anotherAlreadyExistsError")
+        public enum AnotherAlreadyExistsError {
+          /// End and join
+          public static let endAndJoin = Strings.tr("Localizable", "meetings.new.anotherAlreadyExistsError.endAndJoin")
+        }
       }
       public enum Notifications {
         /// You are the new call moderator
