@@ -97,6 +97,12 @@ internal enum Asset {
       internal static let shuffleAudio = ImageAsset(name: "shuffleAudio")
       internal static let viewPlaylist = ImageAsset(name: "viewPlaylist")
     }
+    internal enum Backup {
+      internal static let actionWarning = ImageAsset(name: "actionWarning")
+      internal static let folderBackup = ImageAsset(name: "folder_backup")
+      internal static let folderSync = ImageAsset(name: "folder_sync")
+      internal static let warningModals = ImageAsset(name: "warningModals")
+    }
     internal enum Business {
       internal static let accountExpiredAdmin = ImageAsset(name: "accountExpiredAdmin")
       internal static let accountExpiredUser = ImageAsset(name: "accountExpiredUser")
