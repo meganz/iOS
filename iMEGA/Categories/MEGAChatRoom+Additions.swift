@@ -65,14 +65,14 @@ extension MEGAChatRoom {
         if isGroup && !hasCustomTitle && peerCount == 0  {
             let date = Date(timeIntervalSince1970: TimeInterval(creationTimeStamp))
             let dateString = DateFormatter.dateMediumTimeShort().localisedString(from: date)
-            return NSLocalizedString("Chat created on %s1", comment: "Default title of an empty chat.").replacingOccurrences(of: "%s1", with: dateString)
+            return Strings.Localizable.chatCreatedOnS1(dateString)
         } else {
             return title ?? ""
         }
     }
     
     @objc func participantsNames(withMe me: Bool) -> String {
-        var meString = NSLocalizedString("me", comment: "The title for my message in a chat. The message was sent from yourself.")
+        var meString = Strings.Localizable.me
         if me {
             var myNameOrEmail: String?
             if let myFullname = MEGASdkManager.sharedMEGAChatSdk().myFullname {
@@ -121,7 +121,7 @@ extension MEGAChatRoom {
                 totalCount += 1
             }
             if participantsNames.mnz_isEmpty() {
-                participantsNames = NSLocalizedString("%d participants", comment: "Plural of participant. 2 participants").replacingOccurrences(of: "%d", with: "\(totalCount)")
+                participantsNames = Strings.Localizable.dParticipants(Int(bitPattern: totalCount))
             } else {
                 participantsNames += " and \(totalCount - namesAdded) more"
             }
