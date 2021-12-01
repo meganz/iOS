@@ -19,10 +19,10 @@ extension CloudDriveViewController {
     }
     
     @objc func showSetupBackupAlert() {
-        let setupBackupAlertController = UIAlertController(title: NSLocalizedString("dialog.backup.setup.title", comment: ""),
-                                                           message: NSLocalizedString("dialog.backup.setup.message", comment: ""),
+        let setupBackupAlertController = UIAlertController(title: Strings.Localizable.Dialog.Backup.Setup.title,
+                                                           message: Strings.Localizable.Dialog.Backup.Setup.message,
                                                            preferredStyle: .alert)
-        setupBackupAlertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
+        setupBackupAlertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: nil))
         
         present(setupBackupAlertController, animated: true, completion: nil)
     }
