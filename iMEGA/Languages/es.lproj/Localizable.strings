@@ -214,6 +214,8 @@
 "addContacts"="Añadir contactos";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Invitar a MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Tu contacto[X] no está en MEGA. Para llamar a través del chat cifrado de MEGA, debes invitar a tu contacto";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invitación enviada";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Crear grupo";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Ubicación";
+"chat.map.location"="Ubicación";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Mensaje de audio";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -586,6 +588,8 @@
 "addContactButton"="Añadir";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="No hace falta que añadas tu propio correo electrónico";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="El usuario [X] ha sido invitado y aparecerá en tu lista de contactos en cuanto acepte la invitación.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Los usuarios han sido invitados y aparecerán en tu lista de contactos en cuanto acepten la invitación.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Política de privacidad";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Política de Cookies";
+"general.cookiePolicy"="Política de Cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Ajustes de Cookies";
+"general.cookieSettings"="Ajustes de Cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Términos de servicio";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Para ampliar tu suscripción, contacta con soporte para un [A]plan personalizado[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Plan actual:";
+"inAppPurchase.upgrade.label.currentPlan"="Plan actual:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Plan actual";
+"inAppPurchase.productDetail.navigation.currentPlan"="Plan actual";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Contrata un plan personalizado";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versiones";
 /* Title label of a node property. */
-"location"="Ubicación";
+"cloudDrive.info.node.location"="Ubicación";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Tamaño total";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="archivo";
 /* Label to desing a file matching */
-"File"="Archivo";
+"chat.match.file"="Archivo";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versión actual";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="Eliminar archivos con más de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Para un período de retención más largo, [S]amplia tu cuenta a Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="días";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La Papelera se vacía de forma automática. El período mínimo es de 7 días y el máximo es de 30 días.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="Enviar esta ubicación";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Ajustes del mapa";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Estándar";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satélite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="Inserta un espacio para añadir múltiples correos";
 /* Text used as a section title or similar */
 "Enter Email"="Añadir correo electrónico";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="En MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTOS CON CUENTA EN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="Business";
 /*  */
 "Administrator"="Administrador";
-/* Business user role */
-"User"="Usuario";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferencia";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="Hasta que las reactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutos";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 hora";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 horas";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="Enviar tamaño original, imágenes de mayor calidad";
 /* Setting title for Doc scan view */
 "Save Settings"="Guardar ajustes";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="Escaneo %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Tipo de archivo";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Escribe el nombre del grupo";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Mensaje…";
+"chat.message.placeholder"="Mensaje…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Arrastra hacia la izquierda para cancelar, suelta para enviar";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="Ocultar la actividad reciente en la sección Inicio.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Predeterminado";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="Día";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Noche";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="ENLACE";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Creación del enlace";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="COMPARTIR CON";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="PENDIENTE";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="VERSIONES";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Favoritos";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Eliminar favoritos";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Etiqueta";
+"cloudDrive.sort.label"="Etiqueta";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Etiqueta…";
+"general.chooseLabel.title"="Etiqueta…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Eliminar etiqueta";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="Enviar clave de cifrado por separado";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Fecha de caducidad";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Establecer fecha de caducidad";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Protección por contraseña";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="Contraseña copiada al portapapeles";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nuestro sistema de cifrado punto a punto requiere una clave única generada automáticamente para este archivo. El enlace se crea por defecto con esta clave pero puedes exportala por separado para más seguridad.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="Clave de cifrado";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Eliminar contraseña";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 año";
 /*  */
 "year"="año";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="COMPARTIR";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Buscar tus archivos";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="No se han encontrado vídeos";
 /* Navigation title for the photo explorer view */
 "All Images"="Todas las imágenes";
-/* Section title for the photo explorer view */
-"TODAY"="HOY";
-/* Section title for the photo explorer view */
-"YESTERDAY"="AYER";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="No se han encontrado imágenes";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="No se ha podido envíar el mensaje";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="El envío del mensaje se ha cancelado";
-/* Cookie dialog header */
-"Before You Continue"="Antes de continuar";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="Tu privacidad";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Utilizamos el almacenamiento local y tecnologías similares (“Cookies”) para ofrecerte nuestros servicios, mejorar tu experiencia al usarlos y personalizar los anuncios que ves, incluso a través de terceros. Acepta el uso de Cookies o personalizalo en los ajustes. Encuentra más información al respecto en nuestra [A]Política de cookies[/A].";
+"dialog.cookies.description"="Utilizamos cookies y tecnologías similares (“Cookies”) para ofrecerte nuestros servicios y mejorar tu experiencia al usarlos. Acepta el uso de Cookies o personalizalo en los ajustes. Encuentra más información al respecto en nuestra [A]Política de cookies[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Aceptar Cookies";
+"dialog.cookies.accept"="Aceptar Cookies";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Cookies esenciales";
+"settings.cookies.essential"="Cookies esenciales";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Activas por defecto";
+"settings.cookies.essential.alwaysOn"="Activas por defecto";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Esenciales para el funcionamiento de nuestros servicios y para un acceso seguro. Por esta razón, no requieren consentimiento.";
+"settings.cookies.essential.footer"="Esenciales para el funcionamiento de nuestros servicios y para un acceso seguro. Por esta razón, no requieren consentimiento.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Cookies funcionales";
+"settings.cookies.performanceAndAnalytics"="Cookies de análisis y rendimiento";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Permiten recordar tus ajustes de pantalla y de formato. Si no aceptas estas Cookies, no podremos recordar algunas cosas, como tu formato de pantalla preferido.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Cookies de análisis y rendimiento";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Sirven para entender cómo utilizas nuestros servicios y nos proporcionan datos que podemos utilizar para realizar mejoras. No aceptar estas Cookies significará que tendremos menos datos disponibles para mejorar el servicio.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="Cookies publicitarias";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Utilizadas por nosotros y nuestros socios publicitarios para personalizar los anuncios que ves en nuestros servicios y en otros sitios web en función de tu historial de navegación. No aceptar estas Cookies significa que mostraremos anuncios menos relevantes.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="Cookies de terceros";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Controladas por terceros, las usamos para proporcionar las funcionalidades descritas anteriormente. No aceptar estas Cookies tendrá distintas implicaciones en función del tipo de Cookie de terceros. Haz clic en “Más información” a continuación para obtener detalles sobre todas las Cookies de terceros que utilizamos.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="Más información";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="Las Cookies de terceros no están activas";
+"settings.cookies.performanceAndAnalytics.footer"="Sirven para entender cómo utilizas nuestros servicios y nos proporcionan datos que podemos utilizar para realizar mejoras. No aceptar estas Cookies significará que tendremos menos datos disponibles para mejorar el servicio.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La versión se ha creado como un nuevo archivo.";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>Amplía tu cuenta hoy si quieres conservar tus datos.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Obtén bono";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="Copia de seguridad";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="Utiliza nuestra aplicación de escritorio para que tu carpeta de respaldo esté sincronizada con tu nube de MEGA.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="Mover “%@”";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="Vas a cambiar la ubicación de tu carpeta de copias de seguridad. Esto puede afectar tu capacidad para encontrar esa carpeta en el futuro. Recuerda la nueva ubicación para que puedas encontrarla en el futuro.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="Al mover esta carpeta se cambiará el destino de las copias de seguridad y se desactivará esta función. ¿Es esto lo que quieres hacer? Puedes volver a activar las copias de seguridad a través de la aplicación de escritorio de MEGA.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="Mover “%@” a la Papelera";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="Vas a eliminar tu carpeta de copias de seguridad. Se borrarán todas las copias de seguridad que hayas configurado. ¿Seguro que quieres hacer esto?";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="¿Estás seguro de que quieres eliminar tu carpeta de copias de seguridad y desactivar las copias de seguridad que has configurado?";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="Añadir elemento a “%@”";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="Al añadir elementos a esta carpeta se cambiará el destino de la copias de seguridad y se desactivará esta función. ¿Es esto lo que quieres hacer? Puedes volver a activar las copias de seguridad a través de la aplicación de escritorio de MEGA.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="Escribe “%@” para confirmar esta acción";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="Mover copia de seguridad";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="eliminar copia de seguridad";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="desactivar copias de seguridad";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="Mover a la Papelera";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="Añadir";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="El texto no coincide";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="Esta carpeta solo se puede compartir en solo lectura porque es una carpeta de respaldo. Cualquier cambio en su contenido podría desactivar la copia de seguridad.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="Estas carpetas solo se pueden compartir en solo lectura porque son carpetas de respaldo. Cualquier cambio en su contenido podría desactivar las copias de seguridad.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="Algunas carpetas compartidas son carpetas de respaldo y de solo lectura. ¿Quieres continuar?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ se ha unido a la llamada";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="Nueva reunión";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="Reunión de %@";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="Empieza la reunión";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="La reunión ha terminado.";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2725,4 +2729,178 @@
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Vista previa de imágenes de alta resolución";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+"settings.fileManagement.useMobileData.footer"="Usa los datos móviles para cargar imágenes de alta resolución en la vista previa. Si esta opción está desactivada, la imagen de alta resolución solo se cargará cuando hagas zoom. ";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="Ya tienes una suscripción activa";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="Estás subscrito a un plan Pro en Google Play o AppGallery. Cancela manualmente esa subscripción desde tu dispositivo a través de Google Play o de la AppGallery de Huawei y vuelve a intentarlo.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="¿Quieres cancelar tu suscripción actual y continuar con la compra?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="Hay otra llamada en curso. Termina esa llamada para hacer otra.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="Finalizar y unirse";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="Modelo 3D";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D Scene";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="Imagen RAW";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="Multimedia";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="7-Zip comprimido";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="Base de datos";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="ANSI Text File";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Aplicación para Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Mac OS X App";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="Texto ASCII";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="Streaming Video";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Imagen Casio RAW";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="Bitmap Image";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX comprimido";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="Código fuente C/C++";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="Código fuente C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="CorelDRAW Image";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Java Class";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOS Command";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="CSS Style Sheet";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="Plantilla de MS Word";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="Imagen DXF";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="Imagen EPS";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="Ejecutable";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="Lossless Audio";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Vídeo Flash";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Windows Font";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="Fuente";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Windows Gadget";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="Imagen GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="GPS Exchange";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="Hoja de cálculo";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU Compressed";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="Header";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="Documento HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Interchange File Format";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="Imagen ISO";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Archivo Java";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Código Java";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="Imagen JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="Log";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="Media Playlist";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="Audio MPEG-4";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max Scene";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="Audio MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="Vídeo MKV ";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="QuickTime Movie";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="Audio MP3";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="Vídeo MP4 ";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="MPEG Movie";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="MS Installer";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="Documento de texto";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="OpenType Font";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="Podcast";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="Documento PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="Código PHP";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="Lista de reproducción audio";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="Imagen PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="RAR comprimido";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="Texto enriquecido ";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Imagen Panasonic RAW";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="Server HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X comprimido";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="Base de datos SQL";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Imagen Sony RAW";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="Subtitle";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="Imagen vectorial";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Flash Movie";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="Archivar";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="Comprimido";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="Imagen TIF";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="Imagen TIFF";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="TrueType Font";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Audio Wave";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="Vídeo WebM";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="WM Audio";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="WM Video";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="Documento XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="Archivo ZIP";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Seleccionar";
