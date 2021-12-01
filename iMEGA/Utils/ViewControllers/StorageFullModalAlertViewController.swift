@@ -23,10 +23,13 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
     
     func configureView() {
         image = UIImage(named: "deviceStorageAlmostFull")
-        viewTitle = NSLocalizedString("Device Storage Almost Full", comment: "Title to show when device local storage is almost full")
-        detail = String(format: NSLocalizedString("MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.", comment: "Message shown when you try to downlonad files bigger than the available memory."), Helper.memoryStyleString(fromByteCount: requiredStorage)
-)
-        firstButtonTitle = NSLocalizedString("Manage", comment: "Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache.")
+        viewTitle = Strings.Localizable.deviceStorageAlmostFull
+        detail = Strings.Localizable.MEGANeedsAMinimumOf
+            .FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery
+            .youCanAlsoManageWhatMEGAStoresOnYourDevice(Helper.memoryStyleString(fromByteCount: requiredStorage))
+
+        firstButtonTitle = Strings.Localizable.manage
+
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
                 let fileManagementVC = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "FileManagementTableViewControllerID")
@@ -34,7 +37,8 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
             })
         }
         
-        dismissButtonTitle = NSLocalizedString("notNow", comment: "Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage.")
+        dismissButtonTitle = Strings.Localizable.notNow
+
         dismissCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
                 UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "MEGAStorageFullNotification")

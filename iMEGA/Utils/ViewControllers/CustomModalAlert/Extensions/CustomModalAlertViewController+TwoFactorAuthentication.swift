@@ -3,13 +3,14 @@ import Foundation
 extension CustomModalAlertViewController {
     @objc func configureForTwoFactorAuthentication(requestedByUser: Bool) {
         image = UIImage(named: "2FASetup")
-        viewTitle = NSLocalizedString("whyYouDoNeedTwoFactorAuthentication", comment: "Title shown when you start the process to enable Two-Factor Authentication")
-        detail = NSLocalizedString("whyYouDoNeedTwoFactorAuthenticationDescription", comment: "Description text of the dialog displayed to start setup the Two-Factor Authentication")
-        firstButtonTitle = NSLocalizedString("beginSetup", comment: "Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication")
+        viewTitle = Strings.Localizable.whyYouDoNeedTwoFactorAuthentication
+        detail = Strings.Localizable.whyYouDoNeedTwoFactorAuthenticationDescription
+        firstButtonTitle = Strings.Localizable.beginSetup
+        
         if requestedByUser {
-            dismissButtonTitle = NSLocalizedString("cancel", comment: "")
+            dismissButtonTitle = Strings.Localizable.cancel
         } else {
-            dismissButtonTitle = NSLocalizedString("notNow", comment: "Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.")
+            dismissButtonTitle = Strings.Localizable.notNow
         }
 
         firstCompletion = { [weak self] in

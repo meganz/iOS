@@ -70,19 +70,19 @@
     @objc var title: String {
         switch tabType {
         case .cloudDrive:
-            return NSLocalizedString("cloudDrive", comment: "Title of the Cloud Drive section")
+            return Strings.Localizable.cloudDrive
             
         case .cameraUploads:
-            return NSLocalizedString("cameraUploadsLabel", comment: "Title of one of the Settings sections where you can set up the 'Camera Uploads' options")
+            return Strings.Localizable.cameraUploadsLabel
             
         case .home:
-            return NSLocalizedString("Home", comment: "Accessibility label of Home section in tabbar item")
+            return Strings.Localizable.home
             
         case .chat:
-            return NSLocalizedString("chat", comment: "Chat section header")
+            return Strings.Localizable.chat
             
         case .sharedItems:
-            return  NSLocalizedString("sharedItems", comment: "Title of Shared Items section")
+            return Strings.Localizable.sharedItems
         }
     }
 }
