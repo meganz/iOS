@@ -35,7 +35,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre microphone dans vos réglages";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre médiathèque (Photos) dans Réglages";
+"photoLibraryPermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre photothèque dans Réglages";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Votre compte a été activé. Veuillez vous connecter.";
 /*  */
@@ -97,7 +97,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Le format de l’adresse courriel est invalide";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="Saisir un mot de passe valide";
+"passwordInvalidFormat"="Saisissez un mot de passe valide";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Adresse courriel";
 /* Hint text to suggest that the user has to write his password */
@@ -201,7 +201,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="La Corbeille est vide";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Aucun fichier n’est enregistré Hors ligne";
+"offlineEmptyState_title"="Aucun fichier n’est enregistré Hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Aucun contact";
 /* Title shown when there's no incoming Shared Items */
@@ -214,6 +214,8 @@
 "addContacts"="Ajouter des contacts";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Inviter à MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Votre contact [X] ne se trouve pas sur MEGA. Afin de pouvoir appeler grâce au dialogue en ligne chiffré de MEGA, vous devez inviter votre contact";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="L’invitation a été envoyée";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Commencer un groupe";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Position";
+"chat.map.location"="Emplacement";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Insert parlé";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -329,7 +331,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n’avez plus accès à ce dossier";
 /* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Enregistrer Hors ligne";
+"saveForOffline"="Enregistrer Hors ligne";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="« Boîte de réception » est réservé à l’usage d’Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -529,7 +531,7 @@
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d sont sélectionnés";
 /* Title of the Offline section */
-"offline"="Hors ligne";
+"offline"="Hors ligne";
 /* Title of the Contacts section */
 "contactsTitle"="Contacts";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
@@ -586,6 +588,8 @@
 "addContactButton"="Ajouter";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Il est inutile d’ajouter votre propre adresse courriel";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts si l’invitation est acceptée.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s’ils acceptent.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Politique des témoins de connexion";
+"general.cookiePolicy"="Politique sur les Témoins de connexion";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Paramètres des Témoins de connexion";
+"general.cookieSettings"="Paramètres des Témoins";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Conditions générales d’utilisation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -757,11 +761,11 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="La Clé de récupération a été exportée";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="La Clé de récupération a été exportée dans la section Hors ligne sous MEGA-CLÉdeRÉCUPÉRATION.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
+"masterKeyExported_alertMessage"="La Clé de récupération a été exportée dans la section Hors ligne sous MEGA-CLÉdeRÉCUPÉRATION.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sur votre appareil";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Vider les fichiers Hors ligne";
+"clearOfflineFiles"="Vider les fichiers Hors ligne";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
 "settings.fileManagement.alert.clearAllOfflineFiles"="Vider tous les fichiers Hors ligne ?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
@@ -775,11 +779,11 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Ne pas utiliser HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="N’activer cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.";
+"transfersSectionFooter"="N’activez cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Options de téléchargement";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="%s utilisés actuellement";
+"currentlyUsing"="%s sont utilisés actuellement";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Supprimer le compte";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
@@ -893,7 +897,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Vous serez déconnecté et vos fichiers Hors ligne seront supprimés après dix tentatives infructueuses";
+"failedAttempstSectionTitle"="Vous serez déconnecté et vos fichiers Hors ligne seront supprimés après dix tentatives infructueuses";
 /* Button text to change the passcode type. */
 "Passcode Options"="Options du code d’accès";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -949,9 +953,9 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ d’espace de stockage pour chaque parrainage. \nValide pendant 365 jours.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Sélectionnez des contacts sur votre appareil ou saisissez plusieurs adresses courriel";
+"Select from phone contacts or enter multiple email addresses"="Sélectionner des contacts sur votre appareil ou saisir plusieurs adresses courriel";
 /*  */
-"insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
+"insertYourFriendsEmails"="Saisissez les adresses courriel de vos amis :";
 /*  */
 "howItWorks"="Fonctionnement";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Pour surclasser votre abonnement actuel, veuillez contacter notre équipe d’assistance pour obtenir un [A]abonnement personnalisé[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Abonnement actuel :";
+"inAppPurchase.upgrade.label.currentPlan"="Abonnement actuel :";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Abonnement actuel";
+"inAppPurchase.productDetail.navigation.currentPlan"="Abonnement actuel";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Passer à un abonnement personnalisé";
 /* Mail subject to upgrade to a custom plan */
@@ -1133,15 +1137,15 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activer le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent contenir des renseignements associés à votre compte.";
+"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent contenir des renseignements associés à votre compte.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Désactiver le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="Le journal (MEGAiOS.log) sera supprimé de la section Hors ligne.";
+"disableDebugMode_message"="Le journal (MEGAiOS.log) sera supprimé de la section Hors ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément Hors ligne ?";
+"removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément Hors ligne ?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments Hors ligne ?";
+"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments Hors ligne ?";
 /* Giphy section header */
 "Send GIF"="Envoyer un GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1487,7 +1491,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Balayer un code";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Alignez le code QR pour le balayer avec l’appareil photo de votre appareil";
+"lineCodeWithCamera"="Aligner le code QR pour le balayer avec l’appareil photo de votre appareil";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Le code est invalide";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versions";
 /* Title label of a node property. */
-"location"="Emplacement";
+"cloudDrive.info.node.location"="Emplacement";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Taille totale";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="fichier";
 /* Label to desing a file matching */
-"File"="Fichier";
+"chat.match.file"="Fichier";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Version actuelle";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1615,7 +1619,7 @@
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Le fichier n’est pas pris en charge";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="Vous pouvez l’enregistrer Hors ligne et l’ouvrir dans une appli compatible.";
+"message_fileNotSupported"="Vous pouvez l’enregistrer Hors ligne et l’ouvrir dans une appli compatible.";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Transférer";
 /* Success message shown after forwarding messages to other chats */
@@ -1671,13 +1675,13 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Enregistrer les vidéos dans Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Les images et les vidéos téléchargées seront enregistrées dans la médiathèque de l’appareil au lieu de la section Hors ligne.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Les images et vidéos téléchargées seront enregistrées dans la photothèque de l’appareil au lieu de la section Hors ligne.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Appareil photo";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Enregistrer dans Photos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Enregistrer dans la médiathèque de votre appareil un exemplaire des images et des vidéos prises avec l’appli MEGA.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Enregistrez dans la photothèque de votre appareil un exemplaire des images et vidéos prises avec l’appli MEGA.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Recherche Spotlight";
 /* Title of the Spotlight Search section */
@@ -1731,7 +1735,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Versionnage des fichiers";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nDésactiver le versionnage des fichiers n’empêche pas vos contacts de créer de nouvelles versions dans les dossiers partagés.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activez ou désactivez le versionnage des fichiers pour votre compte entier.\nDésactiver le versionnage des fichiers n’empêche pas vos contacts de créer de nouvelles versions dans les dossiers partagés.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version quand le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Voulez-vous vraiment désactiver le versionnage des fichiers ?";
 /* Settings preference title to show file versions info of the account */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="Supprimer les fichiers de plus de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Pour une période de conservation plus longue, [S]Passez à un compte Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="jours";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La Corbeille est vidée pour vous automatiquement, au minimum tous les 7 jours et au maximum tous les 30 jours.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1801,7 +1803,7 @@
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Lien de conversation";
 /* Button text in public chat previews that allows the user to join the chat */
-"Join"="Vous y joindre";
+"Join"="Me joindre";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="Vous vous êtes joint à %@";
 /* Users previewing a public chat */
@@ -1930,8 +1932,6 @@
 "Send This Location"="Envoyer cette position";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Paramètres de la carte";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Normal";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satellite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2049,11 +2049,9 @@
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="Inviter [X] contacts";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Touchez la barre d’espacement pour saisir plusieurs adresses courriel";
+"Tap space to enter multiple emails"="Toucher la barre d’espacement pour saisir plusieurs adresses courriel";
 /* Text used as a section title or similar */
 "Enter Email"="Saisir une adresse courriel";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="Sur MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS SUR MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="Pour entreprise";
 /*  */
 "Administrator"="Administrateur";
-/* Business user role */
-"User"="Utilisateur";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfert";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="Jusqu’à ce que je les réactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 heure";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 heures";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2231,15 +2225,17 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatique";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Envoyer les images de plus petite taille avec les données mobiles et les images de taille originale par le Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Envoyez les images de plus petite taille avec les données mobiles et les images de taille originale par le Wi-Fi";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimisée";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Envoyer des images de plus petite taille, optimisées pour une consommation réduite de données";
+"Send smaller size images optimised for lower data consumption"="Envoyez des images de plus petite taille, optimisées pour une consommation réduite de données";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Envoyer la taille originale. Les images sont de meilleure qualité";
+"Send original size, increased quality images"="Envoyez des images de meilleure qualité, de taille originale";
 /* Setting title for Doc scan view */
-"Save Settings"="Enregistrer les paramètres";
+"Save Settings"="Paramètres d’enregistrement";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="Numérisation %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Type de fichier";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Écrivez un message…";
+"chat.message.placeholder"="Écrivez un message…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Faire glisser vers la gauche pour annuler, relâcher pour envoyer";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2263,11 +2259,9 @@
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Cacher l’activité récente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Cacher l’activité récente dans la section Accueil.";
+"settings.userInterface.hideRecentActivity.footer"="Cachez l’activité récente dans la section Accueil.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Par défaut";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="jour";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Nuit";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2297,9 +2291,9 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Quand vous vous déconnectez, les transferts en cours sont annulés.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="Quand vous vous déconnectez, les fichiers de votre section Hors ligne sont supprimés de votre appareil.";
+"When you logout, files from your Offline section will be deleted from your device."="Quand vous vous déconnectez, les fichiers de votre section Hors ligne sont supprimés de votre appareil.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Quand vous vous déconnectez, les fichiers de votre section Hors ligne sont supprimés de votre appareil et les transferts en cours sont annulés.";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Quand vous vous déconnectez, les fichiers de votre section Hors ligne sont supprimés de votre appareil et les transferts en cours sont annulés.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Conversation créée le %s1";
 /* Title shown when there are no shared files */
@@ -2360,20 +2354,14 @@
 "LINK"="Lien";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Création du lien";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="Partager avec";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="En attente";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="Versions";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Favori";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Supprimer le favori";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Étiquette";
+"cloudDrive.sort.label"="Étiquette";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Étiquette…";
+"general.chooseLabel.title"="Étiquette…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Supprimer l’étiquette";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,14 +2384,12 @@
 "Send Decryption Key Separately"="Envoyer la clé de déchiffrement séparément";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Date d’expiration";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Définir une date d’expiration";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Protection par mot de passe";
 /* Text for options in Get Link View to set password protection */
 "Set Password"="Définir un mot de passe";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="Exporter séparément le lien et la clé de déchiffrement.";
+"Export the link and decryption key separately."="Exportez séparément le lien et la clé de déchiffrement.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="En apprendre davantage";
 /* Text indicating the date until a link will be valid */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="Le mot de passe a été copié dans le presse-papiers";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Notre système de chiffrement de bout en bout exige une clé unique générée automatiquement pour ce fichier. Un lien qui comprend cette clé est créé par défaut, mais par mesure supplémentaire de sécurité, vous pouvez exporter séparément la clé de chiffrement.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="Clé de déchiffrement";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Supprimer le mot de passe";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 an";
 /*  */
 "year"="an";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="PARTAGER";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cherchez dans vos fichiers";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="Aucune vidéo n’a été trouvée";
 /* Navigation title for the photo explorer view */
 "All Images"="Toutes les images";
-/* Section title for the photo explorer view */
-"TODAY"="Aujourd’hui";
-/* Section title for the photo explorer view */
-"YESTERDAY"="Hier";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="Aucune image n’a été trouvée";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="Échec d’envoi du message";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="L’envoi du message a été annulé";
-/* Cookie dialog header */
-"Before You Continue"="Avant que vous ne poursuiviez";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="Votre vie privée";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Nous utilisons la mémoire locale et des technologies semblables (« cookies ») pour vous fournir nos services, améliorer votre expérience d’utilisation de nos services et personnaliser les publicités que vous voyez, dont celles provenant de tiers. Acceptez dès le début de votre visite notre utilisation de Témoins ou personnalisez les Témoins dans les paramètres des Témoins de connexion. Apprenez-en davantage dans notre [A]Politique sur les Témoins de connexion[/A].";
+"dialog.cookies.description"="Nous utilisons des Témoins de connexion et des technologies semblables (« Témoins ») pour vous fournir nos services et améliorer votre expérience d’utilisation de nos services. Acceptez notre utilisation de Témoins dès le début de votre visite ou personnalisez les Témoins dans les paramètres des Témoins de connexion. Apprenez-en davantage dans notre [A]Politique sur les Témoins de connexion[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Accepter les Témoins de connexion";
+"dialog.cookies.accept"="Accepter les témoins";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Témoins essentiels";
+"settings.cookies.essential"="Témoins essentiels";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Toujours activés";
+"settings.cookies.essential.alwaysOn"="Toujours activés";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Ils sont essentiels pour une fonction importante et pour un accès sécurisé à nos services. Pour cette raison, ils ne demandent pas de consentement.";
+"settings.cookies.essential.footer"="Ils sont essentiels pour une fonction importante et pour un accès sécurisé à nos services. Pour cette raison, ils ne demandent pas de consentement.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Témoins des préférences";
+"settings.cookies.performanceAndAnalytics"="Témoins de performance et d’analyse";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Ils nous permettent de mémoriser certains paramètres d’affichage et de formatage que vous choisissez. Le refus de ces Témoins signifierait que nous ne pourrions pas mémoriser certaines choses pour vous, telles que votre disposition d’écran préférée.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Témoins de performances et d’analyses";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Ils nous permettent de comprendre comment vous utilisez nos services et nous fournissent des données que nous pouvons utiliser pour apporter des améliorations. Le refus de ces Témoins signifierait que moins de données seraient à notre disposition pour faciliter les améliorations conceptionnelles.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="Témoins publicitaires";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Ils sont utilisés par nous et par nos partenaires publicitaires approuvés afin de personnaliser les publicités que vous voyez dans nos services et sur d’autres sites Web, d’après votre historique de connexion. Le refus de ces Témoins signifierait que nous pourrions afficher des publicités moins pertinentes.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="Témoins tiers";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ces Témoins ne sont pas contrôlés par nous, mais par des tiers ; nous utilisons ces Témoins pour fournir les types de fonctions que nous décrivons ci-dessous. Le refus de ces Témoins aurait différentes implications suivant la nature de chaque Témoin tiers. Vous obtiendrez des détails sur les Témoins que nous utilisons en cliquant sur « Plus de précision » ci-dessous.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="Plus de précisions";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="Aucun témoin tiers n’est utilisé";
+"settings.cookies.performanceAndAnalytics.footer"="Ils nous permettent de comprendre comment vous utilisez nos services et nous fournissent des données que nous pouvons utiliser pour apporter des améliorations. Le refus de ces Témoins signifierait que moins de données seraient à notre disposition pour faciliter les améliorations conceptionnelles.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La version a été créée avec succès en tant que nouveau fichier.";
 /* Text shown for the action create new file */
@@ -2599,13 +2561,13 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Accès rapide";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Accédez rapidement aux fichiers dans Récents, Favoris ou la section Hors ligne";
+"Quickly access files on Recents, Favourites, or Offline section"="Accédez rapidement aux fichiers dans Récents, Favoris ou la section Hors ligne";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="Accéder facilement aux fichiers de votre section Favoris";
 /* Text description for the Recents QuickAccess widget */
 "Quickly access files on Recents section"="Accéder facilement aux fichiers de votre section Récents";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="Accéder facilement aux fichiers de votre section Hors ligne";
+"Quickly access files on Offline section"="Accéder facilement aux fichiers de votre section Hors ligne";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="L’appareil n’a pas assez d’espace libre pour que MEGA fonctionne correctement.";
 /* Dialog description for the no enough device storage screen */
@@ -2629,7 +2591,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Changer le paramètre";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="La déconnexion supprime le contenu hors ligne.";
+"offline.logOut.warning.message"="Se déconnecter supprime le contenu hors ligne.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Le propriétaire du partage a dépassé son quota d’espace de stockage.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2666,16 +2628,58 @@
 "dialog.storage.paywall.final.warning"="<body><warn>Veuillez surclasser votre compte aujourd’hui si vous souhaitez conserver vos données.</warn><body> ";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Obtenir des primes";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="Mettre en place la sauvegarde";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="Utilisez notre appli pour ordinateur pour synchroniser votre dossier de sauvegarde avec votre Nuage MEGA.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="Déplacer « %@ »";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="Vous êtes en train de changer l’emplacement par défaut du dossier de sauvegarde. Cela pourrait affecter votre capacité à le trouver à l’avenir. Veuillez mémoriser son emplacement afin de pouvoir le trouver ultérieurement.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="Déplacer ce dossier change la destination de la sauvegarde. La sauvegarde sera désactivée pour des raisons de sécurité. Est-ce ce que vous voulez faire ? Les sauvegardes peuvent être réactivées dans l’appli MEGA pour ordinateur.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="Déplacer « %@ » vers la Corbeille";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="Vous êtes en train de supprimer votre dossier de sauvegarde. Cela supprimera toutes les sauvegardes que vous avez définies. Confirmez-vous cette action ?";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="Confirmez-vous que vous voulez supprimer votre dossier de sauvegarde et désactiver les sauvegardes que vous avez définies ?";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="Ajouter un élément à « %@ »";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="Ajouter des éléments à ce dossier change la destination de la sauvegarde. La sauvegarde sera désactivée pour des raisons de sécurité. Est-ce ce que vous voulez faire ? Les sauvegardes peuvent être réactivées dans l’appli MEGA pour ordinateur.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="Veuillez taper « %@ » pour confirmer cette action";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="déplacer la sauvegarde";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="supprimer la sauvegarde";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="désactiver la sauvegarde";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="Déplacer vers la Corbeille";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="Ajouter";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="Le texte saisi ne correspond pas";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="Ce dossier ne peut être partagé qu’en lecture seule, car c’est un dossier de sauvegarde. Tout changement apporté à son contenu pourrait désactiver la sauvegarde.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="Ces dossiers ne peuvent être partagés qu’en lecture seule, car ce sont des dossiers de sauvegarde. Tout changement apporté à leur contenu pourrait désactiver les sauvegardes.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="Certains dossiers partagés sont des dossiers de sauvegarde et en lecture seule. Souhaitez-vous poursuivre ?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ s’est joint à l’appel";
 /* Message to inform the local user that someone has left the current group call */
 "meetings.message.leftCall"="%@ a quitté l’appel";
 /* Title for Enter Meeting Link. */
-"meetings.enterMeetingLink.title"="Saisissez le lien de la réunion";
+"meetings.enterMeetingLink.title"="Saisir le lien de la réunion";
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Nouvelle réunion";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="Réunion de %@";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="Commencer une réunion";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="La réunion est terminée";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2725,4 +2729,178 @@
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Prévisualiser des images à haute résolution";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="Utiliser les données mobiles pour charger des images à haute résolution lors de l’aperçu. Si cette option est désactivée, l’image à haute résolution ne sera chargée que lors d’un zoom avant.";
+"settings.fileManagement.useMobileData.footer"="Utilisez les données mobiles pour charger des images à haute résolution lors de l’aperçu. Si cette option est désactivée, l’image à haute résolution ne sera chargée que lors d’un zoom avant.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="Vous avez déjà un abonnement actif";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="Vous avez souscrit auparavant à un abonnement Pro grâce aux magasins Play Store de Google ou AppGalery de Huawei. Veuillez annuler vos abonnements manuellement sur votre appareil dans les magasins Play Store de Google ou AppGalery de Huawei, puis réessayez.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Voulez-vous annuler l’abonnement actuel et poursuivre l’achat ?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="Un autre appel est en cours. Veuillez mettre fin à cet appel avant d’en faire un autre.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="Y mettre fin et me joindre";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="Modèle 3D";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="Scène 3D";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="Image RAW";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="Fichier multimédia";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="Fichier compressé au format 7-Zip";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="Base de données";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="Fichier texte ANSI";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Appli pour Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Appli macOS";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="Texte ASCII";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="Vidéo diffusée en continu";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Image RAW Casio";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="Image Bitmap";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="Fichier compressé UNIX";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="Code source C/C++";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="Code source C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="Image CorelDRAW";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Classe Java";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="Command DOS";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="Feuille de style en cascade";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="Modèle Word de MS";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="Image DXF";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="Image EPS";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="Exécutable";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="Audio sans perte";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Vidéo Flash";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Police Windows";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="Police";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Gadget Windows";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="Image GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="Échange GPS";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="Feuille de calcul";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="Fichier compressé GNU";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="Entête";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="Document HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Format de fichier d’échange";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="Image ISO";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Fichier compressé Java";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Code Java";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="Image JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="Journal";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="Liste de lecture de médias";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="Fichier son MPEG-4";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="Scène 3ds Max";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="Access de MS";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="Fichier son MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="Vidéo MKV";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="Film QuickTime";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="Fichier son MP3";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="Vidéo MP4";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="Film MPEG";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="Programme d’installation de MS";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="Document texte";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="Police OpenType";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="Balado";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="Document PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="Code PHP";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="Liste de lecture de fichiers son";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="Image PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="Fichier compressé au format RAR";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="Texte enrichi";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Image RAW Panasonic";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="HTML serveur";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="Fichier compressé X";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="Base de données SQL";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Image RAW Sony";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="Sous-titres";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="Image vectorielle";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Film Flash";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="Fichier compressé";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="Fichier compressé";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="Image TIF";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="Image TIFF";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="Police TrueType";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Fichier son Wave";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="Vidéo WebM";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="Son WM";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="Vidéo WM";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="Document XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="Fichier compressé ZIP";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Choisir";

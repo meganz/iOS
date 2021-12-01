@@ -214,6 +214,8 @@
 "addContacts"="เพิ่มผู้ติดต่อ";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="เชิญเข้าร่วม MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="ส่งคำเชิญแล้ว";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="สร้างกลุ่ม";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="ตำแหน่งที่ตั้ง";
+"chat.map.location"="ตำแหน่งที่ตั้ง";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="คลิปเสียง";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -586,6 +588,8 @@
 "addContactButton"="เพิ่ม";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="ไม่มีความจำเป็นที่จะเพิ่มที่อยู่อีเมลของคุณเอง";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="[X] ได้รับคำเชิญแล้วและจะปรากฏในรายชื่อผู้ติดต่อของคุณ";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="ผู้ใช้งานไดรับคำเชิญแล้วและจะปรากฎบนรายชื่อผู้ติดต่อของคุณ";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="นโยบายสิทธิส่วนบุคคล";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="นโยบายคุกกี้";
+"general.cookiePolicy"="นโยบายคุกกี้";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="ตั้งค่าคุกกี้";
+"general.cookieSettings"="ตั้งค่าคุกกี้";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="เงื่อนไขการให้บริการ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -951,7 +955,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในโทรศัพท์หรือกรอกอีเมลได้หลายที่อยู่";
 /*  */
-"insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
+"insertYourFriendsEmails"="Insert your friends' emails:";
 /*  */
 "howItWorks"="วิธีการทำงาน";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="หากต้องการอัปเกรดการสมัครใช้งานปัจจุบันของคุณ กรุณาติดต่อฝ่ายสนับสนุนเพื่อ[A]กำหนดแผนเอง[/A]";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="แผนปัจจุบัน:";
+"inAppPurchase.upgrade.label.currentPlan"="แผนปัจจุบัน:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="แผนปัจจุบัน";
+"inAppPurchase.productDetail.navigation.currentPlan"="แผนปัจจุบัน";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="อัปเกรดเป็นแผนแบบกำหนดเอง";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="เวอร์ชัน";
 /* Title label of a node property. */
-"location"="ตำแหน่งที่ตั้ง";
+"cloudDrive.info.node.location"="ตำแหน่งที่ตั้ง";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="ขนาดทั้งหมด";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="ไฟล์";
 /* Label to desing a file matching */
-"File"="ไฟล์";
+"chat.match.file"="ไฟล์";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="เวอร์ชันปัจจุบัน";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="ลบไฟล์ที่เก่ากว่า";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="เพื่อให้ระยะเวลาการเก็บรักษานานขึ้น [S]อัปเกรดเป็น Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="วัน";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ถังขยะจะถูกล้างให้คุณโดยอัตโนมัติ ระยะเวลาขั้นต่ำคือ 7 วันและระยะเวลาสูงสุดคือ 30 วัน";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="ส่งตำแหน่งนี้";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="การตั้งค่าแผนที่";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="มาตรฐาน";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="ดาวเทียม";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="ใช้เว้นวรรค เพื่อกรอกอีเมลหลายรายการ";
 /* Text used as a section title or similar */
 "Enter Email"="กรอกอีเมล";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="บน MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="ผู้ติดต่อใน MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="ธุรกิจ";
 /*  */
 "Administrator"="แอดมิน";
-/* Business user role */
-"User"="ผู้ใช้";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="ถ่ายโอน";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="จนกว่าฉันจะเปิดอีกครั้ง";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 นาที";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 ชั่วโมง";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 ชั่วโมง";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="ส่งขนาดดั้งเดิม เพื่อเพิ่มคุณภาพของรูปภาพ";
 /* Setting title for Doc scan view */
 "Save Settings"="บันทึกการตั้งค่า";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="Scan %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="ประเภทไฟล์";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="กรอกชื่อกลุ่ม";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="พิมพ์ข้อความ…";
+"chat.message.placeholder"="พิมพ์ข้อความ…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="ลากไปทางซ้ายเพื่อยกเลิก หรือปล่อยเพื่อส่ง";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="ซ่อนกิจกรรมล่าสุดในส่วนของหน้าแรก";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="ค่าเริ่มต้น";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="วัน";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="กลางคืน";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="ลิงก์";
 /* Text referencing the date of creation of a link */
 "Link Creation"="วันที่สร้างลิงก์";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="แชร์ไปยัง";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="กำลังรอ";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="เวอร์ชัน";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="รายการโปรด";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="ลบออกจากรายการโปรด";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="ป้ายชื่อ";
+"cloudDrive.sort.label"="ป้ายชื่อ";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="ป้ายกำกับ…";
+"general.chooseLabel.title"="ป้ายกำกับ…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="ลบป้ายกำกับออก";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="ส่งคีย์ถอดรหัสลับแยกต่างหาก";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="วันหมดอายุ";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="กำหนดวันหมดอายุ";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="ป้องกันด้วยรหัสผ่าน";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="คัดลอกรหัสผ่านไปยังคลิปบอร์ดแล้ว";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="ระบบการเข้ารหัสแบบครบวงจรของเรา มีการใช้คีย์เฉพาะที่สร้างขึ้นโดยอัตโนมัติของไฟล์นี้ ลิงก์ที่มีคีย์นี้จะถูกสร้างขึ้นตามค่าเริ่มต้น แต่คุณสามารถส่งออกคีย์ถอดรหัสแบบแยกต่างหากเพื่อเพิ่มระดับความปลอดภัยได้";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="คีย์ถอดรหัสลับ";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="ลบรหัสผ่าน";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 ปี";
 /*  */
 "year"="ปี";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="แชร์";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="ค้นหาไฟล์ของคุณ";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="ไม่พบวิดีโอ";
 /* Navigation title for the photo explorer view */
 "All Images"="รูปภาพทั้งหมด";
-/* Section title for the photo explorer view */
-"TODAY"="วันนี้";
-/* Section title for the photo explorer view */
-"YESTERDAY"="เมื่อวานนี้";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="ไม่พบรูปภาพ";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="ส่งข้อความไม่สำเร็จ";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="ยกเลิกการส่งข้อความแล้ว";
-/* Cookie dialog header */
-"Before You Continue"="ก่อนที่คุณจะดำเนินการต่อ";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="ความเป็นส่วนตัวของคุณ";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="เราได้มีการใช้คุกกี้และเทคโนโลยีที่คล้ายกัน (‘คุกกี้’) เพื่อให้บริการแก่คุณ ปรับปรุงประสบการณ์ของคุณด้วยบริการของเรา และปรับแต่งโฆษณาที่ปรากฎให้คุณเห็น รวมถึงผ่านบุคคลที่สาม ยอมรับการใช้คุกกี้ของเราตั้งแต่เริ่มเยี่ยมชมหรือปรับแต่งคุกกี้ในการตั้งค่าคุกกี้ อ่านเพิ่มเติมใน[A]นโยบายคุกกี้[/A]ของเรา";
+"dialog.cookies.description"="เราใช้คุกกี้และเทคโนโลยีที่คล้ายกัน (“คุกกี้”) เพื่อมอบและปรับปรุงประสบการณ์ของคุณกับบริการของเรา ยอมรับการใช้คุกกี้ของเราตั้งแต่เริ่มต้นการเยี่ยมชมของคุณ หรือปรับแต่งคุกกี้ในการตั้งค่าคุกกี้ อ่านเพิ่มเติมใน[A]นโยบายคุกกี้[/A]ของเรา";
 /* Cookie dialog button label. */
-"Accept Cookies"="ยอมรับการใช้งานคุกกี้";
+"dialog.cookies.accept"="ยอมรับการใช้งานคุกกี้";
 /* Cookie settings dialog text. */
-"Essential Cookies"="คุกกี้สำคัญ";
+"settings.cookies.essential"="คุกกี้สำคัญ";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="เปิดไว้เสมอ";
+"settings.cookies.essential.alwaysOn"="เปิดไว้เสมอ";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="มีความจำเป็นต่อการให้บริการฟังก์ชันการทำงานที่สำคัญ และการเข้าถึงบริการของเราอย่างปลอดภัย ด้วยเหตุนี้จึงไม่ต้องขอความยินยอมจากคุณ";
+"settings.cookies.essential.footer"="มีความจำเป็นต่อการให้บริการฟังก์ชันการทำงานที่สำคัญ และการเข้าถึงบริการของเราอย่างปลอดภัย ด้วยเหตุนี้จึงไม่ต้องขอความยินยอมจากคุณ";
 /* Cookie settings dialog text. */
-"Preference Cookies"="คุกกี้สำหรับกำหนดลักษณะ";
+"settings.cookies.performanceAndAnalytics"="คุกกี้สำหรับประสิทธิภาพและการวิเคราะห์";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="ช่วยให้เราจำการตั้งค่าการแสดงผลและการจัดรูปแบบที่คุณเลือกได้ การไม่ยอมรับคุกกี้เหล่านี้หมายความว่าเราจะจำบางสิ่งให้คุณไม่ได้ เช่น เค้าโครงหน้าจอที่คุณต้องการ เป็นต้น";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="คุกกี้สำหรับประสิทธิภาพและการวิเคราะห์";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="ช่วยให้เราเข้าใจว่าคุณใช้บริการของเราอย่างไร และให้ข้อมูลที่เราสามารถใช้เพื่อปรับปรุง การไม่ยอมรับคุกกี้เหล่านี้จะทำให้เรามีข้อมูลเพื่อช่วยในการออกแบบการปรับปรุงผลิตภัณฑ์ของเราน้อยลง";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="คุกกี้สำหรับโฆษณา";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="ดำเนินการโดยเราและพันธมิตรโฆษณาที่ได้รับอนุมัติของเราเท่านั้น เพื่อปรับแต่งโฆษณาที่คุณเห็นในบริการของเราและบนเว็บไซต์อื่น ๆ ตามประวัติการเข้าชมของคุณ การไม่ยอมรับคุกกี้เหล่านี้หมายความว่าเราอาจแสดงโฆษณาที่มีความเกี่ยวข้องกับคุณน้อยลง";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="คุกกี้จากที่อื่น";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="คุกกี้เหล่านี้ถูกควบคุมโดยบุคคลอื่นที่ไม่ใช่เรา เราใช้คุกกี้เหล่านี้เพื่อจัดหาประเภทของฟังก์ชันที่อธิบายไว้ข้างต้นแล้ว การไม่ยอมรับคุกกี้เหล่านี้จะมีผลกระทบที่แตกต่างกันไป ขึ้นอยู่กับประเภทของคุกกี้แต่ละคุกกี้จากที่อื่น คลิกที่ “ข้อมูลเพิ่มเติม” ด้านล่างเพื่อดูรายละเอียดเกี่ยวกับคุกกี้จากที่อื่นทั้งหมดที่เราใช้";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="ข้อมูลเพิ่มเติม";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="ไม่มีการใช้งานคุกกี้จากที่อื่น";
+"settings.cookies.performanceAndAnalytics.footer"="ช่วยให้เราเข้าใจว่าคุณใช้บริการของเราอย่างไร และให้ข้อมูลที่เราสามารถใช้เพื่อปรับปรุง การไม่ยอมรับคุกกี้เหล่านี้จะทำให้เรามีข้อมูลเพื่อช่วยในการออกแบบการปรับปรุงผลิตภัณฑ์ของเราน้อยลง";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="สร้างเวอร์ชันเป็นไฟล์ใหม่เรียบร้อยแล้ว";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>กรุณาอัปเกรดวันนี้หากคุณต้องการเก็บข้อมูลของคุณไว้</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="รับโบนัส";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="ตั้งค่าการสำรองข้อมูล";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="ใช้แอปเดสก์ท็อปของเราเพื่อให้แน่ใจว่าโฟลเดอร์ที่ใช้สำรองข้อมูลของคุณซิงโครไนซ์กับ MEGA คลาวด์ของคุณ";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="ย้าย “%@”";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="คุณกำลังเปลี่ยนตำแหน่งโฟลเดอร์สำรองเริ่มต้น ซึ่งอาจส่งผลต่อความสามารถในการค้นหาโฟลเดอร์สำรองของคุณในอนาคตได้ กรุณาอย่าลืมว่าตำแหน่งโฟลเดอร์อยู่ที่ใดเพื่อให้คุณสามารถค้นหาได้ในอนาคต";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="ในการย้ายโฟลเดอร์นี้จะเปลี่ยนปลายทางการสำรองข้อมูล การสำรองข้อมูลจะถูกปิดไว้เพื่อความปลอดภัย นี่คือสิ่งที่คุณต้องการที่จะดำเนินการต่อหรือไม่ หากต้องการสำรองข้อมูลอีกครั้ง สามารถเปิดใช้งานได้ที่แอป MEGA เดสก์ทอป";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="ย้าย “%@” ไปที่ถังขยะ";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="คุณกำลังลบโฟลเดอร์ข้อมูลสำรองของคุณ การดำเนินการนี้จะลบข้อมูลสำรองทั้งหมดที่คุณตั้งค่าไว้ คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ข้อมูลสำรองและปิดใช้งานข้อมูลสำรองที่คุณตั้งค่าไว้";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="เพิ่มรายการไปที่ “%@”";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="การเพิ่มรายการในโฟลเดอร์นี้จะเปลี่ยนปลายทางการสำรองข้อมูล การสำรองข้อมูลจะถูกปิดเพื่อความปลอดภัย นี่คือสิ่งที่คุณต้องการที่จะดำเนินการต่อหรือไม่ การสำรองข้อมูลสามารถเปิดใช้งานได้อีกครั้งด้วยแอป MEGA เดสก์ทอป";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="กรุณาพิมพ์ “%@” เพื่อยืนยันการดำเนินการนี้";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="ย้ายข้อมูลสำรอง";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="ลบข้อมูลสำรอง";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="ปิดสำรองข้อมูล";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="ย้ายไปถังขยะ";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="เพิ่ม";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="ข้อความที่คุณกรอกลงไปไม่ตรงกัน";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="โฟลเดอร์นี้สามารถแชร์เป็นแบบอ่านอย่างเดียวเท่านั้นเนื่องจากเป็นโฟลเดอร์ที่ใช้สำรองข้อมูล การเปลี่ยนแปลงใด ๆ ในเนื้อหาอาจเป็นการปิดใช้งานสำรองข้อมูลได้";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="โฟลเดอร์เหล่านี้สามารถแชร์เป็นแบบอ่านอย่างเดียวเท่านั้น เนื่องจากเป็นโฟลเดอร์ที่ใช้สำรองข้อมูล การเปลี่ยนแปลงใด ๆ ในเนื้อหาอาจเป็นการปิดใช้งานสำรองข้อมูลได้";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="บางโฟลเดอร์ที่จะแชร์นั้น เป็นโฟลเดอร์ที่ใช้สำรองข้อมูลและจะเป็นแบบอ่านอย่างเดียวเท่านั้น คุณต้องการดำเนินการต่อหรือไม่";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ เข้าร่วมการโทรแล้ว";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="ประชุมใหม่";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="ประชุมกับ %@";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="เริ่มการประชุม";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="สิ้นสุดการประชุม";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="ดูตัวอย่างภาพด้วยความละเอียดสูง";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="You already have an active subscription";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="อยู่ระหว่างดำเนินการโทรอีก กรุณาวางสายปัจจุบันของคุณก่อนที่จะโทรออกอีกครั้ง";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="End and join";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="3D Model";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D Scene";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="รูปภาพ RAW";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="Multimedia";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="บีบอัด 7-Zip";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="ไฟล์ฐานข้อมูล";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="ANSI Text File";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="แอป Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Mac OS X App";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="ข้อความ ASCII";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="Streaming Video";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="ไฟล์รูปภาพ Casio RAW";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="Bitmap Image";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX Compressed";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="ไฟล์โค้ด C/C++";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="ไฟล์โค้ด C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="CorelDRAW Image";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Java Class";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOS Command";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="CSS Style Sheet";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="MS Word Template";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="DXF Image";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="EPS Image";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="ไฟล์รันโปรแกรมได้";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="Lossless Audio";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Flash Video";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Windows Font";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="ฟอนต์";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Windows Gadget";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="ไฟล์ภาพ GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="GPS Exchange";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="Spreadsheet";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU Compressed";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="Header";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="ไฟล์เอกสาร HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Interchange File Format";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="ISO Image";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Java Archive";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Java Code";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="ไฟล์ภาพ JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="ไฟล์บันทึก";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="Media Playlist";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="ไฟล์เสียง MPEG-4";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max Scene";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="ไฟล์เสียง MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="MKV Video";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="QuickTime Movie";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="ไฟล์เสียง MP3";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="MP4 Video";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="MPEG Movie";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="MS Installer";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="Text Document";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="ไฟล์ฟอนต์ OpenType";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="Podcast";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="ไฟล์เอกสาร PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="ไฟล์โค้ด PHP";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="ไฟล์เพลย์ลิสต์เสียง";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="ไฟล์ภาพ PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="ไฟล์บีบอัด RAR";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="Rich Text";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Panasonic RAW Image";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="Server HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X Compressed";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="ไฟล์ฐานข้อมูล SQL";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Sony RAW Image";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="Subtitle";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="Vector Image";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Flash Movie";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="จัดเก็บ";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="Compressed";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="TIF Image";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="TIFF Image";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="ไฟล์ฟอนต์ TrueType";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="ไฟล์เสียง Wave";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="ไฟล์วิดีโอ WebM";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="WM Audio";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="WM Video";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="ไฟล์เอกสาร XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIP Archive";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="เลือก";

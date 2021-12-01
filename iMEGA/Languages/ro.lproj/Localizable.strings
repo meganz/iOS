@@ -214,6 +214,8 @@
 "addContacts"="Adaugă contacte";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Invită pe MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invitație trimisă";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Inițiază grup";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Locație";
+"chat.map.location"="Locație";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Clip vocal";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -586,6 +588,8 @@
 "addContactButton"="Adaugă";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Nu este nevoie să adaugi adresa de e-mail proprie";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="Utilizatorul [X] a fost invitat și va apărea în lista de contacte de îndată ce a acceptat invitația.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Utilizatorii au fost invitați și vor apărea în lista de contacte de îndată ce au acceptat invitația.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politica de confidențialitate";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Politica privind cookie-urile";
+"general.cookiePolicy"="Politica privind cookie-urile";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Setări privind cookie-urile";
+"general.cookieSettings"="Setări privind cookie-urile";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii de utilizare a serviciului";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -951,7 +955,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selectează din contactele de pe telefon sau introdu mai multe adrese de e-mail";
 /*  */
-"insertYourFriendsEmails"="Introdu e-mailul(urile) prietenului:";
+"insertYourFriendsEmails"="Insert your friends' emails:";
 /*  */
 "howItWorks"="Cum funcționează";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Plan actual:";
+"inAppPurchase.upgrade.label.currentPlan"="Plan actual:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Planul actual";
+"inAppPurchase.productDetail.navigation.currentPlan"="Planul actual";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Upgradează la un plan personalizat";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versiuni";
 /* Title label of a node property. */
-"location"="Locație";
+"cloudDrive.info.node.location"="Locație";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Dimensiune totală";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="fișier";
 /* Label to desing a file matching */
-"File"="Fișier";
+"chat.match.file"="Fișier";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versiunea actuală";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="For a longer retention period [S]Upgrade to Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="Trimite această locație";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Setări pentru hartă";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satelit";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="Atinge spațiu pentru a introduce mai multe e-mailuri";
 /* Text used as a section title or similar */
 "Enter Email"="Introdu un e-mail";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="Pe MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTE PE MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="Business";
 /*  */
 "Administrator"="Administrator";
-/* Business user role */
-"User"="Utilizator";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferuri";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="Până când le pornesc înapoi";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 de minute";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 oră";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 ore";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="Trimite imagini de dimensiuni originale, cu calitate crescută";
 /* Setting title for Doc scan view */
 "Save Settings"="Setări pentru salvare";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="Scan %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Tipul fișierului";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Scrie un mesaj…";
+"chat.message.placeholder"="Scrie un mesaj…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Trage în stânga pentru a anula, eliberează pentru a trimite";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Implicită";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="Zi";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Noapte";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="LINK";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Data creării linkului";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="PARTAJEAZĂ CU";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="ÎN CURS";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="VERSIUNI";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Favorit";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Elimină de la favorite";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Etichetă";
+"cloudDrive.sort.label"="Etichetă";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Etichetă…";
+"general.chooseLabel.title"="Etichetă…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Elimină eticheta";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="Trimite separat cheia de decriptare";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Dată de expirare";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Setează o dată de expirare";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Protecție prin parolă";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="Parolă copiată în clipboard";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistemul nostru de criptare capăt-la-capăt necesită o cheie unică generată automat pentru acest fișier. În mod implicit, este creat un link cu această cheie, însă poți exporta cheia de decriptare separat pentru un strat de securitate suplimentar.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="Cheie de decriptare";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Elimină parola";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 an";
 /*  */
 "year"="an";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="PARTAJEAZĂ";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Caută fișiere";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="Niciun videoclip găsit";
 /* Navigation title for the photo explorer view */
 "All Images"="Toate imaginile";
-/* Section title for the photo explorer view */
-"TODAY"="ASTĂZI";
-/* Section title for the photo explorer view */
-"YESTERDAY"="IERI";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="Nicio imagine găsită";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="eșec la trimiterea mesajului";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="s-a anulat trimiterea mesajului";
-/* Cookie dialog header */
-"Before You Continue"="Înainte de a continua";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="Intimitatea ta";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Folosim spațiul de stocare local și tehnologii similare („Cookie-uri”) pentru a-ți oferi serviciile noastre, pentru a-ți îmbunătăți experiența cu serviciile noastre și pentru a personaliza anunțurile pe care le vezi, inclusiv prin intermediul unor terțe părți. Acceptă folosirea cookie-urilor de la începutul vizitei tale sau personalizează cookie-urile în Setări privind cookie-urile. Citește mai multe în [A]Politica noastră privind cookie-urile[/A].";
+"dialog.cookies.description"="Folosim cookie-uri și tehnologii similare („Cookie-uri”) pentru a-ți oferi și a-ți îmbunătăți experiența cu serviciile noastre. Acceptă folosirea cookie-urilor de la începutul vizitei tale sau personalizează cookie-urile în Setări privind cookie-urile. Citește mai multe în [A]Politica noastră privind cookie-urile[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Acceptă cookie-urile";
+"dialog.cookies.accept"="Acceptă cookie-urile";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Cookie-uri esențiale";
+"settings.cookies.essential"="Cookie-uri esențiale";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Mereu activate";
+"settings.cookies.essential.alwaysOn"="Mereu activate";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Esențiale pentru furnizarea de funcționalități importante și acces securizat la serviciile noastre. Din acest motiv, ele nu necesită consimțământ.";
+"settings.cookies.essential.footer"="Esențiale pentru furnizarea de funcționalități importante și acces securizat la serviciile noastre. Din acest motiv, ele nu necesită consimțământ.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Cookie-uri privind preferințele";
+"settings.cookies.performanceAndAnalytics"="Cookie-uri de performanță și analiză";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Permite-ne să ținem minte anumite setări de afișare și formatare pe care le alegi. Neacceptarea acestor cookie-uri va însemna că nu vom putea să ținem minte unele lucruri pentru tine, precum aspectul preferat al ecranului.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Cookie-uri de performanță și analiză";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Ajută-ne să înțelegem modul în care folosești serviciile noastre și furnizează-ne date pe care le putem folosi pentru a face îmbunătățiri. Neacceptarea acestor cookie-uri va însemna că vom avea mai puține date disponibile pentru a ajuta la îmbunătățiri ale designului.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="Cookie-uri de publicitate";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Folosite de noi și partenerii noștri de publicitate aprobați pentru a personaliza anunțurile pe care le vezi în serviciile noastre și pe alte site-uri web pe baza istoricului tău de navigare. Neacceptarea acestor cookie-uri înseamnă că putem afișa reclame care sunt mai puțin relevante.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="Cookie-uri terță parte";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Acestea sunt cookie-uri care sunt controlate de altcineva decât noi; folosim aceste cookie-uri pentru a furniza tipurile de funcționalități descrise mai sus. Neacceptarea acestor cookie-uri va avea implicații diferite în funcție de ce tip de cookie este fiecare cookie terță parte. Dă clic pe „Mai multe informații” de mai jos pentru detalii despre toate cookie-urile terță parte pe care le folosim.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="Mai multe informații";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="No Third Party Cookies in use";
+"settings.cookies.performanceAndAnalytics.footer"="Ajută-ne să înțelegem modul în care folosești serviciile noastre și furnizează-ne date pe care le putem folosi pentru a face îmbunătățiri. Neacceptarea acestor cookie-uri va însemna că vom avea mai puține date disponibile pentru a ajuta la îmbunătățiri ale designului.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versiunea a fost creată cu succes ca un fișier nou.";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>Please upgrade today if you wish to keep your data.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Obține bonusul";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="Set up Backup";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="Use our Desktop App to ensure your backup folder is synchronised with your MEGA Cloud.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="Move “%@”";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder in the future. Please remember where it is located so that you can find it in the future.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="Moving this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="Move “%@” to Rubbish Bin";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="You are deleting your backups folder. This will remove all the backups you have set. Are you sure you want to do this?";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="Are you sure you want to delete your backup folder and disable backup you set?";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="Add Item to “%@”";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="Adding items to this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="Please type “%@” to confirm this action";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="move backup";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="delete backup";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="disable backup";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="Mută în coșul de gunoi";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="Adaugă";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="Text entered does not match";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="Some folders shared are backup folders and read-only. Do you wish to continue?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ joined the call";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="New Meeting";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="%@ Meeting";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="Începe o întâlnire";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Meeting Ended";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="Preview high resolution images";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="You already have an active subscription";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="Un alt apel în curs. Te rugăm să închei apelul actual înainte de a efectua altul.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="End and join";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="3D Model";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D Scene";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="Imagine RAW";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="Multimedia";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="Fișier comprimat 7-Zip";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="Bază de date";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="ANSI Text File";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Aplicație pentru Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Mac OS X App";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="Text ASCII";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="Streaming Video";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Imagine RAW Casio";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="Bitmap Image";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX Compressed";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="Cod sursă C/C++";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="Cod sursă C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="CorelDRAW Image";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Clasă Java";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOS Command";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="CSS Style Sheet";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="MS Word Template";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="DXF Image";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="EPS Image";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="Executabil";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="Lossless Audio";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Flash Video";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Windows Font";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="Font";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Windows Gadget";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="Imagine GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="GPS Exchange";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="Spreadsheet";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU Compressed";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="Header";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="Document HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Interchange File Format";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="Imagine ISO";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Arhivă Java";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Cod Java";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="Imagine JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="Log";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="Media Playlist";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="Audio MPEG-4";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max Scene";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="Fișier audio MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="MKV Video";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="QuickTime Movie";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="Fișier audio MP3";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="MP4 Video";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="MPEG Movie";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="MS Installer";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="Text Document";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="Font OpenType";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="Podcast";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="Document PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="Cod PHP";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="Playlist audio";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="Imagine PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="Fișier comprimat RAR";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="Rich Text";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Panasonic RAW Image";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="Server HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X Compressed";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="Bază de date SQL";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Imagine RAW Sony";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="Subtitle";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="Vector Image";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Flash Movie";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="Arhivează";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="Compressed";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="TIF Image";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="TIFF Image";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="Font TrueType";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Fișier audio Wave";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="Videoclip WebM";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="WM Audio";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="WM Video";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="Document XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIP Archive";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Alege";

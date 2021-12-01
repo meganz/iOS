@@ -214,6 +214,8 @@
 "addContacts"="أضف جهات اتصال";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="دعوة إلى ميغا MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="جهة الاتصال الخاصة بك [X] ليست موجودة على ميغا MEGA. من أجل الاتصال عبر المحادثة المشفرة في ميغا MEGA ، عليك دعوة جهة الاتصال الخاصة بك";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="تم إرسال الدعوة";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="بدء مجموعة";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="الموقع";
+"chat.map.location"="الموقع";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="مقطع صوتي";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -371,7 +373,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="(فقط لمشتركي Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="ضع تاريخ لانتهاء الصلاحية";
+"setExpiryDate"="حدد تاريخ انتهاء الصلاحية";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="تفعيل الحماية بكلمة مرور";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -586,6 +588,8 @@
 "addContactButton"="اضافة";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="لاحاجة لإضافة بريدك الإلكتروني";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="المستخدم [X] الذي قمت بدعوته سوف يظهر في قائمة الاتصال الخاصة بك فور موافقته على طلب الإضافة.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="لقد تمت دعوة المستخدمين وسوف تجدهم في جهات الاتصال عند موافقتهم.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="سياسة الخصوصية";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="سياسة ملفات تعريف الارتباط Cookie";
+"general.cookiePolicy"="سياسة ملفات تعريف الارتباط Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="إعدادات ملفات تعريف الارتباط Cookies";
+"general.cookieSettings"="إعدادات ملفات تعريف الارتباط Cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="شروط الخدمة";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -951,7 +955,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الهاتف أو أدخل عناوين بريد إلكتروني متعددة";
 /*  */
-"insertYourFriendsEmails"="أدخل البريد الإلكتروني لصديقك (أصدقائك):";
+"insertYourFriendsEmails"="أدخل عنوان البريد الإلكتروني الخاصة بأصدقائك:";
 /*  */
 "howItWorks"="كيف تعمل";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="لترقية اشتراكك الحالي، يرجى الاتصال بقسم االدعم للحصول على [A] باقة مخصصة[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="الباقة الحالية:";
+"inAppPurchase.upgrade.label.currentPlan"="الباقة الحالية:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="الباقة الحالية";
+"inAppPurchase.productDetail.navigation.currentPlan"="الباقة الحالية";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="قم بالترقية إلى باقة مخصصة";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="النسخ";
 /* Title label of a node property. */
-"location"="الموقع";
+"cloudDrive.info.node.location"="الموقع";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="الحجم الإجمالي";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="ملف";
 /* Label to desing a file matching */
-"File"="ملف";
+"chat.match.file"="ملف";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="النسخة الحالية";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="أزل الملفات الأكبر من";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="لفترة احتفاظ أطول [S]قم بالترقية إلى برو Pr[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="أيام";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="سيتم افراغ سلة المحذوفات بشكل أتوماتيكي. أقصر مدة يمكن تحديدها هي 7 أيام وأطول مدة هي 30 يوم.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="إرسال هذا الموقع";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="إعدادات الخريطة";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="معيار";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="الأقمار الصناعية";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="أنقر زر الفراغ لإدخال رسائل البريد الإلكتروني متعددة";
 /* Text used as a section title or similar */
 "Enter Email"="أدخل البريد الإلكتروني";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="على ميغا MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="جهات الاتصال على ميغا MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="الأعمال Business";
 /*  */
 "Administrator"="مدير";
-/* Business user role */
-"User"="مستخدم";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="تراسل المعطيات";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="حتى أقوم بإعادة تشغيلهم";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 دقيقة";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 ساعة";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 ساعات";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="إرسال الحجم الأصلي، وزيادة جودة الصور";
 /* Setting title for Doc scan view */
 "Save Settings"="احفظ الإعدادات";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="مسح ضوئي %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="نوع الملف";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="رسالة…";
+"chat.message.placeholder"="رسالة…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="اسحب لليسار للإلغاء، حرر للإرسال";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="إخفاء التفاعل مؤخراً في قسم الصفحة الرئيسية";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="الإفتراضي";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="يوم";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="ليلي";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="رابط";
 /* Text referencing the date of creation of a link */
 "Link Creation"="إنشاء رابط";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="مشارك مع";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="قيد الانتظار";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="النسخ";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="مفضلة";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="إزالة من المفضلة";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="وسم";
+"cloudDrive.sort.label"="وسم";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="تمييز لوني…";
+"general.chooseLabel.title"="وسم…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="إزالة الوسم";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="إرسال مفتاح فك التشفير بشكل منفصل";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="تاريخ انتهاء الصلاحية";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="حدد تاريخ انتهاء الصلاحية";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="حماية كلمة المرور";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="تم نسخ كلمة المرور إلى الحافظة";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="يتطلب نظام التشفير من طرف إلى طرف الخاص بنا مفتاحاً فريداً يتم إنشاؤه تلقائياً لهذا الملف. يتم إنشاء رابط لهذا المفتاح بشكل تلقائي، ولكن يمكنك تصدير مفتاح فك التشفير بشكل منفصل لإضافة طبقة أمان آخرى.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="مفتاح فك التشفير";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="إزالة كلمة المرور";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 سنة";
 /*  */
 "year"="سنة";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="شارك";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="ابحث في ملفاتك";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="لم يتم العثور على أي ملفات فيديو";
 /* Navigation title for the photo explorer view */
 "All Images"="كل الصور";
-/* Section title for the photo explorer view */
-"TODAY"="اليوم";
-/* Section title for the photo explorer view */
-"YESTERDAY"="البارحة";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="لم يتم العثور على أي صور";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="فشل في إرسال الرسالة";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="تم إلغاء إرسال الرسالة";
-/* Cookie dialog header */
-"Before You Continue"="قبل المتابعة";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="خصوصيتك";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="نستخدم التخزين المحلي والتقنيات المماثلة (”ملفات تعريف الارتباط Cookies”) لتقديم خدماتنا لك، وتعزيز تجربتك مع خدماتنا، وتخصيص الإعلانات التي تراها، بما في ذلك من خلال جهات خارجية. اقبل استخدامنا لملفات تعريف الارتباط Cookies من بداية زيارتك أو قم بتخصيص ملفات تعريف الارتباط Cookies في إعدادات ملفات تعريف الارتباط Cookies . اقرأ المزيد في [A]سياسة ملفات تعريف الارتباط Cookies الخاصة بنا[/A].";
+"dialog.cookies.description"="نحن نستخدم ملفات تعريف الارتباط Cookies والتقنيات المماثلة (“Cookies”) لتقديم وتعزيز تجربتك مع خدماتنا، وتخصيص الإعلانات التي تراها، بما في ذلك من خلال جهات خارجية. اقبل استخدامنا لملفات تعريف الارتباط Cookies من بداية زيارتك أو قم بتخصيص ملفات تعريف الارتباط في إعدادات ملفات تعريف الارتباط. اقرأ المزيد في [A]سياسة ملفات تعريف الارتباط Cookies[/A] الخاصة بنا.";
 /* Cookie dialog button label. */
-"Accept Cookies"="قبول ملفات تعريف الارتباط Cookies";
+"dialog.cookies.accept"="قبول ملفات تعريف الارتباط Cookies";
 /* Cookie settings dialog text. */
-"Essential Cookies"="ملفات تعريف الارتباط Cookies الأساسية";
+"settings.cookies.essential"="ملفات تعريف الارتباط Cookies الأساسية";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="دائما متاح";
+"settings.cookies.essential.alwaysOn"="دائما متاح";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="أساسي لتزويدك بوظائف مهمة والوصول الآمن إلى خدماتنا. لهذا السبب، لا يحتاجون إلى الموافقة.";
+"settings.cookies.essential.footer"="أساسية لتزويدك بوظائف مهمة والوصول الآمن إلى خدماتنا. لهذا السبب، لا يحتاجون إلى موافقة.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="ملفات تعريف الارتباط Cookies المفضلة";
+"settings.cookies.performanceAndAnalytics"="أداء وتحليلات لملفات تعريف الارتباط Cookie";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="اسمح لنا بتذكر إعدادات عرض وتنسيق معينة تختارها. إن عدم قبول ملفات تعريف الارتباط Cookies هذه يعني أننا لن نتمكن من تذكر بعض الأشياء لك مثل نموذج الشاشة المفضل لديك.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="أداء وتحليلات لملفات تعريف الارتباط Cookie";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="ساعدنا في فهم كيفية استخدامك لخدماتنا وتزويدنا بالبيانات التي يمكننا استخدامها لإجراء تحسينات. يعني عدم قبول ملفات تعريف الارتباط Cookies هذه أننا سنحصل على بيانات متاحة أقل لنقوم بالمساعدة في تحسينات التصميم.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="ملفات تعريف الارتباط Cookies الإعلانية";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="مستخدمة من قبلنا  ومن قبل شركاؤنا الإعلانيون المعتمدون لتخصيص الإعلانات التي تراها على خدماتنا وعلى مواقع الويب الأخرى بناءً على سجل التصفح الخاص بك. يعني عدم قبول ملفات تعريف الارتباط هذه أننا قد نعرض إعلانات أقل صلة.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="ملفات تعريف ارتباط لجهات خارجية Cookies";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="هذه ملفات تعريف الارتباط Cookies المتحكم بها من قبل شخص آخر غيرنا؛ نستخدم ملفات تعريف الارتباط Cookies هذه لتوفير أنواع الوظائف الموضحة أعلاه. سيكون لعدم قبول ملفات تعريف الارتباط هذه آثار مختلفة اعتمادًا على نوع ملفات تعريف الارتباط لكل ملف تعريف ارتباط تابع لجهة خارجية. انقر فوق ”مزيد من المعلومات“ أدناه للحصول على تفاصيل حول جميع ملفات تعريف الارتباط Cookies للجهات الخارجية التي نستخدمها.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="معلومات اكثر";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="لا توجد ملفات تعريف ارتباط Cookies خاصة بطرف ثالث قيد الاستخدام";
+"settings.cookies.performanceAndAnalytics.footer"="ساعدنا في فهم كيفية استخدامك لخدماتنا وتزويدنا بالبيانات التي يمكننا استخدامها لإجراء تحسينات. يعني عدم قبول ملفات تعريف الارتباط Cookies هذه أننا سنحصل على بيانات متاحة أقل لنقوم بالمساعدة في تحسينات التصميم.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="تم إنشاء النسخة كملف جديد بنجاح.";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>يرجى الترقية اليوم إذا كنت ترغب في الاحتفاظ ببياناتك.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="احصل على علاوة";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="شغل النسخ الاحتياطي";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="استخدم تطبيقنا للحاسوب المكتبي للتأكد من مزامنة مجلد النسخ الاحتياطي الخاص بك مع سحابة ميغا MEGA.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="نقل “%@”";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="أنت تقوم بتغيير موقع مجلد النسخ الاحتياطي الافتراضي. قد يؤثر ذلك على قدرتك على العثور على مجلد النسخ الاحتياطي في المستقبل. يرجى تذكر مكانه حتى تتمكن من العثور عليه في المستقبل.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="يؤدي نقل هذا المجلد إلى تغيير وجهة النسخ الاحتياطي. سيتم إيقاف النسخ الاحتياطي للأمان. هل هذا ما تريد أن تفعله؟ يمكن إعادة تمكين النسخ الاحتياطية باستخدام تطبيق ميغا للحاسوب المكتبي MEGA Desktop App.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="نقل “%@” إلى سلة المحذوفات";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="أنت تقوم بحذف مجلد النسخ الاحتياطي. سيؤدي هذا إلى حذف جميع النسخ الاحتياطية التي قمت بتعيينها. هل انت متأكد من أنك تريد أن تفعل هذا؟";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="هل أنت متأكد أنك تريد حذف مجلد النسخ الاحتياطي وتعطيل النسخ الاحتياطي الذي قمت بتعيينه؟";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="إضافة عنصر إلى “%@”";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="تؤدي إضافة عناصر إلى هذا المجلد إلى تغيير وجهة النسخ الاحتياطي. سيتم إيقاف النسخ الاحتياطي للأمان. هل هذا ما تريد أن تفعل؟ يمكن إعادة تمكين النسخ الاحتياطي باستخدام تطبيق ميغا للحاسوب المكتبي MEGA Desktop App.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="الرجاء كتابة “%@” لتأكيد هذا الإجراء";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="نقل النسخ الاحتياطي";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="حذف النسخ الاحتياطي";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="تعطيل النسخ الاحتياطي";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="نقل إلى سلة المحذوفات";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="إضافة";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="النص المدخل غير متطابق";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="لا يمكن مشاركة هذا المجلد إلا للقراءة فقط لأنه مجلد نسخ احتياطي. قد تؤدي أي تغييرات في محتواه إلى تعطيل النسخ الاحتياطي.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="لا يمكن مشاركة هذه المجلدات إلا للقراءة فقط لأنها مجلدات نسخ احتياطي. قد تؤدي أي تغييرات في محتواها إلى تعطيل النسخ الاحتياطية.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="بعض المجلدات المشاركة هي مجلدات نسخ احتياطي وقراءة فقط. هل ترغب في الاستمرار؟";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ انضم الى المكالمة";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="اجتماع جديد";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="اجتماع %@";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="ابدأ الاجتماع";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="اجتماع منتهي";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="عرض الصور عالية الدقة";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="استخدم بيانات الهاتف المحمول لتحميل صور عالية الدقة عند المعاينة. إذا تم تعطيله، فلن يتم تحميل الصورة عالية الدقة إلا عند التقريب.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="لديك بالفعل اشتراك نشط";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="لقد سبق لك الاشتراك في باقة برو Pro باستخدام غوغل بلاي Google Play أو اب غاليري AppGallery. يرجى إلغاء اشتراكك يدويًا داخل غوغل بلاي Google Play أو هواوي اب غاليري Huawei AppGallery على جهازك ثم إعادة المحاولة.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="هل تريد إلغاء اشتراكك الحالي ومتابعة الشراء؟";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="مكالمة أخرى جارية. يرجى إنهاء مكالمتك الحالية قبل إجراء أخرى.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="إنهاء و انضمام";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="نموذج 3D";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D Scene";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="صورة RAW";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="الوسائط المتعددة Multimedia";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="مضغوط 7-Zip";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="قاعدة بيانات Database";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="ملف نصي ANSI";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="تطبيق Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="برنامج ماك أو اس اكس Mac OS X";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="ملف نصي ASCII";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="فيديو بث Streaming Video";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="صورة Casio RAW";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="صورة Bitmap";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="ملف مضغوط UNIX";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="الرماز المصدري C/C++ ";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="الرماز المصدري C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="صورة CorelDRAW";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="فئة جافا Java";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOS Command";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="ورقة الأنماط المتتالية CSS ";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="نموذج ملف وورد مايكروسفت MS Word";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="صورة Image";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="صورة EPS";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="ملف تنفيذي Executable";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="ملف صوتي Lossless";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="فيديو Flash";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="خط ويندوز Windows";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="خط";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="أداة ويندوز  Windows Gadget";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="صورة GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="ملف تبادل الموقع الجغرافي GPS Exchange";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="ملف جداول إلكترونية Spreadsheet";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="ملف مضغوط GNU";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="ترويسة Header";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="مستند HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Interchange File Format";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="صورة ISO";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="ملف أرشفة جافا Java Archive";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="ملف جافا Java Code";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="صورة JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="سجل Log";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="قائمة تشغيل الوسائط Media Playlist";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="ملف صوتي MPEG-4";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max Scene";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="أكسس ميكروسوفت MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="ملف صوتي MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="فيديو MKV";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="فيديو كويك تايم QuickTime";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="ملف صوتي MP3";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="ملف فيديو MP4";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="فيلم MPEG";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="ملف تثبيت ميكروسوفت MS Installer";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="مستند نصي Text Document";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="خط OpenType";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="ملف Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="تدوين صوتي Podcast";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="مستند PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="ملف PHP";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="قائمة تشغيل ملفات صوتية Audio Playlist";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="صورة PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="ملف مضغوط RAR";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="ملف نصي Rich Text";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="صوره باناسونيك Panasonic RAW ";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="مخدم HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="ملف مضغوط اكس X";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="قاعدة بيانات SQL Database";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="صورة Sony RAW";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="عنوان فرعي Subtitle";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="صورة Vector";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="فلم Flash";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="الأرشيف";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="ملف مضغوط";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="صورة TIF";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="صورة TIFF";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="خط TrueType";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="ملف صوتي Wave";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="فيديو WebM";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="ملف صوتي WM";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="فيديو WM";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="مستند XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ملف أرشفة ZIP";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="اختر";
