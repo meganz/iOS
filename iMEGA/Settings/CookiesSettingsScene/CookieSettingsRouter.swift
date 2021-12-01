@@ -1,30 +1,48 @@
 
 import Foundation
 
-protocol CookieSettingsRouterProtocol {
+protocol CookieSettingsRouterProtocol: Routing {
     func didTap(on source: CookieSettingsSource)
 }
 
 enum CookieSettingsSource {
-    case showThirdPartyCookiesMoreInfo
     case showCookiePolicy
     case showPrivacyPolicy
 }
 
 final class CookieSettingsRouter: NSObject, CookieSettingsRouterProtocol {
-    
+    private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
+    private weak var presenter: UIViewController?
     
-    init(navigationController: UINavigationController?) {
-        assert(navigationController != nil, "Must pass in a UINavigationController in CookieSettingsRouter.")
+    @objc init(presenter: UIViewController) {
+        self.presenter = presenter
+    }
+    
+    func build() -> UIViewController {
+        guard let cookieSettingsTVC = UIStoryboard(name: "CookieSettings", bundle: nil).instantiateViewController(withIdentifier: "CookieSettingsTableViewControllerID") as? CookieSettingsTableViewController else {
+            fatalError("Could not instantiate CookieSettingsTableViewController")
+        }
+        
+        let viewModel = CookieSettingsViewModel(cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository(sdk:  MEGASdkManager.sharedMEGASdk())), router: self)
+        
+        cookieSettingsTVC.router = self
+        cookieSettingsTVC.viewModel = viewModel
+        
+        baseViewController = cookieSettingsTVC
+        
+        return cookieSettingsTVC
+    }
+    
+    @objc func start() {
+        let navigationController = MEGANavigationController(rootViewController: build())
         self.navigationController = navigationController
+        
+        presenter?.present(navigationController, animated: true, completion: nil)
     }
     
     func didTap(on source: CookieSettingsSource) {
         switch source {
-        case .showThirdPartyCookiesMoreInfo:
-            let thirdPartyCookiesMoreInfoVC = CookieSettingsFactory().createThirdPartyCookiesMoreInfoVC()
-            navigationController?.pushViewController(thirdPartyCookiesMoreInfoVC, animated: true)
             
         case .showCookiePolicy:
             NSURL.init(string: "https://mega.nz/cookie")?.mnz_presentSafariViewController()

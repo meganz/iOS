@@ -24,10 +24,7 @@ enum CookieSettingsAction: ActionType {
     case configView
     
     case acceptCookiesSwitchValueChanged(Bool)
-    case preferenceCookiesSwitchValueChanged(Bool)
     case performanceAndAnalyticsSwitchValueChanged(Bool)
-    case advertisingCookiesSwitchValueChanged(Bool)
-    case thirdPartyCookiesSwitchValueChanged(Bool)
     
     case save
 }
@@ -72,17 +69,8 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         case .acceptCookiesSwitchValueChanged(let bool):
             cookiesConfigArray = bool ? [true, true, true, true, true] : [true, false, false, false, false]
             
-        case .preferenceCookiesSwitchValueChanged(let bool):
-            cookiesConfigArray[CookiesBitPosition.preference.rawValue] = bool
-            
         case .performanceAndAnalyticsSwitchValueChanged(let bool):
             cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue] = bool
-            
-        case .advertisingCookiesSwitchValueChanged(let bool):
-            cookiesConfigArray[CookiesBitPosition.advertising.rawValue] = bool
-            
-        case .thirdPartyCookiesSwitchValueChanged(let bool):
-            cookiesConfigArray[CookiesBitPosition.thirdParty.rawValue] = bool
             
         case .save:
             save()
@@ -130,11 +118,8 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         var footersArray: Array<String> = []
         
         footersArray.append("")
-        footersArray.append(NSLocalizedString("Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.", comment: ""))
-        footersArray.append(NSLocalizedString("Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.", comment: ""))
-        footersArray.append(NSLocalizedString("Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.", comment: ""))
-        footersArray.append(NSLocalizedString("Cookie settings dialog text -- Used by us and our approved advertising partners...", comment: ""))
-        footersArray.append(NSLocalizedString("Cookie settings dialog text -- These are Cookies which are controlled by...", comment: "Cookie settings dialog text."))
+        footersArray.append(Strings.Localizable.Settings.Cookies.Essential.footer)
+        footersArray.append(Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer)
         
         self.invokeCommand?(.updateFooters(footersArray))
     }
