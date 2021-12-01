@@ -40,7 +40,7 @@ class TermsAndPoliciesTableViewController: UITableViewController {
         title = NSLocalizedString("settings.section.termsAndPolicies", comment: "Title of one of the Settings sections where you can see MEGA's 'Terms and Policies'")
         
         privacyPolicyLabel.text = NSLocalizedString("privacyPolicyLabel", comment: "Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'")
-        cookiePolicyLabel.text = NSLocalizedString("Cookie Policy", comment: "Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy'")
+        cookiePolicyLabel.text = Strings.Localizable.General.cookiePolicy
         termsOfServiceLabel.text = NSLocalizedString("termsOfServicesLabel", comment: "Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'")
         
         updateAppearance()
