@@ -3,7 +3,7 @@
 struct VideoExplorerViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {
-        return NSLocalizedString("Videos", comment: "Title for video explorer view")
+        return Strings.Localizable.videos
     }
     
     var emptyStateType: EmptyStateType {
