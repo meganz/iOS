@@ -143,7 +143,7 @@
                 break;
         }
     } else if (node.isFolder) {
-        self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
+        self.infoLabel.text = node.isBackupRootNode ? [node numberOfDevicesWithSdk:api] : [Helper filesAndFoldersInFolderNode:node api:api];
         self.versionedImageView.hidden = YES;
     }
     
