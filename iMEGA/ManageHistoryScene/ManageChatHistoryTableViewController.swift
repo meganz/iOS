@@ -183,17 +183,17 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     // MARK: - Private
     
     private func configView() {
-        title = NSLocalizedString("Manage Chat History", comment: "Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.")
+        title = Strings.Localizable.manageChatHistory
         
-        historyRetentionLabel.text = NSLocalizedString("History Clearing", comment: "Setting title for the feature that deletes messages automatically from a chat after a period of time")
+        historyRetentionLabel.text = Strings.Localizable.historyClearing
         viewModel.dispatch(.historyRetentionValue)
         
-        historyRetentionSaveButton.setTitle(NSLocalizedString("save", comment: "Button title to 'Save' the selected option"), for: .normal)
+        historyRetentionSaveButton.setTitle(Strings.Localizable.save, for: .normal)
         
         historyRetentionPickerView.dataSource = pickerViewModel
         historyRetentionPickerView.delegate = pickerViewModel
         
-        clearAllChatHistoryLabel.text = NSLocalizedString("clearChatHistory", comment: "A button title to delete the history of a chat.")
+        clearAllChatHistoryLabel.text = Strings.Localizable.clearChatHistory
         
         updateAppearance()
     }
@@ -255,25 +255,25 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     }
     
     private func historyRetentionActionSheet() {
-        let alertController = UIAlertController(title: NSLocalizedString("Clear Messages Older Than", comment: "Title show on the sheet to configure default values of the 'History Retention' setting"), message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: Strings.Localizable.clearMessagesOlderThan, message: nil, preferredStyle: .actionSheet)
         
-        let oneDayAction = UIAlertAction(title: NSLocalizedString("One Day", comment: "Used within the `Retention History` dropdown -- available option for the time range selection."), style: .default) { _ in
+        let oneDayAction = UIAlertAction(title: Strings.Localizable.oneDay, style: .default) { _ in
             self.viewModel.dispatch(.selectHistoryRetentionValue(HistoryRetentionOption.oneDay.rawValue))
         }
         
-        let oneWeekAction = UIAlertAction(title: NSLocalizedString("One Week", comment: "Used within the `Retention History` dropdown -- available option for the time range selection."), style: .default) { _ in
+        let oneWeekAction = UIAlertAction(title: Strings.Localizable.oneWeek, style: .default) { _ in
             self.viewModel.dispatch(.selectHistoryRetentionValue(HistoryRetentionOption.oneWeek.rawValue))
         }
         
-        let oneMonthAction = UIAlertAction(title: NSLocalizedString("One Month", comment: "Used within the `Retention History` dropdown -- available option for the time range selection."), style: .default) { _ in
+        let oneMonthAction = UIAlertAction(title: Strings.Localizable.oneMonth, style: .default) { _ in
             self.viewModel.dispatch(.selectHistoryRetentionValue(HistoryRetentionOption.oneMonth.rawValue))
         }
         
-        let customAction = UIAlertAction(title: NSLocalizedString("Custom...", comment: "Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range."), style: .default) { _ in
+        let customAction = UIAlertAction(title: Strings.Localizable.custom, style: .default) { _ in
             self.viewModel.dispatch(.selectHistoryRetentionValue(HistoryRetentionOption.custom.rawValue))
         }
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel) { _ in
+        let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { _ in
             self.viewModel.dispatch(.configHistoryRetentionSwitch(false))
         }
         
@@ -292,11 +292,11 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     }
     
     private func clearChatHistoryAlert() {
-        let alertController = UIAlertController(title: NSLocalizedString("clearChatHistory", comment: "A button title to delete the history of a chat."), message: NSLocalizedString("clearTheFullMessageHistory", comment: "A confirmation message for a user to confirm that they want to clear the history of a chat."), preferredStyle: .alert)
+        let alertController = UIAlertController(title: Strings.Localizable.clearChatHistory, message: Strings.Localizable.clearTheFullMessageHistory, preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
         
-        let continueAction = UIAlertAction(title: NSLocalizedString("continue", comment: "'Next' button in a dialog"), style: .default) { _ in
+        let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { _ in
             self.viewModel.dispatch(.clearChatHistoryConfirmed)
         }
         

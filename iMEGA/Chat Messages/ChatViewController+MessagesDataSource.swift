@@ -40,7 +40,7 @@ extension ChatViewController: MessagesDataSource {
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isDateLabelVisible(for: indexPath) {
             return NSAttributedString(
-                string: NSCalendar.current.isDateInToday(message.sentDate) ? NSLocalizedString("Today", comment: "") : message.sentDate.string(withDateFormat: "E dd MMM"),
+                string: NSCalendar.current.isDateInToday(message.sentDate) ? Strings.Localizable.today : message.sentDate.string(withDateFormat: "E dd MMM"),
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
                              NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
 
@@ -81,7 +81,7 @@ extension ChatViewController: MessagesDataSource {
            return nil
         }
         
-        let bottomLabelString = NSLocalizedString("Couldn't load. [RED]Tap to retry[/RED]", comment: "")
+        let bottomLabelString = Strings.Localizable.CouldnTLoad.redTapToRetryRED
         guard let title = (bottomLabelString as NSString).mnz_stringBetweenString("[RED]", andString: "[/RED]") else {
             return nil
         }

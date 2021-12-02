@@ -160,8 +160,7 @@ extension ChatViewController {
             }
 
             if showSuccess {
-                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("messagesSent", comment: "Success message shown after forwarding messages to other chats"))
-                
+                SVProgressHUD.showSuccess(withStatus: Strings.Localizable.messagesSent)
             }
         }
         

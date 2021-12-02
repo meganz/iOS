@@ -23,7 +23,7 @@ class RichPreviewDialogView: UIView {
     lazy var alwaysAllowButton: UIButton = {
         let button = UIButton(type: .system)
         button.contentHorizontalAlignment = .left
-        button.setTitle(NSLocalizedString("never", comment: ""), for: .normal)
+        button.setTitle(Strings.Localizable.never, for: .normal)
         button.isUserInteractionEnabled = true
 
         return button
@@ -40,7 +40,7 @@ class RichPreviewDialogView: UIView {
     lazy var neverButton: UIButton = {
         let button = UIButton(type: .system)
         button.contentHorizontalAlignment = .left
-        button.setTitle(NSLocalizedString("never", comment: ""), for: .normal)
+        button.setTitle(Strings.Localizable.never, for: .normal)
         button.isUserInteractionEnabled = true
 
         return button
@@ -94,23 +94,23 @@ class RichPreviewDialogView: UIView {
     private func configureView() {
         switch message?.warningDialog {
         case .initial:
-            titleLabel.text = NSLocalizedString("enableRichUrlPreviews", comment: "Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.")
-            descriptionLabel.text = NSLocalizedString("richPreviewsFooter", comment: "Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs")
-            alwaysAllowButton.setTitle(NSLocalizedString("alwaysAllow", comment: "Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers."), for: .normal)
-            notNowButton.setTitle(NSLocalizedString("notNow", comment: "Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers."), for: .normal)
+            titleLabel.text = Strings.Localizable.enableRichUrlPreviews
+            descriptionLabel.text = Strings.Localizable.richPreviewsFooter
+            alwaysAllowButton.setTitle(Strings.Localizable.alwaysAllow, for: .normal)
+            notNowButton.setTitle(Strings.Localizable.notNow, for: .normal)
             neverButton.flex.display(.none)
         case .standard:
-            titleLabel.text = NSLocalizedString("enableRichUrlPreviews", comment: "Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.")
-            descriptionLabel.text = NSLocalizedString("richPreviewsFooter", comment: "Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs")
-            alwaysAllowButton.setTitle(NSLocalizedString("alwaysAllow", comment: "Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers."), for: .normal)
-            notNowButton.setTitle(NSLocalizedString("notNow", comment: "Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers."), for: .normal)
-            neverButton.setTitle(NSLocalizedString("never", comment: ""), for: .normal)
+            titleLabel.text = Strings.Localizable.enableRichUrlPreviews
+            descriptionLabel.text = Strings.Localizable.richPreviewsFooter
+            alwaysAllowButton.setTitle(Strings.Localizable.alwaysAllow, for: .normal)
+            notNowButton.setTitle(Strings.Localizable.notNow, for: .normal)
+            neverButton.setTitle(Strings.Localizable.never, for: .normal)
             neverButton.flex.display(.flex)
         case .confirmation:
-            titleLabel.text = NSLocalizedString("richUrlPreviews", comment: "Title used in settings that enables the generation of link previews in the chat")
-            descriptionLabel.text = NSLocalizedString("richPreviewsConfirmation", comment: "After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings.")
-            alwaysAllowButton.setTitle(NSLocalizedString("yes", comment: ""), for: .normal)
-            notNowButton.setTitle(NSLocalizedString("no", comment: ""), for: .normal)
+            titleLabel.text = Strings.Localizable.richUrlPreviews
+            descriptionLabel.text = Strings.Localizable.richPreviewsConfirmation
+            alwaysAllowButton.setTitle(Strings.Localizable.yes, for: .normal)
+            notNowButton.setTitle(Strings.Localizable.no, for: .normal)
             neverButton.flex.display(.none)
         default:
             isHidden = true
