@@ -23,8 +23,8 @@ class EndMeetingOptionsViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         preferredContentSize = Constants.popoverSize
-        leaveButton.setTitle(NSLocalizedString("leave", comment: ""), for: .normal)
-        cancelButton.setTitle(NSLocalizedString("cancel", comment: ""), for: .normal)
+        leaveButton.setTitle(Strings.Localizable.leave, for: .normal)
+        cancelButton.setTitle(Strings.Localizable.cancel, for: .normal)
     }
     
     @IBAction func leaveButtonTapped(_ sender: UIButton) {
