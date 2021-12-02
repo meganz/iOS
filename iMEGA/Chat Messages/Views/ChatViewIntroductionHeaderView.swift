@@ -83,13 +83,13 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         participantsLabel.textColor = UIColor.mnz_label()
         statusLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
 
-        chattingWithTextLabel.text = NSLocalizedString("chattingWith", comment: "Title show above the name of the persons with whom you're chatting")
-        descriptionLabel.text = NSLocalizedString("chatIntroductionMessage", comment: "Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.")
+        chattingWithTextLabel.text = Strings.Localizable.chattingWith
+        descriptionLabel.text = Strings.Localizable.chatIntroductionMessage
         
-        let confidentialityText = NSLocalizedString("confidentialityExplanation", comment: "Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.")
+        let confidentialityText = Strings.Localizable.confidentialityExplanation
         setAttributedText(with: confidentialityText, label: confidentialityTextLabel)
         
-        let authenticityText = NSLocalizedString("authenticityExplanation", comment: "Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.")
+        let authenticityText = Strings.Localizable.authenticityExplanation
         setAttributedText(with: authenticityText, label: authenticityTextLabel)
         
         guard let status = chatRoom?.onlineStatus else {

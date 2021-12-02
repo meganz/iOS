@@ -23,7 +23,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         }
         var actions = [ActionSheetAction]()
         
-        let infoAction = ActionSheetAction(title: NSLocalizedString("info", comment: ""), detail: nil, image: nil, style: .default) { [weak self] in
+        let infoAction = ActionSheetAction(title: Strings.Localizable.info, detail: nil, image: nil, style: .default) { [weak self] in
             guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
                 return
             }
@@ -39,7 +39,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         
         let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: userEmail)
         if user == nil || user?.visibility != MEGAUserVisibility.visible {
-            let addContactAction = ActionSheetAction(title: NSLocalizedString("addContact", comment: ""), detail: nil, image: nil, style: .default) {
+            let addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: nil, style: .default) {
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
                 }
@@ -52,7 +52,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         
         if chatRoom.ownPrivilege == .moderator,
         chatRoom.isGroup {
-            let removeParticipantAction = ActionSheetAction(title: NSLocalizedString("removeParticipant", comment: ""), detail: nil, image: nil, style: .default) {
+            let removeParticipantAction = ActionSheetAction(title: Strings.Localizable.removeParticipant, detail: nil, image: nil, style: .default) {
                 MEGASdkManager.sharedMEGAChatSdk().remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
             }
             actions.append(removeParticipantAction)

@@ -30,7 +30,7 @@ class ChatLocationCollectionViewCell: MessageContentCell {
         let megaMessage = chatMessage.message
         let imageData = Data(base64Encoded: megaMessage.containsMeta.geolocation.image!, options: .ignoreUnknownCharacters)
         locationView.imageView.image = UIImage(data: imageData!)
-        locationView.titleLabel.text = NSLocalizedString("Pinned Location", comment: "Text shown in location-type messages")
+        locationView.titleLabel.text = Strings.Localizable.pinnedLocation
         locationView.subtitleLabel.text = NSString.mnz_convertCoordinatesLatitude(megaMessage.containsMeta.geolocation.latitude, longitude: megaMessage.containsMeta.geolocation.longitude)
     }
 }

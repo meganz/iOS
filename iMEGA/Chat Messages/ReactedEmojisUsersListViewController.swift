@@ -163,7 +163,7 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
     func userName(forHandle handle: UInt64) -> String? {
         guard let myHandle = MEGASdkManager.sharedMEGASdk().myUser?.handle, myHandle != handle else {
             if let myFullName = MEGASdkManager.sharedMEGAChatSdk().myFullname {
-                return String(format: "%@ (%@)", myFullName, NSLocalizedString("me", comment: "The title for my message in a chat. The message was sent from yourself."))
+                return String(format: "%@ (%@)", myFullName, Strings.Localizable.me)
             }
 
             return nil

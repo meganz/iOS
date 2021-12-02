@@ -44,7 +44,7 @@ extension ChatViewController {
         guard let initDuration = initDuration else { return }
         
         let time = Date().timeIntervalSince1970 - startTime + initDuration
-        let title = String(format: NSLocalizedString("Touch to return to call %@", comment: ""), NSString.mnz_string(fromTimeInterval: time))
+        let title = Strings.Localizable.touchToReturnToCall(NSString.mnz_string(fromTimeInterval: time))
         showJoinCall(withTitle: title)
     }
     
@@ -107,7 +107,7 @@ extension ChatViewController {
         case .inProgress:
             initTimerForCall(call)
         case .connecting:
-            showJoinCall(withTitle: NSLocalizedString("Reconnecting...", comment: ""))
+            showJoinCall(withTitle: Strings.Localizable.reconnecting)
         case .destroyed, .terminatingUserParticipation, .undefined:
             joinCallCleanup()
         default:

@@ -9,8 +9,8 @@ struct UnitsComponentValues {
 }
 
 struct MeasuramentsComponentValues {
-    let singular = [NSLocalizedString("hour", comment: ""), NSLocalizedString("day", comment: ""), NSLocalizedString("week", comment: ""), NSLocalizedString("month", comment: ""), NSLocalizedString("year", comment: "")]
-    let plural = [NSLocalizedString("hours", comment: ""), NSLocalizedString("days", comment: ""), NSLocalizedString("weeks", comment: ""), NSLocalizedString("months", comment: ""), NSLocalizedString("year", comment: "")]
+    let singular = [Strings.Localizable.hour, Strings.Localizable.day, Strings.Localizable.week, Strings.Localizable.month, Strings.Localizable.year]
+    let plural = [Strings.Localizable.hours, Strings.Localizable.days, Strings.Localizable.weeks, Strings.Localizable.months, Strings.Localizable.year]
 }
 
 enum AutomaticChanges: Int {

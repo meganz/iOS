@@ -118,7 +118,7 @@ extension ChatViewController {
         }
         
         if downloading {
-            SVProgressHUD.show(UIImage(named: "hudDownload")!, status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts"))
+            SVProgressHUD.show(UIImage(named: "hudDownload")!, status: Strings.Localizable.downloadStarted)
         }
     }
     
