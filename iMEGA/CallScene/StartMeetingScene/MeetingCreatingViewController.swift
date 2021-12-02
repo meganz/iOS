@@ -27,7 +27,7 @@ class MeetingCreatingViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("close", comment: ""),
+            title: Strings.Localizable.close,
             style: .plain,
             target: self,
             action: #selector(dissmissVC(_:))

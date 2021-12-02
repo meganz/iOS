@@ -97,7 +97,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         input.textColor = Constants.textColor
         input.delegate = self
         let placeholderText = NSAttributedString(
-            string: NSLocalizedString("firstName", comment: ""),
+            string: Strings.Localizable.firstName,
             attributes: [NSAttributedString.Key.foregroundColor: Constants.placeholderTextColor,
                          NSAttributedString.Key.font: Constants.bottomBarText]
         )
@@ -119,7 +119,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         input.textColor = Constants.textColor
         input.delegate = self
         let placeholderText = NSAttributedString(
-            string: NSLocalizedString("lastName", comment: ""),
+            string: Strings.Localizable.lastName,
             attributes: [NSAttributedString.Key.foregroundColor: Constants.placeholderTextColor,
                          NSAttributedString.Key.font: Constants.bottomBarText]
         )
@@ -278,7 +278,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
             switch type {
             case .guestJoin:
                 meetingNameInputTextfield.isHidden = true
-                startMeetingButton.setTitle(NSLocalizedString("meetings.link.guest.joinButtonText", comment: ""), for: .normal)
+                startMeetingButton.setTitle(Strings.Localizable.Meetings.Link.Guest.joinButtonText, for: .normal)
                 startMeetingButton.isEnabled = false
                 startMeetingButton.alpha = 0.5
                 
@@ -294,7 +294,7 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
                                                 font: AvatarProperties.font)
             case .join:
                 meetingNameInputTextfield.isHidden = true
-                startMeetingButton.setTitle(NSLocalizedString("meetings.link.loggedInUser.joinButtonText", comment: ""), for: .normal)
+                startMeetingButton.setTitle(Strings.Localizable.Meetings.Link.LoggedInUser.joinButtonText, for: .normal)
                 
                 firstNameTextfield.flex.display(.none)
                 lastNameTextfield.flex.display(.none)
