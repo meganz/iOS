@@ -214,6 +214,8 @@
 "addContacts"="연락처 추가";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="MEGA에 초대";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="당신의 연락처 [X]님이 MEGA에 없습니다. MEGA의 암호화된 대화를 통해 통화하려면 연락처를 초대해야 합니다";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="초대 발송됨";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="그룹 시작";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="위치";
+"chat.map.location"="위치";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="음성 클립";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -586,6 +588,8 @@
 "addContactButton"="추가";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="당신의 이메일을 추가할 필요는 없습니다";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="이용자 [X]님이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="이용자들이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="개인 정보 보호 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="쿠키 정책";
+"general.cookiePolicy"="쿠키 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="쿠키 설정";
+"general.cookieSettings"="쿠키 설정";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="이용 약관";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -763,7 +767,7 @@
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="오프라인 파일 삭제";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
-"settings.fileManagement.alert.clearAllOfflineFiles"="Clear all offline files?";
+"settings.fileManagement.alert.clearAllOfflineFiles"="모든 오프라인 파일을 삭제할까요?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="캐시 지우기";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -951,7 +955,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="휴대 전화 연락처를 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
-"insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
+"insertYourFriendsEmails"="친구의 이메일을 입력하세요:";
 /*  */
 "howItWorks"="작동 원리";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="현재 구독을 업그레이드하려면, 고객 지원에 [A]맞춤 요금제[/A]를 요청하세요.";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="현재 요금제:";
+"inAppPurchase.upgrade.label.currentPlan"="현재 요금제:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="현재 요금제";
+"inAppPurchase.productDetail.navigation.currentPlan"="현재 요금제";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="맞춤 요금제로 업그레이드";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="버전";
 /* Title label of a node property. */
-"location"="위치";
+"cloudDrive.info.node.location"="위치";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="총 크기";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="파일";
 /* Label to desing a file matching */
-"File"="파일";
+"chat.match.file"="파일";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="현재 버전";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="다음 날짜보다 오래된 파일 삭제";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="더 긴 보존 기간은 [S]Pro로 업그레이드 하세요[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="일";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="휴지통은 자동으로 비워집니다. 최단 기간은 7일이며 최장 기간은 30일입니다.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="이 위치 전송";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="지도 설정";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="기본";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="위성";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="여러 이메일을 입력하려면 스페이스를 탭하세요";
 /* Text used as a section title or similar */
 "Enter Email"="이메일 입력";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="MEGA에서";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA의 연락처";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="기업용";
 /*  */
 "Administrator"="관리자";
-/* Business user role */
-"User"="이용자";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="전송";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="내가 다시 켤 때까지";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30분";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1시간";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6시간";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="원래 크기 전송, 향상된 이미지 품질";
 /* Setting title for Doc scan view */
 "Save Settings"="설정 저장";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="%@ 스캔";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="파일 유형";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="메시지…";
+"chat.message.placeholder"="메시지…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="홈 섹션에서 최근 활동 숨기기";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="기본";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="일";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="밤";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="링크";
 /* Text referencing the date of creation of a link */
 "Link Creation"="링크 생성";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="다음과 공유";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="보류중";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="버전";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="즐겨찾기";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="즐겨찾기 제거";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="라벨";
+"cloudDrive.sort.label"="라벨";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="라벨…";
+"general.chooseLabel.title"="라벨…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="라벨 제거";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="복호화 키를 따로 보냄";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="만료일";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="만료일 설정";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="암호로 보호";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="암호가 클립보드에 복사되었습니다";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="우리의 종단간 암호화 시스템은 이 파일을 위해 자동으로 생성된 고유의 키를 필요로 합니다. 이 키에 대한 링크는 자동으로 생성되지만, 보안을 위해 복호화 키를 별도로 내보낼 수 있습니다.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="복호화 키";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="암호 제거";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1년";
 /*  */
 "year"="년";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="공유";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="파일 찾기";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="영상이 없습니다";
 /* Navigation title for the photo explorer view */
 "All Images"="모든 이미지";
-/* Section title for the photo explorer view */
-"TODAY"="오늘";
-/* Section title for the photo explorer view */
-"YESTERDAY"="어제";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="이미지 없음";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="메시지 발송 실패";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="메시지 발송 취소";
-/* Cookie dialog header */
-"Before You Continue"="진행하기 전에";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="당신의 사생활";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="우리는 제3자를 포함하여 당신에게 서비스를 제공하고, 우리 서비스에서의 경험을 향상하고 당신이 보는 광고를 개인화하기 위하여 로컬 저장소 그리고 비슷한 기술 (‘쿠키’)를 사용합니다. 첫 방문시 쿠키를 허용하거나 쿠키 설정에서 설정할 수 있습니다. 더 알아보려면 우리의 [A]쿠키 정책[/A]을 읽어보세요.";
+"dialog.cookies.description"="우리는 제3자를 통한 것을 포함하여, 당신에게 서비스를 제공하고, 당신의 경험을 향상시키기 위하여 쿠키 그리고 이와 유사한 기술 (“쿠키”)을 사용합니다. 방문 초기에 우리의 쿠키 사용에 동의하거나 쿠키 설정에서 쿠키를 개인화 할 수 있습니다. 자세한 내용은 우리의 [A]쿠키 정책[/A]에서 읽어보세요.";
 /* Cookie dialog button label. */
-"Accept Cookies"="쿠키 허용";
+"dialog.cookies.accept"="쿠키 허용";
 /* Cookie settings dialog text. */
-"Essential Cookies"="필수 쿠키";
+"settings.cookies.essential"="필수 쿠키";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="항상 켬";
+"settings.cookies.essential.alwaysOn"="항상 켬";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="필수 사항은 우리 서비스에 대한 안전한 접근과 중요한 기능을 제공하기 위함입니다. 이러한 이유로, 동의가 필요하지 않습니다.";
+"settings.cookies.essential.footer"="중요한 기능과 우리 서비스에 대한 안전한 접근을 제공하기 위해 필수적입니다. 이러한 이유로, 동의가 필요하지 않습니다.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="선호 사항 쿠키";
+"settings.cookies.performanceAndAnalytics"="성능과 분석 쿠키";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="당신이 선택한 어떠한 표기나 형식 설정을 기억하도록 허용합니다. 이 쿠키를 허용하지 않으면 당신이 선호하는 화면 배치 등을 저장할 수 없습니다.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="성능과 분석 쿠키";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="당신이 우리의 서비스를 어떻게 이용하는지 이해하도록 돕고 우리가 향상시킬 수 있도록 데이터를 제공해주세요. 이 쿠키를 허용하지 않는다면 설계를 향상시킬 수 있는 데이터가 우리에게 덜 제공됩니다.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="광고 쿠키";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="당신의 브라우징 기록을 우리 또는 우리의 승인된 광고 파트너들이 활용하여 당신이 우리 서비스와 다른 웹사이트에서 보는 광고를 개인화 하도록 합니다. 이 쿠키를 허용하지 않는다면 덜 관련있는 광고를 보게 됩니다.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="제3자 쿠키";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="이것들은 우리가 아닌 다른 이들에 의해 통제되는 쿠키입니다; 우리는 위에 설명한 기능 유형들을 제공하기 위해 이 쿠키를 사용합니다. 이 쿠키를 허용하지 않는다면 각 제3자 쿠키가 어떤 것인가에 따라 서로 다른 영향을 받게 됩니다. 우리가 사용하는 제3자 쿠키가 어떤 것인지 자세히 보려면 ‘자세한 정보’를 클릭하세요.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="자세한 정보";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="사용중인 제3자 쿠키 없음";
+"settings.cookies.performanceAndAnalytics.footer"="당신이 우리의 서비스를 어떻게 이용하는지 이해할 수 있도록 도와주시고 향상할 수 있도록 데이터를 제공해주세요. 이러한 쿠키들을 허용하지 않는 것은 우리가 설계를 개선하는 데에 쓸 수 있는 데이터가 적어진다는 뜻입니다.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="기록으로 새 파일을 성공적으로 생성하였습니다.";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>데이터를 지키고 싶다면 오늘 업그레이드 하세요.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="보너스 얻기";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="백업 설정";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="당신의 백업 폴더가 MEGA 클라우드와 동기화되고 있다는 것을 확실히 하려면 데스크톱 앱을 사용하세요.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="“%@” 이동";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="기본 백업 폴더 위치를 변경하려고 합니다. 이것은 나중에 당신의 백업 폴더를 찾을 수 있는지 여부에 영향을 미칩니다. 나중에 찾을 수 있도록 어디에 위치했는지 기억하세요.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="이 폴더를 옮기는 것은 백업 대상 폴더를 바꿉니다. 안전을 위해 백업은 꺼집니다. 정말 하려던 행동인가요? 백업은 MEGA 데스크톱 앱에서 재활성화할 수 있습니다.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="“%@” 항목을 휴지통으로 이동";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="백업 폴더를 삭제하려고 합니다. 이것은 당신이 설정한 모든 백업을 삭제합니다. 정말 하시겠습니까?";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="정말 백업 폴더를 삭제하고 설정한 백업을 비활성화 하시겠습니까?";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="“%@”에 항목 추가";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="이 폴더에 항목을 추가하는 것은 백업 대상 폴더를 바꿉니다. 안전을 위해 백업은 꺼집니다. 정말 하려던 행동인가요? 백업은 MEGA 데스크톱 앱에서 다시 활성화할 수 있습니다.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="이 행동을 승인하려면 “%@”을/를 입력하세요.";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="백업 이동";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="백업 삭제";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="백업 해제";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="휴지통으로 이동";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="추가";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="입력한 문자가 일치하지 않습니다";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="이 폴더는 백업 폴더이기 때문에 읽기 전용으로 공유 되었습니다. 항목에 대한 어떠한 변경은 백업을 비활성화 합니다.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="이 폴더들은 백업 폴더이기 때문에 읽기 전용으로 공유 되었습니다. 항목에 대한 어떠한 변경은 백업을 비활성화 합니다.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="일부 폴더가 백업 폴더이거나 읽기 전용입니다. 계속 하시겠습니까?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@님이 통화에 참여하였습니다";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="새 회의";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="%@의 회의";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="회의 시작";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="회의가 종료됨";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="고해상도 이미지 미리 보기";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="미리 보기를 할 때 고해상도 이미지를 불러오기 위해 모바일 데이터를 사용합니다. 만약 비활성화 하면, 확대할 때만 고해상도 이미지를 불러옵니다.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="이미 활성 상태의 구독이 있습니다";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="이전에 Google Play 또는 AppGallery를 통하여 구독을 하였습니다. 기기에서 Google Play 또는 Huawei AppGallery 안에서 구독을 수동으로 취소한 후 다시 시도하세요.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="현재 구독을 취소하고 결제를 진행하시겠습니까?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="다른 통화가 진행 중입니다. 다른 통화를 하기 전에 현재 통화를 종료하세요.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="종료하고 참여";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="3D 모델";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D 장면";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="RAW 이미지";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="멀티미디어";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="7-Zip 압축";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="데이터베이스";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="ANSI 텍스트 파일";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Android 앱";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Mac OS X 앱";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="ASCII 텍스트";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="스트리밍 동영상";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Casio RAW 이미지";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="비트맵 이미지";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX 압축";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="C/C++ 소스 코드";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="C++ 소스 코드";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="CorelDRAW 이미지";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Java 클래스";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOS 명령";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="CSS 스타일 시트";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="MS Word 템플릿";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="DXF 이미지";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="EPS 이미지";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="실행 파일";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="무손실 오디오";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Flash 동영상";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Windows 서체";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="서체";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Windows 가젯";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="GIF 이미지";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="GPS 교환";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="스프레드시트";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU 압축";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="헤더";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="HTML 문서";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="교환 파일 형식";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="ISO 이미지";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Java 아카이브";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Java 코드";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="JPEG 이미지";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="기록";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="미디어 재생목록";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="MPEG-4 오디오";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max 장면";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="MIDI 오디오";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="MKV 동영상";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="QuickTime 동영상";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="MP3 오디오";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="MP4 동영상";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="MPEG 동영상";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="MS 인스톨러";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="텍스트 문서";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="OpenType 서체";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="팟캐스트";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="PDF 문서";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="PHP 코드";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="오디오 재생목록";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="PNG 이미지";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="RAR 압축";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="서식 있는 텍스트";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Panasonic RAW 이미지";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="서버 HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X 압축";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="SQL 데이터베이스";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Sony RAW 이미지";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="자막";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="벡터 이미지";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Flash 동영상";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="보관함";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="압축";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="TIF 이미지";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="TIFF 이미지";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="TrueType 서체";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Wave 오디오";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="WebM 동영상";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="WM 오디오";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="WM 동영상";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="XML 문서";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIP 아카이브";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Choose";

@@ -214,7 +214,6 @@
 		5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AB4AE20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m */; };
 		5B1C4DE726C15BFC00425A23 /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1C4DE626C15BFC00425A23 /* NodeModel.swift */; };
-		5B1C6AB925B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1C6AB825B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift */; };
 		5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */; };
 		5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */; };
 		5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */; };
@@ -348,7 +347,6 @@
 		5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */; };
 		5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */; };
 		5BB72924255C52C20040CC2C /* HistoryRetentionPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB72923255C52C20040CC2C /* HistoryRetentionPickerViewModel.swift */; };
-		5BB8448B259CA85F008BDD2A /* CookieSettingsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB84488259CA85F008BDD2A /* CookieSettingsFactory.swift */; };
 		5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8A852243DF42D009FE957 /* Usage.storyboard */; };
 		5BBC13DE26CE62D10010115B /* FavouritesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13DD26CE62D10010115B /* FavouritesViewModelTests.swift */; };
 		5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E126CE635B0010115B /* MockFavouritesRouter.swift */; };
@@ -2494,7 +2492,6 @@
 		5B1AB4AD20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAQuerySignupLinkRequestDelegate.h; path = API/Requests/MEGAQuerySignupLinkRequestDelegate.h; sourceTree = "<group>"; };
 		5B1AB4AE20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAQuerySignupLinkRequestDelegate.m; path = API/Requests/MEGAQuerySignupLinkRequestDelegate.m; sourceTree = "<group>"; };
 		5B1C4DE626C15BFC00425A23 /* NodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
-		5B1C6AB825B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyCookiesMoreInfoViewController.swift; sourceTree = "<group>"; };
 		5B1F74D12126E30B00F09A16 /* AwaitingEmailConfirmationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AwaitingEmailConfirmationView.h; sourceTree = "<group>"; };
 		5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwaitingEmailConfirmationView.m; sourceTree = "<group>"; };
 		5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AwaitingEmailConfirmationView.xib; sourceTree = "<group>"; };
@@ -2634,7 +2631,6 @@
 		5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordStrengthIndicatorView.m; sourceTree = "<group>"; };
 		5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordStrengthIndicatorView.xib; sourceTree = "<group>"; };
 		5BB72923255C52C20040CC2C /* HistoryRetentionPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRetentionPickerViewModel.swift; sourceTree = "<group>"; };
-		5BB84488259CA85F008BDD2A /* CookieSettingsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsFactory.swift; sourceTree = "<group>"; };
 		5BB8A852243DF42D009FE957 /* Usage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Usage.storyboard; sourceTree = "<group>"; };
 		5BBC13DD26CE62D10010115B /* FavouritesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModelTests.swift; sourceTree = "<group>"; };
 		5BBC13E126CE635B0010115B /* MockFavouritesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFavouritesRouter.swift; sourceTree = "<group>"; };
@@ -5560,8 +5556,6 @@
 				5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */,
 				5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */,
 				5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */,
-				5BB84488259CA85F008BDD2A /* CookieSettingsFactory.swift */,
-				5B1C6AB825B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift */,
 				5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */,
 			);
 			path = CookiesSettingsScene;
@@ -10938,7 +10932,6 @@
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */,
 				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
-				5BB8448B259CA85F008BDD2A /* CookieSettingsFactory.swift in Sources */,
 				5B5A18C72732F70C00DE8619 /* CustomModalAlertViewController+Contacts.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
@@ -11667,7 +11660,6 @@
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
-				5B1C6AB925B763F60098C998 /* ThirdPartyCookiesMoreInfoViewController.swift in Sources */,
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,
 				5D8A76F024FCD0C900C0610C /* MEGANotificationUseCase.swift in Sources */,
 				2FA619A7261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift in Sources */,

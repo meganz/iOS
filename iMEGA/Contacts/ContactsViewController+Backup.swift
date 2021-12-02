@@ -7,30 +7,30 @@ extension ContactsViewController {
         if let nodes = nodesArray as? [MEGANode] {
             if nodes.allSatisfy({ $0.isBackupNode() || $0.isBackupRootNode() }) {
                 message = nodes.count > 1 ?
-                    NSLocalizedString("dialog.share.backup.folders.warning.message", comment: "") :
-                    NSLocalizedString("dialog.share.backup.folder.warning.message", comment: "")
+                    Strings.Localizable.Dialog.Share.Backup.Folders.Warning.message:
+                    Strings.Localizable.Dialog.Share.Backup.Folder.Warning.message
             } else {
-                message = NSLocalizedString("dialog.share.backup.non.backup.folders.warning.message", comment: "")
+                message = Strings.Localizable.Dialog.Share.Backup.Non.Backup.Folders.Warning.message
                 isInfoAlert = false
             }
         } else {
-            message = NSLocalizedString("dialog.share.backup.folder.warning.message", comment: "")
+            message = Strings.Localizable.Dialog.Share.Backup.Folder.Warning.message
         }
         
-        let alert = UIAlertController(title: NSLocalizedString("permissions", comment: ""),
+        let alert = UIAlertController(title: Strings.Localizable.permissions,
                                       message: message,
                                       preferredStyle: .alert)
         
         if isInfoAlert {
-            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel) { _ in
+            alert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel) { _ in
                 completion()
             })
         } else {
-            alert.addAction(UIAlertAction(title: NSLocalizedString("yes", comment: ""), style: .default) { _ in
+            alert.addAction(UIAlertAction(title: Strings.Localizable.yes, style: .default) { _ in
                 completion()
             })
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel))
+            alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
         }
     
         present(alert, animated: true, completion: nil)
