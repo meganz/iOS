@@ -129,15 +129,12 @@ class NicknameViewController: UIViewController {
             nicknameTextField.text = nickname
         }
 
-        title = (nickname != nil) ?
-            NSLocalizedString("Edit Nickname", comment: "Contact details screen: Set the alias(nickname) for a user") :
-            NSLocalizedString("Set Nickname", comment: "Contact details screen: Set the alias(nickname) for a user")
+        title = (nickname != nil) ? Strings.Localizable.editNickname : Strings.Localizable.setNickname
         removeNicknameButtonView.isHidden = (nickname == nil)
-        removeNicknameButton.setTitle(NSLocalizedString("Remove Nickname", comment: "Edit nickname screen: Remove nickname button title"),
-                                      for: .normal)
-        cancelBarButtonItem.title = NSLocalizedString("cancel", comment: "Cancels the add nickname screen")
-        saveBarButtonItem.title = NSLocalizedString("save", comment: "Saves the new nickname")
-        nicknameLabel.text = NSLocalizedString("Alias/ Nickname", comment: "Add nickname screen: This text appears above the alias(nickname) entry")
+        removeNicknameButton.setTitle(Strings.Localizable.removeNickname, for: .normal)
+        cancelBarButtonItem.title = Strings.Localizable.cancel
+        saveBarButtonItem.title = Strings.Localizable.save
+        nicknameLabel.text = Strings.Localizable.aliasNickname
         
         updateAppearance()
     }
