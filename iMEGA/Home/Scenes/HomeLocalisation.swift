@@ -12,7 +12,6 @@ enum HomeLocalisation: String {
 
     // MARK: - Upload From Album TableView
 
-    case uploadWithNumber
     case upload
 
     // MARK: - Search Bar
@@ -31,11 +30,6 @@ enum HomeLocalisation: String {
             return Strings.Localizable.uploadFrom
         case .documentScan:
             return Strings.Localizable.scanDocument
-        case .uploadWithNumber:
-            return NSLocalizedString(
-                "Upload (%d)", comment:
-                "Used in Photos app browser view to send the photos from the view to the cloud."
-            )
         case .upload:
             return Strings.Localizable.upload
         case .searchYourFiles:

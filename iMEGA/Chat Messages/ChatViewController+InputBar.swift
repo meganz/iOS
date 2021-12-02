@@ -607,9 +607,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        let selectionActionText = NSLocalizedString("Send (%d)", comment: "Used in Photos app browser view to send the photos from the view to the chat.")
         let selectionActionDisabledText = NSLocalizedString("send", comment: "Used in Photos app browser view as a disabled action when there is no assets selected")
-        let albumTableViewController = AlbumsTableViewController(selectionActionText: selectionActionText,
+        let albumTableViewController = AlbumsTableViewController(selectionActionType: AlbumsSelectionActionType.send,
                                                                  selectionActionDisabledText: selectionActionDisabledText) { [weak self] assets in
                                                                     guard let `self` = self else {
                                                                         return
