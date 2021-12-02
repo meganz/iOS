@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,21 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="fkw-cY-ho8">
-                            <rect key="frame" x="0.0" y="748" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXP-hz-5H9">
-                                    <rect key="frame" x="20" y="8" width="374" height="28"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                    <state key="normal" title="More Information"/>
-                                    <connections>
-                                        <action selector="thirdPartyCookiesMoreInfoTouchUpInside:" destination="oqn-M7-ZsL" eventType="touchUpInside" id="gg0-Ve-KQa"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                        </view>
                         <sections>
                             <tableViewSection id="DM1-6i-sd4">
                                 <cells>
@@ -111,60 +95,11 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="1mc-ZW-Tkk">
-                                <string key="footerTitle">Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.</string>
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Uml-7Y-w1D">
-                                        <rect key="frame" x="0.0" y="214" width="414" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Uml-7Y-w1D" id="5Pf-bp-Q9b">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2vn-KV-3bf">
-                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="COz-De-EVA"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="preferenceCookiesSwitchValueChanged:" destination="oqn-M7-ZsL" eventType="valueChanged" id="Y5b-fR-gAS"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preference Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJc-M2-udG">
-                                                    <rect key="frame" x="20" y="13.5" width="126.5" height="17.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="2vn-KV-3bf" firstAttribute="trailing" secondItem="5Pf-bp-Q9b" secondAttribute="trailingMargin" id="IJu-nq-c5M"/>
-                                                <constraint firstItem="rJc-M2-udG" firstAttribute="trailing" secondItem="5Pf-bp-Q9b" secondAttribute="trailingMargin" id="K8H-0q-JV4"/>
-                                                <constraint firstItem="2vn-KV-3bf" firstAttribute="centerY" secondItem="5Pf-bp-Q9b" secondAttribute="centerY" id="NUD-aF-np0"/>
-                                                <constraint firstItem="2vn-KV-3bf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rJc-M2-udG" secondAttribute="trailing" constant="8" id="fXS-3j-J50"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="2vn-KV-3bf" secondAttribute="trailing" id="p1B-sC-3e9"/>
-                                                <constraint firstItem="rJc-M2-udG" firstAttribute="top" secondItem="5Pf-bp-Q9b" secondAttribute="top" constant="13.5" id="rwr-tg-NRk"/>
-                                                <constraint firstItem="rJc-M2-udG" firstAttribute="leading" secondItem="5Pf-bp-Q9b" secondAttribute="leadingMargin" id="tmd-5m-qcr"/>
-                                                <constraint firstItem="rJc-M2-udG" firstAttribute="leading" secondItem="5Pf-bp-Q9b" secondAttribute="leadingMargin" constant="15" id="uLB-lK-Ito"/>
-                                                <constraint firstAttribute="bottom" secondItem="rJc-M2-udG" secondAttribute="bottom" constant="13.5" id="xPc-sG-7Lp"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="K8H-0q-JV4"/>
-                                                    <exclude reference="uLB-lK-Ito"/>
-                                                    <exclude reference="IJu-nq-c5M"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="EHM-OQ-3Yh">
                                 <string key="footerTitle">Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements. </string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="WxE-fY-4YZ">
-                                        <rect key="frame" x="0.0" y="345" width="414" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="214" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="WxE-fY-4YZ" id="a9I-Zw-tfK">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
@@ -209,104 +144,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="8fg-5s-RZ4">
-                                <string key="footerTitle">Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant.</string>
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="aja-7D-gSN">
-                                        <rect key="frame" x="0.0" y="476" width="414" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="aja-7D-gSN" id="3nK-sd-rtT">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bEx-Wt-6YY">
-                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="InZ-aI-w0J"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="advertisingCookiesSwitchValueChanged:" destination="oqn-M7-ZsL" eventType="valueChanged" id="2QR-Zq-kMM"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advertising Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJ1-o8-gOf">
-                                                    <rect key="frame" x="20" y="13.5" width="129" height="17.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="AJ1-o8-gOf" firstAttribute="trailing" secondItem="3nK-sd-rtT" secondAttribute="trailingMargin" id="2X0-EH-GXY"/>
-                                                <constraint firstItem="AJ1-o8-gOf" firstAttribute="top" secondItem="3nK-sd-rtT" secondAttribute="top" constant="13.5" id="3fM-kR-8qv"/>
-                                                <constraint firstAttribute="bottom" secondItem="AJ1-o8-gOf" secondAttribute="bottom" constant="13.5" id="6fx-AR-SEo"/>
-                                                <constraint firstItem="bEx-Wt-6YY" firstAttribute="trailing" secondItem="3nK-sd-rtT" secondAttribute="trailingMargin" id="bde-rr-di4"/>
-                                                <constraint firstItem="AJ1-o8-gOf" firstAttribute="leading" secondItem="3nK-sd-rtT" secondAttribute="leadingMargin" id="e8S-Qr-Pi1"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="bEx-Wt-6YY" secondAttribute="trailing" id="m2V-M1-PZ6"/>
-                                                <constraint firstItem="bEx-Wt-6YY" firstAttribute="centerY" secondItem="3nK-sd-rtT" secondAttribute="centerY" id="oce-KP-kNI"/>
-                                                <constraint firstItem="bEx-Wt-6YY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AJ1-o8-gOf" secondAttribute="trailing" constant="8" id="yy2-JT-4QY"/>
-                                                <constraint firstItem="AJ1-o8-gOf" firstAttribute="leading" secondItem="3nK-sd-rtT" secondAttribute="leadingMargin" constant="15" id="zQh-Is-kCT"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="2X0-EH-GXY"/>
-                                                    <exclude reference="zQh-Is-kCT"/>
-                                                    <exclude reference="bde-rr-di4"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="D5a-QD-vBF">
-                                <string key="footerTitle">These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on ‘More Information' below for details on all the third party Cookies we use. </string>
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="1Hp-1p-ezo">
-                                        <rect key="frame" x="0.0" y="607" width="414" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="1Hp-1p-ezo" id="6ay-gf-0AD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EMy-hH-KmG">
-                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="mBZ-Ed-EKA"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="thirdPartyCookiesSwitchValueChanged:" destination="oqn-M7-ZsL" eventType="valueChanged" id="J1Q-K4-DTr"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Third Party Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qzu-QL-Vp3">
-                                                    <rect key="frame" x="20" y="13.5" width="127.5" height="17.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Qzu-QL-Vp3" firstAttribute="trailing" secondItem="6ay-gf-0AD" secondAttribute="trailingMargin" id="1hJ-hn-Ba3"/>
-                                                <constraint firstItem="EMy-hH-KmG" firstAttribute="trailing" secondItem="6ay-gf-0AD" secondAttribute="trailingMargin" id="Bau-X9-h4O"/>
-                                                <constraint firstItem="EMy-hH-KmG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Qzu-QL-Vp3" secondAttribute="trailing" constant="8" id="CUc-mM-mNp"/>
-                                                <constraint firstItem="Qzu-QL-Vp3" firstAttribute="top" secondItem="6ay-gf-0AD" secondAttribute="top" constant="13.5" id="Op1-14-5xD"/>
-                                                <constraint firstItem="Qzu-QL-Vp3" firstAttribute="leading" secondItem="6ay-gf-0AD" secondAttribute="leadingMargin" id="T11-IL-YFp"/>
-                                                <constraint firstItem="EMy-hH-KmG" firstAttribute="centerY" secondItem="6ay-gf-0AD" secondAttribute="centerY" id="Tlu-c1-0J0"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="EMy-hH-KmG" secondAttribute="trailing" id="fjK-Qa-z9l"/>
-                                                <constraint firstItem="Qzu-QL-Vp3" firstAttribute="leading" secondItem="6ay-gf-0AD" secondAttribute="leadingMargin" constant="15" id="giB-Yi-o43"/>
-                                                <constraint firstAttribute="bottom" secondItem="Qzu-QL-Vp3" secondAttribute="bottom" constant="13.5" id="iFY-FL-pR6"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="1hJ-hn-Ba3"/>
-                                                    <exclude reference="giB-Yi-o43"/>
-                                                    <exclude reference="Bau-X9-h4O"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="oqn-M7-ZsL" id="pzy-Ng-DJD"/>
@@ -324,20 +161,13 @@
                     <connections>
                         <outlet property="acceptCookiesLabel" destination="xd4-xW-2Pe" id="ffd-5G-c5s"/>
                         <outlet property="acceptCookiesSwitch" destination="K6C-ga-zqF" id="f8U-Qw-s87"/>
-                        <outlet property="advertisingCookiesLabel" destination="AJ1-o8-gOf" id="sEy-xp-Snz"/>
-                        <outlet property="advertisingCookiesSwitch" destination="bEx-Wt-6YY" id="B9Y-S9-SD0"/>
                         <outlet property="cookiePolicyBarButtonItem" destination="RuF-TW-7PV" id="qig-nE-pJH"/>
                         <outlet property="essentialCookiesDetailLabel" destination="flH-7k-eOO" id="083-Hv-Exo"/>
                         <outlet property="essentialCookiesLabel" destination="zTK-5B-dCd" id="Pr9-xR-g8N"/>
                         <outlet property="performanceAndAnalyticsCookiesLabel" destination="bcm-kQ-mo0" id="pPV-68-Zoj"/>
                         <outlet property="performanceAndAnalyticsSwitch" destination="Rhg-kL-7jv" id="CX5-f8-6Sk"/>
-                        <outlet property="preferenceCookiesLabel" destination="rJc-M2-udG" id="OkE-IV-nwc"/>
-                        <outlet property="preferenceCookiesSwitch" destination="2vn-KV-3bf" id="Cr4-WL-SCT"/>
                         <outlet property="privacyPolicyBarButtonItem" destination="17d-JL-TMG" id="mHQ-Nr-6Jd"/>
                         <outlet property="saveBarButtonItem" destination="ggm-2a-Wjc" id="tvn-Tl-g9r"/>
-                        <outlet property="thirdPartyCookiesLabel" destination="Qzu-QL-Vp3" id="5zD-RW-7hG"/>
-                        <outlet property="thirdPartyCookiesMoreInformationButton" destination="aXP-hz-5H9" id="PRu-bg-SAI"/>
-                        <outlet property="thirdPartyCookiesSwitch" destination="EMy-hH-KmG" id="zxO-jO-Bbg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qjf-Hn-lue" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -359,69 +189,7 @@
             </objects>
             <point key="canvasLocation" x="528.98550724637687" y="-410.49107142857139"/>
         </scene>
-        <!--Third Party Cookies-->
-        <scene sceneID="G7H-0a-A9Z">
-            <objects>
-                <viewController storyboardIdentifier="ThirdPartyCookiesMoreInfoViewControllerID" title="Third Party Cookies" id="esi-WG-EK6" customClass="ThirdPartyCookiesMoreInfoViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Zob-9W-v03">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Third Party Cookies in use" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc9-ND-xZC" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                <rect key="frame" x="108" y="98" width="198.5" height="17"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="footnote"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="semibold"/>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="uVO-4o-i0m"/>
-                        <constraints>
-                            <constraint firstItem="uc9-ND-xZC" firstAttribute="top" secondItem="uVO-4o-i0m" secondAttribute="top" constant="54" id="6ix-Uf-Mql"/>
-                            <constraint firstItem="uc9-ND-xZC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uVO-4o-i0m" secondAttribute="leading" constant="10" id="8D8-re-i2Q"/>
-                            <constraint firstItem="uVO-4o-i0m" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uc9-ND-xZC" secondAttribute="trailing" constant="10" id="EIX-se-vql"/>
-                            <constraint firstItem="uc9-ND-xZC" firstAttribute="centerX" secondItem="uVO-4o-i0m" secondAttribute="centerX" id="rGB-4w-caI"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="noThirdPartyCookiesInUseLabel" destination="uc9-ND-xZC" id="uvO-Pm-2g3"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LY0-IW-Er4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1504" y="-410"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="bdN-AS-tVT">
-            <objects>
-                <navigationController storyboardIdentifier="CookieSettingsNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="MZ6-qs-Zc9" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j04-28-zcA">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9px-Vv-jAf">
-                        <rect key="frame" x="0.0" y="813" width="414" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="oqn-M7-ZsL" kind="relationship" relationship="rootViewController" id="leC-QX-WHv"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pBm-aW-l4S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-381.15942028985512" y="-410.49107142857139"/>
-        </scene>
     </scenes>
-    <designables>
-        <designable name="uc9-ND-xZC">
-            <size key="intrinsicContentSize" width="198.5" height="17"/>
-        </designable>
-    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

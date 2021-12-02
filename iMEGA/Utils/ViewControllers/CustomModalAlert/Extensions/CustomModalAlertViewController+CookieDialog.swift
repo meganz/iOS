@@ -3,16 +3,16 @@ import Foundation
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {
         image = UIImage(named: "cookie")
-        viewTitle = Strings.Localizable.beforeYouContinue
+        viewTitle = Strings.Localizable.Dialog.Cookies.Title.yourPrivacy
         detailAttributed = detailTextAttributedString()
         
         let detailTapGR = UITapGestureRecognizer(target: self, action: #selector(cookiePolicyTouchUpInside))
         detailTapGR.cancelsTouchesInView = false
         detailTapGestureRecognizer = detailTapGR
         
-        firstButtonTitle = Strings.Localizable.acceptCookies
+        firstButtonTitle = Strings.Localizable.Dialog.Cookies.accept
         dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
-        dismissButtonTitle = Strings.Localizable.cookieSettings
+        dismissButtonTitle = Strings.Localizable.General.cookieSettings
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
@@ -37,20 +37,17 @@ extension CustomModalAlertViewController {
         
         dismissCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                let cookieSettingsFactory = CookieSettingsFactory()
-                let cookieSettingsNC = cookieSettingsFactory.createCookieSettingsNC()
-                
                 if UIApplication.mnz_presentingViewController().presentedViewController == nil {
-                    UIApplication.mnz_visibleViewController().navigationController?.present(cookieSettingsNC, animated: true, completion: nil)
+                    CookieSettingsRouter(presenter: UIApplication.mnz_visibleViewController()).start()
                 } else {
-                    UIApplication.mnz_presentingViewController().navigationController?.present(cookieSettingsNC, animated: true, completion: nil)
+                    CookieSettingsRouter(presenter: UIApplication.mnz_presentingViewController()).start()
                 }
             })
         }
     }
     
     @objc func detailTextAttributedString() -> NSAttributedString {
-        var detailText = Strings.Localizable.cookieDialogTextWeUseCookiesAndSimilarTechnologiesCookies as NSString
+        var detailText = Strings.Localizable.Dialog.Cookies.description as NSString
         let cookiePolicy = detailText.mnz_stringBetweenString("[A]", andString: "[/A]")
         detailText = detailText.mnz_removeWebclientFormatters() as NSString
         

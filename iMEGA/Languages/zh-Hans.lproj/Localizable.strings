@@ -214,6 +214,8 @@
 "addContacts"="新增联系人";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="邀请至MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="您和联系人[X] 在MEGA上还不是好友。您需要邀请您的联系人后才能进行加密聊天通话";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="已邀请";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="开启群聊";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="位置";
+"chat.map.location"="位置";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="语音剪辑";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -371,7 +373,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="（仅限Pro会员）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="设定到期日";
+"setExpiryDate"="设置到期日";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="密码保护设定";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -586,6 +588,8 @@
 "addContactButton"="新增";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="该用户已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="隐私政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Cookie政策";
+"general.cookiePolicy"="Cookie政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Cookie设置";
+"general.cookieSettings"="Cookie设置";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服务条款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -951,7 +955,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="从手机通讯录中选择联系人或输入多个电子邮件地址";
 /*  */
-"insertYourFriendsEmails"="请填入您好友的电子邮件：";
+"insertYourFriendsEmails"="请填写您好友的电子邮件地址：";
 /*  */
 "howItWorks"="如何使用";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="欲升级当前订阅，您可以联系支持了解[A]自定义会员方案[/A]。";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="当前计划：";
+"inAppPurchase.upgrade.label.currentPlan"="当前会员方案：";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="当前方案";
+"inAppPurchase.productDetail.navigation.currentPlan"="当前方案";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="升级至自定义会员方案";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="历史版本";
 /* Title label of a node property. */
-"location"="位置";
+"cloudDrive.info.node.location"="位置";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="大小总计";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="文件";
 /* Label to desing a file matching */
-"File"="文件";
+"chat.match.file"="文件";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="当前版本";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="删除垃圾桶中的文件，时间早于";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="若需延长保留期限，请[S]升级到Pro会员帐户[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="天";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾箱会自动清除。最短时隔为7天，最长时隔为30天。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="发送此位置";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="地图设置";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="标准模式";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="卫星图像";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="按空格键添加更多邮箱";
 /* Text used as a section title or similar */
 "Enter Email"="输入电子邮件地址";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="于MEGA上";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA联系人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="企业";
 /*  */
 "Administrator"="管理员";
-/* Business user role */
-"User"="用户";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="传输";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="直到打开前";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分钟";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1小时";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6小时";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="发送原始尺寸，提高图像质量";
 /* Setting title for Doc scan view */
 "Save Settings"="保存设置";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="扫描件%@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="文件类型";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="输入群名称";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="输入文字……";
+"chat.message.placeholder"="输入文字……";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="向左拖动即可取消，松手发送";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="在主页部分隐藏近期动态。";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="默认";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="天";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="夜间模式";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="链接";
 /* Text referencing the date of creation of a link */
 "Link Creation"="链接创建时间";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="分享给";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="待接收";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="历史版本";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="收藏";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="取消收藏";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="标签";
+"cloudDrive.sort.label"="标签";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="标签…";
+"general.chooseLabel.title"="标签…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="取消标签";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="单独发送解密密钥";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="到期日";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="设置到期日";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="密码保护";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="已复制密码到剪贴板";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我们的端到端加密系统需要为此文件自动生成唯一密钥。 默认情况下会创建带有此密钥的链接，您也可以单独导出解密密钥增加链接安全性。";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="解密密钥";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="移除密码";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="一年";
 /*  */
 "year"="年";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="共享";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="搜索您的文件";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="无视频";
 /* Navigation title for the photo explorer view */
 "All Images"="所有图片";
-/* Section title for the photo explorer view */
-"TODAY"="今天";
-/* Section title for the photo explorer view */
-"YESTERDAY"="昨天";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="无图片";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="发送消息失败";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="消息发送已取消";
-/* Cookie dialog header */
-"Before You Continue"="我们的Cookie政策";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="您的隐私";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="我们使用本地存储和类似技术（“ Cookies”）为您提供服务，通过我们的服务增强您的体验，并定制您所看到的广告，包括第三方广告。从访问开始就接受我们对Cookie的使用，或在Cookie设置中自定义Cookie。您可以在我们的[A]Cookie政策[/A]中了解更多信息。";
+"dialog.cookies.description"="我们使用Cookie和类似技术（“Cookie”）来提供并增强您对我们服务的体验。在您开始访问时就接受我们对Cookie的使用或在Cookie设置中个性化设置Cookie。您可以在我们的[A]Cookie政策[/A]中阅读更多信息。";
 /* Cookie dialog button label. */
-"Accept Cookies"="接受Cookies";
+"dialog.cookies.accept"="接受Cookie";
 /* Cookie settings dialog text. */
-"Essential Cookies"="基本Cookies";
+"settings.cookies.essential"="基本Cookie";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="始终开启";
+"settings.cookies.essential.alwaysOn"="始终开启";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="基本Cookie为您提供重要功能以及对我们服务的安全访问。因此，无需经过同意。";
+"settings.cookies.essential.footer"="为您提供重要功能和安全访问我们服务的必要条件。 因此，无需进行设置。";
 /* Cookie settings dialog text. */
-"Preference Cookies"="偏好Cookies";
+"settings.cookies.performanceAndAnalytics"="性能与分析Cookies";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="我们将记住您选择的某些显示与格式设置。不接受这些Cookies意味着我们无法记住您的偏好，例如您偏好的屏幕布局。";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="性能与分析Cookies";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="帮助我们了解您如何使用我们的服务，并向我们提供可用于改进的数据。不接受这些Cookies意味着我们无法获得较多的数据以帮助改进设计。";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="广告Cookies";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="我们和我们认可的广告合作商将根据您的浏览历史记录来自定义您在我们的服务和其他网站上显示的广告。不接受这些Cookies意味着我们可能会显示不相关的广告。";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="第三方Cookies";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="这些Cookies并非由我们控制，我们使用它来提供上述功能类别。根据每个第三方Cookie的类别，不接受这些Cookies会产生不同含义。请点击下方的“更多信息”获取我们使用的所有第三方Cookie详细信息。";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="更多信息";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="未使用第三方Cookie";
+"settings.cookies.performanceAndAnalytics.footer"="帮助我们了解您如何使用我们的服务，并向我们提供可用于改进的数据。不接受这些Cookies意味着我们无法获得较多的数据以帮助改进设计。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="版本已成功创建为新文件。";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>如果您希望保留您的数据，请升级帐户。</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="获得奖励";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="设置备份";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="使用我们的桌面应用程序确保您的备份文件夹与您的MEGA云盘保持同步。";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="移动“%@”";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="您正在更改默认备份文件夹位置。这可能会影响您将来查找备份文件夹。请牢记此位置以便日后可以找到它。";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="移动此文件夹将更改备份位置。出于安全考虑，备份将被停止。您确定要继续吗？使用MEGA桌面应用程序可重新开启备份。";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="移动“%@”至垃圾桶";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="备份文件夹将会被删除。此操作将删除您设置的所有备份。您确定要继续吗？";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="您确定要删除备份文件夹并停用已设置的备份吗？";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="添加项目到“%@”";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="添加项目到此文件夹会更改备份位置。出于安全考虑，备份将会停止。您确定要继续吗？使用MEGA桌面应用程序可重新开启备份。";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="请输入“%@”确认此操作";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="移动备份";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="删除备份";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="停用备份";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="移至垃圾桶";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="添加";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="输入的文字不匹配";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="由于这是备份文件夹，只能以只读方式共享，对其内容的任何更改都可能会禁用备份。";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="这些文件夹只能以只读方式共享，因为它们是备份文件夹。对其内容的任何更改都可能会禁用备份。";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="某些共享文件夹是备份文件夹和只读文件夹。您确定要继续吗？";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@加入了通话";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="新建会议";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="%@ 会议";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="开始会议";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="会议已结束";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2707,7 +2711,7 @@
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="以访客身份加入";
 /* Guest user join Mega: paragraph 1 title */
-"meetings.joinMega.paragraph1.title"="您的隐私非常重要";
+"meetings.joinMega.paragraph1.title"="您的隐私是重中之重";
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="加入全球最大的安全云存储和协作平台。";
 /* Guest user join Mega: paragraph 2 title */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="预览高分辨率图片";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="预览时使用移动数据加载高分辨率图片。若关闭此选项，则只有在放大时才会加载高分辨率图片。";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="您已经有一个现有订阅";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="您之前已通过Google Play或华为AppGallery订阅了Pro会员方案。请在您设备上的Google Play或华为AppGallery中手动取消您的订阅后进行重试。";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="您想要取消当前订阅并继续购买吗？";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="另一个通话正在进行中。请先结束您的当前通话后才能加入另一个。";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="结束并加入";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="3D模型";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D场景";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="RAW图像";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="多媒体";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="7-Zip压缩文件";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="数据库";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="ANSI文本文件";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Android应用程序";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Mac OS X应用程序";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="ASCII文本";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="流媒体视频";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="卡西欧RAW图像";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="位图图像";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX压缩";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="C/C++源代码";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="C++源代码";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="CorelDRAW图像";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Java Class";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOS命令";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="CSS样式表";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="MS Word模板";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="DXF图像";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="EPS图像";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="执行档";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="无损音频";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Flash视频";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="视窗字体";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="字体";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="视窗小工具";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="GIF图像";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="GPS交换";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="电子表格";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU Compressed";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="标头";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="HTML文档";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="交换文件格式";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="ISO映像";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Java归档";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Java代码";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="JPEG图像";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="日志";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="媒体播放列表";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="MPEG-4音频";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max场景";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="MIDI音频";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="MKV视频";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="QuickTime视频";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="MP3音频";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="MP4视频";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="MPEG视频";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="MS安装程序";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="文本文件";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="OpenType字体";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="播客";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="PDF文件";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="PHP代码";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="音频播放列表";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="PNG图像";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="RAR压缩文件";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="富文本";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="松下RAW图像";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="服务器HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X压缩";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="SQL数据库";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="索尼RAW图像";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="字幕";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="矢量图像";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Flash影片";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="归档";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="压缩文件";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="TIF图像";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="TIFF图像";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="TrueType字体";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Wave音频";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="WebM视频";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="WM音频";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="WM视频";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="XML文档";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIP归档";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="选择";

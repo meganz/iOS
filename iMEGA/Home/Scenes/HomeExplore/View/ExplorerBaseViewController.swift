@@ -84,9 +84,7 @@ class ExplorerBaseViewController: UIViewController {
         
         let activityVC = UIActivityViewController(forNodes: selectedNodes, sender: button)
         activityVC.completionWithItemsHandler = { [weak self] activityType, _, _, _ in
-            if activityType?.rawValue == MEGAUIActivityTypeGetLink {
-                self?.endEditingMode()
-            }
+            self?.endEditingMode()
         }
         present(activityVC, animated: true)
     }
@@ -130,6 +128,7 @@ class ExplorerBaseViewController: UIViewController {
         
         browserVC.selectedNodesArray = selectedNodes
         browserVC.browserAction = action
+        browserVC.browserViewControllerDelegate = self
         present(navigationController, animated: true)
     }
     
@@ -154,5 +153,11 @@ extension ExplorerBaseViewController: TraitEnviromentAware {
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
+    }
+}
+
+extension ExplorerBaseViewController: BrowserViewControllerDelegate {
+    func nodeEditCompleted(_ complete: Bool) {
+        endEditingMode()
     }
 }

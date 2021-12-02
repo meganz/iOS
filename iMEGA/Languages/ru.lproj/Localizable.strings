@@ -214,6 +214,8 @@
 "addContacts"="Добавить контакты";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Пригласить в MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Ваш контакт [X] не зарегистрирован в MEGA. Чтобы позвонить через зашифрованный чат MEGA, вам необходимо пригласить контакт";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Приглашение отправлено";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Создать группу";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Расположение";
+"chat.map.location"="Расположение";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Голосовое сообщение";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -586,6 +588,8 @@
 "addContactButton"="Добавить";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный  email адрес";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="Пользователь [X]  приглашён. Он появится в вашем списке контактов, если согласится.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Пользователи приглашены. Они появятся в вашем списке контактов, если согласятся.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Политика использования файлов cookie";
+"general.cookiePolicy"="Политика использования файлов cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Настройки куки";
+"general.cookieSettings"="Настройки куки";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Условия предоставления услуг";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -951,7 +955,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Выберите из телефонных контактов или введите несколько адресов электронной почты";
 /*  */
-"insertYourFriendsEmails"="Введите e-mail друга:";
+"insertYourFriendsEmails"="Введите адреса электронной почты друзей:";
 /*  */
 "howItWorks"="Как это работает";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Чтобы улучшить текущую подписку, обратитесь в службу поддержки за [A]индивидуальным планом[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Текущий план:";
+"inAppPurchase.upgrade.label.currentPlan"="Текущий план:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Текущий план";
+"inAppPurchase.productDetail.navigation.currentPlan"="Текущий план";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Перейти на индивидуальный план";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Версии";
 /* Title label of a node property. */
-"location"="Расположение";
+"cloudDrive.info.node.location"="Расположение";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Размер";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="файл";
 /* Label to desing a file matching */
-"File"="Файл";
+"chat.match.file"="Файл";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Текущая версия";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="Удалять файлы старше";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Для большего периода хранения [S]улучшите аккаунт до Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="д.";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Корзина очищается автоматически. Минимальный срок составляет 7 дней, максимальный — 30 дней.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="Отправить это местоположение";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Настройки карты";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Обычный";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Спутник";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="Нажмите пробел, чтобы ввести несколько электронных писем";
 /* Text used as a section title or similar */
 "Enter Email"="Ввести email";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="В MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="КОНТАКТЫ В MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="Бизнес";
 /*  */
 "Administrator"="Администратор";
-/* Business user role */
-"User"="Пользователь";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Передача";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="Пока я не включу их снова";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 минут";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 час";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 часов";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="Отправлять оригинальный размер, увеличенное качество изображения";
 /* Setting title for Doc scan view */
 "Save Settings"="Сохранение настроек";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="Скан %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Тип файла";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Введите имя группы";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Сообщение…";
+"chat.message.placeholder"="Сообщение…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Передвиньте влево для отмены, отпустите для отправки";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="Скрыть недавние действия в главном разделе.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="По умолчанию";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="День";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Ночь";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="ССЫЛКА";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Ссылка создана";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="ПОДЕЛИЛИСЬ С";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="В ОЖИДАНИИ";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="ВЕРСИИ";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Избранное";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Удалить из избранного";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Метка";
+"cloudDrive.sort.label"="Метка";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Метка…";
+"general.chooseLabel.title"="Метка…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Удалить метку";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="Отправлять ключ дешифрования отдельно";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Срок годности";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Задать срок годности";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Защита паролем";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="Пароль скопирован в буфер обмена";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Наша система сквозного шифрования требует уникальный ключ, автоматически сгенерированный для этого файла. Ссылка с этим ключом создается по умолчанию, но вы можете экспортировать ключ дешифрования отдельно для дополнительного уровня безопасности.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="Ключ дешифрирования";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Удалить пароль";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 год";
 /*  */
 "year"="год";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="ПОДЕЛИТЬСЯ";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Искать в файлах";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="Видео не найдены";
 /* Navigation title for the photo explorer view */
 "All Images"="Все изображения";
-/* Section title for the photo explorer view */
-"TODAY"="СЕГОДНЯ";
-/* Section title for the photo explorer view */
-"YESTERDAY"="ВЧЕРА";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="Изображения не найдены";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="не удалось отправить сообщение";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="отправка сообщения отменена";
-/* Cookie dialog header */
-"Before You Continue"="Прежде чем вы продолжите";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="Your privacy";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Мы используем локальное хранилище и аналогичные технологии («Cookies») для предоставления вам наших услуг, улучшения вашего опыта работы с нашими услугами и настройки рекламы, которую вы видите, в том числе через третьих лиц. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]Политике в отношении куки-файлов[/A].";
+"dialog.cookies.description"="We use Cookies and similar technologies (“Cookies”) to provide and enhance your experience with our services. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Принять куки";
+"dialog.cookies.accept"="Принять куки";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Основные куки-файлы";
+"settings.cookies.essential"="Основные куки-файлы";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Всегда включены";
+"settings.cookies.essential.alwaysOn"="Всегда включены";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Необходимы для предоставления вам важных функций и безопасного доступа к нашим услугам. По этой причине согласие на них не требуется.";
+"settings.cookies.essential.footer"="Необходимы для предоставления вам важных функций и безопасного доступа к нашим услугам. По этой причине согласие на них не требуется.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Куки отображения";
+"settings.cookies.performanceAndAnalytics"="Куки производительности и аналитики";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Позвольте нам запомнить определенные выбранные вами настройки отображения и форматирования. Непринятие этих куки-файлов будет означать, что мы не сможем запомнить для вас некоторые вещи, такие как предпочтительный макет экрана.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Куки производительности и аналитики";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Помогите нам понять, как вы используете наши услуги, и предоставьте нам данные, которые мы можем использовать для улучшения. Непринятие этих файлов cookie будет означать, что у нас будет меньше данных, необходимых для улучшения разработки.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="Рекламные куки";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Используется нами и нашими утверждёнными рекламными партнерами для настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах на основе вашей истории просмотров. Если не принять эти куки, мы можем показывать менее актуальную рекламу.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="Сторонние куки";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Это куки, которые контролируются кем-то, кроме нас; мы используем эти куки для предоставления функций, описанных выше. Непринятие этих куки будет иметь различные последствия в зависимости от того, какой тип у каждого стороннего куки-файла. Нажмите «Дополнительная информация» ниже, чтобы получить подробную информацию обо всех сторонних файлах cookie, которые мы используем.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="Дополнительная информация";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="Сторонние файлы cookie не используются";
+"settings.cookies.performanceAndAnalytics.footer"="Помогите нам понять, как вы используете наши услуги, и предоставьте нам данные, которые мы можем использовать для улучшения. Непринятие этих файлов cookie будет означать, что у нас будет меньше данных, необходимых для улучшения разработки.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Версия была успешно создана как новый файл.";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>Пожалуйста, улучшите аккаунт сегодня, если вы хотите сохранить свои данные.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Бонусы";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="Настройка резервного копирования";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="Используйте наше настольное приложение, чтобы синхронизировать папку резервных копий с вашим облаком MEGA.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="Перемещение папки «%@»";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="Вы меняете расположение папки резервного копирования по умолчанию. Из-за этого её может быть сложнее найти в будущем. Пожалуйста, запомните, где она находится, чтобы не потерять.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="При перемещении этой папки изменяется место сохранения резервных копий. Резервное копирование будет отключено в целях безопасности. Вы действительно хотите это сделать? Резервное копирование можно повторно включить с помощью настольного приложения MEGA.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="Перемещение папки «%@» в корзину";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="Вы удаляете папку с резервными копиями. Это удалит все созданные вами резервные копии. Вы уверены, что хотите это сделать?";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="Вы действительно хотите удалить папку резервного копирования и отключить заданное вами резервное копирование?";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="Добавление элемента в папку «%@»";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="При добавлении элементов в эту папку изменяется место сохранения резервных копий. Резервное копирование будет отключено в целях безопасности. Вы действительно хотите это сделать? Резервное копирование можно повторно включить с помощью настольного приложения MEGA.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="Пожалуйста, введите «%@», чтобы продолжить";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="переместить";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="удалить";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="отключить";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="Переместить в корзину";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="Добавить";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="Введённый текст не подходит";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="Эта папка может быть доступна только для чтения, потому что это папка резервных копий. Любые изменения её содержимого могут отключить резервное копирование.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="Эти папки могут быть доступны только для чтения, потому что это папки резервных копий. Любые изменения их содержимого могут отключить резервное копирование.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="Некоторые папки, которыми вы собираетесь поделиться, являются папками резервных копий и предназначены только для чтения. Продолжить?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ присоединился к звонку";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="Новая встреча";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="Встреча %@";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="Начать встречу";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Встреча закончилась";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="Превью изображений с высоким разрешением";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="Использовать мобильные данные для загрузки изображений с высоким разрешением при предварительном просмотре. Если этот параметр отключён, изображение с высоким разрешением будет загружено только при увеличении масштаба.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="У вас уже есть активная подписка";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="Вы ранее подписались на план Pro в Google Play или AppGallery. Пожалуйста, вручную отмените подписку в Google Play или Huawei AppGallery на вашем устройстве, а затем повторите попытку.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Хотите отменить текущую подписку и продолжить покупку?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="Идёт ещё один звонок. Пожалуйста, завершите первый звонок, прежде чем сделать следующий.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="Закончить и присоединиться";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="3D-модель";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D-сцена";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="RAW-изображение";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="Мультимедиа";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="Архив 7-Zip";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="База данных";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="Текстовый файл ANSI";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Приложение для Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Приложение Mac OS X";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="ASCII-текст";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="Потоковое видео";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Изображение Casio RAW";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="Изображение Bitmap";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="Архив UNIX";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="Исходный код на C/C++";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="Исходный код на C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="Изображение CorelDRAW";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Класс в Java";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="Команда DOS";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="Таблица стилей CSS";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="Шаблон MS Word";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="Изображение DXF";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="Изображение EPS";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="Исполняемый файл";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="Аудио без потерь";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Flash-видео";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Шрифт Windows";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="Шрифт";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Windows-гаджет";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="Изображение GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="Файл обмена данными GPS";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="Таблица";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="Архив GNU";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="Заголовок";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="Документ HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Формат файла обмена";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="Образ ISO";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Java-архив";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Java-код";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="Изображение JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="Журнал";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="Медиа-плейлист";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="Аудио MPEG-4";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="Сцена 3ds Max";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="Аудио MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="Видео MKV";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="Видео QuickTime";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="Аудио MP3";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="Видео MP4";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="Видео MPEG";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="Установщик MS";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="Текстовый документ";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="Шрифт OpenType";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Файл Apple Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="Подкаст";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="Документ PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="PHP-код";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="Аудио-плейлист";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="Изображение PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="Архив RAR";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="Текстовый документ RTF";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Изображение Panasonic RAW";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="Сервер HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="Архив X";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="База данных SQL";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Изображение Sony RAW";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="Субтитры";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="Векторное изображение";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Flash-видео";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="Архив";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="Архив";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="Изображение TIF";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="Изображение TIFF";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="Шрифт TrueType";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Аудио Wave";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="Видео WebM";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="Аудмо WM";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="Видео WM";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="Документ XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIP-архив";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Выбрать";

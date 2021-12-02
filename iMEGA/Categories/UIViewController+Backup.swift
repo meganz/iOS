@@ -19,49 +19,49 @@ extension UIViewController {
         switch action {
         case .move:
             return BackupAlertConfiguration(node: node,
-                                            title: String(format: NSLocalizedString("dialog.backup.folder.location.warning.title", comment: ""), node.name ?? ""),
+                                            title: Strings.Localizable.Dialog.Backup.Folder.Location.Warning.title(node.name ?? ""),
                                             description: node.isBackupRootNode() ?
-                                                                NSLocalizedString("dialog.root.backup.folder.location.warning.message", comment: "") :
-                                                                NSLocalizedString("dialog.backup.folder.location.warning.message", comment: ""),
-                                            actionTitle: NSLocalizedString("continue", comment: ""))
+                                                                Strings.Localizable.Dialog.Root.Backup.Folder.Location.Warning.message :
+                                                                Strings.Localizable.Dialog.Backup.Folder.Location.Warning.message,
+                                            actionTitle: Strings.Localizable.continue)
             
         case .moveToRubbishBin:
             return BackupAlertConfiguration(node: node,
-                                            title: String(format: NSLocalizedString("dialog.delete.backup.folder.warning.title", comment: ""), node.name ?? ""),
+                                            title: Strings.Localizable.Dialog.Delete.Backup.Folder.Warning.title(node.name ?? ""),
                                             description: node.isBackupRootNode() ?
-                                                                NSLocalizedString("dialog.delete.root.backup.folder.warning.message", comment: "") :
-                                                                NSLocalizedString("dialog.delete.backup.folder.warning.message", comment: ""),
-                                            actionTitle: NSLocalizedString("continue", comment: ""))
+                                                                Strings.Localizable.Dialog.Delete.Root.Backup.Folder.Warning.message:
+                                                                Strings.Localizable.Dialog.Delete.Backup.Folder.Warning.message,
+                                            actionTitle: Strings.Localizable.continue)
         case .addFolder:
             return BackupAlertConfiguration(node: node,
-                                            title: String(format: NSLocalizedString("dialog.add.items.backup.folder.warning.title", comment: ""), node.name ?? ""),
-                                            description: NSLocalizedString("dialog.add.items.backup.folder.warning.message", comment: ""),
-                                            actionTitle: NSLocalizedString("continue", comment: ""))
+                                            title: Strings.Localizable.Dialog.Add.Items.Backup.Folder.Warning.title(node.name ?? ""),
+                                            description: Strings.Localizable.Dialog.Add.Items.Backup.Folder.Warning.message,
+                                            actionTitle: Strings.Localizable.continue)
         case .confirmMove:
             let placeholder = node.isBackupRootNode() ?
-                                                    NSLocalizedString("dialog.move.backup.placeholder", comment: "") :
-                                                    NSLocalizedString("dialog.disable.backup.placeholder", comment: "")
+                                                    Strings.Localizable.Dialog.Move.Backup.placeholder :
+                                                    Strings.Localizable.Dialog.Disable.Backup.placeholder
             return BackupAlertConfiguration(node: node,
-                                            title: String(format: NSLocalizedString("dialog.backup.folder.location.warning.title", comment: ""), node.name ?? ""),
-                                            description: String(format: NSLocalizedString("dialog.backup.warning.confirm.message", comment: ""), placeholder),
-                                            actionTitle: NSLocalizedString("move", comment: ""),
+                                            title: Strings.Localizable.Dialog.Backup.Folder.Location.Warning.title(node.name ?? ""),
+                                            description: Strings.Localizable.Dialog.Backup.Warning.Confirm.message(placeholder),
+                                            actionTitle: Strings.Localizable.move,
                                             confirmPlaceholder: placeholder)
         case .confirmMoveToRubbishBin:
             let placeholder = node.isBackupRootNode() ?
-                                                    NSLocalizedString("dialog.disable.backup.placeholder", comment: "") :
-                                                    NSLocalizedString("dialog.delete.backup.placeholder", comment: "")
+                                                    Strings.Localizable.Dialog.Disable.Backup.placeholder :
+                                                    Strings.Localizable.Dialog.Delete.Backup.placeholder
             return BackupAlertConfiguration(node: node,
-                                            title: String(format: NSLocalizedString("dialog.delete.backup.folder.warning.title", comment: ""), node.name ?? ""),
-                                            description: String(format: NSLocalizedString("dialog.backup.warning.confirm.message", comment: ""), placeholder),
-                                            actionTitle: NSLocalizedString("dialog.delete.backup.action.title", comment: ""),
+                                            title: Strings.Localizable.Dialog.Delete.Backup.Folder.Warning.title(node.name ?? ""),
+                                            description: Strings.Localizable.Dialog.Backup.Warning.Confirm.message(placeholder),
+                                            actionTitle: Strings.Localizable.Dialog.Delete.Backup.Action.title,
                                             confirmPlaceholder: placeholder)
             
         case .confirmAddFolder:
             return BackupAlertConfiguration(node: node,
-                                            title: String(format: NSLocalizedString("dialog.add.items.backup.folder.warning.title", comment: ""), node.name ?? ""),
-                                            description: String(format: NSLocalizedString("dialog.backup.warning.confirm.message", comment: ""), NSLocalizedString("dialog.disable.backup.placeholder", comment: "")),
-                                            actionTitle: NSLocalizedString("dialog.add.items.backup.action.title", comment: ""),
-                                            confirmPlaceholder: NSLocalizedString("dialog.disable.backup.placeholder", comment: ""))
+                                            title: Strings.Localizable.Dialog.Add.Items.Backup.Folder.Warning.title(node.name ?? ""),
+                                            description: Strings.Localizable.Dialog.Backup.Warning.Confirm.message(Strings.Localizable.Dialog.Disable.Backup.placeholder),
+                                            actionTitle: Strings.Localizable.Dialog.Add.Items.Backup.Action.title,
+                                            confirmPlaceholder: Strings.Localizable.Dialog.Disable.Backup.placeholder)
         }
     }
 }

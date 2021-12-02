@@ -75,7 +75,7 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
     
     self.aboutLabel.text = NSLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
     self.termsAndPoliciesLabel.text = NSLocalizedString(@"settings.section.termsAndPolicies", @"Title of one of the Settings sections where you can see the MEGA's 'Terms and Policies'");
-    self.cookieSettingsLabel.text = NSLocalizedString(@"Cookie Settings", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings'");
+    self.cookieSettingsLabel.text = NSLocalizedString(@"general.cookieSettings", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings'");
 }
 
 - (void)updateAppearance {
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
                         break;
                     
                     case LastSectionRowCookieSettings:
-                        [self.navigationController presentViewController:[CookieSettingsFactory.new createCookieSettingsNC] animated:YES completion:nil];
+                        [[CookieSettingsRouter.alloc initWithPresenter:self.navigationController] start];
                         break;
                         
                     default:
