@@ -215,7 +215,7 @@ class NodeActionViewController: ActionSheetViewController {
         if node.isFile() {
             subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {
-            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
+            subtitleLabel.text = node.isBackupRootNode() ? node.numberOfDevices(sdk: sharedMEGASdk) : Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
         }
     
         headerView?.addSubview(separatorLineView)
