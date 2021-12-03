@@ -4,7 +4,7 @@ import Foundation
 extension CustomModalAlertViewController {
     
     func configureOutgoingContactRequest(_ email: String) {
-        image = UIImage(named: "inviteSent")
+        image = Asset.Images.Contacts.inviteSent.image
         viewTitle = Strings.Localizable.inviteSent
         var detailText = Strings.Localizable.Dialog.InviteContact.outgoingContactRequest
         detailText = detailText.replacingOccurrences(of: "[X]", with: email)

@@ -87,7 +87,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     
     func showInviteSuccess(email: String) {
         let customModalAlertViewController = CustomModalAlertViewController()
-        customModalAlertViewController.image = UIImage(named: "inviteSent")
+        customModalAlertViewController.image = Asset.Images.Contacts.inviteSent.image
         customModalAlertViewController.viewTitle = Strings.Localizable.inviteSent
         customModalAlertViewController.detail = Strings.Localizable.theUsersHaveBeenInvited
         customModalAlertViewController.boldInDetail = email

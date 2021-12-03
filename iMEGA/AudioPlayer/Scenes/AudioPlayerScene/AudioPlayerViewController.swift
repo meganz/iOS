@@ -153,7 +153,7 @@ final class AudioPlayerViewController: UIViewController {
     
     private func configureNavigationBar(title: String, subtitle: String) {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(closeButtonAction))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(moreButtonAction(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: Asset.Images.Contacts.more.image, style: .plain, target: self, action: #selector(moreButtonAction(_:)))
         
         let titleView = CustomTitleView.instanceFromNib
         titleView.titleLabel.text = title
