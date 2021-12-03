@@ -82,7 +82,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         }
 
         func initialise(searchField: UITextField) {
-            searchField.setLeftImage(UIImage(named: "searchBarIcon")!)
+            searchField.setLeftImage(Asset.Images.Home.searchBarIcon.image)
             searchField.placeholder = HomeLocalisation.searchYourFiles.rawValue
             searchField.delegate = self
         }

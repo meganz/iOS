@@ -20,7 +20,7 @@ extension EmptyStateView {
     }
     
     class func photosEmptyState() -> EmptyStateView {
-        let view = EmptyStateView(forHomeWith: UIImage(named: "allPhotosEmptyState"),
+        let view = EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
                                   title: Strings.Localizable.Home.Images.empty,
                                   description: nil,
                                   buttonTitle: nil)
@@ -29,7 +29,7 @@ extension EmptyStateView {
     }
     
     class func documentsEmptyState() -> EmptyStateView {
-        let view = EmptyStateView(forHomeWith: UIImage(named: "documentsEmptyState"),
+        let view = EmptyStateView(forHomeWith: Asset.Images.Home.documentsEmptyState.image,
                                   title: Strings.Localizable.noDocumentsFound,
                                   description: nil,
                                   buttonTitle: nil)
@@ -38,7 +38,7 @@ extension EmptyStateView {
     }
     
     class func audioEmptyState() -> EmptyStateView {
-        let view = EmptyStateView(forHomeWith: UIImage(named: "audioEmptyState"),
+        let view = EmptyStateView(forHomeWith: Asset.Images.Home.audioEmptyState.image,
                                   title: Strings.Localizable.noAudioFilesFound,
                                   description: nil,
                                   buttonTitle: nil)
@@ -47,7 +47,7 @@ extension EmptyStateView {
     }
     
     class func videoEmptyState() -> EmptyStateView {
-        let view = EmptyStateView(forHomeWith: UIImage(named: "videoEmptyState"),
+        let view = EmptyStateView(forHomeWith: Asset.Images.Home.videoEmptyState.image,
                                   title: Strings.Localizable.noVideosFound,
                                   description: nil,
                                   buttonTitle: nil)
