@@ -215,7 +215,7 @@ class NodeInfoViewController: UIViewController {
     
     private func prepareShareFolderPermissionsAlertController(fromIndexPat indexPath: IndexPath) {
         let activeShare = activeOutShares()[indexPath.row - 1].access
-        let checkmarkImageView = UIImageView(image: UIImage(named: "turquoise_checkmark"))
+        let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
 
         guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else {
             return

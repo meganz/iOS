@@ -56,7 +56,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
     ) -> BaseAction {
         switch labelColor == currentLabelColor {
         case true:
-            let checkMarkImageView = UIImage(named: "turquoise_checkmark")
+            let checkMarkImageView = Asset.Images.Generic.turquoiseCheckmark.image
             return ActionSheetAction(
                 title: labelColor.localizedTitle,
                 detail: nil,

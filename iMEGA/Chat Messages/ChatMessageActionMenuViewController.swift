@@ -19,7 +19,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.forwardMessage(chatMessage)
      }
     
-    lazy var editAction = ActionSheetAction(title: Strings.Localizable.edit, detail: nil, image: UIImage(named: "rename"), style: .default) {
+     lazy var editAction = ActionSheetAction(title: Strings.Localizable.edit, detail: nil, image: Asset.Images.Generic.rename.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }

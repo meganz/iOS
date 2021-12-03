@@ -13,7 +13,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     private let viewPreference: ViewPreference
     
     private lazy var selectAllBarButtonItem = UIBarButtonItem(
-        image: UIImage(named: "moreList"),
+        image: Asset.Images.Generic.moreList.image,
         style: .plain,
         target: self, action: #selector(moreButtonItemSelected(_:))
     )
@@ -246,7 +246,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     func showSortOptions(sender: UIBarButtonItem) {
-        let checkmarkImageView = UIImageView(image: UIImage(named: "turquoise_checkmark"))
+        let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
                 
         let actions = SortOrderType.allValid.map { sortOrderType in
             ActionSheetAction(title: sortOrderType.localizedString,

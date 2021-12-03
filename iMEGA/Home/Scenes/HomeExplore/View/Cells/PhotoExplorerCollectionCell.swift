@@ -31,7 +31,7 @@ class PhotoExplorerCollectionCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            selectedImageView.image = UIImage(named: isSelected ? "thumbnail_selected" : "checkBoxUnselected")
+            selectedImageView.image = isSelected ? Asset.Images.Generic.thumbnailSelected.image : Asset.Images.Login.checkBoxUnselected.image
         }
     }
 

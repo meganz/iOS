@@ -64,7 +64,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
                             Strings.Localizable.Meetings.Action.rename :
                             Strings.Localizable.renameGroup,
                           detail: nil,
-                          image: UIImage(named: "rename"),
+                          image: Asset.Images.Generic.rename.image,
                           style: .default) {
             dispatch(.renameAction)
         }
