@@ -21,7 +21,7 @@ class DocScannerActionTableViewCell: UITableViewCell {
         
         switch cellType {
         case .upload:
-            actionImageView.image = UIImage(named: "upload")
+            actionImageView.image = Asset.Images.ActionSheetIcons.upload.image
             actionLabel.text = NSLocalizedString("uploadToMega", comment: "")
         case .sendMessage:
             actionImageView.tintColor = .mnz_primaryGray(for: self.traitCollection)
