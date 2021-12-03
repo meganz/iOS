@@ -155,5 +155,8 @@ class AppearanceManager: NSObject {
         toolbarAppearance.configureWithDefaultBackground()
         toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         UIToolbar.appearance().standardAppearance = toolbarAppearance
+        if #available(iOS 15.0, *) {
+            UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
+        }
     }
 }

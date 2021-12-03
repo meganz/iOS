@@ -1,5 +1,6 @@
 
 import Foundation
+import UIKit
 
 protocol TermsAndPoliciesRouterProtocol: Routing {
     func didTap(on source: TermsAndPoliciesSource)
@@ -15,9 +16,16 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
     
     private weak var baseTableViewController: UITableViewController?
     private weak var navigationController: UINavigationController?
-    
+    private weak var presentController: UIViewController?
+
     @objc init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        
+        super.init()
+    }
+    
+    @objc init(presentController: UIViewController) {
+        self.presentController = presentController
         
         super.init()
     }
@@ -37,7 +45,14 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
     }
     
     @objc func start() {
-        navigationController?.pushViewController(build(), animated: true)
+        let viewContoller = build()
+        if let navigationController = navigationController {
+            navigationController.pushViewController(viewContoller, animated: true)
+        } else if let presentController = presentController {
+            let nav = MEGANavigationController(rootViewController:viewContoller)
+            nav.addLeftDismissButton(withText: Strings.Localizable.close)
+            presentController.present(nav, animated: true, completion: nil)
+        }
     }
     
     func didTap(on source: TermsAndPoliciesSource) {

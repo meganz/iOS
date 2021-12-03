@@ -436,7 +436,7 @@
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="Qpm-D2-X2Y">
-                                    <rect key="frame" x="0.0" y="315.33333206176758" width="375" height="306"/>
+                                    <rect key="frame" x="0.0" y="315.33333206176763" width="375" height="306.00000000000006"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0J-yD-czn">
@@ -708,6 +708,8 @@
                         <outlet property="footerTopLineView" destination="x0J-yD-czn" id="Vic-ro-gh8"/>
                         <outlet property="skipBarButtonItem" destination="UrL-pv-AsI" id="5e7-TB-gpd"/>
                         <outlet property="tableView" destination="0Py-ot-9iS" id="boC-2f-8QB"/>
+                        <outlet property="termsAndPoliciesBarButtonItem" destination="uKM-SH-ha2" id="DJ3-vh-J2p"/>
+                        <outlet property="toolbar" destination="duW-NZ-SA8" id="jEK-uW-Nq0"/>
                         <outlet property="twoMonthsFreeLabel" destination="Ues-1R-JZP" id="gnw-c4-ukw"/>
                     </connections>
                 </viewController>
@@ -750,6 +752,21 @@
                         <action selector="currentPlanTouchUpInside:" destination="K9A-Kk-YaD" id="7gr-P1-gmL"/>
                     </connections>
                 </tapGestureRecognizer>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="duW-NZ-SA8">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <viewLayoutGuide key="safeArea" id="bZk-kO-8SP"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="WFS-8U-jYW"/>
+                        <barButtonItem title="Terms and Policies" style="plain" id="uKM-SH-ha2" userLabel="Share">
+                            <connections>
+                                <action selector="termsAndPoliciesTouchUpInside:" destination="K9A-Kk-YaD" id="i4a-sX-S5S"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="TOJ-v5-IVw"/>
+                    </items>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="2137" y="-285"/>
         </scene>
