@@ -464,9 +464,9 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
     
     func imageForEmptyState() -> UIImage? {
         if (MEGAReachabilityManager.isReachable()) {
-            return UIImage(named: "sharedFilesEmptyState")
+            return Asset.Images.EmptyStates.sharedFilesEmptyState.image
         } else {
-            return UIImage(named: "noInternetEmptyState")
+            return Asset.Images.EmptyStates.noInternetEmptyState.image
         }
     }
 }

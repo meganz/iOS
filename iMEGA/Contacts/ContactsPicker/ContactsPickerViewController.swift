@@ -258,9 +258,9 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     
     func imageForEmptyDataSet() -> UIImage? {
         if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-            return UIImage(named: "searchEmptyState")
+            return Asset.Images.EmptyStates.searchEmptyState.image
         } else {
-            return UIImage(named: "contactsEmptyState")
+            return Asset.Images.EmptyStates.contactsEmptyState.image
         }
     }
     

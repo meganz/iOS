@@ -34,11 +34,11 @@ struct QuickAccessWidgetView: View {
             if entry.value.items.count == 0 {
                 switch entry.link {
                 case SectionDetail.recents.link:
-                    emptyView("recentsEmptyState", Strings.Localizable.noRecentActivity)
+                    emptyView(Asset.Images.EmptyStates.recentsEmptyState.name, Strings.Localizable.noRecentActivity)
                 case SectionDetail.favourites.link:
-                    emptyView("favouritesEmptyState", Strings.Localizable.noFavourites)
+                    emptyView(Asset.Images.EmptyStates.favouritesEmptyState.name, Strings.Localizable.noFavourites)
                 default:
-                    emptyView("offlineEmptyState", Strings.Localizable.offlineEmptyStateTitle)
+                    emptyView(Asset.Images.EmptyStates.offlineEmptyState.name, Strings.Localizable.offlineEmptyStateTitle)
                 }
             } else {
                 GridView(items: entry.value.items)
