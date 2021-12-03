@@ -136,10 +136,10 @@ final class NodeCellViewModel: ViewModelType {
     
     private func iconForNode() {
         if nodeModel.isFolder {
-            if nodeModel.name == NSLocalizedString("cameraUploadsLabel", comment: "Title of one of the Settings sections where you can set up the 'Camera Uploads' options") {
+            if nodeModel.name == Strings.Localizable.cameraUploadsLabel {
                 let cameraUploadsFolderImageName = "folder_image"
                 self.invokeCommand?(.setIcon(cameraUploadsFolderImageName))
-            } else if nodeModel.name == NSLocalizedString("My chat files", comment: "Destination folder name of chat files") {
+            } else if nodeModel.name == Strings.Localizable.myChatFiles {
                 accountUseCase.getMyChatFilesFolder() { [weak self] in
                     switch $0 {
                     case .success(let myChatFilesNodeEntity):

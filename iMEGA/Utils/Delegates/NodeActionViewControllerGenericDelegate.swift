@@ -19,7 +19,7 @@ final class NodeActionViewControllerGenericDelegate:
             if let progressImage = UIImage(named: "hudDownload") {
                 SVProgressHUD.show(
                     progressImage,
-                    status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
+                    status: Strings.Localizable.downloadStarted
                 )
             }
             node.mnz_downloadNode()

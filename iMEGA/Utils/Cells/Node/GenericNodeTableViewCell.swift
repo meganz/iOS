@@ -58,7 +58,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
         
         case .setBeingDownloaded(let isBeingDownloaded):
             if isBeingDownloaded {
-                secondaryLabel.text = NSLocalizedString("queued", comment: "Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download")
+                secondaryLabel.text = Strings.Localizable.queued
                 moreButton.isHidden = true
             } else {
                 viewModel.dispatch(.isDownloaded)

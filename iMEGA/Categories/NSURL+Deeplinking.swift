@@ -84,40 +84,38 @@ extension NSURL {
     }
     
     private func parseFragmentType() -> URLType {
-        let isMEGAhost = host?.lowercased().contains("mega") ?? false
-        if isMEGAhost || DeeplinkSchemeKey(rawValue: scheme ?? "") == DeeplinkSchemeKey.mega {
-            guard let fragment = fragment  else {
-                return .default
-            }
-            if fragment.hasPrefix(DeeplinkFragmentKey.file.rawValue) {
-                return .fileLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.folder.rawValue) {
-                return .folderLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.confirmation.rawValue) {
-                return .confirmationLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.encrypted.rawValue) {
-                return .encryptedLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.newSignUp.rawValue) {
-                return .newSignUpLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.backup.rawValue) {
-                return .backupLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.incomingPendingContacts.rawValue) {
-                return .incomingPendingContactsLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.changeEmail.rawValue) {
-                return .changeEmailLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.cancelAccount.rawValue) {
-                return .cancelAccountLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.recover.rawValue) {
-                return .recoverLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.contact.rawValue) {
-                return .contactLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.openChatSection.rawValue) {
-                return .openChatSectionLink
-            } else if fragment.hasPrefix(DeeplinkFragmentKey.publicChat.rawValue) {
-                return .publicChatLink
-            } else if !fragment.isEmpty {
-                return .handleLink
-            }
+        guard let fragment = fragment  else {
+            return .default
+        }
+        
+        if fragment.hasPrefix(DeeplinkFragmentKey.file.rawValue) {
+            return .fileLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.folder.rawValue) {
+            return .folderLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.confirmation.rawValue) {
+            return .confirmationLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.encrypted.rawValue) {
+            return .encryptedLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.newSignUp.rawValue) {
+            return .newSignUpLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.backup.rawValue) {
+            return .backupLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.incomingPendingContacts.rawValue) {
+            return .incomingPendingContactsLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.changeEmail.rawValue) {
+            return .changeEmailLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.cancelAccount.rawValue) {
+            return .cancelAccountLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.recover.rawValue) {
+            return .recoverLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.contact.rawValue) {
+            return .contactLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.openChatSection.rawValue) {
+            return .openChatSectionLink
+        } else if fragment.hasPrefix(DeeplinkFragmentKey.publicChat.rawValue) {
+            return .publicChatLink
+        } else if !fragment.isEmpty {
+            return .handleLink
         }
         
         return .default
@@ -155,7 +153,7 @@ extension NSURL {
     }
     
     private func parseUniversalLinkURL() -> URLType {
-        guard let path = path else {
+        guard let path = path, host?.lowercased().contains("mega") == true else {
             return .default
         }
         

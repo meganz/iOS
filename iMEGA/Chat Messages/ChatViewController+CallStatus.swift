@@ -93,21 +93,26 @@ extension ChatViewController {
         }
         
         configureNavigationBar()
+        chatCall = call
+
+        guard MEGASdkManager.sharedMEGAChatSdk().chatConnectionState(chatRoom.chatId) == .online else {
+            joinCallCleanup()
+            return
+        }
 
         switch call.status {
         case .initial, .joining, .userNoPresent:
+            joinCallCleanup()
             showJoinCall(withTitle: joinCallString)
         case .inProgress:
             initTimerForCall(call)
         case .connecting:
             showJoinCall(withTitle: NSLocalizedString("Reconnecting...", comment: ""))
-        case .destroyed, .terminatingUserParticipation:
+        case .destroyed, .terminatingUserParticipation, .undefined:
             joinCallCleanup()
         default:
             return
         }
-        
-        chatCall = call
     }
 }
 

@@ -44,22 +44,22 @@ class ContactsPermissionBottomView: UITableViewHeaderFooterView {
 
     func configureForRequestingPermission(action: @escaping completion) {
         configureLabels()
-        enableButton.setTitle(NSLocalizedString("Allow Access", comment: "Button which triggers a request for a specific permission, that have been explained to the user beforehand"), for: .normal)
+        enableButton.setTitle(Strings.Localizable.allowAccess, for: .normal)
         enableButtonAction = action
         contentView.layoutSubviews()
     }
 
     func configureForOpenSettingsPermission(action: @escaping completion) {
         configureLabels()
-        enableButton.setTitle(NSLocalizedString("Open Settings", comment: "Text indicating the user to open the device settings for MEGA"), for: .normal)
+        enableButton.setTitle(Strings.Localizable.openSettings, for: .normal)
         enableButtonAction = action
         contentView.layoutSubviews()
     }
     
     private func configureLabels() {
-        titleLabel.text = NSLocalizedString("Enable Access to Your Address Book", comment: "Title label that explains that the user is going to be asked for the contacts permission ");
-        subtitleLabel.text = NSLocalizedString("Easily discover contacts from your address book on MEGA.", comment: "Detailed explanation of why the user should give permission to contacts")
-        descriptionLabel.text = NSLocalizedString("MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.", comment: "Detailed explanation about MEGA not using the contacts data without permision ");
+        titleLabel.text = Strings.Localizable.enableAccessToYourAddressBook
+        subtitleLabel.text = Strings.Localizable.easilyDiscoverContactsFromYourAddressBookOnMEGA
+        descriptionLabel.text = Strings.Localizable.megaWillNotUseThisDataForAnyOtherPurposeAndWillNeverInteractWithYourContactsWithoutYourConsent
     }
     
     @IBAction func buttonTapped(_ sender: Any) {

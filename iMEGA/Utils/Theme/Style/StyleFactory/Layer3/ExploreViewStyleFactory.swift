@@ -45,7 +45,7 @@ extension ExplorerCardConfiguration {
     private static let foregroundColorsDark = [UIColor.mnz_(fromHexString: "#1C1C1F"), UIColor.black]
     
     static func photosExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
-        let title = NSLocalizedString("Photos", comment: "New Home: Explorer view cards - Photos")
+        let title = Strings.Localizable.photos
         let image = UIImage(named: "explorerCardImage") ?? UIImage()
         let borderColors = [UIColor.mnz_(fromHexString: "#1695F8"), UIColor.mnz_(fromHexString: "#0054C3")]
         return ExplorerCardConfiguration(title: title,
@@ -58,7 +58,7 @@ extension ExplorerCardConfiguration {
     }
     
     static func documentsExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
-        let title = NSLocalizedString("Docs", comment: "Home Screen: Explorer view card title - Documents")
+        let title = Strings.Localizable.docs
         let image = UIImage(named: "explorerCardDocs") ?? UIImage()
         let borderColors = [UIColor.mnz_(fromHexString: "#FEB800"), UIColor.mnz_(fromHexString: "#FE8601")]
         return ExplorerCardConfiguration(title: title,
@@ -71,7 +71,7 @@ extension ExplorerCardConfiguration {
     }
     
     static func audioExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
-        let title = NSLocalizedString("Audio", comment: "New Home: Explorer view cards - Audio")
+        let title = Strings.Localizable.audio
         let image = UIImage(named: "explorerCardAudio") ?? UIImage()
         let borderColors = [UIColor.mnz_(fromHexString: "#2BA6DE"), UIColor.mnz_(fromHexString: "#00C398")]
         return ExplorerCardConfiguration(title: title,
@@ -84,7 +84,7 @@ extension ExplorerCardConfiguration {
     }
     
     static func videoExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
-        let title = NSLocalizedString("Videos", comment: "New Home: Explorer view cards - Videos")
+        let title = Strings.Localizable.videos
         let iconForegroundImage = UIImage(named: "explorerCardVideoPlay") ?? UIImage()
         let iconBackgroundImage = UIImage(named: "explorerCardVideoFilmStrips") ?? UIImage()
         let borderColors = [UIColor.mnz_(fromHexString: "#EB1C5C"), UIColor.mnz_(fromHexString: "#E301CA")]

@@ -37,27 +37,24 @@ final class OverDiskQuotaViewController: UIViewController {
 
         var titleMessage: String {
             isFinalWarning
-                ? NSLocalizedString("dialog.storage.paywall.final.title", comment: "")
-                : NSLocalizedString("dialog.storage.paywall.notFinal.title", comment: "")
+            ? Strings.Localizable.Dialog.Storage.Paywall.Final.title
+            : Strings.Localizable.Dialog.Storage.Paywall.NotFinal.title
         }
 
         func overDiskQuotaMessage(with traitCollection: UITraitCollection) -> NSAttributedString {
             var message: String
             
             if isFinalWarning {
-                message = NSLocalizedString("dialog.storage.paywall.final.detail", comment: "")
+                message = Strings.Localizable.Dialog.Storage.Paywall.Final.detail
             } else {
                 var warningPeriod = ""
                 if let firstWarningDate = overDiskQuotaData.warningDates.first {
                     warningPeriod = daysBetweenLocalized(from: firstWarningDate, to: Date())
                 }
-                message = String(
-                    format: NSLocalizedString("dialog.storage.paywall.notFinal.detail", comment: ""),
-                    warningPeriod,
-                    overDiskQuotaData.email,
-                    overDiskQuotaData.formattedWarningDates(with: dateFormatter),
-                    overDiskQuotaData.takingUpStorage(with: byteCountFormatter)
-                )
+                message = Strings.Localizable.Dialog.Storage.Paywall.NotFinal.detail(warningPeriod,
+                                                                                     overDiskQuotaData.email,
+                                                                                     overDiskQuotaData.formattedWarningDates(with: dateFormatter),
+                                                                                     overDiskQuotaData.takingUpStorage(with: byteCountFormatter))
             }
 
             let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadlineMedium)]
@@ -84,12 +81,9 @@ final class OverDiskQuotaViewController: UIViewController {
 
         private func warningMessage(for deadline: Date) -> String {
             if isFinalWarning {
-                return NSLocalizedString("dialog.storage.paywall.final.warning", comment: "")
+                return Strings.Localizable.Dialog.Storage.Paywall.Final.warning
             } else {
-                return String(
-                    format:NSLocalizedString("dialog.storage.paywall.notFinal.warning", comment: ""),
-                    daysBetweenLocalized(from: Date(), to: deadline)
-                )
+                return Strings.Localizable.Dialog.Storage.Paywall.NotFinal.warning(daysBetweenLocalized(from: Date(), to: deadline))
             }
         }
     }
@@ -177,7 +171,7 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupStorageFullLabel(_ label: UILabel, with trait: UITraitCollection) {
-        storageFullLabel.text = NSLocalizedString("Storage Full", comment: "Screen title")
+        storageFullLabel.text = Strings.Localizable.storageFull
         let alwyasBrightTextStyle = trait.alwaysBrightLabelStyler(of: .headline)
         alwyasBrightTextStyle(storageFullLabel)
     }
@@ -199,14 +193,14 @@ final class OverDiskQuotaViewController: UIViewController {
     private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
         let style = trait.styler(of: .primary)
         style(button)
-        button.setTitle(NSLocalizedString("upgrade", comment: "Upgrade"), for: .normal)
+        button.setTitle(Strings.Localizable.upgrade, for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
         let style = trait.styler(of: .secondary)
         style(button)
-        button.setTitle(NSLocalizedString("dismiss", comment: "Dismiss"), for: .normal)
+        button.setTitle(Strings.Localizable.dismiss, for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
 

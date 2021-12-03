@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Chú Ý";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Xin cho MEGA quyền truy cập vào Camera trong phần Cài đặt của máy";
+"cameraPermissions"="Xin cho MEGA quyền truy cập vào Camera trong phần Cài đặt của thiết bị";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Xin cho phép app MEGA quyền sử dụng micrô trong phần Cài đặt của điện thoại";
+"microphonePermissions"="Xin cho phép app MEGA quyền sử dụng micrô trong phần Cài đặt của thiết bị";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Xin cho MEGA quyền truy cập vào thư viện ảnh trong phần Cài đặt của máy";
+"photoLibraryPermissions"="Xin cho MEGA quyền truy cập vào thư viện ảnh trong phần Cài đặt của thiết bị";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Tài khoản đã được kích hoạt rồi. Xin đăng nhập.";
 /*  */
@@ -43,17 +43,17 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Đường liên kết không hợp lệ";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Tài khoản người dùng sở hữu đường liên kết này đã bị chấm dứt do vi phạm nhiều [A] Điều khoản Dịch vụ [/A].";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Tài khoản người dùng sở hữu đường liên kết này đã bị chấm dứt do vi phạm nhiều [A] Điều Khoản Dịch Vụ [/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="Nhập chìa khóa mã";
+"decryptionKeyAlertTitle"="Nhập chìa khóa giải mã";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Để truy cập vào thư mục hay tệp tin này, cần phải có Chìa Khóa Mã. Nếu bạn không có, hãy hỏi tới người chủ của đường liên kết này để giải quyết.";
+"decryptionKeyAlertMessage"="Để truy cập vào thư mục hay tệp tin này, cần phải có Chìa Khóa Giải Mã. Nếu bạn không có, hãy hỏi tới người chủ của đường liên kết này để giải quyết.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Chìa khóa mã";
+"decryptionKey"="Chìa khóa giải mã";
 /* Button title to try to decrypt the link */
 "decrypt"="Giải mã";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Chìa khóa mã không hợp lệ";
+"decryptionKeyNotValid"="Chìa khóa giải mã không hợp lệ";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
 "To access this link, you will need its password."="Để truy cập vào đường liên kết này, người sử dụng cần phải có mật khẩu giải mã.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
@@ -214,6 +214,8 @@
 "addContacts"="Thêm tên liên lạc";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Mời vào MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Tên liên lạc [X] không có trên MEGA. Để có thể gọi điện và chát thông qua MEGA, bạn cần phải mời người này đăng ký tài khoản";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Lời Mời Đã Gửi";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Tạo Nhóm Chát";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Vị trí";
+"chat.map.location"="Vị trí";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Tin Nhắn Thoại";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -371,7 +373,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="(CHỈ CHO HẠNG PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="Đặt ngày hết hạn";
+"setExpiryDate"="Chọn Ngày Hết Hạn";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="Đặt bảo vệ bằng mật khẩu";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -411,7 +413,7 @@
 /* Title show when a file is being downloaded */
 "downloading"="Đang tải về";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
-"selectDestination"="Chọn vi trí đích";
+"selectDestination"="Chọn vị trí đích";
 /* Text of the button for user to select files in MEGA. */
 "selectFiles"="Chọn tệp tin";
 /* Title for the action that allows you to move a file or folder */
@@ -489,7 +491,7 @@
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Chuyển nhập vào Ổ Mây";
 /* Message shown when a file has been imported */
-"fileImported"="Đã nhập tệp tin!";
+"fileImported"="Tệp đã được chuyển nhập";
 /* Message shown when some files have been imported */
 "filesImported"="Đã chuyển nhập tệp tin";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -586,6 +588,8 @@
 "addContactButton"="Thêm";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Không cần phải nhập chính email của mình vào sổ liên lạc";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="Người dùng [X] đã được mời và sẽ xuất hiện trong sổ liên lạc khi họ chấp nhận lời mời đó.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Tên của những người quý khách vừa mời sẽ xuất hiện trong sổ liên lạc sau khi họ dùng lời mời của quý khách để tạo tài khoản.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Chính Sách Cookie";
+"general.cookiePolicy"="Chính Sách Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Cài Đặt Cookie";
+"general.cookieSettings"="Cài Đặt Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Điều Khoản Dịch Vụ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -961,7 +965,7 @@
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Bạn sẽ không nhận được thưởng khi gửi lời mời tới những người đã có sẵn tài khoản với MEGA, hệ thống sẽ không gửi thông báo nào cho biết rằng lời mời đã bị từ chối.";
 /* Header of block with achievements bonuses. */
-"unlockedBonuses"="Phần thưởng nhận được:";
+"unlockedBonuses"="Phần thưởng đã mở:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Hạn Mức Lưu Trữ";
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
@@ -969,7 +973,7 @@
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
 "account.storage.freePlan"="[B]20 GB+[/B] Lưu Trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Lượng băng thông";
+"Transfer Quota"="Lượng Băng Thông";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ Truyền Tải";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
@@ -1043,7 +1047,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Không Gian Trống";
 /* title of the My Account screen */
-"accountType"="Hạng Tài Khoản";
+"accountType"="Hạng Tài Khoản:";
 /* Label to indicate that the current user has a Free account. */
 "Free"="Miễn phí";
 /* Text that shows the expiry date of the account PRO level */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói thuê bao hiện tại, xin liên hệ với đội hỗ trợ để có một [A]gói theo nhu cầu[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Gói Hiện Tại:";
+"inAppPurchase.upgrade.label.currentPlan"="Gói Hiện Tại:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Gói hiện tại";
+"inAppPurchase.productDetail.navigation.currentPlan"="Gói hiện tại";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Nâng cấp thành gói cước theo nhu cầu";
 /* Mail subject to upgrade to a custom plan */
@@ -1111,7 +1115,7 @@
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Cài đặt App Store";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Cảm ơn quý khách";
+"thankYou_title"="Xin cảm ơn";
 /* Alert message shown when a purchase was restored succesfully */
 "purchaseRestore_message"="Đã khôi phục lại mặt hàng thành công";
 /* Alert title shown when a purchase has stopped because some error between the process */
@@ -1311,7 +1315,7 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Gửi tên liên lạc";
 /*  */
-"done"="Hoàn Thành";
+"done"="Xong";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Bật hiển thị xem trước nội dung tóm tắt của URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Phiên bản lưu";
 /* Title label of a node property. */
-"location"="Vị trí";
+"cloudDrive.info.node.location"="Vị trí";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Tổng kích thước";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="tệp";
 /* Label to desing a file matching */
-"File"="Tệp";
+"chat.match.file"="Tệp";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Phiên Bản Hiện Hành";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1569,7 +1573,7 @@
 /* Button title to allow the user open the default browser */
 "openBrowser"="Mở trình duyệt";
 /* A label for the Restart button to relaunch MEGAsync. */
-"restart"="Khởi động lại MEGAsync";
+"restart"="Khởi động lại";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
 "resumePlayback"="Tiếp tục phát?";
 /* Message to show the user info (name and time) about the resume of the video */
@@ -1713,7 +1717,7 @@
 /* Detailed explanation of why the user should give permission to access to the photos */
 "Please give the MEGA App permission to access Photos to share photos and videos."="Xin cho phép app MEGA quyền truy cập vào kho Ảnh để chia sẻ hình và videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Bật Micrôphone và Camera";
+"Enable Microphone and Camera"="Bật Micrô và Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
 "To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Để có thể thực hiện tạo cuộc gọi thoại hay gọi video, xin cho phép MEGA truy cập vào Camera và Micrô";
 /* Title label that explains that the user is going to be asked for the notifications permission */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="Dọn dữ liệu tồn đọng hơn";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Để có thời gian trữ rác lâu hơn [S]Nâng cấp lên Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="ngày";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Thùng Rác tự động được dọn dẹp. Thời gian chờ (ít nhất) cho mỗi lần dọn là 7 ngày và chờ lâu nhất là 30 ngày.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1845,7 +1847,7 @@
 /* Label shown inside an unseen notification */
 "New"="Mới";
 /* When a contact sent a contact/friend request */
-"Sent you a contact request"="Vừa gửi bạn lời mời thêm vào sổ liên lạc";
+"Sent you a contact request"="Gửi bạn lời mời thêm vào sổ liên lạc";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="Đã hủy lời mời thêm liên lạc";
 /* A reminder notification to remind the user to respond to the contact request. */
@@ -1861,9 +1863,9 @@
 /* Response text after clicking Ignore on an incoming contact request notification. */
 "You ignored a contact request"="Đã bỏ qua yêu cầu thêm liên lạc";
 /* Response text after clicking Accept on an incoming contact request notification. */
-"You accepted a contact request"="Bạn vừa chấp nhận yêu cầu liên lạc này";
+"You accepted a contact request"="Bạn chấp nhận yêu cầu liên lạc này";
 /* Response text after clicking Deny on an incoming contact request notification. */
-"You denied a contact request"="Bạn vừa từ chối yêu cầu liên lạc này";
+"You denied a contact request"="Bạn từ chối yêu cầu liên lạc này";
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Đã chấp nhận lời mời thêm vào sổ liên lạc từ bạn";
 /* When somebody denied your contact request */
@@ -1930,10 +1932,8 @@
 "Send This Location"="Gửi vị trí nơi này";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Tùy chỉnh bản đồ";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Thường";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Ảnh từ vệ tinh";
+"Satellite"="Ảnh vệ tinh";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "Hybrid"="Kết hợp";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="Chạm dấu cách để điền thêm email";
 /* Text used as a section title or similar */
 "Enter Email"="Nhập Email";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="Trên mạng MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="SỔ LIÊN LẠC TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="Doanh Nghiệp";
 /*  */
 "Administrator"="Quản trị";
-/* Business user role */
-"User"="Nhân viên";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Truyền Tải";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="Cho đến khi tôi bật lại";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 phút";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 giờ";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 giờ";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="Gửi đi kích thước gốc, chất lượng hình ảnh cao";
 /* Setting title for Doc scan view */
 "Save Settings"="Tùy Chọn Khi Lưu";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="Bản quét %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Dạng Tệp";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Điền tên nhóm";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Viết tin nhắn…";
+"chat.message.placeholder"="Viết tin nhắn…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Kéo vào bên trái để hủy tin, thả ra để gửi tin";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="Ẩn đi lịch sử động gần đây trong phần Trang Chủ.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Gốc";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="Ngày";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Đêm";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="ĐƯỜNG LIÊN KẾT";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Ngày Tạo Liên Kết";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="CHIA SẺ VỚI";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="CHỜ HỒI ÂM";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="PHIÊN BẢN LƯU";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Đánh dấu Ưa Thích";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Loại bỏ Ưa Thích";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Màu nhãn";
+"cloudDrive.sort.label"="Màu nhãn";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Dán nhãn…";
+"general.chooseLabel.title"="Dán nhãn…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Gỡ bỏ Dán Nhãn";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2393,17 +2381,15 @@
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="CHÌA KHÓA MÃ";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Gửi Chìa Khóa Mã Ra Riêng";
+"Send Decryption Key Separately"="Gửi Chìa Khóa Giải Mã Ra Riêng";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Giới Hạn Thời Gian";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Chọn Ngày Hết Hạn";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Bảo Vệ bằng Mật Khẩu";
 /* Text for options in Get Link View to set password protection */
 "Set Password"="Đặt Mật Khẩu";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="Xuất chìa khóa mã và đường liên kết ra riêng";
+"Export the link and decryption key separately."="Xuất chìa khóa giải mã và đường liên kết ra riêng";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Tìm hiểu thêm";
 /* Text indicating the date until a link will be valid */
@@ -2413,7 +2399,7 @@
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="Sao Chép Tất Cả";
 /* Description text about options when exporting links for several nodes */
-"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Các tùy chọn như Gửi Chìa Khóa Mã Ra Riêng, Chọn Ngày Hết Hạn và Mật Khẩu chỉ áp dụng được có các mục đơn lẻ.";
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Các tùy chọn như Gửi Chìa Khóa Giải Mã Ra Riêng, Chọn Ngày Hết Hạn và Mật Khẩu chỉ áp dụng được có các mục đơn lẻ.";
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="Đường Liên Kết đã được ghi vào Bộ Nhớ";
 /* Message shown when some links have been copied to the Clipboard */
@@ -2423,9 +2409,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Mật Khẩu đã được ghi vào Bộ Nhớ";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Hệ thống mã hóa đầu-cuối tự động yêu cầu phải tạo ra một chìa khóa cho tệp tin này. Liên kết với chìa khóa này được tạo theo cài đặt mặc định, nhưng bạn có thể xuất chìa khóa mã ra riêng để tăng thêm một lớp bảo mật bổ sung.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="Chìa Khóa Mã";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Hệ thống mã hóa đầu-cuối tự động yêu cầu phải tạo ra một chìa khóa cho tệp tin này. Liên kết với chìa khóa này được tạo theo cài đặt mặc định, nhưng bạn có thể xuất chìa khóa giải mã ra riêng để tăng thêm một lớp bảo mật bổ sung.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Xóa bỏ Mật Khẩu";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 năm";
 /*  */
 "year"="năm";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="CHIA SẺ";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Tìm Tệp Tin";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="Không có video nào";
 /* Navigation title for the photo explorer view */
 "All Images"="Tất Cả Ảnh";
-/* Section title for the photo explorer view */
-"TODAY"="HÔM NAY";
-/* Section title for the photo explorer view */
-"YESTERDAY"="HÔM QUA";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="Không có ảnh nào";
 /* Accessibility label for Home section in tabbar item */
@@ -2537,7 +2515,7 @@
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="Văn Bản";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="Đường liên kết này đẽ được chia sẻ mà không có mã giải khóa. Ban có muốn chia sẻ mã bây giờ không?";
+"This link was shared without a decryption key. Do you want to share its key?"="Đường liên kết này đẽ được chia sẻ mà không có chìa khóa giải mã. Ban có muốn chia sẻ chìa khóa bây giờ không?";
 /* Title for password protect link alert */
 "Link Password"="Mật Khẩu Đường Liên Kết";
 /* Message shown when a link is shared having a password */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="gửi đi tin nhắn bị thất bại";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="đã hủy gửi đi tin nhắn";
-/* Cookie dialog header */
-"Before You Continue"="Trước khi tiếp tục";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="Quản lý quyền riêng tư";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Chúng tôi sử dụng không gian lưu trữ nội bộ và các công nghệ tương tự (“Cookies”) để cung cấp dịch vụ của chúng tôi cho khách hàng, nâng cao trải nghiệm của khách hàng với các dịch vụ của chúng tôi và tùy chỉnh các quảng cáo mà khách hàng thấy, bao gồm cả thông qua các bên thứ ba. Xin chấp nhận việc sử dụng Cookies của chúng tôi hoặc tùy chỉnh theo ý thích trong phần Cài Đặt Cookie. Đọc thêm về [A]Chính Sách Cookie[/A].";
+"dialog.cookies.description"="Chúng tôi sử dụng Cookie và các công nghệ tương tự (“Cookies”) để cung cấp và nâng cao trải nghiệm dịch vụ cho  người sử dụng. Chấp nhận việc sử dụng Cookies của chúng tôi trước khi sử dụng hoặc tùy chỉnh theo ý thích trong phần Cài Đặt Cookie. Đọc thêm về [A]Chính Sách Cookie[/A].";
 /* Cookie dialog button label. */
-"Accept Cookies"="Chấp Nhận Cookies";
+"dialog.cookies.accept"="Chấp Nhận Cookies";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Cookies Thiết Yếu";
+"settings.cookies.essential"="Cookies Thiết Yếu";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Luôn Bật";
+"settings.cookies.essential.alwaysOn"="Luôn Bật";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Cần thiết để cung cấp cho quý khách chức năng quan trọng và quyền truy cập an toàn vào các dịch vụ của chúng tôi. Vì thế, các mục này không yêu cầu sự đồng ý.";
+"settings.cookies.essential.footer"="Cần thiết để cung cấp cho quý khách chức năng quan trọng và quyền truy cập an toàn vào các dịch vụ của chúng tôi. Vì thế, các mục này không yêu cầu sự đồng ý.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Cookies Theo Ý Thích";
+"settings.cookies.performanceAndAnalytics"="Cookies Hiệu Suất và Phân Tích";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Cho phép chúng tôi nhớ các cài đặt hiển thị và định dạng ngôn ngữ mà quý khách chọn. Không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ không thể ghi nhớ một số điều mà quý khách áp đặt, chẳng hạn như bố cục màn hình và cách hiện danh sách.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Cookies Hiệu Suất và Phân Tích";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Giúp chúng tôi hiểu cách quý khách sử dụng dịch vụ và cung cấp cho chúng tôi dữ liệu có thể sử dụng để cải tiến. Việc không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ nhận ít dữ liệu để giúp cải tiến thiết kế sau này.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="Cookies Quảng Cáo";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Được sử dụng bởi chúng tôi và các đối tác quảng cáo được chấp thuận để tùy chỉnh các quảng cáo quý khách thấy trên các dịch vụ của chúng tôi và trên các trang web khác dựa trên lịch sử duyệt web của quý khách. Không chấp nhận những Cookies này có nghĩa là chúng tôi có thể hiển thị những quảng cáo ít liên quan hơn tới sở thích của quý khách.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="Cookies Bên Thứ Ba";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Đây là những Cookies được kiểm soát bởi ai đó không phải từ phía chúng tôi; chúng tôi sử dụng các Cookies này để cung cấp các chức năng được mô tả ở trên. Việc không chấp nhận các Cookie này sẽ có các tác động khác nhau tùy thuộc vào loại Cookies của bên thứ ba. Clíck vào “Thêm Thông Tin” bên dưới để biết chi tiết về tất cả các Cookies của bên thứ ba mà chúng tôi sử dụng.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="Thêm Thông Tin";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="Không có Cookies Bên Thứ Ba nào đang được dùng";
+"settings.cookies.performanceAndAnalytics.footer"="Giúp chúng tôi hiểu cách quý khách sử dụng dịch vụ và cung cấp cho chúng tôi dữ liệu có thể sử dụng để cải tiến. Việc không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ nhận ít dữ liệu để giúp cải tiến thiết kế sau này.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Phiên bản đã được chuyển thành một tệp tin toàn vẹn.";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>Xin nâng cấp tài khoản ngay hôm nay nếu quý khách muốn lưu giữ dữ liệu của mình.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Nhận thêm Thưởng";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="Cài Đặt Lưu Dự Phòng";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="Nên dùng App MEGA cho Máy Tính để đảm bảo thư mục lưu trữ dự phòng được đồng bộ với Ổ Mây MEGA của bạn.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="Di chuyển “%@”";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="Bạn đang tiến hành thay đổi vị trí mặc định cho thư mục lưu trữ dự phòng. Việc này có thể ảnh hưởng đến khả năng truy tìm thư mục lưu trữ trong tương lai. Xin ghi nhớ vị trí mà bạn dời thư mục đi để không bị lạc mất dữ liệu.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="Di chuyển thư mục này sẽ thay đổi vị trí của việc lưu dự phòng, và sẽ bị tắt đi để đảm bảo an toàn. Có chắc chắn đây là điều bạn muốn thực hiện hay không? Việc lưu dự phòng có thể được bật lại trong App MEGA cho Máy Tính.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="Di chuyển “%@” vào Thùng Rác";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="Bạn đang tiến hành xóa đi thư mục chứa bản lưu trữ. Việc này sẽ xóa tất cả các lưu dự phòng bạn đã đặt. Bạn có chắc muốn thực hiện việc này không?";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="Bạn có chắc muốn xóa thư mục chứa bản lưu trữ và tắt việc lưu dự phòng bạn đã đặt không?";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="Thêm mục vào “%@”";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="Thêm nội dung vào thư mục này sẽ thay đổi vị trí của việc lưu dự phòng, và sẽ bị tắt đi để đảm bảo an toàn. Có chắc chắn đây là điều bạn muốn thực hiện hay không? Việc lưu dự phòng có thể được bật lại trong App MEGA cho Máy Tính.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="Xin điền “%@” để xác nhận hành động này";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="di chuyen ban luu tru";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="xoa ban luu tru";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="tat luu du phong";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="Chuyển vào Thùng Rác";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="Thêm";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="chữ đã nhập không trùng khớp";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="Thư mục này chỉ được chia sẻ dưới dạng chỉ-được-xem bởi vì là thư mục lưu dự phòng. Bất kỳ thay đổi trong nội dung sẽ vô hiệu hóa việc sao lưu.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="Các thư mục này chỉ được chia sẻ dưới dạng chỉ-được-xem bởi vì đây là các thư mục lưu dự phòng. Bất kỳ thay đổi trong nội dung sẽ vô hiệu hóa việc sao lưu.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="Vài trong các thư mục chia sẻ này là thư mục lưu dự phòng và chỉ-được-xem. Bạn có muốn tiếp tục không?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ tham gia vào cuộc gọi";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="Cuộc Họp Mới";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="%@ Họp Mặt";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="Bắt đầu cuộc meeting";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Cuộc Họp Chấm Dứt";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2707,7 +2711,7 @@
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Tham gia với tư cách khách";
 /* Guest user join Mega: paragraph 1 title */
-"meetings.joinMega.paragraph1.title"="Mức độ an ninh là điều quan trọng";
+"meetings.joinMega.paragraph1.title"="Quyền riêng tư là điều quan trọng";
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Tham gia vào dịch vụ lưu trữ điện toán đám mây lớn và an ninh nhất với nền tảng cộng tác toàn cầu.";
 /* Guest user join Mega: paragraph 2 title */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="Xem trước hình ảnh độ phân giải cao";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="Sử dụng mạng di động để tải độ phân giải cao khi xem qua hình ảnh. Nếu tắt đi, độ phân giải cao sẽ chỉ được tải khi bạn phóng vào kích thước của hình ảnh để xem.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="Quý khách hiện đã có hạng tài khoản trả phí";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="Quý khách đã mua hạng Pro thông qua CH Google Play hoặc AppGallery từ trước. Xin vui lòng hủy thủ công dịch vụ với bên Google Play hoặc Huawei AppGallery trên thiết bị của mình rồi quay lại đây để tiếp tục việc mua.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Quý khách có muốn hủy gói trả phí hiện tại để mua hạng tài khoản mới không?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="Đang có một cuộc gọi đang giang dở. Xin chấm dứt cuộc gọi đó trước khi tham gia vào cuộc khác.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="Kết thúc và tham gia";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="Model 3D";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D Scene";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="Ảnh RAW";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="Multimedia";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="Tệp nén 7-Zip";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="Database";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="Tệp văn bản ANSI";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Ứng dụng Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Ứng dụng Mac OS X";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="Tệp văn bản ASCII";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="Streaming Video";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Ảnh RAW của Casio";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="Ảnh Bitmap";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX Nén";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="Mã Nguồn C/C++";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="Mã nguồn C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="Ảnh CorelDRAW";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Java Class";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="Lệnh DOS";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="Bảng dạng CSS";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="Dạng mẫu MS Word";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="Ảnh DXF";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="Ảnh EPS";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="Tệp thực thi";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="Âm thanh Lossless";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Video Flash";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Phông chữ Windows";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="Phông chữ";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Tiện ích Windows";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="Ảnh GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="Trao đổi GPS";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="Bảng tính";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU Compressed";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="Header";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="Tài liệu HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Định dạng tệp hoán đổi";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="Đĩa ảo ISO";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Java Archive";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Mã Java";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="Ảnh JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="Log";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="Playlist Media";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="Âm thanh MPEG-4";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max Scene";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="Âm thanh MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="Video MKV";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="Phim QuickTime";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="Âm thanh MP3";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="Video MP4";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="Phim MPEG";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="Trình cài đặt MS";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="Tài liệu Chữ";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="Phông chữ OpenType";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="Podcast";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="Tài liệu PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="PHP Code";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="Playlist Âm thanh";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="Ảnh PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="Tệp nén RAR";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="Văn bản Đa dạng";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Ảnh RAW của Panasonic";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="HTML Máy chủ";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X Compressed";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="Database SQL";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Ảnh RAW của Sony";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="Phụ đề";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="Ảnh Véctơ";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Phim Flash";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="Chuyển Vào Bảo Lưu";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="Nén";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="Ảnh TIF";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="Ảnh TIFF";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="Phông chữ TrueType";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Âm thanh Wave";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="Video dạng WebM";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="Âm thanh WM";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="Video WM";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="Tài liệu XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIP Archive";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Chọn";

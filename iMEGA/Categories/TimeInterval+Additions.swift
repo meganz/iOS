@@ -12,9 +12,9 @@ extension TimeInterval {
         let time = dateFormatter.string(from: date)
                 
         if Calendar.current.isDateInTomorrow(date) {
-            return String(format: NSLocalizedString("Notifications will be silenced until tomorrow, %@", comment: "Chat Notifications DND: Remaining time left if until tomorrow"), time)
+            return Strings.Localizable.notificationsWillBeSilencedUntilTomorrow(time)
         } else {
-            return String(format: NSLocalizedString("Notifications will be silenced until %@", comment: "Chat Notifications DND: Remaining time left if until today"), time)
+            return Strings.Localizable.notificationsWillBeSilencedUntil(time)
         }
     }
 }

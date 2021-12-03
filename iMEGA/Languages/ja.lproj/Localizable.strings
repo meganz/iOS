@@ -214,6 +214,8 @@
 "addContacts"="連絡先を追加";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="MEGAに招待";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="あなたの連絡先[X]さんはMEGAにはおりません。MEGAの暗号化されたチャットで通話するには、あなたの連絡先の方を招待する必要があります。";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="招待状が送信されました";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="グループを開始";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="場所";
+"chat.map.location"="場所";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="ボイスクリップ";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -371,7 +373,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="（PROのみ）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="失効日を選ぶ";
+"setExpiryDate"="有効期限の設定";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="パスワード保護の設定";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -586,6 +588,8 @@
 "addContactButton"="追加";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="あなたご自身のメールアドレスを追加する必要はありません";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="ユーザーの[X]さんが招待されました。承認されると、あなたの連絡先リストに表示されます。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="複数のユーザーが招待されています。承認されると連絡先リストに表示されます。";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="プライバシーポリシー";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="クッキーポリシー";
+"general.cookiePolicy"="クッキーポリシー";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="クッキーの設定";
+"general.cookieSettings"="クッキーの設定";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="ご利用規約";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -951,7 +955,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="電話の連絡先から選択するか、複数のメールアドレスを入力してください";
 /*  */
-"insertYourFriendsEmails"="ご友人のメールアドレス（複数）を入力：";
+"insertYourFriendsEmails"="ご友人のメールアドレスを入力：";
 /*  */
 "howItWorks"="仕組み";
 /*  */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="あなたの現在のサブスクリプションをアップグレードするには、[A]カスタムプラン[/A]用にサポートにお問い合わせください。";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="現在のプラン：";
+"inAppPurchase.upgrade.label.currentPlan"="現在のプラン：";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="現在のプラン";
+"inAppPurchase.productDetail.navigation.currentPlan"="現在のプラン";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="カスタムプランにアップグレード";
 /* Mail subject to upgrade to a custom plan */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="バージョン";
 /* Title label of a node property. */
-"location"="場所";
+"cloudDrive.info.node.location"="場所";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="合計サイズ";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="ファイル";
 /* Label to desing a file matching */
-"File"="ファイル";
+"chat.match.file"="ファイル";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="現在のバージョン";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,8 +1756,6 @@
 "Remove files older than"="次の日数より古いファイルを削除：";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="より長い保存期間をご希望の場合は、[S]Proにアップグレード[/S]してください。";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="日";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ごみ箱は自動的にきれいにできます。最小期間は7日間で、最大期間は30日間です。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1930,8 +1932,6 @@
 "Send This Location"="この場所を送信";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="マップ設定";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="標準";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="衛星";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="スペースをタップして複数のメールアドレスを入力します";
 /* Text used as a section title or similar */
 "Enter Email"="メールアドレスを入力";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="MEGAに";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA上の連絡先";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="ビジネス";
 /*  */
 "Administrator"="管理者";
-/* Business user role */
-"User"="ユーザー";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="転送";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="オンにするまで";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1時間";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6時間";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="元のサイズ、品質を上げた画像を送信します";
 /* Setting title for Doc scan view */
 "Save Settings"="設定を保存";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="%@をスキャン";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="ファイルの種類";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="グループ名を入力";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="メッセージ…";
+"chat.message.placeholder"="メッセージ…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="左にドラッグしてキャンセルし、離して送信します";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="ホームセクションの最近のアクティビティを非表示にします。";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="デフォルト";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="日";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="夜";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="リンク";
 /* Text referencing the date of creation of a link */
 "Link Creation"="リンク作成";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="共有先";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="保留中";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="バージョン";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="お気に入り";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="お気に入りを削除";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="ラベル";
+"cloudDrive.sort.label"="ラベル";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="色を選択…";
+"general.chooseLabel.title"="ラベル…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="ラベルを削除";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="復号キーを個別に送信";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="有効期限";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="有効期限の設定";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="パスワード保護";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="パスワードがクリップボードにコピーされました";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="当社のエンドツーエンドの暗号化システムでは、このファイルに対して自動的に生成される一意のキーが必要です。このキーを有するリンクはデフォルトで作成されますが、セキュリティの層を追加するために、復号キーを個別にエクスポートできます。";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="復号キー";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="パスワードを削除";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1年";
 /*  */
 "year"="年";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="共有";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="あなたのファイルを検索";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="動画が見つかりません";
 /* Navigation title for the photo explorer view */
 "All Images"="すべての画像";
-/* Section title for the photo explorer view */
-"TODAY"="今日";
-/* Section title for the photo explorer view */
-"YESTERDAY"="昨日";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="画像が見つかりません";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="メッセージの送信に失敗しました";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="メッセージの送信がキャンセルされました";
-/* Cookie dialog header */
-"Before You Continue"="続行する前に";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="お客様のプライバシー";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="当社は、ローカルストレージおよび同様のテクノロジー（「クッキー」）を使用して、お客様にサービスをご提供し、当社サービスのエクスペリエンスを向上させ、サードパーティを介して表示される広告を含め、お客様がご覧になる広告をカスタマイズいたします。ご訪問の最初から当社によるクッキーの使用を受け入れるか、クッキーの設定でクッキーをカスタマイズしてください。詳細については、当社の[A]クッキーポリシー[/A]をご覧ください。";
+"dialog.cookies.description"="当社は、お客様に当社のサービスをご提供し、その利便性を高めるために、クッキー（Cookie）および類似の技術（以下、「クッキー」）を使用いたします。お客様がご訪問された最初から当社のクッキーの使用を受け入れるか、クッキー設定でクッキーをカスタマイズしてください。詳しくは、当社の[A]クッキーポリシー[/A]をご覧ください。";
 /* Cookie dialog button label. */
-"Accept Cookies"="クッキーを受け入れる";
+"dialog.cookies.accept"="クッキーを受け入れる";
 /* Cookie settings dialog text. */
-"Essential Cookies"="必須クッキー";
+"settings.cookies.essential"="必須クッキー";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="常にオン";
+"settings.cookies.essential.alwaysOn"="常にオン";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="必須クッキーは、重要な機能と当社サービスへの安全なアクセスをご提供するのに不可欠なクッキーです。このため、同意は必要ありません。";
+"settings.cookies.essential.footer"="必須クッキーは、重要な機能と当社サービスへの安全なアクセスをご提供するのに不可欠なクッキーです。このため、同意は必要ありません。";
 /* Cookie settings dialog text. */
-"Preference Cookies"="お好みのクッキー";
+"settings.cookies.performanceAndAnalytics"="パフォーマンスとアナリティクスのクッキー";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="ご選択された特定の表示とフォーマット設定を当社が覚えておけるようにするクッキーです。これらのクッキーを受け入れない場合、ご希望の画面レイアウトなど、当社は覚えておくことができません。";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="パフォーマンスとアナリティクスのクッキー";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="お客様が当社サービスをどのようにご使用になられているのかを理解し、改善に使用できるデータをご提供いただくのに役立つクッキーです。これらのクッキーを受け入れない場合、当社が設計を改善するのに役立つデータが少なくなります。";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="広告クッキー";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="当社および当社が承認した広告パートナーが、閲覧履歴に基づいて、当社サービスおよび他のウェブサイトに表示される広告をカスタマイズするために使用いたします。これらのクッキーを受け入れない場合、関連性の低い広告が表示される可能性があります。";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="サードパーティのクッキー";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="これらは、当社以外の者が管理するクッキーです。これらのクッキーを使用して、上記の種類の機能をご提供いたします。これらのクッキーを受け入れない場合、各サードパーティのクッキーの種類に応じて異なる影響が生じます。当社が使用するサードパーティの全クッキーの詳細については、以下の「詳細情報」をクリックしてください。";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="詳細情報";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="サードパーティのクッキーは使用されていません";
+"settings.cookies.performanceAndAnalytics.footer"="お客様が当社サービスをどのようにご使用になられているのかを理解し、改善に使用できるデータをご提供いただくのに役立つクッキーです。これらのクッキーを受け入れない場合、当社が設計を改善するのに役立つデータが少なくなります。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="バージョンは新しいファイルとして正常に作成されました。";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>データの保持をご希望の場合は、本日中にアップグレードしてください。</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="ボーナスを獲得";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="バックアップを設定してください";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="当社のデスクトップアプリケーションを使用して、バックアップフォルダをMEGAクラウドと同期させてください。";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="「%@」を移動";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="デフォルトのバックアップフォルダの場所を変更しています。これにより、将来的にバックアップフォルダを見つけることが難しくなる場合があります。どこにあるのかを覚えておいて、今後も見つけられるようにしてください。";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="このフォルダを移動すると、バックアップ先が変わります。バックアップは安全のためにオフにします。これを行ってもよろしいですか？バックアップは、MEGAデスクトップアプリで再度有効にすることができます。";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="「%@」をごみ箱に移動";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="バックアップフォルダを削除します。これにより、設定したすべてのバックアップが削除されます。本当にこれを行ってもよろしいですか？";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="バックアップフォルダを削除して、設定したバックアップを無効にしてもよろしいですか？";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="項目を「%@」に追加";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="項目をこのフォルダに追加すると、バックアップ先が変わります。バックアップは安全のためにオフにします。これを行ってもよろしいですか？　バックアップは、MEGAデスクトップアプリで再度有効にすることができます。";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="このアクションを確認するために「%@」を入力してください";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="バックアップを移動";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="バックアップを削除";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="バックアップを無効にする";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="ごみ箱に移す";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="追加";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="入力されたテキストが一致しません";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="このフォルダは読み取り専用としてのみ共有することができます。なぜなら、これはバックアップ用のフォルダであり、コンテンツを変更するとバックアップが無効になる可能性があるからです。";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="これらのフォルダはバックアップフォルダであるため、読み取り専用でしか共有できません。その内容が変更されると、バックアップが無効になってしまいます。";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="共有されているフォルダの中には、バックアップフォルダや読み取り専用のフォルダもあります。続行しますか？";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@さんが通話に参加しました";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="新しいミーティング";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="%@ミーティング";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="ミーティング開始";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="ミーティング終了";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2726,3 +2730,177 @@
 "settings.fileManagement.useMobileData.header"="高解像度画像のプレビュー";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="モバイルデータを利用して、プレビュー時に高解像度の画像を読み込みます。無効にした場合、高解像度の画像はズームインしたときにのみ読み込まれます。";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="すでに有効なサブスクリプションをお持ちです";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="以前にGoogle PlayまたはAppGalleryでProプランにご加入されたことがございます。お使いの端末のGoogle PlayまたはHuawei AppGallery内で、手動でサブスクリプションをキャンセルしてから再試行してください。";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="現在のサブスクリプションをキャンセルして、ご購入を継続されますか？";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="別の電話がかかってきました。次の電話をかける前に、現在の通話を終えてください。";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="終了して参加";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="3Dモデル";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3Dシーン";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="RAW画像";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="マルチメディア";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="7-Zip圧縮";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="データベース";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="ANSIテキストファイル";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Androidアプリ";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Mac OS Xアプリ";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="ASCIIテキスト";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="ストリーミングビデオ";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Casio RAW画像";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="ビットマップイメージ";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX圧縮";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="C/C++ソースコード";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="C++ソースコード";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="CorelDRAWイメージ";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Javaクラス";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOSコマンド";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="CSSスタイルシート";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="MSワードテンプレート";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="DXFイメージ";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="EPSイメージ";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="実行ファイル";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="ロスレスオーディオ";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="フラッシュビデオ";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Windowsフォント";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="フォント";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Windowsガジェット";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="GIF画像";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="GPSエクスチェンジ";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="スプレッドシート";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU圧縮";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="ヘッダ";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="HTMLドキュメント";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="インターチェンジファイルフォーマット";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="ISOイメージ";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Javaアーカイブ";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Javaコード";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="JPEG画像";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="ログ";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="メディアプレイリスト";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="MPEG-4オーディオ";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3dsマックスシーン";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MSアクセス";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="MIDIオーディオ";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="MKVビデオ";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="QuickTimeムービー";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="MP3オーディオ";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="MP4動画";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="MPEGムービー";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="MSインストーラー";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="テキスト文書";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="OpenTypeフォント";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="ページ";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="ポッドキャスト";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="PDFドキュメント";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="PHPコード";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="オーディオプレイリスト";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="PNG画像";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="RAR圧縮";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="リッチテキスト";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="パナソニックRAW画像";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="サーバーHTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X圧縮";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="SQLデータベース";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="ソニーRAW画像";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="字幕";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="ベクターイメージ";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="フラッシュムービー";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="アーカイブ";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="圧縮";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="TIFイメージ";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="TIFFイメージ";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="TrueTypeフォント";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="ウェーブオーディオ";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="WebMビデオ";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="WMオーディオ";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="WMビデオ";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="XMLドキュメント";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIPアーカイブ";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="選ぶ";

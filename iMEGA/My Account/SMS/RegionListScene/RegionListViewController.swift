@@ -71,7 +71,7 @@ final class RegionListViewController: UIViewController, ViewType {
     
     // MARK: - Config view
     private func configView() {
-        title = NSLocalizedString("Choose Your Country", comment: "")
+        title = Strings.Localizable.chooseYourCountry
         
         view.wrap(tableView)
         

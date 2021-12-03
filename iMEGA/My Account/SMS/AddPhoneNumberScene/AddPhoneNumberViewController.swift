@@ -37,10 +37,10 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
     
     // MARK: - Configure views
     private func configureViews() {
-        addPhoneNumberButton.setTitle(NSLocalizedString("Add Phone Number", comment: ""), for: .normal)
-        notNowButton.setTitle(NSLocalizedString("notNow", comment: ""), for: .normal)
-        dontShowAgainButton.setTitle(NSLocalizedString("dontShowAgain", comment: ""), for: .normal)
-        addPhoneNumberTitle.text = NSLocalizedString("Add Phone Number", comment: "")
+        addPhoneNumberButton.setTitle(Strings.Localizable.addPhoneNumber, for: .normal)
+        notNowButton.setTitle(Strings.Localizable.notNow, for: .normal)
+        dontShowAgainButton.setTitle(Strings.Localizable.dontShowAgain, for: .normal)
+        addPhoneNumberTitle.text = Strings.Localizable.addPhoneNumber
         
         updateAppearance()
     }

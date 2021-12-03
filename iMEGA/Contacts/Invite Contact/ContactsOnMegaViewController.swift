@@ -18,8 +18,8 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = NSLocalizedString("On MEGA", comment: "Text used as a section title or similar showing the user the phone contacts using MEGA")
-        inviteContactLabel.text = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
+        navigationItem.title = Strings.Localizable.onMEGA
+        inviteContactLabel.text = Strings.Localizable.inviteContact
         
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         searchController.hidesNavigationBarDuringPresentation = false
@@ -174,7 +174,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        header.titleLabel.text = NSLocalizedString("CONTACTS ON MEGA", comment: "Text used as a section title or similar showing the user the phone contacts using MEGA")
+        header.titleLabel.text = Strings.Localizable.contactsOnMega
         
         return header
     }
@@ -256,12 +256,12 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     func titleForEmptyDataSet() -> String? {
         if (MEGAReachabilityManager.isReachable()) {
             if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return NSLocalizedString("noResults", comment: "Title shown when you make a search and there is 'No Results'")
+                return Strings.Localizable.noResults
             } else {
                 return nil
             }
         } else {
-            return NSLocalizedString("noInternetConnection", comment: "No Internet Connection")
+            return Strings.Localizable.noInternetConnection
         }
     }
 }

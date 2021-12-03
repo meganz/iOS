@@ -108,21 +108,21 @@ private extension NodeLabelColor {
     var localizedTitle: String {
         switch self {
         case .red:
-            return NSLocalizedString("Red", comment: "A user can mark a folder or file with its own colour, in this case “Red”.")
+            return Strings.Localizable.red
         case .orange:
-            return NSLocalizedString("Orange", comment: "A user can mark a folder or file with its own colour, in this case “Orange”.")
+            return Strings.Localizable.orange
         case .yellow:
-            return NSLocalizedString("Yellow", comment: "A user can mark a folder or file with its own colour, in this case “Yellow”.")
+            return Strings.Localizable.yellow
         case .green:
-            return NSLocalizedString("Green", comment: "A user can mark a folder or file with its own colour, in this case “Green”.")
+            return Strings.Localizable.green
         case .blue:
-            return NSLocalizedString("Blue", comment: "A user can mark a folder or file with its own colour, in this case “Blue”.")
+            return Strings.Localizable.blue
         case .purple:
-            return NSLocalizedString("Purple", comment: "A user can mark a folder or file with its own colour, in this case “Purple”.")
+            return Strings.Localizable.purple
         case .grey:
-            return NSLocalizedString("Grey", comment: "A user can mark a folder or file with its own colour, in this case “Grey”.")
+            return Strings.Localizable.grey
         case .unknown:
-            return NSLocalizedString("Remove Label", comment: "Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label")
+            return Strings.Localizable.removeLabel
         }
     }
 }

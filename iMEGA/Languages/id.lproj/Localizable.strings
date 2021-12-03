@@ -103,7 +103,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Sandi";
 /* Account, Change Password view. Error shown when you type your current password. */
-"account.changePassword.error.currentPassword"="You have entered your current password.";
+"account.changePassword.error.currentPassword"="Anda telah memasukkan kata sandi anda saat ini.";
 /*  */
 "pleaseStrengthenYourPassword"="Harap perkuat password anda.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -214,6 +214,8 @@
 "addContacts"="Tambah kontak";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Undang ke MEGA";
+/* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
+"dialog.callAttempt.contactNotInMEGA"="Kontak anda [X] tidak ada di MEGA. Untuk menelepon melalui obrolan terenkripsi MEGA, anda perlu mengundang kontak anda";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Undangan terkirim";
 /* Button title to allow the user postpone an action */
@@ -297,7 +299,7 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Mulai Grup";
 /* Menu option from the `Add` section that allows the user to share Location */
-"Location"="Lokasi";
+"chat.map.location"="Lokasi";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Klip Suara";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -371,7 +373,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="(HANYA PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="Set tanggal expiration";
+"setExpiryDate"="Tetapkan Tanggal Kedaluwarsa";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="Atur proteksi password";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -455,7 +457,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Masukkan nama baru";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="The following characters are not allowed: ” * / : < > ? \\ |";
+"general.error.charactersNotAllowed"="Karakter berikut tidak diperbolehkan: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Ganti Nama File %@ ?";
 /* Title for the action that allows you to replace a file. */
@@ -586,6 +588,8 @@
 "addContactButton"="Tambah";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri.";
+/* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
+"dialog.inviteContact.outgoingContactRequest"="Nama pengguna [X] telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Pengguna telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -645,9 +649,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Kebijakan Privasi";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"Cookie Policy"="Kebijakan Cookie";
+"general.cookiePolicy"="Kebijakan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"Cookie Settings"="Pengaturan Cookie";
+"general.cookieSettings"="Pengaturan cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Persyaratan Layanan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -965,15 +969,15 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Quota Storage";
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
-"account.storageQuota"="%@ Storage";
+"account.storageQuota"="%@ Penyimpanan";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Storage";
+"account.storage.freePlan"="[B]20 GB+[/B] Penyimpanan";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Kuota Transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ Transfer";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
-"account.transferQuota.freePlan"="[B]Limited[/B] Transfer";
+"account.transferQuota.freePlan"="Transfer [B]Terbatas[/B] ";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bonus pendaftaran";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1077,9 +1081,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Untuk mengupgrade langganan anda saat ini, hubungi dukungan untuk [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Plan saat ini:";
+"inAppPurchase.upgrade.label.currentPlan"="Plan saat ini:";
 /* A label which shows the user's current PRO plan. */
-"Current plan"="Rencana saat ini";
+"inAppPurchase.productDetail.navigation.currentPlan"="Rencana saat ini";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Tingkatkan ke paket khusus";
 /* Mail subject to upgrade to a custom plan */
@@ -1337,7 +1341,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Hilangkan";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="You have new messages";
+"You may have new messages"="Anda memiliki pesan baru";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Permintaan kontak";
 /* Notification text body shown when you have received a new shared folder */
@@ -1367,7 +1371,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu PESAN BELUM TERBACA";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Langganan diperbarui secara otomatis untuk periode berlangganan berturut-turut dengan durasi yang sama dan dengan harga yang sama dengan periode awal yang dipilih. Anda dapat mematikan perpanjangan otomatis langganan MEGA Pro anda selambat-lambatnya 24 jam sebelum pembayaran langganan berikutnya jatuh tempo melalui halaman pengaturan akun iTunes anda. Untuk mengelola langganan anda, cukup ketuk ikon App Store di perangkat seluler anda, masuk dengan ID Apple anda di bagian bawah halaman (jika anda belum melakukannya), lalu klik Lihat ID. Anda akan dibawa ke halaman akun tempat anda dapat menggulir ke bawah ke Kelola Langganan Aplikasi. Dari sana, anda dapat memilih langganan MEGA Pro anda dan melihat tanggal perpanjangan terjadwal anda, memilih paket langganan yang berbeda, atau matikan sakelar hidup-mati untuk menonaktifkan perpanjangan otomatis langganan anda.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Buka MEGA dan masuk untuk melanjutkan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1499,7 +1503,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versi";
 /* Title label of a node property. */
-"location"="Lokasi";
+"cloudDrive.info.node.location"="Lokasi";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Ukuran total";
 /* Refers to the type of a file or folder. */
@@ -1529,7 +1533,7 @@
 /* Singular of file. 1 file */
 "file"="file";
 /* Label to desing a file matching */
-"File"="File";
+"chat.match.file"="File";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versi sekarang";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1752,14 +1756,12 @@
 "Remove files older than"="Hapus file lebih lama dari";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Untuk periode retensi yang lebih lama [S]Tingkatkan ke Pro[/S]";
-/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="hari";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Tempat Sampah dibersihkan untuk Anda secara otomatis. Periode minimum adalah 7 hari dan periode maksimum adalah 30 hari.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Tempat Sampah dapat dibersihkan untuk Anda secara otomatis. Periode minimum adalah 7 hari.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a Pro plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Untuk menonaktifkan Penjadwal Kliring Sampah atau menetapkan periode penyimpanan yang lebih lama, anda harus berlangganan paket Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Apakah Anda ingin menutup semua sesi lainnya? Ini akan mengeluarkan Anda di semua sesi aktif lainnya kecuali sesi saat ini.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1930,8 +1932,6 @@
 "Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Pengaturan peta";
-/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Standar";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satelit";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -1995,11 +1995,11 @@
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 Gambar dan %2 Video";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
-"home.recent.modifiedByLabel"="Modified by %@";
+"home.recent.modifiedByLabel"="Diubah oleh %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 dan [A]%2 lebih[/A]";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
-"home.recent.createdByLabel"="Created by %@";
+"home.recent.createdByLabel"="Dibuat oleh %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Tidak ada aktivitas terbaru";
 /* Plural of items which contains a folder. 2 items */
@@ -2031,7 +2031,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Anda yakin ingin mengubah ke server pengujian? Akun anda mungkin mengalami masalah yang tidak dapat dipulihkan.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Grant Access to Your Address Book";
+"Enable Access to Your Address Book"="Berikan Akses ke Buku Alamat Anda";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Temukan kontak dari buku alamat Anda dengan mudah di MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2052,8 +2052,6 @@
 "Tap space to enter multiple emails"="Ketuk ruang untuk memasukkan banyak email";
 /* Text used as a section title or similar */
 "Enter Email"="Masukan Email";
-/* Text used as view title showing the user the phone contacts using MEGA */
-"On MEGA"="Pada MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="KONTAK DI MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2068,8 +2066,6 @@
 "Business"="Bisnis";
 /*  */
 "Administrator"="Administrator";
-/* Business user role */
-"User"="Pengguna";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
@@ -2116,8 +2112,6 @@
 "Until I turn it back on"="Sampai saya menyalakannya kembali";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 menit";
-/* Chat Notifications DND: Option that deactivates DND after 1 hour */
-"1 hour"="1 jam";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
 "6 hours"="6 jam";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
@@ -2240,6 +2234,8 @@
 "Send original size, increased quality images"="Kirim ukuran asli, peningkatan kualitas gambar";
 /* Setting title for Doc scan view */
 "Save Settings"="Simpan Pengaturan";
+/* Default title given to the document created when you use the option 'Scan Document' in the app */
+"cloudDrive.scanDocument.defaultName"="Pindai %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Jenis File";
 /* export Quality Option for Scan document */
@@ -2251,7 +2247,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Masukan nama grup";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"Message..."="Pesan…";
+"chat.message.placeholder"="Pesan…";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Tarik ke kiri untuk membatalkan, lepaskan untuk mengirim";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2266,8 +2262,6 @@
 "settings.userInterface.hideRecentActivity.footer"="Sembunyikan aktivitas terbaru di bagian Beranda.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Default";
-/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
-"Day"="Hari";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Malam";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2360,20 +2354,14 @@
 "LINK"="TAUTAN";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Pembuatan Tautan";
-/* Text used for a title or header to list users whom you are sharing something. */
-"SHARE WITH"="BERBAGI DENGAN";
-/* Text used for a title or header to list pending users whom you are sharing something. */
-"PENDING"="TERTUNDA";
-/* Text used as title or header to display number of all historical versions of files. */
-"VERSIONS"="VERSI";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Favorit";
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="Hapus Favorit";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"Label"="Label";
+"cloudDrive.sort.label"="Label";
 /* Context menu item which allows to mark folders with own color label */
-"Label..."="Label…";
+"general.chooseLabel.title"="Label…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="Hapus Label";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2396,8 +2384,6 @@
 "Send Decryption Key Separately"="Kirim Kunci Dekripsi Secara Terpisah";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Tanggal Kadaluarsa";
-/* Text for options in Get Link View to set expiry date */
-"Set Expiry Date"="Tetapkan Tanggal Kedaluwarsa";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Proteksi Kata Sandi";
 /* Text for options in Get Link View to set password protection */
@@ -2424,8 +2410,6 @@
 "Password Copied to Clipboard"="Sandi Disalin ke Papan Klip";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistem enkripsi ujung-ke-ujung kami memerlukan kunci unik yang dibuat secara otomatis untuk file ini. Tautan dengan kunci ini dibuat secara default, tetapi Anda dapat mengekspor kunci dekripsi secara terpisah untuk lapisan keamanan tambahan.";
-/* Text related to the decryption key of a public link */
-"Decryption Key"="Kunci Dekripsi";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Hapus Kata Sandi";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2494,8 +2478,6 @@
 "1 year"="1 tahun";
 /*  */
 "year"="Tahun";
-/* Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder */
-"SHARE"="BAGIKAN";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cari File Anda";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2526,10 +2508,6 @@
 "No videos found"="Video tidak ditemukan";
 /* Navigation title for the photo explorer view */
 "All Images"="Semua Gambar";
-/* Section title for the photo explorer view */
-"TODAY"="HARI INI";
-/* Section title for the photo explorer view */
-"YESTERDAY"="KEMARIN";
 /* Photo Explorer Screen: No images in the accoun t */
 "No images found"="Tidak ada gambar ditemukan";
 /* Accessibility label for Home section in tabbar item */
@@ -2548,38 +2526,22 @@
 "failed to send the message"="gagal mengirim pesan";
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="pengiriman pesan dibatalkan";
-/* Cookie dialog header */
-"Before You Continue"="Sebelum anda melanjutkan";
+/* Cookie dialog title */
+"dialog.cookies.title.yourPrivacy"="Privasi anda";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)..."="Kami menggunakan penyimpanan lokal dan teknologi serupa (‘Cookies’) untuk memberikan layanan kami kepada anda, meningkatkan pengalaman anda dengan layanan kami dan menyesuaikan iklan yang anda lihat, termasuk melalui pihak ketiga. Terima penggunaan Cookie kami sejak awal kunjungan anda atau sesuaikan Cookie di Pengaturan Cookie. Baca selengkapnya di [A]Kebijakan Cookie[/A] kami.";
+"dialog.cookies.description"="Kami menggunakan Cookie dan teknologi serupa (“Cookies”) untuk menyediakan dan meningkatkan pengalaman anda dengan layanan kami. Terima penggunaan Cookie kami sejak awal kunjungan anda atau sesuaikan Cookie di Pengaturan Cookie. Baca selengkapnya di [A]Kebijakan Cookie[/A] kami.";
 /* Cookie dialog button label. */
-"Accept Cookies"="Terima Cookies";
+"dialog.cookies.accept"="Terima Cookies";
 /* Cookie settings dialog text. */
-"Essential Cookies"="Cookie Penting";
+"settings.cookies.essential"="Cookie Penting";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
-"Always On"="Selalu Aktif";
+"settings.cookies.essential.alwaysOn"="Selalu Aktif";
 /* Cookie settings dialog text. */
-"Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent."="Penting untuk memberi anda fungsionalitas penting dan akses aman ke layanan kami. Untuk alasan ini, mereka tidak membutuhkan persetujuan.";
+"settings.cookies.essential.footer"="Penting untuk memberi anda fungsionalitas penting dan akses aman ke layanan kami. Untuk alasan ini, mereka tidak membutuhkan persetujuan.";
 /* Cookie settings dialog text. */
-"Preference Cookies"="Preferensi Cookies";
+"settings.cookies.performanceAndAnalytics"="Cookie Kinerja dan Analisis";
 /* Cookie settings dialog text. */
-"Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout."="Izinkan kami mengingat pengaturan tampilan dan format tertentu yang anda pilih. Tidak menerima Cookie ini berarti kami tidak dapat mengingat beberapa hal untuk anda seperti tata letak layar pilihan anda.";
-/* Cookie settings dialog text. */
-"Performance and Analytics Cookies"="Cookie Kinerja dan Analisis";
-/* Cookie settings dialog text. */
-"Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements."="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
-/* Cookie settings dialog text. */
-"Advertising Cookies"="Cookie Iklan";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- Used by us and our approved advertising partners..."="Digunakan oleh kami dan mitra periklanan kami yang disetujui untuk menyesuaikan iklan yang anda lihat di layanan kami dan di situs web lain berdasarkan riwayat penelusuran anda. Tidak menerima Cookies ini berarti kami mungkin menampilkan iklan yang kurang relevan.";
-/* Cookie settings dialog text. */
-"Third Party Cookies"="Cookie Pihak Ketiga";
-/* Cookie settings dialog text. */
-"Cookie settings dialog text -- These are Cookies which are controlled by..."="Ini adalah Cookies yang dikendalikan oleh orang lain selain kami; kami menggunakan Cookie ini untuk menyediakan jenis fungsionalitas yang dijelaskan di atas. Tidak menerima Cookie ini akan memiliki implikasi yang berbeda tergantung pada jenis Cookie apa setiap Cookie pihak ketiga itu. Klik “Informasi Lebih Lanjut” di bawah untuk detail tentang semua Cookie pihak ketiga yang kami gunakan.";
-/* Cookie settings dialog link label. Should be same as in “24659” string. */
-"More Information"="Informasi Lebih Lanjut";
-/* Text shown after clicking on 'More information' under the Third Party Cookies section when there are not used */
-"No Third Party Cookies in use"="Tidak ada Cookie Pihak Ketiga yang digunakan";
+"settings.cookies.performanceAndAnalytics.footer"="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini  berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versi berhasil dibuat sebagai file baru.";
 /* Text shown for the action create new file */
@@ -2666,6 +2628,46 @@
 "dialog.storage.paywall.final.warning"="<body><warn>Harap tingkatkan hari ini jika anda ingin menyimpan data anda.</warn><body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Dapatkan Bonus";
+/* Backup setup warning title */
+"dialog.backup.setup.title"="Siapkan Cadangan";
+/* Backup setup warning message */
+"dialog.backup.setup.message"="Gunakan Aplikasi Desktop kami untuk memastikan folder cadangan Anda disinkronkan dengan MEGA Cloud anda.";
+/* Change the default backup location warning title. %@ is a folder */
+"dialog.backup.folder.location.warning.title"="Pindahkan “%@”";
+/* Change the default backup location warning message */
+"dialog.root.backup.folder.location.warning.message"="Anda mengubah lokasi folder cadangan default. Ini dapat memengaruhi kemampuan anda untuk menemukan folder cadangan di masa mendatang. Harap ingat di mana letaknya sehingga anda dapat menemukannya di masa depan.";
+/* Change the default backup location warning message */
+"dialog.backup.folder.location.warning.message"="Memindahkan folder ini mengubah tujuan pencadangan. Pencadangan akan dimatikan demi keamanan. Apakah ini yang ingin anda lakukan? Pencadangan dapat diaktifkan kembali dengan Aplikasi Desktop MEGA.";
+/* Delete the default backup folder warning title. %@ is a folder */
+"dialog.delete.backup.folder.warning.title"="Pindahkan “%@” ke Tempat Sampah";
+/* Delete the default backup folder warning message */
+"dialog.delete.root.backup.folder.warning.message"="Anda menghapus folder cadangan anda. Ini akan menghapus semua cadangan yang telah anda atur. Apakah anda yakin ingin melakukan ini?";
+/* Delete the default backup folder warning message */
+"dialog.delete.backup.folder.warning.message"="Apakah anda yakin ingin menghapus folder cadangan dan menonaktifkan cadangan yang anda tetapkan?";
+/* Add new items to a backup folder warning title. %@ is a folder */
+"dialog.add.items.backup.folder.warning.title"="Tambahkan item ke “%@”";
+/* Add new items to a backup folder warning message */
+"dialog.add.items.backup.folder.warning.message"="Menambahkan item ke folder ini akan mengubah tujuan pencadangan. Pencadangan akan dimatikan demi keamanan. Apakah ini yang ingin anda lakukan? Pencadangan dapat diaktifkan kembali dengan Aplikasi Desktop MEGA.";
+/* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
+"dialog.backup.warning.confirm.message"="Tolong ketik “%@” untuk mengkonfirmasi tindakan ini";
+/* Change the location of a backup folder placeholder for a textfield */
+"dialog.move.backup.placeholder"="pindahkan cadangan";
+/* Delete a backup folder placeholder for a textfield */
+"dialog.delete.backup.placeholder"="hapus cadangan";
+/* Add items to a backup folder placeholder for a textfield */
+"dialog.disable.backup.placeholder"="nonaktifkan cadangan";
+/* Delete a backup folder action title */
+"dialog.delete.backup.action.title"="Pindahkan ke Sampah";
+/* Add items to a backup folder action title */
+"dialog.add.items.backup.action.title"="Tambah";
+/* Backup action confirmation error message */
+"dialog.confirmation.error.message"="teks yang dimasukkan tidak cocok";
+/* Alert the user when trying to share a backup folder */
+"dialog.share.backup.folder.warning.message"="Folder ini hanya dapat dibagikan sebagai hanya-baca karena merupakan folder cadangan. Perubahan apa pun pada kontennya dapat menonaktifkan pencadangan.";
+/* Alert the user when trying to share several backup folders */
+"dialog.share.backup.folders.warning.message"="Folder-folder ini hanya dapat dibagikan sebagai hanya-baca karena merupakan folder cadangan. Perubahan apa pun pada konten mereka dapat menonaktifkan pencadangan.";
+/* Alert the user when trying to share several backup and non-backup folders */
+"dialog.share.backup.non.backup.folders.warning.message"="Beberapa folder yang dibagikan adalah folder cadangan dan hanya-baca. Apakah anda ingin melanjutkan?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ bergabung dengan panggilan ";
 /* Message to inform the local user that someone has left the current group call */
@@ -2676,6 +2678,8 @@
 "meetings.create.newMeeting"="Rapat Baru";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="%@ Rapat";
+/* Start meeting button title */
+"meetings.createMeeting.startMeeting"="Mulai pertemuan";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Rapat Berakhir";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -2721,8 +2725,182 @@
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Suara";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Switch";
+"meetings.quickAction.flip"="Alihkan";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
-"settings.fileManagement.useMobileData.header"="Preview high resolution images";
+"settings.fileManagement.useMobileData.header"="Pratinjau gambar resolusi tinggi";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+"settings.fileManagement.useMobileData.footer"="Gunakan data seluler untuk memuat gambar resolusi tinggi saat melihat pratinjau. Jika dinonaktifkan, gambar resolusi tinggi hanya akan dimuat saat anda memperbesar.";
+/* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.title"="Anda sudah memiliki langganan aktif";
+/* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
+"account.upgrade.alreadyHaveASubscription.message"="Anda sebelumnya telah berlangganan paket Pro dengan Google Play atau AppGallery. Harap batalkan langganan anda secara manual dengan mereka di dalam Google Play atau Huawei AppGallery di perangkat anda, lalu coba lagi.";
+/* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Apakah anda ingin membatalkan langganan anda saat ini dan melanjutkan pembelian?";
+/* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError"="Panggilan lain sedang berlangsung. Harap akhiri panggilan anda saat ini sebelum melakukan panggilan lain.";
+/* Button option when trying to join a new meeting given that the user is already in another meeting */
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="Akhiri dan gabung";
+/* File extensions: .3dm and .3gp. Commercial names should be stay on English */
+"general.filetype.3DModel"="Model 3D";
+/* File extension: .3ds. Commercial names should be stay on English */
+"general.filetype.3ds"="3D Scene";
+/* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
+"general.filetype.rawImage"="Gambar RAW";
+/* File extension: .3g2. Commercial names should be stay on English */
+"general.filetype.3g2"="Multimedia";
+/* File extension: .7z. Commercial names should be stay on English */
+"general.filetype.7z"="7-Zip Dikompresi";
+/* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
+"general.filetype.database"="Database";
+/* File extension: .ans. Commercial names should be stay on English */
+"general.filetype.ans"="File Teks ANSI";
+/* File extension: .apk. Commercial names should be stay on English */
+"general.filetype.apk"="Aplikasi Android";
+/* File extension: .app. Commercial names should be stay on English */
+"general.filetype.app"="Aplikasi Mac OS X";
+/* File extension: .ascii. Commercial names should be stay on English */
+"general.filetype.ascii"="Text ASCII";
+/* File extension: .asf. Commercial names should be stay on English */
+"general.filetype.asf"="Video Streaming";
+/* File extension: .bay. Commercial names should be stay on English */
+"general.filetype.bay"="Gambar Casio RAW";
+/* File extension: .bmp. Commercial names should be stay on English */
+"general.filetype.bmp"="Bitmap Image";
+/* File extension: .bz2. Commercial names should be stay on English */
+"general.filetype.bz2"="UNIX Compressed";
+/* File extension: .c. Commercial names should be stay on English */
+"general.filetype.c"="Kode Sumber C/C++";
+/* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
+"general.filetype.cpp"="Kode Sumber C++";
+/* File extension. Commercial names should be stay on English */
+"general.filetype.cdr"="Gambar CorelDRAW";
+/* File extension: .class. Commercial names should be stay on English */
+"general.filetype.class"="Java Class";
+/* File extension: .com. Commercial names should be stay on English */
+"general.filetype.com"="DOS Command";
+/* File extension: .css. Commercial names should be stay on English */
+"general.filetype.css"="CSS Style Sheet";
+/* File extension: .dotx. Commercial names should be stay on English */
+"general.filetype.wordTemplate"="Template MS Word";
+/* File extension: .dxf. Commercial names should be stay on English */
+"general.filetype.dxf"="Gambar DXF";
+/* File extension: .eps. Commercial names should be stay on English */
+"general.filetype.eps"="Gambar EPS";
+/* File extension: .exe. Commercial names should be stay on English */
+"general.filetype.exe"="Executable";
+/* File extension: .flac. Commercial names should be stay on English */
+"general.filetype.flac"="Lossless Audio";
+/* File extension: .flv. Commercial names should be stay on English */
+"general.filetype.flv"="Video Flash";
+/* File extension: .fnt. Commercial names should be stay on English */
+"general.filetype.fnt"="Windows Font";
+/* File extension: .fon. Commercial names should be stay on English */
+"general.filetype.fon"="Font";
+/* File extension: .gadget. Commercial names should be stay on English */
+"general.filetype.gadget"="Windows Gadget";
+/* File extension: .gif. Commercial names should be stay on English */
+"general.filetype.gif"="Gambar GIF";
+/* File extension: .gpx. Commercial names should be stay on English */
+"general.filetype.gpx"="GPS Exchange";
+/* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
+"general.filetype.spreadsheet"="Spreadsheet";
+/* File extension: .gz. Commercial names should be stay on English */
+"general.filetype.gz"="GNU Compressed";
+/* File extensions: .h and .hpp. Commercial names should be stay on English */
+"general.filetype.header"="Header";
+/* File extensions: .htm and .html. Commercial names should be stay on English */
+"general.filetype.htmlDocument"="Dokumen HTML";
+/* File extension: .iff. Commercial names should be stay on English */
+"general.filetype.iff"="Interchange File Format";
+/* File extension: .iso. Commercial names should be stay on English */
+"general.filetype.iso"="Gambar ISO";
+/* File extension: .jar. Commercial names should be stay on English */
+"general.filetype.jar"="Java Archive";
+/* File extension: .java. Commercial names should be stay on English */
+"general.filetype.java"="Kode Java";
+/* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
+"general.filetype.jpeg"="Gambar JPEG";
+/* File extension: .log. Commercial names should be stay on English */
+"general.filetype.log"="Log";
+/* File extension: .3mu. Commercial names should be stay on English */
+"general.filetype.m3u"="Playlist Media";
+/* File extension: .m4a. Commercial names should be stay on English */
+"general.filetype.m4a"="MPEG-4 Audio";
+/* File extension: .max. Commercial names should be stay on English */
+"general.filetype.max"="3ds Max Scene";
+/* File extension: .mdb. Commercial names should be stay on English */
+"general.filetype.mdb"="MS Access";
+/* File extensions: .mid and .midi. Commercial names should be stay on English */
+"general.filetype.mid"="Audio MIDI";
+/* File extension: .mkv. Commercial names should be stay on English */
+"general.filetype.mkv"="Video MKV";
+/* File extension: .mov. Commercial names should be stay on English */
+"general.filetype.mov"="Film QuickTime";
+/* File extension: .mp3. Commercial names should be stay on English */
+"general.filetype.mp3"="MP3 Audio";
+/* File extension: .mp4. Commercial names should be stay on English */
+"general.filetype.mp4"="Video MP4";
+/* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
+"general.filetype.mpeg"="Film MPEG";
+/* File extension: .msi. Commercial names should be stay on English */
+"general.filetype.msi"="MS Installer";
+/* File extensions: .txt and .odt. Commercial names should be stay on English */
+"general.filetype.textDocument"="Text Document";
+/* File extension: .otf. Commercial names should be stay on English */
+"general.filetype.otf"="Font OpenType";
+/* File extension: .pages. Commercial names should be stay on English */
+"general.filetype.pages"="Pages";
+/* File extension: .pcast. Commercial names should be stay on English */
+"general.filetype.podcast"="Podcast";
+/* File extension: .pdf. Commercial names should be stay on English */
+"general.filetype.pdf"="Dokumen PDF";
+/* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
+"general.filetype.php"="PHP Code";
+/* File extension: .pls. Commercial names should be stay on English */
+"general.filetype.pls"="Audio Playlist";
+/* File extension: .png. Commercial names should be stay on English */
+"general.filetype.png"="Gambar PNG";
+/* File extension: .rar. Commercial names should be stay on English */
+"general.filetype.rar"="RAR Compressed";
+/* File extension: .rtf. Commercial names should be stay on English */
+"general.filetype.rtf"="Rich Text";
+/* File extension: .rw2. Commercial names should be stay on English */
+"general.filetype.rw2"="Gambar Panasonic RAW";
+/* File extension: .shmtl. Commercial names should be stay on English */
+"general.filetype.shtml"="Server HTML";
+/* File extension: .sitx. Commercial names should be stay on English */
+"general.filetype.sitx"="X Compressed";
+/* File extension: .sql. Commercial names should be stay on English */
+"general.filetype.sql"="Database SQL";
+/* File extension: .srf. Commercial names should be stay on English */
+"general.filetype.srf"="Gambar Sony RAW";
+/* File extension: .srt. Commercial names should be stay on English */
+"general.filetype.subtitle"="Subtitle";
+/* File extension: .svg and .svgz. Commercial names should be stay on English */
+"general.filetype.vectorImage"="Gambar Vector";
+/* File extension: .swf. Commercial names should be stay on English */
+"general.filetype.swf"="Film Flash";
+/* File extension: .tar. Commercial names should be stay on English */
+"general.filetype.tar"="Arsipkan";
+/* File extension: .tbz and .tgz. Commercial names should be stay on English */
+"general.filetype.compressed"="Compressed";
+/* File extension: .tif. Commercial names should be stay on English */
+"general.filetype.tif"="Gambar TIF";
+/* File extension: .tiff. Commercial names should be stay on English */
+"general.filetype.tiff"="Gambar TIFF";
+/* File extension: .ttf. Commercial names should be stay on English */
+"general.filetype.ttf"="TrueType Font";
+/* File extension: .wav. Commercial names should be stay on English */
+"general.filetype.wav"="Wave Audio";
+/* File extension: .webm. Commercial names should be stay on English */
+"general.filetype.webm"="WebM Video";
+/* File extension: .wma. Commercial names should be stay on English */
+"general.filetype.wma"="WM Audio";
+/* File extension: .wmv. Commercial names should be stay on English */
+"general.filetype.wmv"="WM Video";
+/* File extension: .xml. Commercial names should be stay on English */
+"general.filetype.xml"="Dokumen XML";
+/* File extension: .zip. Commercial names should be stay on English */
+"general.filetype.zip"="ZIP Archive";
+/* Text show to highlight that you can choose a different option */
+"general.choose"="Pilih";

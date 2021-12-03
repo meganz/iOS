@@ -217,9 +217,9 @@ final class PhotoCarouselViewController: UIViewController {
     
     private func updateSelectDeselectButtonTitle(withSelectedAsset asset: PHAsset) {
         if selectedAssets.contains(asset) {
-            selectDeselectBarButtonItem?.title = NSLocalizedString("Unselect", comment: "Used in Photos app browser carousel view to unselect a selected photo.")
+            selectDeselectBarButtonItem?.title = Strings.Localizable.unselect
         } else {
-            selectDeselectBarButtonItem?.title = NSLocalizedString("select", comment: "Used in Photos app browser carousel view to select a photo.")
+            selectDeselectBarButtonItem?.title = Strings.Localizable.select
         }
     }
         
@@ -229,7 +229,7 @@ final class PhotoCarouselViewController: UIViewController {
                                                 target: self,
                                                 action: #selector(sendBarButtonTapped))
         let selectDeselectBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("select", comment: "Used in Photos app browser carousel view to select a photo."),
+            title: Strings.Localizable.select,
             style: .plain,
             target: self,
             action: #selector(selectBarButtonTapped)
