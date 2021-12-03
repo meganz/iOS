@@ -1353,6 +1353,7 @@
 		A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */; };
+		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		B5300AF32754A098001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		B5300AF42754A09C001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
@@ -1930,11 +1931,11 @@
 		C42C35802743DAE1004D8BA9 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C357D2743DAE1004D8BA9 /* CustomModalAlertViewController+UpgradeToPro.swift */; };
 		C42C35812743DC1B004D8BA9 /* CustomModalAlertViewController+BackupActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477AAFE26E66F2B00490B34 /* CustomModalAlertViewController+BackupActions.swift */; };
 		C42C35832743DC1C004D8BA9 /* CustomModalAlertViewController+BackupActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C477AAFE26E66F2B00490B34 /* CustomModalAlertViewController+BackupActions.swift */; };
-		C44080B5273580AF00E3EDDE /* UIViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44080B4273580AF00E3EDDE /* UIViewController+Backup.swift */; };
 		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
 		C43817B92746925E00EA82A8 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
 		C43817BA2746926A00EA82A8 /* UIFont+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB733266550A5006A114F /* UIFont+Additions.swift */; };
+		C44080B5273580AF00E3EDDE /* UIViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44080B4273580AF00E3EDDE /* UIViewController+Backup.swift */; };
 		C44947762652A466004B4C8E /* BannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44947752652A466004B4C8E /* BannerType.swift */; };
 		C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */; };
 		C44CE0112590C66F00313719 /* AudioPlayer+EventObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */; };
@@ -3442,6 +3443,7 @@
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.release.xcconfig"; sourceTree = "<group>"; };
 		AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
@@ -9166,6 +9168,7 @@
 			children = (
 				BFAB113323CEA5C300BCE72D /* AlbumsTableViewDelegate.swift */,
 				BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */,
+				B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */,
 				BFAB113023CEA5C300BCE72D /* Controller */,
 				BFAB113423CEA5C300BCE72D /* Cell */,
 			);
@@ -10754,6 +10757,7 @@
 				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
 				BF99A41F24B2AD040035A183 /* ChatUploadTransfer+CoreDataClass.swift in Sources */,
+				B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */,
 				5BFA9604252DF22B003653EB /* ManageChatHistoryTableViewController.swift in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				C4936D4826FA322A00432806 /* CustomModalBackupAlertRouter.swift in Sources */,

@@ -37,11 +37,11 @@ class TermsAndPoliciesTableViewController: UITableViewController {
     // MARK: - Private
     
     private func configView() {
-        title = NSLocalizedString("settings.section.termsAndPolicies", comment: "Title of one of the Settings sections where you can see MEGA's 'Terms and Policies'")
+        title = Strings.Localizable.Settings.Section.termsAndPolicies
         
-        privacyPolicyLabel.text = NSLocalizedString("privacyPolicyLabel", comment: "Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'")
+        privacyPolicyLabel.text = Strings.Localizable.privacyPolicyLabel
         cookiePolicyLabel.text = Strings.Localizable.General.cookiePolicy
-        termsOfServiceLabel.text = NSLocalizedString("termsOfServicesLabel", comment: "Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'")
+        termsOfServiceLabel.text = Strings.Localizable.termsOfServicesLabel
         
         updateAppearance()
     }

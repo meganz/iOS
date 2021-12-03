@@ -64,7 +64,7 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
 extension PushNotificationControl {
     func string(from timeLeft: Int64) -> String? {
         if timeLeft == 0 {
-            return NSLocalizedString("Notifications muted", comment: "Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch")
+            return Strings.Localizable.notificationsMuted
         } else {
             let remainingTime = ceil(TimeInterval(timeLeft) - Date().timeIntervalSince1970)
             return remainingTime.dndFormattedString

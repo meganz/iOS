@@ -5,7 +5,7 @@ final class AlbumsTableViewController: UITableViewController {
     private var albumsDataSource: AlbumsTableViewDataSource?
     private var albumsDelegate: AlbumsTableViewDelegate?
     private lazy var albums = Albums()
-    private let selectionActionText: String
+    private let selectionActionType: AlbumsSelectionActionType
     private let selectionActionDisabledText: String
     private let completionBlock: AlbumsTableViewController.CompletionBlock
     var source: PhotoLibrarySelectionSource = .other
@@ -14,10 +14,10 @@ final class AlbumsTableViewController: UITableViewController {
     
     // MARK:- Initializers.
     
-    @objc init(selectionActionText: String,
+    @objc init(selectionActionType: AlbumsSelectionActionType,
                selectionActionDisabledText: String,
                completionBlock: @escaping ([PHAsset]) -> Void) {
-        self.selectionActionText = selectionActionText
+        self.selectionActionType = selectionActionType
         self.selectionActionDisabledText = selectionActionDisabledText
         self.completionBlock = completionBlock
         super.init(nibName: nil, bundle: nil)
@@ -67,7 +67,7 @@ final class AlbumsTableViewController: UITableViewController {
     
     private func showDetail(album: Album) {
         let gridViewController = PhotoGridViewController(album: album,
-                                                         selectionActionText: selectionActionText,
+                                                         selectionActionType: selectionActionType,
                                                          selectionActionDisabledText: selectionActionDisabledText,
                                                          completionBlock: completionBlock,
                                                          source: source)
