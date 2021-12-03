@@ -186,10 +186,10 @@
 #pragma mark - IBActions
 
 - (IBAction)firstButtonTouchUpInside:(UIButton *)sender {
-    if ((self.confirmationPlaceholder && [self.detailTextField.placeholder isEqualToString:self.detailTextField.text]) ||
+    if ((self.confirmationPlaceholder && [self.detailTextField.placeholder.lowercaseString isEqualToString:self.detailTextField.text.lowercaseString]) ||
         (!self.confirmationPlaceholder && self.firstCompletion)) {
         self.firstCompletion();
-    } else if (self.confirmationPlaceholder && ![self.detailTextField.placeholder isEqualToString:self.detailTextField.text]) {
+    } else if (self.confirmationPlaceholder && ![self.detailTextField.placeholder.lowercaseString isEqualToString:self.detailTextField.text.lowercaseString]) {
         [self showConfirmationTextError];
     }
 }
