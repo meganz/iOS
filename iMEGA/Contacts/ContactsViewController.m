@@ -1749,7 +1749,7 @@
             if (indexPath.section == 0) {
                 if (indexPath.row == 0) {
                     [self addShareWith:nil];
-                } else if (![self isAnyBackupNodeBeingManaged]) {
+                } else {
                     MEGAUser *user = self.visibleUsersArray[indexPath.row - 1];
                     if (!user) {
                         [SVProgressHUD showErrorWithStatus:@"Invalid user"];
@@ -1761,8 +1761,10 @@
                         return;
                     }
                     
-                    self.userTapped = user;
-                    [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
+                    if (![self isAnyBackupNodeBeingManaged]) {
+                        self.userTapped = user;
+                        [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
+                    }
                 }
             } else {
                 if (!tableView.isEditing) {
