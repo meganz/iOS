@@ -3,7 +3,7 @@ import Foundation
 extension CustomModalAlertViewController {
     
     func configureForBusinessGracePeriod() {
-        image = UIImage(named: "paymentOverdue")
+        image = Asset.Images.Business.paymentOverdue.image
         viewTitle = Strings.Localizable.somethingWentWrong
         detail = Strings.Localizable.ThereHasBeenAProblemWithYourLastPayment.pleaseAccessMEGAUsingADesktopBrowserForMoreInformation
         
