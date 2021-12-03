@@ -12,7 +12,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     var sender: UIView?
-    lazy var forwardAction = ActionSheetAction(title: NSLocalizedString("forward", comment: ""), detail: nil, image: UIImage(named: "forwardToolbar"), style: .default) {
+    lazy var forwardAction = ActionSheetAction(title: NSLocalizedString("forward", comment: ""), detail: nil, image: Asset.Images.Chat.forwardToolbar.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
@@ -294,7 +294,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         }
         
         let addMoreView = UIButton()
-        addMoreView.setImage(UIImage(named: "addReactionSmall"), for: .normal)
+        addMoreView.setImage(Asset.Images.Chat.addReactionSmall.image, for: .normal)
         addMoreView.layer.cornerRadius = 22
         addMoreView.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
         addMoreView.imageView?.contentMode = .scaleAspectFit

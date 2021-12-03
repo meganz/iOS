@@ -133,7 +133,7 @@ class AppearanceManager: NSObject {
         navigationBarAppearance.shadowImage = nil
         navigationBarAppearance.shadowColor = nil
         
-        let backArrowImage = UIImage(named: "backArrow")
+        let backArrowImage = Asset.Images.Chat.backArrow.image
         navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
         
         let barButtonItemAppearance = UIBarButtonItemAppearance()

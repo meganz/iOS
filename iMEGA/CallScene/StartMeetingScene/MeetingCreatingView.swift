@@ -45,14 +45,14 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     
     private lazy var enableDisableVideoButton: UIButton  = {
         let button = UIButton()
-        button.setImage(UIImage(named: "cameraOff"), for: .normal)
-        button.setImage(UIImage(named: "cameraOn"), for: .selected)
+        button.setImage(Asset.Images.Chat.Calls.cameraOff.image, for: .normal)
+        button.setImage(Asset.Images.Chat.Calls.cameraOn.image, for: .selected)
         return button
     }()
     private lazy var muteUnmuteMicrophoneButton: UIButton  = {
         let button = UIButton()
-        button.setImage(UIImage(named: "micOn"), for: .normal)
-        button.setImage(UIImage(named: "micOff"), for: .selected)
+        button.setImage(Asset.Images.Chat.Calls.micOn.image, for: .normal)
+        button.setImage(Asset.Images.Chat.Calls.micOff.image, for: .selected)
         button.isSelected = true
         return button
     }()
@@ -84,8 +84,8 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
     }()
     private lazy var switchCameraButton: UIButton  = {
         let button = UIButton()
-        button.setImage(UIImage(named: "rotateOFF"), for: .normal)
-        button.setImage(UIImage(named: "rotateON"), for: .selected)
+        button.setImage(Asset.Images.Chat.Calls.rotateOFF.image, for: .normal)
+        button.setImage(Asset.Images.Chat.Calls.rotateON.image, for: .selected)
         return button
     }()
     

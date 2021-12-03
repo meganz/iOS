@@ -25,7 +25,7 @@ class AddToChatImageCell: UICollectionViewCell {
         didSet {
             if cellType == .media {
                 foregoundLabel.text = NSLocalizedString("Send", comment: "")
-                let sendImage = UIImage(named: "sendChatDisabled")?.withRenderingMode(.alwaysTemplate)
+                let sendImage = Asset.Images.Chat.sendChatDisabled.image.withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = sendImage
             } else {
                 foregoundLabel.text = NSLocalizedString("more", comment: "")

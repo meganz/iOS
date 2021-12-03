@@ -64,7 +64,7 @@ final class TurnOnNotificationsViewModel: ViewModelType {
             let stepTwo = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepTwo
             let stepThree = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepThree
             
-            let notificationsModel = TurnOnNotificationsModel(headerImageName: "groupChat",
+            let notificationsModel = TurnOnNotificationsModel(headerImageName: Asset.Images.Chat.groupChat.name,
                                                               title: title,
                                                               description: description,
                                                               stepOneImageName: "openSettings",

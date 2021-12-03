@@ -253,7 +253,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
             manageChatHistoryUseCase.clearChatHistoryUseCase.clearChatHistory(for: chatId) { [weak self] in
                 switch $0 {
                 case .success(_):
-                    self?.invokeCommand?(.showResult(.content(UIImage.init(named: "clearChatHistory")! , NSLocalizedString("Chat History has Been Cleared", comment: "Message show when the history of a chat has been successfully deleted."))))
+                    self?.invokeCommand?(.showResult(.content(Asset.Images.Chat.ContactDetails.clearChatHistory.image , NSLocalizedString("Chat History has Been Cleared", comment: "Message show when the history of a chat has been successfully deleted."))))
                     
                 case .failure(_):
                     self?.invokeCommand?(.showResult(.error(NSLocalizedString("An error has occurred. The chat history has not been successfully cleared", comment: "Message show when the history of a chat hasn’t been successfully deleted"))))

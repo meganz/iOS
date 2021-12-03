@@ -87,7 +87,7 @@ class RichPreviewContentView: UIView {
                 descriptionLabel.text = "\(message.richNumber?.int64Value ?? 0) \(NSLocalizedString("participants", comment: "Label to describe the section where you can see the participants of a group chat"))"
                 linkLabel.text = "mega.nz"
                 iconImageView.image = UIImage(named: "favicon")
-                imageView.image = UIImage(named: "groupChat")
+                imageView.image = Asset.Images.Chat.groupChat.image
                 
             default:
                 break

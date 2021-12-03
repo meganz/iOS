@@ -169,7 +169,7 @@ extension GiphySelectionView: CHTCollectionViewDelegateWaterfallLayout, UICollec
 
         // Add image to cell
         cell.image.sd_setImage(with: URL(string: gif.webp))
-        cell.image.backgroundColor = UIColor(patternImage: UIImage(named: "giphyCellBackground")!)
+        cell.image.backgroundColor = UIColor(patternImage: Asset.Images.Chat.giphyCellBackground.image)
         return cell
     }
 
@@ -269,7 +269,7 @@ extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
-        return UIImage(named: "noGIF")
+        return Asset.Images.Chat.noGIF.image
     }
 
     func customView(forEmptyDataSet _: UIScrollView) -> UIView? {

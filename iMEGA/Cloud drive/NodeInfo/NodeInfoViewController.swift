@@ -394,7 +394,7 @@ class NodeInfoViewController: UIViewController {
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
-        cell.avatarImageView.image = UIImage(named: "inviteToChat")
+        cell.avatarImageView.image = Asset.Images.Chat.inviteToChat.image
         cell.nameLabel.text = Strings.Localizable.addContact
         cell.shareLabel.isHidden = true
         
