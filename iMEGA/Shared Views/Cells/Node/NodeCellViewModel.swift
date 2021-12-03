@@ -157,7 +157,7 @@ final class NodeCellViewModel: ViewModelType {
         } else if nodeModel.isOutShare {
             return "folder_outgoing"
         } else {
-            return "folder"
+            return Asset.Images.Filetypes.folder.name
         }
     }
 }
