@@ -18,10 +18,10 @@ class BusinessExpiredViewController: UIViewController {
         titleLabel.text = Strings.Localizable.yourBusinessAccountIsExpired
         dismissButton.titleLabel?.text = Strings.Localizable.dismiss
         if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-            imageView.image = UIImage(named: "accountExpiredAdmin")
+            imageView.image = Asset.Images.Business.accountExpiredAdmin.image
             detailLabel.text = Strings.Localizable.ThereHasBeenAProblemProcessingYourPayment.megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser
         } else {
-            imageView.image = UIImage(named: "accountExpiredUser")
+            imageView.image = Asset.Images.Business.accountExpiredUser.image
             detailLabel.text = Strings.Localizable.YourAccountIsCurrentlyBSuspendedB.youCanOnlyBrowseYourData.replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + Strings.Localizable.contactYourBusinessAccountAdministratorToResolveTheIssueAndActivateYourAccount
         }
         
