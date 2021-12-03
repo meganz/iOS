@@ -316,7 +316,7 @@ extension TextEditorViewController: ViewType {
         } else {
             let importBarButtonItem =
                 UIBarButtonItem(
-                    image: UIImage(named: "import"),
+                    image: Asset.Images.InfoActions.import.image,
                     style: .plain,
                     target: self,
                     action: #selector(importTapped)
