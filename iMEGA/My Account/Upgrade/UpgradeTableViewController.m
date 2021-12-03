@@ -53,6 +53,9 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *skipBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *termsAndPoliciesBarButtonItem;
+
 @property (strong, nonatomic) NSMutableArray *proLevelsMutableArray;
 @property (strong, nonatomic) NSMutableDictionary *proLevelsIndexesMutableDictionary;
 @property (nonatomic) MEGAAccountType userProLevel;
@@ -91,6 +94,9 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     
     _autorenewableDescriptionLabel.text = NSLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
+    self.termsAndPoliciesBarButtonItem.title = NSLocalizedString(@"settings.section.termsAndPolicies", @"Title of one of the Settings sections where you can see MEGA's 'Terms and Policies'");
+    self.navigationController.topViewController.toolbarItems = self.toolbar.items;
+
     if (self.presentingViewController || self.navigationController.presentingViewController.presentedViewController == self.navigationController || [self.tabBarController.presentingViewController isKindOfClass:UITabBarController.class]) {
         self.hideSkipButton = NO;
         self.skipBarButtonItem.title = NSLocalizedString(@"skipButton", @"Button title that skips the current action");
@@ -170,8 +176,6 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     self.chooseFromOneOfThePlansLabel.textColor = self.chooseFromOneOfThePlansProLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
     [self setupTableViewHeaderAndFooter];
-    
-    [self setupToolbar];
 }
 
 - (void)setupCurrentPlanView {
@@ -370,28 +374,6 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     return transferQuotaMutableAttributedString;
 }
 
-- (void)setupToolbar {
-    self.navigationController.toolbarHidden = NO;
-    
-    UIBarButtonItem *termsOfServiceBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'") style:UIBarButtonItemStylePlain target:self action:@selector(showTermsOfService)];
-    [termsOfServiceBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
-
-    UIBarButtonItem *flexibleBarButtomItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    UIBarButtonItem *privacyPolicyBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'") style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacyPolicy)];
-    [privacyPolicyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
-    
-    [self setToolbarItems:@[termsOfServiceBarButtonItem, flexibleBarButtomItem, privacyPolicyBarButtonItem]];
-}
-
-- (void)showTermsOfService {
-    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
-}
-
-- (void)showPrivacyPolicy {
-    [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
-}
-
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
     NSUInteger index = [MEGAPurchase.sharedInstance pricingProductIndexForProduct:product];
     NSInteger storageValue = [MEGAPurchase.sharedInstance.pricing storageGBAtProductIndex:index];
@@ -456,6 +438,10 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:NSLocalizedString(@"noEmailAccountConfigured", @"Text shown when you want to send feedback of the app and you don't have an email account set up on your device")];
     }
+}
+
+- (IBAction)termsAndPoliciesTouchUpInside:(id)sender {
+    [[TermsAndPoliciesRouter.alloc initWithPresentController:self] start];
 }
 
 - (void)restoreTouchUpInside {
