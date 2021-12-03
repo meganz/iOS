@@ -244,12 +244,12 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     func imageForEmptyDataSet() -> UIImage? {
         if (MEGAReachabilityManager.isReachable()) {
             if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return UIImage(named: "searchEmptyState")
+                return Asset.Images.EmptyStates.searchEmptyState.image
             } else {
                 return nil
             }
         } else {
-            return UIImage(named: "noInternetEmptyState")
+            return Asset.Images.EmptyStates.noInternetEmptyState.image
         }
     }
     

@@ -56,7 +56,7 @@ extension EmptyStateView {
     }
     
     class func favouritesEmptyState() -> EmptyStateView {
-        let view = EmptyStateView(forHomeWith: UIImage(named: "favouritesEmptyState"),
+        let view = EmptyStateView(forHomeWith: Asset.Images.EmptyStates.favouritesEmptyState.image,
                                   title: Strings.Localizable.noFavourites,
                                   description: nil,
                                   buttonTitle: nil)
