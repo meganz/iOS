@@ -35,14 +35,14 @@ final class TextEditorViewModelTests: XCTestCase {
             
             if textEditorMode == .view {
                 navbarItemsModel = TextEditorNavbarItemsModel (
-                    leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+                    leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
                     rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
                     textEditorMode: textEditorMode
                 )
             } else {
                 navbarItemsModel = TextEditorNavbarItemsModel (
-                    leftItem: NavbarItemModel(title: TextEditorL10n.cancel, imageName: nil),
-                    rightItem: NavbarItemModel(title: TextEditorL10n.save, imageName: nil),
+                    leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
+                    rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
                     textEditorMode: textEditorMode
                 )
             }
@@ -90,7 +90,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsLoadModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
         )
@@ -102,7 +102,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsViewModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
@@ -167,7 +167,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
         )
@@ -221,7 +221,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
         )
@@ -247,7 +247,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 .configView(textEditorLoadModel, shallUpdateContent: false),
                 .setupNavbarItems(navbarItemsModel),
                 .updateProgressView(progress: percentage),
-                .showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.download)
+                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download)
              ]
         )
     }
@@ -290,7 +290,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
@@ -337,7 +337,7 @@ final class TextEditorViewModelTests: XCTestCase {
              action: .saveText(content: editContent),
              expectedCommands: [.startLoading,
                                 .stopLoading,
-                                .showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.upload)
+                                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)
              ]
         )
     }
@@ -353,11 +353,11 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockParentHandle: MEGAHandle = 123
         
         let duplicateNameAlertModel = TextEditorDuplicateNameAlertModel(
-            alertTitle: String(format: TextEditorL10n.duplicateNameAlertTitle, textFile.fileName),
-            alertMessage: TextEditorL10n.duplicateNameAlertMessage,
-            cancelButtonTitle: TextEditorL10n.cancel,
-            replaceButtonTitle: TextEditorL10n.replace,
-            renameButtonTitle: TextEditorL10n.rename
+            alertTitle: Strings.Localizable.renameFileAlertTitle(textFile.fileName),
+            alertMessage: Strings.Localizable.thereIsAlreadyAFileWithTheSameName,
+            cancelButtonTitle: Strings.Localizable.cancel,
+            replaceButtonTitle: Strings.Localizable.replace,
+            renameButtonTitle: Strings.Localizable.rename
         )
 
         let viewModel = TextEditorViewModel(
@@ -436,7 +436,7 @@ final class TextEditorViewModelTests: XCTestCase {
 
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
-             expectedCommands: [.showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.upload)]
+             expectedCommands: [.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
         )
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
         XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
@@ -453,11 +453,11 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorMode: TextEditorMode = .create
         
         let duplicateNameAlertModel = TextEditorDuplicateNameAlertModel(
-            alertTitle: String(format: TextEditorL10n.duplicateNameAlertTitle, textFile.fileName),
-            alertMessage: TextEditorL10n.duplicateNameAlertMessage,
-            cancelButtonTitle: TextEditorL10n.cancel,
-            replaceButtonTitle: TextEditorL10n.replace,
-            renameButtonTitle: TextEditorL10n.rename
+            alertTitle: Strings.Localizable.renameFileAlertTitle(textFile.fileName),
+            alertMessage: Strings.Localizable.thereIsAlreadyAFileWithTheSameName,
+            cancelButtonTitle: Strings.Localizable.cancel,
+            replaceButtonTitle: Strings.Localizable.replace,
+            renameButtonTitle: Strings.Localizable.rename
         )
 
         let viewModel = TextEditorViewModel(
@@ -531,7 +531,7 @@ final class TextEditorViewModelTests: XCTestCase {
 
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
-             expectedCommands: [.showError(message: TextEditorL10n.transferError + " " + TextEditorL10n.upload)]
+             expectedCommands: [.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
         )
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 1)
         XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
@@ -548,10 +548,10 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorMode: TextEditorMode = .create
         
         let renameAlertModel = TextEditorRenameAlertModel(
-            alertTitle: TextEditorL10n.rename,
-            alertMessage: TextEditorL10n.renameAlertMessage,
-            cancelButtonTitle: TextEditorL10n.cancel,
-            renameButtonTitle: TextEditorL10n.rename,
+            alertTitle: Strings.Localizable.rename,
+            alertMessage: Strings.Localizable.renameNodeMessage,
+            cancelButtonTitle: Strings.Localizable.cancel,
+            renameButtonTitle: Strings.Localizable.rename,
             textFileName: textFile.fileName
         )
 
@@ -654,8 +654,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.cancel, imageName: nil),
-            rightItem: NavbarItemModel(title: TextEditorL10n.save, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
+            rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
             textEditorMode: .edit
         )
 
@@ -691,7 +691,7 @@ final class TextEditorViewModelTests: XCTestCase {
 
         test(viewModel: viewModel,
              action: .editFile,
-             expectedCommands: [.showError(message: TextEditorL10n.uneditableLargeFileMessage)]
+             expectedCommands: [.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)]
         )
     }
     
@@ -724,8 +724,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.cancel, imageName: nil),
-            rightItem: NavbarItemModel(title: TextEditorL10n.save, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
+            rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
             textEditorMode: .edit
         )
 
@@ -761,7 +761,7 @@ final class TextEditorViewModelTests: XCTestCase {
 
         test(viewModel: viewModel,
              action: .editAfterOpen,
-             expectedCommands: [.showError(message: TextEditorL10n.uneditableLargeFileMessage)]
+             expectedCommands: [.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)]
         )
     }
     
@@ -893,7 +893,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
-            leftItem: NavbarItemModel(title: TextEditorL10n.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
             textEditorMode: .view
         )
@@ -925,7 +925,7 @@ final class TextEditorViewModelTests: XCTestCase {
 
         test(viewModel: viewModel,
              action: .downloadToOffline,
-             expectedCommands: [.startDownload(status: TextEditorL10n.downloadMessage)]
+             expectedCommands: [.startDownload(status: Strings.Localizable.downloadStarted)]
         )
     }
     
