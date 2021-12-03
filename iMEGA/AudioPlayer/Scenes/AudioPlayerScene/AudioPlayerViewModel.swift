@@ -191,7 +191,7 @@ final class AudioPlayerViewModel: ViewModelType {
             invokeCommand?(.configureOfflinePlayer)
             updateTracksActionStatus(enabled: tracks.count > 1)
         case .fileLink:
-            invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: NSLocalizedString("fileLink", comment: "")))
+            invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: Strings.Localizable.fileLink))
         }
     }
     

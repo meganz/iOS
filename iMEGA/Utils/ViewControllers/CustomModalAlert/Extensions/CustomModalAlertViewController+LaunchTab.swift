@@ -2,12 +2,12 @@ extension CustomModalAlertViewController {
     
     func configureForChangeLaunchTab() {
         image = UIImage(named: "changeLaunchTab")
-        viewTitle = NSLocalizedString("Change Launch Tab", comment: "Dialog title for the change launch tab screen")
-        detail = NSLocalizedString("You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.", comment: "Dialog description for the change launch tab screen")
+        viewTitle = Strings.Localizable.changeLaunchTab
+        detail = Strings.Localizable.YouCanNowSelectWhichSectionTheAppOpensAtLaunch.chooseTheOneThatBetterSuitsYourNeedsWhetherItSChatCloudDriveOrHome
         
-        firstButtonTitle = NSLocalizedString("Change Setting", comment: "Dialog button text for the change launch tab screen")
+        firstButtonTitle = Strings.Localizable.changeSetting
         firstButtonStyle = MEGACustomButtonStyle.basic.rawValue
-        dismissButtonTitle = NSLocalizedString("dismiss", comment: "")
+        dismissButtonTitle = Strings.Localizable.dismiss
         dismissButtonStyle = MEGACustomButtonStyle.cancel.rawValue
 
         firstCompletion = { [weak self] in
@@ -16,7 +16,7 @@ extension CustomModalAlertViewController {
                     return
                 }
                 let navigation = UINavigationController(rootViewController: defaultTabTableViewController)
-                defaultTabTableViewController.addRightDismissBarButtonItem(with: NSLocalizedString("close", comment: ""))
+                defaultTabTableViewController.addRightDismissBarButtonItem(with: Strings.Localizable.close)
                 UIApplication.mnz_presentingViewController().present(navigation, animated: true, completion: nil)
             })
         }

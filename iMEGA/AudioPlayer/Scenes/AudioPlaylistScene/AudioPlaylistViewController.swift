@@ -145,9 +145,9 @@ final class AudioPlaylistViewController: UIViewController {
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundElevated(traitCollection)
         
-        closeButton.setTitle(NSLocalizedString("close", comment: "Title for close button"), for: .normal)
+        closeButton.setTitle(Strings.Localizable.close, for: .normal)
         
-        removeButton.setTitle(NSLocalizedString("remove", comment: "Title for remove button"), for: .normal)
+        removeButton.setTitle(Strings.Localizable.remove, for: .normal)
         
         
         

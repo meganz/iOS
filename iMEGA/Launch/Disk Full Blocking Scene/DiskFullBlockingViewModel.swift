@@ -26,12 +26,12 @@ struct DiskFullBlockingViewModel: ViewModelType {
     func dispatch(_ action: DiskFullBlockingAction) {
         switch action {
         case .onViewLoaded:
-            let storagePath = String(format: NSLocalizedString("Settings > General > %@ Storage", comment: ""), deviceModel)
-            let description = String(format: NSLocalizedString("Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@", comment: ""), storagePath)
-            let blockingModel = DiskFullBlockingModel(title: NSLocalizedString("The device does not have enough space for MEGA to run properly.", comment: ""),
+            let storagePath = Strings.Localizable.settingsGeneralStorage(deviceModel)
+            let description = Strings.Localizable.FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery.youCanManageYourStorageIn(storagePath)
+            let blockingModel = DiskFullBlockingModel(title: Strings.Localizable.theDeviceDoesNotHaveEnoughSpaceForMEGAToRunProperly,
                                                       description: description,
                                                       highlightedText: storagePath,
-                                                      manageDiskSpaceTitle: NSLocalizedString("Manage", comment: ""),
+                                                      manageDiskSpaceTitle: Strings.Localizable.manage,
                                                       headerImageName: "blockingDiskFull")
             invokeCommand?(.configView(blockingModel))
         case .manage:

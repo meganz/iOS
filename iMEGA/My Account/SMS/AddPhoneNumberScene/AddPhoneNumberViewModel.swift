@@ -62,10 +62,10 @@ final class AddPhoneNumberViewModel: ViewModelType {
         achievementUseCase.getAchievementStorage(by: .addPhone) { [weak self] in
             switch $0 {
             case .success(let storage):
-                let storageText = String(format: NSLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", comment: ""), Helper.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
+                let storageText = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(Helper.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
                 self?.invokeCommand?(.showAchievementStorage(storageText))
             case .failure:
-                self?.invokeCommand?(.loadAchievementError(message: NSLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", comment: "")))
+                self?.invokeCommand?(.loadAchievementError(message: Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA))
             }
         }
     }

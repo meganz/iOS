@@ -145,8 +145,6 @@ public enum Strings {
     public static let aUserHasLeftTheSharedFolder0 = Strings.tr("Localizable", "A user has left the shared folder {0}")
     /// About
     public static let about = Strings.tr("Localizable", "about")
-    /// Accept Cookies
-    public static let acceptCookies = Strings.tr("Localizable", "Accept Cookies")
     /// Accepted your contact request
     public static let acceptedYourContactRequest = Strings.tr("Localizable", "Accepted your contact request")
     /// Access denied
@@ -233,8 +231,6 @@ public enum Strings {
     public static let administrator = Strings.tr("Localizable", "Administrator")
     /// Advanced
     public static let advanced = Strings.tr("Localizable", "advanced")
-    /// Advertising Cookies
-    public static let advertisingCookies = Strings.tr("Localizable", "Advertising Cookies")
     /// After that, your data is subject to deletion.
     public static let afterThatYourDataIsSubjectToDeletion = Strings.tr("Localizable", "After that, your data is subject to deletion.")
     /// Agree
@@ -273,8 +269,6 @@ public enum Strings {
     public static func alreadyAContact(_ p1: UnsafePointer<CChar>) -> String {
       return Strings.tr("Localizable", "alreadyAContact", p1)
     }
-    /// Always On
-    public static let alwaysOn = Strings.tr("Localizable", "Always On")
     /// Always Allow
     public static let alwaysAllow = Strings.tr("Localizable", "alwaysAllow")
     /// App Icon
@@ -351,8 +345,6 @@ public enum Strings {
     public static let badSessionID = Strings.tr("Localizable", "Bad session ID")
     /// Balance error
     public static let balanceError = Strings.tr("Localizable", "Balance error")
-    /// Before you continue
-    public static let beforeYouContinue = Strings.tr("Localizable", "Before You Continue")
     /// Begin Setup
     public static let beginSetup = Strings.tr("Localizable", "beginSetup")
     /// Best
@@ -565,16 +557,6 @@ public enum Strings {
     public static func continueOrRestartVideoMessage(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return Strings.tr("Localizable", "continueOrRestartVideoMessage", p1, p2)
     }
-    /// We use local storage and similar technologies (’Cookies’) to provide our services to you, enhance your experience with our services and customize the adverts you see, including through third parties. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].
-    public static let cookieDialogTextWeUseCookiesAndSimilarTechnologiesCookies = Strings.tr("Localizable", "Cookie dialog text -- We use Cookies and similar technologies (‘Cookies’)...")
-    /// Cookie Policy
-    public static let cookiePolicy = Strings.tr("Localizable", "Cookie Policy")
-    /// Cookie Settings
-    public static let cookieSettings = Strings.tr("Localizable", "Cookie Settings")
-    /// These are Cookies which are controlled by someone other than us; we use these Cookies to provide the types of functionality described above. Not accepting these Cookies will have different implications depending on what type of Cookie each third party Cookie is. Click on “More Information” below for details on all the third party Cookies we use.
-    public static let cookieSettingsDialogTextTheseAreCookiesWhichAreControlledBy = Strings.tr("Localizable", "Cookie settings dialog text -- These are Cookies which are controlled by...")
-    /// Used by us and our approved advertising partners to customise the adverts you see on our services and on other websites based on your browsing history. Not accepting these Cookies means we may show advertisements that are less relevant.
-    public static let cookieSettingsDialogTextUsedByUsAndOurApprovedAdvertisingPartners = Strings.tr("Localizable", "Cookie settings dialog text -- Used by us and our approved advertising partners...")
     /// Copied to the clipboard
     public static let copiedToTheClipboard = Strings.tr("Localizable", "copiedToTheClipboard")
     /// Copy
@@ -813,8 +795,6 @@ public enum Strings {
     public static let eraseAllLocalDataLabel = Strings.tr("Localizable", "eraseAllLocalDataLabel")
     /// Error
     public static let error = Strings.tr("Localizable", "error")
-    /// Essential Cookies
-    public static let essentialCookies = Strings.tr("Localizable", "Essential Cookies")
     /// Expired
     public static let expired = Strings.tr("Localizable", "Expired")
     /// expires on %@
@@ -1319,8 +1299,6 @@ public enum Strings {
     public static let months = Strings.tr("Localizable", "months")
     /// More
     public static let more = Strings.tr("Localizable", "more")
-    /// More Information
-    public static let moreInformation = Strings.tr("Localizable", "More Information")
     /// %1$s [A]and more are typing…[/A]
     public static func moreThanTwoUsersAreTyping(_ p1: UnsafePointer<CChar>) -> String {
       return Strings.tr("Localizable", "moreThanTwoUsersAreTyping", p1)
@@ -1437,8 +1415,6 @@ public enum Strings {
     public static let noRecentActivity = Strings.tr("Localizable", "No recent activity")
     /// No Shared Files
     public static let noSharedFiles = Strings.tr("Localizable", "No Shared Files")
-    /// No Third Party Cookies in use
-    public static let noThirdPartyCookiesInUse = Strings.tr("Localizable", "No Third Party Cookies in use")
     /// No videos found
     public static let noVideosFound = Strings.tr("Localizable", "No videos found")
     /// No Archived Chats
@@ -1617,8 +1593,6 @@ public enum Strings {
     public static let peopleCanJoinYourGroupByUsingThisLink = Strings.tr("Localizable", "People can join your group by using this link.")
     /// Per Folder
     public static let perFolder = Strings.tr("Localizable", "Per Folder")
-    /// Performance and Analytics Cookies
-    public static let performanceAndAnalyticsCookies = Strings.tr("Localizable", "Performance and Analytics Cookies")
     /// It will be permanently removed
     public static let permanentlyRemoved = Strings.tr("Localizable", "permanentlyRemoved")
     /// Check your permissions on this folder
@@ -1677,8 +1651,6 @@ public enum Strings {
     public static let poorConnection = Strings.tr("Localizable", "Poor connection.")
     /// Port
     public static let port = Strings.tr("Localizable", "Port")
-    /// Preference Cookies
-    public static let preferenceCookies = Strings.tr("Localizable", "Preference Cookies")
     /// Preparing…
     public static let preparing = Strings.tr("Localizable", "preparing...")
     /// Preview Content
@@ -2223,12 +2195,8 @@ public enum Strings {
     public static let thereIsAlreadyAFileWithTheSameName = Strings.tr("Localizable", "There is already a file with the same name")
     /// There is already a folder with the same name
     public static let thereIsAlreadyAFolderWithTheSameName = Strings.tr("Localizable", "There is already a folder with the same name")
-    /// The user has been invited and will appear in your contact list once accepted.
-    public static let theUserHasBeenInvited = Strings.tr("Localizable", "theUserHasBeenInvited")
     /// The users have been invited and will appear in your contact list once accepted.
     public static let theUsersHaveBeenInvited = Strings.tr("Localizable", "theUsersHaveBeenInvited")
-    /// Third Party Cookies
-    public static let thirdPartyCookies = Strings.tr("Localizable", "Third Party Cookies")
     /// This action cannot be completed as it would take you over your current storage limit
     public static let thisActionCanNotBeCompletedAsItWouldTakeYouOverYourCurrentStorageLimit = Strings.tr("Localizable", "This action can not be completed as it would take you over your current storage limit")
     /// This chat link is no longer available
@@ -2677,10 +2645,6 @@ public enum Strings {
       /// All current files will remain. Only historic versions of your files will be deleted.
       public static let onlyHistoricVersionsOfYourFilesWillBeDeleted = Strings.tr("Localizable", "All current files will remain. Only historic versions of your files will be deleted.")
     }
-    public enum AllowUsToRememberCertainDisplayAndFormattingSettingsYouChoose {
-      /// Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.
-      public static let notAcceptingTheseCookiesWillMeanWeWonTBeAbleToRememberSomeThingsForYouSuchAsYourPreferredScreenLayout = Strings.tr("Localizable", "Allow us to remember certain display and formatting settings you choose. Not accepting these Cookies will mean we won’t be able to remember some things for you such as your preferred screen layout.")
-    }
     public enum AnErrorHasOccurred {
       /// An error has occurred. The chat history has not been successfully cleared
       public static let theChatHistoryHasNotBeenSuccessfullyCleared = Strings.tr("Localizable", "An error has occurred. The chat history has not been successfully cleared")
@@ -2716,10 +2680,6 @@ public enum Strings {
       /// You are not allowed to enable video as this call has reached the maximum number of participants using video.
       public static let noMoreVideoAreAllowedInThisGroupCall = Strings.tr("Localizable", "Error. No more video are allowed in this group call.")
     }
-    public enum EssentialForProvidingYouImportantFunctionalityAndSecureAccessToOurServices {
-      /// Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.
-      public static let forThisReasonTheyDoNotRequireConsent = Strings.tr("Localizable", "Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.")
-    }
     public enum FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery {
       /// Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@
       public static func youCanManageYourStorageIn(_ p1: Any) -> String {
@@ -2731,10 +2691,6 @@ public enum Strings {
       public static func thisMakesItEasierForYourContactsToFindYouOnMEGA(_ p1: Any) -> String {
         return Strings.tr("Localizable", "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", String(describing: p1))
       }
-    }
-    public enum HelpUsToUnderstandHowYouUseOurServicesAndProvideUsDataThatWeCanUseToMakeImprovements {
-      /// Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.
-      public static let notAcceptingTheseCookiesWillMeanWeWillHaveLessDataAvailableToUsToHelpDesignImprovements = Strings.tr("Localizable", "Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.")
     }
     public enum MEGANeedsAMinimumOf {
       public enum FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery {
@@ -3006,6 +2962,18 @@ public enum Strings {
           return Strings.tr("Localizable", "account.transferQuota.perMonth", String(describing: p1))
         }
       }
+      public enum Upgrade {
+        public enum AlreadyHaveACancellableSubscription {
+          /// Do you want to cancel your current subscription and continue with the purchase?
+          public static let message = Strings.tr("Localizable", "account.upgrade.alreadyHaveACancellableSubscription.message")
+        }
+        public enum AlreadyHaveASubscription {
+          /// You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.
+          public static let message = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.message")
+          /// You already have an active subscription
+          public static let title = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.title")
+        }
+      }
     }
     public enum Calls {
       public enum Incompatibility {
@@ -3040,6 +3008,12 @@ public enum Strings {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
         }
       }
+      public enum ScanDocument {
+        /// Scan %@
+        public static func defaultName(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "cloudDrive.scanDocument.defaultName", String(describing: p1))
+        }
+      }
       public enum Sort {
         /// Label
         public static let label = Strings.tr("Localizable", "cloudDrive.sort.label")
@@ -3052,6 +3026,158 @@ public enum Strings {
       }
     }
     public enum Dialog {
+      public enum Add {
+        public enum Items {
+          public enum Backup {
+            public enum Action {
+              /// Add
+              public static let title = Strings.tr("Localizable", "dialog.add.items.backup.action.title")
+            }
+            public enum Folder {
+              public enum Warning {
+                /// Adding items to this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enable with the MEGA Desktop App.
+                public static let message = Strings.tr("Localizable", "dialog.add.items.backup.folder.warning.message")
+                /// Add Item to “%@”
+                public static func title(_ p1: Any) -> String {
+                  return Strings.tr("Localizable", "dialog.add.items.backup.folder.warning.title", String(describing: p1))
+                }
+              }
+            }
+          }
+        }
+      }
+      public enum Backup {
+        public enum Folder {
+          public enum Location {
+            public enum Warning {
+              /// Moving this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.
+              public static let message = Strings.tr("Localizable", "dialog.backup.folder.location.warning.message")
+              /// Move “%@”
+              public static func title(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "dialog.backup.folder.location.warning.title", String(describing: p1))
+              }
+            }
+          }
+        }
+        public enum Setup {
+          /// Use our Desktop App to ensure your backup folder is synchronised with your MEGA Cloud.
+          public static let message = Strings.tr("Localizable", "dialog.backup.setup.message")
+          /// Setup Backup
+          public static let title = Strings.tr("Localizable", "dialog.backup.setup.title")
+        }
+        public enum Warning {
+          public enum Confirm {
+            /// Please type “%@” to confirm this action
+            public static func message(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "dialog.backup.warning.confirm.message", String(describing: p1))
+            }
+          }
+        }
+      }
+      public enum CallAttempt {
+        /// Your contact [X] is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact
+        public static let contactNotInMEGA = Strings.tr("Localizable", "dialog.callAttempt.contactNotInMEGA")
+      }
+      public enum Confirmation {
+        public enum Error {
+          /// Text entered does not match
+          public static let message = Strings.tr("Localizable", "dialog.confirmation.error.message")
+        }
+      }
+      public enum Cookies {
+        /// Accept Cookies
+        public static let accept = Strings.tr("Localizable", "dialog.cookies.accept")
+        /// We use Cookies and similar technologies (“Cookies”) to provide and enhance your experience with our services. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].
+        public static let description = Strings.tr("Localizable", "dialog.cookies.description")
+        public enum Title {
+          /// Your privacy
+          public static let yourPrivacy = Strings.tr("Localizable", "dialog.cookies.title.yourPrivacy")
+        }
+      }
+      public enum Delete {
+        public enum Backup {
+          /// delete backup
+          public static let placeholder = Strings.tr("Localizable", "dialog.delete.backup.placeholder")
+          public enum Action {
+            /// Move to Rubbish Bin
+            public static let title = Strings.tr("Localizable", "dialog.delete.backup.action.title")
+          }
+          public enum Folder {
+            public enum Warning {
+              /// Are you sure you want to delete your backup folder and disable backup you set?
+              public static let message = Strings.tr("Localizable", "dialog.delete.backup.folder.warning.message")
+              /// Move “%@” to Rubbish Bin
+              public static func title(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "dialog.delete.backup.folder.warning.title", String(describing: p1))
+              }
+            }
+          }
+        }
+        public enum Root {
+          public enum Backup {
+            public enum Folder {
+              public enum Warning {
+                /// You are deleting your backups folder. This will remove all the backups you have set. Are you sure you want to do this?
+                public static let message = Strings.tr("Localizable", "dialog.delete.root.backup.folder.warning.message")
+              }
+            }
+          }
+        }
+      }
+      public enum Disable {
+        public enum Backup {
+          /// disable backup
+          public static let placeholder = Strings.tr("Localizable", "dialog.disable.backup.placeholder")
+        }
+      }
+      public enum InviteContact {
+        /// The user [X] has been invited and will appear in your contact list once accepted.
+        public static let outgoingContactRequest = Strings.tr("Localizable", "dialog.inviteContact.outgoingContactRequest")
+      }
+      public enum Move {
+        public enum Backup {
+          /// move backup
+          public static let placeholder = Strings.tr("Localizable", "dialog.move.backup.placeholder")
+        }
+      }
+      public enum Root {
+        public enum Backup {
+          public enum Folder {
+            public enum Location {
+              public enum Warning {
+                /// You are changing a default backup folder location. This may affect your ability to find your backup folder in the future. Please remember where it is located so that you can find it in the future.
+                public static let message = Strings.tr("Localizable", "dialog.root.backup.folder.location.warning.message")
+              }
+            }
+          }
+        }
+      }
+      public enum Share {
+        public enum Backup {
+          public enum Folder {
+            public enum Warning {
+              /// This folder can only be shared as read-only, as this is a backup folder, any changes to its content could disable the backup.
+              public static let message = Strings.tr("Localizable", "dialog.share.backup.folder.warning.message")
+            }
+          }
+          public enum Folders {
+            public enum Warning {
+              /// These folders can only be shared as read-only, as they are backup folders, any changes to their content could disable the backups.
+              public static let message = Strings.tr("Localizable", "dialog.share.backup.folders.warning.message")
+            }
+          }
+          public enum Non {
+            public enum Backup {
+              public enum Folders {
+                public enum Warning {
+                  /// Some folders shared are backup folders and read-only. Do you wish to continue?
+                  public static let message = Strings.tr("Localizable", "dialog.share.backup.non.backup.folders.warning.message")
+                }
+              }
+            }
+          }
+        }
+      }
       public enum ShareOwnerStorageQuota {
         /// The file cannot be sent as the target user is over their storage quota.
         public static let message = Strings.tr("Localizable", "dialog.shareOwnerStorageQuota.message")
@@ -3114,6 +3240,10 @@ public enum Strings {
     public enum General {
       /// Choose
       public static let choose = Strings.tr("Localizable", "general.choose")
+      /// Cookie Policy
+      public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
+      /// Cookie Settings
+      public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
       public enum Button {
         /// Get Bonus
         public static let getBonus = Strings.tr("Localizable", "general.button.getBonus")
@@ -3420,6 +3550,14 @@ public enum Strings {
         /// Waiting for others to join…
         public static let waitingOthers = Strings.tr("Localizable", "meetings.message.waitingOthers")
       }
+      public enum New {
+        /// Another call in progress. Please end your current call before making another.
+        public static let anotherAlreadyExistsError = Strings.tr("Localizable", "meetings.new.anotherAlreadyExistsError")
+        public enum AnotherAlreadyExistsError {
+          /// End and join
+          public static let endAndJoin = Strings.tr("Localizable", "meetings.new.anotherAlreadyExistsError.endAndJoin")
+        }
+      }
       public enum Notifications {
         /// You are the new call moderator
         public static let moderatorPrivilege = Strings.tr("Localizable", "meetings.notifications.moderatorPrivilege")
@@ -3466,6 +3604,22 @@ public enum Strings {
       }
     }
     public enum Settings {
+      public enum Cookies {
+        /// Essential Cookies
+        public static let essential = Strings.tr("Localizable", "settings.cookies.essential")
+        /// Performance and Analytics Cookies
+        public static let performanceAndAnalytics = Strings.tr("Localizable", "settings.cookies.performanceAndAnalytics")
+        public enum Essential {
+          /// Always On
+          public static let alwaysOn = Strings.tr("Localizable", "settings.cookies.essential.alwaysOn")
+          /// Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.
+          public static let footer = Strings.tr("Localizable", "settings.cookies.essential.footer")
+        }
+        public enum PerformanceAndAnalytics {
+          /// Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.
+          public static let footer = Strings.tr("Localizable", "settings.cookies.performanceAndAnalytics.footer")
+        }
+      }
       public enum FileManagement {
         public enum Alert {
           /// Clear all offline files?
