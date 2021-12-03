@@ -266,7 +266,7 @@ final class HomeViewController: UIViewController {
     
     private func setupRightItems() {
         let startConversationItem = UIBarButtonItem(
-            image: UIImage(named: "startChat"),
+            image: Asset.Images.Home.startChat.image,
             style: .plain,
             target: self,
             action: .didTapNewChat
@@ -275,7 +275,7 @@ final class HomeViewController: UIViewController {
         self.startConversationItem = startConversationItem
 
         let startUploadBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "uploadFile"),
+            image: Asset.Images.Home.uploadFile.image,
             style: .plain,
             target: self,
             action: .didTapNewUpload
