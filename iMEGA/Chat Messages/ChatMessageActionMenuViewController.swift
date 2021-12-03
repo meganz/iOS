@@ -47,7 +47,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.downloadMessage([chatMessage])
     }
     
-    lazy var importAction = ActionSheetAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: UIImage(named: "import"), style: .default) {
+    lazy var importAction = ActionSheetAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: Asset.Images.InfoActions.import.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }

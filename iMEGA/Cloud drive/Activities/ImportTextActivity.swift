@@ -14,7 +14,7 @@ class ImportTextActivity: UIActivity, BrowserViewControllerDelegate {
     }
     
     override var activityImage: UIImage? {
-        return UIImage(named: "import")
+        return Asset.Images.InfoActions.import.image
     }
     
     override func perform() {

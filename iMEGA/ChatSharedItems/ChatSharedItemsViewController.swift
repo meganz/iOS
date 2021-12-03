@@ -28,7 +28,7 @@ class ChatSharedItemsViewController: UIViewController {
     private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline"), style: .plain, target: self, action: #selector(downloadTapped)
     )
     
-    private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "import"), style: .plain, target: self, action: #selector(importTapped)
+    private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.InfoActions.import.image, style: .plain, target: self, action: #selector(importTapped)
     )
     
     private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)

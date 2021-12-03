@@ -33,7 +33,7 @@ class ChatViewController: MessagesViewController {
     let copyBarButtonItem = UIBarButtonItem(image: UIImage(named: "copy")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
     let offlineBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
     let saveToPhotosButtonItem = UIBarButtonItem(image: UIImage(named: "saveToPhotos")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
-    let importButtonItem = UIBarButtonItem(image: UIImage(named: "import")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.importSelectedMessages))
+    let importButtonItem = UIBarButtonItem(image: Asset.Images.InfoActions.import.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.importSelectedMessages))
     
     let deleteBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(ChatViewController.deleteSelectedMessages))
     

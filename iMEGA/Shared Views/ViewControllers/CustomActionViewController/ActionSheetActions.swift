@@ -166,7 +166,7 @@ extension NodeAction {
     }
     
     class func importAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: UIImage(named: "import"), type: .import)
+        return NodeAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: Asset.Images.InfoActions.import.image, type: .import)
     }
     
     class func revertVersionAction() -> NodeAction {

@@ -12,7 +12,7 @@ final class AudioPlayerFileToolbarConfigurator {
     )
     
     lazy var importItem = UIBarButtonItem(
-        image: UIImage(named: "import"),
+        image: Asset.Images.InfoActions.import.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
