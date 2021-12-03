@@ -29,7 +29,7 @@ class ChatViewController: MessagesViewController {
     }
     
     let shareBarButtonItem = UIBarButtonItem(image: UIImage(named: "share")?.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.shareSelectedMessages))
-    let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
+    let forwardBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.forwardToolbar.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
     let copyBarButtonItem = UIBarButtonItem(image: UIImage(named: "copy")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
     let offlineBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
     let saveToPhotosButtonItem = UIBarButtonItem(image: UIImage(named: "saveToPhotos")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
@@ -80,14 +80,14 @@ class ChatViewController: MessagesViewController {
     }()
 
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "audioCall"),
+        return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.audioCall.image,
                                style: .done,
                                target: self,
                                action: #selector(startAudioCall))
     }()
 
     lazy var videoCallBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "videoCall"),
+        return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.videoCall.image,
                                style: .done,
                                target: self,
                                action: #selector(startVideoCall))
@@ -265,7 +265,7 @@ class ChatViewController: MessagesViewController {
         if publicChatWithLinkCreated {
             let customModalAlertVC = CustomModalAlertViewController()
             customModalAlertVC.modalPresentationStyle = .overCurrentContext
-            customModalAlertVC.image = UIImage(named: "chatLinkCreation")
+            customModalAlertVC.image = Asset.Images.Chat.chatLinkCreation.image
             customModalAlertVC.viewTitle = chatRoom.title
             customModalAlertVC.detail = NSLocalizedString("People can join your group by using this link.", comment: "Text explaining users how the chat links work.")
             customModalAlertVC.firstButtonTitle = NSLocalizedString("share", comment: "Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected")

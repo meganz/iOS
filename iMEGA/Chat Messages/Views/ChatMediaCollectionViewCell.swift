@@ -29,13 +29,13 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     }()
     
     open var downloadGifIcon: UIImageView = {
-        let downloadGifIcon = UIImageView(image: UIImage(named: "download_gif"))
+        let downloadGifIcon = UIImageView(image: Asset.Images.Chat.downloadGif.image)
         downloadGifIcon.isHidden = true
         return downloadGifIcon
     }()
     
     open var playIconView: UIImageView = {
-        let playIconView = UIImageView(image: UIImage(named: "playButton"))
+        let playIconView = UIImageView(image: Asset.Images.Chat.Messages.playButton.image)
         playIconView.isHidden = true
         return playIconView
     }()

@@ -63,7 +63,7 @@ class TapAndHoldMessageView: UIView {
     }
     
     private func setLabelText() {
-        guard let voiceImageAttributedString = NSAttributedString.mnz_attributedString(fromImageNamed: "voiceTip",
+        guard let voiceImageAttributedString = NSAttributedString.mnz_attributedString(fromImageNamed: Asset.Images.Chat.voiceTip.name,
                                                                                        fontCapHeight: label.font.capHeight) else {
                                                                                         MEGALogDebug("could not create voice image attributed string")
                                                                                         return

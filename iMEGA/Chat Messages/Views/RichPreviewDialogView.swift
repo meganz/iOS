@@ -5,7 +5,7 @@ import PinLayout
 class RichPreviewDialogView: UIView {
     
     private let rootFlexContainer = UIView()
-    private let warmingImageView = UIImageView(image: UIImage(named: "privacy_warning_ico"))
+    private let warmingImageView = UIImageView(image: Asset.Images.Chat.privacyWarningIco.image)
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)

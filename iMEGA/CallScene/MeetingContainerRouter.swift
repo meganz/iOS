@@ -113,7 +113,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func showShareMeetingError() {
         let customModalAlertViewController = CustomModalAlertViewController()
-        customModalAlertViewController.image = UIImage(named: "chatLinkCreation")
+        customModalAlertViewController.image = Asset.Images.Chat.chatLinkCreation.image
         customModalAlertViewController.viewTitle = chatRoom.title
         customModalAlertViewController.firstButtonTitle = NSLocalizedString("close", comment: "")
         customModalAlertViewController.link = NSLocalizedString(chatRoom.chatType == .meeting ? "meetings.sharelink.Error" : "No chat link available.", comment: "")

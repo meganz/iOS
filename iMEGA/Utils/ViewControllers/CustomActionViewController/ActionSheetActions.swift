@@ -206,7 +206,7 @@ extension NodeAction {
     }
     
     class func forwardAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.forward, detail: nil, image: UIImage(named: "forwardToolbar"), type: .forward)
+        return NodeAction(title: Strings.Localizable.forward, detail: nil, image: Asset.Images.Chat.forwardToolbar.image, type: .forward)
     }
     
     class func searchAction() -> NodeAction {

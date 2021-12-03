@@ -22,7 +22,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
-    lazy private var layoutModeBarButton = UIBarButtonItem(image: UIImage(named: "speakerView"),
+    lazy private var layoutModeBarButton = UIBarButtonItem(image: Asset.Images.Chat.speakerView.image,
                                                style: .plain,
                                                target: self,
                                                action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton))
@@ -229,7 +229,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
         switch mode {
         case .grid:
-            layoutModeBarButton.image = UIImage(named: "speakerView")
+            layoutModeBarButton.image = Asset.Images.Chat.speakerView.image
         case .speaker:
             layoutModeBarButton.image = UIImage(named: "galleryView")
         }
@@ -304,7 +304,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func configureNavigationBar(_ title: String, _ subtitle: String) {
         titleView.configure(title: title, subtitle: subtitle)
         if !(isUserAGuest ?? false) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(self.didTapBackButton))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.backArrow.image, style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
         navigationItem.rightBarButtonItems = [optionsMenuButton,
                                               layoutModeBarButton]

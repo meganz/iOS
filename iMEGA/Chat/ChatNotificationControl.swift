@@ -15,7 +15,7 @@ import UIKit
         
         cell.notificationsSwitch?.isEnabled = isNotificationSettingsLoaded()
         cell.notificationsSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
-        cell.iconImageView?.image = #imageLiteral(resourceName: "chatNotifications")
+        cell.iconImageView?.image = Asset.Images.Chat.chatNotifications.image
     }
     
     @objc func isChatDNDEnabled(chatId: Int64) -> Bool {

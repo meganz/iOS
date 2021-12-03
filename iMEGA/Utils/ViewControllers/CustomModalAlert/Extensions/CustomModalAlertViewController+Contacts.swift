@@ -21,7 +21,7 @@ extension CustomModalAlertViewController {
     }
     
     func configureContactNotInMEGA(_ email: String) {
-        image = UIImage(named: "groupChat")
+        image = Asset.Images.Chat.groupChat.image
         viewTitle = Strings.Localizable.inviteContact
         
         var detailText = Strings.Localizable.Dialog.CallAttempt.contactNotInMEGA
