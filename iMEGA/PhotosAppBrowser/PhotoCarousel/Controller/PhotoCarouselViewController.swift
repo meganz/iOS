@@ -27,7 +27,7 @@ final class PhotoCarouselViewController: UIViewController {
         }
     }
     
-    private let selectionActionText: String
+    private let selectionActionType: AlbumsSelectionActionType
     private let selectionActionDisabledText: String
     
     private var selectDeselectBarButtonItem: UIBarButtonItem?
@@ -37,7 +37,7 @@ final class PhotoCarouselViewController: UIViewController {
     private var collectionViewDelegate: PhotoCarouselDelegate?
     
     private var senderBarButtonText: String {
-        return selectedAssets.count > 0 ? String(format: selectionActionText, selectedAssets.count) : selectionActionDisabledText
+        return selectedAssets.count > 0 ? selectionActionType.localizedTextWithCount(selectedAssets.count) : selectionActionDisabledText
     }
     
     private lazy var titleLabel: UILabel = {
@@ -65,14 +65,14 @@ final class PhotoCarouselViewController: UIViewController {
     init(album: Album,
          selectedPhotoIndexPath: IndexPath,
          selectedAssets: [PHAsset],
-         selectionActionText: String,
+         selectionActionType: AlbumsSelectionActionType,
          selectionActionDisabledText: String,
          delegate: PhotoCarouselViewControllerDelegate) {
         
         self.album = album
         self.selectedPhotoIndexPath = selectedPhotoIndexPath
         self.selectedAssets = selectedAssets
-        self.selectionActionText = selectionActionText
+        self.selectionActionType = selectionActionType
         self.selectionActionDisabledText = selectionActionDisabledText
         self.delegate = delegate
         

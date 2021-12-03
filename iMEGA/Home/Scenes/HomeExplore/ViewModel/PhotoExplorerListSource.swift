@@ -111,9 +111,9 @@ extension PhotoExplorerListSource: UICollectionViewDataSource {
         }
         if let modificationDate = nodesByDay[indexPath.section].first?.modificationTime {
             if NSCalendar.current.isDateInToday(modificationDate) {
-                headerView.label.text = NSLocalizedString("Today", comment: "Section title for the photo explorer view").localizedUppercase
+                headerView.label.text = Strings.Localizable.today.localizedUppercase
             } else if NSCalendar.current.isDateInYesterday(modificationDate) {
-                headerView.label.text = NSLocalizedString("Yesterday", comment: "Section title for the photo explorer view").localizedUppercase
+                headerView.label.text = Strings.Localizable.yesterday.localizedUppercase
             } else {
                 headerView.label.text = (modificationDate as NSDate).mnz_formattedDateMediumStyle()
             }

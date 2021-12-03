@@ -15,7 +15,7 @@ class FilesExplorerContainerListViewState: FilesExplorerContainerViewState {
         var viewPreferenceAction: ActionSheetAction? = nil
         if (self.viewModel.getExplorerType()  == .document) {
             viewPreferenceAction = ActionSheetAction(
-                title: NSLocalizedString("Thumbnail View", comment: "Text shown for switching from list view to thumbnail view."),
+                title: Strings.Localizable.thumbnailView,
                 detail: nil,
                 image: Asset.Images.ActionSheetIcons.thumbnailsThin.image,
                 style: .default) { [weak self] in

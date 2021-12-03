@@ -96,7 +96,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
             completion(UIImage.mnz_folderCameraUploads())
             return
         }
-        if node.name == NSLocalizedString("My chat files", comment: "Destination folder name of chat files") {
+        if node.name == Strings.Localizable.myChatFiles {
             sdkNodeClient.findChatFolderNode { chatFilesRootNode in
                 guard chatFilesRootNode?.handle == node.handle else {
                     completion(self.defaultFolderImage(forNode: node))

@@ -13,7 +13,7 @@ class FilesExplorerContainerGridViewState: FilesExplorerContainerViewState {
     
     override func showPreferences(sender: UIBarButtonItem) {
         let viewPreferenceAction = ActionSheetAction(
-            title: NSLocalizedString("List View", comment: "Text shown for switching from thumbnail view to list view."),
+            title: Strings.Localizable.listView,
             detail: nil,
             image: Asset.Images.ActionSheetIcons.gridThin.image,
             style: .default) { [weak self] in

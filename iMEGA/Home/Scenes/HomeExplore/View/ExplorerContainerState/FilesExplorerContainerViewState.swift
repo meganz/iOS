@@ -128,11 +128,11 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         let title: String
         switch count {
         case 0:
-            title = NSLocalizedString("selectTitle", comment: "Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos")
+            title = Strings.Localizable.selectTitle
         case 1:
-            title = String(format: NSLocalizedString("oneItemSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), count)
+            title = Strings.Localizable.oneItemSelected(count)
         default:
-            title = String(format: NSLocalizedString("itemsSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), count)
+            title = Strings.Localizable.itemsSelected(count)
         }
         
         containerViewController.updateTitle(title)
