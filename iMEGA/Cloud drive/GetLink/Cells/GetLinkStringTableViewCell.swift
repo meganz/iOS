@@ -8,7 +8,7 @@ class GetLinkStringTableViewCell: UITableViewCell {
 
     func configureLinkCell(link: String) {
         nameLabel.text = link
-        leftImageView.image = UIImage(named: "linkGetLink")
+        leftImageView.image = Asset.Images.GetLinkView.linkGetLink.image
         rightImageView.isHidden = true
     }
     
