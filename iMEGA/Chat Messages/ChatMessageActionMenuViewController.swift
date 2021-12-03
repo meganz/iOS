@@ -54,7 +54,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.importMessage([chatMessage])
     }
     
-    lazy var addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: UIImage(named: "addContact"), style: .default) {
+    lazy var addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: Asset.Images.Contacts.addContact.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }

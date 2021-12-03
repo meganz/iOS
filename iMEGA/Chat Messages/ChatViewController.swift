@@ -94,7 +94,7 @@ class ChatViewController: MessagesViewController {
     }()
 
     lazy var addParticpantBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "addContact"),
+        return UIBarButtonItem(image: Asset.Images.Contacts.addContact.image,
                                style: .done,
                                target: self,
                                action: #selector(addParticipant))
