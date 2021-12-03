@@ -193,9 +193,9 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     }
 
     private func setupSegmentTitle() {
-        let recentsTitle = NSLocalizedString("Recents", comment: "")
-        let favouritesTitle = NSLocalizedString("Favourites", comment: "Text for title for favourite nodes")
-        let offlineTitle = NSLocalizedString("offline", comment: "")
+        let recentsTitle = Strings.Localizable.recents
+        let favouritesTitle = Strings.Localizable.favourites
+        let offlineTitle = Strings.Localizable.offline
         titleView.setSegmentTitleViewModel(model: .init(titles: [
             .init(text: recentsTitle, index: 0),
             .init(text: favouritesTitle, index: 1),

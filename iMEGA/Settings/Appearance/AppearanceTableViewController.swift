@@ -44,19 +44,23 @@ class AppearanceTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("settings.section.userInterface", comment: "Title of one of the Settings sections where you can customise the 'User Interface' of the app.")
+        title = Strings.Localizable.Settings.Section.userInterface
         
-        defaultTabLabel.text = NSLocalizedString("Default Tab", comment: "Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.")
+        defaultTabLabel.text = Strings.Localizable.defaultTab
         
-        sortingAndViewModeLabel.text = NSLocalizedString("Sorting And View Mode", comment: "Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app.")
+        sortingAndViewModeLabel.text = Strings.Localizable.sortingAndViewMode
         
-        hideRecentActivityLabel.text = NSLocalizedString("settings.userInterface.hideRecentActivity", comment: "In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section")
+        hideRecentActivityLabel.text = Strings.Localizable.Settings.UserInterface.hideRecentActivity
+        
         hideRecentActivitySwitch.isOn = !RecentsPreferenceManager.showRecents()
         
-        defaultIconLabel.text = NSLocalizedString("Default", comment: "Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible).")
-        dayIconLabel.text = NSLocalizedString("day", comment: "Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible).").localizedCapitalized
-        nightIconLabel.text = NSLocalizedString("Night", comment: "Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible).")
-        minimalIconLabel.text = NSLocalizedString("Minimal", comment: "Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible).")
+        defaultIconLabel.text = Strings.Localizable.default
+
+        dayIconLabel.text = Strings.Localizable.day.localizedCapitalized
+
+        nightIconLabel.text = Strings.Localizable.night
+
+        minimalIconLabel.text = Strings.Localizable.minimal
         
         defaultIconLabel.textColor = UIColor.white
         dayIconLabel.textColor = UIColor.white
@@ -185,16 +189,16 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch AppearanceSection(rawValue: section) {
         case .launch:
-            return NSLocalizedString("Launch", comment: "Section title inside of Settings - User Interface, where you can change the default tab when launch the app.")
+            return Strings.Localizable.launch
             
         case .layout:
-            return NSLocalizedString("Layout", comment: "Section title inside of Settings - Appearance, where you can change the app's layout distribution.")
+            return Strings.Localizable.layout
             
         case .recents:
-            return NSLocalizedString("Recents", comment: "Title for the recents section.")
+            return Strings.Localizable.recents
             
         case .appIcon:
-            return NSLocalizedString("App Icon", comment: "Section title inside of Settings - Appearance, where you can change the app's icon.")
+            return Strings.Localizable.appIcon
             
         default:
             return nil
@@ -204,13 +208,13 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch AppearanceSection(rawValue: section) {
         case .launch:
-            return NSLocalizedString("Configure default launch section.", comment: "Footer text to explain what you could do in the Settings - User Interface - Default Tab section.")
+            return Strings.Localizable.configureDefaultLaunchSection
         
         case .layout:
-            return NSLocalizedString("Configure sorting order and the default view (List or Thumbnail).", comment: "Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section.")
+            return Strings.Localizable.configureSortingOrderAndTheDefaultViewListOrThumbnail
             
         case .recents:
-            return NSLocalizedString("settings.userInterface.hideRecentActivity.footer", comment: "In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option.")
+            return Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
             
         case .appIcon:
             return nil
