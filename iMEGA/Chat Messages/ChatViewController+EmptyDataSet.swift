@@ -5,7 +5,7 @@ extension ChatViewController: DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
 
         if chatRoomDelegate.loadingState {
-            return UIImageView(image: Asset.Images.EmptyStates.chatroomLoading.image)
+            return UIImageView(image: Asset.Images.EmptyStates.Skeletons.chatroomLoading.image)
         }
         
         return wrappedIntroductionView()
