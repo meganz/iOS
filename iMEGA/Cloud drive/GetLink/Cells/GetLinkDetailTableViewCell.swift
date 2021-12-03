@@ -12,9 +12,9 @@ class GetLinkDetailTableViewCell: UITableViewCell {
 
     func configurePasswordCell(passwordActive: Bool, isPro: Bool, justUpgraded: Bool) {
         if passwordActive {
-            nameLabel.text = NSLocalizedString("Reset Password", comment: "Text to indicate the user to reset/change the password of a link")
+            nameLabel.text = Strings.Localizable.resetPassword
         } else {
-            nameLabel.text = NSLocalizedString("Set Password", comment: "Text for options in Get Link View to set password protection")
+            nameLabel.text = Strings.Localizable.setPassword
         }
         nameLabel.textColor = UIColor.mnz_label()
         proImageView.isHidden = justUpgraded ? true : isPro
@@ -25,7 +25,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
     }
     
     func configureRemovePasswordCell() {
-        nameLabel.text = NSLocalizedString("Remove Password", comment: "Text to indicate the user to remove the password of a link")
+        nameLabel.text = Strings.Localizable.removePassword
         nameLabel.textColor = UIColor.mnz_red(for: traitCollection)
         proImageView.isHidden = true
         detailLabel.isHidden = true
@@ -39,7 +39,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
         if let date = date {
             detailLabel.text = dateFormatter.localisedString(from: date)
         } else {
-            detailLabel.text = NSLocalizedString("select", comment: "Button that allows you to select something (a folder, a message...)")
+            detailLabel.text = Strings.Localizable.select
         }
         proImageView.isHidden = true
         detailLabel.isHidden = false
