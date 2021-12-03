@@ -263,10 +263,8 @@ extension TextEditorViewController: ViewType {
     }
     
     private func startDownload(status: String) {
-        if let hudImage = UIImage(named: "hudDownload") {
-            SVProgressHUD.setDefaultMaskType(.none)
-            SVProgressHUD.show(hudImage, status: status)
-        }
+        SVProgressHUD.setDefaultMaskType(.none)
+        SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: status)
     }
     
     private func showDiscardChangeAlert() {

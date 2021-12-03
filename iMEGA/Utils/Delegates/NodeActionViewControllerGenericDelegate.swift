@@ -16,12 +16,10 @@ final class NodeActionViewControllerGenericDelegate:
             showEditTextFile(for: node)
             
         case .download:
-            if let progressImage = UIImage(named: "hudDownload") {
-                SVProgressHUD.show(
-                    progressImage,
-                    status: Strings.Localizable.downloadStarted
-                )
-            }
+            SVProgressHUD.show(
+                Asset.Images.Hud.hudDownload.image,
+                status: Strings.Localizable.downloadStarted
+            )
             node.mnz_downloadNode()
         
         case .copy, .move:

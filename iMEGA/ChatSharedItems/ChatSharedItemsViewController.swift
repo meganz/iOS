@@ -236,10 +236,7 @@ class ChatSharedItemsViewController: UIViewController {
     }
     
     private func downloadNodes(_ nodes: [MEGANode]) {
-        guard let image = UIImage(named: "hudDownload") else {
-            return
-        }
-        SVProgressHUD.show(image, status: Strings.Localizable.downloadStarted)
+        SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: Strings.Localizable.downloadStarted)
         nodes.forEach { $0.mnz_downloadNode() }
         
         cancelSelectTapped()
