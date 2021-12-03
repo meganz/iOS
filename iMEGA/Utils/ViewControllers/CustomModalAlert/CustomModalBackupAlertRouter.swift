@@ -16,8 +16,8 @@ struct BackupAlertConfiguration {
     let description: String
     let actionTitle: String
     var confirmPlaceholder: String = ""
-    var iconName: String = "warningModals"
-    var dismissTitle: String = NSLocalizedString("cancel", comment: "")
+    var iconImage: UIImage = Asset.Images.Backup.warningModals.image
+    var dismissTitle: String = Strings.Localizable.cancel
 }
 
 final class CustomModalBackupAlertRouter: Routing {
@@ -38,7 +38,7 @@ final class CustomModalBackupAlertRouter: Routing {
     
     func build() -> UIViewController {
         let customModalAlertVC = CustomModalAlertViewController()
-        customModalAlertVC.image = UIImage(named: backupAlertData.iconName)
+        customModalAlertVC.image = backupAlertData.iconImage
         customModalAlertVC.viewTitle = backupAlertData.title
         customModalAlertVC.detail = backupAlertData.description
         if backupAlertData.confirmPlaceholder != "" {
