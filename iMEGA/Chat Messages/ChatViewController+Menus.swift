@@ -118,7 +118,7 @@ extension ChatViewController {
         }
         
         if downloading {
-            SVProgressHUD.show(UIImage(named: "hudDownload")!, status: Strings.Localizable.downloadStarted)
+            SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: Strings.Localizable.downloadStarted)
         }
     }
     

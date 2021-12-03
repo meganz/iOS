@@ -573,7 +573,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
                 self.recentsViewModel.inputs.saveToPhotoAlbum(of: node)
             case .download:
                 SVProgressHUD.show(
-                    UIImage(named: "hudDownload")!,
+                    Asset.Images.Hud.hudDownload.image,
                     status: Strings.Localizable.downloadStarted
                 )
                 node.mnz_downloadNode()

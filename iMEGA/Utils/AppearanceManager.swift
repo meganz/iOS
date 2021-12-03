@@ -63,8 +63,8 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setBackgroundColor(UIColor.mnz_secondaryBackground(for: traitCollection))
         SVProgressHUD.setHapticsEnabled(true)
         
-        SVProgressHUD.setSuccessImage(UIImage(named: "hudSuccess")!)
-        SVProgressHUD.setErrorImage(UIImage(named: "hudError")!)
+        SVProgressHUD.setSuccessImage(Asset.Images.Hud.hudSuccess.image)
+        SVProgressHUD.setErrorImage(Asset.Images.Hud.hudError.image)
     }
     
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
