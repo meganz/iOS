@@ -165,14 +165,14 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         let sortPreferenceAction = ActionSheetAction(
             title: NSLocalizedString("sortTitle", comment: "Section title of the 'Sort by'"),
             detail: NSString.localizedSortOrderType(Helper.sortType(for: nil)),
-            image: UIImage(named: "sort"), style: .default) { [weak self] in
+            image: Asset.Images.ActionSheetIcons.sort.image, style: .default) { [weak self] in
             self?.showSortOptions(sender: sender)
         }
         
         let selectAction = ActionSheetAction(
             title: NSLocalizedString("select", comment: "Button that allows you to select a given folder") ,
             detail: nil,
-            image: UIImage(named: "select"),
+            image: Asset.Images.ActionSheetIcons.select.image,
             style: .default) { [weak self] in
             self?.showCancelRightBarButton()
             self?.showSelectAllBarButton()

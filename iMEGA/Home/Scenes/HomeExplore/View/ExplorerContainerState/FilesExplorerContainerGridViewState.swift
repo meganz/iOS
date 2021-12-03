@@ -15,7 +15,7 @@ class FilesExplorerContainerGridViewState: FilesExplorerContainerViewState {
         let viewPreferenceAction = ActionSheetAction(
             title: NSLocalizedString("List View", comment: "Text shown for switching from thumbnail view to list view."),
             detail: nil,
-            image: UIImage(named: "gridThin"),
+            image: Asset.Images.ActionSheetIcons.gridThin.image,
             style: .default) { [weak self] in
             guard let self = self else { return }
             let nextState = self.transitionToState(matching: FilesExplorerContainerListViewState.identifier)
