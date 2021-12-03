@@ -58,8 +58,8 @@ struct ShortcutsWidget: Widget {
         IntentConfiguration(kind: kind, intent: SelectShortcutIntent.self, provider: ShortcutsProvider()) { entry in
             ShortcutsWidgetView(entry: entry)
         }
-        .configurationDisplayName(NSLocalizedString("Shortcuts", comment: "Text title for shortcuts, ie in the widget"))
-        .description(NSLocalizedString("Launch the MEGA app to perform an action", comment: "Text description leading the user to perform an action, ie the shortcuts widget"))
+        .configurationDisplayName(Strings.Localizable.shortcuts)
+        .description(Strings.Localizable.launchTheMEGAAppToPerformAnAction)
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

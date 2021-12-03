@@ -32,8 +32,8 @@ struct OfflineQuickAccessWidget: Widget {
         StaticConfiguration(kind: kind, provider: OfflineTimelineProvider()) { entry in
             QuickAccessWidgetView(entry: entry)
         }
-        .configurationDisplayName(NSLocalizedString("Quick Access", comment: "Title for the QuickAccess widget"))
-        .description(NSLocalizedString("Quickly access files on Offline section", comment: "Text description for the Offline QuickAccess widget"))
+        .configurationDisplayName(Strings.Localizable.quickAccess)
+        .description(Strings.Localizable.quicklyAccessFilesOnOfflineSection)
         .supportedFamilies([.systemLarge])
     }
 }
