@@ -2,7 +2,7 @@ import Foundation
 
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {
-        image = UIImage(named: "cookie")
+        image = Asset.Images.Cookies.cookie.image
         viewTitle = Strings.Localizable.Dialog.Cookies.Title.yourPrivacy
         detailAttributed = detailTextAttributedString()
         
