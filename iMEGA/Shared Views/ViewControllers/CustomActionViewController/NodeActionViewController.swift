@@ -203,7 +203,7 @@ class NodeActionViewController: ActionSheetViewController {
             downloadImageView.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
             downloadImageView.autoPinEdge(.leading, to: .trailing, of: subtitleLabel, withOffset: 4)
             downloadImageView.autoPinEdge(toSuperviewSafeArea: .trailing, withInset: 10, relation: .greaterThanOrEqual)
-            downloadImageView.image = UIImage(named: "downloaded")
+            downloadImageView.image = Asset.Images.Generic.downloaded.image
         } else {
             subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         }

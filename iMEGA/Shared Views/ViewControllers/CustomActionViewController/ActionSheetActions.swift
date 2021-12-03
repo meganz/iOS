@@ -108,11 +108,11 @@ extension NodeAction {
     }
     
     class func infoAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.info, detail: nil, image: UIImage(named: "info"), type: .info)
+        return NodeAction(title: Strings.Localizable.info, detail: nil, image: Asset.Images.Generic.info.image, type: .info)
     }
     
     class func renameAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.rename, detail: nil, image: UIImage(named: "rename"), type: .rename)
+        return NodeAction(title: Strings.Localizable.rename, detail: nil, image: Asset.Images.Generic.rename.image, type: .rename)
     }
     
     class func copyAction() -> NodeAction {
@@ -136,15 +136,15 @@ extension NodeAction {
     }
     
     class func getLinkAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.getLink, detail: nil, image: UIImage(named: "link"), type: .getLink)
+        return NodeAction(title: Strings.Localizable.getLink, detail: nil, image: Asset.Images.Generic.link.image, type: .getLink)
     }
     
     class func retryAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.retry, detail: nil, image: UIImage(named: "link"), type: .retry)
+        return NodeAction(title: Strings.Localizable.retry, detail: nil, image: Asset.Images.Generic.link.image, type: .retry)
     }
     
     class func manageLinkAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.manageLink, detail: nil, image: UIImage(named: "link"), type: .manageLink)
+        return NodeAction(title: Strings.Localizable.manageLink, detail: nil, image: Asset.Images.Generic.link.image, type: .manageLink)
     }
     
     class func removeLinkAction() -> NodeAction {
@@ -156,7 +156,7 @@ extension NodeAction {
     }
     
     class func viewInFolderAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.viewInFolder, detail: nil, image: UIImage(named: "search"), type: .viewInFolder)
+        return NodeAction(title: Strings.Localizable.viewInFolder, detail: nil, image: Asset.Images.Generic.search.image, type: .viewInFolder)
     }
     
     class func clearAction() -> NodeAction {
@@ -210,7 +210,7 @@ extension NodeAction {
     }
     
     class func searchAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.search, detail: nil, image: UIImage(named: "search"), type: .search)
+        return NodeAction(title: Strings.Localizable.search, detail: nil, image: Asset.Images.Generic.search.image, type: .search)
     }
     
     class func favouriteAction(isFavourite: Bool) -> NodeAction {

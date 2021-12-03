@@ -36,7 +36,7 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     func fetchRecentItems() -> EntryValue {
         if authUseCase.sessionId() != nil {
             let items = recentItemsUseCase.fetchRecentItems().map {
-                QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath:$0.name).pathExtension), name: $0.name, url: URL(string: SectionDetail.recents.link)?.appendingPathComponent($0.base64Handle), image: $0.isUpdate ? Image("versioned") : Image("recentUpload"), description: recentStringTimestamp($0.timestamp))
+                QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath:$0.name).pathExtension), name: $0.name, url: URL(string: SectionDetail.recents.link)?.appendingPathComponent($0.base64Handle), image: $0.isUpdate ? Image(Asset.Images.Generic.versioned.name) : Image("recentUpload"), description: recentStringTimestamp($0.timestamp))
             }
             return (items, .connected)
         } else {

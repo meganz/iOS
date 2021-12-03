@@ -34,7 +34,7 @@ class FileExplorerGridCell: UICollectionViewCell {
         
         if viewModel.isTakenDown,
            let takenDownAttributedText = NSAttributedString.mnz_attributedString(
-            fromImageNamed: "isTakedown",
+            fromImageNamed: Asset.Images.Generic.isTakedown.name,
             fontCapHeight: nameLabel.font.capHeight
            ) {
             let mutableAttributedText = NSMutableAttributedString(string: viewModel.name)
@@ -61,7 +61,7 @@ class FileExplorerGridCell: UICollectionViewCell {
     
     private var markSelection: Bool = false {
         didSet {
-            selectImageView.image = UIImage(named: markSelection ? "thumbnail_selected" : "checkBoxUnselected")
+            selectImageView.image = markSelection ? Asset.Images.Generic.thumbnailSelected.image : Asset.Images.Login.checkBoxUnselected.image
             if (markSelection) {
                 self.borderColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
             } else {

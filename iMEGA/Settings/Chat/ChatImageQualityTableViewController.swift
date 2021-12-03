@@ -41,7 +41,7 @@ class ChatImageQualityTableViewController: UITableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let currentSeletedQuality = UserDefaults.standard.integer(forKey: "chatImageQuality")
 
-        cell.accessoryView = UIImageView.init(image: #imageLiteral(resourceName: "turquoise_checkmark"))
+        cell.accessoryView = UIImageView.init(image: Asset.Images.Generic.turquoiseCheckmark.image)
         cell.accessoryView?.isHidden = currentSeletedQuality != indexPath.row
 
         switch indexPath.row {

@@ -194,7 +194,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
             } else {
                 var actions = [ActionSheetAction]()
                 let sortType = Helper.sortType(for: nil)
-                let checkmarkImageView = UIImageView(image: UIImage(named: "turquoise_checkmark"))
+                let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
     
                 actions.append(ActionSheetAction(title: Strings.Localizable.nameAscending, detail:nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.ascending.image, style: .default) {
                     Helper.save(.defaultAsc, for: nil)

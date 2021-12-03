@@ -65,7 +65,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         let timerDuration = LTHPasscodeViewController.timerDuration()
 
         if Int(timerDuration) == passcodeDurationInfoArray[indexPath.row].duration.rawValue {
-            cell.accessoryView = UIImageView.init(image: UIImage.init(named: "turquoise_checkmark"))
+            cell.accessoryView = UIImageView.init(image: Asset.Images.Generic.turquoiseCheckmark.image)
         } else {
             cell.accessoryView = nil
         }

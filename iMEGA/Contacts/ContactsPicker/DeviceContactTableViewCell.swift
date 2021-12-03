@@ -17,7 +17,7 @@ class DeviceContactTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        selectionImage.image = selected ? UIImage(named: "thumbnail_selected") : UIImage(named: "checkBoxUnselected")
+        selectionImage.image = selected ? Asset.Images.Generic.thumbnailSelected.image : Asset.Images.Login.checkBoxUnselected.image
     }
 
     func configure(for contact: DeviceContact) {
