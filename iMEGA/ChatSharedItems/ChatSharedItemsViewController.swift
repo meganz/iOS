@@ -13,10 +13,10 @@ class ChatSharedItemsViewController: UIViewController {
     
     private var requestedParticipantsMutableSet = Set<UInt64>()
 
-    private lazy var cancelBarButton: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .plain, target: self, action: #selector(cancelSelectTapped)
+    private lazy var cancelBarButton: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.cancel, style: .plain, target: self, action: #selector(cancelSelectTapped)
     )
     
-    private lazy var selectBarButton: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("select", comment: "Button that allows you to select something"), style: .plain, target: self, action: #selector(selectTapped)
+    private lazy var selectBarButton: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.select, style: .plain, target: self, action: #selector(selectTapped)
     )
     
     private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "selectAll"), style: .plain, target: self, action: #selector(selectAllTapped)
@@ -46,7 +46,7 @@ class ChatSharedItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("Shared Files", comment: "Header of block with all shared files in chat.")
+        title = Strings.Localizable.sharedFiles
         
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat.leastNormalMagnitude))
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -83,7 +83,7 @@ class ChatSharedItemsViewController: UIViewController {
     }
     
     @objc private func selectTapped() {
-        title = NSLocalizedString("selectTitle", comment: "Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos")
+        title = Strings.Localizable.selectTitle
         tableView.setEditing(true, animated: true)
         navigationItem.leftBarButtonItem = selectAllBarButton
         navigationItem.rightBarButtonItem = cancelBarButton
@@ -96,7 +96,7 @@ class ChatSharedItemsViewController: UIViewController {
     
     @objc private func cancelSelectTapped() {
         if tableView.isEditing {
-            title = NSLocalizedString("sharedItems", comment: "Title of Shared Items section")
+            title = Strings.Localizable.sharedItems
             tableView.setEditing(false, animated: true)
             navigationItem.leftBarButtonItem = nil
             navigationItem.rightBarButtonItem = selectBarButton
@@ -177,13 +177,13 @@ class ChatSharedItemsViewController: UIViewController {
     
     private func updateSelectCountTitle() {
         guard let selectedCount = tableView.indexPathsForSelectedRows?.count else {
-            title = NSLocalizedString("selectTitle", comment: "Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos")
+            title = Strings.Localizable.selectTitle
             return
         }
         if selectedCount == 1 {
-            title = String(format: NSLocalizedString("oneItemSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo") , selectedCount)
+            title = Strings.Localizable.oneItemSelected(selectedCount)
         } else {
-            title = String(format: NSLocalizedString("itemsSelected", comment: "Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo") , selectedCount)
+            title = Strings.Localizable.itemsSelected(selectedCount)
         }
     }
     
@@ -219,7 +219,7 @@ class ChatSharedItemsViewController: UIViewController {
         sendToVC.messages = messages
         sendToVC.sourceChatId = chatRoom.chatId
         sendToVC.completion = { [weak self] chatIdNumbers, sentMessages in
-            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("messagesSent", comment: "Success message shown after forwarding messages to other chats"))
+            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.messageSent)
             self?.cancelSelectTapped()
         }
         present(sendToNC, animated: true, completion: nil)
@@ -239,7 +239,7 @@ class ChatSharedItemsViewController: UIViewController {
         guard let image = UIImage(named: "hudDownload") else {
             return
         }
-        SVProgressHUD.show(image, status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts"))
+        SVProgressHUD.show(image, status: Strings.Localizable.downloadStarted)
         nodes.forEach { $0.mnz_downloadNode() }
         
         cancelSelectTapped()
@@ -457,9 +457,9 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
     
     func titleForEmtyState() -> String {
         if (MEGAReachabilityManager.isReachable()) {
-            return NSLocalizedString("No Shared Files", comment: "Title shown when there are no shared files")
+            return Strings.Localizable.noSharedFiles
         } else {
-            return NSLocalizedString("noInternetConnection", comment: "No Internet Connection")
+            return Strings.Localizable.noInternetConnection
         }
     }
     

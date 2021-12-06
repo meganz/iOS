@@ -274,7 +274,7 @@ class MessageInputBar: UIView {
         UIKeyCommand(
            action: #selector(MessageInputBar.sendButtonTapped),
            input: kMEGAUIKeyInputCarriageReturn,
-           discoverabilityTitle: NSLocalizedString("send", comment: "")
+           discoverabilityTitle: Strings.Localizable.send
        )
       ]
     }

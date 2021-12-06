@@ -4987,7 +4987,6 @@
 			isa = PBXGroup;
 			children = (
 				A873E84226E117A400CBB174 /* Reinstallation */,
-				A866461A26D67C39002FA07C /* OCCompatible */,
 				5B5C7B26264A92410087200D /* RecentsPreference.swift */,
 				5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
@@ -5599,7 +5598,6 @@
 		5B59B4CD2367266900A57229 /* Document Previewer */ = {
 			isa = PBXGroup;
 			children = (
-				0D877F5A261BCCFE00A3698C /* TextEditor */,
 				5B59B4CE236726D100A57229 /* DocumentPreviewer.storyboard */,
 				41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */,
 				41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */,
@@ -7659,6 +7657,7 @@
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				0D877F5A261BCCFE00A3698C /* TextEditor */,
 				A8A716B72639A66900DDC8E2 /* TurnOnNotifications */,
 				2FD6A26925745B0A00C1997E /* PasteImagePreviewViewController */,
 				5D6092B5255E53B4005FA3E4 /* ActionSheetViewControllerFactory */,
@@ -7730,21 +7729,6 @@
 				A860C80E26BBDECF004BFD23 /* ReinstallationUseCase.swift */,
 			);
 			path = Reinstallation;
-			sourceTree = "<group>";
-		};
-		A866461A26D67C39002FA07C /* OCCompatible */ = {
-			isa = PBXGroup;
-			children = (
-				A866461B26D67C39002FA07C /* UseCases */,
-			);
-			path = OCCompatible;
-			sourceTree = "<group>";
-		};
-		A866461B26D67C39002FA07C /* UseCases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UseCases;
 			sourceTree = "<group>";
 		};
 		A866D9A7271D8B0600146302 /* Account */ = {

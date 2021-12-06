@@ -88,10 +88,10 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     func showInviteSuccess(email: String) {
         let customModalAlertViewController = CustomModalAlertViewController()
         customModalAlertViewController.image = UIImage(named: "inviteSent")
-        customModalAlertViewController.viewTitle = NSLocalizedString("inviteSent", comment: "")
-        customModalAlertViewController.detail = NSLocalizedString("theUsersHaveBeenInvited", comment: "")
+        customModalAlertViewController.viewTitle = Strings.Localizable.inviteSent
+        customModalAlertViewController.detail = Strings.Localizable.theUsersHaveBeenInvited
         customModalAlertViewController.boldInDetail = email
-        customModalAlertViewController.firstButtonTitle = NSLocalizedString("close", comment: "")
+        customModalAlertViewController.firstButtonTitle = Strings.Localizable.close
         customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
             customModalAlertViewController?.dismiss(animated: true, completion: nil)
         }

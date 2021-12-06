@@ -38,9 +38,9 @@ final class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
     func showLinkError() {
         guard let viewControllerToPresent = viewControllerToPresent else { return }
 
-        let title = NSLocalizedString("meetings.joinMeeting.header", comment: "")
-        let message = NSLocalizedString("meetings.joinMeeting.description", comment: "")
-        let cancelButtonText = NSLocalizedString("ok", comment: "")
+        let title = Strings.Localizable.Meetings.JoinMeeting.header
+        let message = Strings.Localizable.Meetings.JoinMeeting.description
+        let cancelButtonText = Strings.Localizable.ok
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: cancelButtonText, style: .cancel))
         viewControllerToPresent.present(alert, animated: true)

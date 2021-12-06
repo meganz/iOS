@@ -26,20 +26,20 @@ class EncourageGuestUserToJoinMegaViewController: UIViewController {
         view.backgroundColor = .mnz_background()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("close", comment: ""),
+            title: Strings.Localizable.close,
             style: .plain,
             target: self,
             action: #selector(dissmissVC(_:))
         )
         
-        createAccountButton.setTitle(NSLocalizedString("createAccount", comment: ""), for: .normal)
+        createAccountButton.setTitle(Strings.Localizable.createAccount, for: .normal)
         createAccountButton.mnz_setupPrimary(traitCollection)
         
-        paragraph1TitleLabel.text = NSLocalizedString("meetings.joinMega.paragraph1.title", comment: "")
-        paragraph1SubtitleLabel.text = NSLocalizedString("meetings.joinMega.paragraph1.description", comment: "")
+        paragraph1TitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph1.title
+        paragraph1SubtitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph1.description
 
-        paragraph2TitleLabel.text = NSLocalizedString("meetings.joinMega.paragraph2.title", comment: "")
-        paragraph2SubtitleLabel.text = NSLocalizedString("meetings.joinMega.paragraph2.description", comment: "")
+        paragraph2TitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph2.title
+        paragraph2SubtitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph2.description
     }
     
     @objc private func dissmissVC(_ barButtonItem: UIBarButtonItem) {

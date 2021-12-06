@@ -8,9 +8,9 @@ class ChatUnreadMessagesLabelCollectionCell: UICollectionViewCell {
             if unreadMessageCount <= 0 {
                 label.text = ""
             } else if unreadMessageCount == 1 {
-                label.text = String(format: NSLocalizedString("unreadMessage", comment: ""), unreadMessageCount).localizedUppercase
+                label.text = Strings.Localizable.unreadMessage(unreadMessageCount).localizedUppercase
             } else {
-                label.text = String(format: NSLocalizedString("unreadMessages", comment: ""), unreadMessageCount).localizedUppercase
+                label.text = Strings.Localizable.unreadMessages(unreadMessageCount).localizedUppercase
             }
         }
     }

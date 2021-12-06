@@ -61,8 +61,8 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     
     private func renameAction() -> ActionSheetAction {
         ActionSheetAction(title: chatRoom.chatType == .meeting ?
-                            NSLocalizedString("meetings.action.rename", comment: "") :
-                            NSLocalizedString("renameGroup", comment: ""),
+                            Strings.Localizable.Meetings.Action.rename :
+                            Strings.Localizable.renameGroup,
                           detail: nil,
                           image: UIImage(named: "rename"),
                           style: .default) {
@@ -72,8 +72,8 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     
     private func shareLinkAction() -> ActionSheetAction {
         ActionSheetAction(title: chatRoom.chatType == .meeting ?
-                            NSLocalizedString("meetings.action.shareLink", comment: "") :
-                            NSLocalizedString("Get Chat Link", comment: ""),
+                            Strings.Localizable.Meetings.Action.shareLink :
+                            Strings.Localizable.getChatLink,
                           detail: nil,
                           image: UIImage(named: "share"),
                           style: .default) {

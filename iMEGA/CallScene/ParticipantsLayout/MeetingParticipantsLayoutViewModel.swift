@@ -252,9 +252,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func initialSubtitle() -> String {
         if call.isRinging || call.status == .joining {
-            return NSLocalizedString("connecting", comment: "")
+            return Strings.Localizable.connecting
         } else {
-            return NSLocalizedString("calling...", comment: "")
+            return Strings.Localizable.calling
         }
     }
     
@@ -581,7 +581,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         timer?.invalidate()
         if (call.termCodeType == .tooManyParticipants)  {
             containerViewModel?.dispatch(.dismissCall(completion: {
-                SVProgressHUD.showError(withStatus: NSLocalizedString("Error. No more participants are allowed in this group call.", comment: "Message show when a call cannot be established because there are too many participants in the group call"))
+                SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
             }))
         }
     }

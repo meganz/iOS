@@ -74,7 +74,7 @@ class ChatViewCallCollectionCell: MessageContentCell {
                                              isGroup: chatMessage.chatRoom.isGroup)
         } else {
             icon = Asset.Images.Chat.Messages.Management.callWithXIncoming.image
-            reason = NSLocalizedString("Call Started", comment: "Text to inform the user there is an active call and is participating")
+            reason = Strings.Localizable.callStarted
         }
         
         iconImageView.image = icon

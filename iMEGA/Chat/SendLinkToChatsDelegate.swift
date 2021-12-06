@@ -39,7 +39,7 @@ extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
         }
         
         let totalCount = chats.count + users.count
-        let message = totalCount == 1 ? NSLocalizedString("fileSentToChat", comment: "Toast text upon sending a single file to chat") : String(format: NSLocalizedString("fileSentToXChats", comment: "Success message when the attachment has been sent to a many chats"), totalCount)
+        let message = totalCount == 1 ? Strings.Localizable.fileSentToChat : Strings.Localizable.fileSentToXChats(totalCount)
         
         SVProgressHUD.showSuccess(withStatus: message)
     }
