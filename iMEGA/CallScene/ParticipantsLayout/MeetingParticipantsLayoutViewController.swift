@@ -231,7 +231,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .grid:
             layoutModeBarButton.image = Asset.Images.Chat.speakerView.image
         case .speaker:
-            layoutModeBarButton.image = UIImage(named: "galleryView")
+            layoutModeBarButton.image = Asset.Images.Meetings.galleryView.image
         }
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker || participantsCount <= 6

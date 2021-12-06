@@ -148,7 +148,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func infoAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
-                          image: UIImage(named: "InfoMeetings"),
+                          image: Asset.Images.Meetings.infoMeetings.image,
                           style: .default) {
             dispatch(.showInfo)
         }
@@ -157,7 +157,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func sendMessageAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
-                          image: UIImage(named: "sendMessageMeetings"),
+                          image: Asset.Images.Meetings.sendMessageMeetings.image,
                           style: .default) {
             dispatch(.sendMessage)
         }
@@ -166,7 +166,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func makeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: NSLocalizedString("Make Moderator", comment: ""),
                           detail: nil,
-                          image: UIImage(named: "moderatorMeetings"),
+                          image: Asset.Images.Meetings.moderatorMeetings.image,
                           style: .default) {
             dispatch(.makeModerator)
         }
@@ -175,7 +175,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func removeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: NSLocalizedString("Remove Moderator", comment: ""),
                           detail: nil,
-                          image: UIImage(named: "moderatorMeetings"),
+                          image: Asset.Images.Meetings.moderatorMeetings.image,
                           style: .default) {
             dispatch(.removeModerator)
         }
@@ -184,7 +184,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func addContactAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.addContact,
                           detail: nil,
-                          image: UIImage(named: "addContactMeetings"),
+                          image: Asset.Images.Meetings.addContactMeetings.image,
                           style: .default) {
             dispatch(.addToContact)
         }
