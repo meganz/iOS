@@ -29,7 +29,7 @@ class DeviceContactTableViewCell: UITableViewCell {
         if let imageData = contact.avatarData {
             avatarImage.image = UIImage(data: imageData)
         } else {
-            avatarImage.image = UIImage(named: "icon-contacts")
+            avatarImage.image = Asset.Images.MyAccount.iconContacts.image
         }
     }
 }
