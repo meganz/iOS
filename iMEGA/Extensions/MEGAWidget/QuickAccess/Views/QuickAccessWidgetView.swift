@@ -8,7 +8,7 @@ struct QuickAccessWidgetView: View {
         let headerView = VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
                 if entry.value.status == .noSession {
-                    Image("MEGA_logo_grayscale")
+                    Image(Asset.Images.Logo.megaLogoGrayscale.name)
                         .resizable()
                         .frame(width: 31, height: 28, alignment: .leading)
                         .padding()
