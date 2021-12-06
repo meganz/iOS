@@ -26,21 +26,21 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.editMessage(chatMessage)
     }
     
-    lazy var copyAction = ActionSheetAction(title: Strings.Localizable.copy, detail: nil, image: UIImage(named: "copy"), style: .default) {
+    lazy var copyAction = ActionSheetAction(title: Strings.Localizable.copy, detail: nil, image: Asset.Images.NodeActions.copy.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.copyMessage(chatMessage)
     }
 
-    lazy var deleteAction = ActionSheetAction(title: Strings.Localizable.delete, detail: nil, image: UIImage(named: "delete"), style: .destructive) {
+    lazy var deleteAction = ActionSheetAction(title: Strings.Localizable.delete, detail: nil, image: Asset.Images.NodeActions.delete.image, style: .destructive) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.deleteMessage(chatMessage)
     }
     
-    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.saveForOffline, detail: nil, image: UIImage(named: "offline"), style: .default) {
+    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.saveForOffline, detail: nil, image: Asset.Images.NodeActions.offline.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
@@ -61,21 +61,21 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.addContactMessage(chatMessage)
     }
     
-    lazy var removeRichLinkAction = ActionSheetAction(title: Strings.Localizable.removePreview, detail: nil, image: UIImage(named: "removeLink"), style: .default) {
+    lazy var removeRichLinkAction = ActionSheetAction(title: Strings.Localizable.removePreview, detail: nil, image: Asset.Images.NodeActions.removeLink.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.removeRichPreview(chatMessage)
     }
     
-    lazy var saveToPhotosAction = ActionSheetAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: UIImage(named: "saveToPhotos"), style: .default) {
+    lazy var saveToPhotosAction = ActionSheetAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: Asset.Images.NodeActions.saveToPhotos.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.saveToPhotos([chatMessage])
     }
     
-    lazy var shareAction = ActionSheetAction(title: Strings.Localizable.share, detail: nil, image: UIImage(named: "share"), style: .default) {
+    lazy var shareAction = ActionSheetAction(title: Strings.Localizable.share, detail: nil, image: Asset.Images.NodeActions.share.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }

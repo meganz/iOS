@@ -92,19 +92,19 @@ class NodeAction: BaseAction {
 
 extension NodeAction {
     class func shareAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.share, detail: nil, image: UIImage(named: "share"), type: .share)
+        return NodeAction(title: Strings.Localizable.share, detail: nil, image: Asset.Images.NodeActions.share.image, type: .share)
     }
     
     class func shareFolderAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.shareFolder, detail: nil, image: UIImage(named: "shareFolder"), type: .shareFolder)
+        return NodeAction(title: Strings.Localizable.shareFolder, detail: nil, image: Asset.Images.NodeActions.shareFolder.image, type: .shareFolder)
     }
     
     class func manageFolderAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.manageShare, detail: nil, image: UIImage(named: "shareFolder"), type: .manageShare)
+        return NodeAction(title: Strings.Localizable.manageShare, detail: nil, image: Asset.Images.NodeActions.shareFolder.image, type: .manageShare)
     }
     
     class func downloadAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.download, detail: nil, image: UIImage(named: "offline"), type: .download)
+        return NodeAction(title: Strings.Localizable.download, detail: nil, image: Asset.Images.NodeActions.offline.image, type: .download)
     }
     
     class func infoAction() -> NodeAction {
@@ -116,23 +116,23 @@ extension NodeAction {
     }
     
     class func copyAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.copy, detail: nil, image: UIImage(named: "copy"), type: .copy)
+        return NodeAction(title: Strings.Localizable.copy, detail: nil, image: Asset.Images.NodeActions.copy.image, type: .copy)
     }
     
     class func moveAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.move, detail: nil, image: UIImage(named: "move"), type: .move)
+        return NodeAction(title: Strings.Localizable.move, detail: nil, image: Asset.Images.NodeActions.move.image, type: .move)
     }
     
     class func moveToRubbishBinAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.moveToTheRubbishBin, detail: nil, image: UIImage(named: "rubbishBin"), type: .moveToRubbishBin)
+        return NodeAction(title: Strings.Localizable.moveToTheRubbishBin, detail: nil, image: Asset.Images.NodeActions.rubbishBin.image, type: .moveToRubbishBin)
     }
     
     class func removeAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.remove, detail: nil, image: UIImage(named: "rubbishBin"), type: .remove)
+        return NodeAction(title: Strings.Localizable.remove, detail: nil, image: Asset.Images.NodeActions.rubbishBin.image, type: .remove)
     }
     
     class func leaveSharingAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.leaveFolder, detail: nil, image: UIImage(named: "leaveShare"), type: .leaveSharing)
+        return NodeAction(title: Strings.Localizable.leaveFolder, detail: nil, image: Asset.Images.NodeActions.leaveShare.image, type: .leaveSharing)
     }
     
     class func getLinkAction() -> NodeAction {
@@ -148,7 +148,7 @@ extension NodeAction {
     }
     
     class func removeLinkAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.removeLink, detail: nil, image: UIImage(named: "removeLink"), type: .removeLink)
+        return NodeAction(title: Strings.Localizable.removeLink, detail: nil, image: Asset.Images.NodeActions.removeLink.image, type: .removeLink)
     }
     
     class func removeSharingAction() -> NodeAction {
@@ -170,11 +170,11 @@ extension NodeAction {
     }
     
     class func revertVersionAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.revert, detail: nil, image: UIImage(named: "history"), type: .revertVersion)
+        return NodeAction(title: Strings.Localizable.revert, detail: nil, image: Asset.Images.NodeActions.history.image, type: .revertVersion)
     }
     
     class func removeVersionAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.delete, detail: nil, image: UIImage(named: "delete"), type: .remove)
+        return NodeAction(title: Strings.Localizable.delete, detail: nil, image: Asset.Images.NodeActions.delete.image, type: .remove)
     }
     
     class func selectAction() -> NodeAction {
@@ -182,15 +182,15 @@ extension NodeAction {
     }
     
     class func restoreAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.restore, detail: nil, image: UIImage(named: "restore"), type: .restore)
+        return NodeAction(title: Strings.Localizable.restore, detail: nil, image: Asset.Images.NodeActions.restore.image, type: .restore)
     }
     
     class func saveToPhotosAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: UIImage(named: "saveToPhotos"), type: .saveToPhotos)
+        return NodeAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: Asset.Images.NodeActions.saveToPhotos.image, type: .saveToPhotos)
     }
     
     class func sendToChatAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.sendToContact, detail: nil, image: UIImage(named: "sendMessage"), type: .sendToChat)
+        return NodeAction(title: Strings.Localizable.sendToContact, detail: nil, image: Asset.Images.NodeActions.sendMessage.image, type: .sendToChat)
     }
     
     class func pdfPageViewAction() -> NodeAction {
@@ -202,7 +202,7 @@ extension NodeAction {
     }
     
     class func textEditorAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.edit, detail: nil, image: UIImage(named: "edittext"), type: .editTextFile)
+        return NodeAction(title: Strings.Localizable.edit, detail: nil, image: Asset.Images.NodeActions.edittext.image, type: .editTextFile)
     }
     
     class func forwardAction() -> NodeAction {
@@ -214,7 +214,7 @@ extension NodeAction {
     }
     
     class func favouriteAction(isFavourite: Bool) -> NodeAction {
-        return NodeAction(title: isFavourite ? Strings.Localizable.removeFavourite : Strings.Localizable.favourite, detail: nil, image: isFavourite ? UIImage(named: "removeFavourite") : UIImage(named: "favourite"), type: .favourite)
+        return NodeAction(title: isFavourite ? Strings.Localizable.removeFavourite : Strings.Localizable.favourite, detail: nil, image: isFavourite ? Asset.Images.NodeActions.removeFavourite.image : Asset.Images.NodeActions.favourite.image, type: .favourite)
     }
     
     class func labelAction(label: MEGANodeLabel) -> NodeAction {
@@ -222,7 +222,7 @@ extension NodeAction {
         let detailText = NSLocalizedString(labelString!, comment: "")
         let image = UIImage(named: labelString!)
         
-        return NodeAction(title: Strings.Localizable.General.ChooseLabel.title, detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : nil), image: UIImage(named: "label"), type: .label)
+        return NodeAction(title: Strings.Localizable.General.ChooseLabel.title, detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : nil), image: Asset.Images.NodeActions.label.image, type: .label)
     }
     
     class func listAction() -> NodeAction {

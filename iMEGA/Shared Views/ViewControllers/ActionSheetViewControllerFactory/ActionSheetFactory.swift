@@ -101,7 +101,7 @@ private extension NodeLabelColor {
         case .grey:
             return Asset.Images.Labels.grey.image
         case .unknown:
-            return UIImage(named: "delete")!
+            return Asset.Images.NodeActions.delete.image
         }
     }
 

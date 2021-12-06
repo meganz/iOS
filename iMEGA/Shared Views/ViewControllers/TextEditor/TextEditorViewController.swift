@@ -287,7 +287,7 @@ extension TextEditorViewController: ViewType {
             )
         let downloadBarButtonItem =
             UIBarButtonItem(
-                image: UIImage(named: "offline"),
+                image: Asset.Images.NodeActions.offline.image,
                 style: .plain,
                 target: self,
                 action: #selector(downloadTapped)
@@ -296,7 +296,7 @@ extension TextEditorViewController: ViewType {
         
         let editBarButtonItem =
             UIBarButtonItem(
-                image: UIImage(named: "edittext"),
+                image: Asset.Images.NodeActions.edittext.image,
                 style: .plain,
                 target: self,
                 action: #selector(editTapped)
@@ -307,7 +307,7 @@ extension TextEditorViewController: ViewType {
         if accessLevel == .owner {
             let shareBarButtonItem =
                 UIBarButtonItem(
-                    image: UIImage(named: "share"),
+                    image: Asset.Images.NodeActions.share.image,
                     style: .plain,
                     target: self,
                     action: #selector(shareTapped(button:))

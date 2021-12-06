@@ -14,35 +14,35 @@ class ExplorerToolbarConfigurator {
     )
     
     lazy var downloadItem = UIBarButtonItem(
-        image: UIImage(named: "offline"),
+        image: Asset.Images.NodeActions.offline.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var shareItem = UIBarButtonItem(
-        image: UIImage(named: "share"),
+        image: Asset.Images.NodeActions.share.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var moveItem = UIBarButtonItem(
-        image: UIImage(named: "move"),
+        image: Asset.Images.NodeActions.move.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var copyItem = UIBarButtonItem(
-        image: UIImage(named: "copy"),
+        image: Asset.Images.NodeActions.copy.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var deleteItem = UIBarButtonItem(
-        image: UIImage(named: "rubbishBin"),
+        image: Asset.Images.NodeActions.rubbishBin.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
