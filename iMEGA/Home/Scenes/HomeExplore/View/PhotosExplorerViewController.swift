@@ -12,7 +12,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     private let viewModel: PhotoExplorerViewModel
     
     private lazy var selectAllBarButtonItem = UIBarButtonItem(
-        image: UIImage(named: "selectAll"),
+        image: Asset.Images.NavigationBar.selectAll.image,
         style: .plain,
         target: self,
         action: #selector(selectButtonPressed(_:))
@@ -122,7 +122,7 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     private func configureLeftBarButton() {
         if collectionView.allowsMultipleSelection {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: "selectAll"),
+                image: Asset.Images.NavigationBar.selectAll.image,
                 style: .plain,
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))

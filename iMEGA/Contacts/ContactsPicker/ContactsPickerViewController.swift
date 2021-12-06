@@ -23,7 +23,7 @@ class ContactsPickerViewController: UIViewController {
 
     private var delegate: ContactsPickerViewControllerDelegate?
 
-    private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "selectAll"), style: .plain, target: self, action: #selector(selectAllTapped)
+    private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(selectAllTapped)
     )
     
     private lazy var sendBarButton: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(sendTapped)

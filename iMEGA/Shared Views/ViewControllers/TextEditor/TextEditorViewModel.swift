@@ -297,7 +297,7 @@ final class TextEditorViewModel: ViewModelType {
             case .view:
             return TextEditorNavbarItemsModel (
                 leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-                rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
+                rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
                 textEditorMode: textEditorMode
             )
         case .edit,

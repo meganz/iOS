@@ -36,7 +36,7 @@ final class TextEditorViewModelTests: XCTestCase {
             if textEditorMode == .view {
                 navbarItemsModel = TextEditorNavbarItemsModel (
                     leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-                    rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
+                    rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
                     textEditorMode: textEditorMode
                 )
             } else {
@@ -103,7 +103,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsViewModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
+            rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
             textEditorMode: .view
         )
         
@@ -291,7 +291,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
+            rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
             textEditorMode: .view
         )
         
@@ -894,7 +894,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel (
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: "moreNavigationBar"),
+            rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
             textEditorMode: .view
         )
         
