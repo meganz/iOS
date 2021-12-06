@@ -194,7 +194,7 @@ extension NodeAction {
     }
     
     class func pdfPageViewAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.pageView, detail: nil, image: UIImage(named: "pageView"), type: .pdfPageView)
+        return NodeAction(title: Strings.Localizable.pageView, detail: nil, image: Asset.Images.PhotoBrowser.pageView.image, type: .pdfPageView)
     }
     
     class func pdfThumbnailViewAction() -> NodeAction {
