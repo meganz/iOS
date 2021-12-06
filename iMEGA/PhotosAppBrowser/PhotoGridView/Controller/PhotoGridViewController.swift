@@ -176,7 +176,7 @@ final class PhotoGridViewController: UIViewController {
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         
         if album.subType != .smartAlbumUserLibrary {
-            allBarButton = UIBarButtonItem(image: UIImage(named: "selectAll"), style: .plain, target: self, action: #selector(allButtonTapped))
+            allBarButton = UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(allButtonTapped))
             toolbarItems = [allBarButton!, spacer, sendBarButton!]
         } else {
             toolbarItems = [spacer, sendBarButton!]

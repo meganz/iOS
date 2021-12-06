@@ -88,7 +88,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     
     func showSelectAllBarButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "selectAll"),
+            image: Asset.Images.NavigationBar.selectAll.image,
             style: .plain,
             target: self,
             action: #selector(selectAllButtonPressed(_:))
