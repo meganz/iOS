@@ -28,7 +28,7 @@
     
     var actionIcon: UIImage? {
         switch self {
-        case .warning: return UIImage(named: "closeCircle")
+        case .warning: return Asset.Images.Offline.closeCircle.image
         }
     }
 }
