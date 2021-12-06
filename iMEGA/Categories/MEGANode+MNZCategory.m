@@ -73,7 +73,7 @@
         }
             
         case MEGANodeTypeFile: {
-            if (self.name.mnz_isImagePathExtension || self.name.mnz_isVideoPathExtension) {
+            if (self.name.mnz_isVisualMediaPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
                 MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
                 NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];

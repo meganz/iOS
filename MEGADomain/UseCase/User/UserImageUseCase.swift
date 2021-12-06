@@ -12,14 +12,14 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
     
     private let userImageRepo: UserImageRepositoryProtocol
     private let userStoreRepo: UserStoreRepositoryProtocol
-    private let appGroupFilePathUseCase: MEGAAppGroupFilePathUseCaseProtocol
+    private let fileRepo: FileRepositoryProtocol
     
     init(userImageRepo: UserImageRepositoryProtocol,
          userStoreRepo: UserStoreRepositoryProtocol,
-         appGroupFilePathUseCase: MEGAAppGroupFilePathUseCaseProtocol) {
+         fileRepo: FileRepositoryProtocol) {
         self.userImageRepo = userImageRepo
         self.userStoreRepo = userStoreRepo
-        self.appGroupFilePathUseCase = appGroupFilePathUseCase
+        self.fileRepo = fileRepo
     }
     
     func fetchUserAvatar(withUserHandle handle: UInt64,
@@ -31,7 +31,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
             return
         }
         
-        let destinationURLPath = appGroupFilePathUseCase.cachedThumbnailImageURL(forNode: base64Handle).path
+        let destinationURLPath = fileRepo.cachedThumbnailURL(forHandle: base64Handle).path
         if let image = fetchImage(fromPath: destinationURLPath) {
             MEGALogDebug("UserImageUseCase: imaged fetched for \(base64Handle) at path \(destinationURLPath)")
             completion(.success(image))
@@ -56,7 +56,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
             return nil
         }
         
-        let destinationURL = appGroupFilePathUseCase.cachedThumbnailImageURL(forNode: base64Handle)
+        let destinationURL = fileRepo.cachedThumbnailURL(forHandle: base64Handle)
         if let image = fetchImage(fromPath: destinationURL.path) {
             return image
         }

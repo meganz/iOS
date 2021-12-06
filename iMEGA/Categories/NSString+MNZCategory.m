@@ -80,6 +80,10 @@ static NSString* const B = @"[B]";
     return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
+- (BOOL)mnz_isVisualMediaPathExtension {
+    return self.mnz_isImagePathExtension || self.mnz_isVideoPathExtension;
+}
+
 - (BOOL)mnz_isMultimediaPathExtension {
     return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
 }

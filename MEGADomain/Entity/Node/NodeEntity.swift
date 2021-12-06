@@ -65,3 +65,7 @@ extension NodeEntity: Equatable {
         lhs.handle == rhs.handle
     }
 }
+
+extension NodeEntity: Identifiable {
+    var id: MEGAHandle { handle }
+}

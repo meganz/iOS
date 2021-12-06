@@ -37,7 +37,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private func playableChildren(of parent: MEGAHandle) -> [MEGANode]? {
         guard let parentNode = sdk.node(forHandle: parent) else { return nil }
         
-        return sdk.children(forParent: parentNode, order: sortType(for: parent)).nodes
+        return sdk.children(forParent: parentNode, order: sortType(for: parent)).toNodeArray()
             .filter{ $0.name?.mnz_isMultimediaPathExtension == true &&
                 $0.name?.mnz_isVideoPathExtension == false &&
                 $0.mnz_isPlayable() }
@@ -46,7 +46,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private func folderPlayableChildren(of parent: MEGAHandle) -> [MEGANode]? {
         guard let parentNode = folderNode(fromHandle: parent) else { return nil }
         
-        return folderSDK.children(forParent: parentNode, order: sortType(for: parent)).nodes
+        return folderSDK.children(forParent: parentNode, order: sortType(for: parent)).toNodeArray()
             .filter{ $0.name?.mnz_isMultimediaPathExtension == true &&
                 $0.name?.mnz_isVideoPathExtension == false &&
                 $0.mnz_isPlayable() }

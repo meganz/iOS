@@ -7,7 +7,7 @@ final class VideoExplorerTableCellViewModel {
     private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
         return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
                                         fileSystemClient: .live,
-                                        filePathUseCase: MEGAAppGroupFilePathUseCase())
+                                        fileRepo: FileSystemRepository(fileManager: FileManager.default))
     }()
     
     var title: String {
