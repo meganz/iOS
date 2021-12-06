@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol NodeThumbnailHomeUseCaseProtocol {
     func loadThumbnail(
@@ -11,16 +12,16 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
     private var sdkNodeClient: SDKNodeClient
     private var fileSystemClient: FileSystemImageCacheClient
-    private var filePathUseCase: MEGAAppGroupFilePathUseCaseProtocol
+    private var fileRepo: FileRepositoryProtocol
 
     init(
         sdkNodeClient: SDKNodeClient,
         fileSystemClient: FileSystemImageCacheClient,
-        filePathUseCase: MEGAAppGroupFilePathUseCaseProtocol
+        fileRepo: FileRepositoryProtocol
     ) {
         self.sdkNodeClient = sdkNodeClient
         self.fileSystemClient = fileSystemClient
-        self.filePathUseCase = filePathUseCase
+        self.fileRepo = fileRepo
     }
 
     func loadThumbnail(
@@ -50,7 +51,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         base64Handle: MEGABase64Handle,
         completion: @escaping (UIImage?) -> Void
     ) {
-        let destinationThumbnailCachePath = filePathUseCase.cachedThumbnailImageURL(forNode: base64Handle)
+        let destinationThumbnailCachePath = fileRepo.cachedThumbnailURL(forHandle: base64Handle)
         let fileExists = fileSystemClient.fileExists(destinationThumbnailCachePath)
         if fileExists {
             fileSystemClient.loadCachedImageAsync(destinationThumbnailCachePath) { cachedImageData in

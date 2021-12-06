@@ -1,26 +1,14 @@
 @testable import MEGA
 
-final class MockNodeThumbnailUseCase: NodeThumbnailUseCaseProtocol {
-    var thumbnailFilePath: String = ""
-    var isThumbnailDownloaded: Bool = false
+struct MockNodeThumbnailUseCase: ThumbnailUseCaseProtocol {
+    var getThumbnailResult: (Result<URL, ThumbnailErrorEntity>) = .failure(.generic)
+    var getPreviewResult: (Result<URL, ThumbnailErrorEntity>) = .failure(.generic)
     
-    var getThumbnailResult: (Result<String, GetThumbnailErrorEntity>) = .failure(.generic)
-    
-    var iconImagesDictionaryVariable = ["":""]
-    
-    func getThumbnailFilePath(base64Handle: String) -> String {
-        thumbnailFilePath
-    }
-
-    func isThumbnailDownloaded(thumbnailFilePath: String) -> Bool {
-        isThumbnailDownloaded
-    }
-    
-    func getThumbnail(destinationFilePath: String, completion: @escaping (Result<String, GetThumbnailErrorEntity>) -> Void) {
+    func getCachedThumbnail(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
         completion(getThumbnailResult)
     }
     
-    func iconImagesDictionary() -> Dictionary<AnyHashable, Any> {
-        iconImagesDictionaryVariable
+    func getCachedPreview(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
+        completion(getPreviewResult)
     }
 }

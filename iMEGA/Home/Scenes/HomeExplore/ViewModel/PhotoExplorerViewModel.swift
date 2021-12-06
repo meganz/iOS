@@ -27,7 +27,7 @@ class PhotoExplorerViewModel: NSObject {
     private let debouncer = Debouncer(delay: REQUESTS_DELAY)
 
     private var title: String {
-        return Strings.Localizable.allImages
+        return Strings.Localizable.Home.Images.title
     }
     
     var emptyStateType: EmptyStateType {

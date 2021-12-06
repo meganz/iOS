@@ -574,7 +574,7 @@
     NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : self.publicLinksArray);
     NSMutableArray<MEGANode *> *mediaNodesArray = NSMutableArray.alloc.init;
     for (MEGANode *node in nodesArray) {
-        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        if (node.name.mnz_isVisualMediaPathExtension) {
             [mediaNodesArray addObject:node];
         }
     }
@@ -1046,7 +1046,7 @@
         }
         
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            if (node.name.mnz_isVisualMediaPathExtension) {
                 [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];

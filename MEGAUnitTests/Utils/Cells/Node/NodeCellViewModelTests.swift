@@ -210,7 +210,8 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .manageThumbnail,
-             expectedCommands: [.setIcon("folder")])
+             expectedCommands: [.hideVideoIndicator(true),
+                                .setIcon("folder")])
     }
     
     func testAction_manageThumbnail_isFile_noThumbnail() {
@@ -229,16 +230,17 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .manageThumbnail,
-             expectedCommands: [.setIcon("")])
+             expectedCommands: [.hideVideoIndicator(true),
+                                .setIcon("generic")])
     }
     
-    func testAction_manageThumbnail_isFile_hasThumbnail() {
+    func testAction_manageThumbnail_isFile_hasThumbnail() throws {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeEntity = NodeEntity(isFile: true, hasThumbnail: true)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
-        mockNodeThumbnailUC.thumbnailFilePath = "testAction_manageThumbnail"
+        let thumbnailPath = "file://thumbnail/abc"
+        let mockNodeThumbnailUC = MockNodeThumbnailUseCase(getThumbnailResult: .success(try XCTUnwrap(URL(string: thumbnailPath))))
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -246,43 +248,10 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeActionUseCase: mockNodeActionUC,
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
-        
-        mockNodeThumbnailUC.getThumbnail(destinationFilePath: mockNodeThumbnailUC.thumbnailFilePath) { [weak self] result in
-            switch result {
-            case .success(let thumbnailFilePath):
-                self?.test(viewModel: viewModel,
-                     action: .manageThumbnail,
-                     expectedCommands: [.setThumbnail(thumbnailFilePath)])
-            
-            case .failure:
-                self?.test(viewModel: viewModel,
-                     action: .manageThumbnail,
-                     expectedCommands: [.setIcon("")])
-            }
-        }
-    }
-    
-    func testAction_manageThumbnail_isFile_hasThumbnail_isDownloaded() {
-        let nodeOpener = NodeOpener(navigationController: UINavigationController())
-        let mockNodeEntity = NodeEntity(isFile: true, hasThumbnail: true)
-        let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
-        let mockNodeActionUC = MockNodeActionUseCase()
-        let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
-        mockNodeThumbnailUC.thumbnailFilePath = "testAction_manageThumbnail"
-        mockNodeThumbnailUC.isThumbnailDownloaded = true
-        mockNodeThumbnailUC.getThumbnailResult = .success(mockNodeThumbnailUC.thumbnailFilePath)
-        let mockAccountUC = MockAccountUseCase()
-        
-        let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
-                                          nodeModel: mockNodeModel,
-                                          nodeActionUseCase: mockNodeActionUC,
-                                          nodeThumbnailUseCase: mockNodeThumbnailUC,
-                                          accountUseCase: mockAccountUC)
-        
         test(viewModel: viewModel,
              action: .manageThumbnail,
              expectedCommands: [.hideVideoIndicator(true),
-                                .setThumbnail(mockNodeThumbnailUC.thumbnailFilePath)])
+                                .setThumbnail("/abc")])
     }
     
     func testAction_getFilesAndFolders_emptyFolder() {

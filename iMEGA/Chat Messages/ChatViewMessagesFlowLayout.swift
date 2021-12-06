@@ -123,7 +123,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             case .attachment, .contact:
                 if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
                     let node = chatMessage.message.nodeList.node(at: 0)!
-                    if (node.name!.mnz_isImagePathExtension || node.name!.mnz_isVideoPathExtension) {
+                    if (node.name!.mnz_isVisualMediaPathExtension) {
                         return chatMediaCollectionViewSizeCalculator
                     }
                 }
