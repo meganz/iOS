@@ -50,16 +50,16 @@ class ChatTitleView: UIView {
     
     private func updateSubtitleLabel() {
         if chatRoom.isArchived {
-            subtitleLabel.text = NSLocalizedString("archived", comment: "Title of flag of archived chats.")
+            subtitleLabel.text = Strings.Localizable.archived
         } else if chatRoom.isGroup {
             if chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.ro.rawValue {
-                subtitleLabel.text = NSLocalizedString("Inactive chat", comment: "Subtitle of chat screen when the chat is inactive")
+                subtitleLabel.text = Strings.Localizable.inactiveChat
             } else if chatRoom.hasCustomTitle {
                 subtitleLabel.text = chatRoom.participantNames
             } else if chatRoom.peerCount > 0 {
-                subtitleLabel.text = String(format: NSLocalizedString("%d participants", comment: "Plural of participant. 2 participants") , chatRoom.peerCount + 1)
+                subtitleLabel.text = Strings.Localizable.dParticipants(Int(chatRoom.peerCount) + 1)
             } else {
-                subtitleLabel.text = String(format: NSLocalizedString("%d participant", comment: "Singular of participant. 1 participants") , 1)
+                subtitleLabel.text = Strings.Localizable.dParticipant(1)
             }
             
         } else {
