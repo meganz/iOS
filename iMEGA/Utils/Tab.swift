@@ -51,19 +51,19 @@
     @objc var icon: UIImage? {
         switch tabType {
         case .cloudDrive:
-            return UIImage(named: "cloudDriveIcon") ?? nil
+            return Asset.Images.TabBarIcons.cloudDriveIcon.image
             
         case .cameraUploads:
-            return UIImage(named: "cameraUploadsIcon") ?? nil
+            return Asset.Images.TabBarIcons.cameraUploadsIcon.image
             
         case .home:
-            return UIImage(named: "home") ?? nil
+            return Asset.Images.TabBarIcons.home.image
             
         case .chat:
-            return UIImage(named: "chatIcon")
+            return Asset.Images.TabBarIcons.chatIcon.image
             
         case .sharedItems:
-            return UIImage(named: "sharedItemsIcon")
+            return Asset.Images.TabBarIcons.sharedItemsIcon.image
         }
     }
     
