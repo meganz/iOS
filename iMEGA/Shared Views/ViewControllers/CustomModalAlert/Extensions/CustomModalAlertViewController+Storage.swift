@@ -2,7 +2,7 @@ import Foundation
 
 extension CustomModalAlertViewController {
     func configureForStorageEvent(_ event: MEGAEvent) {
-        let imageName = event.number == StorageState.orange.rawValue ? "storage_almost_full" : "storage_full"
+        let imageName = event.number == StorageState.orange.rawValue ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.storageFull.name
         
         let title = event.number == StorageState.orange.rawValue ? Strings.Localizable.upgradeAccount : Strings.Localizable.Dialog.Storage.Odq.title
 
@@ -19,7 +19,7 @@ extension CustomModalAlertViewController {
         guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
             return
         }
-        let imageName = accountDetails.storageMax.int64Value > accountDetails.storageUsed.int64Value ? "storage_almost_full" : "storage_full"
+        let imageName = accountDetails.storageMax.int64Value > accountDetails.storageUsed.int64Value ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.storageFull.name
         
         let title = Strings.Localizable.upgradeAccount
         let detailText = uploading ? Strings.Localizable.yourUploadSCannotProceedBecauseYourAccountIsFull : Strings.Localizable.thisActionCanNotBeCompletedAsItWouldTakeYouOverYourCurrentStorageLimit

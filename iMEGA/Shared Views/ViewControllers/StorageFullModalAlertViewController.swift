@@ -22,7 +22,7 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
     }
     
     func configureView() {
-        image = UIImage(named: "deviceStorageAlmostFull")
+        image = Asset.Images.WarningStorageAlmostFull.deviceStorageAlmostFull.image
         viewTitle = Strings.Localizable.deviceStorageAlmostFull
         detail = Strings.Localizable.MEGANeedsAMinimumOf
             .FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery
