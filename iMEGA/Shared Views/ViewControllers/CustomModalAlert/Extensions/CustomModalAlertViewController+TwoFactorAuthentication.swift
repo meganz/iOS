@@ -2,7 +2,7 @@ import Foundation
 
 extension CustomModalAlertViewController {
     @objc func configureForTwoFactorAuthentication(requestedByUser: Bool) {
-        image = UIImage(named: "2FASetup")
+        image = Asset.Images.TwoFactorAuthentication._2FASetup.image
         viewTitle = Strings.Localizable.whyYouDoNeedTwoFactorAuthentication
         detail = Strings.Localizable.whyYouDoNeedTwoFactorAuthenticationDescription
         firstButtonTitle = Strings.Localizable.beginSetup
