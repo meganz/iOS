@@ -4,7 +4,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     var backgroundLayer: CAShapeLayer?
     var progressBackgroundLayer: CAShapeLayer?
     var progressLayer: CAShapeLayer?
-    var arrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "transfersDownload"))
+    var arrowImageView: UIImageView = UIImageView(image: Asset.Images.Transfers.transfersDownload.image)
     var stateBadge: UIImageView = UIImageView()
     var transferStatus: Int?
     var transfers = [TransferEntity]()
@@ -116,7 +116,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         stateBadge.autoPinEdge(.top, to: .top, of: arrowImageView)
         
         if transfersPaused {
-            stateBadge.image = #imageLiteral(resourceName: "Combined Shape")
+            stateBadge.image = Asset.Images.Transfers.Widget.Pause.combinedShape.image
         } else {
              stateBadge.image = nil
         }
@@ -169,9 +169,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }) {
             if let lastErrorExtended = failedTransfer.lastErrorExtended {
                 if lastErrorExtended == .overquota {
-                    stateBadge.image = #imageLiteral(resourceName: "overquota")
+                    stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
                 } else if lastErrorExtended != .generic {
-                    stateBadge.image = #imageLiteral(resourceName: "errorBadge")
+                    stateBadge.image = Asset.Images.Transfers.Widget.Error.FileList.FileAcessory.errorBadge.image
                 }
             } else {
                 stateBadge.image = nil
@@ -190,12 +190,12 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             let hasUploadTransfer = transfers.contains { (transfer) -> Bool in
                 return transfer.type == .upload
             }
-            arrowImageView.image = hasDownloadTransfer ? #imageLiteral(resourceName: "transfersDownload") : #imageLiteral(resourceName: "transfersUpload")
+            arrowImageView.image = hasDownloadTransfer ? Asset.Images.Transfers.transfersDownload.image : Asset.Images.Transfers.transfersUpload.image
             if overquota {
-                stateBadge.image = #imageLiteral(resourceName: "overquota")
+                stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
                 self.progressLayer?.strokeColor = hasUploadTransfer ? #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1) : #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
             } else if transfersPaused {
-                stateBadge.image = #imageLiteral(resourceName: "Combined Shape")
+                stateBadge.image = Asset.Images.Transfers.Widget.Pause.combinedShape.image
             }
         } else {
             let completedTransfers = transfersUseCase.completedTransfers(filteringUserTransfers: true)
@@ -208,19 +208,19 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
                 }) {
                     if let lastErrorExtended = failedTransfer.lastErrorExtended {
                         if lastErrorExtended == .overquota {
-                            stateBadge.image = #imageLiteral(resourceName: "overquota")
+                            stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
                             self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
                         } else if lastErrorExtended != .generic {
-                            stateBadge.image = #imageLiteral(resourceName: "errorBadge")
+                            stateBadge.image = Asset.Images.Transfers.Widget.Error.FileList.FileAcessory.errorBadge.image
                             self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
                         }
                     } else {
-                        stateBadge.image = #imageLiteral(resourceName: "completedBadge")
+                        stateBadge.image = Asset.Images.Transfers.Widget.Complete.completedBadge.image
                         self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
                         dismissWidget()
                     }
                 } else {
-                    stateBadge.image = #imageLiteral(resourceName: "completedBadge")
+                    stateBadge.image = Asset.Images.Transfers.Widget.Complete.completedBadge.image
                     self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
                     dismissWidget()
                 }
@@ -350,7 +350,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }
         if request.type == .MEGARequestTypePauseTransfers {
             if request.flag {
-                stateBadge.image = #imageLiteral(resourceName: "Combined Shape")
+                stateBadge.image = Asset.Images.Transfers.Widget.Pause.combinedShape.image
             } else {
                 configureData()
             }

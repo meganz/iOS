@@ -160,7 +160,7 @@ extension NodeAction {
     }
     
     class func clearAction() -> NodeAction {
-        let action = NodeAction(title: Strings.Localizable.clear, detail: nil, image: UIImage(named: "cancelTransfers"), type: .clear)
+        let action = NodeAction(title: Strings.Localizable.clear, detail: nil, image: Asset.Images.Transfers.cancelTransfers.image, type: .clear)
         action.style = .destructive
         return action
     }
