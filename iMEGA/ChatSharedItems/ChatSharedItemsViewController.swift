@@ -25,7 +25,7 @@ class ChatSharedItemsViewController: UIViewController {
     private lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.forwardToolbar.image, style: .plain, target: self, action: #selector(forwardTapped)
     )
     
-    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline"), style: .plain, target: self, action: #selector(downloadTapped)
+    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.offline.image, style: .plain, target: self, action: #selector(downloadTapped)
     )
     
     private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.InfoActions.import.image, style: .plain, target: self, action: #selector(importTapped)

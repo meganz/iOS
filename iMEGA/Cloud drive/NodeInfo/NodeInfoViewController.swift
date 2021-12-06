@@ -235,7 +235,7 @@ class NodeInfoViewController: UIViewController {
             self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
         })
         
-        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: UIImage(named: "delete"), style: .destructive) { [weak self] in
+        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: Asset.Images.NodeActions.delete.image, style: .destructive) { [weak self] in
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
@@ -437,7 +437,7 @@ class NodeInfoViewController: UIViewController {
         cell.nameLabel.text = pendingOutShares()[indexPath.row].user
         cell.shareLabel.isHidden = true
         cell.permissionsImageView.isHidden = false
-        cell.permissionsImageView.image = UIImage(named: "delete")
+        cell.permissionsImageView.image = Asset.Images.NodeActions.delete.image
         
         return cell
     }

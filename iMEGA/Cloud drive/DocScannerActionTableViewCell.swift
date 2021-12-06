@@ -25,7 +25,7 @@ class DocScannerActionTableViewCell: UITableViewCell {
             actionLabel.text = Strings.Localizable.uploadToMega
         case .sendMessage:
             actionImageView.tintColor = .mnz_primaryGray(for: self.traitCollection)
-            actionImageView.image = UIImage(named: "sendMessage")
+            actionImageView.image = Asset.Images.NodeActions.sendMessage.image
             actionLabel.text = Strings.Localizable.sendToContact
         }
     }

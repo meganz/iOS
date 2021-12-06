@@ -183,20 +183,18 @@ class GetLinkViewController: UIViewController {
     }
     
     private func copyKeyToPasteBoard() {
-        guard let copyImage = UIImage(named: "copy") else { return }
         UIPasteboard.general.string = getLinkVM.key
-        SVProgressHUD.show(copyImage, status: Strings.Localizable.keyCopiedToClipboard)
+        SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.keyCopiedToClipboard)
     }
     
     private func copyLinkToPasteboard(atIndex index: Int?) {
-        guard let copyImage = UIImage(named: "copy") else { return }
         if getLinkVM.multilink {
             if let index = index, let link = nodes[safe: index]?.publicLink {
                 UIPasteboard.general.string = link
-                SVProgressHUD.show(copyImage, status: Strings.Localizable.linkCopiedToClipboard)
+                SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.linkCopiedToClipboard)
             } else {
                 UIPasteboard.general.string = nodes.compactMap { $0.publicLink }.joined(separator: " ")
-                SVProgressHUD.show(copyImage, status: Strings.Localizable.linksCopiedToClipboard)
+                SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.linksCopiedToClipboard)
             }
         } else {
             if getLinkVM.separateKey {
@@ -204,14 +202,13 @@ class GetLinkViewController: UIViewController {
             } else {
                 UIPasteboard.general.string = getLinkVM.link
             }
-            SVProgressHUD.show(copyImage, status: Strings.Localizable.linkCopiedToClipboard)
+            SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.linkCopiedToClipboard)
         }
     }
     
     private func copyPasswordToPasteboard() {
-        guard let copyImage = UIImage(named: "copy") else { return }
         UIPasteboard.general.string = getLinkVM.password
-        SVProgressHUD.show(copyImage, status: Strings.Localizable.passwordCopiedToClipboard)
+        SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.passwordCopiedToClipboard)
     }
     
     private func updateModel(forNode node: MEGANode) {

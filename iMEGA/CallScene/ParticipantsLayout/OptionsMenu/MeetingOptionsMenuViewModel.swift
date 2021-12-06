@@ -75,7 +75,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
                             Strings.Localizable.Meetings.Action.shareLink :
                             Strings.Localizable.getChatLink,
                           detail: nil,
-                          image: UIImage(named: "share"),
+                          image: Asset.Images.NodeActions.share.image,
                           style: .default) {
             dispatch(.shareLinkAction)
         }

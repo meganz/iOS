@@ -144,13 +144,13 @@ extension DocAndAudioListSource {
 
         if !isNodeInRubbishBin(node){
             let shareAction = contextualAction(
-                withImageName: "share",
+                withImageName: Asset.Images.NodeActions.share.name,
                 backgroundColor: .systemOrange
             ) { [weak self] in
                 self?.share(node: nodeCell.node)
             }
             let rubbishBinAction = contextualAction(
-                withImageName: "rubbishBin",
+                withImageName: Asset.Images.NodeActions.rubbishBin.name,
                 backgroundColor: .mnz_redError()
             ) { [weak self] in
                 self?.moveToRubbishBin(node: nodeCell.node)
@@ -160,7 +160,7 @@ extension DocAndAudioListSource {
             
             if let base64Handle = node.base64Handle,
                Helper.downloadingNodes()[base64Handle] == nil {
-                let downloadAction = contextualAction(withImageName: "offline", backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
+                let downloadAction = contextualAction(withImageName: Asset.Images.NodeActions.offline.name, backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
                     self?.download(node: node)
                 }
                 actions += [downloadAction]
