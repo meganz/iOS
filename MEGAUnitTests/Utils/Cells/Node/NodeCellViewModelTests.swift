@@ -45,7 +45,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeEntity = NodeEntity(label: .red)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.labelString = "RedSmall"
+        mockNodeActionUC.labelString = Asset.Images.Labels.redSmall.name
         let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -67,7 +67,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeEntity = NodeEntity(label: .orange)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.labelString = "OrangeSmall"
+        mockNodeActionUC.labelString = Asset.Images.Labels.orangeSmall.name
         let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -89,7 +89,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeEntity = NodeEntity(label: .yellow)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.labelString = "YellowSmall"
+        mockNodeActionUC.labelString = Asset.Images.Labels.yellowSmall.name
         let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -111,7 +111,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeEntity = NodeEntity(label: .green)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.labelString = "GreenSmall"
+        mockNodeActionUC.labelString = Asset.Images.Labels.greenSmall.name
         let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -133,7 +133,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeEntity = NodeEntity(label: .blue)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.labelString = "BlueSmall"
+        mockNodeActionUC.labelString = Asset.Images.Labels.blueSmall.name
         let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -155,7 +155,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeEntity = NodeEntity(label: .purple)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.labelString = "PurpleSmall"
+        mockNodeActionUC.labelString = Asset.Images.Labels.purpleSmall.name
         let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -177,7 +177,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeEntity = NodeEntity(label: .grey)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.labelString = "GreySmall"
+        mockNodeActionUC.labelString = Asset.Images.Labels.greySmall.name
         let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         

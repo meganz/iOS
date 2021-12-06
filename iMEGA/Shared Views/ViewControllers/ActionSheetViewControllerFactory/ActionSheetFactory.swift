@@ -87,19 +87,19 @@ private extension NodeLabelColor {
     var iconImage: UIImage {
         switch self {
         case .red:
-            return UIImage(named: "Red")!
+            return Asset.Images.Labels.red.image
         case .orange:
-            return UIImage(named: "Orange")!
+            return Asset.Images.Labels.orange.image
         case .yellow:
-            return UIImage(named: "Yellow")!
+            return Asset.Images.Labels.yellow.image
         case .green:
-            return UIImage(named: "Green")!
+            return Asset.Images.Labels.green.image
         case .blue:
-            return UIImage(named: "Blue")!
+            return Asset.Images.Labels.blue.image
         case .purple:
-            return UIImage(named: "Purple")!
+            return Asset.Images.Labels.purple.image
         case .grey:
-            return UIImage(named: "Grey")!
+            return Asset.Images.Labels.grey.image
         case .unknown:
             return UIImage(named: "delete")!
         }
