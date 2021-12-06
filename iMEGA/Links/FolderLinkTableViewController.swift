@@ -140,7 +140,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         
         if folderLink.isADownloadingNode(node) {
             cell.downloadingArrowView.isHidden = false
-            cell.downloadingArrowImageView.image = UIImage(named: "downloadQueued")
+            cell.downloadingArrowImageView.image = Asset.Images.Transfers.downloadQueued.image
         } else {
             let isDownloaded = node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil
             cell.downloadedView.isHidden = !isDownloaded
