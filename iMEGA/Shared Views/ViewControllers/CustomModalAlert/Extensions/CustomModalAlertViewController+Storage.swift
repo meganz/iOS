@@ -28,7 +28,7 @@ extension CustomModalAlertViewController {
     }
     
     func configureForStorageDownloadQuotaError() {
-        let imageName = "transfer-quota-empty"
+        let imageName = Asset.Images.WarningTransferQuota.transferQuotaEmpty.name
         let title = Strings.Localizable.depletedTransferQuotaTitle
         let detailText = Strings.Localizable.depletedTransferQuotaMessage
         let base64Handle = MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
