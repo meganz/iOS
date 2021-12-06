@@ -152,7 +152,7 @@ extension NodeAction {
     }
     
     class func removeSharingAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.removeSharing, detail: nil, image: UIImage(named: "removeShare"), type: .removeSharing)
+        return NodeAction(title: Strings.Localizable.removeSharing, detail: nil, image: Asset.Images.SharedItems.removeShare.image, type: .removeSharing)
     }
     
     class func viewInFolderAction() -> NodeAction {
