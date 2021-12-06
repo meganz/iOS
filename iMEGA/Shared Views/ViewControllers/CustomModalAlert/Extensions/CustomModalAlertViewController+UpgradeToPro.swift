@@ -2,7 +2,7 @@ import Foundation
 
 extension CustomModalAlertViewController {
     func configureUpgradeToPro() {
-        image = UIImage(named: "upgradePro")
+        image = Asset.Images.Pro.upgradePro.image
         viewTitle = Strings.Localizable.upgradeToPro
         detail = Strings.Localizable.accessProOnlyFeaturesLikeSettingPasswordProtectionAndExpiryDatesForPublicFiles
         
