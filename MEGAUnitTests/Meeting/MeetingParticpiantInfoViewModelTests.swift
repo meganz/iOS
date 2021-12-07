@@ -259,14 +259,14 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     private func makeModeratorAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("Make Moderator", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.Meetings.Participant.makeModerator,
                           detail: nil,
                           image: Asset.Images.Meetings.moderatorMeetings.image,
                           style: .default) {}
     }
     
     private func removeModeratorAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("Remove Moderator", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
                           image: Asset.Images.Meetings.moderatorMeetings.image,
                           style: .default) {}
