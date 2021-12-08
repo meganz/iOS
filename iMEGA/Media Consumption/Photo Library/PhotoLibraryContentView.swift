@@ -70,15 +70,21 @@ struct PhotoLibraryContentView: View {
         UISegmentedControl
             .appearance()
             .setTitleTextAttributes(
-                [.font: UIFont.systemFont(ofSize: 15, weight: .semibold)],
+                [.font: UIFont.systemFont(ofSize: 15, weight: .semibold),
+                 .foregroundColor: UIColor.systemBackground],
                 for: .selected
             )
         
         UISegmentedControl
             .appearance()
             .setTitleTextAttributes(
-                [.font: UIFont.systemFont(ofSize: 13, weight: .medium)],
+                [.font: UIFont.systemFont(ofSize: 13, weight: .medium),
+                 .foregroundColor: UIColor.label],
                 for: .normal
             )
+        
+        UISegmentedControl
+            .appearance()
+            .selectedSegmentTintColor = UIColor.label.withAlphaComponent(0.4)
     }
 }

@@ -7,7 +7,7 @@ struct BlurryBackground: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 15.0, *) {
             content
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: radius))
+                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: radius))
         } else {
             content
                 .background(BlurryView())
