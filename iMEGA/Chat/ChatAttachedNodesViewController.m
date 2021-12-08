@@ -293,7 +293,7 @@
         return;
     } else {
         // Nodes should be authorized here before being opened, if at any moment attaching multiple nodes in a single message is allowed for public chats.
-        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        if (node.name.mnz_isVisualMediaPathExtension) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [self.message.nodeList mnz_mediaNodesMutableArrayFromNodeList];
             
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:node preferredIndex:0];

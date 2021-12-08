@@ -210,7 +210,8 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .manageThumbnail,
-             expectedCommands: [.setIcon("folder")])
+             expectedCommands: [.hideVideoIndicator(true),
+                                .setIcon("folder")])
     }
     
     func testAction_manageThumbnail_isFile_noThumbnail() {
@@ -229,16 +230,17 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .manageThumbnail,
-             expectedCommands: [.setIcon("")])
+             expectedCommands: [.hideVideoIndicator(true),
+                                .setIcon("generic")])
     }
     
-    func testAction_manageThumbnail_isFile_hasThumbnail() {
+    func testAction_manageThumbnail_isFile_hasThumbnail() throws {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeEntity = NodeEntity(isFile: true, hasThumbnail: true)
         let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
-        mockNodeThumbnailUC.thumbnailFilePath = "testAction_manageThumbnail"
+        let thumbnailPath = "file://thumbnail/abc"
+        let mockNodeThumbnailUC = MockNodeThumbnailUseCase(getThumbnailResult: .success(try XCTUnwrap(URL(string: thumbnailPath))))
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -246,43 +248,10 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeActionUseCase: mockNodeActionUC,
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
-        
-        mockNodeThumbnailUC.getThumbnail(destinationFilePath: mockNodeThumbnailUC.thumbnailFilePath) { [weak self] result in
-            switch result {
-            case .success(let thumbnailFilePath):
-                self?.test(viewModel: viewModel,
-                     action: .manageThumbnail,
-                     expectedCommands: [.setThumbnail(thumbnailFilePath)])
-            
-            case .failure:
-                self?.test(viewModel: viewModel,
-                     action: .manageThumbnail,
-                     expectedCommands: [.setIcon("")])
-            }
-        }
-    }
-    
-    func testAction_manageThumbnail_isFile_hasThumbnail_isDownloaded() {
-        let nodeOpener = NodeOpener(navigationController: UINavigationController())
-        let mockNodeEntity = NodeEntity(isFile: true, hasThumbnail: true)
-        let mockNodeModel = NodeModel(nodeEntity: mockNodeEntity)
-        let mockNodeActionUC = MockNodeActionUseCase()
-        let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
-        mockNodeThumbnailUC.thumbnailFilePath = "testAction_manageThumbnail"
-        mockNodeThumbnailUC.isThumbnailDownloaded = true
-        mockNodeThumbnailUC.getThumbnailResult = .success(mockNodeThumbnailUC.thumbnailFilePath)
-        let mockAccountUC = MockAccountUseCase()
-        
-        let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
-                                          nodeModel: mockNodeModel,
-                                          nodeActionUseCase: mockNodeActionUC,
-                                          nodeThumbnailUseCase: mockNodeThumbnailUC,
-                                          accountUseCase: mockAccountUC)
-        
         test(viewModel: viewModel,
              action: .manageThumbnail,
              expectedCommands: [.hideVideoIndicator(true),
-                                .setThumbnail(mockNodeThumbnailUC.thumbnailFilePath)])
+                                .setThumbnail("/abc")])
     }
     
     func testAction_getFilesAndFolders_emptyFolder() {
@@ -298,7 +267,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        let secondaryLabelText = NSLocalizedString("emptyFolder", comment: "Title shown when a folder doesn't have any files")
+        let secondaryLabelText = Strings.Localizable.emptyFolder
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(secondaryLabelText)])
@@ -318,8 +287,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        var filesAndFoldersString = NSLocalizedString("oneFile", comment: "Subtitle shown on folders that gives you information about its content. This case \"{1} file\"")
-        filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "%d", with: String(mockNodeActionUC.filesAndFolders.0))
+        let filesAndFoldersString = Strings.Localizable.oneFile(mockNodeActionUC.filesAndFolders.0)
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(filesAndFoldersString)])
@@ -339,8 +307,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        var filesAndFoldersString = NSLocalizedString("files", comment: "Subtitle shown on folders that gives you information about its content. This case \"{1+} files\"")
-        filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "%d", with: String(mockNodeActionUC.filesAndFolders.0))
+        let filesAndFoldersString = Strings.Localizable.files(mockNodeActionUC.filesAndFolders.0)
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(filesAndFoldersString)])
@@ -360,8 +327,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        var filesAndFoldersString = NSLocalizedString("oneFolder", comment: "Subtitle shown on folders that gives you information about its content. This case \"{1} folder\"")
-        filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "%d", with: String(mockNodeActionUC.filesAndFolders.1))
+        let filesAndFoldersString = Strings.Localizable.oneFolder(mockNodeActionUC.filesAndFolders.1)
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(filesAndFoldersString)])
@@ -381,8 +347,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        var filesAndFoldersString = NSLocalizedString("folders", comment: "Subtitle shown on folders that gives you information about its content. This case \"{1+} folders\"")
-        filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "%d", with: String(mockNodeActionUC.filesAndFolders.1))
+        let filesAndFoldersString = Strings.Localizable.folders(mockNodeActionUC.filesAndFolders.1)
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(filesAndFoldersString)])
@@ -402,7 +367,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        let filesAndFoldersString = NSLocalizedString("folderAndFile", comment: "Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1} file\"")
+        let filesAndFoldersString = Strings.Localizable.folderAndFile
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(filesAndFoldersString)])
@@ -422,8 +387,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        var filesAndFoldersString = NSLocalizedString("foldersAndFile", comment: "Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1+} file\"")
-        filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "%d", with: String(mockNodeActionUC.filesAndFolders.1))
+        let filesAndFoldersString = Strings.Localizable.foldersAndFile(mockNodeActionUC.filesAndFolders.1)
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(filesAndFoldersString)])
@@ -443,8 +407,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        var filesAndFoldersString = NSLocalizedString("folderAndFiles", comment: "Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1+} file\"")
-        filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "%d", with: String(mockNodeActionUC.filesAndFolders.0))
+        let filesAndFoldersString = Strings.Localizable.folderAndFiles(mockNodeActionUC.filesAndFolders.0)
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(filesAndFoldersString)])
@@ -464,7 +427,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        var filesAndFoldersString = NSLocalizedString("foldersAndFiles", comment: "Subtitle shown on folders that gives you information about its content. This case \"[A] = {1+} folders ‚ [B] = {1+} files\"")
+        var filesAndFoldersString = Strings.Localizable.foldersAndFiles
         filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "[A]", with: String(mockNodeActionUC.filesAndFolders.0))
         filesAndFoldersString = filesAndFoldersString.replacingOccurrences(of: "[B]", with: String(mockNodeActionUC.filesAndFolders.1))
         test(viewModel: viewModel,

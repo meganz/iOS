@@ -1,6 +1,5 @@
-
-import SwiftUI
 import Foundation
+import SwiftUI
 
 final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     

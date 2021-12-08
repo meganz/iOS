@@ -54,7 +54,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
 
 extension FavouriteNodesRepository: MEGAGlobalDelegate {
     func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard let nodesUpdateArray = nodeList?.nodes else { return }
+        guard let nodesUpdateArray = nodeList?.toNodeArray() else { return }
         var shouldProcessOnNodesUpdate: Bool = false
         
         var favouritesDictionary: Dictionary<String, String> = Dictionary()
@@ -71,7 +71,7 @@ extension FavouriteNodesRepository: MEGAGlobalDelegate {
         }
         
         if shouldProcessOnNodesUpdate {
-            guard let nodeEntities = nodeList?.toNodeEntities else { return }
+            guard let nodeEntities = nodeList?.toNodeEntities() else { return }
             self.onNodesUpdate?(nodeEntities)
         }
     }

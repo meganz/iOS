@@ -396,8 +396,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                 return
             }
             
-            if let selectedNodeName = selectedNode.name,
-               (selectedNodeName.mnz_isImagePathExtension || selectedNodeName.mnz_isVideoPathExtension) {
+            if let selectedNodeName = selectedNode.name, selectedNodeName.mnz_isVisualMediaPathExtension {
                 let nodes = NSMutableArray()
                 messagesArray.forEach { message in
                     guard let node = message.nodeList.node(at: 0),
@@ -405,7 +404,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                               return
                           }
                     
-                    if name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension {
+                    if name.mnz_isVisualMediaPathExtension {
                         if chatRoom.isPreview {
                             guard let authNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) else { return }
                             nodes.add(authNode)

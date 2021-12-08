@@ -65,7 +65,7 @@
     NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
         MEGANode *node = [self nodeAtIndex:i];
-        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        if (node.name.mnz_isVisualMediaPathExtension) {
             [mediaNodesMutableArray addObject:node];
         }
     }
