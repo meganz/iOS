@@ -14,7 +14,7 @@ final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate {
     }
     
     func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard let updatedNodes = nodeList?.nodes else { return }
+        guard let updatedNodes = nodeList?.toNodeArray() else { return }
         onUpdateHandler?(updatedNodes)
     }
 }

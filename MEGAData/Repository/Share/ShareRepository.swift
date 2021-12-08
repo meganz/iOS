@@ -9,7 +9,7 @@ struct ShareRepository: ShareRepositoryProtocol {
     
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
         sdk.publicLinks(order.toSortOrderType())
-            .toNodeEntities
+            .toNodeEntities()
     }
 
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity] {

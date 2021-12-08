@@ -1,3 +1,5 @@
+import Foundation
+
 @objc protocol RecentsPreferenceProtocol: AnyObject {
     func recentsPreferenceChanged()
 }

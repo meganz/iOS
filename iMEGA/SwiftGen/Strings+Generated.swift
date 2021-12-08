@@ -245,8 +245,6 @@ public enum Strings {
     public static let aliasNickname = Strings.tr("Localizable", "Alias/ Nickname")
     /// All
     public static let all = Strings.tr("Localizable", "all")
-    /// All Images
-    public static let allImages = Strings.tr("Localizable", "All Images")
     /// All Media
     public static let allMedia = Strings.tr("Localizable", "All Media")
     /// All the photos from your burst photo sequences will be uploaded.
@@ -1079,7 +1077,7 @@ public enum Strings {
     }
     /// Info
     public static let info = Strings.tr("Localizable", "info")
-    /// Insert your friend’s email(s):
+    /// Insert your friends' emails:
     public static let insertYourFriendsEmails = Strings.tr("Localizable", "insertYourFriendsEmails")
     /// Internal error
     public static let internalError = Strings.tr("Localizable", "Internal error")
@@ -1223,7 +1221,7 @@ public enum Strings {
     public static let loggedOutFromAnotherLocation = Strings.tr("Localizable", "loggedOutFromAnotherLocation")
     /// Logging out
     public static let loggingOut = Strings.tr("Localizable", "loggingOut")
-    /// Login
+    /// Log in
     public static let login = Strings.tr("Localizable", "login")
     /// Logout
     public static let logoutLabel = Strings.tr("Localizable", "logoutLabel")
@@ -1401,8 +1399,6 @@ public enum Strings {
     public static let noFavourites = Strings.tr("Localizable", "No Favourites")
     /// No GIFs found
     public static let noGIFsFound = Strings.tr("Localizable", "No GIFs found")
-    /// No images found
-    public static let noImagesFound = Strings.tr("Localizable", "No images found")
     /// No notifications
     public static let noNotifications = Strings.tr("Localizable", "No notifications")
     /// No Photos or Videos
@@ -1607,8 +1603,6 @@ public enum Strings {
     public static let phoneNumber = Strings.tr("Localizable", "Phone Number")
     /// Please give MEGA app permission to access your photo library in Settings
     public static let photoLibraryPermissions = Strings.tr("Localizable", "photoLibraryPermissions")
-    /// Photos
-    public static let photos = Strings.tr("Localizable", "Photos")
     /// Photos and videos will be uploaded to the Camera Uploads folder.
     public static let photosAndVideosWillBeUploadedToCameraUploadsFolder = Strings.tr("Localizable", "Photos and videos will be uploaded to Camera Uploads folder.")
     /// Photos uploaded, video uploads are off; %lu videos not uploaded
@@ -2097,7 +2091,7 @@ public enum Strings {
     public static let smallest = Strings.tr("Localizable", "smallest")
     /// Something went wrong
     public static let somethingWentWrong = Strings.tr("Localizable", "Something went wrong")
-    /// Sorting And View Mode
+    /// Sorting and View Mode
     public static let sortingAndViewMode = Strings.tr("Localizable", "Sorting And View Mode")
     /// Sorting preference
     public static let sortingPreference = Strings.tr("Localizable", "Sorting preference")
@@ -3035,7 +3029,7 @@ public enum Strings {
             }
             public enum Folder {
               public enum Warning {
-                /// Adding items to this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enable with the MEGA Desktop App.
+                /// Adding items to this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.
                 public static let message = Strings.tr("Localizable", "dialog.add.items.backup.folder.warning.message")
                 /// Add Item to “%@”
                 public static func title(_ p1: Any) -> String {
@@ -3062,7 +3056,7 @@ public enum Strings {
         public enum Setup {
           /// Use our Desktop App to ensure your backup folder is synchronised with your MEGA Cloud.
           public static let message = Strings.tr("Localizable", "dialog.backup.setup.message")
-          /// Setup Backup
+          /// Set up Backup
           public static let title = Strings.tr("Localizable", "dialog.backup.setup.title")
         }
         public enum Warning {
@@ -3075,7 +3069,7 @@ public enum Strings {
         }
       }
       public enum CallAttempt {
-        /// Your contact [X] is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact
+        /// Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact
         public static let contactNotInMEGA = Strings.tr("Localizable", "dialog.callAttempt.contactNotInMEGA")
       }
       public enum Confirmation {
@@ -3156,13 +3150,13 @@ public enum Strings {
         public enum Backup {
           public enum Folder {
             public enum Warning {
-              /// This folder can only be shared as read-only, as this is a backup folder, any changes to its content could disable the backup.
+              /// This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.
               public static let message = Strings.tr("Localizable", "dialog.share.backup.folder.warning.message")
             }
           }
           public enum Folders {
             public enum Warning {
-              /// These folders can only be shared as read-only, as they are backup folders, any changes to their content could disable the backups.
+              /// These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.
               public static let message = Strings.tr("Localizable", "dialog.share.backup.folders.warning.message")
             }
           }
@@ -3317,7 +3311,7 @@ public enum Strings {
         public static let gif = Strings.tr("Localizable", "general.filetype.gif")
         /// GPS Exchange
         public static let gpx = Strings.tr("Localizable", "general.filetype.gpx")
-        /// Gnu Compressed
+        /// GNU Compressed
         public static let gz = Strings.tr("Localizable", "general.filetype.gz")
         /// Header
         public static let header = Strings.tr("Localizable", "general.filetype.header")
@@ -3434,6 +3428,12 @@ public enum Strings {
       }
     }
     public enum Home {
+      public enum Images {
+        /// No Images Found
+        public static let empty = Strings.tr("Localizable", "home.images.empty")
+        /// Images
+        public static let title = Strings.tr("Localizable", "home.images.title")
+      }
       public enum Recent {
         /// Created by %@
         public static func createdByLabel(_ p1: Any) -> String {
@@ -3591,6 +3591,16 @@ public enum Strings {
           /// Logging out deletes your offline content.
           public static let message = Strings.tr("Localizable", "offline.logOut.warning.message")
         }
+      }
+    }
+    public enum Photo {
+      public enum Empty {
+        /// No Photos Found
+        public static let title = Strings.tr("Localizable", "photo.empty.title")
+      }
+      public enum Navigation {
+        /// Photos
+        public static let title = Strings.tr("Localizable", "photo.navigation.title")
       }
     }
     public enum Recents {

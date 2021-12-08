@@ -1,7 +1,8 @@
+import SwiftUI
 
 extension MEGARequest {
-    var toPSAEntity: PSAEntity {
-        return PSAEntity(
+    func toPSAEntity() -> PSAEntity {
+        PSAEntity(
             identifier: number.intValue,
             title: name,
             description: text,
@@ -10,5 +11,13 @@ extension MEGARequest {
             positiveLink: link,
             URLString: email
         )
+    }
+    
+    func toFileURL() -> URL? {
+        guard let path = file else {
+            return nil
+        }
+        
+        return URL(string: path)
     }
 }

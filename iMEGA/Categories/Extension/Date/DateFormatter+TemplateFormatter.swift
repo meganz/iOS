@@ -14,6 +14,36 @@ extension DateFormatter {
                             locale: locale)
     }
     
+    /// Return a date formatting object using year component template
+    /// - Parameters:
+    ///   - calendar: The calendar for the date format
+    ///   - timeZone: The time zone for the date fomat
+    ///   - locale: The locale for the date format
+    /// - Returns: A date formatting object to format date to a string like "2021"
+    static func yearTemplate(calendar: Calendar? = nil,
+                             timeZone: TimeZone? = nil,
+                             locale: Locale? = nil) -> DateFormatting {
+        return fromTemplate("yyyy",
+                            calendar: calendar,
+                            timeZone: timeZone,
+                            locale: locale)
+    }
+    
+    /// Return a date formatting object using year and month components template
+    /// - Parameters:
+    ///   - calendar: The calendar for the date format
+    ///   - timeZone: The time zone for the date fomat
+    ///   - locale: The locale for the date format
+    /// - Returns: A date formatting object to format date to a string like "November 2021"
+    static func monthTemplate(calendar: Calendar? = nil,
+                             timeZone: TimeZone? = nil,
+                             locale: Locale? = nil) -> DateFormatting {
+        return fromTemplate("MMMyyyy",
+                            calendar: calendar,
+                            timeZone: timeZone,
+                            locale: locale)
+    }
+    
     /// Customise a date time formatter which follows provided unicode pattern. For unicode pattern please visit [here](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
     /// - Parameters:
     ///   - template: The unicode Date Field Symbol Table

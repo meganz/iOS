@@ -24,4 +24,28 @@ extension Date {
                            on calendar: Calendar) -> Timestamp? {
         calendar.dateInterval(of: calendarComponent, for: self)?.start
     }
+    
+    /// Return a date object by removing the timestamp. Only year, month and day date components will be preserved
+    /// - Returns: A new date object without timestamp
+    func removeTimestamp() -> Date? {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: self)
+        return calendar.date(from: components)
+    }
+    
+    /// Return a date object by removing day information. Only year, month date components will be preserved
+    /// - Returns: A new date object without day information
+    func removeDay() -> Date? {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month], from: self)
+        return calendar.date(from: components)
+    }
+    
+    /// Return a date object by removing day information. Only year date components will be preserved
+    /// - Returns: A new date object without month infomation
+    func removeMonth() -> Date? {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year], from: self)
+        return calendar.date(from: components)
+    }
 }
