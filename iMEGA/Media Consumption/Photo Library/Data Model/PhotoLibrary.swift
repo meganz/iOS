@@ -4,6 +4,7 @@ import SwiftUI
 
 final class PhotoLibrary {
     var photosByYearList: [PhotosByYear]
+    var underlyingMEGANodes: [MEGANode]
     
     var allPhotosByMonthList: [PhotosByMonth] {
         photosByYearList.flatMap { $0.photosByMonthList }
@@ -17,8 +18,9 @@ final class PhotoLibrary {
         allPhotosByDayList.flatMap { $0.photoNodeList }
     }
     
-    init(photosByYearList: [PhotosByYear]) {
+    init(photosByYearList: [PhotosByYear], underlyingMEGANodes: [MEGANode] = []) {
         self.photosByYearList = photosByYearList
+        self.underlyingMEGANodes = underlyingMEGANodes
     }
 }
 
@@ -67,7 +69,9 @@ final class PhotosByDay: Identifiable {
 
 extension MEGANodeList {
     func toPhotoLibrary() -> PhotoLibrary {
-        toNodeEntities().toPhotoLibrary()
+        let library = toNodeEntities().toPhotoLibrary()
+        library.underlyingMEGANodes = toNodeArray()
+        return library
     }
 }
 

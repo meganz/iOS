@@ -3,6 +3,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoLibraryAllView: View {
     @ObservedObject var viewModel: PhotoLibraryAllViewModel
+    @State private var selectedNode: NodeEntity?
     
     @State private var columns: [GridItem] = Array(
         repeating: .init(.flexible(), spacing: 1),
@@ -14,7 +15,17 @@ struct PhotoLibraryAllView: View {
             ForEach(viewModel.monthSections) { section in
                 Section(header: headerView(for: section)) {
                     ForEach(section.photosByMonth.allPhotos) { photo in
-                        cell(for: photo)
+                        Button(action: {
+                            self.selectedNode = photo
+                        }) {
+                            cell(for: photo)
+                        }
+                    }
+                    .fullScreenCover(item: $selectedNode) {
+                        let node = $0.toMEGANode(in: MEGASdkManager.sharedMEGASdk())
+                        
+                        PhotoBrowser(node: node, megaNodes: viewModel.library.underlyingMEGANodes)
+                            .ignoresSafeArea()
                     }
                 }
             }
