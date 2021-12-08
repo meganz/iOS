@@ -63,7 +63,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) double transferProgress;
-@property (nonatomic) BOOL needsReload;
 
 @property (nonatomic) UIWindow *secondWindow;
 
@@ -350,6 +349,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
     self.view.backgroundColor = transparent ? UIColor.clearColor : UIColor.mnz_background;
+    
+    if(FeatureFlag.isNewPhotosLibraryEnabled) {
+        self.view.superview.superview.backgroundColor = transparent ? UIColor.clearColor : UIColor.mnz_background;
+    }
+    
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
     // Toggle the play button:
