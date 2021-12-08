@@ -7,7 +7,7 @@ struct BlurryView: View {
     var body: some View {
         Image(colorScheme == .dark ? .black : .white)
             .resizable()
-            .blur(radius: 0.85)
+            .blur(radius: 2)
             .opacity(0.85)
             .clipped()
     }
