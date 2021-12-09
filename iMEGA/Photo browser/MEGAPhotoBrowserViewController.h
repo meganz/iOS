@@ -33,5 +33,6 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic) NSString *publicLink;
 @property (nonatomic) NSString *encryptedLink;
+@property (nonatomic) BOOL needsReload;
 
 @end
