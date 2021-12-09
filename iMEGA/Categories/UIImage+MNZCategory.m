@@ -230,6 +230,10 @@
     return [UIImage imageNamed:@"folder_sync"];
 }
 
++ (UIImage *)mnz_devicePCFolderBackUpImage {
+    return [UIImage imageNamed:@"pc"];
+}
+
 + (UIImage *)mnz_rootFolderBackUpImage {
     return [UIImage imageNamed:@"folder_backup"];
 }
