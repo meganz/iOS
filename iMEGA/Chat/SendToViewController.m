@@ -78,7 +78,7 @@
         case SendModeCloud:
         case SendModeForward:
         case SendModeFileAndFolderLink:
-        case SendModeShareActivity:
+        case SendModeText:
             self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
             break;
             
@@ -430,9 +430,7 @@
         self.searchController.active = NO;
     }
     
-    if (self.sendMode == SendModeShareActivity) {
-        [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:NO];
-    }
+    [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:NO];
     
     if (self.sendMode == SendModeFileAndFolderLink) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -480,6 +478,8 @@
                     }
                 }
                 
+                [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:YES];
+
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
                 break;
@@ -530,7 +530,7 @@
                 break;
             }
                 
-            case SendModeShareActivity: {
+            case SendModeText: {
                 for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
                     [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatListItem.chatId message:[self.sendToChatActivityDelegate textToSend]];
                 }
