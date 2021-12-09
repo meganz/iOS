@@ -25,10 +25,10 @@ def injectEnvironments(Closure body) {
 }
 
 pipeline {
-   agent any
+   agent { label 'mac-slave' }
    options {
         timeout(time: 1, unit: 'HOURS') 
-        gitLabConnection('iosdev')
+        gitLabConnection('GitLabConnection')
    }
     environment {
         APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
