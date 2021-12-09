@@ -50,9 +50,9 @@
 - (UIViewController *)activityViewController {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
+    sendToViewController.sendToChatActivityDelegate = self;
     if (self.text) {
-        sendToViewController.sendToChatActivityDelegate = self;
-        sendToViewController.sendMode = SendModeShareActivity;
+        sendToViewController.sendMode = SendModeText;
     } else if (self.nodes) {
         sendToViewController.nodes = self.nodes;
         sendToViewController.sendMode = SendModeCloud;
