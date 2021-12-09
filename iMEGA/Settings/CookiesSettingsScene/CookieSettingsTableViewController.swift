@@ -133,7 +133,7 @@ class CookieSettingsTableViewController: UITableViewController {
         privacyPolicyBarButtonItem.title = NSLocalizedString("privacyPolicyLabel", comment: "Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'")
         let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         setToolbarItems([cookiePolicyBarButtonItem, flexibleBarButtonItem, privacyPolicyBarButtonItem], animated: false)
-        navigationController?.toolbar.isHidden = false
+        navigationController?.isToolbarHidden = false
         navigationController?.toolbar.isTranslucent = true
     }
     
