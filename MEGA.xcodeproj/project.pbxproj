@@ -1368,8 +1368,12 @@
 		B5300AF52754A0A1001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		B5300AF62754A0A5001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		B5300AF72754A0AA001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
-		B5EDB08B275A194800A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
-		B5EDB08F275A194900A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B53BDBE72761916E001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B53BDBEA27619170001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B53BDBEB27619171001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B53BDBEC27619172001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B53BDBED27619173001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
@@ -11976,6 +11980,7 @@
 				5B784DBF259A0E8E00CE752B /* NSDate+MNZCategory.m in Sources */,
 				B5300AF52754A0A1001E516B /* Strings+Generated.swift in Sources */,
 				774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */,
+				B53BDBEC27619172001D73F8 /* XCAssets+Generated.swift in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */,
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
@@ -12083,6 +12088,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B53BDBED27619173001D73F8 /* XCAssets+Generated.swift in Sources */,
 				83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				831B4911256FED6F0086002B /* IntentHandler.swift in Sources */,
 				B5300AF72754A0AA001E516B /* Strings+Generated.swift in Sources */,
@@ -12212,6 +12218,7 @@
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				B5EDB08B275A194800A8CFC2 /* XCAssets+Generated.swift in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
+				B53BDBE72761916E001D73F8 /* XCAssets+Generated.swift in Sources */,
 				12466817275DB8F600C94335 /* CustomModalBackupAlertRouter.swift in Sources */,
 				BF08AA0025CA28AD009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */,
@@ -12232,6 +12239,7 @@
 				B5300AF32754A098001E516B /* Strings+Generated.swift in Sources */,
 				B6451650223201A2001680BC /* MEGAConstants.m in Sources */,
 				77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */,
+				B53BDBEA27619170001D73F8 /* XCAssets+Generated.swift in Sources */,
 				942255041EDC04080074C51A /* FileProvider.m in Sources */,
 				0DE3037826B25AA100E4A66B /* FileProviderItem.swift in Sources */,
 				942ED2AF1EDEE51600C9908D /* MEGASdkManager.m in Sources */,
@@ -12262,7 +12270,7 @@
 				C46517B2272C9FBD004F27A0 /* NodeTypeEntity+Mapper.swift in Sources */,
 				5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */,
 				B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */,
-				B5EDB08F275A194900A8CFC2 /* XCAssets+Generated.swift in Sources */,
+				B53BDBEB27619171001D73F8 /* XCAssets+Generated.swift in Sources */,
 				C46517AE272C9E79004F27A0 /* NodeLabelTypeEntity.swift in Sources */,
 				83B906BD249A29EB0088F15C /* UIButton+Additions.swift in Sources */,
 				5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */,
