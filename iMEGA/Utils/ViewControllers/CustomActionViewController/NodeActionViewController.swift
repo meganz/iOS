@@ -79,6 +79,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsExported(node.isExported())
             .setIsOutshare(node.isOutShare())
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
+            .setIsBackupFolder(node.isBackupNode() || node.isBackupRootNode())
             .build()
     }
     

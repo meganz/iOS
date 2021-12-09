@@ -147,7 +147,11 @@ static const void *base64HandleKey = &base64HandleKey;
                     }
                 }];
             } else if ([node isBackupNode]) {
-                self.image = UIImage.mnz_folderBackUpImage;
+                if ([node.parent isBackupRootNode]) {
+                    ![node.deviceId isEqualToString:@""] ? self.image = UIImage.mnz_devicePCFolderBackUpImage : [self mnz_commonFolderImageForNode:node];
+                } else {
+                    self.image = UIImage.mnz_folderBackUpImage;
+                }
             } else if ([node isBackupRootNode]) {
                 self.image = UIImage.mnz_rootFolderBackUpImage;
             } else {

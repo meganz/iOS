@@ -224,16 +224,18 @@ class NodeInfoViewController: UIViewController {
             return
         }
         var actions = [ActionSheetAction]()
-
-        actions.append(ActionSheetAction(title: NSLocalizedString("fullAccess", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
-            self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
-        })
-        actions.append(ActionSheetAction(title: NSLocalizedString("readAndWrite", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
-            self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
-        })
-        actions.append(ActionSheetAction(title: NSLocalizedString("readOnly", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
-            self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
-        })
+        
+        if !node.isBackupRootNode() && !node.isBackupNode() {
+            actions.append(ActionSheetAction(title: NSLocalizedString("fullAccess", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
+                self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
+            })
+            actions.append(ActionSheetAction(title: NSLocalizedString("readAndWrite", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
+                self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
+            })
+            actions.append(ActionSheetAction(title: NSLocalizedString("readOnly", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
+                self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
+            })
+        }
         
         actions.append(ActionSheetAction(title: NSLocalizedString("remove", comment: "Title for the action that allows to remove a file or folder"), detail: nil, image: UIImage(named: "delete"), style: .destructive) { [weak self] in
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)

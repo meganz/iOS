@@ -101,6 +101,7 @@ internal enum Asset {
       internal static let actionWarning = ImageAsset(name: "actionWarning")
       internal static let folderBackup = ImageAsset(name: "folder_backup")
       internal static let folderSync = ImageAsset(name: "folder_sync")
+      internal static let pc = ImageAsset(name: "pc")
       internal static let warningModals = ImageAsset(name: "warningModals")
     }
     internal enum Business {

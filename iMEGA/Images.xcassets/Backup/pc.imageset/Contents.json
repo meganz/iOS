@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "pc.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

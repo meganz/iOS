@@ -16,6 +16,7 @@ final class NodeActionBuilder {
     private var isExported: Bool = false
     private var isOutShare: Bool = false
     private var isChildVersion: Bool = false
+    private var isBackupFolder: Bool = false
     private var viewMode: ViewModePreference = .list
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
@@ -90,6 +91,11 @@ final class NodeActionBuilder {
     
     func setIsChildVersion(_ isChildVersion: Bool?) -> NodeActionBuilder {
         self.isChildVersion = isChildVersion ?? false
+        return self
+    }
+    
+    func setIsBackupFolder(_ isBackupFolder: Bool) -> NodeActionBuilder {
+        self.isBackupFolder = isBackupFolder
         return self
     }
     
@@ -269,7 +275,9 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.removeVersionAction())
         } else {
-            nodeActions.append(NodeAction.renameAction())
+            if !isBackupFolder {
+                nodeActions.append(NodeAction.renameAction())
+            }
             nodeActions.append(NodeAction.copyAction())
             if isIncomingShareChildView {
                 nodeActions.append(NodeAction.leaveSharingAction())
@@ -317,7 +325,9 @@ final class NodeActionBuilder {
             if isFile {
                 nodeActions.append(NodeAction.sendToChatAction())
             }
-            nodeActions.append(NodeAction.renameAction())
+            if !isBackupFolder {
+                nodeActions.append(NodeAction.renameAction())
+            }
             nodeActions.append(NodeAction.moveAction())
             nodeActions.append(NodeAction.copyAction())
             if isIncomingShareChildView {
@@ -354,7 +364,9 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.manageFolderAction())
             nodeActions.append(NodeAction.shareAction())
-            nodeActions.append(NodeAction.renameAction())
+            if !isBackupFolder {
+                nodeActions.append(NodeAction.renameAction())
+            }
             nodeActions.append(NodeAction.copyAction())
             nodeActions.append(NodeAction.removeSharingAction())
         }
