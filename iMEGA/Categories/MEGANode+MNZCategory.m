@@ -811,6 +811,13 @@
     NSString *fileType = [fileTypesForExtension objectForKey:self.name.pathExtension];
     if (fileType.length == 0) {
         fileType = [NSString stringWithFormat:@"%@ %@", self.name.pathExtension.localizedUppercaseString, NSLocalizedString(@"file", @"Label to desing a file matching").localizedCapitalizedString];
+    } else {
+        if ([fileType containsString:@"general.filetype"]) {
+            NSString *localizedFiletype = NSLocalizedString(fileType, nil);
+            if (localizedFiletype) {
+                return localizedFiletype;
+            }
+        }
     }
     
     return fileType;
