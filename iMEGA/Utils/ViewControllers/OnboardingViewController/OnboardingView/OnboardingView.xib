@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina3_5" orientation="landscape" appearance="light"/>
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
@@ -19,23 +19,23 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="okb-Cu-Y9k">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FiA-HN-bPL">
-                    <rect key="frame" x="0.0" y="-8" width="480" height="328"/>
+                    <rect key="frame" x="0.0" y="-8" width="320" height="488"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XfG-nB-gEu">
-                            <rect key="frame" x="0.0" y="8" width="480" height="164"/>
+                            <rect key="frame" x="0.0" y="8" width="320" height="293"/>
                         </imageView>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOs-JM-xL8">
-                            <rect key="frame" x="20" y="172" width="440" height="140"/>
+                            <rect key="frame" x="20" y="301" width="280" height="171"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="ZmM-gv-0Ck">
-                                    <rect key="frame" x="0.0" y="10" width="440" height="46.5"/>
+                                    <rect key="frame" x="0.0" y="10" width="280" height="51.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rG-Uh-jdQ" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="440" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="280" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="749" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fba-kT-5tq">
-                                            <rect key="frame" x="0.0" y="30.5" width="440" height="16"/>
+                                            <rect key="frame" x="0.0" y="35.5" width="280" height="16"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -67,10 +67,10 @@
                             <viewLayoutGuide key="frameLayoutGuide" id="pR7-Oa-mpR"/>
                         </scrollView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rd0-bE-uwJ">
-                            <rect key="frame" x="20" y="322" width="440" height="0.0"/>
+                            <rect key="frame" x="20" y="482" width="280" height="0.0"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9w-zY-jBd">
-                                    <rect key="frame" x="220" y="0.0" width="0.0" height="0.0"/>
+                                    <rect key="frame" x="140" y="0.0" width="0.0" height="0.0"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                     <color key="textColor" systemColor="systemGrayColor"/>
                                     <nil key="highlightedColor"/>
@@ -82,7 +82,7 @@
                         <constraint firstAttribute="trailingMargin" secondItem="XfG-nB-gEu" secondAttribute="trailingMargin" id="G5v-Ul-GcN"/>
                         <constraint firstItem="YOs-JM-xL8" firstAttribute="leading" secondItem="FiA-HN-bPL" secondAttribute="leading" constant="20" id="NrN-fQ-dfh"/>
                         <constraint firstItem="rd0-bE-uwJ" firstAttribute="centerX" secondItem="FiA-HN-bPL" secondAttribute="centerX" id="OC0-dJ-tSD"/>
-                        <constraint firstItem="XfG-nB-gEu" firstAttribute="height" secondItem="FiA-HN-bPL" secondAttribute="height" multiplier="0.5" id="SwU-yM-GkF"/>
+                        <constraint firstItem="XfG-nB-gEu" firstAttribute="height" secondItem="FiA-HN-bPL" secondAttribute="height" multiplier="0.6" id="SwU-yM-GkF"/>
                         <constraint firstItem="YOs-JM-xL8" firstAttribute="top" secondItem="XfG-nB-gEu" secondAttribute="bottom" id="VHd-qu-XrD"/>
                         <constraint firstAttribute="trailing" secondItem="YOs-JM-xL8" secondAttribute="trailing" constant="20" id="X9x-9h-5GX"/>
                         <constraint firstAttribute="bottom" secondItem="rd0-bE-uwJ" secondAttribute="bottom" constant="6" id="dg4-Jw-JFW"/>
