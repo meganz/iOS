@@ -630,6 +630,8 @@
 "settingsTitle"="Settings";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="Years";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Photos";
 /* Photo view is empty */
