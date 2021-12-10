@@ -12,13 +12,13 @@ final class PhotoLibraryContentViewModel: ObservableObject {
         var title: String {
             switch self {
             case .year:
-                return "Years"
+                return Strings.Localizable.CameraUploads.Years.title
             case .month:
-                return "Months"
+                return Strings.Localizable.months.localizedCapitalized
             case .day:
-                return "Days"
+                return Strings.Localizable.days.localizedCapitalized
             case .all:
-                return "All"
+                return Strings.Localizable.all
             }
         }
     }
