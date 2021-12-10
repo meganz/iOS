@@ -13,11 +13,11 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     private let createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)?
     private let setFolderHandleRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)?
     private let completion: NodeLoadCompletion
-    private let autoCreate: Bool
+    private let autoCreate: (() -> Bool)?
     let sdk: MEGASdk
     
     // MARK: - Init
-    init(autoCreate: Bool = false,
+    init(autoCreate: (() -> Bool)?,
          sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
          loadNodeRequest: @escaping (MEGARequestDelegate) -> Void,
          newNodeName: String? = nil,
@@ -25,12 +25,12 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
          setFolderHandleRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)? = nil,
          completion: @escaping NodeLoadCompletion) {
         self.autoCreate = autoCreate
+        self.sdk = sdk
         self.loadNodeRequest = loadNodeRequest
         self.newNodeName = newNodeName
         self.createNodeRequest = createNodeRequest
         self.setFolderHandleRequest = setFolderHandleRequest
         self.completion = completion
-        self.sdk = sdk
         super.init()
     }
     
@@ -58,7 +58,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     // MARK: - Check loaded node handle
     func validateLoadedHandle(_ handle: NodeHandle) {
         guard let node = handle.validNode(in: sdk) else {
-            autoCreate ?
+            autoCreate?() ?? false ?
                     createNode():
                     finishOperation(node: nil, error: NodeLoadError.invalidNode)
             return

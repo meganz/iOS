@@ -5041,7 +5041,6 @@
 				BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */,
 				C467AD4D26A8651400AFE4D2 /* DynamicType */,
 				C473097426FC93BB00DC9D55 /* CrashlyticsLogger.swift */,
-				C46050552727FC3B00D67A44 /* Backups */,
 				C4E78E99272B4F5100DBF926 /* NodeAccess */,
 			);
 			path = Utils;
@@ -8565,7 +8564,6 @@
 				B6D176862236F16600098084 /* ImageExporter.m */,
 				B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */,
 				B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */,
-				B616D807254DFBA300712012 /* CameraUploadNodeAccess.swift */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -9506,6 +9504,14 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
+		C473CB962758130A000E633B /* Camera Uploads */ = {
+			isa = PBXGroup;
+			children = (
+				B616D807254DFBA300712012 /* CameraUploadNodeAccess.swift */,
+			);
+			path = "Camera Uploads";
+			sourceTree = "<group>";
+		};
 		C47E7C0025D18FC800DB6FF5 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -9579,6 +9585,8 @@
 				C4E78E8B272AF59D00DBF926 /* NodeAccess.swift */,
 				C4E78E9A272B4F9200DBF926 /* NodeLoadOperationProtocol.swift */,
 				C48CE0132732ECE40081DEC4 /* NodeLoadOperation.swift */,
+				C46050552727FC3B00D67A44 /* Backups */,
+				C473CB962758130A000E633B /* Camera Uploads */,
 			);
 			path = NodeAccess;
 			sourceTree = "<group>";
