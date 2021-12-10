@@ -1571,6 +1571,8 @@
 		B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */; };
 		B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE421A24C7700446B86 /* PutNodeOperation.m */; };
 		B6D176872236F16600098084 /* ImageExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D176862236F16600098084 /* ImageExporter.m */; };
+		B6D7FB162762990B003D9570 /* CoverPhotoLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D7FB152762990B003D9570 /* CoverPhotoLoader.swift */; };
+		B6D7FB1A2762A534003D9570 /* PhotoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */; };
 		B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */; };
 		B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */; };
 		B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */; };
@@ -3724,6 +3726,8 @@
 		B6D11AE421A24C7700446B86 /* PutNodeOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PutNodeOperation.m; sourceTree = "<group>"; };
 		B6D176852236F16600098084 /* ImageExporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageExporter.h; sourceTree = "<group>"; };
 		B6D176862236F16600098084 /* ImageExporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageExporter.m; sourceTree = "<group>"; };
+		B6D7FB152762990B003D9570 /* CoverPhotoLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverPhotoLoader.swift; sourceTree = "<group>"; };
+		B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardViewModel.swift; sourceTree = "<group>"; };
 		B6D90BC02224D46800E0623A /* AssetLocalAttribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetLocalAttribute.h; sourceTree = "<group>"; };
 		B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetLocalAttribute.m; sourceTree = "<group>"; };
 		B6D90BC5222533AD00E0623A /* BackgroundUploadingTaskMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadingTaskMonitor.h; sourceTree = "<group>"; };
@@ -8638,6 +8642,8 @@
 			children = (
 				B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */,
 				B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */,
+				B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */,
+				B6D7FB152762990B003D9570 /* CoverPhotoLoader.swift */,
 				B6C444DD274A288B00268D9A /* Data Model */,
 				B6C444D8274A284300268D9A /* Year View */,
 				B6C444D9274A284900268D9A /* Month View */,
@@ -10733,6 +10739,7 @@
 				83B42F6A25D2E9F900AAA88F /* CallParticipantEntity.swift in Sources */,
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
+				B6D7FB162762990B003D9570 /* CoverPhotoLoader.swift in Sources */,
 				C49DB2D526F3B11D00A9BC33 /* WarningActionSheetCell.swift in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				BFB33D90263B922F006E203D /* EndMeetingOptionsRouter.swift in Sources */,
@@ -11712,6 +11719,7 @@
 				8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				BFAAF70F252E6D170053A9BF /* VideoExplorerListSource.swift in Sources */,
 				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
+				B6D7FB1A2762A534003D9570 /* PhotoCardViewModel.swift in Sources */,
 				B65AC8E421F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,

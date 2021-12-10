@@ -1,16 +1,15 @@
 import Foundation
+import Combine
 
-final class PhotoYearCardViewModel: ObservableObject {
+@available(iOS 14.0, *)
+final class PhotoYearCardViewModel: PhotoCardViewModel {
     private let photosByYear: PhotosByYear
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    let title: String
     
-    @Published var coverPhotoURL: URL?
+    let title: String
     
     init(photosByYear: PhotosByYear,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.photosByYear = photosByYear
-        self.thumbnailUseCase = thumbnailUseCase
         
         if #available(iOS 15.0, *) {
             title = photosByYear.year.formatted(.dateTime.year().locale(.current))
@@ -18,18 +17,6 @@ final class PhotoYearCardViewModel: ObservableObject {
             title = DateFormatter.yearTemplate().localisedString(from: photosByYear.year)
         }
         
-        loadCoverPhoto()
-    }
-    
-    func loadCoverPhoto() {
-        guard let coverPhoto = photosByYear.coverPhoto else { return }
-        thumbnailUseCase.getCachedPreview(for: coverPhoto.handle) { [weak self] result in
-            switch result {
-            case .failure:
-                break
-            case .success(let url):
-                self?.coverPhotoURL = url
-            }
-        }
+        super.init(coverPhoto: photosByYear.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }
 }

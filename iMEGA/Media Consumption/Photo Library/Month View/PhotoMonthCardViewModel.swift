@@ -1,8 +1,8 @@
 import Foundation
 
-final class PhotoMonthCardViewModel: ObservableObject {
+@available(iOS 14.0, *)
+final class PhotoMonthCardViewModel: PhotoCardViewModel {
     private let photosByMonth: PhotosByMonth
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
     
     let title: String
     
@@ -15,13 +15,10 @@ final class PhotoMonthCardViewModel: ObservableObject {
         
         return attr
     }
-    
-    @Published var coverPhotoURL: URL?
-    
+
     init(photosByMonth: PhotosByMonth,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.photosByMonth = photosByMonth
-        self.thumbnailUseCase = thumbnailUseCase
         
         if #available(iOS 15.0, *) {
             title = photosByMonth.month.formatted(.dateTime.locale(.current).year().month(.wide))
@@ -29,18 +26,6 @@ final class PhotoMonthCardViewModel: ObservableObject {
             title = DateFormatter.monthTemplate().localisedString(from: photosByMonth.month)
         }
         
-        loadCoverPhoto()
-    }
-    
-    func loadCoverPhoto() {
-        guard let coverPhoto = photosByMonth.coverPhoto else { return }
-        thumbnailUseCase.getCachedPreview(for: coverPhoto.handle) { [weak self] result in
-            switch result {
-            case .failure:
-                break
-            case .success(let url):
-                self?.coverPhotoURL = url
-            }
-        }
+        super.init(coverPhoto: photosByMonth.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }
 }
