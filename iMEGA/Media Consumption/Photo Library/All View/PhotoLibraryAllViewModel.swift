@@ -12,7 +12,7 @@ final class PhotoLibraryAllViewModel: ObservableObject {
             if #available(iOS 15.0, *) {
                 title = $0.month.formatted(.dateTime.year().locale(.current))
             } else {
-                title = DateFormatter.yearTemplate().localisedString(from: $0.month)
+                title = DateFormatter.monthTemplate().localisedString(from: $0.month)
             }
             
             return PhotoMonthSection(photosByMonth: $0, title: title)

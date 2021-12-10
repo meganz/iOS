@@ -6,12 +6,12 @@ struct PhotoLibraryAllView: View {
     @State private var selectedNode: NodeEntity?
     
     @State private var columns: [GridItem] = Array(
-        repeating: .init(.flexible(), spacing: 1),
+        repeating: .init(.flexible(), spacing: 0.5),
         count: 3
     )
     
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 1, pinnedViews: .sectionHeaders) {
+        LazyVGrid(columns: columns, spacing: 0.5, pinnedViews: .sectionHeaders) {
             ForEach(viewModel.monthSections) { section in
                 Section(header: headerView(for: section)) {
                     ForEach(section.photosByMonth.allPhotos) { photo in

@@ -1,11 +1,10 @@
 import Foundation
 
-final class PhotoDayCardViewModel: ObservableObject {
+@available(iOS 14.0, *)
+final class PhotoDayCardViewModel: PhotoCardViewModel {
     private let photosByDay: PhotosByDay
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    let title: String
     
-    @Published var coverPhotoURL: URL?
+    let title: String
     
     var badgeTitle: String? {
         return photosByDay.photoNodeList.count > 1 ? "+\(photosByDay.photoNodeList.count)": nil
@@ -24,7 +23,6 @@ final class PhotoDayCardViewModel: ObservableObject {
     init(photosByDay: PhotosByDay,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.photosByDay = photosByDay
-        self.thumbnailUseCase = thumbnailUseCase
         
         if #available(iOS 15.0, *) {
             title = photosByDay.day.formatted(.dateTime.locale(.current).year().month(.wide).day())
@@ -32,18 +30,6 @@ final class PhotoDayCardViewModel: ObservableObject {
             title = DateFormatter.dateLong().localisedString(from: photosByDay.day)
         }
         
-        loadCoverPhoto()
-    }
-    
-    func loadCoverPhoto() {
-        guard let coverPhoto = photosByDay.coverPhoto else { return }
-        thumbnailUseCase.getCachedPreview(for: coverPhoto.handle) { [weak self] result in
-            switch result {
-            case .failure:
-                break
-            case .success(let url):
-                self?.coverPhotoURL = url
-            }
-        }
+        super.init(coverPhoto: photosByDay.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }
 }
