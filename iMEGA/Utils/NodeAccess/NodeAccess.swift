@@ -3,17 +3,20 @@ import Foundation
 typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: Error?) -> Void
 
 struct NodeAccessConfiguration {
+    var autoCreate: (() -> Bool)? = nil
     let updateInMemoryNotificationName: Notification.Name
     let updateInRemoteNotificationName: Notification.Name
     let loadNodeRequest: (MEGARequestDelegate) -> Void
     var setNodeRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)? = nil
-    var autoCreate: Bool = false
+    var nodeName: String? = nil
+    var createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)? = nil
 }
 
 class NodeAccess: NSObject {
     let sdk = MEGASdkManager.sharedMEGASdk()
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
-    private let nodeAccessConfiguration: NodeAccessConfiguration
+    private var nodeAccessConfiguration: NodeAccessConfiguration
+    private var nodeLoadOperation: NodeLoadOperation?
     
     /// All changes in the SDK and in memory are notified so that the handle value is always up to date. This handle is the single source of truth on target node handle check.
     private var handle: NodeHandle? {
@@ -71,11 +74,16 @@ class NodeAccess: NSObject {
         nodeAccessSemaphore.wait()
         
         guard let node = handle?.validNode(in: sdk) else {
-            let operation = NodeLoadOperation(loadNodeRequest: nodeAccessConfiguration.loadNodeRequest, completion: { [weak self] node, error in
+            let operation = NodeLoadOperation(autoCreate:nodeAccessConfiguration.autoCreate,
+                                              loadNodeRequest: nodeAccessConfiguration.loadNodeRequest,
+                                              newNodeName: nodeAccessConfiguration.nodeName,
+                                              createNodeRequest: nodeAccessConfiguration.createNodeRequest,
+                                              setFolderHandleRequest: nodeAccessConfiguration.setNodeRequest) { [weak self] node, error in
                 self?.updateHandle(node, error: error, completion: completion)
-            })
-            
+            }
+        
             operation.start()
+            nodeLoadOperation = operation
             return
         }
         
