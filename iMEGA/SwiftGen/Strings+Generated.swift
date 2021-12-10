@@ -2975,6 +2975,12 @@ public enum Strings {
         public static let warningMessage = Strings.tr("Localizable", "calls.incompatibility.warningMessage")
       }
     }
+    public enum CameraUploads {
+      public enum Years {
+        /// Years
+        public static let title = Strings.tr("Localizable", "cameraUploads.years.title")
+      }
+    }
     public enum Chat {
       public enum Map {
         /// Location
