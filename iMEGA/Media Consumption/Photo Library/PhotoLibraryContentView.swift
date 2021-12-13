@@ -3,28 +3,23 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoLibraryContentView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
+    var router: PhotoLibraryContentViewRouting
     
-    @State private var selectedMode = PhotoLibraryContentViewModel.ViewMode.all
-    
-    init(viewModel: PhotoLibraryContentViewModel) {
+    init(viewModel: PhotoLibraryContentViewModel, router: PhotoLibraryContentViewRouting) {
         self.viewModel = viewModel
+        self.router = router
         configSegmentedControlAppearance()
     }
     
     var body: some View {
         if #available(iOS 15.0, *) {
-            ScrollView {
-                photoContent()
-            }
-            .safeAreaInset(edge: .bottom) {
-                pickerFooter()
-            }
+            photoContent()
+                .safeAreaInset(edge: .bottom) {
+                    pickerFooter()
+                }
         } else {
             ZStack(alignment: .bottom) {
-                ScrollView {
-                    photoContent()
-                        .padding(.bottom, 60)
-                }
+                photoContent()
                 pickerFooter()
             }
         }
@@ -37,8 +32,8 @@ struct PhotoLibraryContentView: View {
     }
     
     private func viewModePicker() -> some View {
-        Picker("View Mode", selection: $selectedMode) {
-            ForEach(PhotoLibraryContentViewModel.ViewMode.allCases) {
+        Picker("View Mode", selection: $viewModel.selectedMode) {
+            ForEach(PhotoLibraryViewMode.allCases) {
                 Text($0.title)
                     .font(.headline)
                     .bold()
@@ -50,19 +45,23 @@ struct PhotoLibraryContentView: View {
     
     @ViewBuilder
     private func photoContent() -> some View {
-        switch selectedMode {
-        case .year:
-            let vm = PhotoLibraryYearViewModel(photosByYearList: viewModel.library.photosByYearList)
-            PhotoLibraryYearView(viewModel: vm)
-        case .month:
-            let vm = PhotoLibraryMonthViewModel(photosByMonthList: viewModel.library.allPhotosByMonthList)
-            PhotoLibraryMonthView(viewModel: vm)
-        case .day:
-            let vm = PhotoLibraryDayViewModel(photosByDayList: viewModel.library.allPhotosByDayList)
-            PhotoLibraryDayView(viewModel: vm)
-        case .all:
-            let vm = PhotoLibraryAllViewModel(library: viewModel.library)
-            PhotoLibraryAllView(viewModel: vm)
+        if viewModel.library.isEmpty {
+            EmptyView()
+        } else {
+            switch viewModel.selectedMode {
+            case .year:
+                let vm = PhotoLibraryYearViewModel(libraryViewModel: viewModel)
+                PhotoLibraryYearView(viewModel: vm, router: router)
+            case .month:
+                let vm = PhotoLibraryMonthViewModel(libraryViewModel: viewModel)
+                PhotoLibraryMonthView(viewModel: vm, router: router)
+            case .day:
+                let vm = PhotoLibraryDayViewModel(libraryViewModel: viewModel)
+                PhotoLibraryDayView(viewModel: vm, router: router)
+            case .all:
+                let vm = PhotoLibraryAllViewModel(libraryViewModel: viewModel)
+                PhotoLibraryAllView(viewModel: vm, router: router)
+            }
         }
     }
     

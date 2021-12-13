@@ -2,7 +2,7 @@ import Foundation
 import Combine
 
 final class CoverPhotoLoader {
-    private var subscription: AnyCancellable? = nil
+    private var subscription: AnyCancellable?
     
     let coverPhoto: NodeEntity?
     let thumbnailUseCase: ThumbnailUseCaseProtocol

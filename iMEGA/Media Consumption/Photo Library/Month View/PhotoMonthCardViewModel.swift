@@ -8,7 +8,7 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
     
     @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
-        var attr = photosByMonth.month.formatted(.dateTime.locale(.current).year().month(.wide).attributed)
+        var attr = photosByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).attributed)
         let month = AttributeContainer.dateField(.month)
         let bold = AttributeContainer.font(.title2.bold())
         attr.replaceAttributes(month, with: bold)
@@ -21,9 +21,9 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
         self.photosByMonth = photosByMonth
         
         if #available(iOS 15.0, *) {
-            title = photosByMonth.month.formatted(.dateTime.locale(.current).year().month(.wide))
+            title = photosByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide))
         } else {
-            title = DateFormatter.monthTemplate().localisedString(from: photosByMonth.month)
+            title = DateFormatter.monthTemplate().localisedString(from: photosByMonth.categoryDate)
         }
         
         super.init(coverPhoto: photosByMonth.coverPhoto, thumbnailUseCase: thumbnailUseCase)
