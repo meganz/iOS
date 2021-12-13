@@ -3,31 +3,47 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoLibraryAllView: View {
     @ObservedObject var viewModel: PhotoLibraryAllViewModel
+    var router: PhotoLibraryContentViewRouting
+    
     @State private var selectedNode: NodeEntity?
     
     @State private var columns: [GridItem] = Array(
-        repeating: .init(.flexible(), spacing: 0.5),
+        repeating: .init(.flexible(), spacing: 1),
         count: 3
     )
     
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 0.5, pinnedViews: .sectionHeaders) {
-            ForEach(viewModel.monthSections) { section in
-                Section(header: headerView(for: section)) {
-                    ForEach(section.photosByMonth.allPhotos) { photo in
-                        Button(action: {
-                            self.selectedNode = photo
-                        }) {
-                            cell(for: photo)
-                        }
-                    }
-                    .fullScreenCover(item: $selectedNode) {
-                        let node = $0.toMEGANode(in: MEGASdkManager.sharedMEGASdk())
-                        
-                        PhotoBrowser(node: node, megaNodes: viewModel.library.underlyingMEGANodes)
-                            .ignoresSafeArea()
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 1, pinnedViews: .sectionHeaders) {
+                    ForEach(viewModel.monthSections) { section in
+                        sectionView(for: section)
                     }
                 }
+            }
+            .onAppear {
+                proxy.scrollTo(viewModel.currentScrollPositionId)
+            }
+        }
+    }
+    
+    private func sectionView(for section: PhotoMonthSection) -> some View {
+        Section(header: headerView(for: section)) {
+            ForEach(section.photosByMonth.allPhotos) { photo in
+                Button(action: {
+                    withAnimation {
+                        selectedNode = photo
+                    }
+                }, label: {
+                    router.card(for: photo)
+                        .clipped()
+                })
+                    .id(viewModel.positionId(for: photo))
+                    .buttonStyle(.plain)
+            }
+            .fullScreenCover(item: $selectedNode) {
+                router.photoBrowser(for: $0, viewModel: viewModel)
+                    .ignoresSafeArea()
             }
         }
     }
@@ -51,17 +67,5 @@ struct PhotoLibraryAllView: View {
             Text(section.title)
                 .font(.subheadline.weight(.semibold))
         }
-    }
-    
-    private func cell(for photo: NodeEntity) -> some View {
-        let thumbnailRepo = ThumbnailRepository(
-            sdk: MEGASdkManager.sharedMEGASdk(),
-            fileRepo: FileSystemRepository(fileManager: FileManager.default)
-        )
-        
-        let photoCellViewModel = PhotoCellViewModel(photo: photo, thumbnailUseCase: ThumbnailUseCase(repository: thumbnailRepo))
-        
-        return PhotoCell(viewModel: photoCellViewModel)
-            .clipped()
     }
 }

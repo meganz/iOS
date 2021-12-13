@@ -2,41 +2,35 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct PhotoLibraryDayView: View {
-    private enum Constants {
-        static let cardMinimumWidth: CGFloat = 300
-        static let cardMaximumWidth: CGFloat = 1000
-        static let cardHeight: CGFloat = 250
-    }
-    
     @ObservedObject var viewModel: PhotoLibraryDayViewModel
-    
-    private let columns = [
-        GridItem(
-            .adaptive(minimum: Constants.cardMinimumWidth,
-                      maximum: Constants.cardMaximumWidth)
-        )
-    ]
-    
+    var router: PhotoLibraryContentViewRouting
+
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 16) {
-            ForEach(viewModel.photosByDayList) { photosByDay in
-                card(for: photosByDay)
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVGrid(columns: PhotoLibraryConstants.cardColumns, spacing: 16) {
+                    ForEach(viewModel.photosByDayList) { photosByDay in
+                        cell(for: photosByDay)
+                    }
+                }
+                .padding()
             }
-        }.padding()
+            .onAppear {
+                proxy.scrollTo(viewModel.currentScrollPositionId)
+            }
+        }
     }
     
-    private func card(for Day: PhotosByDay) -> some View {
-        let thumbnailRepo = ThumbnailRepository(
-            sdk: MEGASdkManager.sharedMEGASdk(),
-            fileRepo: FileSystemRepository(fileManager: FileManager.default)
-        )
-        
-        let dayCardViewModel = PhotoDayCardViewModel(
-            photosByDay: Day,
-            thumbnailUseCase: ThumbnailUseCase(repository: thumbnailRepo)
-        )
-        
-        return PhotoDayCard(viewModel: dayCardViewModel)
-            .frame(height: Constants.cardHeight)
+    private func cell(for photosByDay: PhotosByDay) -> some View {
+        Button(action: {
+            withAnimation {
+                viewModel.didTapDayCard(photosByDay)
+            }
+        }, label: {
+            router.card(for: photosByDay)
+                .frame(height: PhotoLibraryConstants.cardHeight)
+        })
+            .id(viewModel.positionId(for: photosByDay))
+            .buttonStyle(.plain)
     }
 }

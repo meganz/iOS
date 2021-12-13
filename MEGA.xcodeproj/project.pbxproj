@@ -1458,6 +1458,11 @@
 		B6730B092734EC4D00A9CF5F /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6730B082734EC4D00A9CF5F /* NodeModel.swift */; };
 		B6730B0F27361BEC00A9CF5F /* MVVM-R.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BF3824FF123700A3CBC8 /* MVVM-R.swift */; };
 		B6730B1E2738482600A9CF5F /* FileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311A2DE258775170027BEFF /* FileTypes.swift */; };
+		B67507AB2762EABA0034F951 /* PhotoLibraryViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */; };
+		B67507AF276689530034F951 /* PhotoLibraryModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AE276689520034F951 /* PhotoLibraryModeViewModel.swift */; };
+		B67507B22766B8060034F951 /* PhotoLibrary+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */; };
+		B67507B42766BB580034F951 /* PhotoLibraryConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */; };
+		B67507B62766BE670034F951 /* PhotoLibraryContentViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */; };
 		B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */; };
 		B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */; };
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
@@ -3592,6 +3597,11 @@
 		B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadOperation+Utils.h"; sourceTree = "<group>"; };
 		B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CameraUploadOperation+Utils.m"; sourceTree = "<group>"; };
 		B6730B082734EC4D00A9CF5F /* NodeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
+		B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewMode.swift; sourceTree = "<group>"; };
+		B67507AE276689520034F951 /* PhotoLibraryModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeViewModel.swift; sourceTree = "<group>"; };
+		B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoLibrary+Mapper.swift"; sourceTree = "<group>"; };
+		B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryConstants.swift; sourceTree = "<group>"; };
+		B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewRouter.swift; sourceTree = "<group>"; };
 		B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeThumbnailHomeUseCase.swift; sourceTree = "<group>"; };
 		B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+CameraUpload.swift"; sourceTree = "<group>"; };
 		B6790E05256B81C600154F6D /* MEGANode+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions.swift"; sourceTree = "<group>"; };
@@ -8403,6 +8413,16 @@
 			path = "Shared Controls";
 			sourceTree = "<group>";
 		};
+		B67507B027668D6F0034F951 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */,
+				B67507AE276689520034F951 /* PhotoLibraryModeViewModel.swift */,
+				B6D7FB152762990B003D9570 /* CoverPhotoLoader.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		B67A2C71251755A300B40D89 /* RepositoryProtocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -8637,6 +8657,9 @@
 			isa = PBXGroup;
 			children = (
 				B6C5D09F2718DAAA004FB105 /* PhotoLibrary.swift */,
+				B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */,
+				B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */,
+				B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -8646,8 +8669,8 @@
 			children = (
 				B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */,
 				B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */,
-				B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */,
-				B6D7FB152762990B003D9570 /* CoverPhotoLoader.swift */,
+				B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */,
+				B67507B027668D6F0034F951 /* Shared */,
 				B6C444DD274A288B00268D9A /* Data Model */,
 				B6C444D8274A284300268D9A /* Year View */,
 				B6C444D9274A284900268D9A /* Month View */,
@@ -10790,6 +10813,7 @@
 				BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				BF782D63269BA4BB0001D169 /* ChatSessionEntity.swift in Sources */,
+				B67507AF276689530034F951 /* PhotoLibraryModeViewModel.swift in Sources */,
 				5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */,
 				C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
@@ -10881,6 +10905,7 @@
 				C46D2A7C270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift in Sources */,
 				B63AE687250EFA3A000B8517 /* SMSState+Mapper.swift in Sources */,
 				5B727383240D1570005816AB /* AppearanceTableViewController.swift in Sources */,
+				B67507B62766BE670034F951 /* PhotoLibraryContentViewRouter.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */,
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
@@ -10921,6 +10946,7 @@
 				B6A16F9F2748C8D6009AB6B4 /* PhotoLibraryYearViewModel.swift in Sources */,
 				8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */,
 				BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */,
+				B67507B42766BB580034F951 /* PhotoLibraryConstants.swift in Sources */,
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
 				2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */,
 				5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */,
@@ -11567,6 +11593,7 @@
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
 				A837E62C27070A370069AB30 /* AccountDetailsErrorEntity.swift in Sources */,
 				C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */,
+				B67507B22766B8060034F951 /* PhotoLibrary+Mapper.swift in Sources */,
 				BF9457CE24FF02360048F82B /* PhotoExplorerCollectionSectionHeaderView.swift in Sources */,
 				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
 				BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */,
@@ -11940,6 +11967,7 @@
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				837DC7A9256D196400CA289E /* GetLinkStringTableViewCell.swift in Sources */,
 				5BE689AD2419135400462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
+				B67507AB2762EABA0034F951 /* PhotoLibraryViewMode.swift in Sources */,
 				C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
 				BFCB81112505A8D90096BD57 /* FilesExplorerListViewController.swift in Sources */,

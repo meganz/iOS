@@ -12,7 +12,7 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
     
     @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
-        var attr = photosByDay.day.formatted(.dateTime.locale(.current).year().month(.wide).day().attributed)
+        var attr = photosByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day().attributed)
         let bold = AttributeContainer.font(.title2.bold())
         attr.replaceAttributes(AttributeContainer.dateField(.month), with: bold)
         attr.replaceAttributes(AttributeContainer.dateField(.day), with: bold)
@@ -25,9 +25,9 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
         self.photosByDay = photosByDay
         
         if #available(iOS 15.0, *) {
-            title = photosByDay.day.formatted(.dateTime.locale(.current).year().month(.wide).day())
+            title = photosByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day())
         } else {
-            title = DateFormatter.dateLong().localisedString(from: photosByDay.day)
+            title = DateFormatter.dateLong().localisedString(from: photosByDay.categoryDate)
         }
         
         super.init(coverPhoto: photosByDay.coverPhoto, thumbnailUseCase: thumbnailUseCase)
