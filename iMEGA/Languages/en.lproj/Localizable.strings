@@ -259,9 +259,9 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 folder • %d files";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.node.action.device.subtitle"="%@ device";
+"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.node.action.devices.subtitle"="%@ devices";
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Queued";
 /* A label to indicate a paused state for a transfer item (upload/download). */

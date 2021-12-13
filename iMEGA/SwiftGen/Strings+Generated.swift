@@ -3000,26 +3000,28 @@ public enum Strings {
           public static let location = Strings.tr("Localizable", "cloudDrive.info.node.location")
         }
       }
-      public enum Node {
-        public enum Action {
-          public enum Device {
-            /// %@ device
-            public static func subtitle(_ p1: Any) -> String {
-              return Strings.tr("Localizable", "cloudDrive.node.action.device.subtitle", String(describing: p1))
-            }
-          }
-          public enum Devices {
-            /// %@ devices
-            public static func subtitle(_ p1: Any) -> String {
-              return Strings.tr("Localizable", "cloudDrive.node.action.devices.subtitle", String(describing: p1))
-            }
-          }
-        }
-      }
       public enum NodeInfo {
         /// %@ (Owner)
         public static func owner(_ p1: Any) -> String {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
+        }
+      }
+      public enum Root {
+        public enum Backup {
+          public enum Folder {
+            public enum Device {
+              /// %@ device
+              public static func subtitle(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "cloudDrive.root.backup.folder.device.subtitle", String(describing: p1))
+              }
+            }
+            public enum Devices {
+              /// %@ devices
+              public static func subtitle(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "cloudDrive.root.backup.folder.devices.subtitle", String(describing: p1))
+              }
+            }
+          }
         }
       }
       public enum ScanDocument {

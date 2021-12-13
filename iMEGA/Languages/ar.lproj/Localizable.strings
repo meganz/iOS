@@ -258,6 +258,10 @@
 "foldersAndFile"="%d مجلد • 1 ملف";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 مجلد • %d ملف";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
+"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="في قائمة الانتظار";
 /* A label to indicate a paused state for a transfer item (upload/download). */
