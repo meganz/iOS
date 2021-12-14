@@ -1823,16 +1823,46 @@
         return;
     }
     
-    //Delete transfer from dictionary file even if we get an error
-    MEGANode *node = nil;
     if ([transfer type] == MEGATransferTypeDownload) {
-        node = [sdk nodeForHandle:transfer.nodeHandle];
-        if (!node) {
-            node = [transfer publicNode];
-        }
-        if (node) {
-            [[Helper downloadingNodes] removeObjectForKey:node.base64Handle];
-        }
+        [sdk getNodeForTransfer:transfer completion:^(MEGANode * _Nullable node) {
+            if (node) {
+                [[Helper downloadingNodes] removeObjectForKey:node.base64Handle];
+            }
+            
+            if (error.type == MEGAErrorTypeApiOk) {
+                // Don't add to the database files saved in others applications
+                if ([transfer.appData containsString:@"SaveInPhotosApp"] ||
+                    (transfer.path.mnz_isImagePathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSavePhotoToGalleryEnabled"])
+                    || (transfer.path.mnz_isVideoPathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                    [transfer mnz_saveInPhotosApp];
+                } else {
+                    NSManagedObjectContext *childQueueContext = [MEGAStore.shareInstance.stack newBackgroundContext];
+                    if (childQueueContext) {
+                        [childQueueContext performBlock:^{
+                            MOOfflineNode *offlineNodeExist = [MEGAStore.shareInstance offlineNodeWithNode:node context:childQueueContext];
+                            if (!offlineNodeExist) {
+                                NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
+                                if (replaceRange.location != NSNotFound) {
+                                    MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
+                                    NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
+                                    [MEGAStore.shareInstance insertOfflineNode:node api:sdk path:[result decomposedStringWithCanonicalMapping] context:childQueueContext];
+                                    if (@available(iOS 14.0, *)) {
+                                        [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
+                                    }
+                                }
+                            }
+                        }];
+                    }
+                    
+                    if (transfer.fileName.mnz_isVideoPathExtension && !node.hasThumbnail) {
+                        NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
+                        [node mnz_generateThumbnailForVideoAtPath:videoURL];
+                    }
+                    
+                    [transfer mnz_setNodeCoordinates];
+                }
+            }
+        }];
     }
     
     if (transfer.type == MEGATransferTypeUpload) {
@@ -1876,36 +1906,6 @@
             }
         }
         return;
-    }
-    
-    if ([transfer type] == MEGATransferTypeDownload) {
-        // Don't add to the database files saved in others applications
-        if ([transfer.appData containsString:@"SaveInPhotosApp"] ||
-            (transfer.path.mnz_isImagePathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSavePhotoToGalleryEnabled"])
-            || (transfer.path.mnz_isVideoPathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
-            [transfer mnz_saveInPhotosApp];
-            return;
-        }
-        
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
-        if (!offlineNodeExist) {
-            NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
-            if (replaceRange.location != NSNotFound) {
-                MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
-                NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
-                [[MEGAStore shareInstance] insertOfflineNode:node api:sdk path:[result decomposedStringWithCanonicalMapping]];
-                if (@available(iOS 14.0, *)) {
-                    [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
-                }
-            }
-        }
-        
-        if (transfer.fileName.mnz_isVideoPathExtension && !node.hasThumbnail) {
-            NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
-            [node mnz_generateThumbnailForVideoAtPath:videoURL];
-        }
-        
-        [transfer mnz_setNodeCoordinates];
     }
     
     [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferFinishedNotification object:nil userInfo:@{MEGATransferUserInfoKey : transfer}];
