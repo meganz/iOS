@@ -17,6 +17,7 @@
 
 + (void)localLogoutAndCleanUp {
     [MEGASdkManager localLogout];
+    [MEGASdkManager deleteSharedSdks];
 }
 
 @end
