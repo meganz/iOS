@@ -261,7 +261,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         CMTime currentTime = self.player.currentTime;
         AVPlayerItem *newPlayerItem = [AVPlayerItem playerItemWithURL:self.fileUrl];
         [self.player replaceCurrentItemWithPlayerItem:newPlayerItem];
-        [self.player seekToTime:currentTime];
+        if (CMTIME_IS_VALID(currentTime)) {
+            [self.player seekToTime:currentTime];
+        }
     }
 }
 
