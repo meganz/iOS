@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - MOOfflineNode entity
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path;
+- (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path context:(NSManagedObjectContext *)context;
 - (nullable MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path;
 - (nullable MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node;
 - (nullable MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node context:(NSManagedObjectContext *)context;

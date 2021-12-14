@@ -54,4 +54,20 @@ extension MEGASdk {
             completion(self.transfers.size.intValue > 0 || self.transfers.size.intValue > 0)
         }
     }
+    
+    /// An async way get a node from a transfer.
+    /// - Parameters:
+    ///   - transfer: transfer you want to get a node
+    ///   - completion: Callback closure upon completion. The completion closure will be called from an arbitrary background thread.
+    @objc(getNodeForTransfer:completion:)
+    func getNodeForTransfer(_ transfer: MEGATransfer, completion: @escaping (MEGANode?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else {
+                completion(nil)
+                return
+            }
+            let node = self.node(forHandle: transfer.nodeHandle) ?? transfer.publicNode
+            completion(node)
+        }
+    }
 }
