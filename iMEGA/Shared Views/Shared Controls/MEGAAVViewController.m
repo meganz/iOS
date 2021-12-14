@@ -197,6 +197,13 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     }
 }
 
+- (void)replayVideo {
+    if (self.player) {
+        [self.player seekToTime:kCMTimeZero];
+        [self.player play];
+        self.endPlaying = NO;
+    }
+}
 
 - (void)stopStreaming {
     if (self.node) {
@@ -234,7 +241,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 - (void)movieFinishedCallback:(NSNotification*)aNotification {
     self.endPlaying = YES;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self replayVideo];
 }
 
 - (void)applicationDidEnterBackground:(NSNotification*)aNotification {
