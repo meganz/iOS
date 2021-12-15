@@ -1460,10 +1460,18 @@
 		B6730B0F27361BEC00A9CF5F /* MVVM-R.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BF3824FF123700A3CBC8 /* MVVM-R.swift */; };
 		B6730B1E2738482600A9CF5F /* FileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311A2DE258775170027BEFF /* FileTypes.swift */; };
 		B67507AB2762EABA0034F951 /* PhotoLibraryViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */; };
-		B67507AF276689530034F951 /* PhotoLibraryModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AE276689520034F951 /* PhotoLibraryModeViewModel.swift */; };
+		B67507AF276689530034F951 /* ScrollPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AE276689520034F951 /* ScrollPositioning.swift */; };
 		B67507B22766B8060034F951 /* PhotoLibrary+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */; };
 		B67507B42766BB580034F951 /* PhotoLibraryConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */; };
 		B67507B62766BE670034F951 /* PhotoLibraryContentViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */; };
+		B67507C32768094C0034F951 /* OffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507C22768094C0034F951 /* OffsetPreferenceKey.swift */; };
+		B67507C527684FC00034F951 /* PhotoLibraryModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507C427684FBF0034F951 /* PhotoLibraryModeViewModel.swift */; };
+		B67507C7276852B00034F951 /* PhotosMonthSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507C6276852AF0034F951 /* PhotosMonthSection.swift */; };
+		B67507C9276858E70034F951 /* PhotoLibraryModeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507C8276858E70034F951 /* PhotoLibraryModeCardView.swift */; };
+		B67507CB27685F0E0034F951 /* PhotoLibraryModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507CA27685F0E0034F951 /* PhotoLibraryModeView.swift */; };
+		B67507CD276938200034F951 /* FramePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507CC2769381F0034F951 /* FramePreferenceKey.swift */; };
+		B67507CF27694F120034F951 /* PhotosChronologicalCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507CE27694F120034F951 /* PhotosChronologicalCategory.swift */; };
+		B67507D12769520C0034F951 /* ScrollPositionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507D02769520C0034F951 /* ScrollPositionCalculator.swift */; };
 		B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */; };
 		B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */; };
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
@@ -3599,10 +3607,18 @@
 		B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CameraUploadOperation+Utils.m"; sourceTree = "<group>"; };
 		B6730B082734EC4D00A9CF5F /* NodeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
 		B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewMode.swift; sourceTree = "<group>"; };
-		B67507AE276689520034F951 /* PhotoLibraryModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeViewModel.swift; sourceTree = "<group>"; };
+		B67507AE276689520034F951 /* ScrollPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPositioning.swift; sourceTree = "<group>"; };
 		B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoLibrary+Mapper.swift"; sourceTree = "<group>"; };
 		B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryConstants.swift; sourceTree = "<group>"; };
 		B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewRouter.swift; sourceTree = "<group>"; };
+		B67507C22768094C0034F951 /* OffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetPreferenceKey.swift; sourceTree = "<group>"; };
+		B67507C427684FBF0034F951 /* PhotoLibraryModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeViewModel.swift; sourceTree = "<group>"; };
+		B67507C6276852AF0034F951 /* PhotosMonthSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosMonthSection.swift; sourceTree = "<group>"; };
+		B67507C8276858E70034F951 /* PhotoLibraryModeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeCardView.swift; sourceTree = "<group>"; };
+		B67507CA27685F0E0034F951 /* PhotoLibraryModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeView.swift; sourceTree = "<group>"; };
+		B67507CC2769381F0034F951 /* FramePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FramePreferenceKey.swift; sourceTree = "<group>"; };
+		B67507CE27694F120034F951 /* PhotosChronologicalCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosChronologicalCategory.swift; sourceTree = "<group>"; };
+		B67507D02769520C0034F951 /* ScrollPositionCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPositionCalculator.swift; sourceTree = "<group>"; };
 		B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeThumbnailHomeUseCase.swift; sourceTree = "<group>"; };
 		B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+CameraUpload.swift"; sourceTree = "<group>"; };
 		B6790E05256B81C600154F6D /* MEGANode+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions.swift"; sourceTree = "<group>"; };
@@ -8416,11 +8432,22 @@
 		B67507B027668D6F0034F951 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				B6E5D24F274C5FBA00C8AB96 /* Custom Views */,
 				B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */,
-				B67507AE276689520034F951 /* PhotoLibraryModeViewModel.swift */,
+				B67507C427684FBF0034F951 /* PhotoLibraryModeViewModel.swift */,
 				B6D7FB152762990B003D9570 /* CoverPhotoLoader.swift */,
+				B67507D02769520C0034F951 /* ScrollPositionCalculator.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		B67507C1276809070034F951 /* Preference Keys */ = {
+			isa = PBXGroup;
+			children = (
+				B67507C22768094C0034F951 /* OffsetPreferenceKey.swift */,
+				B67507CC2769381F0034F951 /* FramePreferenceKey.swift */,
+			);
+			path = "Preference Keys";
 			sourceTree = "<group>";
 		};
 		B67A2C71251755A300B40D89 /* RepositoryProtocol */ = {
@@ -8647,6 +8674,7 @@
 			children = (
 				B6C444D4274A282500268D9A /* PhotoLibraryAllView.swift */,
 				B6C444D6274A283300268D9A /* PhotoLibraryAllViewModel.swift */,
+				B67507C6276852AF0034F951 /* PhotosMonthSection.swift */,
 				B66E8073275A0C3000502601 /* PhotoCell.swift */,
 				B66E8075275A0C4200502601 /* PhotoCellViewModel.swift */,
 			);
@@ -8658,6 +8686,8 @@
 			children = (
 				B6C5D09F2718DAAA004FB105 /* PhotoLibrary.swift */,
 				B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */,
+				B67507AE276689520034F951 /* ScrollPositioning.swift */,
+				B67507CE27694F120034F951 /* PhotosChronologicalCategory.swift */,
 				B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */,
 				B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */,
 			);
@@ -8676,7 +8706,6 @@
 				B6C444D9274A284900268D9A /* Month View */,
 				B6C444DA274A284F00268D9A /* Day View */,
 				B6C444DB274A285700268D9A /* All View */,
-				B6E5D24F274C5FBA00C8AB96 /* Custom Views */,
 			);
 			path = "Photo Library";
 			sourceTree = "<group>";
@@ -8684,8 +8713,9 @@
 		B6C444E1274AE99A00268D9A /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				B6524E56274B218F00DB4160 /* Custom Views */,
 				B6524E51274AEFFB00DB4160 /* Extensions */,
+				B6524E56274B218F00DB4160 /* Custom Views */,
+				B67507C1276809070034F951 /* Preference Keys */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -8805,6 +8835,8 @@
 				123E3018275B2EC400EEDAAA /* NumberBadge.swift */,
 				123E301C275B31A400EEDAAA /* PhotoCardNumber.swift */,
 				129C341D275FECF100019019 /* PhotoBrowser.swift */,
+				B67507CA27685F0E0034F951 /* PhotoLibraryModeView.swift */,
+				B67507C8276858E70034F951 /* PhotoLibraryModeCardView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -10777,6 +10809,7 @@
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
 				B6D7FB162762990B003D9570 /* CoverPhotoLoader.swift in Sources */,
 				C49DB2D526F3B11D00A9BC33 /* WarningActionSheetCell.swift in Sources */,
+				B67507C32768094C0034F951 /* OffsetPreferenceKey.swift in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				BFB33D90263B922F006E203D /* EndMeetingOptionsRouter.swift in Sources */,
 				BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */,
@@ -10822,7 +10855,7 @@
 				BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				BF782D63269BA4BB0001D169 /* ChatSessionEntity.swift in Sources */,
-				B67507AF276689530034F951 /* PhotoLibraryModeViewModel.swift in Sources */,
+				B67507AF276689530034F951 /* ScrollPositioning.swift in Sources */,
 				5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */,
 				C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
@@ -10899,6 +10932,7 @@
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */,
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
+				B67507C527684FC00034F951 /* PhotoLibraryModeViewModel.swift in Sources */,
 				83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */,
@@ -10955,6 +10989,7 @@
 				B6A16F9F2748C8D6009AB6B4 /* PhotoLibraryYearViewModel.swift in Sources */,
 				8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */,
 				BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */,
+				B67507C7276852B00034F951 /* PhotosMonthSection.swift in Sources */,
 				B67507B42766BB580034F951 /* PhotoLibraryConstants.swift in Sources */,
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
 				2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */,
@@ -11244,6 +11279,7 @@
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
 				2F4291E6257F2CDC00EDF780 /* MEGARecentActionBucket+MNZCategory.m in Sources */,
 				BFAB114A23CEA5C300BCE72D /* PhotoCarouselCell.swift in Sources */,
+				B67507CD276938200034F951 /* FramePreferenceKey.swift in Sources */,
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				BF782D77269BA4BB0001D169 /* CallErrorEntity.swift in Sources */,
 				BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */,
@@ -11258,6 +11294,7 @@
 				2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */,
 				2F9E1E2B24A5A8FE00F53FBD /* ReactionCollectionViewCell.swift in Sources */,
 				B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */,
+				B67507C9276858E70034F951 /* PhotoLibraryModeCardView.swift in Sources */,
 				BF782D6A269BA4BB0001D169 /* SMSStateEntity.swift in Sources */,
 				83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */,
 				A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */,
@@ -11326,6 +11363,7 @@
 				C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */,
 				C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */,
 				83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */,
+				B67507CF27694F120034F951 /* PhotosChronologicalCategory.swift in Sources */,
 				BF782D71269BA4BB0001D169 /* InviteErrorEntity.swift in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
@@ -11644,6 +11682,7 @@
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				5B9F5D47259DD57700BADB11 /* CookieSettingsUseCase.swift in Sources */,
 				BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */,
+				B67507CB27685F0E0034F951 /* PhotoLibraryModeView.swift in Sources */,
 				BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */,
 				2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */,
 				5D4D672824AABE050034A4CD /* UINavigationViewController+Additions.swift in Sources */,
@@ -11902,6 +11941,7 @@
 				2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */,
+				B67507D12769520C0034F951 /* ScrollPositionCalculator.swift in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				2F528CAD24739053006DE5C2 /* LoadingMessageReusableView.swift in Sources */,
 				2F8606212489F10A004D9100 /* ChatTextMessageViewCell.swift in Sources */,

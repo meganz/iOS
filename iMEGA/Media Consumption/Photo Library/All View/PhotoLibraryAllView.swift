@@ -4,6 +4,7 @@ import SwiftUI
 struct PhotoLibraryAllView: View {
     @ObservedObject var viewModel: PhotoLibraryAllViewModel
     var router: PhotoLibraryContentViewRouting
+    var calculator: ScrollPositionCalculator
     
     @State private var selectedNode: NodeEntity?
     
@@ -13,21 +14,18 @@ struct PhotoLibraryAllView: View {
     )
     
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
+        GeometryReader { geoProxy in
+            PhotoLibraryModeView(viewModel: viewModel) {
                 LazyVGrid(columns: columns, spacing: 1, pinnedViews: .sectionHeaders) {
-                    ForEach(viewModel.monthSections) { section in
-                        sectionView(for: section)
+                    ForEach(viewModel.photoCategoryList) { section in
+                        sectionView(for: section, viewPortSize: geoProxy.size)
                     }
                 }
-            }
-            .onAppear {
-                proxy.scrollTo(viewModel.currentScrollPositionId)
             }
         }
     }
     
-    private func sectionView(for section: PhotoMonthSection) -> some View {
+    private func sectionView(for section: PhotosMonthSection, viewPortSize: CGSize) -> some View {
         Section(header: headerView(for: section)) {
             ForEach(section.photosByMonth.allPhotos) { photo in
                 Button(action: {
@@ -38,8 +36,13 @@ struct PhotoLibraryAllView: View {
                     router.card(for: photo)
                         .clipped()
                 })
-                    .id(viewModel.positionId(for: photo))
+                    .id(photo.position)
                     .buttonStyle(.plain)
+                    .frame(in: .named("scrollView"))
+                    .onPreferenceChange(FramePreferenceKey.self) {
+                        let position = calculator.calculateScrollPosition(with: photo, frame: $0, viewPortSize: viewPortSize)
+                        viewModel.libraryViewModel.currentPosition = position
+                    }
             }
             .fullScreenCover(item: $selectedNode) {
                 router.photoBrowser(for: $0, viewModel: viewModel)
@@ -48,7 +51,7 @@ struct PhotoLibraryAllView: View {
         }
     }
     
-    private func headerView(for section: PhotoMonthSection) -> some View {
+    private func headerView(for section: PhotosMonthSection) -> some View {
         HStack {
             headerTitle(for: section)
                 .padding(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))
@@ -60,7 +63,7 @@ struct PhotoLibraryAllView: View {
     }
     
     @ViewBuilder
-    private func headerTitle(for section: PhotoMonthSection) -> some View {
+    private func headerTitle(for section: PhotosMonthSection) -> some View {
         if #available(iOS 15.0, *) {
             Text(section.attributedTitle)
         } else {

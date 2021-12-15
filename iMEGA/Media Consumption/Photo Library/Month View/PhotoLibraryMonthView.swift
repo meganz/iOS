@@ -6,18 +6,8 @@ struct PhotoLibraryMonthView: View {
     var router: PhotoLibraryContentViewRouting
     
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVGrid(columns: PhotoLibraryConstants.cardColumns, spacing: 16) {
-                    ForEach(viewModel.photosByMonthList) { photosByMonth in
-                        cell(for: photosByMonth)
-                    }
-                }
-                .padding()
-            }
-            .onAppear {
-                proxy.scrollTo(viewModel.currentScrollPositionId)
-            }
+        PhotoLibraryModeCardView(viewModel: viewModel) {
+            cell(for: $0)
         }
     }
     
@@ -30,7 +20,7 @@ struct PhotoLibraryMonthView: View {
             router.card(for: photosByMonth)
                 .frame(height: PhotoLibraryConstants.cardHeight)
         })
-            .id(viewModel.positionId(for: photosByMonth))
+            .id(photosByMonth.position)
             .buttonStyle(.plain)
     }
     
