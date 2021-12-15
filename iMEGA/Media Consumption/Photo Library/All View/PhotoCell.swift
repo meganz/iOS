@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct PhotoCell: View {
     @ObservedObject var viewModel: PhotoCellViewModel
     
@@ -10,7 +11,7 @@ struct PhotoCell: View {
                 .resizable()
                 .aspectRatio(1, contentMode: .fill)
         } else {
-            Text("Placeholder")
+            Image(viewModel.thumbnailPlaceholderFileType)
         }
     }
 }

@@ -6,12 +6,14 @@ protocol ThumbnailUseCaseProtocol {
     func getCachedThumbnail(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity>
     func getCachedPreview(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void)
     func getCachedPreview(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity>
-    
     func getCachedThumbnailAndPreview(for handle: MEGAHandle) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity>
+    
+    func thumbnailPlaceholderFileType(forNodeName name: String) -> MEGAFileType
 }
 
 struct ThumbnailUseCase: ThumbnailUseCaseProtocol {
     private let repository: ThumbnailRepositoryProtocol
+    private let fileTypes = FileTypes()
     
     init(repository: ThumbnailRepositoryProtocol) {
         self.repository = repository
@@ -47,6 +49,10 @@ struct ThumbnailUseCase: ThumbnailUseCaseProtocol {
                     .prepend(nil)
             )
             .eraseToAnyPublisher()
+    }
+    
+    func thumbnailPlaceholderFileType(forNodeName name: String) -> MEGAFileType {
+        fileTypes.fileType(forFileName: name)
     }
 }
 
