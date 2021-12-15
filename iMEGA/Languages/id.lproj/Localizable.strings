@@ -45,15 +45,15 @@
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
 "The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Akun yang membuat link ini telah dimatikan karena beberapa pelanggaran pada [A]Kebijakan Pelayanan[/A] kami.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="Masukkan decryption key";
+"decryptionKeyAlertTitle"="Masukkan kunci dekripsi";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Untuk mengakses folder / file ini, anda memerlukan kunci Dekripsi. Jika Anda tidak memiliki kuncinya, silakan hubungi pembuat tautan.";
+"decryptionKeyAlertMessage"="Untuk mengakses folder / file ini, anda memerlukan kunci Dekripsi. Jika anda tidak memiliki kuncinya, silakan hubungi pembuat tautan.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Decryption key";
+"decryptionKey"="Kunci dekripsi";
 /* Button title to try to decrypt the link */
 "decrypt"="Dekripsikan";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Decryption key salah";
+"decryptionKeyNotValid"="Kunci dekripsi salah";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
 "To access this link, you will need its password."="Untuk mengakses link ini, anda membutuhkan password.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
@@ -71,9 +71,9 @@
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Prosesnya memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Server sangat sibuk. Harap tunggu.";
+"serversAreTooBusy"="Server sangat sibuk. Harap tunggu…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Tidak dapat menjangkau MEGA. Silakan periksa konektivitas Anda atau coba lagi nanti.";
+"unableToReachMega"="Tidak dapat menjangkau MEGA. Silakan periksa konektivitas anda atau coba lagi nanti.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Terlalu banyak permintaan. Mohon tunggu.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -83,13 +83,13 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Masuk";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Buat akun";
+"createAccount"="Buat Akun";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mail atau password tidak sah. Harap coba kembali";
+"invalidMailOrPassword"="Email atau password tidak sah. Harap coba kembali";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Anda berusaha masuk terlalu banyak. Harap tunggu sampai %@ dan coba kembali.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Harap cek e-mail anda dan ikuti link untuk mengkonfirmasi akun anda.";
+"accountNotConfirmed"="Harap cek email anda dan ikuti link untuk mengkonfirmasi akun anda.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Akun anda dihentikan karena pelanggaran Persyaratan Layanan MEGA termasuk, namun tidak terbatas pada, klausul 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -111,7 +111,7 @@
 /*  */
 "weak"="Lemah";
 /*  */
-"passwordVeryWeakOrWeak"="Password anda mudah ditebak. Coba untuk membuat password yang lebih panjang. Kombinasikan huruf besar & huruf kecil. Tambahkan sepcial characters. Jangan gunakan nama atau kata yang dapat ditemukan di kamus.";
+"passwordVeryWeakOrWeak"="Password anda mudah ditebak. Coba untuk membuat password yang lebih panjang. Kombinasikan huruf besar & huruf kecil. Tambahkan special characters. Jangan gunakan nama atau kata yang dapat ditemukan di kamus.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="Sedang";
 /*  */
@@ -125,19 +125,19 @@
 /*  */
 "passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa anda akan mengingat password anda.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href=\"terms\">Kebijakan Pelayanan MEGA</a>";
+"agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href=\"terms\">Kebijakan Pelayanan</a>MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Saya mengerti bahwa [S]jika saya kehilangan kata sandi saya, saya mungkin kehilangan data saya.[/S] Baca lebih lanjut tentang <a href=\"terms\">Enkripsi ujung-ke-ujung MEGA</a>.";
+"agreeWithLosingPasswordYouLoseData"="Saya mengerti bahwa [S]jika saya kehilangan kata sandi saya, saya mungkin kehilangan data saya.[/S] Baca lebih lanjut tentang <a href=\"terms\">enkripsi menyeluruh</a> MEGA.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Masukan nama yang benar";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Password berbeda";
+"passwordsDoNotMatch"="Password tidak sama";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Anda harus setuju dengan persyaratan layanan untuk mendaftarkan akun MEGA.";
+"termsCheckboxUnselected"="Anda harus setuju dengan Persyaratan Layanan untuk mendaftarkan akun MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
-"termsForLosingPasswordCheckboxUnselected"="Anda harus setuju bahwa Anda memahami bahaya kehilangan kata sandi Anda";
+"termsForLosingPasswordCheckboxUnselected"="Anda harus setuju bahwa anda memahami bahaya kehilangan kata sandi anda";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Surel ini telah memiliki akun di Mega.";
+"emailAlreadyRegistered"="Alamat email ini telah mendaftarkan akun dengan MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Menunggu konfirmasi email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -153,11 +153,11 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA membutuhkan minimum %@. Kosongkan sebagian ruang dengan menghapus aplikasi yang tidak lagi anda gunakan atau file video besar di galeri anda. Anda juga dapat mengelola apa yang disimpan MEGA di perangkat anda.";
 /* Title for the file link view */
-"fileLink"="Pranala berkas";
+"fileLink"="Link Berkas";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Buka";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="File yang anda coba untuk download lebih besar dari memori yang tersedia.";
+"fileTooBigMessage"="File yang anda coba untuk unduh lebih besar dari memori yang tersedia.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="File yang anda coba buka lebih besar dari memori yang tersedia.";
 /* Error title shown when you open a file or folder link and it's no longer available */
@@ -165,33 +165,33 @@
 /*  */
 "fileLinkUnavailableText1"="Ini bisa terjadi karena alasan berikut:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Berkas telah dihapus karena pelanggaran.";
+"fileLinkUnavailableText2"="Berkas telah dihapus karena pelanggaran kebijakan.";
 /*  */
-"fileLinkUnavailableText3"="URL tidak valid - pranala yang anda coba akses tidak ada";
+"fileLinkUnavailableText3"="URL tidak benar - link yang anda coba akses tidak ada";
 /*  */
 "fileLinkUnavailableText4"="Berkas telah dihapus oleh pengguna.";
 /* Message shown when a download starts */
-"downloadStarted"="Download dimulai";
+"downloadStarted"="Unduhan dimulai";
 /* Title for the folder link view */
 "folderLink"="Link Folder";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Unduh";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="Folder yang anda ingin download lebih besar daripada memori yang tersedia.";
+"folderTooBigMessage"="Folder yang anda ingin unduh lebih besar daripada memori yang tersedia.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="Folder '%@' tidak dapat dibuat";
+"folderCreationError"="Folder “%@” tidak dapat dibuat";
 /*  */
 "folderLinkUnavailableText1"="Ini bisa terjadi karena alasan berikut:";
 /*  */
-"folderLinkUnavailableText2"="Link / Tautan telah dihapus karena pelanggaran ToS/AUP";
+"folderLinkUnavailableText2"="Link folder telah dihapus karena pelanggaran ToS/AUP";
 /*  */
-"folderLinkUnavailableText3"="URL tidak valid - pranala yang anda coba akses tidak ada";
+"folderLinkUnavailableText3"="URL tidak valid - link yang anda coba akses tidak ada";
 /*  */
-"folderLinkUnavailableText4"="Link / Tautan ke folder telah di non-aktifkan.";
+"folderLinkUnavailableText4"="Link ke folder telah di non-aktifkan oleh pengguna.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Koneksi internet tidak tersedia";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Tidak ada file di folder";
+"emptyFolder"="Folder Kosong";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Tidak ada berkas di Cloud Drive anda";
 /* Button title shown in empty views when you can 'Add files' */
@@ -209,7 +209,7 @@
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Tidak ada Folder Berbagi keluar";
 /* Title of Contacts requests section */
-"contactRequests"="Request kontak";
+"contactRequests"="Permintaan kontak";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Tambah kontak";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
@@ -217,29 +217,29 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Kontak anda [X] tidak ada di MEGA. Untuk menelepon melalui obrolan terenkripsi MEGA, anda perlu mengundang kontak anda";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Undangan terkirim";
+"inviteSent"="Undangan Terkirim";
 /* Button title to allow the user postpone an action */
 "later"="Nanti";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Diterima";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
-"sent"="Sent";
+"sent"="Terkirim";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="Request telah diterima";
+"requestAccepted"="Permintaan diterima";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Request telah dibatalkan";
+"requestCancelled"="Permintaan dibatalkan";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Request telah dihapus";
+"requestDeleted"="Permintaan dihapus";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Tidak ada request pending";
+"noRequestPending"="Tidak ada permintaan tertunda";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transfer Terhentikan";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Tidak ada transfer";
+"transfersEmptyState_titleAll"="Tidak ada Transfer";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Tidak ada download";
+"transfersEmptyState_titleDownload"="Tidak ada Unduhan";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Tidak ada upload";
+"transfersEmptyState_titleUpload"="Tidak ada Unggahan";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -258,10 +258,6 @@
 "foldersAndFile"="%d folder • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 folder • %d file";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Dimasukan antrian";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -273,29 +269,27 @@
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Mencoba lagi …";
 /* Section title of the 'Sort by' */
-"sortTitle"="URUTKAN BERDASAR";
+"sortTitle"="Urutkan berdasar";
 /* Button title to 'Save' the selected option */
 "save"="Simpan";
 /* Sort by option (1/6). This one orders the files alphabethically */
-"nameAscending"="nama (meningkat)";
+"nameAscending"="Nama (meningkat)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="nama (menurun)";
+"nameDescending"="Nama (menurun)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
 "largest"="Terbesar";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="terkecil";
+"smallest"="Terkecil";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="terbaru";
+"newest"="Terbaru";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="tertua";
+"oldest"="Tertua";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Pilih dari Foto";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Ambil foto";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
-"Scan Document"="Scan Document";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Foto";
+"Scan Document"="Pindai Dokumen";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Suara";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -313,7 +307,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder Baru";
 /* Hint text shown on the create folder alert. */
-"newFolderMessage"="Nama folder baru";
+"newFolderMessage"="Nama untuk folder baru";
 /* Title button for the create folder alert. */
 "createFolderButton"="Buat";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
@@ -329,7 +323,7 @@
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d file terpilih telah berhasil diupload ke folder ini.";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="Upload dimulai";
+"uploadStarted_Message"="Unggahan dimulai";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFile_alertTitle"="Anda tidak lagi memiliki akses ke file ini";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
@@ -339,27 +333,27 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Label inbox telah disediakan khusus untuk Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="Simpan gambar";
+"saveImage"="Simpan Gambar";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Dapatkan Tautan";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Dapatkan Tautan";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Kelola Tautan";
+"manageLink"="Kelola Link";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Kelola Tautan";
+"manageLinks"="Kelola Link";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Membuat link…";
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Membuat links…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link terkopi";
+"linkCopied"="Link tersalin";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Link terkopi";
+"linksCopied"="Link tersalin";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Disalin ke clipboard";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Peringatan Hak Cipta";
+"copyrightWarning"="Peringatan hak cipta";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Peringatan hak cipta untuk semua pengguna";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -371,9 +365,9 @@
 /* button caption text that the user clicks when he disagrees */
 "disagree"="Tidak setuju";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
-"linkWithoutKey"="Link tanpa key";
+"linkWithoutKey"="Link tanpa kunci";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
-"linkWithKey"="Link dengan key";
+"linkWithKey"="Link dengan kunci";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(HANYA PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -381,17 +375,17 @@
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="Atur proteksi password";
 /* The text of a button. This button will encrypt a link with a password. */
-"encrypt"="Encrypt";
+"encrypt"="Enkripsi";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypted"="Terenkripsi";
 /* Title for a button to copy the link to the clipboard */
-"copyLink"="Salin tautan";
+"copyLink"="Salin link";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy kunci";
+"copyKey"="Salin kunci";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Buka dengan…";
 /*  */
-"uploadToMega"="Upload ke MEGA";
+"uploadToMega"="Unggah ke MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Ketuk file untuk mengganti nama";
 /*  */
@@ -401,15 +395,15 @@
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="File dikirim ke obrolan";
 /* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="File dikirim ke %1$d chat";
+"fileSentToXChats"="File dikirim ke %1$d obrolan";
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="File dikirim ke obrolan";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d file berhasil dikirim";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Hapus Tautan";
+"removeLink"="Hapus Link";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Hapus Tautan";
+"removeLinks"="Hapus Link";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link terhapus";
 /* Message shown when the links to files and/or folders have been removed */
@@ -435,27 +429,27 @@
 /* Success message shown when you have moved 1 file and {1+} folders */
 "moveFileFoldersMessage"="1 file dan %d folder dipindahkan";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d file dan 1 folder moved";
+"moveFilesFolderMessage"="%d file dan 1 folder dipindahkan";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] file dan [B] folder dipindahkan";
 /* List option shown on the details of a file or folder */
 "copy"="Salin";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="1 file terkopi";
+"copyFileMessage"="1 file tersalin";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d file terkopi";
+"copyFilesMessage"="%d file tersalin";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="1 folder terkopi";
+"copyFolderMessage"="1 folder tersalin";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="%d folder terkopi";
+"copyFoldersMessage"="%d folder tersalin";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="1 file dan 1 folder terkopi";
+"copyFileFolderMessage"="1 file dan 1 folder tersalin";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="1 file and %d folder terkopi";
+"copyFileFoldersMessage"="1 file and %d folder tersalin";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d file dan 1 folder terkopi";
+"copyFilesFolderMessage"="%d file dan 1 folder tersalin";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] file dan [B] folder terkopi";
+"copyFilesFoldersMessage"="[A] file dan [B] folder tersalin";
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Ubah nama";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -487,7 +481,7 @@
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Kesalahan izin";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionMessage"="Cek permission anda untuk folder ini";
+"permissionMessage"="Cek izin anda untuk folder ini";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder dibagikan";
 /* Success message for sharing multiple folders. */
@@ -503,21 +497,21 @@
 /* Button title that skips the current action */
 "skipButton"="Lewati";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Cadangkan foto dan video Anda secara otomatis ke Drive Cloud Anda.";
+"Automatically backup your photos and videos to the Cloud Drive."="Cadangkan foto dan video anda secara otomatis ke Drive Cloud anda.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Aktifkan Upload Kamera";
+"enableCameraUploadsButton"="Aktifkan Unggahan Kamera";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Kamera upload teraktifkan";
+"cameraUploadsEnabled"="Unggahan Kamera teraktifkan";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Upload kamera selesai";
+"cameraUploadsComplete"="Unggahan kamera selesai";
 /* Message shown while uploading files. Singular. */
-"cameraUploadsPendingFile"="Unggah sedang berlangsung, 1 file tertunda";
+"cameraUploadsPendingFile"="Unggahan sedang berlangsung, 1 file tertunda";
 /* Message shown while uploading files. Plural. */
-"cameraUploadsPendingFiles"="Unggah sedang berlangsung, %lu file tertunda";
+"cameraUploadsPendingFiles"="Unggahan sedang berlangsung, %lu file tertunda";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Unggah dijeda karena tidak ada koneksi Wi-Fi, 1 file tertunda";
+"Upload paused because of no WiFi, 1 file pending"="Unggahan dijeda karena tidak ada koneksi Wi-Fi, 1 file tertunda";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Unggah dijeda karena tidak ada koneksi Wi-Fi, %lu file tertunda";
+"Upload paused because of no WiFi, %lu files pending"="Unggahan dijeda karena tidak ada koneksi Wi-Fi, %lu file tertunda";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Foto diunggah, unggahan video tidak aktif; 1 video tidak diunggah";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -539,7 +533,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Kontak";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
-"Requests"="Request";
+"Requests"="Permintaan";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
 "Groups"="Grup";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
@@ -555,13 +549,13 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Berbagi";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Dibagikan";
+"incoming"="Masuk";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Membagikan";
+"outgoing"="Keluar";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Dibagikan dengan %d kontak";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="Permission telah diubah";
+"permissionsChanged"="Izin telah diubah";
 /* Message shown when a share has been left */
 "shareLeft"="Berbagi ditinggalkan";
 /* Message shown when some shares have been left */
@@ -585,15 +579,15 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Tambah dari Kontak";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Tambah kontak";
+"addContact"="Tambah Kontak";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Kontak email";
+"contactEmail"="Kontak Email";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Tambah";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri.";
 /* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
-"dialog.inviteContact.outgoingContactRequest"="Nama pengguna [X] telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
+"dialog.inviteContact.outgoingContactRequest"="Pengguna [X] telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Pengguna telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -636,16 +630,22 @@
 "settingsTitle"="Pengaturan";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Unggahan Kamera";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="Tahun";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="Foto";
+/* Photo view is empty */
+"photo.empty.title"="No Photos Found";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Tempat Sampah";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Lanjutan";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
-"securityOptions"="Pilihan keamanan";
+"securityOptions"="Pilihan Keamanan";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Tentang";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Kirim saran";
+"sendFeedbackLabel"="Kirim Saran";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Harap tulis feedback anda disini:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
@@ -655,15 +655,15 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Kebijakan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"general.cookieSettings"="Pengaturan cookie";
+"general.cookieSettings"="Pengaturan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Persyaratan Layanan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="Peraturan Perlindungan Data";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="Off";
+"off"="Mati";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="On";
+"on"="Nyala";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Pilihan";
 /* A hint to show one option is recommended by MEGA */
@@ -679,7 +679,7 @@
 /* Footer for video compression quality */
 "Compression quality when to transcode HEVC videos to H.264 format."="Kualitas kompresi ketika video HEVC ditranskode ke format H.264.";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Upload video";
+"uploadVideosLabel"="Unggah Video";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Jika diaktifkan, foto akan diunggah.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
@@ -691,13 +691,13 @@
 /* Title for the location based background upload message */
 "Enable location services for background upload"="Aktifkan layanan lokasi untuk unggahan latar belakang";
 /* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi Anda berubah.";
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi anda berubah.";
 /* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Silakan pilih \"Selalu\" di halaman Lokasi Anda di Pengaturan, sehingga MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi Anda berubah.";
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Silakan pilih “Selalu” di halaman Lokasi anda di Pengaturan, sehingga MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi anda berubah.";
 /* Title for turn on a feature */
 "Turn On"="Nyalakan";
 /* Title for turn on a feature in settings */
-"Turn On in Settings"="Aktifkan di Pengaturan";
+"Turn On in Settings"="Nyalakan di Pengaturan";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Video akan diunggah ke folder Unggah Kamera.";
 /* Footer for video uploads switch section when disabled */
@@ -705,7 +705,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="Opsi Unggah Kamera Baru!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sekarang Anda dapat memilih untuk mengonversi foto dan video HEIC/HEVC ke format JPEG/H.264 yang lebih luas kompatibel.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sekarang anda dapat memilih untuk mengonversi foto dan video HEIC/HEVC ke format JPEG/H.264 yang lebih luas kompatibel.";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Gunakan Format Paling Kompatibel";
 /* Title for custom settings */
@@ -715,35 +715,35 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Penyimpanan Perangkat Hampir Penuh";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Anda tidak memiliki cukup penyimpanan untuk unggahan kamera lebih lanjut. Kosongkan ruang dengan menghapus aplikasi, video, atau musik yang tidak dibutuhkan. Anda dapat mengelola penyimpanan Anda di %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Anda tidak memiliki cukup penyimpanan untuk unggahan kamera lebih lanjut. Kosongkan ruang dengan menghapus aplikasi, video, atau musik yang tidak dibutuhkan. Anda dapat mengelola penyimpanan anda di %@";
 /* Navigation path for Storage settings in iOS */
-"Settings > General > %@ Storage"="Pengaturan> Umum> %@ Penyimpanan";
+"Settings > General > %@ Storage"="Pengaturan > Umum > %@ Penyimpanan";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="Unggah Video untuk Live Photos";
+"Upload Videos for Live Photos"="Unggah Video untuk Foto Live";
 /* Title of the switch to config whether to upload all burst photos */
 "Upload All Burst Photos"="Unggah Semua Foto Beruntun";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Unggah Album Tersembunyi";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="Versi foto dan video dari setiap Foto Langsung akan diunggah.";
+"The video and the photo in each Live Photo will be uploaded."="Versi foto dan video dari setiap Foto Live akan diunggah.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Hanya versi foto dari setiap Foto Langsung yang akan diunggah.";
+"Only the photo in each Live Photo will be uploaded."="Hanya versi foto dari setiap Foto Live yang akan diunggah.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="Semua foto dari urutan foto burst Anda akan diunggah.";
+"All the photos from your burst photo sequences will be uploaded."="Semua foto dari urutan foto burst anda akan diunggah.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Hanya foto favorit dari urutan foto burst Anda yang akan diunggah.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Hanya foto favorit dari urutan foto burst anda yang akan diunggah.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="Album Tersembunyi adalah tempat Anda menyembunyikan foto atau video di aplikasi Foto perangkat Anda.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Album Tersembunyi adalah tempat anda menyembunyikan foto atau video di aplikasi Foto perangkat anda.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Unggah Album yang Dibagikan";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Album bersama dari aplikasi Foto perangkat Anda akan diunggah.";
+"Shared Albums from your device's Photos app will be uploaded."="Album bersama dari aplikasi Foto perangkat anda akan diunggah.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Album yang Dibagikan dari aplikasi Foto perangkat Anda tidak akan diunggah.";
+"Shared Albums from your device's Photos app will not be uploaded."="Album yang Dibagikan dari aplikasi Foto perangkat anda tidak akan diunggah.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload Albums Synced from iTunes"="Unggah Album yang Disinkronkan dari iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Album yang disinkronkan adalah tempat Anda menyelaraskan foto atau video ke aplikasi Foto perangkat Anda dari iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Album yang disinkronkan adalah tempat anda menyelaraskan foto atau video ke aplikasi Foto perangkat anda dari iTunes.";
 /* App means “Application” */
 "App Version"="Versi Aplikasi";
 /* Title of the label where the SDK version is shown */
@@ -755,15 +755,15 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Pengakuan";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Ganti kata sandi";
+"changePasswordLabel"="Ganti Kata Sandi";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Meng-ekspor Recovery Key dan menyimpan nya di tempat yang aman membolehkan anda mengatur password baru tanpa kehilangan data.";
+"exportMasterKeyFooter"="Mengekspor Kunci Pemulihan dan menyimpan nya di tempat yang aman membolehkan anda mengatur password baru tanpa kehilangan data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Mengapa saya butuh Recovery Key?";
+"whyDoINeedARecoveryKey"="Mengapa saya butuh Kunci Pemulihan?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Recovery Key telah disalin ke papan klip. Tolong simpan di tempat yang aman.";
+"recoveryKeyCopiedToClipboard"="Kunci Pemulihan telah disalin ke papan klip. Tolong simpan di tempat yang aman.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Recovery Key terekspor";
+"masterKeyExported"="Kunci Pemulihan terekspor";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Kunci Pemulihan telah diekspor ke bagian Offline sebagai MEGA-KUNCIPEMULIHAN.txt. Catatan: Ini akan dihapus jika anda keluar, harap simpan di tempat yang aman.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -783,7 +783,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Jangan gunakan HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Aktifkan pilihan ini jika transfer anda tidak dimulai. Dalam keadaan normal, HTTP cukup memuaskan karena seluruh transfer telah di-enkripsi.";
+"transfersSectionFooter"="Aktifkan pilihan ini jika transfer anda tidak dimulai. Dalam keadaan normal, HTTP cukup memuaskan karena seluruh transfer telah dienkripsi.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Opsi download";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -797,7 +797,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link pembatalan telah habis.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk menghapus akun Anda. Anda akan kehilangan semua data yang disimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk menghapus akun anda. Anda akan kehilangan semua data yang disimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Akun anda berhasil dihapus.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -2510,10 +2510,10 @@
 "No audio files found"="Tidak ada file audio yang ditemukan";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="Video tidak ditemukan";
-/* Navigation title for the photo explorer view */
-"All Images"="Semua Gambar";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="Tidak ada gambar ditemukan";
+/* Image title for the photo explorer */
+"home.images.title"="Gambar-gambar";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="No Images Found";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Beranda";
 /* Home Screen: Explorer view card title - Documents */

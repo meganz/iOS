@@ -258,10 +258,6 @@
 "foldersAndFile"="%d cartelle • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 cartella • %d file";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="In coda";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -294,8 +290,6 @@
 "capturePhotoVideo"="Scatta";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scansiona documento";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Foto";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Voce";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -636,6 +630,12 @@
 "settingsTitle"="Impostazioni";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="Anni";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="Foto";
+/* Photo view is empty */
+"photo.empty.title"="Nessuna foto trovata";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Cestino";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -979,7 +979,7 @@
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Quota di trasferimento";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
-"account.transferQuota.perMonth"="Trasferimimento di %@";
+"account.transferQuota.perMonth"="Banda di %@";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="Trasferimento [B]limitato[/B]";
 /* Cell title shown on the achievements view for registration achievement */
@@ -2510,10 +2510,10 @@
 "No audio files found"="Nessun file audio trovato";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="Nessun video trovato";
-/* Navigation title for the photo explorer view */
-"All Images"="Tutte le immagini";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="Nessuna immagine trovata";
+/* Image title for the photo explorer */
+"home.images.title"="Immagini";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="Nessuna immagine trovata";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
 /* Home Screen: Explorer view card title - Documents */

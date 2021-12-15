@@ -191,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="No Internet connection";
 /* Title shown when a folder doesn't have any files */
-"general.emptyFolder"="Empty Folder";
+"emptyFolder"="Empty Folder";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="No files in your Cloud Drive";
 /* Button title shown in empty views when you can 'Add files' */
@@ -215,7 +215,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Invite to MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
+"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invite Sent";
 /* Button title to allow the user postpone an action */
@@ -258,10 +258,6 @@
 "foldersAndFile"="%d folders • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 folder • %d files";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Queued";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -1033,7 +1029,7 @@
 /*  */
 "days"="days";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Logout";
+"logoutLabel"="Log out";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
@@ -1569,7 +1565,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Export Recovery Key";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Proceed to log out";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="You are about to log out, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
@@ -2515,7 +2511,7 @@
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="No videos found";
 /* Image title for the photo explorer */
-"home.images.title" = "Images";
+"home.images.title"="Images";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="No Images Found";
 /* Accessibility label for Home section in tabbar item */
@@ -2911,4 +2907,4 @@
 /* File extension: .zip. Commercial names should be stay on English */
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
-"general.choose"="Choose";
+"general.choose"="Select";

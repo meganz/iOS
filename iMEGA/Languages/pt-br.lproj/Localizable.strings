@@ -215,7 +215,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Adicionar contato ao MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
+"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Solicitação de contato enviada";
 /* Button title to allow the user postpone an action */
@@ -258,10 +258,6 @@
 "foldersAndFile"="%d pastas • 1 arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 pasta • %d arquivos";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Em fila";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -294,8 +290,6 @@
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Escanear documento";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Fotos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Áudio";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -636,6 +630,12 @@
 "settingsTitle"="Configurações";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Uploads da câmera";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="Anos";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="Fotos";
+/* Photo view is empty */
+"photo.empty.title"="No Photos Found";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Lixeira";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -2510,10 +2510,10 @@
 "No audio files found"="Não há arquivos de áudio";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="Não há arquivos de vídeo";
-/* Navigation title for the photo explorer view */
-"All Images"="Todas as imagens";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="Não há imagens";
+/* Image title for the photo explorer */
+"home.images.title"="Imagens";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="No Images Found";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Início";
 /* Home Screen: Explorer view card title - Documents */
