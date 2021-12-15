@@ -21,11 +21,6 @@ struct FileSystemRepository: FileRepositoryProtocol {
     func fileExists(at url: URL) -> Bool {
         fileManager.fileExists(atPath: url.path)
     }
-    
-    func fileTypeName(forFileExtension fileExtension: String) -> String? {
-        let dict = Helper.fileTypesDictionary() as? [String: String] ?? [:]
-        return dict[fileExtension.lowercased()]
-    }
 
     func cachedThumbnailURL(forHandle base64Handle: MEGABase64Handle) -> URL {
         let directory = appGroupSharedCacheURL.appendingPathComponent(Constants.thumbnailCacheDirectory, isDirectory: true)

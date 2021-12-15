@@ -5,6 +5,7 @@ struct MockNodeThumbnailUseCase: ThumbnailUseCaseProtocol {
     var getThumbnailResult: (Result<URL, ThumbnailErrorEntity>) = .failure(.generic)
     var getPreviewResult: (Result<URL, ThumbnailErrorEntity>) = .failure(.generic)
     var getThumbnailAndPreviewResult: (Result<(URL?, URL?), ThumbnailErrorEntity>) = .failure(.generic)
+    var placeholderFileType: MEGAFileType = "generic"
     
     func getCachedThumbnail(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
         completion(getThumbnailResult)
@@ -30,5 +31,9 @@ struct MockNodeThumbnailUseCase: ThumbnailUseCaseProtocol {
         getThumbnailAndPreviewResult
             .publisher
             .eraseToAnyPublisher()
+    }
+    
+    func thumbnailPlaceholderFileType(forNodeName: String) -> MEGAFileType {
+        placeholderFileType
     }
 }
