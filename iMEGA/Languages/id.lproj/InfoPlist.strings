@@ -1,0 +1,22 @@
+/* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSMicrophoneUsageDescription"="MEGA mengakses mikrofon anda saat merekam video, melakukan panggilan atau merekam pesan suara di dalam aplikasi.";
+/* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSCameraUsageDescription"="MEGA mengakses kamera anda ketika anda mengambil video, foto atau membuat panggilan di dalam aplikasi.";
+/* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryUsageDescription"="MEGA mengakses foto / video anda ketika anda mengunggahnya, membaginya melalui obrolan dan saat Unggahan Kamera diaktifkan.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="Mengizinkan akses ke buku alamat anda membantu anda dan orang lain menemukan teman dan membantu kami memberikan layanan yang lebih baik.";
+/* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryAddUsageDescription"="MEGA memerlukan akses ke pustaka foto anda untuk menambahkan foto dan video ke galeri perangkat anda";
+/* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSFaceIDUsageDescription"="MEGA mengakses Face ID untuk memungkinkan anda membuka kunci kode aplikasi dengan mudah saat anda mengaktifkan opsi ini.";
+/* Label for any 'Search' button, link, etc. - (String as short as possible). */
+"quickActionSearchString"="Cari";
+/*  */
+"quickActionUploadString"="Unggah";
+/* Title of the Offline section */
+"quickActionOfflineString"="Offline";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA mengakses lokasi anda ketika anda membaginya dengan kontak anda dalam obrolan atau ketika anda mengaktifkan “Unggah di Latar Belakang” untuk Unggah Kamera sehingga foto dan video anda diunggah saat lokasi anda berubah.";
+/* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
+"NSLocalNetworkUsageDescription"="Ini akan memungkinkan anda menggunakan MEGA untuk melakukan dan menerima panggilan melalui perangkat yang berada di Wi-Fi atau jaringan lokal yang sama.";
