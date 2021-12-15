@@ -12,7 +12,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         
         test(viewModel: sut,
              action: VerificationCodeAction.onViewReady,
-             expectedCommands: [.configView(phoneNumber: "+64 27 232 0000", screenTitle: NSLocalizedString("Add Phone Number", comment: ""))])
+             expectedCommands: [.configView(phoneNumber: "+64 27 232 0000", screenTitle: Strings.Localizable.addPhoneNumber)])
     }
     
     func testAction_onViewReady_unblockAccount() {
@@ -24,7 +24,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         
         test(viewModel: sut,
              action: VerificationCodeAction.onViewReady,
-             expectedCommands: [.configView(phoneNumber: "+64 27 232 0000", screenTitle: NSLocalizedString("Verify Your Account", comment: ""))])
+             expectedCommands: [.configView(phoneNumber: "+64 27 232 0000", screenTitle: Strings.Localizable.verifyYourAccount)])
     }
 
     func testAction_resendCode() {
@@ -93,10 +93,10 @@ final class VerificationCodeViewModelTests: XCTestCase {
     
     func testAction_checkVerificationCode_error() {
         let errorMessageDict: [CheckSMSErrorEntity: String] =
-            [.reachedDailyLimit: NSLocalizedString("You have reached the daily limit", comment: ""),
-             .codeDoesNotMatch: NSLocalizedString("The verification code doesn't match.", comment: ""),
-             .alreadyVerifiedWithAnotherAccount: NSLocalizedString("Your account is already verified", comment: ""),
-             .generic: NSLocalizedString("Unknown error", comment: "")]
+        [.reachedDailyLimit: Strings.Localizable.youHaveReachedTheDailyLimit,
+         .codeDoesNotMatch: Strings.Localizable.theVerificationCodeDoesnTMatch,
+         .alreadyVerifiedWithAnotherAccount: Strings.Localizable.yourAccountIsAlreadyVerified,
+         .generic: Strings.Localizable.unknownError]
         
         for (error, message) in errorMessageDict {
             let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),

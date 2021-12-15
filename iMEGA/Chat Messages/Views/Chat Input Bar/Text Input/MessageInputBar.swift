@@ -259,13 +259,13 @@ class MessageInputBar: UIView {
     private func configureEditField() {
         guard let editMessage = editMessage else {
             editViewHeightConstraint.constant = 0
-            sendButton.setImage(UIImage(named: "sendButton"), for: .normal)
+            sendButton.setImage(Asset.Images.Chat.InputToolbar.sendButton.image, for: .normal)
             sendButton.isEnabled = true
             return
         }
         editViewHeightConstraint.constant = 40
         editMessageLabel.text = editMessage.message.content
-        sendButton.setImage(UIImage(named: "confirmEdit"), for: .normal)
+        sendButton.setImage(Asset.Images.Chat.confirmEdit.image, for: .normal)
         sendButton.isEnabled = !editMessage.message.content.isEmpty
     }
     
@@ -274,7 +274,7 @@ class MessageInputBar: UIView {
         UIKeyCommand(
            action: #selector(MessageInputBar.sendButtonTapped),
            input: kMEGAUIKeyInputCarriageReturn,
-           discoverabilityTitle: NSLocalizedString("send", comment: "")
+           discoverabilityTitle: Strings.Localizable.send
        )
       ]
     }
@@ -346,7 +346,7 @@ class MessageInputBar: UIView {
         
         editViewTopConstraint.constant = editViewTopConstraintValueWhenCollapsed
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
-        expandCollapseButton.setImage(#imageLiteral(resourceName: "expand"), for: .normal)
+        expandCollapseButton.setImage(Asset.Images.Chat.InputToolbar.expand.image, for: .normal)
     }
     
     private func expandAnimationStart(completionHandler: ((Bool) -> Void)?) {
@@ -378,7 +378,7 @@ class MessageInputBar: UIView {
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
         editViewTopConstraint.constant = editViewTopConstraintValueWhenExpanded ?? editViewTopConstraintValueWhenCollapsed
         messageTextView.expandedHeight = expandedHeight
-        expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
+        expandCollapseButton.setImage(Asset.Images.Chat.InputToolbar.collapse.image, for: .normal)
     }
     
     private func keyboardShowNotification() -> NSObjectProtocol {

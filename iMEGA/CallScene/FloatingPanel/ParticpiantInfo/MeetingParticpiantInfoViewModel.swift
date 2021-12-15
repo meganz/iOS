@@ -135,18 +135,18 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         case .generic(let error):
             errorString = error
         case .ownEmailEntered:
-            errorString = NSLocalizedString("noNeedToAddYourOwnEmailAddress", comment: "")
+            errorString = Strings.Localizable.noNeedToAddYourOwnEmailAddress
         case .alreadyAContact:
-            errorString = NSLocalizedString("alreadyAContact", comment: "").replacingOccurrences(of: "%s", with: email)
+            errorString = Strings.Localizable.alreadyAContact(email)
         case .isInOutgoingContactRequest:
-            errorString = NSLocalizedString("dialog.inviteContact.outgoingContactRequest", comment: "Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user")
+            errorString = Strings.Localizable.Dialog.InviteContact.outgoingContactRequest
             errorString = errorString.replacingOccurrences(of: "[X]", with: email)
         }
         self.router.showInviteErrorMessage(errorString)
     }
         
     private func infoAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("info", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
                           image: UIImage(named: "InfoMeetings"),
                           style: .default) {
@@ -155,7 +155,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
     
     private func sendMessageAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("sendMessage", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
                           image: UIImage(named: "sendMessageMeetings"),
                           style: .default) {
@@ -182,7 +182,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
     
     private func addContactAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("addContact", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.addContact,
                           detail: nil,
                           image: UIImage(named: "addContactMeetings"),
                           style: .default) {

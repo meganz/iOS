@@ -118,7 +118,7 @@ extension ChatViewController {
         }
         
         if downloading {
-            SVProgressHUD.show(UIImage(named: "hudDownload")!, status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts"))
+            SVProgressHUD.show(UIImage(named: "hudDownload")!, status: Strings.Localizable.downloadStarted)
         }
     }
     
@@ -167,7 +167,7 @@ extension ChatViewController {
             if chatMessage.message.nodeList.size.uintValue == 1,
                var node = chatMessage.message.nodeList.node(at: 0),
                let name = node.name,
-               (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) {
+               (name.mnz_isVisualMediaPathExtension) {
                 if chatRoom.isPreview,
                    let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
                     node = authorizedNode

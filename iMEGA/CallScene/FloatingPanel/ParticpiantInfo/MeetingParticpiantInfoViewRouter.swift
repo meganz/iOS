@@ -32,7 +32,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
-            appGroupFilePathUseCase: MEGAAppGroupFilePathUseCase(fileManager: FileManager.default)
+            fileRepo: FileSystemRepository(fileManager: FileManager.default)
         )
         
         let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
@@ -87,11 +87,11 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     
     func showInviteSuccess(email: String) {
         let customModalAlertViewController = CustomModalAlertViewController()
-        customModalAlertViewController.image = UIImage(named: "inviteSent")
-        customModalAlertViewController.viewTitle = NSLocalizedString("inviteSent", comment: "")
-        customModalAlertViewController.detail = NSLocalizedString("theUsersHaveBeenInvited", comment: "")
+        customModalAlertViewController.image = Asset.Images.Contacts.inviteSent.image
+        customModalAlertViewController.viewTitle = Strings.Localizable.inviteSent
+        customModalAlertViewController.detail = Strings.Localizable.theUsersHaveBeenInvited
         customModalAlertViewController.boldInDetail = email
-        customModalAlertViewController.firstButtonTitle = NSLocalizedString("close", comment: "")
+        customModalAlertViewController.firstButtonTitle = Strings.Localizable.close
         customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
             customModalAlertViewController?.dismiss(animated: true, completion: nil)
         }

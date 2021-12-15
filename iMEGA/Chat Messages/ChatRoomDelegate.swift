@@ -45,15 +45,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         case .MEGAChatErrorTooMany:
             switch ReactionErrorType(rawValue: Int(request.number)) {
             case .user:
-                let title = String(format: NSLocalizedString("You have reached the maximum limit of %d reactions.", comment: ""), MEGAMaxReactionsPerMessagePerUser)
+                let title = Strings.Localizable.youHaveReachedTheMaximumLimitOfDReactions(MEGAMaxReactionsPerMessagePerUser)
                 let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                let cancel = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel)
+                let cancel = UIAlertAction(title: Strings.Localizable.ok, style: .cancel)
                 alertController.addAction(cancel)
                 chatViewController?.present(viewController: alertController)
             case .message:
-                let title = String(format: NSLocalizedString("This message has reached the maximum limit of %d reactions.", comment: ""), MEGAMaxReactionsPerMessage)
+                let title = String(format: Strings.Localizable.thisMessageHasReachedTheMaximumLimitOfDReactions(MEGAMaxReactionsPerMessage))
                 let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                let cancel = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel)
+                let cancel = UIAlertAction(title: Strings.Localizable.ok, style: .cancel)
                 alertController.addAction(cancel)
                 chatViewController?.present(viewController: alertController)
             default:
@@ -136,8 +136,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             if chatRoom.isPreview {
                 api.closeChatPreview(chat.chatId)
                 chatViewController?.reloadInputViews()
-                let statusString = NSLocalizedString("linkRemoved",
-                                                     comment: "Message shown when the link to a file or folder has been removed")
+                let statusString = Strings.Localizable.linkRemoved
                 chatViewController?.updateJoinView()
                 SVProgressHUD.showInfo(withStatus: statusString)
             } else {
@@ -609,8 +608,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         } else if whoIsTyping.keys.count == 1 {
             if let handle = whoIsTyping.keys.first,
                 let username = username(forHandle: handle) {
-                let localizedString = NSLocalizedString("isTyping", comment: "A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime.")
-                let typingIndicatorString = String(format: localizedString, username)
+                let typingIndicatorString = Strings.Localizable.isTyping(username)
                 let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10, weight: .medium)]
                 let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
                                                                                 attributes: attributes)
@@ -641,12 +639,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
             let localizedString: String?
             if keys.count > 2 {
-                localizedString = NSLocalizedString("moreThanTwoUsersAreTyping", comment: "text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
+                localizedString = Strings.Localizable.moreThanTwoUsersAreTyping(combinedUsername).mnz_removeWebclientFormatters()
             } else {
-                localizedString = NSLocalizedString("twoUsersAreTyping", comment: "Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
+                localizedString = Strings.Localizable.twoUsersAreTyping(combinedUsername).mnz_removeWebclientFormatters()
             }
 
-            if let typingIndicatorString = localizedString?.replacingOccurrences(of: "%1$s", with: combinedUsername) {
+            if let typingIndicatorString = localizedString {
                 let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10, weight: .medium)]
                 let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
                                                                                 attributes: attributes)

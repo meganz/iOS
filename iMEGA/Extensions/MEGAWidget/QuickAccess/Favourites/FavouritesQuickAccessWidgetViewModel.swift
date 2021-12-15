@@ -1,6 +1,5 @@
-
-import SwiftUI
 import Foundation
+import SwiftUI
 
 final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     
@@ -48,9 +47,9 @@ final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     
     private func imageForPatExtension(_ pathExtension: String) -> Image {
         if pathExtension != "" {
-            return Image(FileTypes().allTypes[pathExtension] ?? "generic")
+            return Image(FileTypes().allTypes[pathExtension] ?? Asset.Images.Filetypes.generic.name)
         } else {
-            return Image("folder")
+            return Image(Asset.Images.Filetypes.folder.name)
         }
     }
     

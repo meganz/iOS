@@ -7,7 +7,7 @@ protocol FilesExplorerViewConfiguration {
 
 struct DocumentExplorerViewConfiguration: FilesExplorerViewConfiguration {
     var title: String {
-        return NSLocalizedString("Documents", comment: "Title for document explorer view")
+        return Strings.Localizable.documents
     }
     
     var emptyStateType: EmptyStateType {

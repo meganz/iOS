@@ -25,7 +25,7 @@ def injectEnvironments(Closure body) {
 }
 
 pipeline {
-   agent any
+   agent { label 'mac-slave' }
    options {
         timeout(time: 3, unit: 'HOURS') 
         gitLabConnection('iosdev')

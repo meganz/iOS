@@ -245,14 +245,14 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     //MARK:- Private methods
     
     private func infoAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("info", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
                           image: UIImage(named: "InfoMeetings"),
                           style: .default) {}
     }
     
     private func sendMessageAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("sendMessage", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
                           image: UIImage(named: "sendMessageMeetings"),
                           style: .default) {}
@@ -273,7 +273,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     }
     
     private func addContactAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("addContact", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.addContact,
                           detail: nil,
                           image: UIImage(named: "addContactMeetings"),
                           style: .default) {}

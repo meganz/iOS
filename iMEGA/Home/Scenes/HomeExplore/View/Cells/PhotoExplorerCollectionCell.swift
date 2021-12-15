@@ -20,7 +20,7 @@ class PhotoExplorerCollectionCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView.image = UIImage(named: "image")
+        imageView.image = Asset.Images.Filetypes.image.image
     }
     
     var allowSelection: Bool = false {

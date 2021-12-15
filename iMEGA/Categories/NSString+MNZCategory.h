@@ -10,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, getter=mnz_isImagePathExtension) BOOL mnz_imagePathExtension;
 @property (nonatomic, readonly, getter=mnz_isVideoPathExtension) BOOL mnz_videoPathExtension;
+@property (nonatomic, readonly, getter=mnz_isVisualMediaPathExtension) BOOL mnz_visualMediaPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
 @property (nonatomic, readonly, getter=mnz_isEditableTextFilePathExtension) BOOL mnz_isEditableTextFilePathExtension;
 

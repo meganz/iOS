@@ -1,3 +1,4 @@
+import Foundation
 
 final class FavouritesViewController: UIViewController, ViewType {
     
@@ -101,7 +102,8 @@ extension FavouritesViewController: UITableViewDataSource {
         
         let nodeOpener = NodeOpener(navigationController: navigationController)
         let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository(sdk: MEGASdkManager.sharedMEGASdk(), nodeHandle: nodeModel.handle))
-        let nodeThumbnailUseCase = NodeThumbnailUseCase(repository: NodeThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), nodeHandle: nodeModel.handle))
+        let thumbnailRepo = ThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), fileRepo: FileSystemRepository(fileManager: FileManager.default))
+        let nodeThumbnailUseCase = ThumbnailUseCase(repository: thumbnailRepo)
         let accountUseCase = AccountUseCase(repository: AccountRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         let cellViewModel = NodeCellViewModel(nodeOpener: nodeOpener,
                                               nodeModel: nodeModel,

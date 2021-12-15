@@ -5,7 +5,7 @@ final class DefaultTabTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NSLocalizedString("Default Tab", comment: "Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app.")
+        title = Strings.Localizable.defaultTab
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
     }

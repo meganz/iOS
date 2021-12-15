@@ -18,10 +18,10 @@ class EnterEmailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = NSLocalizedString("Enter Email", comment: "Text used as a section title or similar")
+        navigationItem.title = Strings.Localizable.enterEmail
         
-        descriptionLabel.text = NSLocalizedString("Select from phone contacts or enter multiple email addresses", comment: "Text shown to explain how and where you can invite friends")
-        instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
+        descriptionLabel.text = Strings.Localizable.selectFromPhoneContactsOrEnterMultipleEmailAddresses
+        instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
         customizeTagsField()
 
         disableInviteContactsButton()
@@ -111,7 +111,7 @@ class EnterEmailViewController: UIViewController {
     }
 
     private func disableInviteContactsButton() {
-        inviteContactsButton.setTitle(NSLocalizedString("invite", comment: "A button on a dialog which invites a contact to join MEGA."), for: .normal)
+        inviteContactsButton.setTitle(Strings.Localizable.invite, for: .normal)
         inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
 
@@ -119,8 +119,8 @@ class EnterEmailViewController: UIViewController {
         inviteContactsButton.mnz_setupPrimary(traitCollection)
         let tagsNumber = tagsField.tags.count + (tagsField.text?.mnz_isValidEmail() ?? false ? 1 : 0)
         let inviteContactsString = tagsNumber == 1 ?
-            NSLocalizedString("Invite 1 contact", comment: "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tagsNumber)) :
-            NSLocalizedString("Invite [X] contacts", comment: "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tagsNumber))
+        Strings.Localizable.invite1Contact.replacingOccurrences(of: "[X]", with: String(tagsNumber)) :
+        Strings.Localizable.inviteXContacts.replacingOccurrences(of: "[X]", with: String(tagsNumber))
         inviteContactsButton.setTitle(inviteContactsString, for: .normal)
     }
 
@@ -144,7 +144,7 @@ class EnterEmailViewController: UIViewController {
         tagsField.cornerRadius = 16
         
         tagsField.placeholderColor = .mnz_label().withAlphaComponent(0.2)
-        tagsField.placeholder = NSLocalizedString("insertYourFriendsEmails", comment: "")
+        tagsField.placeholder = Strings.Localizable.insertYourFriendsEmails
         
         configureTagFieldEvents()
     }
@@ -153,7 +153,7 @@ class EnterEmailViewController: UIViewController {
     @IBAction func inviteContactsTapped(_ sender: UIButton) {
         if let text = tagsField.text, text.mnz_isValidEmail() {
             tagsField.textField.textColor = .mnz_label()
-            instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             tagsField.addTag(text)
         }
@@ -198,7 +198,7 @@ extension EnterEmailViewController: ContactsPickerViewControllerDelegate {
         values.forEach { (email) in
             tagsField.addTag(email)
             
-            instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             
             if tagsField.tags.count == 0 {
@@ -230,7 +230,7 @@ extension EnterEmailViewController {
         }
 
         tagsField.onDidRemoveTag = { field, tag in
-            self.instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
+            self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
             
             if self.tagsField.tags.count > 0 {
                 self.enableInviteContactsButton()
@@ -242,7 +242,7 @@ extension EnterEmailViewController {
         tagsField.onDidChangeText = { _, text in
             if text!.mnz_isValidEmail() || self.tagsField.tags.count > 0 {
                 self.tagsField.textField.textColor = .mnz_label()
-                self.instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
+                self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
                 self.instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
                 self.enableInviteContactsButton()
             } else {
@@ -260,13 +260,13 @@ extension EnterEmailViewController {
             }
             if text.mnz_isValidEmail() {
                 self.tagsField.textField.textColor = .mnz_label()
-                self.instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
+                self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
                 self.instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
                 
                 return true
             } else {
                 self.tagsField.textField.textColor = .mnz_red(for: self.traitCollection)
-                self.instructionsLabel.text = NSLocalizedString("theEmailAddressFormatIsInvalid", comment: "Add contacts and share dialog error message when user try to add wrong email address")
+                self.instructionsLabel.text = Strings.Localizable.theEmailAddressFormatIsInvalid
                 
                 return false
             }

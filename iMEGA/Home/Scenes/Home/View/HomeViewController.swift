@@ -271,7 +271,7 @@ final class HomeViewController: UIViewController {
             target: self,
             action: .didTapNewChat
         )
-        startConversationItem.accessibilityLabel = NSLocalizedString("startConversation", comment: "start a chat/conversation")
+        startConversationItem.accessibilityLabel = Strings.Localizable.startConversation
         self.startConversationItem = startConversationItem
 
         let startUploadBarButtonItem = UIBarButtonItem(
@@ -280,7 +280,7 @@ final class HomeViewController: UIViewController {
             target: self,
             action: .didTapNewUpload
         )
-        startUploadBarButtonItem.accessibilityLabel = NSLocalizedString("upload", comment: "")
+        startUploadBarButtonItem.accessibilityLabel = Strings.Localizable.upload
         self.startUploadBarButtonItem = startUploadBarButtonItem
 
         navigationItem.setRightBarButtonItems([startUploadBarButtonItem, startConversationItem], animated: false)
@@ -574,7 +574,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             case .download:
                 SVProgressHUD.show(
                     UIImage(named: "hudDownload")!,
-                    status: NSLocalizedString("downloadStarted", comment: "Message shown when a download starts")
+                    status: Strings.Localizable.downloadStarted
                 )
                 node.mnz_downloadNode()
 

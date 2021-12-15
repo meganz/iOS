@@ -10,7 +10,7 @@ class ImportTextActivity: UIActivity, BrowserViewControllerDelegate {
     }
 
     override var activityTitle: String? {
-        return NSLocalizedString("Import to Cloud Drive", comment: "Button title that triggers the importing link action")
+        return Strings.Localizable.importToCloudDrive
     }
     
     override var activityImage: UIImage? {

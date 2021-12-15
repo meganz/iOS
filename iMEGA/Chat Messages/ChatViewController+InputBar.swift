@@ -120,7 +120,7 @@ extension ChatViewController {
         }
             
         let navController = MEGANavigationController(rootViewController: shareLocationViewController)
-        navController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: ""))
+        navController.addLeftDismissButton(withText: Strings.Localizable.cancel)
         present(viewController: navController)
     }
     
@@ -174,7 +174,7 @@ extension ChatViewController {
         if UIDevice.current.iPadDevice {
             let navController = MEGANavigationController(rootViewController: addToChatViewController)
             navController.navigationBar.isTranslucent = false
-            navController.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: ""))
+            navController.addLeftDismissButton(withText: Strings.Localizable.cancel)
             navController.modalPresentationStyle = .popover
 
             if let popover = navController.popoverPresentationController {
@@ -268,7 +268,7 @@ extension ChatViewController {
     }
     
     private func postMessageSentAccessibilityNotification() {
-        postAccessibilityNotification(message: NSLocalizedString("message sent", comment: ""))
+        postAccessibilityNotification(message: Strings.Localizable.messageSent)
     }
     
     private func postAccessibilityNotification(message: String) {
@@ -284,9 +284,9 @@ extension ChatViewController {
             case .complete:
                 self.postMessageSentAccessibilityNotification()
             case .failed:
-                self.postAccessibilityNotification(message: NSLocalizedString("failed to send the message", comment: ""))
+                self.postAccessibilityNotification(message: Strings.Localizable.failedToSendTheMessage)
             case .cancelled:
-                self.postAccessibilityNotification(message: NSLocalizedString("message sending cancelled", comment: ""))
+                self.postAccessibilityNotification(message: Strings.Localizable.messageSendingCancelled)
             default:
                 break
             }
@@ -329,10 +329,10 @@ extension ChatViewController {
                 return
             }
             
-            let title = NSLocalizedString("error", comment: "")
+            let title = Strings.Localizable.error
             let message = error?.localizedDescription
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: nil))
+            alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel, handler: nil))
             
             DispatchQueue.main.async {
                 self.present(viewController: alertController)
@@ -372,13 +372,13 @@ extension ChatViewController {
                     errors.count == 1 {
                     message = error.localizedDescription
                 } else {
-                    message = NSLocalizedString("shareExtensionUnsupportedAssets", comment: "")
+                    message = Strings.Localizable.shareExtensionUnsupportedAssets
                 }
                 
-                let alertController = UIAlertController(title: NSLocalizedString("error", comment: ""),
+                let alertController = UIAlertController(title: Strings.Localizable.error,
                                                         message: message,
                                                         preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""),
+                alertController.addAction(UIAlertAction(title: Strings.Localizable.ok,
                                                         style: .cancel,
                                                         handler: nil))
                 
@@ -607,9 +607,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        let selectionActionText = NSLocalizedString("Send (%d)", comment: "Used in Photos app browser view to send the photos from the view to the chat.")
-        let selectionActionDisabledText = NSLocalizedString("send", comment: "Used in Photos app browser view as a disabled action when there is no assets selected")
-        let albumTableViewController = AlbumsTableViewController(selectionActionText: selectionActionText,
+        let selectionActionDisabledText = Strings.Localizable.send
+        let albumTableViewController = AlbumsTableViewController(selectionActionType: AlbumsSelectionActionType.send,
                                                                  selectionActionDisabledText: selectionActionDisabledText) { [weak self] assets in
                                                                     guard let `self` = self else {
                                                                         return
@@ -716,19 +715,19 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     func showLocation() {
         let genericRequestDelegate = MEGAGenericRequestDelegate { (request, error) in
             if error.type != .apiOk {
-                let title = NSLocalizedString("Send Location", comment: "Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
+                let title = Strings.Localizable.sendLocation
                 
-                let message = NSLocalizedString("This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", comment: "Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
+                let message = Strings.Localizable.thisLocationWillBeOpenedUsingAThirdPartyMapsProviderOutsideTheEndToEndEncryptedMEGAPlatform
                 
-                let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
                 
-                let continueAction = UIAlertAction(title: NSLocalizedString("continue", comment: ""), style: .default) { _ in
+                let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { _ in
                     let enableGeolocationDelegate = MEGAGenericRequestDelegate { (request, error) in
                         if error.type != .apiOk {
-                            let alertTitle = NSLocalizedString("error", comment: "")
+                            let alertTitle = Strings.Localizable.error
                             let alertMessage = String(format: "Enable geolocation failed. Error: %@", error.name)
                             
-                            let enableGeolocationAlertAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""),
+                            let enableGeolocationAlertAction = UIAlertAction(title: Strings.Localizable.ok,
                                                                              style: .default,
                                                                              handler: nil)
                             let enableGeolocationAlertController = UIAlertController(title: alertTitle,
@@ -772,7 +771,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         }
         
         if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
-            let message = NSLocalizedString("It is not possible to record voice messages while there is a call in progress", comment: "Message shown when there is an ongoing call and the user tries to record a voice message")
+            let message = Strings.Localizable.itIsNotPossibleToRecordVoiceMessagesWhileThereIsACallInProgress
             SVProgressHUD.setDefaultMaskType(.clear)
             SVProgressHUD.showError(withStatus: message)
             return false

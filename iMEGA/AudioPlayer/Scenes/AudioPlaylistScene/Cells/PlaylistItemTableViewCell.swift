@@ -40,7 +40,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
             }
             
         } else {
-            thumbnailImageView.image = UIImage(named: "defaultArtwork")
+            thumbnailImageView.image = Asset.Images.AudioPlayer.defaultArtwork.image
         }
         
         thumbnailImageView.layer.cornerRadius = 8.0

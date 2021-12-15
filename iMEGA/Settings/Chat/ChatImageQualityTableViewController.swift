@@ -7,7 +7,7 @@ class ChatImageQualityTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = NSLocalizedString("Image Quality", comment: "Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original)")
+        navigationItem.title = Strings.Localizable.imageQuality
         
         updateAppearance()
     }
@@ -46,16 +46,16 @@ class ChatImageQualityTableViewController: UITableViewController {
 
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = NSLocalizedString("Automatic", comment: "Label indicating that Send smaller size images through cellular networks and original size images through wifi")
-            cell.detailTextLabel?.text = NSLocalizedString("Send smaller size images through cellular networks and original size images through wifi", comment: "Description of Automatic Image Quality option")
+            cell.textLabel?.text = Strings.Localizable.automatic
+            cell.detailTextLabel?.text = Strings.Localizable.sendSmallerSizeImagesThroughCellularNetworksAndOriginalSizeImagesThroughWifi
 
         case 1:
-            cell.textLabel?.text = NSLocalizedString("high", comment: "Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.")
-            cell.detailTextLabel?.text = NSLocalizedString("Send original size, increased quality images", comment: "Description of High Image Quality option")
+            cell.textLabel?.text = Strings.Localizable.high
+            cell.detailTextLabel?.text = Strings.Localizable.sendOriginalSizeIncreasedQualityImages
 
         case 2:
-            cell.textLabel?.text = NSLocalizedString("Optimised", comment: "Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats")
-            cell.detailTextLabel?.text = NSLocalizedString("Send smaller size images optimised for lower data consumption", comment: "Description of Optimised Image Quality option")
+            cell.textLabel?.text = Strings.Localizable.optimised
+            cell.detailTextLabel?.text = Strings.Localizable.sendSmallerSizeImagesOptimisedForLowerDataConsumption
         
         default:
             return cell

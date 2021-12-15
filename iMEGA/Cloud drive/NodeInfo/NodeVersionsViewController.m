@@ -171,7 +171,7 @@
         }
     
     } else {
-        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        if (node.name.mnz_isVisualMediaPathExtension) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [[[MEGASdkManager sharedMEGASdk] versionsForNode:self.node] mnz_mediaNodesMutableArrayFromNodeList];
             
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeNodeVersions presentingNode:node preferredIndex:0];

@@ -11,12 +11,11 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
                                                authUseCase: MockAuthUseCase(isUserLoggedIn: true))
         sut.dispatch(.onViewLoaded)
         
-        let title = NSLocalizedString("dialog.turnOnNotifications.label.title", comment: "The title of Turn on Notifications view")
-        let description = NSLocalizedString("dialog.turnOnNotifications.label.description", comment: "The description of Turn on Notifications view")
-        let stepOne = NSLocalizedString("dialog.turnOnNotifications.label.stepOne", comment: "First step to turn on notifications")
-        let stepTwo = NSLocalizedString("dialog.turnOnNotifications.label.stepTwo", comment: "Second step to turn on notifications")
-        let stepThree = NSLocalizedString("dialog.turnOnNotifications.label.stepThree", comment: "Third step to turn on notifications")
-        
+        let title = Strings.Localizable.Dialog.TurnOnNotifications.Label.title
+        let description = Strings.Localizable.Dialog.TurnOnNotifications.Label.description
+        let stepOne = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepOne
+        let stepTwo = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepTwo
+        let stepThree = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepThree
         
         let expectedNotificationsModel = TurnOnNotificationsModel(headerImageName: "groupChat",
                                                           title: title,
@@ -27,8 +26,8 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
                                                           stepTwo: stepTwo,
                                                           stepThreeImageName: "allowNotifications",
                                                           stepThree: stepThree,
-                                                          openSettingsTitle: NSLocalizedString("dialog.turnOnNotifications.button.primary", comment: "Title of the button to open Settings"),
-                                                          dismissTitle: NSLocalizedString("Dismiss", comment: ""))
+                                                          openSettingsTitle: Strings.Localizable.Dialog.TurnOnNotifications.Button.primary,
+                                                          dismissTitle: Strings.Localizable.dismiss)
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedNotificationsModel)])
     }
     

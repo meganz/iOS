@@ -23,11 +23,11 @@ class InviteContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
-        addFromContactsLabel.text = NSLocalizedString("addFromContacts", comment: "Item menu option to add a contact through your device app Contacts")
-        enterEmailLabel.text = NSLocalizedString("Enter Email", comment: "Text used as a section title or similar")
-        scanQrCodeLabel.text = NSLocalizedString("scanCode", comment: "")
-        moreLabel.text = NSLocalizedString("more", comment: "")
+        navigationItem.title = Strings.Localizable.inviteContact
+        addFromContactsLabel.text = Strings.Localizable.addFromContacts
+        enterEmailLabel.text = Strings.Localizable.enterEmail
+        scanQrCodeLabel.text = Strings.Localizable.scanCode
+        moreLabel.text = Strings.Localizable.more
 
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }
@@ -108,7 +108,7 @@ class InviteContactViewController: UIViewController {
     }
 
     @IBAction func moreButtonTapped(_ sender: Any) {
-        let items = [NSLocalizedString("contact.invite.message", comment: ""), userLink]
+        let items = [Strings.Localizable.Contact.Invite.message, userLink]
         let activity = UIActivityViewController(activityItems: items, applicationActivities: [])
         activity.popoverPresentationController?.sourceView = moreLabel
         activity.popoverPresentationController?.sourceRect = moreLabel.frame
@@ -121,7 +121,7 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         switch result {
         case .failed:
-            controller.present(UIAlertController(title: "Something went wrong", message: "Try it later", preferredStyle: .alert), animated: true, completion: nil)
+            controller.present(UIAlertController(title: Strings.Localizable.somethingWentWrong, message: "Try it later", preferredStyle: .alert), animated: true, completion: nil)
 
         case .cancelled, .sent:
             controller.dismiss(animated: true, completion: nil)
@@ -139,7 +139,7 @@ extension InviteContactViewController: ContactsPickerViewControllerDelegate {
         let composeVC = MFMessageComposeViewController()
         composeVC.messageComposeDelegate = self
         composeVC.recipients = values
-        composeVC.body = NSLocalizedString("contact.invite.message", comment: "") + " " + self.userLink
+        composeVC.body = Strings.Localizable.Contact.Invite.message + " " + self.userLink
         self.present(composeVC, animated: true, completion: nil)
     }
 }

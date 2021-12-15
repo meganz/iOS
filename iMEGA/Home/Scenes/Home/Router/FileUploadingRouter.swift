@@ -26,7 +26,7 @@ final class FileUploadingRouter {
 
     private func presentPhotoAlbumSelection(completion: @escaping (([PHAsset], MEGANode) -> Void)) {
         let albumTableViewController = AlbumsTableViewController(
-            selectionActionText: HomeLocalisation.uploadWithNumber.rawValue,
+            selectionActionType: AlbumsSelectionActionType.upload,
             selectionActionDisabledText: HomeLocalisation.upload.rawValue
         ) { [weak self] assets in
             asyncOnMain {

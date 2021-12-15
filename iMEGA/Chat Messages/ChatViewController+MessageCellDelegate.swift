@@ -23,7 +23,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         }
         var actions = [ActionSheetAction]()
         
-        let infoAction = ActionSheetAction(title: NSLocalizedString("info", comment: ""), detail: nil, image: nil, style: .default) { [weak self] in
+        let infoAction = ActionSheetAction(title: Strings.Localizable.info, detail: nil, image: nil, style: .default) { [weak self] in
             guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
                 return
             }
@@ -39,7 +39,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         
         let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: userEmail)
         if user == nil || user?.visibility != MEGAUserVisibility.visible {
-            let addContactAction = ActionSheetAction(title: NSLocalizedString("addContact", comment: ""), detail: nil, image: nil, style: .default) {
+            let addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: nil, style: .default) {
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
                 }
@@ -52,7 +52,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         
         if chatRoom.ownPrivilege == .moderator,
         chatRoom.isGroup {
-            let removeParticipantAction = ActionSheetAction(title: NSLocalizedString("removeParticipant", comment: ""), detail: nil, image: nil, style: .default) {
+            let removeParticipantAction = ActionSheetAction(title: Strings.Localizable.removeParticipant, detail: nil, image: nil, style: .default) {
                 MEGASdkManager.sharedMEGAChatSdk().remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
             }
             actions.append(removeParticipantAction)
@@ -159,7 +159,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                 }
                 
                 if let name = node?.name,
-                    (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) {
+                    (name.mnz_isVisualMediaPathExtension) {
                     var mediaNodesArrayIndex = 0
                     var foundIndex: Int?
                     let mediaNodesArray = messages.compactMap { message -> MEGANode? in
@@ -167,7 +167,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                               localChatMessage.message.type == .attachment,
                               localChatMessage.message.nodeList.size.intValue > 0,
                               let node = localChatMessage.message.nodeList.node(at: 0),
-                              (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) else {
+                              name.mnz_isVisualMediaPathExtension else {
                             return nil
                         }
                         

@@ -57,7 +57,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = UIImage(named: "hangCallMeetingAction")
-        endQuickActionView.name = NSLocalizedString("leave", comment: "")
+        endQuickActionView.name = Strings.Localizable.leave
         updateInTheMeetingLabel()
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
         flipQuickActionView.disabled = true
@@ -69,12 +69,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
         let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
         quickActions.forEach { $0?.properties = quickActionProperties }
         
-        [cameraQuickActionView: "Camera",
-           muteQuickActionView: "mute",
-        speakerQuickActionView: "meetings.quickAction.speaker",
-           flipQuickActionView: "meetings.quickAction.flip"
+        [cameraQuickActionView: Strings.Localizable.camera,
+           muteQuickActionView: Strings.Localizable.mute,
+        speakerQuickActionView: Strings.Localizable.Meetings.QuickAction.speaker,
+           flipQuickActionView: Strings.Localizable.Meetings.QuickAction.flip
         ].forEach { (view, key) in
-            view?.name = NSLocalizedString(key, comment: "")
+            view?.name = key
         }
         
         viewModel.invokeCommand = { [weak self] in
@@ -206,7 +206,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     }
     
     private func updateInTheMeetingLabel() {
-        participantsCountLabel.text = String(format: NSLocalizedString("meetings.panel.ParticipantsCount", comment: ""), callParticipants.count)
+        participantsCountLabel.text = Strings.Localizable.Meetings.Panel.participantsCount(callParticipants.count)
     }
 }
 

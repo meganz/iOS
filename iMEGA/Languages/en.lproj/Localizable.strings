@@ -294,8 +294,6 @@
 "capturePhotoVideo"="Capture";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scan Document";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Photos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Voice";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -636,6 +634,12 @@
 "settingsTitle"="Settings";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="Years";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="Photos";
+/* Photo view is empty */
+"photo.empty.title"="No Photos Found";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Rubbish Bin";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -2510,10 +2514,10 @@
 "No audio files found"="No audio files found";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="No videos found";
-/* Navigation title for the photo explorer view */
-"All Images"="All Images";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="No images found";
+/* Image title for the photo explorer */
+"home.images.title" = "Images";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="No Images Found";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
 /* Home Screen: Explorer view card title - Documents */

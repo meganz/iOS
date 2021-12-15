@@ -34,11 +34,11 @@ struct QuickAccessWidgetView: View {
             if entry.value.items.count == 0 {
                 switch entry.link {
                 case SectionDetail.recents.link:
-                    emptyView("recentsEmptyState", NSLocalizedString("No recent activity", comment: "Message shown when the user has not recent activity in their account."))
+                    emptyView(Asset.Images.EmptyStates.recentsEmptyState.name, Strings.Localizable.noRecentActivity)
                 case SectionDetail.favourites.link:
-                    emptyView("favouritesEmptyState", NSLocalizedString("No Favourites", comment: "Text describing that there is not any node marked as favourite"))
+                    emptyView(Asset.Images.EmptyStates.favouritesEmptyState.name, Strings.Localizable.noFavourites)
                 default:
-                    emptyView("offlineEmptyState", NSLocalizedString("offlineEmptyState_title", comment: "Title shown when the Offline section is empty, when you don't have download any files. Keep the upper."))
+                    emptyView(Asset.Images.EmptyStates.offlineEmptyState.name, Strings.Localizable.offlineEmptyStateTitle)
                 }
             } else {
                 GridView(items: entry.value.items)
@@ -47,7 +47,7 @@ struct QuickAccessWidgetView: View {
                 if entry.value.items.count == 8 {
                     HStack (alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
                         Spacer()
-                        Text(NSLocalizedString("VIEW MORE", comment:"Text indicating to the user that can perform an action to view more results"))
+                        Text(Strings.Localizable.viewMore)
                             .font(.system(size: 10, weight: .medium, design: .default))
                             .opacity(0.2)
                         Spacer()
@@ -96,7 +96,7 @@ struct QuickAccessWidgetView: View {
             Spacer()
             HStack (alignment: .center, spacing: 0, content: {
                 Spacer()
-                Text(NSLocalizedString("login", comment: "Button title which triggers the action to login in your MEGA account"))
+                Text(Strings.Localizable.login)
                     .font(.system(size: 17, weight: .semibold, design: .default))
                     .foregroundColor(Color("#00A886"))
                 Spacer()
@@ -118,7 +118,7 @@ struct QuickAccessWidgetView: View {
             Spacer()
             HStack (alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
                 Spacer()
-                Text(NSLocalizedString("loading", comment: "state previous to import a file"))
+                Text(Strings.Localizable.loading)
                     .font(.system(size: 20, weight: .medium, design: .default))
                 Spacer()
             })
