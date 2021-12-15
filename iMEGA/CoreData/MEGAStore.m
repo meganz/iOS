@@ -117,22 +117,6 @@
     [self saveContext:self.managedObjectContext];
 }
 
-- (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path context:(NSManagedObjectContext *)context {
-    if (!node.base64Handle || !path) return;
-    
-    MOOfflineNode *offlineNode = [NSEntityDescription insertNewObjectForEntityForName:@"OfflineNode" inManagedObjectContext:context];
-
-    [offlineNode setBase64Handle:node.base64Handle];
-    [offlineNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
-    [offlineNode setLocalPath:path];
-    [offlineNode setFingerprint:node.fingerprint];
-    [offlineNode setDownloadedDate:[NSDate date]];
-
-    MEGALogDebug(@"Save context: insert offline node: %@", offlineNode);
-    
-    [self saveContext:context];
-}
-
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path {
     if (self.managedObjectContext == nil) return nil;
     
