@@ -267,7 +267,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                           nodeThumbnailUseCase: mockNodeThumbnailUC,
                                           accountUseCase: mockAccountUC)
         
-        let secondaryLabelText = Strings.Localizable.General.emptyFolder
+        let secondaryLabelText = Strings.Localizable.emptyFolder
         test(viewModel: viewModel,
              action: .getFilesAndFolders,
              expectedCommands: [.setSecondaryLabel(secondaryLabelText)])

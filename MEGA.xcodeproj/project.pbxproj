@@ -65,7 +65,6 @@
 		12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682A275DBE0500C94335 /* TextEditorViewModel.swift */; };
 		12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */; };
 		12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */; };
-		12714F732769775E00CEC4A5 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		129C341E275FECF100019019 /* PhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129C341D275FECF100019019 /* PhotoBrowser.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
@@ -12511,7 +12510,6 @@
 				B6FD651E268D8EC600988A17 /* TransferEntity+Additions.swift in Sources */,
 				B6FD6515268D818D00988A17 /* MockShareUseCase.swift in Sources */,
 				B67B182025CAACC00022D6C0 /* SDKUserClient+Additions.swift in Sources */,
-				12714F732769775E00CEC4A5 /* Strings+Generated.swift in Sources */,
 				0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
