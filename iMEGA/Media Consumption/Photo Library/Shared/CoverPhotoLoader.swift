@@ -19,8 +19,8 @@ final class CoverPhotoLoader {
             subscription =
             thumbnailUseCase
                 .getCachedThumbnailAndPreview(for: handle)
-                .sink { _ in
-                } receiveValue: { output in
+                .replaceError(with: (nil, nil))
+                .sink { output in
                     if let url = output.1 {
                         subject.send(url)
                     } else if let url = output.0 {

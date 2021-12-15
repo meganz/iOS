@@ -145,8 +145,7 @@ final class NodeCellViewModel: ViewModelType {
                 self.invokeCommand?(.setIcon(folderImageName(for: nodeModel)))
             }
         } else if nodeModel.isFile {
-            let pathExtension = (nodeModel.name as NSString).pathExtension
-            let imageName = FileTypes().imageName(for: pathExtension.lowercased()) ?? "generic"
+            let imageName = FileTypes().fileType(forFileName: nodeModel.name)
             self.invokeCommand?(.setIcon(imageName))
         }
     }
