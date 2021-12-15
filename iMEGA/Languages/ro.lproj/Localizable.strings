@@ -215,7 +215,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Invită pe MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
+"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invitație trimisă";
 /* Button title to allow the user postpone an action */
@@ -258,10 +258,6 @@
 "foldersAndFile"="%d foldere • 1 fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 folder • %d fișier";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="În coada de așteptare";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -294,8 +290,6 @@
 "capturePhotoVideo"="Capturează";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scanează un document";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Fotografii";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Apel vocal";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -636,6 +630,12 @@
 "settingsTitle"="Setări";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Încărcări cameră";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="Ani";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="Fotografii";
+/* Photo view is empty */
+"photo.empty.title"="No Photos Found";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Coș de gunoi";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -2510,10 +2510,10 @@
 "No audio files found"="Niciun fișier audio găsit";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="Niciun videoclip găsit";
-/* Navigation title for the photo explorer view */
-"All Images"="Toate imaginile";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="Nicio imagine găsită";
+/* Image title for the photo explorer */
+"home.images.title"="Imagini";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="No Images Found";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Start";
 /* Home Screen: Explorer view card title - Documents */

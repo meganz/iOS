@@ -215,7 +215,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="เชิญเข้าร่วม MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
+"dialog.callAttempt.contactNotInMEGA"="ผู้ติดต่อของคุณ [X] ไม่ได้อยู่ใน MEGA ต้องเชิญผู้ติดต่อให้โทรผ่านการสนทนาที่เข้ารหัสของ MEGA ก่อน";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="ส่งคำเชิญแล้ว";
 /* Button title to allow the user postpone an action */
@@ -258,10 +258,6 @@
 "foldersAndFile"="%d โฟลเดอร์ • 1 ไฟล์";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 โฟลเดอร์ • %d ไฟล์";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="อยู่ในคิว";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -294,8 +290,6 @@
 "capturePhotoVideo"="จับภาพ";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="สแกนเอกสาร";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="รูปถ่าย";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="เสียง";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -636,6 +630,12 @@
 "settingsTitle"="ตั้งค่า";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="อัปโหลดจากกล้อง";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="ปี";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="รูปถ่าย";
+/* Photo view is empty */
+"photo.empty.title"="No Photos Found";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="ถังขยะ";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -959,7 +959,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในโทรศัพท์หรือกรอกอีเมลได้หลายที่อยู่";
 /*  */
-"insertYourFriendsEmails"="Insert your friends' emails:";
+"insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
 "howItWorks"="วิธีการทำงาน";
 /*  */
@@ -2239,7 +2239,7 @@
 /* Setting title for Doc scan view */
 "Save Settings"="บันทึกการตั้งค่า";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
-"cloudDrive.scanDocument.defaultName"="Scan %@";
+"cloudDrive.scanDocument.defaultName"="สแกน %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="ประเภทไฟล์";
 /* export Quality Option for Scan document */
@@ -2510,10 +2510,10 @@
 "No audio files found"="ไม่พบไฟล์เสียง";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="ไม่พบวิดีโอ";
-/* Navigation title for the photo explorer view */
-"All Images"="รูปภาพทั้งหมด";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="ไม่พบรูปภาพ";
+/* Image title for the photo explorer */
+"home.images.title"="รูปภาพ";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="No Images Found";
 /* Accessibility label for Home section in tabbar item */
 "Home"="หน้าแรก";
 /* Home Screen: Explorer view card title - Documents */
@@ -2733,83 +2733,83 @@
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="ดูตัวอย่างภาพด้วยความละเอียดสูง";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+"settings.fileManagement.useMobileData.footer"="เมื่อดูตัวอย่าง เราใช้ข้อมูลมือถือเพื่อโหลดภาพที่มีความละเอียดสูง หากปิดใช้งาน รูปภาพความละเอียดสูงจะถูกโหลดเมื่อซูมภาพเท่านั้น";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.title"="You already have an active subscription";
+"account.upgrade.alreadyHaveASubscription.title"="คุณมีการสมัครใช้งานอยู่แล้ว";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.message"="You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.";
+"account.upgrade.alreadyHaveASubscription.message"="คุณเคยสมัครแผน Pro ด้วย Google Play หรือ AppGallery กรุณายกเลิกการสมัครใช้งานด้วยตนเองได้ที่ Google Play หรือ Huawei AppGallery บนอุปกรณ์ของคุณก่อน แล้วลองอีกครั้ง";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
-"account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
+"account.upgrade.alreadyHaveACancellableSubscription.message"="คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการสมัครใช้งานปัจจุบันและดำเนินการซื้อต่อ";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="อยู่ระหว่างดำเนินการโทรอีก กรุณาวางสายปัจจุบันของคุณก่อนที่จะโทรออกอีกครั้ง";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
-"meetings.new.anotherAlreadyExistsError.endAndJoin"="End and join";
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="วางสายและเข้าร่วมใหม่";
 /* File extensions: .3dm and .3gp. Commercial names should be stay on English */
-"general.filetype.3DModel"="3D Model";
+"general.filetype.3DModel"="โมเดล 3D";
 /* File extension: .3ds. Commercial names should be stay on English */
-"general.filetype.3ds"="3D Scene";
+"general.filetype.3ds"="ฉาก 3D";
 /* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
 "general.filetype.rawImage"="รูปภาพ RAW";
 /* File extension: .3g2. Commercial names should be stay on English */
-"general.filetype.3g2"="Multimedia";
+"general.filetype.3g2"="มัลติมีเดีย";
 /* File extension: .7z. Commercial names should be stay on English */
 "general.filetype.7z"="บีบอัด 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="ไฟล์ฐานข้อมูล";
 /* File extension: .ans. Commercial names should be stay on English */
-"general.filetype.ans"="ANSI Text File";
+"general.filetype.ans"="ไฟล์ข้อความ ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="แอป Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X App";
+"general.filetype.app"="แอป Mac OS X";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ข้อความ ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
-"general.filetype.asf"="Streaming Video";
+"general.filetype.asf"="สตรีมมิ่งวิดีโอ";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="ไฟล์รูปภาพ Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
-"general.filetype.bmp"="Bitmap Image";
+"general.filetype.bmp"="ภาพบิตแมป";
 /* File extension: .bz2. Commercial names should be stay on English */
-"general.filetype.bz2"="UNIX Compressed";
+"general.filetype.bz2"="บีบอัด UNIX";
 /* File extension: .c. Commercial names should be stay on English */
 "general.filetype.c"="ไฟล์โค้ด C/C++";
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
 "general.filetype.cpp"="ไฟล์โค้ด C++";
 /* File extension. Commercial names should be stay on English */
-"general.filetype.cdr"="CorelDRAW Image";
+"general.filetype.cdr"="ภาพ CorelDRAW";
 /* File extension: .class. Commercial names should be stay on English */
-"general.filetype.class"="Java Class";
+"general.filetype.class"="คลาส Java";
 /* File extension: .com. Commercial names should be stay on English */
-"general.filetype.com"="DOS Command";
+"general.filetype.com"="คำสั่ง DOS";
 /* File extension: .css. Commercial names should be stay on English */
-"general.filetype.css"="CSS Style Sheet";
+"general.filetype.css"="สไตล์ชีต CSS";
 /* File extension: .dotx. Commercial names should be stay on English */
-"general.filetype.wordTemplate"="MS Word Template";
+"general.filetype.wordTemplate"="เทมเพลตของ MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
-"general.filetype.dxf"="DXF Image";
+"general.filetype.dxf"="ภาพ DXF";
 /* File extension: .eps. Commercial names should be stay on English */
-"general.filetype.eps"="EPS Image";
+"general.filetype.eps"="ภาพ EPS";
 /* File extension: .exe. Commercial names should be stay on English */
 "general.filetype.exe"="ไฟล์รันโปรแกรมได้";
 /* File extension: .flac. Commercial names should be stay on English */
-"general.filetype.flac"="Lossless Audio";
+"general.filetype.flac"="เสียง Lossless";
 /* File extension: .flv. Commercial names should be stay on English */
-"general.filetype.flv"="Flash Video";
+"general.filetype.flv"="วิดีโอ Flash";
 /* File extension: .fnt. Commercial names should be stay on English */
-"general.filetype.fnt"="Windows Font";
+"general.filetype.fnt"="แบบอักษรของ Windows";
 /* File extension: .fon. Commercial names should be stay on English */
 "general.filetype.fon"="ฟอนต์";
 /* File extension: .gadget. Commercial names should be stay on English */
-"general.filetype.gadget"="Windows Gadget";
+"general.filetype.gadget"="โปรแกรมเบ็ดเตล็ดของ Windows";
 /* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="ไฟล์ภาพ GIF";
 /* File extension: .gpx. Commercial names should be stay on English */
 "general.filetype.gpx"="GPS Exchange";
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
-"general.filetype.spreadsheet"="Spreadsheet";
+"general.filetype.spreadsheet"="สเปรดชีต";
 /* File extension: .gz. Commercial names should be stay on English */
-"general.filetype.gz"="GNU Compressed";
+"general.filetype.gz"="บีบอัดของ GNU";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
 "general.filetype.header"="Header";
 /* File extensions: .htm and .html. Commercial names should be stay on English */

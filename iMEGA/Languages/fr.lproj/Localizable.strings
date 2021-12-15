@@ -258,10 +258,6 @@
 "foldersAndFile"="%d dossiers • 1 fichier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 dossier • %d fichiers";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En attente";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -294,8 +290,6 @@
 "capturePhotoVideo"="Prendre une photo";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Numériser un document";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="Photos";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Appel vocal";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -636,6 +630,12 @@
 "settingsTitle"="Paramètres";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Téléversements de l’appareil photo";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="Années";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="Photos";
+/* Photo view is empty */
+"photo.empty.title"="Aucune photo n’a été trouvée";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Corbeille";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -653,7 +653,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politique de confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"general.cookiePolicy"="Politique sur les Témoins de connexion";
+"general.cookiePolicy"="Politique sur les Témoins";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Paramètres des Témoins";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -2510,10 +2510,10 @@
 "No audio files found"="Aucun fichier son n’a été trouvé";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="Aucune vidéo n’a été trouvée";
-/* Navigation title for the photo explorer view */
-"All Images"="Toutes les images";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="Aucune image n’a été trouvée";
+/* Image title for the photo explorer */
+"home.images.title"="Images";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="Aucune image n’a été trouvée";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Accueil";
 /* Home Screen: Explorer view card title - Documents */
@@ -2533,7 +2533,7 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Votre vie privée";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Nous utilisons des Témoins de connexion et des technologies semblables (« Témoins ») pour vous fournir nos services et améliorer votre expérience d’utilisation de nos services. Acceptez notre utilisation de Témoins dès le début de votre visite ou personnalisez les Témoins dans les paramètres des Témoins de connexion. Apprenez-en davantage dans notre [A]Politique sur les Témoins de connexion[/A].";
+"dialog.cookies.description"="Nous utilisons des Témoins de connexion et des technologies semblables (« Témoins ») pour vous fournir nos services et améliorer votre expérience d’utilisation de nos services. Acceptez notre utilisation de Témoins dès le début de votre visite ou personnalisez les Témoins dans les paramètres des Témoins. Apprenez-en davantage dans notre [A]Politique sur les Témoins[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accepter les témoins";
 /* Cookie settings dialog text. */
@@ -2545,7 +2545,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics"="Témoins de performance et d’analyse";
 /* Cookie settings dialog text. */
-"settings.cookies.performanceAndAnalytics.footer"="Ils nous permettent de comprendre comment vous utilisez nos services et nous fournissent des données que nous pouvons utiliser pour apporter des améliorations. Le refus de ces Témoins signifierait que moins de données seraient à notre disposition pour faciliter les améliorations conceptionnelles.";
+"settings.cookies.performanceAndAnalytics.footer"="Nous permettent de comprendre comment vous utilisez nos services et nous fournissent des données que nous pouvons utiliser pour apporter des améliorations. Le refus de ces Témoins signifierait que moins de données seraient à notre disposition pour faciliter les améliorations conceptionnelles.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La version a été créée avec succès en tant que nouveau fichier.";
 /* Text shown for the action create new file */

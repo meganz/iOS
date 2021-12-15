@@ -258,10 +258,6 @@
 "foldersAndFile"="%d 文件夹• 1 文件";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 文件夹• %d 文件";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="已入进程";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -294,8 +290,6 @@
 "capturePhotoVideo"="拍摄";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="扫描文档";
-/* Menu option from the `Add` section that allows the user to choose photo and upload it directly to MEGA. */
-"Photos"="照片";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="语音通话";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -636,6 +630,12 @@
 "settingsTitle"="设定";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相机上传";
+/* Title of Photo Years tab */
+"cameraUploads.years.title"="年";
+/* Navigation title for Photo Controller */
+"photo.navigation.title"="照片";
+/* Photo view is empty */
+"photo.empty.title"="无照片";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="垃圾桶";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -2510,10 +2510,10 @@
 "No audio files found"="无语音文件";
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="无视频";
-/* Navigation title for the photo explorer view */
-"All Images"="所有图片";
-/* Photo Explorer Screen: No images in the accoun t */
-"No images found"="无图片";
+/* Image title for the photo explorer */
+"home.images.title"="图片";
+/* Photo Explorer Screen: No images in the account */
+"home.images.empty"="无图片";
 /* Accessibility label for Home section in tabbar item */
 "Home"="主页";
 /* Home Screen: Explorer view card title - Documents */
@@ -2809,7 +2809,7 @@
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="电子表格";
 /* File extension: .gz. Commercial names should be stay on English */
-"general.filetype.gz"="GNU Compressed";
+"general.filetype.gz"="GNU压缩";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
 "general.filetype.header"="标头";
 /* File extensions: .htm and .html. Commercial names should be stay on English */
