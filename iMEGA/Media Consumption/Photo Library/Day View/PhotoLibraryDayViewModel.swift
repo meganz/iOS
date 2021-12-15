@@ -1,24 +1,16 @@
 import Foundation
 
-final class PhotoLibraryDayViewModel: PhotoLibraryModeViewModel {
-    @Published var photosByDayList: [PhotosByDay]
-    var libraryViewModel: PhotoLibraryContentViewModel
-    
-    var currentScrollPositionId: PhotoPositionId {
-        if let date = libraryViewModel.currentScrollPositionId {
+final class PhotoLibraryDayViewModel: PhotoLibraryModeViewModel<PhotosByDay> {
+    override var position: PhotoScrollPosition {
+        if let date = libraryViewModel.currentPosition {
             return date.removeTimestamp()
         } else {
-            return photosByDayList.last?.categoryDate
+            return super.position
         }
     }
     
-    init(libraryViewModel: PhotoLibraryContentViewModel) {
-        self.libraryViewModel = libraryViewModel
-        self.photosByDayList = libraryViewModel.library.allPhotosByDayList
-    }
-    
     func didTapDayCard(_ photoByDay: PhotosByDay) {
-        libraryViewModel.currentScrollPositionId = photoByDay.coverPhoto?.createTime
+        libraryViewModel.currentPosition = photoByDay.coverPhoto?.createTime
         libraryViewModel.selectedMode = .all
     }
 }

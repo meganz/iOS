@@ -1,14 +1,15 @@
 import Foundation
 
-typealias PhotoPositionId = Date?
-
-protocol PhotoLibraryModeViewModel: ObservableObject {
-    var currentScrollPositionId: PhotoPositionId { get }
-    func positionId<T: PhotosChronologicalCategory>(for category: T) -> PhotoPositionId
-}
-
-extension PhotoLibraryModeViewModel {
-    func positionId<T: PhotosChronologicalCategory>(for category: T) -> PhotoPositionId {
-        category.categoryDate
+class PhotoLibraryModeViewModel<T: PhotosChronologicalCategory>: ScrollPositioning, ObservableObject {
+    @Published var photoCategoryList: [T]
+    let libraryViewModel: PhotoLibraryContentViewModel
+    
+    var position: PhotoScrollPosition {
+        photoCategoryList.last?.categoryDate
+    }
+    
+    init(libraryViewModel: PhotoLibraryContentViewModel, photoCategoryList: [T]) {
+        self.libraryViewModel = libraryViewModel
+        self.photoCategoryList = photoCategoryList
     }
 }

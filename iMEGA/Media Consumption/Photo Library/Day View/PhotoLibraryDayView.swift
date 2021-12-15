@@ -6,18 +6,8 @@ struct PhotoLibraryDayView: View {
     var router: PhotoLibraryContentViewRouting
 
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVGrid(columns: PhotoLibraryConstants.cardColumns, spacing: 16) {
-                    ForEach(viewModel.photosByDayList) { photosByDay in
-                        cell(for: photosByDay)
-                    }
-                }
-                .padding()
-            }
-            .onAppear {
-                proxy.scrollTo(viewModel.currentScrollPositionId)
-            }
+        PhotoLibraryModeCardView(viewModel: viewModel) {
+            cell(for: $0)
         }
     }
     
@@ -30,7 +20,7 @@ struct PhotoLibraryDayView: View {
             router.card(for: photosByDay)
                 .frame(height: PhotoLibraryConstants.cardHeight)
         })
-            .id(viewModel.positionId(for: photosByDay))
+            .id(photosByDay.position)
             .buttonStyle(.plain)
     }
 }

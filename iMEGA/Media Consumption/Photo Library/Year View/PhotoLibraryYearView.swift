@@ -6,18 +6,8 @@ struct PhotoLibraryYearView: View {
     var router: PhotoLibraryContentViewRouting
     
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVGrid(columns: PhotoLibraryConstants.cardColumns, spacing: 16) {
-                    ForEach(viewModel.photosByYearList) { photosByYear in
-                        cell(for: photosByYear)
-                    }
-                }
-                .padding()
-            }
-            .onAppear {
-                proxy.scrollTo(viewModel.currentScrollPositionId)
-            }
+        PhotoLibraryModeCardView(viewModel: viewModel) {
+            cell(for: $0)
         }
     }
     
@@ -30,7 +20,7 @@ struct PhotoLibraryYearView: View {
             router.card(for: photosByYear)
                 .frame(height: PhotoLibraryConstants.cardHeight)
         })
-            .id(viewModel.positionId(for: photosByYear))
+            .id(photosByYear.position)
             .buttonStyle(.plain)
     }
 }

@@ -50,17 +50,21 @@ struct PhotoLibraryContentView: View {
         } else {
             switch viewModel.selectedMode {
             case .year:
-                let vm = PhotoLibraryYearViewModel(libraryViewModel: viewModel)
+                let vm = PhotoLibraryYearViewModel(libraryViewModel: viewModel,
+                                                   photoCategoryList: viewModel.library.photosByYearList)
                 PhotoLibraryYearView(viewModel: vm, router: router)
             case .month:
-                let vm = PhotoLibraryMonthViewModel(libraryViewModel: viewModel)
+                let vm = PhotoLibraryMonthViewModel(libraryViewModel: viewModel,
+                                                    photoCategoryList: viewModel.library.allPhotosByMonthList)
                 PhotoLibraryMonthView(viewModel: vm, router: router)
             case .day:
-                let vm = PhotoLibraryDayViewModel(libraryViewModel: viewModel)
+                let vm = PhotoLibraryDayViewModel(libraryViewModel: viewModel,
+                                                  photoCategoryList: viewModel.library.allPhotosByDayList)
                 PhotoLibraryDayView(viewModel: vm, router: router)
             case .all:
-                let vm = PhotoLibraryAllViewModel(libraryViewModel: viewModel)
-                PhotoLibraryAllView(viewModel: vm, router: router)
+                let vm = PhotoLibraryAllViewModel(libraryViewModel: viewModel,
+                                                  photoCategoryList: viewModel.library.allPhotosMonthSections)
+                PhotoLibraryAllView(viewModel: vm, router: router, calculator: ScrollPositionCalculator())
             }
         }
     }
