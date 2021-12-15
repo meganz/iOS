@@ -28,6 +28,6 @@ extension MEGANode {
         } else if devices > 0 {
             return Strings.Localizable.CloudDrive.Root.Backup.Folder.Device.subtitle(devices)
         }
-        return Strings.Localizable.General.emptyFolder
+        return Strings.Localizable.emptyFolder
     }
 }

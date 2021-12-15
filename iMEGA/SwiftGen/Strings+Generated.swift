@@ -745,6 +745,8 @@ public enum Strings {
     public static let emailPlaceholder = Strings.tr("Localizable", "emailPlaceholder")
     /// Emails do not match
     public static let emailsDoNotMatch = Strings.tr("Localizable", "emailsDoNotMatch")
+    /// Empty Folder
+    public static let emptyFolder = Strings.tr("Localizable", "emptyFolder")
     /// Clear Rubbish Bin
     public static let emptyRubbishBin = Strings.tr("Localizable", "emptyRubbishBin")
     /// All the items in the Rubbish Bin will be deleted
@@ -1221,7 +1223,7 @@ public enum Strings {
     public static let loggingOut = Strings.tr("Localizable", "loggingOut")
     /// Log in
     public static let login = Strings.tr("Localizable", "login")
-    /// Logout
+    /// Log out
     public static let logoutLabel = Strings.tr("Localizable", "logoutLabel")
     /// Lost your Authenticator device?
     public static let lostYourAuthenticatorDevice = Strings.tr("Localizable", "lostYourAuthenticatorDevice")
@@ -1655,7 +1657,7 @@ public enum Strings {
     public static let proLite = Strings.tr("Localizable", "Pro Lite")
     /// Pro membership plan expiring soon
     public static let proMembershipPlanExpiringSoon = Strings.tr("Localizable", "PRO membership plan expiring soon")
-    /// Proceed to logout
+    /// Proceed to log out
     public static let proceedToLogout = Strings.tr("Localizable", "proceedToLogout")
     /// Product %@ is not found, please contact ios@mega.nz
     public static func productNotFound(_ p1: Any) -> String {
@@ -3091,7 +3093,7 @@ public enum Strings {
         }
       }
       public enum CallAttempt {
-        /// Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact
+        /// Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact
         public static let contactNotInMEGA = Strings.tr("Localizable", "dialog.callAttempt.contactNotInMEGA")
       }
       public enum Confirmation {
@@ -3254,14 +3256,12 @@ public enum Strings {
       }
     }
     public enum General {
-      /// Choose
+      /// Select
       public static let choose = Strings.tr("Localizable", "general.choose")
       /// Cookie Policy
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
-      /// Empty Folder
-      public static let emptyFolder = Strings.tr("Localizable", "general.emptyFolder")
       public enum Button {
         /// Get Bonus
         public static let getBonus = Strings.tr("Localizable", "general.button.getBonus")
