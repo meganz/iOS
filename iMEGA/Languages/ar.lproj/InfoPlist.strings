@@ -1,0 +1,22 @@
+/* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSMicrophoneUsageDescription"="ميغا MEGA تستخدم الميكروفون الخاص بك عند التقاط فيديو أو إجراء مكالمة أو عند اجراء تسجيل صوتي من خلال التطبيق.";
+/* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSCameraUsageDescription"="ميغا MEGA تستخدم الميكروفون الخاص بك عند التقاط فيديو أو صورة  إجراء مكالمة من خلال التطبيق.";
+/* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryUsageDescription"="تطبيق ميغا MEGA يدخل الى الصور والفيديوهات عندما تقوم بالترفيع أو المشاركة بالمحادثات أو عندما تقوم بتفعيل الترفيع التلقائي لصور الكاميرا";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="إن السماح بالوصول إلى دفتر العناوين الخاص بك يساعدك ويساعد الآخرين في العثور على الأصدقاء ويساعدنا على تقديم خدمة أفضل.";
+/* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryAddUsageDescription"="يتطلب ميغا MEGA الوصول إلى مكتبة الصور الخاصة بك لإضافة الصور ومقاطع الفيديو إلى معرض الصور في جهازك";
+/* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSFaceIDUsageDescription"="تطبيق ميغا MEGA يستخدم خاصية التعرف على الوجه ليسمح لك بفتح التطبيق دون ادخال رمز المرور إذا فعلت هذه الخاصية.";
+/* Label for any 'Search' button, link, etc. - (String as short as possible). */
+"quickActionSearchString"="بحث";
+/*  */
+"quickActionUploadString"="ترفيع";
+/* Title of the Offline section */
+"quickActionOfflineString"="غير متصل بالانترنت";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"NSLocationAlwaysAndWhenInUseUsageDescription"=" تصل ميغا MEGA إلى موقعك عندما تشاركه مع جهات الاتصال الخاصة بك في محادثة أو عندما تقوم بتمكين ”ترفيع في خلفية التطبيق“ لترفيعات الكاميرا حتى يتم ترفيع الصور ومقاطع الفيديو الخاصة بك عندما يتغير موقعك.";
+/* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
+"NSLocalNetworkUsageDescription"="سيتيح لك ذلك استخدام ميغا MEGA لإجراء مكالمات واستقبالها من خلال الأجهزة الموجودة على نفس شبكة الواي فاي Wi-Fi أو شبكة الوصول المحلية";
