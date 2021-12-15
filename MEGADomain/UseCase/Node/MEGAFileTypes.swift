@@ -1,7 +1,13 @@
+typealias MEGAFileType = String
 
 struct FileTypes {
-    func imageName(for fileExtension: String) -> String? {
-        allTypes[fileExtension]
+    func fileType(forFileName name: String) -> MEGAFileType {
+        let fileExtension = URL(fileURLWithPath: name).pathExtension
+        return fileType(forFileExtension: fileExtension)
+    }
+    
+    func fileType(forFileExtension fileExtension: String) -> MEGAFileType {
+        allTypes[fileExtension.lowercased()] ?? "generic"
     }
     
     let allTypes = [

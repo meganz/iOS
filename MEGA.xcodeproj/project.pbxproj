@@ -781,7 +781,6 @@
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
 		8311A2CA25876A2E0027BEFF /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
-		8311A2F0258775E90027BEFF /* FileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311A2DE258775170027BEFF /* FileTypes.swift */; };
 		8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */; };
 		8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		83143B5C2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143B5B2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift */; };
@@ -1457,7 +1456,7 @@
 		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
 		B6730B092734EC4D00A9CF5F /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6730B082734EC4D00A9CF5F /* NodeModel.swift */; };
 		B6730B0F27361BEC00A9CF5F /* MVVM-R.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BF3824FF123700A3CBC8 /* MVVM-R.swift */; };
-		B6730B1E2738482600A9CF5F /* FileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311A2DE258775170027BEFF /* FileTypes.swift */; };
+		B6730B1E2738482600A9CF5F /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311A2DE258775170027BEFF /* MEGAFileTypes.swift */; };
 		B67507AB2762EABA0034F951 /* PhotoLibraryViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */; };
 		B67507AF276689530034F951 /* ScrollPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AE276689520034F951 /* ScrollPositioning.swift */; };
 		B67507B22766B8060034F951 /* PhotoLibrary+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */; };
@@ -1471,6 +1470,7 @@
 		B67507CD276938200034F951 /* FramePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507CC2769381F0034F951 /* FramePreferenceKey.swift */; };
 		B67507CF27694F120034F951 /* PhotosChronologicalCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507CE27694F120034F951 /* PhotosChronologicalCategory.swift */; };
 		B67507D12769520C0034F951 /* ScrollPositionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507D02769520C0034F951 /* ScrollPositionCalculator.swift */; };
+		B67507DC2769E8350034F951 /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311A2DE258775170027BEFF /* MEGAFileTypes.swift */; };
 		B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */; };
 		B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */; };
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
@@ -3054,7 +3054,7 @@
 		8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewController.swift; sourceTree = "<group>"; };
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
-		8311A2DE258775170027BEFF /* FileTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTypes.swift; sourceTree = "<group>"; };
+		8311A2DE258775170027BEFF /* MEGAFileTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFileTypes.swift; sourceTree = "<group>"; };
 		8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteContactViewController.swift; sourceTree = "<group>"; };
 		83143B5B2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLocalVideoRepositoryProtocol.swift; sourceTree = "<group>"; };
 		83143B672604A4540033161A /* CallLocalVideoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLocalVideoRepository.swift; sourceTree = "<group>"; };
@@ -4582,6 +4582,7 @@
 		0D213E66263A602500B43723 /* Node */ = {
 			isa = PBXGroup;
 			children = (
+				8311A2DE258775170027BEFF /* MEGAFileTypes.swift */,
 				0D213E67263A603E00B43723 /* NodeActionUseCase.swift */,
 				5B9199EF26E7C7BB00402358 /* ThumbnailUseCase.swift */,
 			);
@@ -5116,7 +5117,6 @@
 				8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */,
 				830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */,
 				830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */,
-				8311A2DE258775170027BEFF /* FileTypes.swift */,
 				5D9DC3CA253EB7AF0055F4C4 /* Foundation */,
 				B695E57E23275A3800D12B9E /* Functions */,
 				5B2417E620527F5900C8DDE2 /* Headers */,
@@ -11171,7 +11171,7 @@
 				5D075CDB25185FB50067D363 /* ContactRequest.swift in Sources */,
 				B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */,
 				B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */,
-				B6730B1E2738482600A9CF5F /* FileTypes.swift in Sources */,
+				B6730B1E2738482600A9CF5F /* MEGAFileTypes.swift in Sources */,
 				BFAC874C25FEF75F009CA3F6 /* AudioSessionRepositoryProtocol.swift in Sources */,
 				BF782D60269BA4BB0001D169 /* CameraPositionEntity.swift in Sources */,
 				5D1B240124AF5F4400ACE1C5 /* ParagraphStyleFactory.swift in Sources */,
@@ -12086,6 +12086,7 @@
 				B6FD64EB2689E29300988A17 /* RecentItemsUseCase.swift in Sources */,
 				83344F73258A1CE40052DB3C /* AuthRepositoryProtocol.swift in Sources */,
 				83655A5F259379C2001A0846 /* MEGAStore.m in Sources */,
+				B67507DC2769E8350034F951 /* MEGAFileTypes.swift in Sources */,
 				B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */,
 				B6F8CE212628232C0074CBBF /* CoreDataErrorHandler.m in Sources */,
 				B6FD64EE2689E2BD00988A17 /* FavouriteItemsRepositoryProtocol.swift in Sources */,
@@ -12151,7 +12152,6 @@
 				83655ACC25938568001A0846 /* MOMessage+CoreDataClass.m in Sources */,
 				83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */,
 				A82D5CDE26BC07AB00E73D27 /* PreferenceRepositoryProtocol.swift in Sources */,
-				8311A2F0258775E90027BEFF /* FileTypes.swift in Sources */,
 				83655ABA2593854D001A0846 /* MOMediaDestination+CoreDataClass.m in Sources */,
 				8375B76E25EFC7FF00B70F6B /* FavouritesQuickAccessWidgetViewModel.swift in Sources */,
 				83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */,
