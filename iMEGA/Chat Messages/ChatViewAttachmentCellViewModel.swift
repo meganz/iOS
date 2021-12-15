@@ -58,7 +58,7 @@ class ChatViewAttachmentCellViewModel {
         if message.nodeList.size.uintValue == 1 {
             return message.nodeList.node(at: 0)?.name ?? ""
         } else {
-            return String(format: NSLocalizedString("files", comment: ""), message.nodeList.size.uintValue)
+            return Strings.Localizable.files(message.nodeList.size.intValue)
         }
     }
     
@@ -85,7 +85,7 @@ class ChatViewAttachmentCellViewModel {
         if message.usersCount == 1 {
             return message.contactName(at: 0) ?? message.userName(at: 0)
         } else {
-            return NSLocalizedString("XContactsSelected", comment: "").replacingOccurrences(of: "[X]", with: "\(message.usersCount)", options: .literal, range: nil)
+            return Strings.Localizable.xContactsSelected.replacingOccurrences(of: "[X]", with: "\(message.usersCount)", options: .literal, range: nil)
         }
     }
     

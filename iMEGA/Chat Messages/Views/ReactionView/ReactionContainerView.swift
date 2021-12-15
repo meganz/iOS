@@ -20,7 +20,7 @@ class ReactionContainerView: UIView {
     weak var delegate: ReactionEmojiViewDelegate?
     open var addMoreView: UIButton = {
         let addMoreView = UIButton()
-        addMoreView.setImage(UIImage(named: "addReactionSmall"), for: .normal)
+        addMoreView.setImage(Asset.Images.Chat.addReactionSmall.image, for: .normal)
         addMoreView.imageView?.contentMode = .scaleAspectFit
         addMoreView.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         addMoreView.layer.borderColor = UIColor.mnz_reactionBubbleBoarder(addMoreView.traitCollection).cgColor

@@ -10,7 +10,7 @@ struct PSARepository: PSARepositoryProtocol {
         sdk.getURLPublicServiceAnnouncement(with: MEGAGenericRequestDelegate {  request, error in
             switch error.type {
             case .apiOk:
-                completion(.success(request.toPSAEntity))
+                completion(.success(request.toPSAEntity()))
             case .apiENoent:
                 completion(.failure(PSAErrorEntity.noDataAvailable))
             default:

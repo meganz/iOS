@@ -245,8 +245,6 @@ public enum Strings {
     public static let aliasNickname = Strings.tr("Localizable", "Alias/ Nickname")
     /// All
     public static let all = Strings.tr("Localizable", "all")
-    /// All Images
-    public static let allImages = Strings.tr("Localizable", "All Images")
     /// All Media
     public static let allMedia = Strings.tr("Localizable", "All Media")
     /// All the photos from your burst photo sequences will be uploaded.
@@ -1399,8 +1397,6 @@ public enum Strings {
     public static let noFavourites = Strings.tr("Localizable", "No Favourites")
     /// No GIFs found
     public static let noGIFsFound = Strings.tr("Localizable", "No GIFs found")
-    /// No images found
-    public static let noImagesFound = Strings.tr("Localizable", "No images found")
     /// No notifications
     public static let noNotifications = Strings.tr("Localizable", "No notifications")
     /// No Photos or Videos
@@ -1605,8 +1601,6 @@ public enum Strings {
     public static let phoneNumber = Strings.tr("Localizable", "Phone Number")
     /// Please give MEGA app permission to access your photo library in Settings
     public static let photoLibraryPermissions = Strings.tr("Localizable", "photoLibraryPermissions")
-    /// Photos
-    public static let photos = Strings.tr("Localizable", "Photos")
     /// Photos and videos will be uploaded to the Camera Uploads folder.
     public static let photosAndVideosWillBeUploadedToCameraUploadsFolder = Strings.tr("Localizable", "Photos and videos will be uploaded to Camera Uploads folder.")
     /// Photos uploaded, video uploads are off; %lu videos not uploaded
@@ -2979,6 +2973,12 @@ public enum Strings {
         public static let warningMessage = Strings.tr("Localizable", "calls.incompatibility.warningMessage")
       }
     }
+    public enum CameraUploads {
+      public enum Years {
+        /// Years
+        public static let title = Strings.tr("Localizable", "cameraUploads.years.title")
+      }
+    }
     public enum Chat {
       public enum Map {
         /// Location
@@ -3452,6 +3452,12 @@ public enum Strings {
       }
     }
     public enum Home {
+      public enum Images {
+        /// No Images Found
+        public static let empty = Strings.tr("Localizable", "home.images.empty")
+        /// Images
+        public static let title = Strings.tr("Localizable", "home.images.title")
+      }
       public enum Recent {
         /// Created by %@
         public static func createdByLabel(_ p1: Any) -> String {
@@ -3609,6 +3615,16 @@ public enum Strings {
           /// Logging out deletes your offline content.
           public static let message = Strings.tr("Localizable", "offline.logOut.warning.message")
         }
+      }
+    }
+    public enum Photo {
+      public enum Empty {
+        /// No Photos Found
+        public static let title = Strings.tr("Localizable", "photo.empty.title")
+      }
+      public enum Navigation {
+        /// Photos
+        public static let title = Strings.tr("Localizable", "photo.navigation.title")
       }
     }
     public enum Recents {

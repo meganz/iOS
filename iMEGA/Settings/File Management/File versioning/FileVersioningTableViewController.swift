@@ -35,10 +35,10 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
     // MARK: - private
     
     func localizeText() {
-        title = NSLocalizedString("File versioning", comment: "Title of the option to enable or disable file versioning on Settings section")
-        fileVersioningLabel.text = NSLocalizedString("File versioning", comment:"Title of the option to enable or disable file versioning on Settings section")
-        fileVersionsLabel.text = NSLocalizedString("File Versions", comment:"Settings preference title to show file versions info of the account")
-        deleteOldVersionsLabel.text = NSLocalizedString("Delete Previous Versions", comment:"Text of a button which deletes all historical versions of files in the users entire account.")
+        title = Strings.Localizable.fileVersioning
+        fileVersioningLabel.text = Strings.Localizable.fileVersioning
+        fileVersionsLabel.text = Strings.Localizable.fileVersions
+        deleteOldVersionsLabel.text = Strings.Localizable.deletePreviousVersions
     }
     
     @IBAction func fileVersioningSwitchValueChanged(_ sender: UISwitch) {
@@ -71,7 +71,7 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == FileVersioningSettingsSection.deletePreviousVersions.rawValue {
-            return NSLocalizedString("Delete all older versions of my files", comment: "The title of the section about deleting file versions in the settings.")
+            return Strings.Localizable.deleteAllOlderVersionsOfMyFiles
         } else {
             return nil
         }
@@ -81,12 +81,12 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
         var title: String?
         switch section {
         case FileVersioningSettingsSection.fileVersioning.rawValue:
-            title = NSLocalizedString("Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled.", comment: "Subtitle of the option to enable or disable file versioning on Settings section")
+            title = Strings.Localizable.EnableOrDisableFileVersioningForYourEntireAccount.brYouMayStillReceiveFileVersionsFromSharedFoldersIfYourContactsHaveThisEnabled
             title = title?.replacingOccurrences(of: "\n", with: " ")
         case FileVersioningSettingsSection.fileVersions.rawValue:
-            title = String(format: "%@ %@", NSLocalizedString("Total size taken up by file versions:", comment: ""), fileVersionSize)
+            title = String(format: "%@ %@", Strings.Localizable.totalSizeTakenUpByFileVersions, fileVersionSize)
         case FileVersioningSettingsSection.deletePreviousVersions.rawValue:
-            title = NSLocalizedString("All current files will remain. Only historic versions of your files will be deleted.", comment: "A warning note about deleting all file versions in the settings section.")
+            title = Strings.Localizable.AllCurrentFilesWillRemain.onlyHistoricVersionsOfYourFilesWillBeDeleted
         default:
             break;
         }

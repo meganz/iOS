@@ -32,8 +32,8 @@ struct RecentsQuickAccessWidget: Widget {
         StaticConfiguration(kind: kind, provider: RecentsTimelineProvider()) { entry in
             QuickAccessWidgetView(entry: entry)
         }
-        .configurationDisplayName(NSLocalizedString("Quick Access", comment: "Title for the QuickAccess widget"))
-        .description(NSLocalizedString("Quickly access files on Recents section", comment: "Text description for the Recents QuickAccess widget"))
+        .configurationDisplayName(Strings.Localizable.quickAccess)
+        .description(Strings.Localizable.quicklyAccessFilesOnRecentsSection)
         .supportedFamilies([.systemLarge])
     }
 }

@@ -15,7 +15,7 @@ final class HomeScreenFactory: NSObject {
                 megaAvatarClient: .live,
                 avatarFileSystemClient: .live,
                 megaUserClient: .live,
-                filePathUseCase: MEGAAppGroupFilePathUseCase()
+                fileRepo: FileSystemRepository(fileManager: FileManager.default)
             ),
             megaAvatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
                 storeUserClient: .live,
@@ -91,7 +91,7 @@ final class HomeScreenFactory: NSObject {
                 nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCase(
                     sdkNodeClient: .live,
                     fileSystemClient: .live,
-                    filePathUseCase: MEGAAppGroupFilePathUseCase()
+                    fileRepo: FileSystemRepository(fileManager: FileManager.default)
                 )
             ),
             router: HomeSearchResultRouter(

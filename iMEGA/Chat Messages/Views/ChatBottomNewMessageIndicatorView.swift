@@ -25,7 +25,7 @@ class ChatBottomNewMessageIndicatorView: UIView {
         backgroundView.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
         backgroundView.layer.cornerRadius = 22
         backgroundView.clipsToBounds = true
-        backgroundView.setImage(UIImage(named: "jumpToLatest"), for: .normal)
+        backgroundView.setImage(Asset.Images.Chat.jumpToLatest.image, for: .normal)
         return backgroundView
     }()
     

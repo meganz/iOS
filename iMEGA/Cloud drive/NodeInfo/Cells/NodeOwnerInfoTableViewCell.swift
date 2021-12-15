@@ -11,7 +11,7 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
         emailLabel.textColor = UIColor.mnz_label()
         emailLabel.text = user.email
         
-        nameLabel.attributedText = createOwnerAttributedString(string: String(format: NSLocalizedString("cloudDrive.nodeInfo.owner", comment: "Show the node owner's name"), user.mnz_displayName),
+        nameLabel.attributedText = createOwnerAttributedString(string: Strings.Localizable.CloudDrive.NodeInfo.owner(user.mnz_displayName as Any),
                                                                highligthedString: user.mnz_displayName,
                                                                normalAttributes: [.foregroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
                                                                                   .font: UIFont.preferredFont(style: .body, weight: .bold)],

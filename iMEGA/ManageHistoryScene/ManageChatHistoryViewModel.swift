@@ -160,19 +160,19 @@ final class ManageChatHistoryViewModel: ViewModelType {
         var footer: String
         switch historyRetentionOption {
         case .disabled:
-            footer = NSLocalizedString("Automatically delete messages older than a certain amount of time", comment: "Text show under the setting 'History Retention' to explain what will happen if enabled")
+            footer = Strings.Localizable.automaticallyDeleteMessagesOlderThanACertainAmountOfTime
             
         case .oneDay:
-            footer = NSLocalizedString("Automatically delete messages older than one day", comment: "Text show under the setting 'History Retention' to explain that it is configured to '1 day'")
+            footer = Strings.Localizable.automaticallyDeleteMessagesOlderThanOneDay
             
         case .oneWeek:
-            footer = NSLocalizedString("Automatically delete messages older than one week", comment: "Text show under the setting 'History Retention' to explain that it is configured to '1 week'")
+            footer = Strings.Localizable.automaticallyDeleteMessagesOlderThanOneWeek
             
         case .oneMonth:
-            footer = NSLocalizedString("Automatically delete messages older than one month", comment: "Text show under the setting 'History Retention' to explain that it is configured to '1 month'")
+            footer = Strings.Localizable.automaticallyDeleteMessagesOlderThanOneMonth
             
         case .custom:
-            let string = NSLocalizedString("Automatically delete messages older than %1", comment: "Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year.")
+            let string = Strings.Localizable.automaticallyDeleteMessagesOlderThan1
             footer = string.replacingOccurrences(of: "%1", with: NSString.mnz_hoursDaysWeeksMonthsOrYear(from: historyRetentionValue))
         }
         
@@ -180,7 +180,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
     }
     
     private func updateClearChatHistoryFooter() {
-        let footer = NSLocalizedString("Delete all messages and files shared in this conversation from both parties. This action is irreversible", comment: "Text show under the setting 'Clear Chat History' to explain what will happen if used")
+        let footer = Strings.Localizable.DeleteAllMessagesAndFilesSharedInThisConversationFromBothParties.thisActionIsIrreversible
         
         self.invokeCommand?(.updateClearChatHistoryFooter(footer))
     }
@@ -253,10 +253,10 @@ final class ManageChatHistoryViewModel: ViewModelType {
             manageChatHistoryUseCase.clearChatHistoryUseCase.clearChatHistory(for: chatId) { [weak self] in
                 switch $0 {
                 case .success(_):
-                    self?.invokeCommand?(.showResult(.content(UIImage.init(named: "clearChatHistory")! , NSLocalizedString("Chat History has Been Cleared", comment: "Message show when the history of a chat has been successfully deleted."))))
+                    self?.invokeCommand?(.showResult(.content(Asset.Images.Chat.ContactDetails.clearChatHistory.image, Strings.Localizable.chatHistoryHasBeenCleared)))
                     
                 case .failure(_):
-                    self?.invokeCommand?(.showResult(.error(NSLocalizedString("An error has occurred. The chat history has not been successfully cleared", comment: "Message show when the history of a chat hasn’t been successfully deleted"))))
+                    self?.invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))
                 }
             }
             

@@ -74,7 +74,7 @@ extension ChatViewController: MessagesDisplayDelegate {
             
             if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
                 
-                if let node = chatMessage.message.nodeList.node(at: 0), (node.name!.mnz_isImagePathExtension || node.name!.mnz_isVideoPathExtension) {
+                if let node = chatMessage.message.nodeList.node(at: 0), node.name!.mnz_isVisualMediaPathExtension {
                     
                     containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
                 }
@@ -105,9 +105,9 @@ extension ChatViewController: MessagesDisplayDelegate {
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
         accessoryView.clipsToBounds = true
         if let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed {
-            button.setImage(UIImage(named: "triangle")?.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+            button.setImage(Asset.Images.Chat.triangle.image.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         } else {
-            button.setImage(UIImage(named: "forward")?.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+            button.setImage(Asset.Images.Chat.Messages.forward.image.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         }
     }
     

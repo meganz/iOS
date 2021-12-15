@@ -25,7 +25,7 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
             previewImage.mnz_image(for: node)
             let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
             shareStackView.isHidden = nodeAccess != .accessOwner
-            shareButton.setTitle(NSLocalizedString("share", comment: "Title for the share button in the folder information view. Tapping the button will start the flow for sharing a folder").localizedUppercase, for: .normal)
+            shareButton.setTitle(Strings.Localizable.share.localizedUppercase, for: .normal)
             let folderSize = folderInfo?.currentSize ?? 0
             let versionSize = folderInfo?.versionsSize ?? 0
             let totalSize = folderSize + versionSize

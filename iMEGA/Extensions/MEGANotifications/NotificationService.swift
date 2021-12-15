@@ -4,7 +4,7 @@ import Firebase
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
     private static var setLogToConsole = false
-    private static let genericBody = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
+    private static let genericBody = Strings.Localizable.youMayHaveNewMessages
 
     private var contentHandler: ((UNNotificationContent) -> Void)?
     private var bestAttemptContent: UNMutableNotificationContent?

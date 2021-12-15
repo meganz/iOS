@@ -160,8 +160,7 @@ extension ChatViewController {
             }
 
             if showSuccess {
-                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("messagesSent", comment: "Success message shown after forwarding messages to other chats"))
-                
+                SVProgressHUD.showSuccess(withStatus: Strings.Localizable.messagesSent)
             }
         }
         
@@ -222,8 +221,7 @@ extension ChatViewController {
             }
             if chatMessage.message.type == .attachment || chatMessage.message.type == .voiceClip {
                 if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1,
-                   let name = chatMessage.message.nodeList.node(at: 0)?.name,
-                   (name.mnz_isImagePathExtension || name.mnz_isVideoPathExtension) {
+                   let name = chatMessage.message.nodeList.node(at: 0)?.name, name.mnz_isVisualMediaPathExtension {
                     hasPhoto = true
                 } else {
                     hasAttachments = true

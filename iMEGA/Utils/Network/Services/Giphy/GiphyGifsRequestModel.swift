@@ -18,7 +18,7 @@ class GiphyGifsRequestModel: RequestModel {
     }
     
     override var path: String {
-        let path = Constant.ServiceConstant.path(category)
+        let path = ServiceConstant.path(category)
         if !searchKey.isEmpty {
             return path + "/search"
         }

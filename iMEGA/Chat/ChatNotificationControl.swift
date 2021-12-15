@@ -11,11 +11,11 @@ import UIKit
 
     @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: Int64) {
         
-        cell.nameLabel?.text = NSLocalizedString("Chat Notifications", comment: "Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch")
+        cell.nameLabel?.text = Strings.Localizable.chatNotifications
         
         cell.notificationsSwitch?.isEnabled = isNotificationSettingsLoaded()
         cell.notificationsSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
-        cell.iconImageView?.image = #imageLiteral(resourceName: "chatNotifications")
+        cell.iconImageView?.image = Asset.Images.Chat.chatNotifications.image
     }
     
     @objc func isChatDNDEnabled(chatId: Int64) -> Bool {

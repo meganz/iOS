@@ -55,29 +55,30 @@ enum DNDTurnOnOption {
     private var localizedTitle: String {
         switch self {
         case .thirtyMinutes:
-            return NSLocalizedString("30 minutes", comment: "Chat Notifications DND: Option that deactivates DND after 30 minutes")
+            return Strings.Localizable._30Minutes
         case .oneHour:
-            return NSLocalizedString("1hour", comment: "")
+            return Strings.Localizable._1Hour
         case .sixHours:
-            return NSLocalizedString("6 hours", comment: "")
+            return Strings.Localizable._6Hours
         case .twentyFourHours:
-            return NSLocalizedString("24 hours", comment: "")
+            return Strings.Localizable._24Hours
         case .morningEightAM:
-            return isMorningEightToday ?  NSLocalizedString("Until this morning", comment: "") : NSLocalizedString("Until tomorrow morning", comment: "")
+            return isMorningEightToday ?  Strings.Localizable.untilThisMorning : Strings.Localizable.untilTomorrowMorning
         case .forever:
-            return NSLocalizedString("Until I turn it back on", comment: "")
+            return Strings.Localizable.untilITurnItBackOn
         }
     }
     
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
                                 isGlobalSetting: Bool,
                                 identifier: Int64?) -> UIAlertController {
-        let alertMessage = NSLocalizedString("Mute chat Notifications for", comment: "Chat Notifications DND: Title bar message for the dnd activate options")
+        let alertMessage = Strings.Localizable.muteChatNotificationsFor
+
         let alertController = UIAlertController(title: nil,
                                                 message: alertMessage,
                                                 preferredStyle: .actionSheet)
         
-        let cancelString = NSLocalizedString("cancel", comment: "")
+        let cancelString = Strings.Localizable.cancel
         alertController.addAction(UIAlertAction(title: cancelString,
                                                 style: .cancel,
                                                 handler: delegate.cancelAction))

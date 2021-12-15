@@ -586,7 +586,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)loadPhotoAlbumBrowser {
-    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionText:NSLocalizedString(@"Upload (%d)", @"Used in Photos app browser view to send the photos from the view to the cloud.") selectionActionDisabledText:NSLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionType:AlbumsSelectionActionTypeUpload selectionActionDisabledText:NSLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
             for (PHAsset *asset in assets) {
                 [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
@@ -941,7 +941,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     NSArray *nodesArray = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList];
     NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
     for (MEGANode *n in nodesArray) {
-        if (n.name.mnz_isImagePathExtension || n.name.mnz_isVideoPathExtension) {
+        if (n.name.mnz_isVisualMediaPathExtension) {
             [mediaNodesArray addObject:n];
         }
     }
@@ -1011,7 +1011,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)openFileNode:(MEGANode *)node {
-    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+    if (node.name.mnz_isVisualMediaPathExtension) {
         [self showNode:node];
     } else {
         [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];

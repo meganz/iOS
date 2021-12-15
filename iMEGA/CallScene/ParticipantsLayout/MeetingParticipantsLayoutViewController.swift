@@ -22,7 +22,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
-    lazy private var layoutModeBarButton = UIBarButtonItem(image: UIImage(named: "speakerView"),
+    lazy private var layoutModeBarButton = UIBarButtonItem(image: Asset.Images.Chat.speakerView.image,
                                                style: .plain,
                                                target: self,
                                                action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton))
@@ -157,14 +157,14 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .localVideoFrame(let width, let height, let buffer):
             localUserView.frameData(width: width, height: height, buffer: buffer)
         case .participantAdded(let name):
-            showNotification(message: String(format: NSLocalizedString("meetings.message.joinedCall", comment: "Message to inform the local user that someone has joined the current group call"), name), color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: Strings.Localizable.Meetings.Message.joinedCall(name), color: UIColor.mnz_turquoise(for: traitCollection))
         case .participantRemoved(let name):
-            showNotification(message: String(format: NSLocalizedString("meetings.message.leftCall", comment: "Message to inform the local user that someone has left the current group call"), name), color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: Strings.Localizable.Meetings.Message.leftCall(name), color: UIColor.mnz_turquoise(for: traitCollection))
         case .reconnecting:
             showReconnectingNotification()
         case .reconnected:
             removeReconnectingNotification()
-            showNotification(message: NSLocalizedString("online", comment: ""), color: UIColor.systemGreen)
+            showNotification(message: Strings.Localizable.online, color: UIColor.systemGreen)
         case .updateCameraPositionTo(let position):
             localUserView.addBlurEffect()
             localUserView.transformLocalVideo(for: position)
@@ -194,9 +194,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .shouldHideSpeakerView(let hidden):
             speakerViews.forEach { $0.isHidden = hidden }
         case .ownPrivilegeChangedToModerator:
-            showNotification(message: NSLocalizedString("meetings.notifications.moderatorPrivilege", comment: "Message shown when the user privilege is changed to moderator"), color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: Strings.Localizable.Meetings.Notifications.moderatorPrivilege, color: UIColor.mnz_turquoise(for: traitCollection))
         case .lowNetworkQuality:
-            showNotification(message: NSLocalizedString("Poor connection.", comment: "Message to inform the local user is having a bad quality network with someone in the current group call"), color: UIColor.systemOrange)
+            showNotification(message: Strings.Localizable.poorConnection, color: UIColor.systemOrange)
         case .updateAvatar(let image, let participant):
             callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
@@ -229,7 +229,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
         switch mode {
         case .grid:
-            layoutModeBarButton.image = UIImage(named: "speakerView")
+            layoutModeBarButton.image = Asset.Images.Chat.speakerView.image
         case .speaker:
             layoutModeBarButton.image = UIImage(named: "galleryView")
         }
@@ -265,8 +265,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     func showRenameAlert(title: String, isMeeting: Bool) {
-        let actionTitle = isMeeting ? NSLocalizedString("meetings.action.rename", comment: "") : NSLocalizedString("renameGroup", comment: "")
-        let renameAlertController = UIAlertController(title: actionTitle, message: NSLocalizedString("renameNodeMessage", comment: "Hint text to suggest that the user have to write the new name for the file or folder"), preferredStyle: .alert)
+        let actionTitle = isMeeting ? Strings.Localizable.Meetings.Action.rename : Strings.Localizable.renameGroup
+        let renameAlertController = UIAlertController(title: actionTitle, message: Strings.Localizable.renameNodeMessage, preferredStyle: .alert)
 
         renameAlertController.addTextField { textField in
             textField.text = title
@@ -275,10 +275,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         }
 
-        renameAlertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: { [weak self] _ in
+        renameAlertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: { [weak self] _ in
             self?.viewModel.dispatch(.discardChangeTitle)
         }))
-        renameAlertController.addAction(UIAlertAction(title: NSLocalizedString("rename", comment: "Title for the action that allows you to rename a file or folder"), style: .default, handler: { [weak self] action in
+        renameAlertController.addAction(UIAlertAction(title: Strings.Localizable.rename, style: .default, handler: { [weak self] action in
             guard let newTitle = renameAlertController.textFields?.first?.text else {
                 return
             }
@@ -304,7 +304,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func configureNavigationBar(_ title: String, _ subtitle: String) {
         titleView.configure(title: title, subtitle: subtitle)
         if !(isUserAGuest ?? false) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(self.didTapBackButton))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.backArrow.image, style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
         navigationItem.rightBarButtonItems = [optionsMenuButton,
                                               layoutModeBarButton]
@@ -315,7 +315,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func showReconnectingNotification() {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: NSLocalizedString("Reconnecting...", comment: "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again"), backgroundColor: UIColor.systemOrange, autoFadeOut: false)
+        notification.show(message: Strings.Localizable.reconnecting, backgroundColor: UIColor.systemOrange, autoFadeOut: false)
         reconncectingNotificationView = notification
     }
     
@@ -327,7 +327,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func showWaitingForOthersMessageView() {
         let emptyMessage = EmptyMeetingMessageView.instanceFromNib
-        emptyMessage.messageLabel.text = NSLocalizedString("meetings.message.waitingOthers", comment: "")
+        emptyMessage.messageLabel.text = Strings.Localizable.Meetings.Message.waitingOthers
         view.addSubview(emptyMessage)
         emptyMessage.autoCenterInSuperview()
         emptyMeetingMessageView = emptyMessage
@@ -335,7 +335,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func showNoOneElseHereMessageView() {
         let emptyMessage = EmptyMeetingMessageView.instanceFromNib
-        emptyMessage.messageLabel.text = NSLocalizedString("meetings.message.noOtherParticipants", comment: "")
+        emptyMessage.messageLabel.text = Strings.Localizable.Meetings.Message.noOtherParticipants
         view.addSubview(emptyMessage)
         emptyMessage.autoCenterInSuperview()
         emptyMeetingMessageView = emptyMessage

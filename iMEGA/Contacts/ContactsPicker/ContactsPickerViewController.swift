@@ -82,11 +82,11 @@ class ContactsPickerViewController: UIViewController {
     }
     
     private func configureView() {
-        title = NSLocalizedString("contactsTitle", comment: "Title of the Contacts section")
+        title = Strings.Localizable.contactsTitle
         guard let megaNavigation = navigationController as? MEGANavigationController else {
             fatalError("Could not access MEGANavigationController")
         }
-        megaNavigation.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: ""))
+        megaNavigation.addLeftDismissButton(withText: Strings.Localizable.cancel)
         
         navigationItem.rightBarButtonItem = selectAllBarButton
         selectAllBarButton.isEnabled = false
@@ -101,7 +101,7 @@ class ContactsPickerViewController: UIViewController {
     }
     
     private func fetchDeviceContacts() {
-        SVProgressHUD.show(withStatus: NSLocalizedString("loading", comment: "state previous to import a file"))
+        SVProgressHUD.show(withStatus: Strings.Localizable.loading)
         
         let deviceContactsOperation = DeviceContactsOperation(keys)
         deviceContactsOperation.completionBlock = { [weak self] in
@@ -243,7 +243,7 @@ extension ContactsPickerViewController: UITableViewDelegate {
     }
     
     func updateToolbar() {
-        sendBarButton.title = String(format: "%@ (%d)", NSLocalizedString("send", comment: "Label for any 'Send' button, link, text, title, etc. - (String as short as possible)."), selectedContacts.count)
+        sendBarButton.title = String(format: "%@ (%d)", Strings.Localizable.send, selectedContacts.count)
     }
 }
 
@@ -258,27 +258,27 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     
     func imageForEmptyDataSet() -> UIImage? {
         if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-            return UIImage(named: "searchEmptyState")
+            return Asset.Images.EmptyStates.searchEmptyState.image
         } else {
-            return UIImage(named: "contactsEmptyState")
+            return Asset.Images.EmptyStates.contactsEmptyState.image
         }
     }
     
     func titleForEmptyDataSet() -> String? {
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized {
             if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return NSLocalizedString("noResults", comment: "Title shown when you make a search and there is 'No Results'")
+                return Strings.Localizable.noResults
             } else {
-                return NSLocalizedString("contactsEmptyState_title", comment: "Title shown when the Contacts section is empty, when you have not added any contact.")
+                return Strings.Localizable.contactsEmptyStateTitle
             }
         } else {
-            return NSLocalizedString("Enable Access to Your Address Book", comment: "Title label that explains that the user is going to be asked for the contacts permission")
+            return Strings.Localizable.enableAccessToYourAddressBook
         }
     }
     
     func buttonTitleForEmptyDataSet() -> String? {
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != .authorized {
-            return NSLocalizedString("Open Settings", comment: "Text indicating the user to open the device settings for MEGA")
+            return Strings.Localizable.openSettings
         } else {
             return nil
         }

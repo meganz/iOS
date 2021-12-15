@@ -20,9 +20,9 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseId)
-        title = NSLocalizedString("Require Passcode", comment: "Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes")
+        title = Strings.Localizable.requirePasscode
 
-        passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.Immediatelly, title: NSLocalizedString("Immediately", comment: "Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background.")))
+        passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.Immediatelly, title: Strings.Localizable.immediately))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.FiveSeconds, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.FiveSeconds.rawValue)))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.TenSeconds, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.TenSeconds.rawValue)))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.ThirtySeconds, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.ThirtySeconds.rawValue)))

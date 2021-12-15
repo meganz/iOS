@@ -32,20 +32,20 @@ final class PhotoGridViewController: UIViewController {
     private let album: Album
     private let completionBlock: AlbumsTableViewController.CompletionBlock
     
-    private let selectionActionText: String
+    private let selectionActionType: AlbumsSelectionActionType
     private let selectionActionDisabledText: String
     private let source: PhotoLibrarySelectionSource
     
     // MARK:- Initializers.
     
     init(album: Album,
-         selectionActionText: String,
+         selectionActionType: AlbumsSelectionActionType,
          selectionActionDisabledText: String,
          completionBlock: @escaping AlbumsTableViewController.CompletionBlock,
          source: PhotoLibrarySelectionSource) {
         self.album = album
         self.completionBlock = completionBlock
-        self.selectionActionText = selectionActionText
+        self.selectionActionType = selectionActionType
         self.selectionActionDisabledText = selectionActionDisabledText
         self.source = source
         super.init(nibName: "PhotoGridViewController", bundle: Bundle.main)
@@ -105,7 +105,7 @@ final class PhotoGridViewController: UIViewController {
         let photoCarousalViewController = PhotoCarouselViewController(album: album,
                                                                       selectedPhotoIndexPath: indexPath,
                                                                       selectedAssets: selectedAssets,
-                                                                      selectionActionText: selectionActionText,
+                                                                      selectionActionType: selectionActionType,
                                                                       selectionActionDisabledText: selectionActionDisabledText,
                                                                       delegate: self)
         navigationController?.pushViewController(photoCarousalViewController, animated: true)
@@ -113,7 +113,7 @@ final class PhotoGridViewController: UIViewController {
     
     private func updateBottomView() {
         let assetsCount = diffableDataSource?.selectedAssets.count ?? 0
-        sendBarButton?.title = assetsCount > 0 ? String(format: selectionActionText, assetsCount) : selectionActionDisabledText
+        sendBarButton?.title = assetsCount > 0 ? selectionActionType.localizedTextWithCount(assetsCount) : selectionActionDisabledText
         sendBarButton?.isEnabled = assetsCount > 0
         navigationController?.setToolbarHidden(false, animated: true)
     }

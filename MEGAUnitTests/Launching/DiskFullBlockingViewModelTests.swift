@@ -6,12 +6,12 @@ final class DiskFullBlockingViewModelTests: XCTestCase {
         let mockDeviceModel = "iPod Touch"
         let sut = DiskFullBlockingViewModel(router: MockDiskFullBlockingViewRouter(), deviceModel: mockDeviceModel)
         sut.dispatch(.onViewLoaded)
-        let storagePath = String(format: NSLocalizedString("Settings > General > %@ Storage", comment: ""), mockDeviceModel)
-        let description = String(format: NSLocalizedString("Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@", comment: ""), storagePath)
-        let expectedBlockingModel = DiskFullBlockingModel(title: NSLocalizedString("The device does not have enough space for MEGA to run properly.", comment: ""),
+        let storagePath = Strings.Localizable.settingsGeneralStorage(mockDeviceModel)
+        let description = Strings.Localizable.FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery.youCanManageYourStorageIn(storagePath)
+        let expectedBlockingModel = DiskFullBlockingModel(title: Strings.Localizable.theDeviceDoesNotHaveEnoughSpaceForMEGAToRunProperly,
                                                   description: description,
                                                   highlightedText: storagePath,
-                                                  manageDiskSpaceTitle: NSLocalizedString("Manage", comment: ""),
+                                                  manageDiskSpaceTitle: Strings.Localizable.manage,
                                                   headerImageName: "blockingDiskFull")
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedBlockingModel)])
     }

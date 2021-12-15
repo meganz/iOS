@@ -63,4 +63,8 @@ extension NodeEntity {
             longitude                          : node.longitude?.doubleValue
         )
     }
+    
+    func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
+        sdk.node(forHandle: handle)
+    }
 }

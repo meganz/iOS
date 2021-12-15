@@ -19,14 +19,14 @@ class ContactsTableViewHeader: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        requestsImageView.image = UIImage(named: "contactRequests")?.imageFlippedForRightToLeftLayoutDirection()
-        requestsLabel.text = NSLocalizedString("Requests", comment: "Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts")
+        requestsImageView.image = Asset.Images.Contacts.contactRequests.image.imageFlippedForRightToLeftLayoutDirection()
+        requestsLabel.text = Strings.Localizable.requests
         let incomingContactsLists: MEGAContactRequestList = MEGASdkManager.sharedMEGASdk().incomingContactRequests()
         let text = (incomingContactsLists.size.intValue == 0) ? "" : incomingContactsLists.size.stringValue
         requestsDetailLabel.text = text
         
-        groupsImageView.image = UIImage(named: "groups")?.imageFlippedForRightToLeftLayoutDirection()
-        groupsLabel.text = NSLocalizedString("Groups", comment: "Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts")
+        groupsImageView.image = Asset.Images.Contacts.groups.image.imageFlippedForRightToLeftLayoutDirection()
+        groupsLabel.text = Strings.Localizable.groups
         
         updateAppearance()
     }

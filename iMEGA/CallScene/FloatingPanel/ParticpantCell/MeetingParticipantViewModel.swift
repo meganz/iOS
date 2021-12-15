@@ -78,7 +78,7 @@ struct MeetingParticipantViewModel: ViewModelType {
             case .success(let name):
                 invokeCommand?(
                     .updateName(
-                        name: isMe ? String(format: "%@ (%@)", name, NSLocalizedString("me", comment: "")) : name
+                        name: isMe ? String(format: "%@ (%@)", name, Strings.Localizable.me) : name
                     )
                 )
                 completion(name)

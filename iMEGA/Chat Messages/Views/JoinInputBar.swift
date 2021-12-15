@@ -12,7 +12,7 @@ class JoinInputBar: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let title = NSLocalizedString("Join", comment: "Button text in public chat previews that allows the user to join the chat")
+        let title = Strings.Localizable.join
         joinButton.setTitle(title, for: .normal)
         joinButton.isHidden = false
         joiningOrLeavingView.isHidden = true
@@ -24,13 +24,13 @@ class JoinInputBar: UIView {
             joinButton.isHidden = true
             joiningOrLeavingView.isHidden = false
             indicator.startAnimating()
-            joiningOrLeavingLabel.text = NSLocalizedString("Joining...", comment: "Label shown while joining a public chat")
+            joiningOrLeavingLabel.text = Strings.Localizable.joining
 
         case.leaving:
             joinButton.isHidden = true
             joiningOrLeavingView.isHidden = false
             indicator.startAnimating()
-            joiningOrLeavingLabel.text = NSLocalizedString("Leaving...", comment: "Label shown while leaving a public chat")
+            joiningOrLeavingLabel.text = Strings.Localizable.leaving
 
         default:
             joinButton.isHidden = false

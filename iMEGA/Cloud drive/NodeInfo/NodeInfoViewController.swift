@@ -68,8 +68,8 @@ class NodeInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("info", comment: "A button label. The button allows the user to get more info of the current context.")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close", comment: "A button label. The button allows the user to close the conversation."), style: .plain, target: self, action: #selector(closeButtonTapped))
+        title = Strings.Localizable.info
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .plain, target: self, action: #selector(closeButtonTapped))
         
         MEGASdkManager.sharedMEGASdk().add(self)
     }
@@ -113,10 +113,10 @@ class NodeInfoViewController: UIViewController {
     
     private func reloadOrShowWarningAfterActionOnNode() {
         guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: node.handle) else {
-            let alertTitle = node.isFolder() ? NSLocalizedString("youNoLongerHaveAccessToThisFolder_alertTitle", comment: "Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : NSLocalizedString("youNoLongerHaveAccessToThisFile_alertTitle", comment: "Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be")
+            let alertTitle = node.isFolder() ? Strings.Localizable.youNoLongerHaveAccessToThisFolderAlertTitle : Strings.Localizable.youNoLongerHaveAccessToThisFileAlertTitle
             
             let warningAlertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
-            warningAlertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: "Button title to accept something"), style: .default, handler: { _ in
+            warningAlertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
                 self.navigationController?.popViewController(animated: true)
             }))
             present(warningAlertController, animated: true, completion: nil)
@@ -195,10 +195,10 @@ class NodeInfoViewController: UIViewController {
             return
         }
         
-        let removePendingShareAlertController = UIAlertController(title: NSLocalizedString("removeUserTitle", comment: "Alert title shown when you want to remove one or more contacts"), message: email, preferredStyle: .alert)
+        let removePendingShareAlertController = UIAlertController(title: Strings.Localizable.removeUserTitle, message: email, preferredStyle: .alert)
         
-        removePendingShareAlertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: "Button title to cancel something"), style: .cancel, handler: nil))
-        removePendingShareAlertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: { _ in
+        removePendingShareAlertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
+        removePendingShareAlertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
             MEGASdkManager.sharedMEGASdk().share(self.node, withEmail: email, level: MEGAShareType.accessUnknown.rawValue, delegate: MEGAShareRequestDelegate.init(toChangePermissionsWithNumberOfRequests: 1, completion: {
                 
                 guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: self.node.handle) else {
@@ -224,24 +224,22 @@ class NodeInfoViewController: UIViewController {
             return
         }
         var actions = [ActionSheetAction]()
+
+        actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
+            self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
+        })
+        actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
+            self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
+        })
+        actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
+            self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
+        })
         
-        if !node.isBackupRootNode() && !node.isBackupNode() {
-            actions.append(ActionSheetAction(title: NSLocalizedString("fullAccess", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage(named: "fullAccessPermissions"), style: .default) { [weak self] in
-                self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
-            })
-            actions.append(ActionSheetAction(title: NSLocalizedString("readAndWrite", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage(named: "readWritePermissions"), style: .default) { [weak self] in
-                self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
-            })
-            actions.append(ActionSheetAction(title: NSLocalizedString("readOnly", comment: "Permissions given to the user you share your folder with"), detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage(named: "readPermissions"), style: .default) { [weak self] in
-                self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
-            })
-        }
-        
-        actions.append(ActionSheetAction(title: NSLocalizedString("remove", comment: "Title for the action that allows to remove a file or folder"), detail: nil, image: UIImage(named: "delete"), style: .destructive) { [weak self] in
+        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: UIImage(named: "delete"), style: .destructive) { [weak self] in
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
-        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: NSLocalizedString("permissions", comment: "Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder"), dismissCompletion: nil, sender: cell.permissionsImageView)
+        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: Strings.Localizable.permissions, dismissCompletion: nil, sender: cell.permissionsImageView)
         
         present(permissionsActionSheet, animated: true, completion: nil)
     }
@@ -396,8 +394,8 @@ class NodeInfoViewController: UIViewController {
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
-        cell.avatarImageView.image = UIImage(named: "inviteToChat")
-        cell.nameLabel.text = NSLocalizedString("addContact", comment: "Alert title shown when you select to add a contact inserting his/her email ")
+        cell.avatarImageView.image = Asset.Images.Chat.inviteToChat.image
+        cell.nameLabel.text = Strings.Localizable.addContact
         cell.shareLabel.isHidden = true
         
         return cell
@@ -452,7 +450,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get RemoveLabel")
         }
 
-        removeLabel.text = NSLocalizedString("Remove Share", comment: "The text in the button to remove all contacts to a shared folder on one click")
+        removeLabel.text = Strings.Localizable.removeShare
         
         return cell
     }
@@ -523,15 +521,15 @@ extension NodeInfoViewController: UITableViewDelegate {
         
         switch sections()[section] {
         case .details:
-            header.titleLabel.text = NSLocalizedString("DETAILS", comment: "Text used for a title or header listing the details of something.")
+            header.titleLabel.text = Strings.Localizable.details
         case .link:
-            header.titleLabel.text = NSLocalizedString("LINK", comment: "Text used as title or header for reference an url, for instance, a node link.")
+            header.titleLabel.text = Strings.Localizable.link
         case .versions:
-            header.titleLabel.text = NSLocalizedString("versions", comment: "Text used as title or header to display number of all historical versions of files.").localizedUppercase
+            header.titleLabel.text = Strings.Localizable.versions.localizedUppercase
         case .sharing:
-            header.titleLabel.text = NSLocalizedString("Share with", comment: "Text used for a title or header to list users whom you are sharing something.").localizedUppercase
+            header.titleLabel.text = Strings.Localizable.shareWith.localizedUppercase
         case .pendingSharing:
-            header.titleLabel.text = NSLocalizedString("pending", comment: "Text used for a title or header to list pending users whom you are sharing something.").localizedUppercase
+            header.titleLabel.text = Strings.Localizable.pending.localizedUppercase
         case .removeSharing, .info:
             header.titleLabel.text = ""
         }

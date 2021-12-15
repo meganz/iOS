@@ -29,7 +29,7 @@ class ChatViewController: MessagesViewController {
     }
     
     let shareBarButtonItem = UIBarButtonItem(image: UIImage(named: "share")?.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.shareSelectedMessages))
-    let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
+    let forwardBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.forwardToolbar.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
     let copyBarButtonItem = UIBarButtonItem(image: UIImage(named: "copy")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
     let offlineBarButtonItem = UIBarButtonItem(image: UIImage(named: "offline")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
     let saveToPhotosButtonItem = UIBarButtonItem(image: UIImage(named: "saveToPhotos")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
@@ -58,7 +58,7 @@ class ChatViewController: MessagesViewController {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-        button.setTitle(NSLocalizedString("Tap to return to call", comment: ""), for: .normal)
+        button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
         button.layer.cornerRadius = 20
         button.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
         return button
@@ -80,21 +80,21 @@ class ChatViewController: MessagesViewController {
     }()
 
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "audioCall"),
+        return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.audioCall.image,
                                style: .done,
                                target: self,
                                action: #selector(startAudioCall))
     }()
 
     lazy var videoCallBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "videoCall"),
+        return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.videoCall.image,
                                style: .done,
                                target: self,
                                action: #selector(startVideoCall))
     }()
 
     lazy var addParticpantBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "addContact"),
+        return UIBarButtonItem(image: Asset.Images.Contacts.addContact.image,
                                style: .done,
                                target: self,
                                action: #selector(addParticipant))
@@ -254,7 +254,7 @@ class ChatViewController: MessagesViewController {
         TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
         
         if (presentingViewController != nil) && parent != nil && UIApplication.mnz_visibleViewController() == self {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close", comment: ""), style: .plain, target: self, action: #selector(dismissChatRoom))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .plain, target: self, action: #selector(dismissChatRoom))
         }
         
         guard let publicChatLinkString = self.publicChatLink?.absoluteString else {
@@ -265,13 +265,13 @@ class ChatViewController: MessagesViewController {
         if publicChatWithLinkCreated {
             let customModalAlertVC = CustomModalAlertViewController()
             customModalAlertVC.modalPresentationStyle = .overCurrentContext
-            customModalAlertVC.image = UIImage(named: "chatLinkCreation")
+            customModalAlertVC.image = Asset.Images.Chat.chatLinkCreation.image
             customModalAlertVC.viewTitle = chatRoom.title
-            customModalAlertVC.detail = NSLocalizedString("People can join your group by using this link.", comment: "Text explaining users how the chat links work.")
-            customModalAlertVC.firstButtonTitle = NSLocalizedString("share", comment: "Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected")
+            customModalAlertVC.detail = Strings.Localizable.peopleCanJoinYourGroupByUsingThisLink
+            customModalAlertVC.firstButtonTitle = Strings.Localizable.share
             customModalAlertVC.link = publicChatLink?.absoluteString
-            customModalAlertVC.secondButtonTitle = NSLocalizedString("delete", comment: "")
-            customModalAlertVC.dismissButtonTitle = NSLocalizedString("dismiss", comment: "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
+            customModalAlertVC.secondButtonTitle = Strings.Localizable.delete
+            customModalAlertVC.dismissButtonTitle = Strings.Localizable.dismiss
             customModalAlertVC.firstCompletion = { [weak customModalAlertVC] in
                 customModalAlertVC?.dismiss(animated: true, completion: {
                     let activityVC = UIActivityViewController(activityItems: [publicChatLinkString], applicationActivities: nil)
@@ -289,7 +289,7 @@ class ChatViewController: MessagesViewController {
                 customModalAlertVC?.dismiss(animated: true, completion: {
                     MEGASdkManager.sharedMEGAChatSdk().removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                         if error.type == .MEGAChatErrorTypeOk {
-                            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("linkRemoved", comment: "Message shown when the link to a file or folder has been removed"))
+                            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.linkRemoved)
                         }
                     }))
                     
@@ -418,7 +418,7 @@ class ChatViewController: MessagesViewController {
             || chatMessage.message.type == .contact {
             if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
                 let node = chatMessage.message.nodeList.node(at: 0)!
-                if (node.name!.mnz_isImagePathExtension || node.name!.mnz_isVideoPathExtension) {
+                if (node.name!.mnz_isVisualMediaPathExtension) {
                     let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
                     cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                     return cell
@@ -839,11 +839,11 @@ class ChatViewController: MessagesViewController {
     
     func checkTransferPauseStatus() {
         if UserDefaults.standard.bool(forKey: "TransfersPaused") {
-            let alertController = UIAlertController(title: NSLocalizedString("Resume Transfers?", comment: ""), message: nil, preferredStyle: .alert)
+            let alertController = UIAlertController(title: Strings.Localizable.resumeTransfers, message: nil, preferredStyle: .alert)
             
-            let cancel = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel)
+            let cancel = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel)
             
-            let action2 = UIAlertAction(title: NSLocalizedString("resume", comment: ""), style: .default) { (action:UIAlertAction) in
+            let action2 = UIAlertAction(title: Strings.Localizable.resume, style: .default) { (action:UIAlertAction) in
                 MEGASdkManager.sharedMEGASdk().pauseTransfers(false)
                 UserDefaults.standard.set(false, forKey: "TransfersPaused")
             }

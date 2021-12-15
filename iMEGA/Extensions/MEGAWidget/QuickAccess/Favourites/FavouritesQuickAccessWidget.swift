@@ -32,8 +32,8 @@ struct FavouritesQuickAccessWidget: Widget {
         StaticConfiguration(kind: kind, provider: FavouritesTimelineProvider()) { entry in
             QuickAccessWidgetView(entry: entry)
         }
-        .configurationDisplayName(NSLocalizedString("Quick Access", comment: "Title for the QuickAccess widget"))
-        .description(NSLocalizedString("Quickly access files on Favourites section", comment: "Text description for the Favourites QuickAccess widget"))
+        .configurationDisplayName(Strings.Localizable.quickAccess)
+        .description(Strings.Localizable.quicklyAccessFilesOnFavouritesSection)
         .supportedFamilies([.systemLarge])
     }
 }

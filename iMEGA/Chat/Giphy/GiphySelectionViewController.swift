@@ -42,7 +42,7 @@ class GiphySelectionViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         navigationController?.isToolbarHidden = false
-        let giphyIconItem = UIBarButtonItem(image: UIImage(named: "poweredByGIPHY"), style: .plain, target: nil, action: nil)
+        let giphyIconItem = UIBarButtonItem(image: Asset.Images.Chat.poweredByGIPHY.image, style: .plain, target: nil, action: nil)
         toolbarItems = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
                         giphyIconItem,
                         UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)]

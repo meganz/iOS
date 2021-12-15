@@ -46,7 +46,7 @@
 }
 
 - (void)mnz_renameOrRemoveThumbnailAndPreview {
-    if (self.fileName.mnz_isImagePathExtension || self.fileName.mnz_isVideoPathExtension) {
+    if (self.fileName.mnz_isVisualMediaPathExtension) {
         NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:self.path];
         NSString *thumbnailPath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_thumbnail"];
         NSString *previewPath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_preview"];
@@ -202,7 +202,7 @@
 }
 
 - (void)mnz_setNodeCoordinates {
-    if (self.fileName.mnz_isImagePathExtension || self.fileName.mnz_isVideoPathExtension) {
+    if (self.fileName.mnz_isVisualMediaPathExtension) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
         if (node.latitude && node.longitude) {
             return;

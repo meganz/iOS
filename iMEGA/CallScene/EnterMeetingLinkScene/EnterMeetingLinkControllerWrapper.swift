@@ -21,11 +21,11 @@ final class EnterMeetingLinkControllerWrapper: NSObject {
     
     private func createAlertController() -> UIAlertController {
         let alertController = UIAlertController(
-            title: NSLocalizedString("meetings.enterMeetingLink.title", comment: ""),
+            title: Strings.Localizable.Meetings.EnterMeetingLink.title,
             message: nil,
             preferredStyle: .alert)
         
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel))
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
         joinButton.isEnabled = false
         alertController.addAction(joinButton)
         

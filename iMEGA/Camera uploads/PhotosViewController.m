@@ -29,8 +29,8 @@
 @import StoreKit;
 @import Photos;
 
-static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
-static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
+static const NSTimeInterval PhotosViewReloadTimeDelay = .7;
+static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate, BrowserViewControllerDelegate> {
     BOOL allNodesSelected;
@@ -53,6 +53,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 @property (weak, nonatomic) IBOutlet UIStackView *progressStackView;
 
+@property (weak, nonatomic) IBOutlet UIView *photoContainerView;
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -78,20 +79,16 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.photosCollectionView.emptyDataSetSource = self;
-    self.photosCollectionView.emptyDataSetDelegate = self;
-    
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
-    
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
-    
-    self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
-    
-    self.cellInset = 1.0f;
-    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-    
+    if (FeatureFlag.isNewPhotosLibraryEnabled) {
+        self.navigationItem.rightBarButtonItems = nil;
+    } else {
+        self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+    }
     self.currentState = MEGACameraUploadsStateLoading;
     
+    [self configPhotoContainerView];
     [self updateAppearance];
 }
 
@@ -161,6 +158,29 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         [self updateAppearance];
     }
+}
+
+#pragma mark - config views
+- (void)configPhotoContainerView {
+    [self configPhotoCollectionView];
+    
+    if (!FeatureFlag.isNewPhotosLibraryEnabled) {
+        return;
+    }
+    
+    if (@available(iOS 14.0, *)) {
+        self.photosCollectionView.delegate = nil;
+        self.photosCollectionView.dataSource = nil;
+        
+        [self configPhotoLibraryViewIn:self.photoContainerView];
+    }
+}
+
+- (void)configPhotoCollectionView {
+    self.photosCollectionView.emptyDataSetSource = self;
+    self.photosCollectionView.emptyDataSetDelegate = self;
+    self.cellInset = 1.0f;
+    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
 }
 
 #pragma mark - load Camera Uploads target folder
@@ -343,44 +363,54 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)reloadPhotos {
-    MEGALogDebug(@"[Camera Upload] reload photos collection view");
-    NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
-    
-    self.photosByMonthYearArray = [NSMutableArray new];
-    NSMutableArray *photosArray = [NSMutableArray new];
-    
-    self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
-    
-    self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.unsignedIntegerValue];
-    
-    for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
-        MEGANode *node = [self.nodeList nodeAtIndex:i];
+    if (FeatureFlag.isNewPhotosLibraryEnabled) {
+        if (@available(iOS 14.0, *)) {
+            self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeCreationAsc];
+            [self updatePhotoLibraryBy:self.nodeList];
+            
+            if ([self.nodeList size].integerValue == 0) {
+                [self.photosCollectionView reloadData];
+            }
+        }
+    } else {
+        NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
         
-        if (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension) {
-            continue;
+        self.photosByMonthYearArray = [NSMutableArray new];
+        NSMutableArray *photosArray = [NSMutableArray new];
+        
+        self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
+        
+        self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.unsignedIntegerValue];
+        
+        for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
+            MEGANode *node = [self.nodeList nodeAtIndex:i];
+            
+            if (!node.name.mnz_isVisualMediaPathExtension) {
+                continue;
+            }
+            
+            NSString *currentMonthYearString = node.modificationTime.mnz_formattedMonthAndYear;
+            
+            if (![photosByMonthYearDictionary objectForKey:currentMonthYearString]) {
+                photosByMonthYearDictionary = [NSMutableDictionary new];
+                photosArray = [NSMutableArray new];
+                [photosArray addObject:node];
+                [photosByMonthYearDictionary setObject:photosArray forKey:currentMonthYearString];
+                [self.photosByMonthYearArray addObject:photosByMonthYearDictionary];
+            } else {
+                [photosArray addObject:node];
+            }
+            
+            [self.mediaNodesArray addObject:node];
         }
         
-        NSString *currentMonthYearString = node.modificationTime.mnz_formattedMonthAndYear;
-        
-        if (![photosByMonthYearDictionary objectForKey:currentMonthYearString]) {
-            photosByMonthYearDictionary = [NSMutableDictionary new];
-            photosArray = [NSMutableArray new];
-            [photosArray addObject:node];
-            [photosByMonthYearDictionary setObject:photosArray forKey:currentMonthYearString];
-            [self.photosByMonthYearArray addObject:photosByMonthYearDictionary];
-        } else {
-            [photosArray addObject:node];
-        }
-        
-        [self.mediaNodesArray addObject:node];
+        [self.photosCollectionView reloadData];
     }
-    
-    [self.photosCollectionView reloadData];
     
     if ([self.photosCollectionView allowsMultipleSelection]) {
         self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
     } else {
-        self.navigationItem.title = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+        self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     }
 }
 
@@ -531,7 +561,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         
         allNodesSelected = NO;
-        self.navigationItem.title = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+        self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];

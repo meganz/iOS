@@ -112,7 +112,7 @@ class CookieSettingsTableViewController: UITableViewController {
         
         title = Strings.Localizable.General.cookieSettings
         
-        saveBarButtonItem.title = NSLocalizedString("save", comment: "Button title to 'Save' the selected option")
+        saveBarButtonItem.title = Strings.Localizable.save
         self.navigationItem.rightBarButtonItem = saveBarButtonItem
         
         acceptCookiesLabel.text = Strings.Localizable.Dialog.Cookies.accept
@@ -130,7 +130,7 @@ class CookieSettingsTableViewController: UITableViewController {
     
     private func configToolbar() {
         cookiePolicyBarButtonItem.title = Strings.Localizable.General.cookiePolicy
-        privacyPolicyBarButtonItem.title = NSLocalizedString("privacyPolicyLabel", comment: "Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'")
+        privacyPolicyBarButtonItem.title = Strings.Localizable.privacyPolicyLabel
         let flexibleBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         setToolbarItems([cookiePolicyBarButtonItem, flexibleBarButtonItem, privacyPolicyBarButtonItem], animated: false)
         navigationController?.isToolbarHidden = false

@@ -2,7 +2,7 @@
 struct AudioExploreViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {
-        return NSLocalizedString("Audio", comment: "Title for audio explorer view")
+        return Strings.Localizable.audio
     }
     
     var emptyStateType: EmptyStateType {

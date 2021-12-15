@@ -197,15 +197,15 @@ extension AppDelegate {
         } else {
             var message: String
             if suspensionType == .businessDisabled {
-                message = NSLocalizedString("Your account has been disabled by your administrator. Please contact your business account administrator for further details.", comment: "Error message appears to sub-users of a business account when they try to login and they are disabled.")
+                message = Strings.Localizable.YourAccountHasBeenDisabledByYourAdministrator.pleaseContactYourBusinessAccountAdministratorForFurtherDetails
             } else if suspensionType == .businessRemoved {
-                message = NSLocalizedString("Your account has been removed by your administrator. Please contact your business account administrator for further details.", comment: "An error message which appears to sub-users of a business account when they try to login and they are deleted.")
+                message = Strings.Localizable.YourAccountHasBeenRemovedByYourAdministrator.pleaseContactYourBusinessAccountAdministratorForFurtherDetails
             } else {
-                message = NSLocalizedString("accountBlocked", comment: "Error message when trying to login and the account is blocked")
+                message = Strings.Localizable.accountBlocked
             }
             
-            let alert = UIAlertController(title: NSLocalizedString("error", comment: ""), message:message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel) { _ in
+            let alert = UIAlertController(title: Strings.Localizable.error, message:message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel) { _ in
                 MEGASdkManager.sharedMEGASdk().logout()
             })
             UIApplication.mnz_presentingViewController().present(alert, animated: true, completion: nil)

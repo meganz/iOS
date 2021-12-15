@@ -53,30 +53,26 @@ enum SortOrderType {
     }
     
     var image: UIImage? {
-        let imageName: String
-        
         switch self {
         case .nameAscending:
-            imageName = "ascending"
+            return Asset.Images.ActionSheetIcons.SortBy.ascending.image
         case .nameDescending:
-            imageName = "descending"
+            return Asset.Images.ActionSheetIcons.SortBy.descending.image
         case .largest:
-            imageName = "largest"
+            return Asset.Images.ActionSheetIcons.SortBy.largest.image
         case .smallest:
-            imageName = "smallest"
+            return Asset.Images.ActionSheetIcons.SortBy.smallest.image
         case .newest:
-            imageName = "newest"
+            return Asset.Images.ActionSheetIcons.SortBy.newest.image
         case .oldest:
-            imageName = "oldest"
+            return Asset.Images.ActionSheetIcons.SortBy.oldest.image
         case .label:
-            imageName = "label"
+            return Asset.Images.ActionSheetIcons.SortBy.sortLabel.image
         case .favourite:
-            imageName = "favourite"
+            return Asset.Images.ActionSheetIcons.SortBy.sortFavourite.image
         case .none:
-            imageName = ""
+            return UIImage(named: "")
         }
-        
-        return UIImage(named: imageName)
     }
     
     var megaSortOrderType: MEGASortOrderType {

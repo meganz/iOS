@@ -341,7 +341,7 @@ static TransfersWidgetViewController* instance = nil;
         
         if (transfer.state == MEGATransferStateComplete) {
             MEGANode *node = transfer.node;
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            if (node.name.mnz_isVisualMediaPathExtension) {
                 [self showNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];

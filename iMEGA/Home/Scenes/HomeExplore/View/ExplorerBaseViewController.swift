@@ -66,7 +66,7 @@ class ExplorerBaseViewController: UIViewController {
         }
         
         SVProgressHUD.show(UIImage(named: "hudDownload")!,
-                           status: NSLocalizedString("downloadStarted", comment: ""))
+                           status: Strings.Localizable.downloadStarted)
         selectedNodes.forEach { node in
             if node.mnz_downloadNode() {
                 downloadStarted(forNode: node)
