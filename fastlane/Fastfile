@@ -13,116 +13,20 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-APPCENTER_API_TOKEN = ENV["appcenter_api_token"]
-APPCENTER_OWNER_NAME = ENV["appcenter_owner_name"]
-APPCENTER_APP_NAME = ENV["appcenter_app_name"]
-APPCENTER_DESTINATIONS = ENV["appcenter_destinations"]
-APPCENTER_SLACK_URL = ENV["appcenter_slack_url"]
-APPCENTER_SLACK_CHANNEL_NAME = ENV["appcenter_slack_channel_name"]
 
 # Directories
 BUILD_DIR       = File.expand_path('build')
 
 # Build
-PROJECT             = "MEGA.xcodeproj"
-WORKSPACE           = "iMEGA.xcworkspace"
-SCHEME              = 'MEGA'
-
-
-def build_appcenter_release_url(id)
-  return "https://appcenter.ms/orgs/#{APPCENTER_OWNER_NAME}/apps/#{APPCENTER_APP_NAME}/distribute/releases/#{id}"
-end
-
+PROJECT                 = "MEGA.xcodeproj"
+WORKSPACE               = "iMEGA.xcworkspace"
+SCHEME                  = 'MEGA'
+TEMP_KEYCHAIN_NAME      = "fastlane_appstore"
+TEMP_KEYCHAIN_PASSWORD  = "TEMP_KEYCHAIN_PASSWORD"
 
 default_platform(:ios)
 
 platform :ios do
-  desc "Bump and tag version"
-  lane :bump do |options|
-    ensure_git_status_clean
-    bump_message = "Bump build number. [skip ci]"
-    # If our latest commit isn't a build bump, then bump the build.
-    build_is_already_bumped = last_git_commit[:message].include? bump_message
-    next if build_is_already_bumped
-    increment_build_number(
-      build_number: Time.new.strftime("%y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
-      xcodeproj: PROJECT
-    )
-    commit_version_bump(
-      message: bump_message,
-      xcodeproj: PROJECT
-    )
-    add_git_tag(
-      sign: true
-    )
-    push_to_git_remote
-  end
-
-  desc "Build App using adhoc certificate for Appcenter"
-  lane :build_using_adhoc do |options|
-
-    increment_build_number(
-      build_number: Time.new.strftime("%y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
-      xcodeproj: PROJECT
-    )
-
-    sync_all_code_signing()
-    match_configuration(type: "adhoc")
-
-    gym(
-      workspace: WORKSPACE,
-      scheme: SCHEME,
-      export_method: "ad-hoc",
-      skip_profile_detection: true,
-      output_directory: BUILD_DIR,
-      export_options: {
-        iCloudContainerEnvironment: "Production"
-      }
-    )
-  end
-
-  desc "Upload to Appcenter"
-  lane :upload_to_appcenter do |options|
-    # 1. Do some math to get build tags
-    # build_number = get_build_number(xcodeproj: PROJECT_PATH)
-    # last_build_number = build_number.to_i - 1
-    # build_tag = "builds/iosbump/" + build_number
-    # last_build_tag = "builds/iosbump/" + last_build_number.to_s
-    # 2. Generate a change log
-    comments = changelog_from_git_commits(
-        # between: [last_build_tag, build_tag],
-        pretty: "- %s",
-        date_format: "short",
-        match_lightweight_tag: false,
-        merge_commit_filtering: "include_merges"
-    )
-
-    # Upload the IPA to Appcenter.
-    appcenter_upload(
-      api_token: APPCENTER_API_TOKEN,
-      owner_name: APPCENTER_OWNER_NAME,
-      app_name: APPCENTER_APP_NAME,
-      ipa: "#{BUILD_DIR}/MEGA.ipa",
-      destinations: APPCENTER_DESTINATIONS,
-      destination_type: "group",
-      release_notes: comments,
-      notify_testers: true
-    )
-
-    # Send a Slack message to the channel with the build information.
-    slack(
-      message: "🎉New version available!",
-      channel: APPCENTER_SLACK_CHANNEL_NAME,
-      success: true, 
-      default_payloads: [:git_branch, :git_author],      
-      payload: {  
-        "App link" => build_appcenter_release_url(lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["id"]),
-        "Build Number" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["version"],
-        "Release Notes" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["release_notes"]
-      },
-      slack_url: APPCENTER_SLACK_URL
-    )
-  end
 
   desc "Upload symbols to crashlytics after running the gym"
   lane :upload_symbols do
@@ -151,30 +55,92 @@ platform :ios do
     end
   end
 
-  desc "build a app store release version"
-  lane :build_release do |options|
+  desc "creates temporary keychain"
+  lane :create_temporary_keychain do
+    delete_keychain(
+      name: TEMP_KEYCHAIN_NAME
+    ) if File.exist? File.expand_path("~/Library/Keychains/#{TEMP_KEYCHAIN_NAME}-db")
+
+    create_keychain(
+      name: TEMP_KEYCHAIN_NAME,
+      password: TEMP_KEYCHAIN_PASSWORD,
+      default_keychain: true,
+      unlock: true,
+      timeout: 0,
+      lock_when_sleeps: false,
+      add_to_search_list: true
+    )
+  end
+
+  desc "installs certificate and profiles for a given profile type to temp keychain created in create_temporary_keychain lane"
+  lane :install_certificate_and_profile_to_temp_keychain do |options|
+    api_key = app_store_connect_api_key(
+        key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+        issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+        key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+        is_key_content_base64: true,
+        in_house: false
+    ) 
+
+    match(
+      type: options[:type],
+      api_key: api_key,
+      keychain_name: TEMP_KEYCHAIN_NAME,
+      keychain_password: TEMP_KEYCHAIN_PASSWORD,
+      readonly: true,
+      verbose: true
+    )
+  end
+
+  desc "set the date and time as build number and write it to build_number file"
+  lane :set_time_as_build_number do
+    build_number = Time.new.strftime("%y%m%d%H%M")
 
     increment_build_number(
-      build_number: Time.new.strftime("%y%m%d") + (options[:BUILD_NUMBER] ||= "1"),
+      build_number: build_number,
       xcodeproj: PROJECT
     )
 
-    sync_all_code_signing()
-    match_configuration(type: "appstore")
+    File.write("build_number.txt", build_number)
+  end
 
+  desc "fetch the version number and write to file named version_number.txt"
+  lane :fetch_version_number do
+    get_version_number(target: "MEGA")
+    File.write("version_number.txt", lane_context[SharedValues::VERSION_NUMBER]) 
+  end
+
+  desc "archive for app store"
+  lane :archive_appstore do
     gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
-      export_method: 'app-store',
+      clean: true,
+      export_method: "app-store",
       skip_profile_detection: true,
       output_name: "MEGA",
       output_directory: BUILD_DIR,
       configuration: 'Release',
+      verbose: true,
       export_options: {
-        iCloudContainerEnvironment: "Production"
+        iCloudContainerEnvironment: "Production",
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "mega.ios": "match AppStore mega.ios",
+          "mega.ios.MEGAIntent": "match AppStore mega.ios.MEGAIntent",
+          "mega.ios.MEGANotifications": "match AppStore mega.ios.MEGANotifications",
+          "mega.ios.MEGAPicker": "match AppStore mega.ios.MEGAPicker",
+          "mega.ios.MEGAPickerFileProvider": "match AppStore mega.ios.MEGAPickerFileProvider",
+          "mega.ios.MEGAShare": "match AppStore mega.ios.MEGAShare",
+          "mega.ios.MEGAWidget": "match AppStore mega.ios.MEGAWidget"
+        }
       }
     )
+  end
 
+  desc "Delete the temporary created keychain"
+  lane :delete_temporary_keychain do 
+    delete_keychain(name: TEMP_KEYCHAIN_NAME)
   end
 
   desc "Upload to iTunesConnect"
@@ -202,21 +168,7 @@ platform :ios do
       api_key: api_key,
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       changelog: lane_context[SharedValues::FL_CHANGELOG],
-
     ) # to only upload the build
-
-      # Send a Slack message to the channel with the build information.
-      slack(
-        message: "🎉New iTunesConnect version available!",
-        channel: APPCENTER_SLACK_CHANNEL_NAME,
-        success: true, 
-        default_payloads: [:git_branch, :git_author],      
-        payload: {  
-          "Build Number" => lane_context[SharedValues::BUILD_NUMBER],
-          "Changelog Notes" => lane_context[SharedValues::FL_CHANGELOG]
-        },
-        slack_url: APPCENTER_SLACK_URL
-      )
   end
 
   lane :sync_all_code_signing do
@@ -226,21 +178,8 @@ platform :ios do
   end
 
   private_lane :match_configuration do |options|
-
-    if is_ci
-      api_key = app_store_connect_api_key(
-        key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
-        issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
-        key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
-        is_key_content_base64: true,
-        in_house: false
-      )
-    end
-
     match(
       type: options[:type],
-      api_key: api_key,
-      readonly: is_ci,
       verbose: true
     )
   end
