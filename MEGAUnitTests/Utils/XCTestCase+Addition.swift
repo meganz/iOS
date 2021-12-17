@@ -2,7 +2,7 @@ import XCTest
 @testable import MEGA
 
 extension XCTestCase {
-    func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 0.3) where T.Command: Equatable {
+    func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 0.5) where T.Command: Equatable {
         var expectedCommands = expectedCommands
         var viewModel = viewModel
         

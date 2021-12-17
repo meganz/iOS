@@ -12,6 +12,8 @@ struct PhotoCell: View {
                 .aspectRatio(1, contentMode: .fill)
         } else {
             Image(viewModel.thumbnailPlaceholderFileType)
+                .resizable()
+                .aspectRatio(1, contentMode: .fill)
         }
     }
 }
