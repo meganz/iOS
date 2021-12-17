@@ -43,7 +43,7 @@ struct NodeEntity {
     // MARK: - File
 
     let size: UInt64
-    let createTime: Date?
+    let creationTime: Date
     let modificationTime: Date
 
     // MARK: - Media

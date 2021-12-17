@@ -56,7 +56,7 @@ final class PhotosByDay: PhotosChronologicalCategory {
 
 extension NodeEntity: PhotosChronologicalCategory {
     var categoryDate: Date {
-        createTime ?? Date()
+        modificationTime
     }
     
     var coverPhoto: NodeEntity? {
