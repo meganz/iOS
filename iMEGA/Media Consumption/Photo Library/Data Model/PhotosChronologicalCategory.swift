@@ -7,7 +7,7 @@ protocol PhotosChronologicalCategory: Identifiable, ScrollPositioning {
 
 extension PhotosChronologicalCategory {
     var position: PhotoScrollPosition {
-        categoryDate
+        coverPhoto?.handle
     }
 }
 
