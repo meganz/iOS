@@ -38,6 +38,7 @@ struct PhotoLibraryAllView: View {
                 })
                     .id(photo.position)
                     .buttonStyle(.plain)
+                    .background(Color(white: 0, opacity: 0.1))
                     .frame(in: .named("scrollView"))
                     .onPreferenceChange(FramePreferenceKey.self) {
                         let position = calculator.calculateScrollPosition(with: photo, frame: $0, viewPortSize: viewPortSize)

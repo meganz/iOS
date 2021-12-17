@@ -46,7 +46,7 @@ extension NodeEntity {
             // MARK: - Files
 
             size                               : node.size?.uint64Value ?? 0,
-            createTime                         : node.creationTime,
+            creationTime                       : node.creationTime ?? Date(),
             modificationTime                   : node.modificationTime ?? Date(),
 
             // MARK: - Media

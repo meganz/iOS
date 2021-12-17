@@ -30,7 +30,7 @@ extension NodeEntity {
                   expirationTime: nil,
                   publicLinkCreationTime: nil,
                   size: 0,
-                  createTime: nil,
+                  creationTime: Date(),
                   modificationTime: Date(),
                   width: 0,
                   height: 0,
