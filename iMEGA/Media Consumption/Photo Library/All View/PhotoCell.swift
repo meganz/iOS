@@ -25,6 +25,8 @@ struct PhotoCell: View {
             .gesture(inEditingMode ? tap : nil)
         } else {
             Image(viewModel.thumbnailPlaceholderFileType)
+                .resizable()
+                .aspectRatio(1, contentMode: .fill)
         }
     }
 }

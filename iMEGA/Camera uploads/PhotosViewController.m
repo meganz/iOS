@@ -202,7 +202,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
     [self reloadPhotos];
     [self reloadHeader];
     
-    if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
+    if (self.nodeList.size.integerValue > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
     } else if (CameraUploadManager.shared.isDiskStorageFull) {
         [self showLocalDiskIsFullWarningScreen];
@@ -221,7 +221,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
     }
     
     if (!CameraUploadManager.isCameraUploadEnabled) {
-        if (self.photosByMonthYearArray.count == 0) {
+        if (self.nodeList.size.integerValue == 0) {
             self.currentState = MEGACameraUploadsStateEmpty;
         } else {
             self.currentState = MEGACameraUploadsStateDisabled;
@@ -331,7 +331,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
             self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             break;
         case MEGACameraUploadsStateNoInternetConnection:
-            if (self.photosByMonthYearArray.count == 0) {
+            if (self.nodeList.size.integerValue == 0) {
                 self.stateView.hidden = YES;
             } else {
                 self.stateLabel.text = NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
@@ -363,9 +363,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
 }
 
 - (void)reloadPhotos {
+    self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
+    
     if (FeatureFlag.isNewPhotosLibraryEnabled) {
         if (@available(iOS 14.0, *)) {
-            self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
             [self updatePhotoLibraryBy:self.nodeList];
             
             if ([self.nodeList size].integerValue == 0) {
@@ -377,9 +378,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
         
         self.photosByMonthYearArray = [NSMutableArray new];
         NSMutableArray *photosArray = [NSMutableArray new];
-        
-        self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
-        
         self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.unsignedIntegerValue];
         
         for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
