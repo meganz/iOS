@@ -6,7 +6,7 @@ protocol PhotoLibraryContentViewRouting {
     func card(for photosByYear: PhotosByYear) -> PhotoYearCard
     func card(for photosByMonth: PhotosByMonth) -> PhotoMonthCard
     func card(for photosByDay: PhotosByDay) -> PhotoDayCard
-    func card(for photo: NodeEntity) -> PhotoCell
+    func card(for photo: NodeEntity, editingMode: Bool) -> PhotoCell
     func photoBrowser(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoBrowser
 }
 
@@ -53,15 +53,16 @@ final class PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoDayCard(viewModel: dayCardViewModel)
     }
     
-    func card(for photo: NodeEntity) -> PhotoCell {
+    func card(for photo: NodeEntity, editingMode: Bool) -> PhotoCell {
         let thumbnailRepo = ThumbnailRepository(
             sdk: MEGASdkManager.sharedMEGASdk(),
             fileRepo: FileSystemRepository(fileManager: FileManager.default)
         )
         
-        let photoCellViewModel = PhotoCellViewModel(photo: photo, thumbnailUseCase: ThumbnailUseCase(repository: thumbnailRepo))
+        let photoCellViewModel = PhotoCellViewModel(photo: photo,
+                                                    thumbnailUseCase: ThumbnailUseCase(repository: thumbnailRepo))
         
-        return PhotoCell(viewModel: photoCellViewModel)
+        return PhotoCell(inEditingMode: editingMode, viewModel: photoCellViewModel)
     }
     
     func photoBrowser(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoBrowser {

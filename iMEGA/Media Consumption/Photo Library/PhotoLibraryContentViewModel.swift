@@ -5,6 +5,8 @@ final class PhotoLibraryContentViewModel: ObservableObject {
     @Published var selectedMode: PhotoLibraryViewMode = .all
     var currentPosition: PhotoScrollPosition = nil
     
+    @Published var editingMode: Bool = true
+    
     init(library: PhotoLibrary) {
         self.library = library
     }
