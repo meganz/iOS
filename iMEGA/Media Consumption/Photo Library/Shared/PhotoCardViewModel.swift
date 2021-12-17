@@ -19,6 +19,7 @@ class PhotoCardViewModel: ObservableObject {
     func loadCoverPhoto() {
         coverPhotoLoader
             .loadCoverPhoto()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$coverPhotoURL)
     }
 }

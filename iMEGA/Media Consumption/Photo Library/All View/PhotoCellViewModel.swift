@@ -21,6 +21,7 @@ final class PhotoCellViewModel: ObservableObject {
             .getCachedThumbnail(for: photo.handle)
             .map(Optional.some)
             .replaceError(with: nil)
+            .receive(on: DispatchQueue.main)
             .assign(to: &$thumbnailURL)
     }
 }
