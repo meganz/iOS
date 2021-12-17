@@ -29,11 +29,13 @@ struct PhotoLibraryAllView: View {
         Section(header: headerView(for: section)) {
             ForEach(section.photosByMonth.allPhotos) { photo in
                 Button(action: {
-                    withAnimation {
-                        selectedNode = photo
+                    if !viewModel.libraryViewModel.editingMode {
+                        withAnimation {
+                            selectedNode = photo
+                        }
                     }
                 }, label: {
-                    router.card(for: photo)
+                    router.card(for: photo, editingMode: viewModel.libraryViewModel.editingMode)
                         .clipped()
                 })
                     .id(photo.position)
