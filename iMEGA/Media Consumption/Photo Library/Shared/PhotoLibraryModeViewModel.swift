@@ -5,7 +5,7 @@ class PhotoLibraryModeViewModel<T: PhotosChronologicalCategory>: ScrollPositioni
     let libraryViewModel: PhotoLibraryContentViewModel
     
     var position: PhotoScrollPosition {
-        photoCategoryList.last?.categoryDate
+        libraryViewModel.currentPosition
     }
     
     init(libraryViewModel: PhotoLibraryContentViewModel, photoCategoryList: [T]) {

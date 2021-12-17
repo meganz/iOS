@@ -1,6 +1,6 @@
 import Foundation
 
-typealias PhotoScrollPosition = Date?
+typealias PhotoScrollPosition = MEGAHandle?
 
 protocol ScrollPositioning {
     var position: PhotoScrollPosition { get }

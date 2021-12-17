@@ -365,7 +365,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
 - (void)reloadPhotos {
     if (FeatureFlag.isNewPhotosLibraryEnabled) {
         if (@available(iOS 14.0, *)) {
-            self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeCreationAsc];
+            self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
             [self updatePhotoLibraryBy:self.nodeList];
             
             if ([self.nodeList size].integerValue == 0) {
