@@ -9,6 +9,10 @@ def injectEnvironments(Closure body) {
     }
 }
 
+def runShell(String cmd) {
+    sh "${cmd} >> ${CONSOLE_LOG_FILE} 2>&1"
+}
+
 pipeline {
    agent { label 'mac-slave' }
    environment {
@@ -35,9 +39,9 @@ pipeline {
                 gitlabCommitStatus(name: 'Submodule update') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                     injectEnvironments({
-                            sh "git submodule foreach --recursive git clean -xfd > ${env.CONSOLE_LOG_FILE}"
-                            sh "git submodule sync --recursive >> ${env.CONSOLE_LOG_FILE}"
-                            sh "git submodule update --init --recursive >> ${env.CONSOLE_LOG_FILE}"
+                            runShell "git submodule foreach --recursive git clean -xfd"
+                            runShell "git submodule sync --recursive"
+                            runShell "git submodule update --init --recursive"
                         })
                     }
                 }
@@ -49,12 +53,12 @@ pipeline {
                 gitlabCommitStatus(name: 'Downloading dependencies') {
                     injectEnvironments({
                         retry(3) {
-                            sh "sh download_3rdparty.sh >> ${env.CONSOLE_LOG_FILE}"
+                            runShell "sh download_3rdparty.sh"
                         }
-                        sh "bundle install >> ${env.CONSOLE_LOG_FILE}"
-                        sh "bundle exec pod repo update >> ${env.CONSOLE_LOG_FILE}"
-                        sh "bundle exec pod cache clean --all --verbose >> ${env.CONSOLE_LOG_FILE}"
-                        sh "bundle exec pod install --verbose >> ${env.CONSOLE_LOG_FILE}"
+                        runShell "bundle install"
+                        runShell "bundle exec pod repo update"
+                        runShell "bundle exec pod cache clean --all --verbose"
+                        runShell "bundle exec pod install --verbose"
                     })
                 }
             }
@@ -65,7 +69,7 @@ pipeline {
                 gitlabCommitStatus(name: 'Running CMake') {
                     injectEnvironments({
                         dir("iMEGA/Vendor/Karere/src/") {
-                            sh "cmake -P genDbSchema.cmake >> ${env.CONSOLE_LOG_FILE}"
+                            runShell "cmake -P genDbSchema.cmake"
                         }
                     })
                 }
@@ -76,7 +80,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Run unit test') {
                     injectEnvironments({
-                        sh "arch -x86_64 bundle exec fastlane tests >> ${env.CONSOLE_LOG_FILE}"
+                        runShell "arch -x86_64 bundle exec fastlane tests"
                     })
                 }
             }

@@ -1,4 +1,4 @@
-git_url("git@code.developers.mega.co.nz:mobile/ios/iOSCertificates.git")
+git_url("https://code.developers.mega.co.nz/mobile/ios/iOSCertificates.git")
 
 storage_mode("git")
 

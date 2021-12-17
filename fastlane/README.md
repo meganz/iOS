@@ -1,69 +1,112 @@
 fastlane documentation
-================
+----
+
 # Installation
 
 Make sure you have the latest version of the Xcode command line tools installed:
 
-```
+```sh
 xcode-select --install
 ```
 
-Install _fastlane_ using
-```
-[sudo] gem install fastlane -NV
-```
-or alternatively using `brew install fastlane`
+For _fastlane_ installation instructions, see [Installing _fastlane_](https://docs.fastlane.tools/#installing-fastlane)
 
 # Available Actions
+
 ## iOS
-### ios bump
-```
-fastlane ios bump
-```
-Bump and tag version
-### ios build_using_adhoc
-```
-fastlane ios build_using_adhoc
-```
-Build App using adhoc certificate for Appcenter
-### ios upload_to_appcenter
-```
-fastlane ios upload_to_appcenter
-```
-Upload to Appcenter
+
 ### ios upload_symbols
-```
-fastlane ios upload_symbols
-```
-Upload symbols to crashlytics after running the gym
-### ios upload_symbols_with_dsym_path
-```
-fastlane ios upload_symbols_with_dsym_path
-```
-Upload symbols to crashlytics with dsym path as parameter
-### ios build_release
-```
-fastlane ios build_release
-```
-build a app store release version
-### ios upload_to_itunesconnect
-```
-fastlane ios upload_to_itunesconnect
-```
-Upload to iTunesConnect
-### ios sync_all_code_signing
-```
-fastlane ios sync_all_code_signing
+
+```sh
+[bundle exec] fastlane ios upload_symbols
 ```
 
+Upload symbols to crashlytics after running the gym
+
+### ios upload_symbols_with_dsym_path
+
+```sh
+[bundle exec] fastlane ios upload_symbols_with_dsym_path
+```
+
+Upload symbols to crashlytics with dsym path as parameter
+
+### ios create_temporary_keychain
+
+```sh
+[bundle exec] fastlane ios create_temporary_keychain
+```
+
+creates temporary keychain
+
+### ios install_certificate_and_profile_to_temp_keychain
+
+```sh
+[bundle exec] fastlane ios install_certificate_and_profile_to_temp_keychain
+```
+
+installs certificate and profiles for a given profile type to temp keychain created in create_temporary_keychain lane
+
+### ios set_time_as_build_number
+
+```sh
+[bundle exec] fastlane ios set_time_as_build_number
+```
+
+set the date and time as build number and write it to build_number file
+
+### ios fetch_version_number
+
+```sh
+[bundle exec] fastlane ios fetch_version_number
+```
+
+fetch the version number and write to file named version_number.txt
+
+### ios archive_appstore
+
+```sh
+[bundle exec] fastlane ios archive_appstore
+```
+
+archive for app store
+
+### ios delete_temporary_keychain
+
+```sh
+[bundle exec] fastlane ios delete_temporary_keychain
+```
+
+Delete the temporary created keychain
+
+### ios upload_to_itunesconnect
+
+```sh
+[bundle exec] fastlane ios upload_to_itunesconnect
+```
+
+Upload to iTunesConnect
+
+### ios sync_all_code_signing
+
+```sh
+[bundle exec] fastlane ios sync_all_code_signing
+```
+
+
+
 ### ios tests
+
+```sh
+[bundle exec] fastlane ios tests
 ```
-fastlane ios tests
-```
+
 MEGA unit tests
 
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
-More information about fastlane can be found on [fastlane.tools](https://fastlane.tools).
-The documentation of fastlane can be found on [docs.fastlane.tools](https://docs.fastlane.tools).
+
+More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).
+
+The documentation of _fastlane_ can be found on [docs.fastlane.tools](https://docs.fastlane.tools).
