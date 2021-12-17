@@ -40,6 +40,7 @@
 		120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		123E3019275B2EC400EEDAAA /* NumberBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E3018275B2EC400EEDAAA /* NumberBadge.swift */; };
 		123E301D275B31A400EEDAAA /* PhotoCardNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E301C275B31A400EEDAAA /* PhotoCardNumber.swift */; };
+		1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1243A31C276AB8F100067A8F /* CheckMarkView.swift */; };
 		124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */; };
 		124667FA275DB82000C94335 /* CustomModalAlertViewController+CookieDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EC275DB81F00C94335 /* CustomModalAlertViewController+CookieDialog.swift */; };
 		124667FB275DB82000C94335 /* CustomModalAlertViewController+LaunchTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667ED275DB81F00C94335 /* CustomModalAlertViewController+LaunchTab.swift */; };
@@ -2300,6 +2301,7 @@
 		120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		123E3018275B2EC400EEDAAA /* NumberBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberBadge.swift; sourceTree = "<group>"; };
 		123E301C275B31A400EEDAAA /* PhotoCardNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardNumber.swift; sourceTree = "<group>"; };
+		1243A31C276AB8F100067A8F /* CheckMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkView.swift; sourceTree = "<group>"; };
 		124667E9275DB81300C94335 /* CustomModalAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomModalAlertViewController.h; sourceTree = "<group>"; };
 		124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Business.swift"; sourceTree = "<group>"; };
 		124667EC275DB81F00C94335 /* CustomModalAlertViewController+CookieDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+CookieDialog.swift"; sourceTree = "<group>"; };
@@ -8676,6 +8678,7 @@
 				B67507C6276852AF0034F951 /* PhotosMonthSection.swift */,
 				B66E8073275A0C3000502601 /* PhotoCell.swift */,
 				B66E8075275A0C4200502601 /* PhotoCellViewModel.swift */,
+				1243A31C276AB8F100067A8F /* CheckMarkView.swift */,
 			);
 			path = "All View";
 			sourceTree = "<group>";
@@ -11033,6 +11036,7 @@
 				5D166B8B252198BB004F4F4A /* ItemGroup.swift in Sources */,
 				BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */,
 				BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */,
+				1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */,
 				B67A2C73251755D500B40D89 /* L10nRepositoryProtocol.swift in Sources */,
 				B6C524EC21E59DC700AE3575 /* BackgroundUploadMonitor.m in Sources */,
 				BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */,
