@@ -2,17 +2,16 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct CardImage: View {
-    let imageURL: URL?
+    let container: ImageContainer
     
     var body: some View {
-        if let path = imageURL?.path,
-           let coverPhoto = UIImage(contentsOfFile: path) {
-            Image(uiImage: coverPhoto)
+        if container.isPlaceholder {
+            container.image
+        } else {
+            container.image
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipped()
-        } else {
-            Image("photoCardPlaceholder")
         }
     }
 }

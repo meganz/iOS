@@ -5,7 +5,7 @@ struct PhotoMonthCard: View {
     @ObservedObject var viewModel: PhotoMonthCardViewModel
     
     var body: some View {
-        PhotoCard(coverPhotoURL: viewModel.coverPhotoURL) {
+        PhotoCard(viewModel: viewModel) {
             if #available(iOS 15.0, *) {
                 Text(viewModel.attributedTitle)
             } else {

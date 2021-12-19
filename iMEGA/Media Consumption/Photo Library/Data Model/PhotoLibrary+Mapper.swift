@@ -19,7 +19,7 @@ extension Array where Element == NodeEntity {
         }
         
         var monthDict = [Date: PhotosByMonth]()
-        for (day, photosByDate) in dayDict.sorted(by: { $0.key < $1.key }) {
+        for (day, photosByDate) in dayDict.sorted(by: { $0.key > $1.key }) {
             guard let month = day.removeDay() else { continue }
             let photosByMonth = monthDict[month] ?? PhotosByMonth(categoryDate: month)
             photosByMonth.photosByDayList.append(photosByDate)
@@ -27,13 +27,13 @@ extension Array where Element == NodeEntity {
         }
         
         var yearDict = [Date: PhotosByYear]()
-        for (month, photosByMonth) in monthDict.sorted(by: { $0.key < $1.key }) {
+        for (month, photosByMonth) in monthDict.sorted(by: { $0.key > $1.key }) {
             guard let year = month.removeMonth() else { continue }
             let photosByYear = yearDict[year] ?? PhotosByYear(categoryDate: year)
             photosByYear.photosByMonthList.append(photosByMonth)
             yearDict[year] = photosByYear
         }
         
-        return PhotoLibrary(photosByYearList: yearDict.values.sorted(by: { $0.categoryDate < $1.categoryDate }))
+        return PhotoLibrary(photosByYearList: yearDict.values.sorted(by: { $0.categoryDate > $1.categoryDate }))
     }
 }

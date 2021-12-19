@@ -1,5 +1,9 @@
 import Foundation
 
+extension ThumbnailRepository {
+    static let `default` = ThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), fileRepo: FileSystemRepository.default)
+}
+
 struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     private let sdk: MEGASdk
     private let fileRepo: FileRepositoryProtocol
