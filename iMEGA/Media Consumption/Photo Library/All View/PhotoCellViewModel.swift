@@ -1,27 +1,46 @@
 import Foundation
+import SwiftUI
+import Combine
 
 @available(iOS 14.0, *)
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    
-    @Published var thumbnailURL: URL?
-    var thumbnailPlaceholderFileType: MEGAFileType
-    
+    private var subscriptions = Set<AnyCancellable>()
+    private let placeholderImageContainer: ImageContainer
+
+    @Published var thumbnailContainer: ImageContainer
+    let isEditingMode: Bool
+
     init(photo: NodeEntity,
-         thumbnailUseCase: ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: ThumbnailUseCaseProtocol,
+         isEditingMode: Bool = false) {
         self.photo = photo
         self.thumbnailUseCase = thumbnailUseCase
-        thumbnailPlaceholderFileType = thumbnailUseCase.thumbnailPlaceholderFileType(forNodeName: photo.name)
-        loadThumbnail()
+        self.isEditingMode = isEditingMode
+        let placeholderFileType = thumbnailUseCase.thumbnailPlaceholderFileType(forNodeName: photo.name)
+        placeholderImageContainer = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
+        thumbnailContainer = placeholderImageContainer
     }
     
     func loadThumbnail() {
         thumbnailUseCase
             .getCachedThumbnail(for: photo.handle)
-            .map(Optional.some)
+            .receive(on: DispatchQueue.global(qos: .utility))
+            .map {
+                ImageContainer(image: Image(contentsOfFile: $0.path))
+            }
             .replaceError(with: nil)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$thumbnailURL)
+            .compactMap { $0 }
+            .delay(for: .seconds(0.07), scheduler: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.thumbnailContainer = $0
+            }
+            .store(in: &subscriptions)
+    }
+    
+    func resetThumbnail() {
+        subscriptions.removeAll()
+        thumbnailContainer = placeholderImageContainer
     }
 }

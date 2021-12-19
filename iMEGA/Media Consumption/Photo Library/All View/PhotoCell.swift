@@ -2,29 +2,39 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct PhotoCell: View {
-    var inEditingMode: Bool = false
+    @State private var selected: Bool = false
     
     @ObservedObject var viewModel: PhotoCellViewModel
-    @State private var selected: Bool = false
     
     private var tap: some Gesture { TapGesture().onEnded { _ in selected.toggle() }}
     
     var body: some View {
-        if let path = viewModel.thumbnailURL?.path,
-           let thumbnail = UIImage(contentsOfFile: path) {
-            ZStack(alignment: .topTrailing) {
-                Image(uiImage: thumbnail)
-                    .resizable()
-                    .aspectRatio(1, contentMode: .fill)
-                
-                if inEditingMode {
-                    CheckMarkView(markedSelected: $selected)
-                        .offset(x: -5, y: 5)
-                }
+        ZStack(alignment: .topTrailing) {
+            thumbnail()
+            if viewModel.isEditingMode {
+                CheckMarkView(markedSelected: $selected)
+                    .offset(x: -5, y: 5)
             }
-            .gesture(inEditingMode ? tap : nil)
+        }
+        .gesture(viewModel.isEditingMode ? tap : nil)
+        .onAppear {
+            viewModel.loadThumbnail()
+        }
+        .onDisappear {
+            viewModel.resetThumbnail()
+        }
+    }
+    
+    @ViewBuilder
+    private func thumbnail() -> some View {
+        if viewModel.thumbnailContainer.isPlaceholder {
+            Color.clear
+                .aspectRatio(1, contentMode: .fill)
+                .overlay(
+                    viewModel.thumbnailContainer.image
+                )
         } else {
-            Image(viewModel.thumbnailPlaceholderFileType)
+            viewModel.thumbnailContainer.image
                 .resizable()
                 .aspectRatio(1, contentMode: .fill)
         }
