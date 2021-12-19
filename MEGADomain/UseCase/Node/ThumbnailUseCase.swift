@@ -1,3 +1,4 @@
+import Foundation
 import Combine
 
 // MARK: - Use case protocol -
@@ -11,6 +12,10 @@ protocol ThumbnailUseCaseProtocol {
     func thumbnailPlaceholderFileType(forNodeName name: String) -> MEGAFileType
 }
 
+extension ThumbnailUseCase {
+    static let `default` = ThumbnailUseCase(repository: ThumbnailRepository.default)
+}
+
 struct ThumbnailUseCase: ThumbnailUseCaseProtocol {
     private let repository: ThumbnailRepositoryProtocol
     private let fileTypes = FileTypes()
@@ -20,7 +25,9 @@ struct ThumbnailUseCase: ThumbnailUseCaseProtocol {
     }
     
     func getCachedThumbnail(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        repository.getCachedThumbnail(for: handle, completion: completion)
+        DispatchQueue.global(qos: .userInitiated).async {
+            repository.getCachedThumbnail(for: handle, completion: completion)
+        }
     }
     
     func getCachedThumbnail(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity> {
@@ -30,7 +37,9 @@ struct ThumbnailUseCase: ThumbnailUseCaseProtocol {
     }
     
     func getCachedPreview(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        repository.getCachedPreview(for: handle, completion: completion)
+        DispatchQueue.global(qos: .utility).async {
+            repository.getCachedPreview(for: handle, completion: completion)
+        }
     }
     
     func getCachedPreview(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity> {
