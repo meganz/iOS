@@ -5,7 +5,7 @@ struct PhotoYearCard: View {
     @ObservedObject var viewModel: PhotoYearCardViewModel
     
     var body: some View {
-        PhotoCard(coverPhotoURL: viewModel.coverPhotoURL) {
+        PhotoCard(viewModel: viewModel) {
             Text(viewModel.title)
                 .font(.title2.bold())
         }
