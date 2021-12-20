@@ -245,17 +245,6 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFk-6I-Pd0">
                                                     <rect key="frame" x="329" y="13" width="46" height="44"/>
                                                     <subviews>
-                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj9-SO-aAp" userLabel="Cancel Button">
-                                                            <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="46" id="ebB-U9-Krh"/>
-                                                                <constraint firstAttribute="height" constant="44" id="rDI-5P-NXt"/>
-                                                            </constraints>
-                                                            <state key="normal" image="cancel"/>
-                                                            <connections>
-                                                                <action selector="cancelTransfer:" destination="jDf-g3-SgE" eventType="touchUpInside" id="1m2-Da-pGX"/>
-                                                            </connections>
-                                                        </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDO-bi-0NI" userLabel="More Button">
                                                             <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
                                                             <constraints>
@@ -293,7 +282,6 @@
                                         </constraints>
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="cancelButton" destination="Hj9-SO-aAp" id="ylz-7F-6nv"/>
                                             <outlet property="downloadProgressView" destination="Hj9-IR-99g" id="9ND-rq-gRq"/>
                                             <outlet property="downloadedImageView" destination="bxb-jD-ZWg" id="3zU-1V-vjs"/>
                                             <outlet property="downloadedView" destination="Sja-D4-03U" id="MVR-xY-Ul4"/>
@@ -521,7 +509,6 @@
         </designable>
     </designables>
     <resources>
-        <image name="cancel" width="46" height="44"/>
         <image name="cancelTransfers" width="22" height="22"/>
         <image name="downloaded" width="12" height="12"/>
         <image name="downloading" width="12" height="12"/>

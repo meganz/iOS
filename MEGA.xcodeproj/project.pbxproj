@@ -1911,7 +1911,6 @@
 		BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */; };
 		BFAFB178252ACEF0003ADFE3 /* SDKFilesSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB177252ACEF0003ADFE3 /* SDKFilesSearchRepository.swift */; };
 		BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */; };
-		BFAFB199252C0A33003ADFE3 /* DownloadingNodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB198252C0A33003ADFE3 /* DownloadingNodeCell.xib */; };
 		BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */; };
 		BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */; };
 		BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */; };
@@ -4067,7 +4066,6 @@
 		BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModel.swift; sourceTree = "<group>"; };
 		BFAFB177252ACEF0003ADFE3 /* SDKFilesSearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKFilesSearchRepository.swift; sourceTree = "<group>"; };
 		BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocAndAudioListSource.swift; sourceTree = "<group>"; };
-		BFAFB198252C0A33003ADFE3 /* DownloadingNodeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadingNodeCell.xib; sourceTree = "<group>"; };
 		BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeTableViewCell.xib; sourceTree = "<group>"; };
 		BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModel.swift; sourceTree = "<group>"; };
 		BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewViewController.swift; sourceTree = "<group>"; };
@@ -7105,7 +7103,6 @@
 				415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */,
 				415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */,
 				BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */,
-				BFAFB198252C0A33003ADFE3 /* DownloadingNodeCell.xib */,
 				832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */,
 				832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */,
 				832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */,
@@ -10428,7 +10425,6 @@
 				BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */,
 				BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */,
 				5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */,
-				BFAFB199252C0A33003ADFE3 /* DownloadingNodeCell.xib in Resources */,
 				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,

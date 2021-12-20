@@ -2,18 +2,6 @@ import Foundation
 
 extension FolderLinkViewController: MEGATransferDelegate {
     
-    public func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        if let node = nodeFromDownload(transfer: transfer) {
-            didDownloadTransferStart(node)
-        }
-    }
-    
-    public func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
-        if let node = nodeFromDownload(transfer: transfer) {
-            didDownloadTransferUpdated(node, transferredBytes: transfer.transferredBytes, totalBytes: transfer.totalBytes, speed: transfer.speed)
-        }
-    }
-    
     public func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
         if let node = nodeFromDownload(transfer: transfer) {
             didDownloadTransferFinish(node)

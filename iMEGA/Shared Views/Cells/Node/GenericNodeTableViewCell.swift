@@ -55,15 +55,6 @@ final class GenericNodeTableViewCell: UITableViewCell {
             
         case .setVersions(let hasVersions):
             versionedImageView.isHidden = !hasVersions
-        
-        case .setBeingDownloaded(let isBeingDownloaded):
-            if isBeingDownloaded {
-                secondaryLabel.text = Strings.Localizable.queued
-                moreButton.isHidden = true
-            } else {
-                viewModel.dispatch(.isDownloaded)
-                moreButton.isHidden = false
-            }
             
         case .setDownloaded(let isDownloaded):
             downloadedImageView.isHidden = !isDownloaded
@@ -77,7 +68,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
     // MARK: - Private
     
     private func config(_ nodeModel: NodeModel) {
-        viewModel.dispatch(.isBeingDownloaded)
+        viewModel.dispatch(.isDownloaded)
         
         favouriteView.isHidden = !nodeModel.isFavourite
         

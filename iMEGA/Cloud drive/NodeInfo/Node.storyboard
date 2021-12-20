@@ -624,17 +624,17 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nodeCell" id="sfv-X8-LiF" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="88" width="414" height="100"/>
+                                        <rect key="frame" x="0.0" y="88" width="414" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sfv-X8-LiF" id="umg-Z1-By5">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRo-Ik-XtA">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-4P-Kpo">
-                                                            <rect key="frame" x="12" y="30" width="40" height="40"/>
+                                                            <rect key="frame" x="12" y="32" width="40" height="40"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SVb-Tz-B5y">
                                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -667,7 +667,7 @@
                                                             </constraints>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="0fE-Re-Twa">
-                                                            <rect key="frame" x="60" y="12" width="79.5" height="76"/>
+                                                            <rect key="frame" x="60" y="12" width="60.5" height="80"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xa6-Us-BLF" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="31" height="18"/>
@@ -680,36 +680,19 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bNs-VH-D36">
-                                                                    <rect key="frame" x="0.0" y="24" width="79.5" height="52"/>
+                                                                    <rect key="frame" x="0.0" y="24" width="60.5" height="56"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQl-my-Dm1">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="11" height="52"/>
-                                                                            <subviews>
-                                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="xVA-dN-gmN" userLabel="Arrow Image View">
-                                                                                    <rect key="frame" x="0.0" y="20" width="11" height="12"/>
-                                                                                    <constraints>
-                                                                                        <constraint firstAttribute="width" constant="11" id="cLL-Gc-NIt"/>
-                                                                                    </constraints>
-                                                                                </imageView>
-                                                                            </subviews>
-                                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <constraints>
-                                                                                <constraint firstItem="xVA-dN-gmN" firstAttribute="leading" secondItem="HQl-my-Dm1" secondAttribute="leading" id="1su-Fs-ns1"/>
-                                                                                <constraint firstItem="xVA-dN-gmN" firstAttribute="centerY" secondItem="HQl-my-Dm1" secondAttribute="centerY" id="gR7-Gt-ICO"/>
-                                                                                <constraint firstItem="xVA-dN-gmN" firstAttribute="centerX" secondItem="HQl-my-Dm1" secondAttribute="centerX" id="v0W-TN-uUK"/>
-                                                                            </constraints>
-                                                                        </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mqe-aU-ngt">
-                                                                            <rect key="frame" x="19" y="0.0" width="40.5" height="52"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="40.5" height="56"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="txP-eA-9L2">
-                                                                            <rect key="frame" x="67.5" y="0.0" width="12" height="52"/>
+                                                                            <rect key="frame" x="48.5" y="0.0" width="12" height="56"/>
                                                                             <subviews>
                                                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="u4D-lA-ajo" userLabel="Middle Image View">
-                                                                                    <rect key="frame" x="0.0" y="20" width="12" height="12"/>
+                                                                                    <rect key="frame" x="0.0" y="22" width="12" height="12"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="12" id="2UK-Zm-3LJ"/>
                                                                                         <constraint firstAttribute="height" constant="12" id="zpe-kU-05A"/>
@@ -728,19 +711,8 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZFT-cO-qXo">
-                                                            <rect key="frame" x="368" y="28" width="46" height="44"/>
+                                                            <rect key="frame" x="368" y="30" width="46" height="44"/>
                                                             <subviews>
-                                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4I-Oy-MOC" userLabel="Cancel Button">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="44" id="kn0-cY-a87"/>
-                                                                        <constraint firstAttribute="width" constant="46" id="t35-Zh-RWT"/>
-                                                                    </constraints>
-                                                                    <state key="normal" image="cancel"/>
-                                                                    <connections>
-                                                                        <action selector="cancelTransfer:" destination="sfv-X8-LiF" eventType="touchUpInside" id="yzS-bL-o4F"/>
-                                                                    </connections>
-                                                                </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdJ-P9-7cj" userLabel="More Button">
                                                                     <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
                                                                     <constraints>
@@ -766,30 +738,20 @@
                                                         <constraint firstItem="BaB-4P-Kpo" firstAttribute="leading" secondItem="cRo-Ik-XtA" secondAttribute="leading" constant="12" id="pyR-Cn-cyW"/>
                                                     </constraints>
                                                 </view>
-                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="9O2-gT-tQp">
-                                                    <rect key="frame" x="0.0" y="98.5" width="414" height="2.5"/>
-                                                </progressView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="cRo-Ik-XtA" firstAttribute="leading" secondItem="umg-Z1-By5" secondAttribute="leading" id="9bz-oc-MNv"/>
                                                 <constraint firstAttribute="bottom" secondItem="0fE-Re-Twa" secondAttribute="bottom" constant="12" id="CPv-b6-ND5"/>
                                                 <constraint firstItem="0fE-Re-Twa" firstAttribute="top" secondItem="umg-Z1-By5" secondAttribute="top" constant="12" id="I44-vu-dpo"/>
-                                                <constraint firstAttribute="trailing" secondItem="9O2-gT-tQp" secondAttribute="trailing" id="IRD-QX-Iag"/>
-                                                <constraint firstItem="9O2-gT-tQp" firstAttribute="bottom" secondItem="cRo-Ik-XtA" secondAttribute="bottom" id="R5o-ZM-JPm"/>
                                                 <constraint firstAttribute="trailing" secondItem="cRo-Ik-XtA" secondAttribute="trailing" id="Vje-wN-b4o"/>
                                                 <constraint firstAttribute="bottom" secondItem="cRo-Ik-XtA" secondAttribute="bottom" id="fOf-8k-RG6"/>
                                                 <constraint firstItem="cRo-Ik-XtA" firstAttribute="top" secondItem="umg-Z1-By5" secondAttribute="top" id="o59-p2-7Pk"/>
-                                                <constraint firstItem="9O2-gT-tQp" firstAttribute="leading" secondItem="umg-Z1-By5" secondAttribute="leading" id="xrH-1E-iG0"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="cancelButton" destination="J4I-Oy-MOC" id="nsK-Ao-ibV"/>
-                                            <outlet property="downloadProgressView" destination="9O2-gT-tQp" id="3xt-Vz-Zxi"/>
                                             <outlet property="downloadedImageView" destination="u4D-lA-ajo" id="JTq-Sk-ahY"/>
                                             <outlet property="downloadedView" destination="txP-eA-9L2" id="05k-Ej-F03"/>
-                                            <outlet property="downloadingArrowImageView" destination="xVA-dN-gmN" id="qgU-d7-4s0"/>
-                                            <outlet property="downloadingArrowView" destination="HQl-my-Dm1" id="QIX-L4-5Hl"/>
                                             <outlet property="infoLabel" destination="Mqe-aU-ngt" id="gfj-3H-ZRt"/>
                                             <outlet property="moreButton" destination="EdJ-P9-7cj" id="ndL-Ir-2s7"/>
                                             <outlet property="nameLabel" destination="xa6-Us-BLF" id="CCb-yv-qmD"/>
@@ -798,7 +760,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nodeInfoFooter" id="7s9-5h-eKo">
-                                        <rect key="frame" x="0.0" y="188" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="192" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7s9-5h-eKo" id="Icx-lK-XGj">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -923,11 +885,9 @@
         </designable>
     </designables>
     <resources>
-        <image name="cancel" width="46" height="44"/>
         <image name="contactVerified" width="14" height="14"/>
         <image name="delete" width="28" height="28"/>
         <image name="download" width="128" height="128"/>
-        <image name="downloadQueued" width="12" height="12"/>
         <image name="downloaded" width="12" height="12"/>
         <image name="history" width="28" height="28"/>
         <image name="hudSharedFolder" width="28" height="28"/>

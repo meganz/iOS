@@ -30,10 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue;
 - (void)setViewEditing:(BOOL)editing;
 
-- (void)didDownloadTransferStart:(MEGANode *)node;
 - (void)didDownloadTransferFinish:(MEGANode *)node;
-- (void)didDownloadTransferUpdated:(MEGANode *)node transferredBytes:(NSNumber *)bytes totalBytes:(NSNumber *)totalBytes speed:(NSNumber *)speed;
-- (BOOL)isADownloadingNode:(MEGANode *)node;
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView;
 
 @end

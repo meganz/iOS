@@ -45,18 +45,6 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
         return sdk.hasVersions(for: node)
     }
     
-    func isBeingDownloaded() -> Bool {
-        guard let nodeHandle = nodeHandle else {
-            return false
-        }
-        
-        if (Helper.downloadingNodes().object(forKey: nodeHandle) != nil) {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     func isDownloaded() -> Bool {
         guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
             return false

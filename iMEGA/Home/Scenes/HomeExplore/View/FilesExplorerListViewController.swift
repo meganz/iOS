@@ -114,10 +114,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
             delegate?.updateSearchResults()
         case .setViewConfiguration(let configuration):
             self.configuration = configuration
-        case .onTransferStarted(let node):
-            listSource?.onTransferStart(forNode: node)
-        case .onProgressUpdate(let progress, let node, let infoString):
-            listSource?.updateProgress(progress, forNode: node, infoString: infoString)
         case .onTransferCompleted(let node):
             listSource?.onTransferCompleted(forNode: node)
         }

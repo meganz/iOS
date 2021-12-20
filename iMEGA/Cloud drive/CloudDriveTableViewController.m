@@ -34,7 +34,6 @@
     [super viewDidLoad];
     
     [self registerNibWithName:@"NodeTableViewCell" andReuseIdentifier:@"nodeCell"];
-    [self registerNibWithName:@"DownloadingNodeCell" andReuseIdentifier:@"downloadingNodeCell"];
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -148,17 +147,12 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     } else {
         [self.cloudDrive.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         
-        if ([Helper.downloadingNodes objectForKey:node.base64Handle]) {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
-        } else {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
-            
-            __weak typeof(self) weakself = self;
-            cell.moreButtonAction = ^(UIButton * moreButton) {
-                [weakself infoTouchUpInside:moreButton];
-            };
-        }
+        __weak typeof(self) weakself = self;
+        cell.moreButtonAction = ^(UIButton * moreButton) {
+            [weakself infoTouchUpInside:moreButton];
+        };
     }
     
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
@@ -317,22 +311,17 @@
         rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
 
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
-        
-        if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-            UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                if ([node mnz_downloadNode]) {
-                    [self.tableView reloadData];
-                }
-                
-                [self setTableViewEditing:NO animated:YES];
-            }];
-            downloadAction.image = [[UIImage imageNamed:@"offline"] imageByTintColor:UIColor.whiteColor];
-            downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+        UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            if ([node mnz_downloadNode]) {
+                [self.tableView reloadData];
+            }
             
-            return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction, downloadAction]];
-        } else {
-            return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
-        }
+            [self setTableViewEditing:NO animated:YES];
+        }];
+        downloadAction.image = [[UIImage imageNamed:@"offline"] imageByTintColor:UIColor.whiteColor];
+        downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+        
+        return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction, downloadAction]];
     }
     
     return [UISwipeActionsConfiguration configurationWithActions:@[]];

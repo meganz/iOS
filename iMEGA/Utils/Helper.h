@@ -37,8 +37,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 
 #pragma mark - Utils for transfers
 
-+ (NSMutableDictionary *)downloadingNodes;
-
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink isTopPriority:(BOOL)isTopPriority;
