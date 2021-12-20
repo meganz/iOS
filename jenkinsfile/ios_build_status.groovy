@@ -9,15 +9,8 @@ def injectEnvironments(Closure body) {
     }
 }
 
-def runShell(String cmd) {
-    sh "${cmd} >> ${CONSOLE_LOG_FILE} 2>&1"
-}
-
 pipeline {
    agent { label 'mac-slave' }
-   environment {
-       CONSOLE_LOG_FILE = "consoleLog.txt"
-   }
    options {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
@@ -25,12 +18,15 @@ pipeline {
    post { 
         failure {
             script {
-                def comment = "Console log: ${env.GIT_BRANCH}"
-                if (env.CHANGE_URL) {
-                    comment = "Console log: ${env.GIT_BRANCH} ${env.CHANGE_URL}"
+                withCredentials([usernamePassword(credentialsId: 'Jenkins-Login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    def comment = "Console log: ${env.GIT_BRANCH}"
+                    if (env.CHANGE_URL) {
+                        comment = "Console log: ${env.GIT_BRANCH} ${env.CHANGE_URL}"
+                    }
+                    sh 'curl -u $USERNAME:$PASSWORD ${BUILD_URL}/consoleText -o console.txt'
+                    slackUploadFile filePath:"console.txt", initialComment:comment
                 }
-                slackUploadFile filePath: env.CONSOLE_LOG_FILE, initialComment: comment
-            } 
+            }
         }
     }
     stages {
@@ -39,9 +35,9 @@ pipeline {
                 gitlabCommitStatus(name: 'Submodule update') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                     injectEnvironments({
-                            runShell "git submodule foreach --recursive git clean -xfd"
-                            runShell "git submodule sync --recursive"
-                            runShell "git submodule update --init --recursive"
+                            sh "git submodule foreach --recursive git clean -xfd"
+                            sh "git submodule sync --recursive"
+                            sh "git submodule update --init --recursive"
                         })
                     }
                 }
@@ -53,12 +49,12 @@ pipeline {
                 gitlabCommitStatus(name: 'Downloading dependencies') {
                     injectEnvironments({
                         retry(3) {
-                            runShell "sh download_3rdparty.sh"
+                            sh "sh download_3rdparty.sh"
                         }
-                        runShell "bundle install"
-                        runShell "bundle exec pod repo update"
-                        runShell "bundle exec pod cache clean --all --verbose"
-                        runShell "bundle exec pod install --verbose"
+                        sh "bundle install"
+                        sh "bundle exec pod repo update"
+                        sh "bundle exec pod cache clean --all --verbose"
+                        sh "bundle exec pod install --verbose"
                     })
                 }
             }
@@ -69,7 +65,7 @@ pipeline {
                 gitlabCommitStatus(name: 'Running CMake') {
                     injectEnvironments({
                         dir("iMEGA/Vendor/Karere/src/") {
-                            runShell "cmake -P genDbSchema.cmake"
+                            sh "cmake -P genDbSchema.cmake"
                         }
                     })
                 }
@@ -80,7 +76,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Run unit test') {
                     injectEnvironments({
-                        runShell "arch -x86_64 bundle exec fastlane tests"
+                        sh "arch -x86_64 bundle exec fastlane tests"
                     })
                 }
             }
