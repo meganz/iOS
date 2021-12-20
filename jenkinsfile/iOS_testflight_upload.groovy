@@ -8,10 +8,6 @@ def injectEnvironments(Closure body) {
     }
 }
 
-def runShell(String cmd) {
-    sh "${cmd} >> ${CONSOLE_LOG_FILE} 2>&1"
-}
-
 pipeline {
     agent { label 'mac-slave' }
     options {
@@ -23,14 +19,18 @@ pipeline {
         APP_STORE_CONNECT_ISSUER_ID = credentials('APP_STORE_CONNECT_ISSUER_ID')
         APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
         MATCH_PASSWORD = credentials('MATCH_PASSWORD')
-        CONSOLE_LOG_FILE = "consoleLog.txt"
     }
     post {
         success {
             slackSend color: "good", message: "Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Testflight"
         }
         failure {
-            slackUploadFile filePath: env.CONSOLE_LOG_FILE, initialComment: "Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
+            script {
+                withCredentials([usernamePassword(credentialsId: 'Jenkins-Login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'curl -u $USERNAME:$PASSWORD ${BUILD_URL}/consoleText -o console.txt'
+                    slackUploadFile filePath:"console.txt", initialComment:"Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
+                }
+            }
         }
         cleanup {
             cleanWs()
@@ -42,9 +42,9 @@ pipeline {
                 gitlabCommitStatus(name: 'Submodule update') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                         injectEnvironments({
-                            runShell "git submodule foreach --recursive git clean -xfd"
-                            runShell "git submodule sync --recursive"
-                            runShell "git submodule update --init --recursive"
+                            sh "git submodule foreach --recursive git clean -xfd"
+                            sh "git submodule sync --recursive"
+                            sh "git submodule update --init --recursive"
                         })
                     }
                 }
@@ -56,12 +56,12 @@ pipeline {
                 gitlabCommitStatus(name: 'Downloading dependencies') {
                     injectEnvironments({
                         retry(3) {
-                            runShell "sh download_3rdparty.sh"
+                            sh "sh download_3rdparty.sh"
                         }
-                        runShell "bundle install"
-                        runShell "bundle exec pod repo update"
-                        runShell "bundle exec pod cache clean --all --verbose"
-                        runShell "bundle exec pod install --verbose "
+                        sh "bundle install"
+                        sh "bundle exec pod repo update"
+                        sh "bundle exec pod cache clean --all --verbose"
+                        sh "bundle exec pod install --verbose "
                     })
                 }
             }
@@ -72,7 +72,7 @@ pipeline {
                 gitlabCommitStatus(name: 'Running CMake') {
                     injectEnvironments({
                         dir("iMEGA/Vendor/Karere/src/") {
-                            runShell "cmake -P genDbSchema.cmake"
+                            sh "cmake -P genDbSchema.cmake"
                         }
                     })
                 }
@@ -83,8 +83,8 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Set build number') {
                     injectEnvironments({
-                        runShell "bundle exec fastlane set_time_as_build_number"
-                        runShell "bundle exec fastlane fetch_version_number"
+                        sh "bundle exec fastlane set_time_as_build_number"
+                        sh "bundle exec fastlane fetch_version_number"
                         script {
                             env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
                             env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
@@ -98,7 +98,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Create Temporary keychain') {
                     injectEnvironments({
-                        runShell "bundle exec fastlane create_temporary_keychain"
+                        sh "bundle exec fastlane create_temporary_keychain"
                     })
                 }
             }
@@ -109,7 +109,7 @@ pipeline {
                 gitlabCommitStatus(name: 'Install certificate and profiles to temp_keychain') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                         injectEnvironments({
-                            runShell "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore'"
+                            sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore'"
                         })
                     }
                 }
@@ -120,7 +120,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Archive') {
                     injectEnvironments({
-                        runShell "arch -x86_64 bundle exec fastlane archive_appstore"
+                        sh "arch -x86_64 bundle exec fastlane archive_appstore"
                     })
                 }
             }
@@ -131,7 +131,7 @@ pipeline {
                 gitlabCommitStatus(name: 'Upload to Testflight') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                         injectEnvironments({
-                            runShell "bundle exec fastlane upload_to_itunesconnect"
+                            sh "bundle exec fastlane upload_to_itunesconnect"
                         })
                     }
                 }
@@ -142,7 +142,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Upload symbols to crashlytics') {
                     injectEnvironments({
-                        runShell "bundle exec fastlane upload_symbols"
+                        sh "bundle exec fastlane upload_symbols"
                     })
                 }
             }
@@ -152,8 +152,8 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Delete temporary keychain') {
                     injectEnvironments({
-                        runShell "bundle exec fastlane delete_temporary_keychain"
-                        runShell "security default-keychain -s ~/Library/keychains/login.keychain"
+                        sh "bundle exec fastlane delete_temporary_keychain"
+                        sh "security default-keychain -s ~/Library/keychains/login.keychain"
                     })
                 }
             }
