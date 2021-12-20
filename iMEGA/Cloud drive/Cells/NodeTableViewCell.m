@@ -51,28 +51,16 @@
             self.separatorInset = UIEdgeInsetsMake(0, 62, 0, 0);
             [self layoutIfNeeded];
         }];
-        if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] == nil) {
-            self.moreButton.hidden = self.recentActionBucket ? self.moreButton.hidden : NO;
-        }
+        self.moreButton.hidden = self.recentActionBucket ? self.moreButton.hidden : NO;
     }
 }
 
 - (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
     self.node = node;
     
-    BOOL isDownloaded = NO;
-    if ([[Helper downloadingNodes] objectForKey:node.base64Handle]) {
-        self.infoLabel.text = NSLocalizedString(@"queued", @"Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download");
-        self.downloadingArrowImageView.hidden = self.cancelButton.hidden = self.downloadProgressView.hidden = NO;
-        
-        self.moreButton.hidden = YES;
-    } else {
-        isDownloaded = (node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
-        
-        self.downloadingArrowImageView.hidden =  self.cancelButton.hidden = self.downloadProgressView.hidden = YES;
-        
-        self.moreButton.hidden = NO;
-    }
+    self.downloadingArrowImageView.hidden = self.downloadProgressView.hidden = YES;
+    
+    self.moreButton.hidden = NO;
     
     if (self.downloadingArrowView != nil) {
         self.downloadingArrowView.hidden = self.downloadingArrowImageView.isHidden;
@@ -84,6 +72,7 @@
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
         self.labelImageView.image = [UIImage imageNamed:labelString];
     }
+    BOOL isDownloaded = (node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
     self.downloadedImageView.hidden = !isDownloaded;
     if (self.downloadedView != nil) {
         self.downloadedView.hidden = self.downloadedImageView.isHidden;
@@ -215,17 +204,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)cancelTransfer:(id)sender {
-    NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.node.handle]];
-    if ([[MEGASdkManager sharedMEGASdk] transferByTag:transferTag.integerValue] != nil) {
-        [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
-    } else {
-        if ([[MEGASdkManager sharedMEGASdkFolder] transferByTag:transferTag.integerValue] != nil) {
-            [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:transferTag.integerValue];
-        }
-    }
-}
 
 - (IBAction)moreButtonPressed:(UIButton *)moreButton {
     self.moreButtonAction(moreButton);

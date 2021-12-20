@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -202,7 +202,6 @@
             <viewLayoutGuide key="safeArea" id="9oh-j7-TvT"/>
             <inset key="separatorInset" minX="62" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
-                <outlet property="cancelButton" destination="OhI-W3-En8" id="bla-0m-RB4"/>
                 <outlet property="cancelButtonTrailingConstraint" destination="ZkZ-EK-Nu0" id="M1J-mX-b47"/>
                 <outlet property="downloadedImageView" destination="kXM-HW-g1i" id="6FV-9Q-Me3"/>
                 <outlet property="favouriteImageView" destination="pIz-hg-PVL" id="2Hs-hS-ROD"/>

@@ -32,23 +32,8 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     
     // MARK:- Interface methods.
     
-    func onTransferStart(forNode node: MEGANode) {
-        // Since we are using NodeTableViewCell and relying on Helper.downloadingNodes() which is updated in Appdelegate transfer delegates, we do need the delay or else we might see inconsitency in the cell update
-        reloadCell(withNode: node, afterDelay: 1)
-    }
-
-    func updateProgress(_ progress: Float, forNode node: MEGANode, infoString: String) {
-        if let nodeCell = cell(forNode: node) as? NodeTableViewCell,
-           let infoLabel = nodeCell.infoLabel,
-           let downloadProgressView = nodeCell.downloadProgressView {
-            infoLabel.text = infoString
-            downloadProgressView.progress = progress
-        }
-    }
-    
     func onTransferCompleted(forNode node: MEGANode) {
-        // Since we are using NodeTableViewCell and relying on Helper.downloadingNodes() which is updated in Appdelegate transfer delegates, we do need the delay or else we might see inconsitency in the cell update
-        reloadCell(withNode: node, afterDelay: 1)
+        reloadCell(withNode: node, afterDelay: 0)
     }
     
     // MARK:- Private methods.
@@ -57,8 +42,6 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
         tableView.rowHeight = 60
         tableView.register(UINib(nibName: "NodeTableViewCell", bundle: nil),
                            forCellReuseIdentifier: "nodeCell")
-        tableView.register(UINib(nibName: "DownloadingNodeCell", bundle: nil),
-                           forCellReuseIdentifier: "downloadingNodeCell")
     }
     
     private func reloadCell(withNode node: MEGANode, afterDelay delay: Int) {
@@ -80,11 +63,7 @@ extension DocAndAudioListSource {
         guard let node = nodes?[indexPath.row] else { return UITableViewCell() }
         
         var cell: NodeTableViewCell?
-        if let handle = node.base64Handle, let _ = Helper.downloadingNodes()[handle] {
-            cell = tableView.dequeueReusableCell(withIdentifier: "downloadingNodeCell", for: indexPath) as? NodeTableViewCell
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell
-        }
+        cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell
         
         if let moreButton = cell?.moreButton {
             moreButton.removeTarget(nil, action: nil, for: .allEvents)
@@ -155,16 +134,11 @@ extension DocAndAudioListSource {
             ) { [weak self] in
                 self?.moveToRubbishBin(node: nodeCell.node)
             }
-
-            var actions = [rubbishBinAction, shareAction]
-            
-            if let base64Handle = node.base64Handle,
-               Helper.downloadingNodes()[base64Handle] == nil {
-                let downloadAction = contextualAction(withImageName: Asset.Images.NodeActions.offline.name, backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
-                    self?.download(node: node)
-                }
-                actions += [downloadAction]
+            let downloadAction = contextualAction(withImageName: Asset.Images.NodeActions.offline.name, backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
+                self?.download(node: node)
             }
+
+            let actions = [rubbishBinAction, shareAction, downloadAction]
             
             return UISwipeActionsConfiguration(actions: actions)
         }

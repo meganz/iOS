@@ -5,7 +5,6 @@ protocol NodeActionUseCaseProtocol {
     func labelString(label: NodeLabelTypeModel) -> String
     func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int)
     func hasVersions() -> Bool
-    func isBeingDownloaded() -> Bool
     func isDownloaded() -> Bool
 }
 
@@ -36,10 +35,6 @@ struct NodeActionUseCase: NodeActionUseCaseProtocol {
     
     func hasVersions() -> Bool {
         repo.hasVersions()
-    }
-    
-    func isBeingDownloaded() -> Bool {
-        repo.isBeingDownloaded()
     }
     
     func isDownloaded() -> Bool {

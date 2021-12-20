@@ -509,27 +509,6 @@
     }
 }
 
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.isStreamingTransfer) {
-        return;
-    }
-    
-    NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-    
-    if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle]) {
-        float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
-        
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed];
-            cell.downloadProgressView.progress = transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue;
-        }
-    }
-}
-
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (transfer.isStreamingTransfer) {
         return;

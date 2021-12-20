@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -173,7 +173,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sharedItemsTableViewCell" id="SaV-xG-Opx" customClass="SharedItemsTableViewCell">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="91"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="91"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SaV-xG-Opx" id="gwY-ut-l2M">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="91"/>
@@ -326,7 +326,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationLevel="1" indentationWidth="60" shouldIndentWhileEditing="NO" reuseIdentifier="nodeCell" id="kaG-HS-c3J" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="115.5" width="414" height="91"/>
+                                        <rect key="frame" x="0.0" y="135.5" width="414" height="91"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="kaG-HS-c3J" id="Rsx-Ay-bqc">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="91"/>
@@ -474,7 +474,6 @@
                                         <viewLayoutGuide key="safeArea" id="XNw-qW-tEH"/>
                                         <inset key="separatorInset" minX="62" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="cancelButton" destination="K2b-Xc-xcs" id="zG4-pc-L0Z"/>
                                             <outlet property="cancelButtonTrailingConstraint" destination="Rhk-Vv-cfd" id="N1T-Bl-MnY"/>
                                             <outlet property="favouriteImageView" destination="2vc-hG-HQn" id="Fhc-AV-mam"/>
                                             <outlet property="favouriteView" destination="YZl-tU-r15" id="yF4-dl-f70"/>

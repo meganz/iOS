@@ -278,14 +278,6 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Utils for transfers
 
-+ (NSMutableDictionary *)downloadingNodes {
-    static NSMutableDictionary *downloadingNodes = nil;
-    if (!downloadingNodes) {
-        downloadingNodes = [[NSMutableDictionary alloc] init];
-    }
-    return downloadingNodes;
-}
-
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink {
     NSNumber *nodeSizeNumber;
     
@@ -846,7 +838,6 @@ static MEGAIndexer *indexer;
 }
 
 + (void)resetUserData {
-    [[Helper downloadingNodes] removeAllObjects];
     [[Helper uploadingNodes] removeAllObjects];
     
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
