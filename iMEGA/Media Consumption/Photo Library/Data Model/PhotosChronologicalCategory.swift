@@ -16,7 +16,7 @@ final class PhotosByYear: PhotosChronologicalCategory {
     var photosByMonthList = [PhotosByMonth]()
     
     var coverPhoto: NodeEntity? {
-        photosByMonthList.last?.coverPhoto
+        photosByMonthList.first?.coverPhoto
     }
     
     init(categoryDate: Date) {
@@ -33,7 +33,7 @@ final class PhotosByMonth: PhotosChronologicalCategory {
     }
     
     var coverPhoto: NodeEntity? {
-        photosByDayList.last?.coverPhoto
+        photosByDayList.first?.coverPhoto
     }
     
     init(categoryDate: Date) {
@@ -46,7 +46,7 @@ final class PhotosByDay: PhotosChronologicalCategory {
     var photoNodeList = [NodeEntity]()
     
     var coverPhoto: NodeEntity? {
-        photoNodeList.last
+        photoNodeList.first
     }
     
     init(categoryDate: Date) {

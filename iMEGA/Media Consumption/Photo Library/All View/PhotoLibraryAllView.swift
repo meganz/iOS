@@ -2,7 +2,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct PhotoLibraryAllView: View {
-    @ObservedObject var viewModel: PhotoLibraryAllViewModel
+    @StateObject var viewModel: PhotoLibraryAllViewModel
     var router: PhotoLibraryContentViewRouting
     var calculator: ScrollPositionCalculator
     
