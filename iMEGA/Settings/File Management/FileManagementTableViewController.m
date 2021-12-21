@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAShareExtensionStorageFolder]];
 }
 
-- (void)showClearAllOfflineFilesActionSheet {
+- (void)showClearAllOfflineFilesActionSheet:(UIView *)sender {
     UIAlertController *clearAllOfflineFilesAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"settings.fileManagement.alert.clearAllOfflineFiles", @"Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [clearAllOfflineFilesAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
@@ -145,6 +145,9 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         [self clearOfflineFiles];
     }];
     [clearAllOfflineFilesAlertController addAction:clearAlertAction];
+    
+    clearAllOfflineFilesAlertController.popoverPresentationController.sourceRect = sender.frame;
+    clearAllOfflineFilesAlertController.popoverPresentationController.sourceView = sender.superview;
     
     [self presentViewController:clearAllOfflineFilesAlertController animated:YES completion:nil];
 }
@@ -241,7 +244,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
                 break;
             }
             
-            [self showClearAllOfflineFilesActionSheet];
+            [self showClearAllOfflineFilesActionSheet:[tableView cellForRowAtIndexPath:indexPath].contentView];
             break;
         }
             
