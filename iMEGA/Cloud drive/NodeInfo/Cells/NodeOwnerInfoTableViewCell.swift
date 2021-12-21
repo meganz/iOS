@@ -11,9 +11,8 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
         emailLabel.textColor = UIColor.mnz_label()
         emailLabel.text = user.email
         
-        let userDisplayName = user.mnz_displayName ?? ""
-        nameLabel.attributedText = createOwnerAttributedString(string: Strings.Localizable.CloudDrive.NodeInfo.owner(userDisplayName as Any),
-                                                               highligthedString: userDisplayName,
+        nameLabel.attributedText = createOwnerAttributedString(string: String(format: NSLocalizedString("cloudDrive.nodeInfo.owner", comment: "Show the node owner's name"), user.mnz_displayName),
+                                                               highligthedString: user.mnz_displayName,
                                                                normalAttributes: [.foregroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
                                                                                   .font: UIFont.preferredFont(style: .body, weight: .bold)],
                                                                highlightedAttributes: [.foregroundColor: UIColor.mnz_label(),
@@ -21,7 +20,7 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
         
         
         
-        avatarImageView.mnz_setImage(forUserHandle: user.handle, name: userDisplayName)
+        avatarImageView.mnz_setImage(forUserHandle: user.handle, name: user.mnz_displayName)
         
         onlineStatusView.backgroundColor = UIColor.mnz_color(for: MEGASdkManager.sharedMEGAChatSdk().userOnlineStatus(user.handle))
         onlineStatusView.layer.cornerRadius = onlineStatusView.frame.height / 2
