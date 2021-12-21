@@ -1,7 +1,10 @@
 import Foundation
 
-typealias PhotoScrollPosition = MEGAHandle?
+struct PhotoScrollPosition: Hashable {
+    let handle: MEGAHandle
+    let date: Date
+}
 
 protocol ScrollPositioning {
-    var position: PhotoScrollPosition { get }
+    var position: PhotoScrollPosition? { get }
 }

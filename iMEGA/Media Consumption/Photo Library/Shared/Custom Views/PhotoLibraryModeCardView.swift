@@ -2,15 +2,14 @@ import Foundation
 import SwiftUI
 
 @available(iOS 14.0, *)
-struct PhotoLibraryModeCardView<Category, VM: PhotoLibraryModeViewModel<Category>, Content: View>: View where Category: PhotosChronologicalCategory {
-    @ObservedObject var viewModel: VM
+struct PhotoLibraryModeCardView<Category, VM: PhotoLibraryModeCardViewModel<Category>, Content: View>: View where Category: PhotosChronologicalCategory {
     private let cellBuilder: (Category) -> Content
-    var calculator: ScrollPositionCalculator
+    
+    @ObservedObject var viewModel: VM
     
     init(viewModel: VM, @ViewBuilder cellBuilder: @escaping (Category) -> Content) {
         self.viewModel = viewModel
         self.cellBuilder = cellBuilder
-        calculator = ScrollPositionCalculator()
     }
     
     var body: some View {
@@ -21,8 +20,7 @@ struct PhotoLibraryModeCardView<Category, VM: PhotoLibraryModeViewModel<Category
                         cellBuilder(category)
                             .frame(in: .named("scrollView"))
                             .onPreferenceChange(FramePreferenceKey.self) {
-                                let position = calculator.calculateScrollPosition(with: category, frame: $0, viewPortSize: geoProxy.size)
-                                viewModel.libraryViewModel.currentPosition = position
+                                viewModel.scrollCalculator.recordFrame($0, for: category, inViewPort: geoProxy.size)
                             }
                     }
                 }

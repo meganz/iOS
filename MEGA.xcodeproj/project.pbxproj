@@ -1620,6 +1620,7 @@
 		B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7A8E22503897A00CD6AC2 /* PreferenceWrapper.swift */; };
 		B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026B5258308E900D29CB6 /* BackupRecorder.swift */; };
 		B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */; };
+		B6F39F092772A986002386BE /* PhotoLibraryModeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */; };
 		B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		B6F8CDCB262821820074CBBF /* CoreDataErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F8CDCA262821820074CBBF /* CoreDataErrorHandler.m */; };
 		B6F8CE0C262823230074CBBF /* CoreDataErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F8CDCA262821820074CBBF /* CoreDataErrorHandler.m */; };
@@ -3804,6 +3805,7 @@
 		B6E7A8E22503897A00CD6AC2 /* PreferenceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceWrapper.swift; sourceTree = "<group>"; };
 		B6F026B5258308E900D29CB6 /* BackupRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRecorder.swift; sourceTree = "<group>"; };
 		B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRegister.swift; sourceTree = "<group>"; };
+		B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeCardViewModel.swift; sourceTree = "<group>"; };
 		B6F8CDC9262821820074CBBF /* CoreDataErrorHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataErrorHandler.h; sourceTree = "<group>"; };
 		B6F8CDCA262821820074CBBF /* CoreDataErrorHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataErrorHandler.m; sourceTree = "<group>"; };
 		B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+User.swift"; sourceTree = "<group>"; };
@@ -8451,9 +8453,10 @@
 			isa = PBXGroup;
 			children = (
 				B6E5D24F274C5FBA00C8AB96 /* Custom Views */,
+				B67507D02769520C0034F951 /* ScrollPositionCalculator.swift */,
 				B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */,
 				B67507C427684FBF0034F951 /* PhotoLibraryModeViewModel.swift */,
-				B67507D02769520C0034F951 /* ScrollPositionCalculator.swift */,
+				B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -11867,6 +11870,7 @@
 				5D92DD1324BFE2B200D7D13B /* Date+Formatting.swift in Sources */,
 				5D8DC6AF248CB0AE0067A4F9 /* BorderStyle.swift in Sources */,
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
+				B6F39F092772A986002386BE /* PhotoLibraryModeCardViewModel.swift in Sources */,
 				83143BAC2604E5EC0033161A /* CallRemoteVideoListenerRepositoryProtocol.swift in Sources */,
 				5DBAC841248778DA0050996E /* OverDiskQuotaWarningView.swift in Sources */,
 				832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */,
