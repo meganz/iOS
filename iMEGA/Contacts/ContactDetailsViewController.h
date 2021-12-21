@@ -13,6 +13,7 @@ typedef NS_ENUM (NSInteger, ContactDetailsMode) {
 @interface ContactDetailsViewController : UIViewController
 
 @property (nonatomic) ContactDetailsMode contactDetailsMode;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) NSString *userEmail;
 @property (nonatomic, strong) NSString *userName;

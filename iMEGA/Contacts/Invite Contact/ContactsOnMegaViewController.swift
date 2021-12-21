@@ -174,8 +174,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        header.titleLabel.text = Strings.Localizable.contactsOnMega
-        
+        header.configure(title: Strings.Localizable.contactsOnMega, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: false)
         return header
     }
 

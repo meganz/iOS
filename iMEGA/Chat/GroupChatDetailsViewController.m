@@ -645,220 +645,153 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == GroupChatDetailsSectionParticipants) {
-        GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
-        headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
-        headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
-        headerView.titleLabel.text = NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString;
-        
-        return headerView;
-    }
+    GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
-    return nil;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat height;
     switch (section) {
         case GroupChatDetailsSectionChatNotifications:
-            height = [self shouldShowChatNotificationEnabledCell] ? 20.0 : 0.1f;
+            [headerView configureWithTitle:nil topDistance:[self shouldShowChatNotificationEnabledCell] ? 20.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
+        case GroupChatDetailsSectionManageChatHistory:
         case GroupChatDetailsSectionRenameGroup:
-            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            [headerView configureWithTitle:nil topDistance:(self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionSharedFiles:
-            height = 10.0f;
+            [headerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionGetChatLink:
             if (self.chatRoom.isPublicChat) {
                 if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
-                    height = 10.0f;
+                    [headerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
                 } else if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo && !self.chatRoom.isPreview) {
-                    height = 20.0f;
+                    [headerView configureWithTitle:nil topDistance:20.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
                 } else {
-                    height = 0.1f;
+                    [headerView configureWithTitle:nil topDistance:1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
                 }
             } else {
-                height = 0.1f;
+                [headerView configureWithTitle:nil topDistance:1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             }
-            break;
-            
-        case GroupChatDetailsSectionManageChatHistory:
-            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
         case GroupChatDetailsSectionArchiveChat:
             if (self.chatRoom.isPreview) {
-                height = 0.1f;
+                [headerView configureWithTitle:nil topDistance:1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             } else {
                 if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-                    height = 10.0f;
+                    [headerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
                 } else if ( self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
                     if (self.chatRoom.isPublicChat) {
-                        height = 10.0f;
+                        [headerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
                     } else {
-                        height = 20.0f;
+                        [headerView configureWithTitle:nil topDistance:20.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
                     }
                 } else {
-                    height = 20.0f;
+                    [headerView configureWithTitle:nil topDistance:20.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
                 }
             }
             
             break;
             
         case GroupChatDetailsSectionLeaveGroup:
-            height = self.chatRoom.isPreview ? 20.0f : 10.0f;
+            [headerView configureWithTitle:nil topDistance:self.chatRoom.isPreview ? 20.0f : 10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionEncryptedKeyRotation:
-            height = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            [headerView configureWithTitle:nil topDistance:(!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+            break;
             break;
             
         case GroupChatDetailsSectionObservers:
-            height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
+            [headerView configureWithTitle:nil topDistance:(self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionParticipants:
-            height = 24.0f;
+            headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
+            [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
             break;
             
         default:
-            height = 0.1f;
+            [headerView configureWithTitle:nil topDistance:1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
     }
     
-    return height;
+    return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    CGFloat height;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    GenericHeaderFooterView *footerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
+    
     switch (section) {
         case GroupChatDetailsSectionChatNotifications: {
             NSString *remainingTimeString = [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
-            height = ([self shouldShowChatNotificationEnabledCell] && remainingTimeString && !remainingTimeString.mnz_isEmpty) ? UITableViewAutomaticDimension : 10.0f;
+            
+            footerView.titleLabel.numberOfLines = 0;
+            footerView.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            [footerView configureWithTitle:[self shouldShowChatNotificationEnabledCell] ? remainingTimeString : nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
         }
             break;
             
         case GroupChatDetailsSectionRenameGroup:
-            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            [footerView configureWithTitle:nil topDistance:self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionSharedFiles:
-            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            [footerView configureWithTitle:nil topDistance:self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionGetChatLink:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat  && !self.chatRoom.isPreview) ? 10.0f : 0.1f;
+            [footerView configureWithTitle:nil topDistance:(self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat && !self.chatRoom.isPreview ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionManageChatHistory:
-            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            [footerView configureWithTitle:nil topDistance:self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionArchiveChat:
-            height = self.chatRoom.isPreview ? 0.1f : 10.0f;
+            [footerView configureWithTitle:nil topDistance:self.chatRoom.isPreview ? 1.0f : 10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionLeaveGroup:
-            height = 10.0f;
+            [footerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionEncryptedKeyRotation: {
-            if (self.chatRoom.isPublicChat) {
-                height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? UITableViewAutomaticDimension : 0.1f;
+            if (self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
+                footerView.titleLabel.numberOfLines = 0;
+                footerView.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+                if (self.chatRoom.peerCount < 100) {
+                    [footerView configureWithTitle:[NSLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"] topDistance:self.chatRoom.isPublicChat ? (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 1.0f : 10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+                } else {
+                    [footerView configureWithTitle:NSLocalizedString(@"Key rotation is disabled for conversations with more than 100 participants.", @"Footer to explain why key rotation is disabled for public chats with many participants") topDistance:self.chatRoom.isPublicChat ? (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.f : 1.0f : 10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+                }
             } else {
-                height = 10.0f;
+                [footerView configureWithTitle:nil topDistance:1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             }
+            
             break;
         }
             
         case GroupChatDetailsSectionObservers:
-            height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
+            [footerView configureWithTitle:nil topDistance:self.chatRoom.previewersCount ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionParticipants:
-            height = 20.0f;
+            [footerView configureWithTitle:nil topDistance:20.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         default:
-            height = 0.1f;
+            [footerView configureWithTitle:nil topDistance:1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
            
     }
     
-    return height;
+    return footerView;
 }
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == GroupChatDetailsSectionEncryptedKeyRotation && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        if (self.chatRoom.peerCount < 100) {
-            return [NSLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"];
-        } else {
-            return NSLocalizedString(@"Key rotation is disabled for conversations with more than 100 participants.", @"Footer to explain why key rotation is disabled for public chats with many participants");
-        }
-    } else if (section == GroupChatDetailsSectionChatNotifications && [self shouldShowChatNotificationEnabledCell]) {
-        return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
-    }
-    
-    return nil;
-}
-
 
 #pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat heightForRow;
-    switch (indexPath.section) {
-        case GroupChatDetailsSectionChatNotifications:
-            heightForRow = 44.0f;
-            break;
-            
-        case GroupChatDetailsSectionRenameGroup:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
-            break;
-            
-        case GroupChatDetailsSectionSharedFiles:
-            heightForRow = 44.0f;
-            break;
-            
-        case GroupChatDetailsSectionGetChatLink:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 44.0f : 0.0f;
-            break;
-            
-        case GroupChatDetailsSectionManageChatHistory:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
-            break;
-            
-        case GroupChatDetailsSectionArchiveChat:
-            heightForRow = self.chatRoom.isPreview ? 0.0f : 44.0f;
-            break;
-            
-        case GroupChatDetailsSectionLeaveGroup:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 44.0f : 0.0f;
-            break;
-            
-        case GroupChatDetailsSectionEncryptedKeyRotation:
-            heightForRow = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
-            break;
-            
-        case GroupChatDetailsSectionObservers:
-            heightForRow = self.chatRoom.previewersCount ? 60.0f : 0.0f;
-            break;
-            
-        case GroupChatDetailsSectionParticipants:
-            heightForRow = 60.0f;
-            break;
-            
-        default:
-            heightForRow = 0.0f;
-            break;
-    }
-    
-    return heightForRow;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
