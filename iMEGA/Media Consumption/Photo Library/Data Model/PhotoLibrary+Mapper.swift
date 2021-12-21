@@ -11,7 +11,7 @@ extension MEGANodeList {
 extension Array where Element == NodeEntity {
     func toPhotoLibrary() -> PhotoLibrary {
         var dayDict = [Date: PhotosByDay]()
-        for node in self {
+        for node in self where NSString(string: node.name).mnz_isVisualMediaPathExtension {
             guard let day = node.categoryDate.removeTimestamp() else { continue }
             let photosByDay = dayDict[day] ?? PhotosByDay(categoryDate: day)
             photosByDay.photoNodeList.append(node)

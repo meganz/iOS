@@ -6,8 +6,12 @@ protocol PhotosChronologicalCategory: Identifiable, ScrollPositioning {
 }
 
 extension PhotosChronologicalCategory {
-    var position: PhotoScrollPosition {
-        coverPhoto?.handle
+    var position: PhotoScrollPosition? {
+        guard let photo = coverPhoto else {
+            return nil
+        }
+        
+        return PhotoScrollPosition(handle: photo.handle, date: photo.categoryDate)
     }
 }
 
