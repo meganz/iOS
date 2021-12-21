@@ -7,7 +7,7 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
     let title: String
     
     var badgeTitle: String? {
-        return photosByDay.photoNodeList.count > 1 ? "+\(photosByDay.photoNodeList.count)": nil
+        return photosByDay.photoNodeList.count > 1 ? "+\(photosByDay.photoNodeList.count - 1)": nil
     }
     
     @available(iOS 15.0, *)
