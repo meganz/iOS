@@ -14,13 +14,26 @@ struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, C
     var body: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                content
+                contentView()
                     .offset(in: .named("scrollView"))
+                    .onPreferenceChange(OffsetPreferenceKey.self) {
+                        viewModel.scrollCalculator.recordContentOffset($0)
+                    }
             }
             .coordinateSpace(name: "scrollView")
             .onAppear {
                 scrollProxy.scrollTo(viewModel.position, anchor: .center)
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func contentView() -> some View {
+        if #available(iOS 15.0, *) {
+            content
+        } else {
+            content
+                .padding(.bottom, 60)
         }
     }
 }
