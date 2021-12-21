@@ -22,6 +22,10 @@ struct PhotoLibraryAllView: View {
                     }
                 }
             }
+            .fullScreenCover(item: $selectedNode) {
+                router.photoBrowser(for: $0, viewModel: viewModel)
+                    .ignoresSafeArea()
+            }
         }
     }
     
@@ -46,10 +50,6 @@ struct PhotoLibraryAllView: View {
                         let position = calculator.calculateScrollPosition(with: photo, frame: $0, viewPortSize: viewPortSize)
                         viewModel.libraryViewModel.currentPosition = position
                     }
-            }
-            .fullScreenCover(item: $selectedNode) {
-                router.photoBrowser(for: $0, viewModel: viewModel)
-                    .ignoresSafeArea()
             }
         }
     }
