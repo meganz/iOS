@@ -7,9 +7,12 @@ extension PhotosViewController {
     // MARK: - config views
     @objc func configPhotoLibraryView(in container: UIView) {
         let content = PhotoLibraryContentView(
-            viewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photosByYearList: [])),
+            viewModel: photoLibraryContentViewModel,
             router: PhotoLibraryContentViewRouter()
         )
+        
+        photoLibraryPublisher.subscribe(photoLibraryContentViewModel)
+        
         let host = UIHostingController(rootView: content)
         addChild(host)
         container.wrap(host.view)
@@ -25,6 +28,10 @@ extension PhotosViewController {
         
         let photoLibrary = nodeList.toPhotoLibrary()
         host.view.isHidden = photoLibrary.isEmpty
-        host.rootView.viewModel.library = photoLibrary
+        photoLibraryPublisher.updatePhotoLibrary(photoLibrary)
+    }
+    
+    @objc func createPhotoLibraryContentViewModel() -> PhotoLibraryContentViewModel {
+        PhotoLibraryContentViewModel(library: PhotoLibrary())
     }
 }

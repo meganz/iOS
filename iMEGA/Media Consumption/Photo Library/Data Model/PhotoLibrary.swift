@@ -3,11 +3,11 @@ import PinLayout
 import SwiftUI
 
 final class PhotoLibrary {
-    var photosByYearList: [PhotosByYear]
+    var allphotosByYearList: [PhotosByYear]
     var underlyingMEGANodes: [MEGANode]
     
     var allPhotosByMonthList: [PhotosByMonth] {
-        photosByYearList.flatMap { $0.photosByMonthList }
+        allphotosByYearList.flatMap { $0.photosByMonthList }
     }
     
     var allPhotosByDayList: [PhotosByDay] {
@@ -19,11 +19,11 @@ final class PhotoLibrary {
     }
     
     var isEmpty: Bool {
-        photosByYearList.isEmpty
+        allphotosByYearList.isEmpty
     }
     
-    init(photosByYearList: [PhotosByYear], underlyingMEGANodes: [MEGANode] = []) {
-        self.photosByYearList = photosByYearList
+    init(photosByYearList: [PhotosByYear] = [], underlyingMEGANodes: [MEGANode] = []) {
+        self.allphotosByYearList = photosByYearList
         self.underlyingMEGANodes = underlyingMEGANodes
     }
 }
