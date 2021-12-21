@@ -1,6 +1,6 @@
 import Foundation
 
-final class PhotoLibraryContentViewModel: ObservableObject {
+@objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published var library: PhotoLibrary
     @Published var selectedMode: PhotoLibraryViewMode = .all
     var currentPosition: PhotoScrollPosition = nil
@@ -9,5 +9,6 @@ final class PhotoLibraryContentViewModel: ObservableObject {
     
     init(library: PhotoLibrary) {
         self.library = library
+        super.init()
     }
 }

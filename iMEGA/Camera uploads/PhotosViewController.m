@@ -183,6 +183,22 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
 }
 
+- (PhotoLibraryContentViewModel *)photoLibraryContentViewModel {
+    if (_photoLibraryContentViewModel == nil) {
+        _photoLibraryContentViewModel = [self createPhotoLibraryContentViewModel];
+    }
+    
+    return _photoLibraryContentViewModel;
+}
+
+- (PhotoLibraryPublisher *)photoLibraryPublisher {
+    if (_photoLibraryPublisher == nil) {
+        _photoLibraryPublisher = [[PhotoLibraryPublisher alloc] init];
+    }
+    
+    return _photoLibraryPublisher;
+}
+
 #pragma mark - load Camera Uploads target folder
 - (void)loadTargetFolder {
     __weak __typeof__(self) weakSelf = self;

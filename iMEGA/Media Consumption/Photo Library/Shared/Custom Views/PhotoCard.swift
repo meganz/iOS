@@ -36,11 +36,9 @@ struct PhotoCard<Content: View>: View {
             .background(Color(colorScheme == .dark ? UIColor.systemBackground : UIColor.mnz_grayF7F7F7()))
         }
         .cornerRadius(12)
-        .onAppear {
+        .contentShape(Rectangle())
+        .onLoad {
             viewModel.loadThumbnail()
-        }
-        .onDisappear {
-            viewModel.resetThumbnail()
         }
     }
 }

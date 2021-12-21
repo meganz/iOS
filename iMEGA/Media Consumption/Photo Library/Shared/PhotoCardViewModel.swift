@@ -4,7 +4,6 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 class PhotoCardViewModel: ObservableObject {
-    private let coverPhotoLoader: CoverPhotoLoader
     private let coverPhoto: NodeEntity?
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private var subscriptions = Set<AnyCancellable>()
@@ -15,26 +14,34 @@ class PhotoCardViewModel: ObservableObject {
     init(coverPhoto: NodeEntity?, thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.coverPhoto = coverPhoto
         self.thumbnailUseCase = thumbnailUseCase
-        self.coverPhotoLoader = CoverPhotoLoader(coverPhoto: coverPhoto, thumbnailUseCase: thumbnailUseCase)
         thumbnailContainer = placeholderImageContainer
     }
     
     func loadThumbnail() {
-        coverPhotoLoader
-            .loadCoverPhoto()
+        guard let handle = coverPhoto?.handle else {
+            return
+        }
+        
+        thumbnailUseCase
+            .getCachedThumbnailAndPreview(for: handle)
+            .map { (thumbnailURL, previewURL) -> URL? in
+                if let url = previewURL {
+                    return url
+                } else if let url = thumbnailURL {
+                    return url
+                } else {
+                    return nil
+                }
+            }
+            .replaceError(with: nil)
             .receive(on: DispatchQueue.global(qos: .utility))
             .compactMap {
                 ImageContainer(image: Image(contentsOfFile: $0?.path))
             }
-            .delay(for: .seconds(0.07), scheduler: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.thumbnailContainer = $0
             }
             .store(in: &subscriptions)
-    }
-    
-    func resetThumbnail() {
-        subscriptions.removeAll()
-        thumbnailContainer = placeholderImageContainer
     }
 }

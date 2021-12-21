@@ -28,11 +28,11 @@ struct PhotosMonthSection: Identifiable {
 
 extension PhotosMonthSection: PhotosChronologicalCategory {
     var categoryDate: Date {
-        photosByMonth.allPhotos.last?.categoryDate ?? Date()
+        photosByMonth.categoryDate
     }
     
     var coverPhoto: NodeEntity? {
-        photosByMonth.allPhotos.last
+        photosByMonth.coverPhoto
     }
 }
 

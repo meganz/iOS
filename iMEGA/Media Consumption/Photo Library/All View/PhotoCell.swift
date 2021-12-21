@@ -3,8 +3,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoCell: View {
     @State private var selected: Bool = false
-    
-    @ObservedObject var viewModel: PhotoCellViewModel
+    @StateObject var viewModel: PhotoCellViewModel
     
     private var tap: some Gesture { TapGesture().onEnded { _ in selected.toggle() }}
     
@@ -17,11 +16,8 @@ struct PhotoCell: View {
             }
         }
         .gesture(viewModel.isEditingMode ? tap : nil)
-        .onAppear {
+        .onLoad {
             viewModel.loadThumbnail()
-        }
-        .onDisappear {
-            viewModel.resetThumbnail()
         }
     }
     

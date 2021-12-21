@@ -2,7 +2,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct PhotoLibraryYearView: View {
-    @ObservedObject var viewModel: PhotoLibraryYearViewModel
+    @StateObject var viewModel: PhotoLibraryYearViewModel
     var router: PhotoLibraryContentViewRouting
     
     var body: some View {
