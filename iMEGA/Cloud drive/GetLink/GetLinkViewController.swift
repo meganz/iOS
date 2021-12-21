@@ -659,67 +659,30 @@ extension GetLinkViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 
 extension GetLinkViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if getLinkVM.multilink {
-            if section != 0 {
-                return 0
-            }
-        } else {
-            
-            switch sections()[section] {
-            case .link, .key, .expiryDate:
-                return UITableView.automaticDimension
-            case .passwordProtection:
-                if !(getLinkVM.expiryDate && !getLinkVM.selectDate && getLinkVM.date != nil) {
-                    return 0
-                }
-            default:
-                return 0
-            }
-        }
-        
-        return UITableView.automaticDimension
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
         
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        header.bottomSeparatorView.isHidden = false
-        
-        var headerTitleTopDistance: CGFloat = 0
         
         if getLinkVM.multilink {
-            header.titleLabel.text = Strings.Localizable.link
-            header.topSeparatorView.isHidden = true
-            headerTitleTopDistance = section == 0 ? 17 : 0
+            header.configure(title: Strings.Localizable.link, topDistance: section == 0 ? 17.0 : 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         } else {
             switch sections()[section] {
             case .link:
-                header.titleLabel.text = Strings.Localizable.link
-                header.topSeparatorView.isHidden = true
-                headerTitleTopDistance = 17
+                header.configure(title: Strings.Localizable.link, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             case .key:
-                header.titleLabel.text = Strings.Localizable.key
-                header.topSeparatorView.isHidden = true
-                headerTitleTopDistance = 17
+                header.configure(title: Strings.Localizable.key, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            case .decryptKeySeparate:
+                header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             case .expiryDate:
-                header.titleLabel.text = ""
-                header.topSeparatorView.isHidden = true
-                headerTitleTopDistance = 17
+                header.configure(title: nil, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             case .passwordProtection:
-                header.titleLabel.text = ""
-                header.topSeparatorView.isHidden = getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil)
+                header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: !(getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil)), isBottomSeparatorVisible: true)
             default:
-                header.titleLabel.text = ""
+                header.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             }
-        }
-        
-        if headerTitleTopDistance != 0 {
-            header.titleLabelTopDistanceConstraint.isActive = true
-            header.titleLabelTopDistanceConstraint.constant = headerTitleTopDistance
         }
         
         return header
@@ -730,39 +693,33 @@ extension GetLinkViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         
-        footer.titleLabelTopDistanceConstraint.isActive = true
-        footer.titleLabelTopDistanceConstraint.constant = 4
         footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        footer.topSeparatorView.isHidden = false
-        footer.titleLabel.text = ""
-        
+
         if getLinkVM.multilink {
             if section == nodes.count - 1 {
-                footer.titleLabel.text = Strings.Localizable.tapToCopy
                 footer.titleLabel.textAlignment = .center
-                footer.bottomSeparatorView.isHidden = true
+                footer.configure(title: Strings.Localizable.tapToCopy, topDistance: 4, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
             }
         } else {
             switch sections()[section] {
             case .decryptKeySeparate:
-                footer.bottomSeparatorView.isHidden = true
                 let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately)
                 let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
                 attributedString.append(learnMoreString)
                 footer.titleLabel.numberOfLines = 0
                 footer.titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMoreTapped)))
                 footer.titleLabel.isUserInteractionEnabled = true
-                footer.titleLabel.attributedText = attributedString
-                footer.titleLabelTopDistanceConstraint.constant = 17
+                
+                footer.configure(attributedTitle: attributedString, topDistance: 17.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+
             case .expiryDate:
                 if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
-                    footer.titleLabel.text = Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date()))
+                    footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+                } else {
+                    footer.configure(title: nil, topDistance: 0.5, isTopSeparatorVisible: false, isBottomSeparatorVisible: false)
                 }
-                footer.bottomSeparatorView.isHidden = getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil)
-            case .link, .passwordProtection, .key:
-                footer.bottomSeparatorView.isHidden = true
-            case .info:
-                footer.bottomSeparatorView.isHidden = false
+            case .link, .key, .info, .passwordProtection:
+                footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
             }
         }
         return footer

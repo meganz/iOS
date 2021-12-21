@@ -18,12 +18,6 @@
 #import "NodeTableViewCell.h"
 
 @interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource>
-
-@property (weak, nonatomic) IBOutlet UIView *bucketHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderParentFolderNameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *bucketHeaderUploadOrVersionImageView;
-@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderHourLabel;
-
 @end
 
 @implementation CloudDriveTableViewController
@@ -34,11 +28,12 @@
     [super viewDidLoad];
     
     [self registerNibWithName:@"NodeTableViewCell" andReuseIdentifier:@"nodeCell"];
-    
+    [self registerNibWithName:@"DownloadingNodeCell" andReuseIdentifier:@"downloadingNodeCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BucketHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"BucketHeaderViewID"];
+
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
-    
     
     [self updateAppearance];
 }
@@ -47,19 +42,8 @@
     [super viewWillAppear:animated];
     
     if (self.cloudDrive.recentActionBucket) {
-        NSString *dateString;
-        if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
-            dateString = NSLocalizedString(@"Today", @"").localizedUppercaseString;
-        } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
-            dateString = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
-        } else {
-            dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
-        }
-        
-        MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
-        self.bucketHeaderParentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
-        self.bucketHeaderUploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
-        self.bucketHeaderHourLabel.text = dateString.uppercaseString;
+        self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedSectionHeaderHeight = 45;
     }
 }
 
@@ -83,6 +67,30 @@
     UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
 }
+
+- (UIView *)prepareBucketHeaderView {
+    BucketHeaderView *bucketHeaderView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BucketHeaderViewID"];
+    
+    NSString *dateString;
+    if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
+        dateString = NSLocalizedString(@"Today", @"").localizedUppercaseString;
+    } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
+        dateString = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
+    } else {
+        dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
+    }
+    
+    MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
+    bucketHeaderView.parentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
+    bucketHeaderView.uploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
+    bucketHeaderView.dateLabel.text = dateString.uppercaseString;
+    
+    bucketHeaderView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    bucketHeaderView.parentFolderNameLabel.textColor = bucketHeaderView.dateLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    return bucketHeaderView;
+}
+
 
 #pragma mark - Public
 
@@ -176,16 +184,11 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (self.cloudDrive.recentActionBucket) {
-        self.bucketHeaderView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
-        self.bucketHeaderParentFolderNameLabel.textColor = self.bucketHeaderHourLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    }
-    
-    return self.cloudDrive.recentActionBucket ? self.bucketHeaderView : nil;
+    return self.cloudDrive.recentActionBucket ? [self prepareBucketHeaderView] : [UIView.alloc initWithFrame:CGRectZero];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return self.cloudDrive.recentActionBucket ? 45.0f : 0;
+    return self.cloudDrive.recentActionBucket ? UITableViewAutomaticDimension : 0.0;
 }
 
 #pragma mark - UITableViewDelegate

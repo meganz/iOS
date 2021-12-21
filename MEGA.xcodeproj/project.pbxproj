@@ -2068,6 +2068,8 @@
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
 		C4652805265294C700371270 /* BannerContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4652804265294C700371270 /* BannerContainer.storyboard */; };
+		C4653A4D274BD09000BB14C2 /* BucketHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */; };
+		C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */; };
 		C466A7F726F4DED800905878 /* MEGANode+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466A7F626F4DED800905878 /* MEGANode+Backup.swift */; };
 		C466A7FB26F4E08B00905878 /* BrowserViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466A7FA26F4E08B00905878 /* BrowserViewController+Backup.swift */; };
 		C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */; };
@@ -4183,6 +4185,8 @@
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
 		C4652804265294C700371270 /* BannerContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BannerContainer.storyboard; sourceTree = "<group>"; };
+		C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BucketHeaderView.xib; sourceTree = "<group>"; };
+		C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketHeaderView.swift; sourceTree = "<group>"; };
 		C466A7F626F4DED800905878 /* MEGANode+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Backup.swift"; sourceTree = "<group>"; };
 		C466A7FA26F4E08B00905878 /* BrowserViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+Backup.swift"; sourceTree = "<group>"; };
 		C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASegmentedControl.swift; sourceTree = "<group>"; };
@@ -7117,6 +7121,8 @@
 				C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */,
 				5B16A736220D6E0900085F61 /* ThumbnailViewerTableViewCell.h */,
 				5B16A737220D6E0900085F61 /* ThumbnailViewerTableViewCell.m */,
+				C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */,
+				C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -10474,6 +10480,7 @@
 				83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */,
 				BFB33D91263B922F006E203D /* EndMeetingOptionsViewViewController.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
+				C4653A4D274BD09000BB14C2 /* BucketHeaderView.xib in Resources */,
 				BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */,
 				5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */,
 				5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */,
@@ -11430,6 +11437,7 @@
 				BF66DF362612CE3100066F35 /* InviteRequestDelegate.swift in Sources */,
 				BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
+				C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */,
 				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				0D7E5FA62634E1E800C5CB2A /* DownloadFileRepository.swift in Sources */,

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,7 +11,7 @@
         <scene sceneID="JTP-uT-Ioo">
             <objects>
                 <tableViewController storyboardIdentifier="CameraUploadsSettingsID" id="0gq-O0-v8H" customClass="CameraUploadsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="HeY-pZ-r8v">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="HeY-pZ-r8v">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="760"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
@@ -19,7 +19,7 @@
                             <tableViewSection footerTitle="When enabled, photos will be uploaded." id="nMP-Ad-yya">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="hGs-DP-h4r" userLabel="Camera Uploads Table View Cell">
-                                        <rect key="frame" x="0.0" y="18" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="hGs-DP-h4r" id="lS6-a4-a7C">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -65,7 +65,7 @@
                             <tableViewSection headerTitle="" id="z1y-BO-nkA">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="9Lu-Gx-ccv" detailTextLabel="ZZc-KJ-13j" style="IBUITableViewCellStyleValue1" id="xJP-C8-8rb" userLabel="Upload Videos">
-                                        <rect key="frame" x="0.0" y="106" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="89" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xJP-C8-8rb" id="oEI-tg-o1g">
                                             <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
@@ -93,7 +93,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="kY1-bw-JGQ" userLabel="Camera Uploads Table View Cell">
-                                        <rect key="frame" x="0.0" y="149.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="132.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="kY1-bw-JGQ" id="Q1f-3d-Zcu">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -139,7 +139,7 @@
                             <tableViewSection headerTitle="MEGA CAMERA UPLOADS FOLDER" id="pCt-8K-KYj">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="PGe-3h-dij" style="IBUITableViewCellStyleDefault" id="xUA-U1-1gu" userLabel="CU Folder">
-                                        <rect key="frame" x="0.0" y="243" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="226" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xUA-U1-1gu" id="2mH-lc-OrS">
                                             <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
@@ -161,7 +161,7 @@
                             <tableViewSection headerTitle="SAVE HEIC PHOTOS AS" footerTitle="We recommend JPG, as it is the most compatible format for photos." id="nFt-pn-NLx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="HSJ-yZ-JNW" customClass="SelectableTableViewCell">
-                                        <rect key="frame" x="0.0" y="343.5" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="326.5" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="HSJ-yZ-JNW" id="5TC-gV-nw7">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -197,7 +197,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="QzL-5j-yJY" customClass="SelectableTableViewCell">
-                                        <rect key="frame" x="0.0" y="388" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="371" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="QzL-5j-yJY" id="KNF-Jn-ZId">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -237,7 +237,7 @@
                             <tableViewSection id="zWS-yJ-cXe">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="2pv-ZY-D7s" userLabel="Video Uploads Table View Cell">
-                                        <rect key="frame" x="0.0" y="491" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="457" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="2pv-ZY-D7s" id="YAl-Nr-o1y">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -283,7 +283,7 @@
                             <tableViewSection headerTitle="Options" id="ceh-Fp-SYr">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="RIs-Oa-XXE" userLabel="Use cellular connection Table View Cell">
-                                        <rect key="frame" x="0.0" y="585" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="551" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="RIs-Oa-XXE" id="dud-y8-IqA">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -325,7 +325,7 @@
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="SFt-KB-vuw" userLabel="Use cellular for videos">
-                                        <rect key="frame" x="0.0" y="629.5" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="595.5" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="SFt-KB-vuw" id="let-L3-LYT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -367,7 +367,7 @@
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="rVL-Aj-5pu" userLabel="Upload in background">
-                                        <rect key="frame" x="0.0" y="674" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="640" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="rVL-Aj-5pu" id="j20-CG-gjb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -416,7 +416,7 @@
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="A5s-xC-BfJ" style="IBUITableViewCellStyleDefault" id="Psx-Ud-pgM" userLabel="Advanced">
-                                        <rect key="frame" x="0.0" y="718.5" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="684.5" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Psx-Ud-pgM" id="DJ3-Aj-WRE">
                                             <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
@@ -852,7 +852,7 @@
         <scene sceneID="Ahm-Qv-3Ce">
             <objects>
                 <tableViewController storyboardIdentifier="AdvancedTableViewControllerID" id="BZj-6h-yKC" customClass="CameraUploadAdvancedOptionsViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="FXl-FS-MkM">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="44" sectionHeaderHeight="1" estimatedSectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="FXl-FS-MkM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
@@ -860,7 +860,7 @@
                             <tableViewSection footerTitle="Underlying videos and key photos in Live Photos will be uploaded." id="Xwc-yt-iPo" userLabel="Live Photos">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="oeW-KB-BHr">
-                                        <rect key="frame" x="0.0" y="18" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="1" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="oeW-KB-BHr" id="2W8-Er-6j1">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -908,7 +908,7 @@
                             <tableViewSection footerTitle="All the photos in a burst photo sequence will be uploaded." id="yOe-vN-au4" userLabel="Burst Photos">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="uun-Km-ucE">
-                                        <rect key="frame" x="0.0" y="121" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="87" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="uun-Km-ucE" id="WdP-OY-jAm">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -956,7 +956,7 @@
                             <tableViewSection footerTitle="The photos or videos in your Hidden album will not be uploaded." id="dVA-ZF-BEn" userLabel="Hidden Assets">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="KgL-jH-BWz">
-                                        <rect key="frame" x="0.0" y="210" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="159" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="KgL-jH-BWz" id="M3z-Un-5Ak">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -1004,7 +1004,7 @@
                             <tableViewSection id="h6Z-Tq-Pyv" userLabel="Upload Shared Albums">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Nhp-ce-3cd">
-                                        <rect key="frame" x="0.0" y="313" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="245" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Nhp-ce-3cd" id="ORF-FQ-4hB">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -1052,7 +1052,7 @@
                             <tableViewSection footerTitle="Synced albums are where you sync photos or videos to your device's Photos app from iTunes." id="93s-At-fdf" userLabel="Upload Synced Albums">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="cpl-FI-lx1">
-                                        <rect key="frame" x="0.0" y="393" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="308" width="375" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="cpl-FI-lx1" id="oUu-M3-QM0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
