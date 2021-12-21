@@ -50,21 +50,26 @@ struct PhotoLibraryContentView: View {
         } else {
             switch viewModel.selectedMode {
             case .year:
-                let vm = PhotoLibraryYearViewModel(libraryViewModel: viewModel,
-                                                   photoCategoryList: viewModel.library.photosByYearList)
-                PhotoLibraryYearView(viewModel: vm, router: router)
+                PhotoLibraryYearView(
+                    viewModel: PhotoLibraryYearViewModel(libraryViewModel: viewModel),
+                    router: router
+                )
             case .month:
-                let vm = PhotoLibraryMonthViewModel(libraryViewModel: viewModel,
-                                                    photoCategoryList: viewModel.library.allPhotosByMonthList)
-                PhotoLibraryMonthView(viewModel: vm, router: router)
+                PhotoLibraryMonthView(
+                    viewModel: PhotoLibraryMonthViewModel(libraryViewModel: viewModel),
+                    router: router
+                )
             case .day:
-                let vm = PhotoLibraryDayViewModel(libraryViewModel: viewModel,
-                                                  photoCategoryList: viewModel.library.allPhotosByDayList)
-                PhotoLibraryDayView(viewModel: vm, router: router)
+                PhotoLibraryDayView(
+                    viewModel: PhotoLibraryDayViewModel(libraryViewModel: viewModel),
+                    router: router
+                )
             case .all:
-                let vm = PhotoLibraryAllViewModel(libraryViewModel: viewModel,
-                                                  photoCategoryList: viewModel.library.allPhotosMonthSections)
-                PhotoLibraryAllView(viewModel: vm, router: router, calculator: ScrollPositionCalculator())
+                PhotoLibraryAllView(
+                    viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
+                    router: router,
+                    calculator: ScrollPositionCalculator()
+                )
             }
         }
     }

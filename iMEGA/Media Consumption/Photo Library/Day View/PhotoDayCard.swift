@@ -2,7 +2,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct PhotoDayCard: View {
-    @ObservedObject var viewModel: PhotoDayCardViewModel
+    @StateObject var viewModel: PhotoDayCardViewModel
     
     var body: some View {
         PhotoCard(viewModel: viewModel, badgeTitle: viewModel.badgeTitle) {

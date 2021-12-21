@@ -32,15 +32,10 @@ final class PhotoCellViewModel: ObservableObject {
             }
             .replaceError(with: nil)
             .compactMap { $0 }
-            .delay(for: .seconds(0.07), scheduler: DispatchQueue.main)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.thumbnailContainer = $0
             }
             .store(in: &subscriptions)
-    }
-    
-    func resetThumbnail() {
-        subscriptions.removeAll()
-        thumbnailContainer = placeholderImageContainer
     }
 }

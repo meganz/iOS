@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MyAvatarManager;
+@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoLibraryPublisher;
 
 typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateDisabled,
@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @interface PhotosViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MEGARequestDelegate, MEGATransferDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, nullable, strong) MyAvatarManager *myAvatarManager;
+@property (strong, nonatomic) PhotoLibraryContentViewModel *photoLibraryContentViewModel;
+@property (strong, nonatomic) PhotoLibraryPublisher *photoLibraryPublisher API_AVAILABLE(ios(14.0));
 
 @end
 
