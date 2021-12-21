@@ -26,8 +26,8 @@ pipeline {
         }
         failure {
             script {
-                withCredentials([usernamePassword(credentialsId: 'Jenkins-Login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh 'curl -u $USERNAME:$PASSWORD ${BUILD_URL}/consoleText -o console.txt'
+                withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+                    sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
                     slackUploadFile filePath:"console.txt", initialComment:"Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
                 }
             }

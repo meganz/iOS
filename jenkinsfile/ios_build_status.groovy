@@ -18,13 +18,29 @@ pipeline {
    post { 
         failure {
             script {
-                withCredentials([usernamePassword(credentialsId: 'Jenkins-Login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    def comment = "Console log: ${env.GIT_BRANCH}"
-                    if (env.CHANGE_URL) {
-                        comment = "Console log: ${env.GIT_BRANCH} ${env.CHANGE_URL}"
+                if (env.BRANCH_NAME.startsWith('MR-')) {
+                    def mrNumber = env.BRANCH_NAME.replace('MR-', '')
+
+                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
                     }
-                    sh 'curl -u $USERNAME:$PASSWORD ${BUILD_URL}/consoleText -o console.txt'
-                    slackUploadFile filePath:"console.txt", initialComment:comment
+
+                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                        final String response = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
+                        def json = new groovy.json.JsonSlurperClassic().parseText(response)
+                        env.MARKDOWN_LINK = json.markdown
+                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
+                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=${MARKDOWN_LINK} ${MERGE_REQUEST_URL}'
+                    }
+                } else {
+                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+                        def comment = "Console log: ${env.GIT_BRANCH}"
+                        if (env.CHANGE_URL) {
+                            comment = "Console log: ${env.GIT_BRANCH} ${env.CHANGE_URL}"
+                        }
+                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
+                        slackUploadFile filePath:"console.txt", initialComment:comment
+                    }
                 }
             }
         }
