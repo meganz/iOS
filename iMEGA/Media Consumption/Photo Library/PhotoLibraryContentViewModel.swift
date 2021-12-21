@@ -3,7 +3,9 @@ import Foundation
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published var library: PhotoLibrary
     @Published var selectedMode: PhotoLibraryViewMode = .all
-    var currentPosition: PhotoScrollPosition = nil
+    
+    var cardScrollPosition: PhotoScrollPosition?
+    var photoScrollPosition: PhotoScrollPosition?
     
     @Published var isEditingMode = false
     

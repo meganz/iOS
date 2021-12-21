@@ -67,8 +67,7 @@ struct PhotoLibraryContentView: View {
             case .all:
                 PhotoLibraryAllView(
                     viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
-                    router: router,
-                    calculator: ScrollPositionCalculator()
+                    router: router
                 )
             }
         }

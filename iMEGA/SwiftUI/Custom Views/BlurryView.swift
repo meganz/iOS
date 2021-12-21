@@ -7,15 +7,8 @@ struct BlurryView: View {
     var body: some View {
         Image(colorScheme == .dark ? .black : .white)
             .resizable()
-            .blur(radius: 2)
-            .opacity(0.85)
+            .blur(radius: 2, opaque: true)
+            .opacity(0.9)
             .clipped()
-    }
-}
-
-@available(iOS 14.0, *)
-struct BlurryView_Previews: PreviewProvider {
-    static var previews: some View {
-        BlurryView()
     }
 }

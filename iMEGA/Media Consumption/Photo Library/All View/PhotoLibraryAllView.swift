@@ -4,10 +4,8 @@ import SwiftUI
 struct PhotoLibraryAllView: View {
     @StateObject var viewModel: PhotoLibraryAllViewModel
     var router: PhotoLibraryContentViewRouting
-    var calculator: ScrollPositionCalculator
     
     @State private var selectedNode: NodeEntity?
-    
     @State private var columns: [GridItem] = Array(
         repeating: .init(.flexible(), spacing: 1),
         count: 3
@@ -47,8 +45,7 @@ struct PhotoLibraryAllView: View {
                     .background(Color(white: 0, opacity: 0.1))
                     .frame(in: .named("scrollView"))
                     .onPreferenceChange(FramePreferenceKey.self) {
-                        let position = calculator.calculateScrollPosition(with: photo, frame: $0, viewPortSize: viewPortSize)
-                        viewModel.libraryViewModel.currentPosition = position
+                        viewModel.scrollCalculator.recordFrame($0, for: photo, inViewPort: viewPortSize)
                     }
             }
         }
