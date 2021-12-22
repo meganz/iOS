@@ -330,4 +330,44 @@
     return [UISwipeActionsConfiguration configurationWithActions:@[]];
 }
 
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView
+contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+                                    point:(CGPoint)point {
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+    
+    UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil
+                                                                                        previewProvider:^UIViewController * _Nullable {
+        if (node.isFolder) {
+            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            return cloudDriveVC;
+        } else {
+            return nil;
+        }
+    } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        UIAction *selectAction = [UIAction actionWithTitle:NSLocalizedString(@"select", nil)
+                                                     image:[UIImage imageNamed:@"select"]
+                                                identifier:nil
+                                                   handler:^(__kindof UIAction * _Nonnull action) {
+            [self setTableViewEditing:YES animated:YES];
+            [self tableView:tableView didSelectRowAtIndexPath:indexPath];
+            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }];
+        return [UIMenu menuWithTitle:@"" children:@[selectAction]];
+    }];
+    return configuration;
+}
+
+- (void)tableView:(UITableView *)tableView
+willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
+         animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    if ([animator.previewViewController isKindOfClass:CloudDriveViewController.class]) {
+        CloudDriveViewController *previewViewController = (CloudDriveViewController *)animator.previewViewController;
+        [animator addCompletion:^{
+            [self.navigationController pushViewController:previewViewController animated:NO];
+        }];
+    }
+}
+
+
 @end
