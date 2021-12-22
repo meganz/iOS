@@ -278,9 +278,6 @@ class NodeInfoViewController: UIViewController {
         if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
             sections.append(.link)
         }
-        if MEGASdkManager.sharedMEGASdk().hasVersions(for: node) {
-            sections.append(.versions)
-        }
 
         if node.isFolder() && MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
             sections.append(.sharing)

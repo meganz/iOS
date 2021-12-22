@@ -55,6 +55,9 @@ final class NodeActionViewControllerGenericDelegate:
             
         case .info:
             showNodeInfo(node)
+            
+        case .viewVersions:
+            node.mnz_showTextFileVersions(in: viewController)
 
         case .leaveSharing:
             node.mnz_leaveSharing(in: viewController)
@@ -125,7 +128,14 @@ final class NodeActionViewControllerGenericDelegate:
         nodeInfoVC.display(node, withDelegate: self)
         viewController?.present(nodeInfoNavigationController, animated: true, completion: nil)
     }
-
+    
+    private func showNodeVersions(_ node: MEGANode) {
+        guard let viewController = viewController else {
+            return
+        }
+        node.mnz_showTextFileVersions(in: viewController)
+    }
+    
     private func showBrowserViewController(node: MEGANode, action: BrowserAction) {
         if let navigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController {
             viewController?.present(navigationController, animated: true, completion: nil)

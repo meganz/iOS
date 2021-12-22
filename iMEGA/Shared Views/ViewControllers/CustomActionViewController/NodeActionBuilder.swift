@@ -6,6 +6,7 @@ final class NodeActionBuilder {
     private var isMediaFile: Bool = false
     private var isEditableTextFile: Bool = false
     private var isFile: Bool = false
+    private var versionCount: Int = 0
     private var isFavourite: Bool = false
     private var label: MEGANodeLabel = .unknown
     private var isRestorable: Bool = false
@@ -41,6 +42,11 @@ final class NodeActionBuilder {
     
     func setIsFile(_ isFile: Bool) -> NodeActionBuilder {
         self.isFile = isFile
+        return self
+    }
+    
+    func setVersionCount(_ versionCount: Int) -> NodeActionBuilder {
+        self.versionCount = versionCount
         return self
     }
     
@@ -231,12 +237,15 @@ final class NodeActionBuilder {
     
     private func readAndWriteAccessLevelNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
-
+        
         if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
             nodeActions.append(NodeAction.textEditorAction())
         }
         if displayMode != .nodeInfo && displayMode != .nodeVersions {
             nodeActions.append(NodeAction.infoAction())
+            if versionCount > 0 {
+                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            }
         }
         if isMediaFile {
             nodeActions.append(NodeAction.saveToPhotosAction())
@@ -262,6 +271,9 @@ final class NodeActionBuilder {
         }
         if displayMode != .nodeInfo && displayMode != .nodeVersions {
             nodeActions.append(NodeAction.infoAction())
+            if versionCount > 0 {
+                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            }
             nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
             nodeActions.append(NodeAction.labelAction(label: label))
         }
@@ -299,9 +311,13 @@ final class NodeActionBuilder {
             }
             if displayMode != .nodeInfo {
                 nodeActions.append(NodeAction.infoAction())
+                if versionCount > 0 {
+                    nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+                }
                 nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                 nodeActions.append(NodeAction.labelAction(label: label))
             }
+            
             if displayMode != .rubbishBin {
                 if isMediaFile {
                     nodeActions.append(NodeAction.saveToPhotosAction())
@@ -349,6 +365,9 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.removeVersionAction())
         } else if displayMode == .chatAttachment {
             nodeActions.append(NodeAction.infoAction())
+            if versionCount > 0 {
+                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            }
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
@@ -356,6 +375,9 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.shareAction())
         } else {
             nodeActions.append(NodeAction.infoAction())
+            if versionCount > 0 {
+                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            }
             nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
             nodeActions.append(NodeAction.labelAction(label: label))
             if isMediaFile {

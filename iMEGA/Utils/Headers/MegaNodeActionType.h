@@ -14,6 +14,7 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeRemove,
     MegaNodeActionTypeRemoveSharing,
     MegaNodeActionTypeImport,
+    MegaNodeActionTypeViewVersions,
     MegaNodeActionTypeRevertVersion,
     MegaNodeActionTypeSelect,
     MegaNodeActionTypeRestore,

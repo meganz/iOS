@@ -169,6 +169,10 @@ extension NodeAction {
         return NodeAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: Asset.Images.InfoActions.import.image, type: .import)
     }
     
+    class func viewVersionsAction(versionCount: Int) -> NodeAction {
+        return NodeAction(title: Strings.Localizable.versions, detail: String(versionCount), image: Asset.Images.Generic.versions.image, type: .viewVersions)
+    }
+    
     class func revertVersionAction() -> NodeAction {
         return NodeAction(title: Strings.Localizable.revert, detail: nil, image: Asset.Images.NodeActions.history.image, type: .revertVersion)
     }
