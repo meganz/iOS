@@ -11,7 +11,7 @@ final class PhotoCellViewModel: ObservableObject {
 
     @Published var thumbnailContainer: ImageContainer
     let isEditingMode: Bool
-
+    
     init(photo: NodeEntity,
          thumbnailUseCase: ThumbnailUseCaseProtocol,
          isEditingMode: Bool = false) {
@@ -27,8 +27,8 @@ final class PhotoCellViewModel: ObservableObject {
         thumbnailUseCase
             .getCachedThumbnail(for: photo.handle)
             .receive(on: DispatchQueue.global(qos: .utility))
-            .map {
-                ImageContainer(image: Image(contentsOfFile: $0.path))
+            .map { [weak self] in
+                ImageContainer(image: Image(contentsOfFile: $0.path), overlay: self?.photo.overlay)
             }
             .replaceError(with: nil)
             .compactMap { $0 }

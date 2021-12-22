@@ -35,8 +35,8 @@ class PhotoCardViewModel: ObservableObject {
             }
             .replaceError(with: nil)
             .receive(on: DispatchQueue.global(qos: .utility))
-            .compactMap {
-                ImageContainer(image: Image(contentsOfFile: $0?.path))
+            .compactMap { [weak self] in
+                ImageContainer(image: Image(contentsOfFile: $0?.path), overlay: self?.coverPhoto?.overlay)
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in

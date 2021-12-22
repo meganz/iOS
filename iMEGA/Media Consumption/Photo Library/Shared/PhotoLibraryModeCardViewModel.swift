@@ -13,7 +13,6 @@ class PhotoLibraryModeCardViewModel<T: PhotosChronologicalCategory>: PhotoLibrar
             return category.position
         }
         
-        
         if let cardPosition = libraryViewModel.cardScrollPosition {
             return searchCategoryPosition(by: cardPosition)
         } else if let photoPosition = libraryViewModel.photoScrollPosition {

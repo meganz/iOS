@@ -1621,6 +1621,8 @@
 		B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026B5258308E900D29CB6 /* BackupRecorder.swift */; };
 		B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */; };
 		B6F39F092772A986002386BE /* PhotoLibraryModeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */; };
+		B6F39F232773D338002386BE /* PhotoCellImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F222773D337002386BE /* PhotoCellImage.swift */; };
+		B6F39F272773D547002386BE /* PhotosChronologicalCategory+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F262773D546002386BE /* PhotosChronologicalCategory+Additions.swift */; };
 		B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		B6F8CDCB262821820074CBBF /* CoreDataErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F8CDCA262821820074CBBF /* CoreDataErrorHandler.m */; };
 		B6F8CE0C262823230074CBBF /* CoreDataErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F8CDCA262821820074CBBF /* CoreDataErrorHandler.m */; };
@@ -3805,6 +3807,8 @@
 		B6F026B5258308E900D29CB6 /* BackupRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRecorder.swift; sourceTree = "<group>"; };
 		B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRegister.swift; sourceTree = "<group>"; };
 		B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeCardViewModel.swift; sourceTree = "<group>"; };
+		B6F39F222773D337002386BE /* PhotoCellImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellImage.swift; sourceTree = "<group>"; };
+		B6F39F262773D546002386BE /* PhotosChronologicalCategory+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosChronologicalCategory+Additions.swift"; sourceTree = "<group>"; };
 		B6F8CDC9262821820074CBBF /* CoreDataErrorHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataErrorHandler.h; sourceTree = "<group>"; };
 		B6F8CDCA262821820074CBBF /* CoreDataErrorHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataErrorHandler.m; sourceTree = "<group>"; };
 		B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+User.swift"; sourceTree = "<group>"; };
@@ -8694,6 +8698,7 @@
 				B67507C6276852AF0034F951 /* PhotosMonthSection.swift */,
 				B66E8073275A0C3000502601 /* PhotoCell.swift */,
 				B66E8075275A0C4200502601 /* PhotoCellViewModel.swift */,
+				B6F39F222773D337002386BE /* PhotoCellImage.swift */,
 				1243A31C276AB8F100067A8F /* CheckMarkView.swift */,
 			);
 			path = "All View";
@@ -8706,6 +8711,7 @@
 				B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */,
 				B67507AE276689520034F951 /* ScrollPositioning.swift */,
 				B67507CE27694F120034F951 /* PhotosChronologicalCategory.swift */,
+				B6F39F262773D546002386BE /* PhotosChronologicalCategory+Additions.swift */,
 				B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */,
 				B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */,
 			);
@@ -10950,6 +10956,7 @@
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */,
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
+				B6F39F232773D338002386BE /* PhotoCellImage.swift in Sources */,
 				B67507C527684FC00034F951 /* PhotoLibraryModeViewModel.swift in Sources */,
 				83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
@@ -11193,6 +11200,7 @@
 				5D075CDB25185FB50067D363 /* ContactRequest.swift in Sources */,
 				B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */,
 				B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */,
+				B6F39F272773D547002386BE /* PhotosChronologicalCategory+Additions.swift in Sources */,
 				B6730B1E2738482600A9CF5F /* MEGAFileTypes.swift in Sources */,
 				BFAC874C25FEF75F009CA3F6 /* AudioSessionRepositoryProtocol.swift in Sources */,
 				BF782D60269BA4BB0001D169 /* CameraPositionEntity.swift in Sources */,
