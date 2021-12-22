@@ -37,80 +37,75 @@ pipeline {
         }
     }
     stages {
-        stage('Submodule update') {
-            steps {
-                gitlabCommitStatus(name: 'Submodule update') {
-                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                        injectEnvironments({
-                            sh "git submodule foreach --recursive git clean -xfd"
-                            sh "git submodule sync --recursive"
-                            sh "git submodule update --init --recursive"
-                        })
+        stage('Prepare Source') {
+            parallel {
+                stage('Submodule update and run cmake') {
+                    steps {
+                        gitlabCommitStatus(name: 'Submodule update and run cmake') {
+                            withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                                injectEnvironments({
+                                    sh "git submodule foreach --recursive git clean -xfd"
+                                    sh "git submodule sync --recursive"
+                                    sh "git submodule update --init --recursive"
+                                    dir("iMEGA/Vendor/Karere/src/") {
+                                        sh "cmake -P genDbSchema.cmake"
+                                    }
+                                })
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        stage('Downloading dependencies') {
-            steps {
-                gitlabCommitStatus(name: 'Downloading dependencies') {
-                    injectEnvironments({
-                        retry(3) {
-                            sh "sh download_3rdparty.sh"
+                stage('Downloading third party libraries') {
+                    steps {
+                        gitlabCommitStatus(name: 'Downloading third party libraries') {
+                            injectEnvironments({
+                                retry(3) {
+                                    sh "sh download_3rdparty.sh"
+                                }
+                            })
                         }
-                        sh "bundle install"
-                        sh "bundle exec pod repo update"
-                        sh "bundle exec pod cache clean --all --verbose"
-                        sh "bundle exec pod install --verbose "
-                    })
+                    }
                 }
-            }
-        }
 
-        stage('Running CMake') {
-            steps {
-                gitlabCommitStatus(name: 'Running CMake') {
-                    injectEnvironments({
-                        dir("iMEGA/Vendor/Karere/src/") {
-                            sh "cmake -P genDbSchema.cmake"
+                stage('Update pods') {
+                    steps {
+                        gitlabCommitStatus(name: 'Update pods') {
+                            injectEnvironments({
+                                sh "bundle install"
+                                sh "bundle exec pod repo update"
+                                sh "bundle exec pod cache clean --all --verbose"
+                                sh "bundle exec pod install --verbose "
+                            })
                         }
-                    })
+                    }
                 }
-            }
-        } 
 
-        stage('Set build number') {
-            steps {
-                gitlabCommitStatus(name: 'Set build number') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane set_time_as_build_number"
-                        sh "bundle exec fastlane fetch_version_number"
-                        script {
-                            env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
-                            env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
+                stage('Set build number') {
+                    steps {
+                        gitlabCommitStatus(name: 'Set build number') {
+                            injectEnvironments({
+                                sh "bundle exec fastlane set_time_as_build_number"
+                                sh "bundle exec fastlane fetch_version_number"
+                                script {
+                                    env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
+                                    env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
+                                }
+                            })
                         }
-                    })
+                    }
                 }
-            }
-        }
 
-        stage('Create temporary keychain') {
-            steps {
-                gitlabCommitStatus(name: 'Create Temporary keychain') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane create_temporary_keychain"
-                    })
-                }
-            }
-        }
-
-        stage('Install certificate and profiles to temp_keychain') {
-            steps {
-                gitlabCommitStatus(name: 'Install certificate and profiles to temp_keychain') {
-                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                        injectEnvironments({
-                            sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore'"
-                        })
+                stage('Install certificate and provisioning profiles in temporary keychain') {
+                    steps {
+                        gitlabCommitStatus(name: 'Install certificate and provisioning profiles in temporary keychain') {
+                            injectEnvironments({
+                                sh "bundle exec fastlane create_temporary_keychain"
+                                withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore'"
+                                }
+                            })
+                        }
                     }
                 }
             }
@@ -126,24 +121,28 @@ pipeline {
             }
         }
 
-        stage('Upload to Testflight') {     
-            steps {
-                gitlabCommitStatus(name: 'Upload to Testflight') {
-                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                        injectEnvironments({
-                            sh "bundle exec fastlane upload_to_itunesconnect"
-                        })
+        stage('Upload build and debug symbols') {
+            parallel {
+                stage('Upload to Testflight') {     
+                    steps {
+                        gitlabCommitStatus(name: 'Upload to Testflight') {
+                            withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                                injectEnvironments({
+                                    sh "bundle exec fastlane upload_to_itunesconnect"
+                                })
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        stage('Upload symbols to crashlytics') {
-            steps {
-                gitlabCommitStatus(name: 'Upload symbols to crashlytics') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane upload_symbols"
-                    })
+                stage('Upload symbols to crashlytics') {
+                    steps {
+                        gitlabCommitStatus(name: 'Upload symbols to crashlytics') {
+                            injectEnvironments({
+                                sh "bundle exec fastlane upload_symbols"
+                            })
+                        }
+                    }
                 }
             }
         }
