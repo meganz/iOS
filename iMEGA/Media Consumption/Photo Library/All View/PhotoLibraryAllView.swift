@@ -24,6 +24,7 @@ struct PhotoLibraryAllView: View {
                 router.photoBrowser(for: $0, viewModel: viewModel)
                     .ignoresSafeArea()
             }
+            .id(UUID().uuidString)
         }
     }
     
