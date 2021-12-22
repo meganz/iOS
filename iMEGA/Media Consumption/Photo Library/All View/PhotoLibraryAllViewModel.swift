@@ -12,11 +12,13 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotosMonthSecti
             return nil
         }
         
-        guard let category = photoCategoryList.first(where: { $0.categoryDate == cardPosition.date.removeDay() }) else {
+        let photosByDayList = photoCategoryList.flatMap { $0.photosByMonth.photosByDayList }
+        
+        guard let dayCategory = photosByDayList.first(where: { $0.categoryDate == cardPosition.date.removeTimestamp() }) else {
             return nil
         }
         
-        guard category.photosByMonth.allPhotos.first(where: { $0.handle == photoPosition.handle }) != nil else {
+        guard dayCategory.photoNodeList.first(where: { $0.handle == photoPosition.handle }) != nil else {
             return cardPosition
         }
         
