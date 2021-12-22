@@ -9,7 +9,8 @@ struct PhotoCell: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            thumbnail()
+            PhotoCellImage(container: viewModel.thumbnailContainer)
+            
             if viewModel.isEditingMode {
                 CheckMarkView(markedSelected: $selected)
                     .offset(x: -5, y: 5)
@@ -20,21 +21,6 @@ struct PhotoCell: View {
             DispatchQueue.global(qos: .utility).async {
                 viewModel.loadThumbnail()
             }
-        }
-    }
-    
-    @ViewBuilder
-    private func thumbnail() -> some View {
-        if viewModel.thumbnailContainer.isPlaceholder {
-            Color.clear
-                .aspectRatio(1, contentMode: .fill)
-                .overlay(
-                    viewModel.thumbnailContainer.image
-                )
-        } else {
-            viewModel.thumbnailContainer.image
-                .resizable()
-                .aspectRatio(1, contentMode: .fill)
         }
     }
 }

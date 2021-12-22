@@ -1,12 +1,15 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
-struct CardImage: View {
+struct PhotoCellImage: View {
     let container: ImageContainer
     
     var body: some View {
         if container.isPlaceholder {
-            container.image
+            Color.clear
+                .aspectRatio(1, contentMode: .fill)
+                .overlay(
+                    container.image
+                )
         } else {
             if let overlay = container.overlay {
                 thumbnail()
@@ -20,7 +23,6 @@ struct CardImage: View {
     private func thumbnail() -> some View {
         container.image
             .resizable()
-            .aspectRatio(contentMode: .fill)
-            .clipped()
+            .aspectRatio(1, contentMode: .fill)
     }
 }
