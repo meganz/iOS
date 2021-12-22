@@ -17,7 +17,16 @@ struct PhotoLibraryModeCardView<Category, VM: PhotoLibraryModeCardViewModel<Cate
             PhotoLibraryModeView(viewModel: viewModel) {
                 LazyVGrid(columns: PhotoLibraryConstants.cardColumns, spacing: PhotoLibraryConstants.cardRowPadding) {
                     ForEach(viewModel.photoCategoryList) { category in
-                        cellBuilder(category)
+                        Button(action: {
+                            withAnimation {
+                                viewModel.didTapCategory(category)
+                            }
+                        }, label: {
+                            cellBuilder(category)
+                                .frame(height: PhotoLibraryConstants.cardHeight)
+                        })
+                            .id(category.position)
+                            .buttonStyle(.plain)
                             .frame(in: .named("scrollView"))
                             .onPreferenceChange(FramePreferenceKey.self) {
                                 viewModel.scrollCalculator.recordFrame($0, for: category, inViewPort: geoProxy.size)

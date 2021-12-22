@@ -7,21 +7,7 @@ struct PhotoLibraryMonthView: View {
     
     var body: some View {
         PhotoLibraryModeCardView(viewModel: viewModel) {
-            cell(for: $0)
+            router.card(for: $0)
         }
     }
-    
-    private func cell(for photosByMonth: PhotosByMonth) -> some View {
-        Button(action: {
-            withAnimation {
-                viewModel.didTapMonthCard(photosByMonth)
-            }
-        }, label: {
-            router.card(for: photosByMonth)
-                .frame(height: PhotoLibraryConstants.cardHeight)
-        })
-            .id(photosByMonth.position)
-            .buttonStyle(.plain)
-    }
-    
 }

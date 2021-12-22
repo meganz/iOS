@@ -17,7 +17,9 @@ struct PhotoCell: View {
         }
         .gesture(viewModel.isEditingMode ? tap : nil)
         .onLoad {
-            viewModel.loadThumbnail()
+            DispatchQueue.global(qos: .utility).async {
+                viewModel.loadThumbnail()
+            }
         }
     }
     

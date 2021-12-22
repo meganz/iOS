@@ -5,17 +5,17 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotosMonthSecti
     
     override var position: PhotoScrollPosition? {
         guard let photoPosition = libraryViewModel.photoScrollPosition else {
-            return super.position
+            return libraryViewModel.cardScrollPosition
         }
         
         guard let cardPosition = libraryViewModel.cardScrollPosition else {
-            return nil
+            return photoPosition
         }
         
         let photosByDayList = photoCategoryList.flatMap { $0.photosByMonth.photosByDayList }
         
         guard let dayCategory = photosByDayList.first(where: { $0.categoryDate == cardPosition.date.removeTimestamp() }) else {
-            return nil
+            return cardPosition
         }
         
         guard dayCategory.photoNodeList.first(where: { $0.handle == photoPosition.handle }) != nil else {
@@ -40,8 +40,13 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotosMonthSecti
             .$selectedMode
             .dropFirst()
             .sink { [weak self] _ in
+                let previousPhotoPosition = libraryViewModel.photoScrollPosition
                 self?.scrollCalculator.calculateScrollPosition(&libraryViewModel.photoScrollPosition)
-                libraryViewModel.cardScrollPosition = nil
+                
+                if previousPhotoPosition != libraryViewModel.photoScrollPosition {
+                    // Clear card scroll position when photo scroll position changes
+                    libraryViewModel.cardScrollPosition = nil
+                }
             }
             .store(in: &subscriptions)
     }

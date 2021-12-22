@@ -7,20 +7,7 @@ struct PhotoLibraryDayView: View {
 
     var body: some View {
         PhotoLibraryModeCardView(viewModel: viewModel) {
-            cell(for: $0)
+            router.card(for: $0)
         }
-    }
-    
-    private func cell(for photosByDay: PhotosByDay) -> some View {
-        Button(action: {
-            withAnimation {
-                viewModel.didTapDayCard(photosByDay)
-            }
-        }, label: {
-            router.card(for: photosByDay)
-                .frame(height: PhotoLibraryConstants.cardHeight)
-        })
-            .id(photosByDay.position)
-            .buttonStyle(.plain)
     }
 }

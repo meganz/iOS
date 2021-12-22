@@ -7,9 +7,7 @@ class PhotoLibraryModeViewModel<T: PhotosChronologicalCategory>: ScrollPositioni
     @Published var photoCategoryList = [T]()
     let libraryViewModel: PhotoLibraryContentViewModel
     
-    var position: PhotoScrollPosition? {
-        libraryViewModel.cardScrollPosition
-    }
+    var position: PhotoScrollPosition? { nil }
     
     init(libraryViewModel: PhotoLibraryContentViewModel) {
         self.libraryViewModel = libraryViewModel
