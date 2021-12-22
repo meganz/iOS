@@ -518,6 +518,13 @@
     [viewController setEditing:NO animated:YES];
 }
 
+- (void)mnz_showTextFileVersionsInViewController:(UIViewController *)viewController {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Node" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeVersionsNC"];
+    NodeVersionsViewController *versionController = navigationController.viewControllers.firstObject;
+    versionController.node = self;
+    [viewController presentViewController:navigationController animated:YES completion:nil];
+}
+
 #pragma mark - File links
 
 - (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {

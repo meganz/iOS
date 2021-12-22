@@ -1705,6 +1705,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [node mnz_sendToChatInViewController:self];
             break;
             
+        case MegaNodeActionTypeViewVersions:
+            [node mnz_showTextFileVersionsInViewController:self];
+            break;
+            
         default:
             break;
     }

@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revertBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -42,6 +43,7 @@
 
     self.title = NSLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
     self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
 
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
@@ -51,6 +53,7 @@
     [self reloadUI];
     
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    self.navigationItem.leftBarButtonItems = @[self.closeBarButtonItem];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
 }
@@ -313,7 +316,7 @@
 
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
-        self.navigationItem.leftBarButtonItems = @[];
+        self.navigationItem.leftBarButtonItems = @[self.closeBarButtonItem];
         
         [self.navigationController setToolbarHidden:YES animated:YES];
         
@@ -425,6 +428,10 @@
     
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeForIndexPath:indexPath] delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
+}
+
+- (IBAction)closeAction:(id)sender {
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 #pragma mark - NodeActionViewControllerDelegate

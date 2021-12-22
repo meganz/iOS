@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_sendToChatInViewController:(UIViewController *)viewController;
 - (void)mnz_moveInViewController:(UIViewController *)viewController;
 - (void)mnz_copyInViewController:(UIViewController *)viewController;
+- (void)mnz_showTextFileVersionsInViewController:(UIViewController *)viewController;
 
 #pragma mark - File links
 
