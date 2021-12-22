@@ -29,8 +29,8 @@
 @import StoreKit;
 @import Photos;
 
-static const NSTimeInterval PhotosViewReloadTimeDelay = .7;
-static const NSTimeInterval HeaderStateViewReloadTimeDelay = .35;
+static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
+static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate, BrowserViewControllerDelegate> {
     BOOL allNodesSelected;

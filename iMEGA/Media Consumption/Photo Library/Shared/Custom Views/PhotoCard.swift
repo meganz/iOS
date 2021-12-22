@@ -38,7 +38,9 @@ struct PhotoCard<Content: View>: View {
         .cornerRadius(12)
         .contentShape(Rectangle())
         .onLoad {
-            viewModel.loadThumbnail()
+            DispatchQueue.global(qos: .utility).async {
+                viewModel.loadThumbnail()
+            }
         }
     }
 }

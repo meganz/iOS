@@ -5,6 +5,10 @@ struct PhotoScrollPosition: Hashable {
     let date: Date
 }
 
+extension PhotoScrollPosition {
+    static let top = PhotoScrollPosition(handle: .invalid, date: Date(timeIntervalSince1970: 0.1))
+}
+
 protocol ScrollPositioning {
     var position: PhotoScrollPosition? { get }
 }
