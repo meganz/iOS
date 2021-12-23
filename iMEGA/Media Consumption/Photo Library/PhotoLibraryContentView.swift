@@ -32,7 +32,7 @@ struct PhotoLibraryContentView: View {
     }
     
     private func viewModePicker() -> some View {
-        Picker("View Mode", selection: $viewModel.selectedMode) {
+        Picker("View Mode", selection: $viewModel.selectedMode.animation()) {
             ForEach(PhotoLibraryViewMode.allCases) {
                 Text($0.title)
                     .font(.headline)
