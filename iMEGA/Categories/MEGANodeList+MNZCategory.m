@@ -73,6 +73,19 @@
     return mediaNodesMutableArray;
 }
 
+- (NSMutableArray<MEGANode *> *)mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:(MEGASdk *)sdk {
+    NSUInteger nodeListCount = self.size.unsignedIntegerValue;
+    NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
+    for (NSUInteger i = 0; i < nodeListCount; i++) {
+        MEGANode *node = [self nodeAtIndex:i];
+        if (node.name.mnz_isVisualMediaPathExtension) {
+            [mediaNodesMutableArray addObject:[sdk authorizeNode:node]];
+        }
+    }
+    
+    return mediaNodesMutableArray;
+}
+
 #pragma mark - onNodesUpdate filtering
 
 - (BOOL)mnz_shouldProcessOnNodesUpdateForParentNode:(MEGANode *)parentNode childNodesArray:(NSArray<MEGANode *> *)childNodesArray {

@@ -403,7 +403,7 @@
 - (void)presentMediaNode:(MEGANode *)node {
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:node.parentHandle];
     MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
-    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:MEGASdkManager.sharedMEGASdkFolder];
     
     MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeNodeInsideFolderLink presentingNode:node preferredIndex:0];
     
@@ -1062,7 +1062,8 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdkFolder]];
+            node = [MEGASdkManager.sharedMEGASdkFolder authorizeNode:node];
+            [node mnz_saveToPhotos];
             break;
             
         case MegaNodeActionTypeSendToChat:
