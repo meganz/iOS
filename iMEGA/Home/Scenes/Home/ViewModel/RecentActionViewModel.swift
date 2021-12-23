@@ -32,7 +32,7 @@ final class HomeRecentActionViewModel:
         devicePermissionUseCase.getAlbumAuthorizationStatus { [weak self] photoAuthorization in
             switch photoAuthorization {
             case .authorized:
-                node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdk())
+                node.mnz_saveToPhotos()
             default:
                 guard let self = self else { return }
                 self.error = .photos

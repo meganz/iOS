@@ -161,7 +161,7 @@
         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         previewController.api = api;
         previewController.filePath = previewDocumentPath;
-        previewController.node = self;
+        previewController.node = isFolderLink ? [api authorizeNode:self] : self;
         previewController.isLink = isFolderLink;
         previewController.fileLink = fileLink;
         
@@ -186,7 +186,7 @@
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-            previewController.node = self;
+            previewController.node = isFolderLink ? [api authorizeNode:self] : self;
             previewController.api = api;
             previewController.isLink = isFolderLink;
             previewController.fileLink = fileLink;
@@ -304,7 +304,7 @@
     }
 }
 
-- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
+- (void)mnz_saveToPhotos {
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
@@ -318,7 +318,7 @@
                 downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                 NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
                 NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                [MEGASdkManager.sharedMEGASdk startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                [MEGASdkManager.sharedMEGASdk startDownloadNode:self localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
             }
         } else {
             [DevicePermissionsHelper alertPhotosPermission];

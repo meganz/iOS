@@ -454,7 +454,7 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            [node mnz_saveToPhotos];
             break;
             
         default:

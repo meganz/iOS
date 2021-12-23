@@ -173,7 +173,7 @@ extension ChatViewController {
                     node = authorizedNode
                 }
                 
-                node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdkFolder())
+                node.mnz_saveToPhotos()
             } else {
                 MEGALogDebug("Wrong Message type to be saved to album")
             }

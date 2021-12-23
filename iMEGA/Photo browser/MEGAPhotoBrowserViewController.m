@@ -496,7 +496,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
-            NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+            NSString *temporaryImagePath = [Helper pathWithOrignalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
@@ -534,7 +534,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectOrNilAtIndex:i];
-            NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+            NSString *temporaryImagePath = [Helper pathWithOrignalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
@@ -671,9 +671,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate =[[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:transferProgress completion:transferCompletion onError:nil];
-            NSString *temporaryImagePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+            NSString *temporaryImagePath = [Helper pathWithOrignalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             
-            [MEGASdkManager.sharedMEGASdk startDownloadNode:[self.api authorizeNode:node] localPath:temporaryImagePath appData:nil delegate:delegate];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
         }
@@ -799,7 +799,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (node == nil) {
         return;
     }
-    [node mnz_saveToPhotosWithApi:MEGASdkManager.sharedMEGASdk];
+    [node mnz_saveToPhotos];
 }
 
 - (IBAction)didPressForwardbarButton:(UIBarButtonItem *)sender {
@@ -864,7 +864,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            [node mnz_saveToPhotosWithApi:self.api];
+            [node mnz_saveToPhotos];
             break;
             
         default:
@@ -1224,7 +1224,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotosWithApi:self.api];
+            [node mnz_saveToPhotos];
             break;
             
         case MegaNodeActionTypeGetLink:

@@ -480,7 +480,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             forwardMessages([message])
             
         case .saveToPhotos:
-            node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdk())
+            node.mnz_saveToPhotos()
             
         case .download:
             downloadNodes([node])

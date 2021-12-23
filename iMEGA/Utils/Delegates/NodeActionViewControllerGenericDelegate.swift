@@ -80,7 +80,7 @@ final class NodeActionViewControllerGenericDelegate:
         case .sendToChat:
             node.mnz_sendToChat(in: viewController)
         case .saveToPhotos:
-            node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdk())
+            node.mnz_saveToPhotos()
         case .favourite:
             let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk()))
             if node.isFavourite {
