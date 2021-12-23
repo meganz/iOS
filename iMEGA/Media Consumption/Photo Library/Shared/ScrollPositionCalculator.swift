@@ -44,6 +44,7 @@ final class ScrollPositionCalculator {
     
     func recordDisappearedPosition(_ position: PhotoScrollPosition?) {
         visiblePositionDict[position] = nil
+        positionRecordDict[position] = nil
     }
     
     func calculateScrollPosition(_ position: inout PhotoScrollPosition?) {
@@ -79,11 +80,19 @@ final class ScrollPositionCalculator {
         }
 
         let viewPortCenter = viewPortSize.height / 2
-        var scrollPosition = firstPosition.key
-        var shortestDistanceToViewPortCenter = abs(viewPortCenter - firstPosition.value.midY)
+        var scrollPosition: PhotoScrollPosition?
+        var shortestDistanceToViewPortCenter = CGFloat.zero
+        
+        var firstSamplePosition: PhotoScrollPosition?
         for (positionId, frame) in positionRecordDict {
             guard visiblePositionDict[positionId] == true else {
                 continue
+            }
+            
+            if firstSamplePosition == nil {
+                firstSamplePosition = positionId
+                scrollPosition = positionId
+                shortestDistanceToViewPortCenter = abs(viewPortCenter - frame.midY)
             }
             
             let distance = abs(viewPortCenter - frame.midY)
@@ -93,6 +102,8 @@ final class ScrollPositionCalculator {
             }
         }
         
-        position = scrollPosition
+        if scrollPosition != nil {
+            position = scrollPosition
+        }
     }
 }
