@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) UISearchController *searchController;
 @property (nonatomic, assign) OfflineViewControllerFlavor flavor;
 @property (nonatomic, readonly) NSString *currentOfflinePath;
+@property (nonatomic, strong) NSString *folderPathFromOffline;
 
 - (nullable NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)updateNavigationBarTitle;
@@ -35,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(nullable void (^)(void))cancelAction;
 - (void)setEditMode:(BOOL)editMode;
 - (void)openFileFromWidgetWith:(NSString *)path;
+- (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName;
 
 @end
 

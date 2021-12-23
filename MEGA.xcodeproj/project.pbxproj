@@ -1319,6 +1319,8 @@
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
 		A8B8E02A273A689400C64E0A /* TransferUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */; };
 		A8B8E02E273A697200C64E0A /* MockTransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */; };
+		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
+		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
@@ -3456,6 +3458,8 @@
 		A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatNotificationDelegate.m; sourceTree = "<group>"; };
 		A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferUseCaseTests.swift; sourceTree = "<group>"; };
 		A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferRepository.swift; sourceTree = "<group>"; };
+		A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineCollectionViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		A8C262971FA0B4A2006172CE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -5094,6 +5098,8 @@
 				83FB1432219AC7DD00418BE6 /* OfflineCollectionViewController.h */,
 				83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */,
 				C4789ED2270E098500DFADF1 /* OfflineCollectionViewController+DynamicType.swift */,
+				A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */,
+				A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */,
 			);
 			path = Offline;
 			sourceTree = "<group>";
@@ -11237,6 +11243,7 @@
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
 				B6ADE4DC2732189000C19F36 /* FileSystemRepository.swift in Sources */,
 				B662B89124FC40090089376A /* RegionListIndexedSource.swift in Sources */,
+				A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */,
 				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
 				C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */,
 				BF782D62269BA4BB0001D169 /* RecentItemEntity.swift in Sources */,
@@ -11649,6 +11656,7 @@
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
+				A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
