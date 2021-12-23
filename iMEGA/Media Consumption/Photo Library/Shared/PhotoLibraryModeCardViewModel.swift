@@ -34,7 +34,7 @@ class PhotoLibraryModeCardViewModel<T: PhotosChronologicalCategory>: PhotoLibrar
             .sink { [weak self] _ in
                 self?.scrollCalculator.calculateScrollPosition(&libraryViewModel.cardScrollPosition)
                 if libraryViewModel.cardScrollPosition == .top {
-                    // When it scrolls to the top, we also clear both card and photo positions
+                    // Clear both card and photo positions when it scrolls to top
                     libraryViewModel.cardScrollPosition = nil
                     libraryViewModel.photoScrollPosition = nil
                 }

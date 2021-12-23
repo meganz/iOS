@@ -22,7 +22,9 @@ struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, C
             }
             .coordinateSpace(name: "scrollView")
             .onAppear {
-                scrollProxy.scrollTo(viewModel.position, anchor: .center)
+                DispatchQueue.main.async {
+                    scrollProxy.scrollTo(viewModel.position, anchor: .center)
+                }
             }
         }
     }
