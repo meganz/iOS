@@ -31,6 +31,12 @@ struct PhotoLibraryModeCardView<Category, VM: PhotoLibraryModeCardViewModel<Cate
                             .onPreferenceChange(FramePreferenceKey.self) {
                                 viewModel.scrollCalculator.recordFrame($0, for: category, inViewPort: geoProxy.size)
                             }
+                            .onAppear {
+                                viewModel.scrollCalculator.recordAppearedPosition(category.position)
+                            }
+                            .onDisappear {
+                                viewModel.scrollCalculator.recordDisappearedPosition(category.position)
+                            }
                     }
                 }
                 .padding(PhotoLibraryConstants.libraryPadding)
