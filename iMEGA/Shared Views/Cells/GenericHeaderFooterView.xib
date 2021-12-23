@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="181"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ree-vC-yyq">
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ree-vC-yyq">
                     <rect key="frame" x="0.0" y="44" width="414" height="137"/>
                     <subviews>
                         <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="034-96-4SB">
@@ -30,30 +30,38 @@
                                 <constraint firstAttribute="height" constant="109.5" id="mkG-4T-tId"/>
                             </constraints>
                         </view>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="FLb-Qm-8cJ">
-                            <rect key="frame" x="0.0" y="110" width="414" height="27"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="FLb-Qm-8cJ">
+                            <rect key="frame" x="16" y="110" width="382" height="26.5"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHq-Vu-umU">
-                                    <rect key="frame" x="16" y="0.0" width="382" height="22.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHq-Vu-umU">
+                                    <rect key="frame" x="0.0" y="6" width="382" height="14.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIR-AY-jhu">
-                                    <rect key="frame" x="0.0" y="26.5" width="414" height="0.5"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="0.5" id="mGD-Y3-Bqd"/>
-                                    </constraints>
-                                </view>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DETAIL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKD-F2-2oX">
+                                    <rect key="frame" x="0.0" y="6.5" width="0.0" height="13.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="SHq-Vu-umU" secondAttribute="trailing" constant="16" id="0Fb-26-i21"/>
-                                <constraint firstAttribute="trailing" secondItem="UIR-AY-jhu" secondAttribute="trailing" id="Ik8-JL-Tho"/>
-                                <constraint firstItem="SHq-Vu-umU" firstAttribute="leading" secondItem="FLb-Qm-8cJ" secondAttribute="leading" constant="16" id="R2g-oV-fLP"/>
-                                <constraint firstItem="UIR-AY-jhu" firstAttribute="leading" secondItem="FLb-Qm-8cJ" secondAttribute="leading" id="YL0-TD-pBq"/>
-                            </constraints>
                         </stackView>
+                        <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIR-AY-jhu">
+                            <rect key="frame" x="0.0" y="136.5" width="414" height="0.5"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="mGD-Y3-Bqd"/>
+                            </constraints>
+                        </view>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="UIR-AY-jhu" secondAttribute="trailing" id="6Fe-YB-Sek"/>
+                        <constraint firstAttribute="trailing" secondItem="034-96-4SB" secondAttribute="trailing" id="6kk-9l-flD"/>
+                        <constraint firstItem="UIR-AY-jhu" firstAttribute="leading" secondItem="ree-vC-yyq" secondAttribute="leading" id="HRh-AL-zD7"/>
+                        <constraint firstAttribute="trailing" secondItem="FLb-Qm-8cJ" secondAttribute="trailing" constant="16" id="LAy-FI-OD4"/>
+                        <constraint firstItem="FLb-Qm-8cJ" firstAttribute="leading" secondItem="ree-vC-yyq" secondAttribute="leading" constant="16" id="ibw-pW-Dfq"/>
+                        <constraint firstItem="034-96-4SB" firstAttribute="leading" secondItem="ree-vC-yyq" secondAttribute="leading" id="yb9-Gx-F14"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -68,6 +76,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="bottomSeparatorView" destination="UIR-AY-jhu" id="35A-D4-OBP"/>
+                <outlet property="detailLabel" destination="eKD-F2-2oX" id="Fa9-MT-mYF"/>
                 <outlet property="marginView" destination="8tT-H8-4Jg" id="Rpz-Aj-MlV"/>
                 <outlet property="marginViewHeightConstraint" destination="mkG-4T-tId" id="Qkp-os-4Ak"/>
                 <outlet property="titleLabel" destination="SHq-Vu-umU" id="Mhb-3P-v7k"/>
