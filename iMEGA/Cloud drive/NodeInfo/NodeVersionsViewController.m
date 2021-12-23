@@ -49,6 +49,7 @@
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
     
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
     [self reloadUI];
     
@@ -211,32 +212,20 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
-    
-    UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
-    titleSection.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    UILabel *versionsSize = (UILabel*)[sectionHeader viewWithTag:2];
-    versionsSize.textColor = UIColor.mnz_label;
+    GenericHeaderFooterView *sectionHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
     if (section == 0) {
-        titleSection.text = NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").localizedUppercaseString;
-        versionsSize.text = nil;
+        [sectionHeader configureWithTitle:NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").localizedUppercaseString topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     } else {
-        titleSection.text = NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").localizedUppercaseString;
-        versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
+        [sectionHeader configureWithTitle:NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").localizedUppercaseString detail:[Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize] topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
-    
-    UIView *separatorView = [sectionHeader viewWithTag:3];
-    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
     return sectionHeader;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UITableViewCell *sectionFooter = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoFooter"];
+    GenericHeaderFooterView *sectionFooter = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
-    UIView *separatorView = [sectionFooter viewWithTag:1];
-    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    [sectionFooter configureWithTitle:nil topDistance:2.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:NO];
     
     return sectionFooter;
 }
@@ -270,7 +259,7 @@
         [node mnz_downloadNode];
         [self setEditing:NO animated:YES];
     }];
-    downloadAction.image = [UIImage imageNamed:@"offline"];
+    downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
     downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [rightActions addObject:downloadAction];
     
