@@ -18,7 +18,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), removeModeratorAction()]),
+                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), removeModeratorAction(), removeContactAction()]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -40,7 +40,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [removeModeratorAction()]),
+                .configView(email: "test@email.com", actions: [removeModeratorAction(), removeContactAction()]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -62,7 +62,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), makeModeratorAction()]),
+                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), makeModeratorAction(), removeContactAction()]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -84,7 +84,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [makeModeratorAction()]),
+                .configView(email: "test@email.com", actions: [makeModeratorAction(), removeContactAction()]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -149,7 +149,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [makeModeratorAction()]),
+                .configView(email: "test@email.com", actions: [makeModeratorAction(), removeContactAction()]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -242,6 +242,24 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         XCTAssert(router.makeParticipantAsModerator_calledTimes == 1)
     }
     
+    func testAction_removeParticipant() {
+        let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
+        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let router = MockMeetingParticpiantInfoViewRouter()
+        
+        
+        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+                                                        userImageUseCase: userImageUseCase,
+                                                        chatRoomUseCase: chatRoomUseCase,
+                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
+                                                        isMyselfModerator: true,
+                                                        router: router)
+        
+        viewModel.dispatch(.removeParticipant)
+        XCTAssert(router.removeParticipant_calledTimes == 1)
+    }
+    
     //MARK:- Private methods
     
     private func infoAction() -> ActionSheetAction {
@@ -278,6 +296,13 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                           image: Asset.Images.Meetings.addContactMeetings.image,
                           style: .default) {}
     }
+    
+    private func removeContactAction() -> ActionSheetAction {
+        ActionSheetAction(title: Strings.Localizable.removeParticipant,
+                          detail: nil,
+                          image: Asset.Images.NodeActions.delete.image,
+                          style: .destructive) {}
+    }
 }
 
 final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
@@ -287,6 +312,7 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     var showInviteErrorMessage_calledTimes = 0
     var makeParticipantAsModerator_calledTimes = 0
     var removeParticipantAsModerator_calledTimes = 0
+    var removeParticipant_calledTimes = 0
 
     func showInfo() {
         showInfo_calledTimes += 1
@@ -307,8 +333,12 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     func makeParticipantAsModerator() {
         makeParticipantAsModerator_calledTimes += 1
     }
-    
-    func removeParticipantAsModerator() {
+        
+    func removeModeratorPrivilage() {
         removeParticipantAsModerator_calledTimes += 1
+    }
+    
+    func removeParticipant() {
+        removeParticipant_calledTimes += 1
     }
 }

@@ -6,7 +6,8 @@ protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInviteSuccess(email: String)
     func showInviteErrorMessage(_ message: String)
     func makeParticipantAsModerator()
-    func removeParticipantAsModerator()
+    func removeModeratorPrivilage()
+    func removeParticipant()
 }
 
 struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
@@ -76,8 +77,12 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         meetingFloatingPanelModel?.dispatch(.makeModerator(participant: participant))
     }
     
-    func removeParticipantAsModerator() {
-        meetingFloatingPanelModel?.dispatch(.removeModerator(participant: participant))
+    func removeModeratorPrivilage() {
+        meetingFloatingPanelModel?.dispatch(.removeModeratorPrivilage(forParticipant: participant))
+    }
+    
+    func removeParticipant() {
+        meetingFloatingPanelModel?.dispatch(.removeParticipant(participant: participant))
     }
     
     func openChatRoom(withChatId chatId: UInt64) {

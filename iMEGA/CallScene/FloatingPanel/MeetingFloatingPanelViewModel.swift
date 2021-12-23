@@ -11,7 +11,8 @@ enum MeetingFloatingPanelAction: ActionType {
     case enableLoudSpeaker
     case disableLoudSpeaker
     case makeModerator(participant: CallParticipantEntity)
-    case removeModerator(participant: CallParticipantEntity)
+    case removeModeratorPrivilage(forParticipant: CallParticipantEntity)
+    case removeParticipant(participant: CallParticipantEntity)
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -176,10 +177,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             participant.isModerator = true
             callUseCase.makePeerAModerator(inCall: call, peerId: participant.participantId)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
-        case .removeModerator(let participant):
+        case .removeModeratorPrivilage(let participant):
             guard let call = call else { return }
             participant.isModerator = false
             callUseCase.removePeerAsModerator(inCall: call, peerId: participant.participantId)
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        case .removeParticipant(let participant):
+            guard let call = call, let index = callParticipants.firstIndex(of: participant) else { return }
+            callParticipants.remove(at: index)
+            callUseCase.removePeer(fromCall: call, peerId: participant.participantId)
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }
