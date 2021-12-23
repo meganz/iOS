@@ -7,6 +7,8 @@ final class ScrollPositionCalculator {
     private var offsetRecord: (first: CGFloat?, last: CGFloat?) = (nil, nil)
     private var tappedPosition: PhotoScrollPosition?
     
+    private var visiblePositionDict = [PhotoScrollPosition?: Bool]()
+    
     private let offsetSubject = PassthroughSubject<CGFloat, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
@@ -34,6 +36,14 @@ final class ScrollPositionCalculator {
     
     func recordTappedPosition(_ position: PhotoScrollPosition?) {
         tappedPosition = position
+    }
+    
+    func recordAppearedPosition(_ position: PhotoScrollPosition?) {
+        visiblePositionDict[position] = true
+    }
+    
+    func recordDisappearedPosition(_ position: PhotoScrollPosition?) {
+        visiblePositionDict[position] = nil
     }
     
     func calculateScrollPosition(_ position: inout PhotoScrollPosition?) {
@@ -72,6 +82,10 @@ final class ScrollPositionCalculator {
         var scrollPosition = firstPosition.key
         var shortestDistanceToViewPortCenter = abs(viewPortCenter - firstPosition.value.midY)
         for (positionId, frame) in positionRecordDict {
+            guard visiblePositionDict[positionId] == true else {
+                continue
+            }
+            
             let distance = abs(viewPortCenter - frame.midY)
             if distance < shortestDistanceToViewPortCenter {
                 shortestDistanceToViewPortCenter = distance

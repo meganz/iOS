@@ -48,6 +48,12 @@ struct PhotoLibraryAllView: View {
                     .onPreferenceChange(FramePreferenceKey.self) {
                         viewModel.scrollCalculator.recordFrame($0, for: photo, inViewPort: viewPortSize)
                     }
+                    .onAppear {
+                        viewModel.scrollCalculator.recordAppearedPosition(photo.position)
+                    }
+                    .onDisappear {
+                        viewModel.scrollCalculator.recordDisappearedPosition(photo.position)
+                    }
             }
         }
     }
