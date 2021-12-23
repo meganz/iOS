@@ -5,23 +5,27 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotosMonthSecti
     
     override var position: PhotoScrollPosition? {
         guard let photoPosition = libraryViewModel.photoScrollPosition else {
+            MEGALogDebug("[Photos] uses card position \(String(describing: libraryViewModel.cardScrollPosition?.date))")
             return libraryViewModel.cardScrollPosition
         }
         
         guard let cardPosition = libraryViewModel.cardScrollPosition else {
+            MEGALogDebug("[Photos] uses photo position \(String(describing: libraryViewModel.photoScrollPosition?.date))")
             return photoPosition
         }
         
         let photosByDayList = photoCategoryList.flatMap { $0.photosByMonth.photosByDayList }
-        
         guard let dayCategory = photosByDayList.first(where: { $0.categoryDate == cardPosition.date.removeTimestamp() }) else {
+            MEGALogDebug("[Photos] can not find day category by card \(String(describing: libraryViewModel.cardScrollPosition?.date))")
             return cardPosition
         }
         
         guard dayCategory.photoNodeList.first(where: { $0.handle == photoPosition.handle }) != nil else {
+            MEGALogDebug("[Photos] photo position \(String(describing: libraryViewModel.photoScrollPosition?.date)) is not in card: \(String(describing: libraryViewModel.cardScrollPosition?.date))")
             return cardPosition
         }
         
+        MEGALogDebug("[Photos] card contains photo position \(String(describing: libraryViewModel.photoScrollPosition?.date))")
         return photoPosition
     }
     
@@ -47,6 +51,8 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotosMonthSecti
                     // Clear card scroll position when photo scroll position changes
                     libraryViewModel.cardScrollPosition = nil
                 }
+                
+                MEGALogDebug("[Photos] after calculation card:\(String(describing: libraryViewModel.cardScrollPosition?.date)), photo: \(String(describing: libraryViewModel.photoScrollPosition?.date))")
             }
             .store(in: &subscriptions)
     }
