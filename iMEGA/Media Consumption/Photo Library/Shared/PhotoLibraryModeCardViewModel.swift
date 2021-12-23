@@ -7,9 +7,11 @@ class PhotoLibraryModeCardViewModel<T: PhotosChronologicalCategory>: PhotoLibrar
     override var position: PhotoScrollPosition? {
         func searchCategoryPosition(by position: PhotoScrollPosition) -> PhotoScrollPosition? {
             guard let category = photoCategoryList.first(where: { $0.categoryDate == categoryDateTransformation(position.date) }) else {
+                MEGALogDebug("[Photos] \(libraryViewModel.selectedMode) could not find position \(position.date)")
                 return position
             }
             
+            MEGALogDebug("[Photos] \(libraryViewModel.selectedMode) position found \(String(describing: category.position?.date))")
             return category.position
         }
         
@@ -36,6 +38,8 @@ class PhotoLibraryModeCardViewModel<T: PhotosChronologicalCategory>: PhotoLibrar
                     libraryViewModel.cardScrollPosition = nil
                     libraryViewModel.photoScrollPosition = nil
                 }
+                
+                MEGALogDebug("[Photos] after calculation card:\(String(describing: libraryViewModel.cardScrollPosition?.date)), photo: \(String(describing: libraryViewModel.photoScrollPosition?.date))")
             }
             .store(in: &subscriptions)
     }

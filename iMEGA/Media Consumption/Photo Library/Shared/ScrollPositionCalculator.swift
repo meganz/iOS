@@ -54,12 +54,7 @@ final class ScrollPositionCalculator {
             tappedPosition = nil
             return
         }
-        
-        guard let firstPosition = positionRecordDict.first else {
-            // Don't update position when we don't have any position record information
-            return
-        }
-        
+                
         guard case var (.some(firstOffset), .some(lastOffset)) = offsetRecord else {
             // Don't update position when we have not recorded any offset changes
             return
@@ -80,30 +75,32 @@ final class ScrollPositionCalculator {
         }
 
         let viewPortCenter = viewPortSize.height / 2
-        var scrollPosition: PhotoScrollPosition?
+        var scrolledPosition: PhotoScrollPosition?
         var shortestDistanceToViewPortCenter = CGFloat.zero
         
-        var firstSamplePosition: PhotoScrollPosition?
-        for (positionId, frame) in positionRecordDict {
-            guard visiblePositionDict[positionId] == true else {
+        var samplePosition: PhotoScrollPosition?
+        for positionKey in visiblePositionDict.keys {
+            guard let frame = positionRecordDict[positionKey] else {
                 continue
             }
             
-            if firstSamplePosition == nil {
-                firstSamplePosition = positionId
-                scrollPosition = positionId
+            MEGALogDebug("[Photos] calculating \(String(describing: positionKey?.date)) and frame \(frame)")
+            
+            if samplePosition == nil {
+                samplePosition = positionKey
+                scrolledPosition = positionKey
                 shortestDistanceToViewPortCenter = abs(viewPortCenter - frame.midY)
             }
             
             let distance = abs(viewPortCenter - frame.midY)
             if distance < shortestDistanceToViewPortCenter {
                 shortestDistanceToViewPortCenter = distance
-                scrollPosition = positionId
+                scrolledPosition = positionKey
             }
         }
         
-        if scrollPosition != nil {
-            position = scrollPosition
+        if scrolledPosition != nil {
+            position = scrolledPosition
         }
     }
 }
