@@ -7,7 +7,6 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     
     var filesAndFolders = (0, 0)
     var versions: Bool = false
-    var beingDownloaded: Bool = false
     var downloaded: Bool = false
     
     func nodeAccessLevel() -> NodeAccessTypeEntity {
@@ -26,10 +25,6 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     
     func hasVersions() -> Bool {
         versions
-    }
-    
-    func isBeingDownloaded() -> Bool {
-        beingDownloaded
     }
     
     func isDownloaded() -> Bool {

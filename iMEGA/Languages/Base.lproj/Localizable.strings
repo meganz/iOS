@@ -302,6 +302,8 @@
 "Start Group"="Start Group";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Location";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Enable geolocation failed. Error: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -2700,6 +2702,10 @@
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATOR";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Make Moderator";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Remove Moderator";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Rename Meeting";
 /* Action of a call/meeting to share its link */
@@ -2718,6 +2724,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Join meeting";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Join as guest";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Join MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Your privacy matters";
 /* Guest user join Mega: paragraph 1 description */
@@ -2760,6 +2768,8 @@
 "general.filetype.7z"="7-Zip Compressed";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI Text File";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2770,6 +2780,12 @@
 "general.filetype.ascii"="ASCII Text";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW Image";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2782,12 +2798,18 @@
 "general.filetype.cpp"="C++ Source Code";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW Image";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS Command";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="Dynamic HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamic Link Library";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Template";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2864,16 +2886,22 @@
 "general.filetype.pdf"="PDF Document";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP Code";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl Script";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Audio Playlist";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG Image";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python Script";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR Compressed";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2892,6 +2920,8 @@
 "general.filetype.tar"="Archive";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2912,3 +2942,7 @@
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Select";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Join Call";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="To share photos and videos allow MEGA to access your gallery";

@@ -472,43 +472,6 @@ final class NodeCellViewModelTests: XCTestCase {
              expectedCommands: [.setVersions(mockNodeActionUC.hasVersions())])
     }
     
-    func testAction_isBeingDownloaded_false() {
-        let nodeOpener = NodeOpener(navigationController: UINavigationController())
-        let mockNodeModel = NodeModel(nodeEntity: NodeEntity())
-        let mockNodeActionUC = MockNodeActionUseCase()
-        let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
-        let mockAccountUC = MockAccountUseCase()
-        
-        let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
-                                          nodeModel: mockNodeModel,
-                                          nodeActionUseCase: mockNodeActionUC,
-                                          nodeThumbnailUseCase: mockNodeThumbnailUC,
-                                          accountUseCase: mockAccountUC)
-        
-        test(viewModel: viewModel,
-             action: .isBeingDownloaded,
-             expectedCommands: [.setBeingDownloaded(mockNodeActionUC.isBeingDownloaded())])
-    }
-    
-    func testAction_isBeingDownloaded_true() {
-        let nodeOpener = NodeOpener(navigationController: UINavigationController())
-        let mockNodeModel = NodeModel(nodeEntity: NodeEntity())
-        let mockNodeActionUC = MockNodeActionUseCase()
-        mockNodeActionUC.beingDownloaded = true
-        let mockNodeThumbnailUC = MockNodeThumbnailUseCase()
-        let mockAccountUC = MockAccountUseCase()
-        
-        let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
-                                          nodeModel: mockNodeModel,
-                                          nodeActionUseCase: mockNodeActionUC,
-                                          nodeThumbnailUseCase: mockNodeThumbnailUC,
-                                          accountUseCase: mockAccountUC)
-        
-        test(viewModel: viewModel,
-             action: .isBeingDownloaded,
-             expectedCommands: [.setBeingDownloaded(mockNodeActionUC.isBeingDownloaded())])
-    }
-    
     func testAction_isDownloaded_false() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeModel(nodeEntity: NodeEntity())

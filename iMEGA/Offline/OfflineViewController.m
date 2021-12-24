@@ -48,7 +48,6 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 @property (nonatomic, strong) NSMutableArray *offlineItems;
 @property (nonatomic, strong) NSMutableArray *offlineFiles;
-@property (nonatomic, strong) NSString *folderPathFromOffline;
 
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 

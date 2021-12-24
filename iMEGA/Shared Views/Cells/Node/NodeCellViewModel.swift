@@ -4,7 +4,6 @@ enum NodeCellAction: ActionType {
     case manageThumbnail
     case getFilesAndFolders
     case hasVersions
-    case isBeingDownloaded
     case isDownloaded
     case moreTouchUpInside(Any)
 }
@@ -22,7 +21,6 @@ final class NodeCellViewModel: ViewModelType {
         case setIcon(String)
         case setSecondaryLabel(String)
         case setVersions(Bool)
-        case setBeingDownloaded(Bool)
         case setDownloaded(Bool)
     }
     
@@ -58,9 +56,6 @@ final class NodeCellViewModel: ViewModelType {
             
         case .hasVersions:
             hasVersions()
-            
-        case .isBeingDownloaded:
-            isBeingDownloaded()
             
         case .isDownloaded:
             isDownloaded()
@@ -103,11 +98,6 @@ final class NodeCellViewModel: ViewModelType {
     private func hasVersions() {
         let hasVersions = nodeActionUseCase.hasVersions()
         invokeCommand?(.setVersions(hasVersions))
-    }
-    
-    private func isBeingDownloaded() {
-        let isBeingDownloaded = nodeActionUseCase.isBeingDownloaded()
-        invokeCommand?(.setBeingDownloaded(isBeingDownloaded))
     }
     
     private func isDownloaded() {

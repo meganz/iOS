@@ -7,6 +7,7 @@ enum MeetingParticpiantInfoAction: ActionType {
     case addToContact
     case makeModerator
     case removeModerator
+    case removeParticipant
 }
 
 struct MeetingParticpiantInfoViewModel: ViewModelType {
@@ -55,7 +56,9 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         case .makeModerator:
             router.makeParticipantAsModerator()
         case .removeModerator:
-            router.removeParticipantAsModerator()
+            router.removeModeratorPrivilage()
+        case .removeParticipant:
+            router.removeParticipant()
         }
     }
     
@@ -63,22 +66,23 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     
     private func actions() -> [ActionSheetAction] {
         if isMyselfModerator {
+            var actions: [ActionSheetAction] = []
+            
             if !participant.isModerator && participant.isInContactList {
-                return [infoAction(), sendMessageAction(), makeModeratorAction()]
+                actions.append(contentsOf: [infoAction(), sendMessageAction(), makeModeratorAction()])
             } else if !participant.isModerator && !participant.isInContactList {
-                return [makeModeratorAction()]
+                actions.append(contentsOf: [makeModeratorAction()])
             } else if participant.isModerator && participant.isInContactList {
-                return [infoAction(), sendMessageAction(), removeModeratorAction()]
+                actions.append(contentsOf: [infoAction(), sendMessageAction(), removeModeratorAction()])
             } else if participant.isModerator && !participant.isInContactList {
-                return [removeModeratorAction()]
-            } else {
-                MEGALogDebug("I am a moderator and the participant is moderator \(participant.isModerator) and in contact list \(participant.isInContactList)")
+                actions.append(contentsOf: [removeModeratorAction()])
             }
+            
+            actions.append(removeContactAction())
+            return actions
         } else {
             return [infoAction(), sendMessageAction()]
         }
-        
-        return []
     }
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
@@ -164,7 +168,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
     
     private func makeModeratorAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("Make Moderator", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.Meetings.Participant.makeModerator,
                           detail: nil,
                           image: Asset.Images.Meetings.moderatorMeetings.image,
                           style: .default) {
@@ -173,7 +177,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
     
     private func removeModeratorAction() -> ActionSheetAction {
-        ActionSheetAction(title: NSLocalizedString("Remove Moderator", comment: ""),
+        ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
                           image: Asset.Images.Meetings.moderatorMeetings.image,
                           style: .default) {
@@ -187,6 +191,15 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
                           image: Asset.Images.Meetings.addContactMeetings.image,
                           style: .default) {
             dispatch(.addToContact)
+        }
+    }
+    
+    private func removeContactAction() -> ActionSheetAction {
+        ActionSheetAction(title: Strings.Localizable.removeParticipant,
+                          detail: nil,
+                          image: Asset.Images.NodeActions.delete.image,
+                          style: .destructive) {
+            dispatch(.removeParticipant)
         }
     }
 }

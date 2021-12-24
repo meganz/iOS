@@ -545,9 +545,12 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             guard let self = self else { return }
             switch action {
             
+            // MARK: Text File
             case .editTextFile:
                 router?.didTap(on: .editTextFile(node))
-
+            case .viewVersions:
+                router?.didTap(on: .viewTextFileVersions(node))
+                
             // MARK: Info
             case .info:
                 router?.didTap(on: .fileInfo(node))

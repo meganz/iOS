@@ -8,6 +8,7 @@
 
 - (NSArray<MEGANode*> *)mnz_nodesArrayFromNodeList;
 - (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList;
+- (NSMutableArray<MEGANode*> *)mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:(MEGASdk *)sdk;
 
 #pragma mark - onNodesUpdate filtering
 

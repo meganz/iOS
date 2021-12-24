@@ -248,6 +248,24 @@ static NSString *kPath = @"kPath";
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
 }
 
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView
+contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+                                    point:(CGPoint)point {
+    if (self.offline.flavor == AccountScreen) {
+        NSString *nameString = [[self.offline itemAtIndexPath:indexPath] objectForKey:kFileName];
+        NSString *pathForItem = [self.offline.currentOfflinePath stringByAppendingPathComponent:nameString];
+        return [self tableView:tableView contextMenuConfigurationForRowAt:indexPath itemPath:pathForItem];
+    } else {
+        return nil;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView
+willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
+         animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    [self willPerformPreviewActionForMenuWithAnimator:animator];
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     [self updateAppearance:self.traitCollection];

@@ -18,12 +18,6 @@
 #import "NodeTableViewCell.h"
 
 @interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource>
-
-@property (weak, nonatomic) IBOutlet UIView *bucketHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderParentFolderNameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *bucketHeaderUploadOrVersionImageView;
-@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderHourLabel;
-
 @end
 
 @implementation CloudDriveTableViewController
@@ -35,11 +29,11 @@
     
     [self registerNibWithName:@"NodeTableViewCell" andReuseIdentifier:@"nodeCell"];
     [self registerNibWithName:@"DownloadingNodeCell" andReuseIdentifier:@"downloadingNodeCell"];
-    
+    [self.tableView registerNib:[UINib nibWithNibName:@"BucketHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"BucketHeaderViewID"];
+
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
-    
     
     [self updateAppearance];
 }
@@ -48,19 +42,8 @@
     [super viewWillAppear:animated];
     
     if (self.cloudDrive.recentActionBucket) {
-        NSString *dateString;
-        if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
-            dateString = NSLocalizedString(@"Today", @"").localizedUppercaseString;
-        } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
-            dateString = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
-        } else {
-            dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
-        }
-        
-        MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
-        self.bucketHeaderParentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
-        self.bucketHeaderUploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
-        self.bucketHeaderHourLabel.text = dateString.uppercaseString;
+        self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedSectionHeaderHeight = 45;
     }
 }
 
@@ -84,6 +67,30 @@
     UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
 }
+
+- (UIView *)prepareBucketHeaderView {
+    BucketHeaderView *bucketHeaderView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BucketHeaderViewID"];
+    
+    NSString *dateString;
+    if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
+        dateString = NSLocalizedString(@"Today", @"").localizedUppercaseString;
+    } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
+        dateString = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
+    } else {
+        dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
+    }
+    
+    MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
+    bucketHeaderView.parentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
+    bucketHeaderView.uploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
+    bucketHeaderView.dateLabel.text = dateString.uppercaseString;
+    
+    bucketHeaderView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    bucketHeaderView.parentFolderNameLabel.textColor = bucketHeaderView.dateLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    return bucketHeaderView;
+}
+
 
 #pragma mark - Public
 
@@ -148,17 +155,12 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     } else {
         [self.cloudDrive.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         
-        if ([Helper.downloadingNodes objectForKey:node.base64Handle]) {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
-        } else {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
-            
-            __weak typeof(self) weakself = self;
-            cell.moreButtonAction = ^(UIButton * moreButton) {
-                [weakself infoTouchUpInside:moreButton];
-            };
-        }
+        __weak typeof(self) weakself = self;
+        cell.moreButtonAction = ^(UIButton * moreButton) {
+            [weakself infoTouchUpInside:moreButton];
+        };
     }
     
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
@@ -182,16 +184,11 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (self.cloudDrive.recentActionBucket) {
-        self.bucketHeaderView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
-        self.bucketHeaderParentFolderNameLabel.textColor = self.bucketHeaderHourLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    }
-    
-    return self.cloudDrive.recentActionBucket ? self.bucketHeaderView : nil;
+    return self.cloudDrive.recentActionBucket ? [self prepareBucketHeaderView] : [UIView.alloc initWithFrame:CGRectZero];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return self.cloudDrive.recentActionBucket ? 45.0f : 0;
+    return self.cloudDrive.recentActionBucket ? UITableViewAutomaticDimension : 0.0;
 }
 
 #pragma mark - UITableViewDelegate
@@ -317,25 +314,60 @@
         rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
 
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
-        
-        if ([[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-            UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                if ([node mnz_downloadNode]) {
-                    [self.tableView reloadData];
-                }
-                
-                [self setTableViewEditing:NO animated:YES];
-            }];
-            downloadAction.image = [[UIImage imageNamed:@"offline"] imageByTintColor:UIColor.whiteColor];
-            downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+        UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            if ([node mnz_downloadNode]) {
+                [self.tableView reloadData];
+            }
             
-            return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction, downloadAction]];
-        } else {
-            return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
-        }
+            [self setTableViewEditing:NO animated:YES];
+        }];
+        downloadAction.image = [[UIImage imageNamed:@"offline"] imageByTintColor:UIColor.whiteColor];
+        downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+        
+        return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction, downloadAction]];
     }
     
     return [UISwipeActionsConfiguration configurationWithActions:@[]];
 }
+
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView
+contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+                                    point:(CGPoint)point {
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+    
+    UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil
+                                                                                        previewProvider:^UIViewController * _Nullable {
+        if (node.isFolder) {
+            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            return cloudDriveVC;
+        } else {
+            return nil;
+        }
+    } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        UIAction *selectAction = [UIAction actionWithTitle:NSLocalizedString(@"select", nil)
+                                                     image:[UIImage imageNamed:@"select"]
+                                                identifier:nil
+                                                   handler:^(__kindof UIAction * _Nonnull action) {
+            [self setTableViewEditing:YES animated:YES];
+            [self tableView:tableView didSelectRowAtIndexPath:indexPath];
+            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }];
+        return [UIMenu menuWithTitle:@"" children:@[selectAction]];
+    }];
+    return configuration;
+}
+
+- (void)tableView:(UITableView *)tableView
+willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
+         animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    if ([animator.previewViewController isKindOfClass:CloudDriveViewController.class]) {
+        CloudDriveViewController *previewViewController = (CloudDriveViewController *)animator.previewViewController;
+        [animator addCompletion:^{
+            [self.navigationController pushViewController:previewViewController animated:NO];
+        }];
+    }
+}
+
 
 @end

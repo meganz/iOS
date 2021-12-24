@@ -38,7 +38,7 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
     }
     
     private func saveToPhotos(node: MEGANode) {
-        node.mnz_saveToPhotos(withApi: MEGASdkManager.sharedMEGASdk())
+        node.mnz_saveToPhotos()
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {

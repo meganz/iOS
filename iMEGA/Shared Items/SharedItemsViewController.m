@@ -611,18 +611,22 @@
             [weakSelf presentViewController:sortByActionSheet animated:YES completion:nil];
         }]];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf setEditing:YES animated:YES];
-            
-            weakSelf.selectedNodesMutableArray = NSMutableArray.alloc.init;
-            weakSelf.selectedSharesMutableArray = NSMutableArray.alloc.init;
-            
-            [weakSelf configToolbarItemsForSharedItems];
-            [weakSelf toolbarItemsSetEnabled:NO];
+            [weakSelf didTapSelect];
         }]];
         
         ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
         [self presentViewController:moreActionSheet animated:YES completion:nil];
     }
+}
+
+- (void)didTapSelect {
+    [self setEditing:YES animated:YES];
+    
+    self.selectedNodesMutableArray = NSMutableArray.alloc.init;
+    self.selectedSharesMutableArray = NSMutableArray.alloc.init;
+    
+    [self configToolbarItemsForSharedItems];
+    [self toolbarItemsSetEnabled:NO];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -1122,6 +1126,16 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
 }
+
+- (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    return [self tableView:tableView contextMenuConfigurationForRowAt:indexPath node:node];
+}
+
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
+         animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    [self willPerformPreviewActionForMenuWithAnimator:animator];
+}
     
 #pragma mark - UISearchBarDelegate
 
@@ -1364,7 +1378,7 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotosWithApi:MEGASdkManager.sharedMEGASdk];
+            [node mnz_saveToPhotos];
             break;
             
         case MegaNodeActionTypeMove:

@@ -39,7 +39,7 @@
 }
 
 - (void)performActivity {
-    [self.node mnz_saveToPhotosWithApi:self.api];
+    [self.node mnz_saveToPhotos];
 }
 
 + (UIActivityCategory)activityCategory {

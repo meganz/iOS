@@ -12,8 +12,6 @@ final class FilesExplorerViewModel {
         case onNodesUpdate([MEGANode])
         case reloadData
         case setViewConfiguration(FilesExplorerViewConfiguration)
-        case onTransferStarted(MEGANode)
-        case onProgressUpdate(_ progress: Float, _ node: MEGANode, _ infoString: String)
         case onTransferCompleted(MEGANode)
     }
     
@@ -111,19 +109,6 @@ final class FilesExplorerViewModel {
     
     private func updateListenerForFilesDownload(withNodes nodes: [MEGANode]?) {
         filesDownloadUseCase.addListener(nodes: nodes) { [weak self] node in
-            
-            guard let self = self else { return }
-            self.invokeCommand?(.onTransferStarted(node))
-            
-        } progress: { [weak self] node, progress, speed in
-            
-            guard let self = self else { return }
-            let percentageCompleted = String(format: "%.f%%", progress * 100)
-            let speed = String(format: "%@/s", Helper.memoryStyleString(fromByteCount: speed))
-            let infoString = String(format: "%@ • %@", percentageCompleted, speed)
-            self.invokeCommand?(.onProgressUpdate(progress, node, infoString))
-
-        } end: { [weak self] node in
             
             guard let self = self else { return }
             self.invokeCommand?(.onTransferCompleted(node))

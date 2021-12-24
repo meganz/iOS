@@ -9,6 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) MyAvatarManager *myAvatarManager;
 
 - (void)selectSegment:(NSUInteger)index;
+- (void)didTapSelect;
 
 @end
 

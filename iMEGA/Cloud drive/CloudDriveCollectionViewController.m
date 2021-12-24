@@ -164,6 +164,45 @@
     [self setCollectionViewEditing:YES animated:YES];
 }
 
+- (UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView
+    contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath
+                                         point:(CGPoint)point {
+    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
+    
+    UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil
+                                                                                        previewProvider:^UIViewController * _Nullable {
+        if ([node isFolder]) {
+            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            return cloudDriveVC;
+        } else {
+            return nil;
+        }
+    } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        UIAction *selectAction = [UIAction actionWithTitle:NSLocalizedString(@"select", nil)
+                                                     image:[UIImage imageNamed:@"select"]
+                                                identifier:nil
+                                                   handler:^(__kindof UIAction * _Nonnull action) {
+            [self setCollectionViewEditing:YES animated:YES];
+            [self collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+        }];
+        return [UIMenu menuWithTitle:@"" children:@[selectAction]];
+    }];
+    return configuration;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
+              animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    if ([animator.previewViewController isKindOfClass:CloudDriveViewController.class]) {
+        CloudDriveViewController *previewViewController = (CloudDriveViewController *)animator.previewViewController;
+        [animator addCompletion:^{
+            [self.navigationController pushViewController:previewViewController animated:NO];
+        }];
+    }
+    
+}
+
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

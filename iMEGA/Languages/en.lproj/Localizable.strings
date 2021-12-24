@@ -302,6 +302,8 @@
 "Start Group"="Start Group";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Location";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Enable geolocation failed. Error: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Voice Clip";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -2700,6 +2702,10 @@
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATOR";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Make Moderator";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Remove Moderator";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Rename Meeting";
 /* Action of a call/meeting to share its link */
@@ -2718,6 +2724,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Join meeting";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Join as guest";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Join MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Your privacy matters";
 /* Guest user join Mega: paragraph 1 description */
@@ -2912,3 +2920,7 @@
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Select";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Join Call";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="To share photos and videos allow MEGA to access your gallery";

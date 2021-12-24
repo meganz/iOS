@@ -92,9 +92,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let node = getNode(at: indexPath),
-              let cell = folderLink.isADownloadingNode(node) ?
-                    tableView.dequeueReusableCell(withIdentifier: "downloadingNodeCell", for: indexPath) as? NodeTableViewCell :
-                    tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
+              let cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
             fatalError("Could not instantiate NodeCollectionViewCell or node at index")
         }
         
@@ -137,14 +135,8 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = true
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
-        
-        if folderLink.isADownloadingNode(node) {
-            cell.downloadingArrowView.isHidden = false
-            cell.downloadingArrowImageView.image = Asset.Images.Transfers.downloadQueued.image
-        } else {
-            let isDownloaded = node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil
-            cell.downloadedView.isHidden = !isDownloaded
-        }
+        let isDownloaded = node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil
+        cell.downloadedView.isHidden = !isDownloaded
         
         return cell
     }

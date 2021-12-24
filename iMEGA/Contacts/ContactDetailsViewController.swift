@@ -8,4 +8,10 @@ extension ContactDetailsViewController {
                                call: CallEntity(with: call),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
+    
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.sizeHeaderToFit()
+    }
 }

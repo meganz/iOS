@@ -40,6 +40,7 @@ enum HomeRoutingSource {
     case manageShare(MEGANode)
     case setLabel(MEGANode)
     case editTextFile(MEGANode)
+    case viewTextFileVersions(MEGANode)
 }
 
 final class HomeRouter: HomeRouterProtocol {
@@ -107,6 +108,8 @@ final class HomeRouter: HomeRouterProtocol {
 
         case .fileInfo(let node):
             nodeInfoRouter.showInformation(for: node)
+        case .viewTextFileVersions(let node):
+            nodeInfoRouter.showVersions(for: node)
         case .linkManagement(let node):
             nodeLinkManagementRouter.showLinkManagement(for: node)
         case .removeLink(let node):

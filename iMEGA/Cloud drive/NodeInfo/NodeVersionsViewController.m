@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revertBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -42,15 +43,18 @@
 
     self.title = NSLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
     self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
 
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
     
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
     [self reloadUI];
     
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    self.navigationItem.leftBarButtonItems = @[self.closeBarButtonItem];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
 }
@@ -208,32 +212,20 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
-    
-    UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
-    titleSection.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    UILabel *versionsSize = (UILabel*)[sectionHeader viewWithTag:2];
-    versionsSize.textColor = UIColor.mnz_label;
+    GenericHeaderFooterView *sectionHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
     if (section == 0) {
-        titleSection.text = NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").localizedUppercaseString;
-        versionsSize.text = nil;
+        [sectionHeader configureWithTitle:NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").localizedUppercaseString topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     } else {
-        titleSection.text = NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").localizedUppercaseString;
-        versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
+        [sectionHeader configureWithTitle:NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").localizedUppercaseString detail:[Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize] topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
-    
-    UIView *separatorView = [sectionHeader viewWithTag:3];
-    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
     return sectionHeader;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UITableViewCell *sectionFooter = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoFooter"];
+    GenericHeaderFooterView *sectionFooter = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
-    UIView *separatorView = [sectionFooter viewWithTag:1];
-    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    [sectionFooter configureWithTitle:nil topDistance:2.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:NO];
     
     return sectionFooter;
 }
@@ -267,7 +259,7 @@
         [node mnz_downloadNode];
         [self setEditing:NO animated:YES];
     }];
-    downloadAction.image = [UIImage imageNamed:@"offline"];
+    downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
     downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [rightActions addObject:downloadAction];
     
@@ -313,7 +305,7 @@
 
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
-        self.navigationItem.leftBarButtonItems = @[];
+        self.navigationItem.leftBarButtonItems = @[self.closeBarButtonItem];
         
         [self.navigationController setToolbarHidden:YES animated:YES];
         
@@ -427,6 +419,10 @@
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
+- (IBAction)closeAction:(id)sender {
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
 #pragma mark - NodeActionViewControllerDelegate
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
@@ -447,7 +443,7 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            [node mnz_saveToPhotos];
             break;
             
         default:
@@ -505,27 +501,6 @@
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
-    }
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.isStreamingTransfer) {
-        return;
-    }
-    
-    NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-    
-    if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle]) {
-        float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
-        
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed];
-            cell.downloadProgressView.progress = transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue;
         }
     }
 }

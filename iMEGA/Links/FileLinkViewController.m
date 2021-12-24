@@ -327,7 +327,7 @@
 }
 
 - (void)saveToPhotos {
-    [self.node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+    [self.node mnz_saveToPhotos];
 }
 
 - (void)sendFileLinkToChat {

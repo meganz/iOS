@@ -72,6 +72,11 @@ class NodeInfoViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .plain, target: self, action: #selector(closeButtonTapped))
         
         MEGASdkManager.sharedMEGASdk().add(self)
+        
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+        tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -277,9 +282,6 @@ class NodeInfoViewController: UIViewController {
         sections.append(.details)
         if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
             sections.append(.link)
-        }
-        if MEGASdkManager.sharedMEGASdk().hasVersions(for: node) {
-            sections.append(.versions)
         }
 
         if node.isFolder() && MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
@@ -512,43 +514,40 @@ extension NodeInfoViewController: UITableViewDataSource {
 extension NodeInfoViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableCell(withIdentifier: "nodeInfoTableHeader") as? NodeInfoHeaderTableViewCell else {
-            fatalError("Could not get NodeInfoHeaderTableViewCell")
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
+            return UIView(frame: .zero)
         }
         
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        header.titleLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
         
         switch sections()[section] {
         case .details:
-            header.titleLabel.text = Strings.Localizable.details
+            header.configure(title: Strings.Localizable.details, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .link:
-            header.titleLabel.text = Strings.Localizable.link
+            header.configure(title: Strings.Localizable.link, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .versions:
-            header.titleLabel.text = Strings.Localizable.versions.localizedUppercase
+            header.configure(title: Strings.Localizable.versions.localizedUppercase, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .sharing:
-            header.titleLabel.text = Strings.Localizable.shareWith.localizedUppercase
+            header.configure(title: Strings.Localizable.shareWith.localizedUppercase, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .pendingSharing:
-            header.titleLabel.text = Strings.Localizable.pending.localizedUppercase
-        case .removeSharing, .info:
-            header.titleLabel.text = ""
+            header.configure(title: Strings.Localizable.pending.localizedUppercase, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        case .removeSharing:
+            header.configure(title: nil, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        default:
+            header.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         }
 
-        header.separatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        
-        return header.contentView
+        return header
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = tableView.dequeueReusableCell(withIdentifier: "nodeInfoTableFooter")
-        footer?.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        
-        guard let separator = footer?.viewWithTag(2) else {
-            return footer
+        guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
+            return UIView(frame: .zero)
         }
-        separator.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-
-        return footer?.contentView
+        footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        footer.configure(title: nil, topDistance: 5.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+        
+        return footer
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
