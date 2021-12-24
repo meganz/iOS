@@ -260,7 +260,7 @@ static MEGAIndexer *indexer;
     return [self pathForHandle:node.base64Handle inSharedSandboxCacheDirectory:directory];
 }
 
-+ (NSString *)pathWithOrignalNameForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory {
++ (NSString *)pathWithOriginalNameForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *folderParentPath = [self pathForHandle:node.base64Handle inSharedSandboxCacheDirectory:directory];
     if (![NSFileManager.defaultManager fileExistsAtPath:folderParentPath isDirectory:nil]) {
         NSError *error;
