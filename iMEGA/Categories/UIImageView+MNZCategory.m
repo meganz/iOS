@@ -97,7 +97,7 @@ static const void *base64HandleKey = &base64HandleKey;
 - (void)mnz_setPreviewByNode:(MEGANode *)node completion:(nullable MNZWebImageCompletionBlock)completion {
     if (node.hasPreview) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
-        NSString *originalPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+        NSString *originalPath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
     
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             [self sd_setImageWithURL:[NSURL fileURLWithPath:path]];

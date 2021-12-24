@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 /// Return a path in cache shared sandbox including base64 node handle as parent folder (eg xxx/Caches/directory/base64Handle/nodeName)
 /// @param node MEGANode used to get the path
 /// @param directory directory in the shared sandbox cache
-+ (NSString *)pathWithOrignalNameForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
++ (NSString *)pathWithOriginalNameForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 + (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory;

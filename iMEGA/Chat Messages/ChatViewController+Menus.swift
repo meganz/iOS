@@ -15,7 +15,7 @@ extension ChatViewController {
                let name = node.name,
                name.mnz_isImagePathExtension {
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
-                let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+                let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
                 if FileManager.default.fileExists(atPath: originalImagePath), let originalImage = UIImage(contentsOfFile: originalImagePath) {
                     UIPasteboard.general.image = originalImage
                 } else if FileManager.default.fileExists(atPath: previewFilePath), let previewImage = UIImage(contentsOfFile: previewFilePath) {
