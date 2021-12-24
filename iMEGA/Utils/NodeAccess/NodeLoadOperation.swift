@@ -4,6 +4,7 @@ enum NodeLoadError: Error {
     case noRootNode
     case loadCancelled
     case invalidNode
+    case autoCreateIsNotEnabled
 }
 
 final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
@@ -58,15 +59,18 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     // MARK: - Check loaded node handle
     func validateLoadedHandle(_ handle: NodeHandle) {
         guard let node = handle.validNode(in: sdk) else {
-            autoCreate?() ?? false ?
-                    createNode():
-                    finishOperation(node: nil, error: NodeLoadError.invalidNode)
+            createNode()
             return
         }
         finishOperation(node: node, error: nil)
     }
     
     func createNode() {
+        guard autoCreate?() == true else {
+            finishOperation(node: nil, error: NodeLoadError.autoCreateIsNotEnabled)
+            return
+        }
+        
         guard let parent = sdk.rootNode, let newNodeName = newNodeName else {
             finishOperation(node: nil, error: NodeLoadError.noRootNode)
             return
@@ -91,7 +95,11 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
         case .success(let request):
             validateLoadedHandle(request.nodeHandle)
         case .failure(let error):
-            finishOperation(node: nil, error: error)
+            if error.type == .apiENoent {
+                createNode()
+            } else {
+                finishOperation(node: nil, error: error)
+            }
         }
     }
 }
