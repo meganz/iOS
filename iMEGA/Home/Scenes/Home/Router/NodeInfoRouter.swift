@@ -8,7 +8,7 @@ final class NodeInfoRouter: NSObject {
         self.navigationController = navigationController
     }
 
-    // MARK: -
+    // MARK: - Info
 
     func showInformation(for node: MEGANode) {
         let nodeInfoNavigation = UIStoryboard(name: "Node", bundle: nil)
@@ -17,6 +17,13 @@ final class NodeInfoRouter: NSObject {
 
         nodeInfoVC.display(node, withDelegate: self)
         navigationController?.present(nodeInfoNavigation, animated: true, completion: nil)
+    }
+    
+    // MARK: - Version
+    
+    func showVersions(for node: MEGANode) {
+        guard let nodeVersionNavigation = navigationController else { return }
+        node.mnz_showTextFileVersions(in: nodeVersionNavigation)
     }
 }
 

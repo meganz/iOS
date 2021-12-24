@@ -2,7 +2,7 @@ import UIKit
 
 extension ChatViewController {
     var joinCallString: String {
-        return NSLocalizedString("Join Call", comment: "")
+        return Strings.Localizable.Chat.joinCall
     }
     
     func checkIfChatHasActiveCall() {

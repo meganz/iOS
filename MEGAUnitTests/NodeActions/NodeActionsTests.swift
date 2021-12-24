@@ -120,6 +120,28 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .getLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testCloudDriveNodeWithNoVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(0)
+            .build()
+
+        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+    }
+    
+    func testCloudDriveNodeWithMultiVersions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+    }
+    
     func testCloudDriveNodeExportedFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)
@@ -160,6 +182,30 @@ class NodeActionsTests: XCTestCase {
         XCTAssertFalse(contains(nodeActionType: .info))
     }
 
+    //MARK: - Recent Items tests
+    
+    func testRecentNodeNoVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.recents)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(0)
+            .build()
+        
+        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+    }
+    
+    func testRecentNodeWithMultiVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.recents)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+    }
+    
     // MARK: - Shared Items tests
 
     func testIncomingFullSharedFolder() {
@@ -184,6 +230,28 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .copy]))
     }
     
+    func testIncomingFullSharedFolderNodeNoVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessFull)
+            .setIsFile(true)
+            .setVersionCount(0)
+            .build()
+        
+        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+    }
+    
+    func testIncomingFullSharedFolderNodeWithMultiVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessFull)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+    }
+    
     func testIncomingReadAndReadWriteSharedFolder() {
         actions = NodeActionBuilder()
             .setDisplayMode(.sharedItem)
@@ -206,6 +274,28 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .download, .copy]))
     }
     
+    func testIncomingReadAndReadWriteSharedFolderNodeNoVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessReadWrite)
+            .setIsFile(true)
+            .setVersionCount(0)
+            .build()
+        
+        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+    }
+    
+    func testIncomingReadAndReadWriteSharedFolderNodeWithMultiVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessReadWrite)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+    }
+
     func testOutgoingSharedFolder() {
         actions = NodeActionBuilder()
             .setDisplayMode(.sharedItem)
@@ -454,6 +544,28 @@ class NodeActionsTests: XCTestCase {
             .build()
         
         XCTAssertTrue(contains(nodeActionTypes: [.info, .saveToPhotos, .download, .share]))
+    }
+    
+    func testChatAttachmentNodeNoVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.chatAttachment)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(0)
+            .build()
+        
+        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+    }
+    
+    func testChatAttachmentNodeWithMultiVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.chatAttachment)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionType: .viewVersions))
     }
     
     // MARK: - Versions tests

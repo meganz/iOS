@@ -260,6 +260,18 @@ static MEGAIndexer *indexer;
     return [self pathForHandle:node.base64Handle inSharedSandboxCacheDirectory:directory];
 }
 
++ (NSString *)pathWithOriginalNameForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory {
+    NSString *folderParentPath = [self pathForHandle:node.base64Handle inSharedSandboxCacheDirectory:directory];
+    if (![NSFileManager.defaultManager fileExistsAtPath:folderParentPath isDirectory:nil]) {
+        NSError *error;
+        if (![NSFileManager.defaultManager createDirectoryAtPath:folderParentPath withIntermediateDirectories:YES attributes:nil error:&error]) {
+            MEGALogError(@"Create directory at path failed with error: %@", error);
+        }
+    }
+
+    return [folderParentPath stringByAppendingPathComponent:node.name];
+}
+
 + (NSString *)pathForHandle:(NSString *)base64Handle inSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *destinationPath = [Helper pathForSharedSandboxCacheDirectory:directory];
     return [destinationPath stringByAppendingPathComponent:base64Handle];
@@ -277,14 +289,6 @@ static MEGAIndexer *indexer;
 }
 
 #pragma mark - Utils for transfers
-
-+ (NSMutableDictionary *)downloadingNodes {
-    static NSMutableDictionary *downloadingNodes = nil;
-    if (!downloadingNodes) {
-        downloadingNodes = [[NSMutableDictionary alloc] init];
-    }
-    return downloadingNodes;
-}
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink {
     NSNumber *nodeSizeNumber;
@@ -331,6 +335,7 @@ static MEGAIndexer *indexer;
     MEGASdk *api;
     if (isFolderLink) {
         api = [MEGASdkManager sharedMEGASdkFolder];
+        node = [api authorizeNode:node];
     } else {
         api = [MEGASdkManager sharedMEGASdk];
     }
@@ -338,9 +343,9 @@ static MEGAIndexer *indexer;
     NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     if (isTopPriority) {
-        [MEGASdkManager.sharedMEGASdk startDownloadTopPriorityWithNode:[api authorizeNode:node] localPath:relativeFilePath appData:nil];
+        [MEGASdkManager.sharedMEGASdk startDownloadTopPriorityWithNode:node localPath:relativeFilePath appData:nil];
     } else {
-        [MEGASdkManager.sharedMEGASdk startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath];
+        [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:relativeFilePath];
     }
 }
 
@@ -846,7 +851,6 @@ static MEGAIndexer *indexer;
 }
 
 + (void)resetUserData {
-    [[Helper downloadingNodes] removeAllObjects];
     [[Helper uploadingNodes] removeAllObjects];
     
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];

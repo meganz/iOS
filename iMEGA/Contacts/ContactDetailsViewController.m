@@ -68,7 +68,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidthConstraint;
 
 @property (strong, nonatomic) MEGAUser *user;
@@ -176,6 +175,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
+    [self.tableView sizeHeaderToFit];
     
     [self updateAppearance];
 }
@@ -222,6 +222,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
+    }
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self.tableView reloadData];
     }
 }
 
@@ -934,44 +938,28 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if ([self isSharedFolderSection:section]) {
-        GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
-        headerView.titleLabel.text = NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.").localizedUppercaseString;
-        headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
-        
-        return headerView;
+    GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
+    if (section == 0) {
+        [headerView configureWithTitle:nil topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+    } else if ([self isSharedFolderSection:section]) {
+        [headerView configureWithTitle:NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.").localizedUppercaseString topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+    } else {
+        [headerView configureWithTitle:nil topDistance:0.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
     
-    return nil;
+    return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0 || [self isSharedFolderSection:section]) {
-        return 24;
-    } else if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
-        NSString *timeRemainingString = [self.chatNotificationControl
-                                         timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
-        if (timeRemainingString.length > 0) {
-            return 10.0f;
-        }
-    }
-    
-    return 0.01f;
-}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    GenericHeaderFooterView *footerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
-        return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
+        [footerView configureWithTitle:[self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId] topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+    } else {
+        [footerView configureWithTitle:nil topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
     
-    return nil;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
-        return UITableViewAutomaticDimension;
-    }
-    
-    return 24.0f;
+    return footerView;
 }
 
 #pragma mark - UITableViewDelegate

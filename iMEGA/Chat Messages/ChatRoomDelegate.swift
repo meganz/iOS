@@ -291,7 +291,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                             transfers.remove(at: index)
                             if let transfer = oldMessage.transfer, let node = MEGASdkManager.sharedMEGASdk().node(forHandle: transfer.nodeHandle) {
                                 let path = NSHomeDirectory().append(pathComponent: transfer.path)
-                                let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+                                let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
                                 try? FileManager.default.copyItem(atPath: path, toPath: originalImagePath)
                             }
 

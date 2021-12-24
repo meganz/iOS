@@ -800,7 +800,7 @@
     } else if (self.incomingButton.selected) {
         MEGAShare *share = [self.shares shareAtIndex:indexPath.row];
         cell.infoLabel.text = [share user];
-        [cell.cancelButton setImage:[UIImage mnz_permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
+        [cell.incomingPermissionButton setImage:[UIImage mnz_permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
     }
     
     cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;

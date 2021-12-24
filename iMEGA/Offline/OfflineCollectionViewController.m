@@ -174,6 +174,24 @@ static NSString *kPath = @"kPath";
     [self setCollectionViewEditing:YES animated:YES];
 }
 
+- (UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView
+    contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath
+                                         point:(CGPoint)point {
+    if (self.offline.flavor == AccountScreen) {
+        NSDictionary *item = [self getItemAtIndexPath:indexPath];
+        NSString *pathForItem = [[self.offline currentOfflinePath] stringByAppendingPathComponent:item[kFileName]];
+        return [self collectionView:collectionView contextMenuConfigurationForItemAt:indexPath itemPath:pathForItem];
+    } else {
+        return nil;
+    }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
+              animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    [self willPerformPreviewActionForMenuWithAnimator:animator];
+}
+
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

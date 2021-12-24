@@ -161,7 +161,7 @@
         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         previewController.api = api;
         previewController.filePath = previewDocumentPath;
-        previewController.node = self;
+        previewController.node = isFolderLink ? [api authorizeNode:self] : self;
         previewController.isLink = isFolderLink;
         previewController.fileLink = fileLink;
         
@@ -186,7 +186,7 @@
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-            previewController.node = self;
+            previewController.node = isFolderLink ? [api authorizeNode:self] : self;
             previewController.api = api;
             previewController.isLink = isFolderLink;
             previewController.fileLink = fileLink;
@@ -304,7 +304,7 @@
     }
 }
 
-- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
+- (void)mnz_saveToPhotos {
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
@@ -318,7 +318,7 @@
                 downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                 NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
                 NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                [MEGASdkManager.sharedMEGASdk startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                [MEGASdkManager.sharedMEGASdk startDownloadNode:self localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
             }
         } else {
             [DevicePermissionsHelper alertPhotosPermission];
@@ -518,6 +518,13 @@
     [viewController setEditing:NO animated:YES];
 }
 
+- (void)mnz_showTextFileVersionsInViewController:(UIViewController *)viewController {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Node" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeVersionsNC"];
+    NodeVersionsViewController *versionController = navigationController.viewControllers.firstObject;
+    versionController.node = self;
+    [viewController presentViewController:navigationController animated:YES completion:nil];
+}
+
 #pragma mark - File links
 
 - (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
@@ -652,8 +659,8 @@
                                                @"aep":@"After Effects",
                                                @"aet":@"After Effects",
                                                @"ai":@"Illustrator",
-                                               @"aif":@"Audio Interchange",
-                                               @"aiff":@"Audio Interchange",
+                                               @"aif":@"general.filetype.audioInterchange",
+                                               @"aiff":@"general.filetype.audioInterchange",
                                                @"ait":@"Illustrator",
                                                @"ans":@"general.filetype.ans",
                                                @"apk":@"general.filetype.apk",
@@ -665,16 +672,16 @@
                                                @"asf":@"general.filetype.asf",
                                                @"asp":@"Active Server",
                                                @"aspx":@"Active Server",
-                                               @"asx":@"Advanced Stream",
-                                               @"avi":@"A/V Interleave",
-                                               @"bat":@"DOS Batch",
+                                               @"asx":@"general.filetype.asx",
+                                               @"avi":@"general.filetype.avi",
+                                               @"bat":@"general.filetype.bat",
                                                @"bay":@"general.filetype.bay",
                                                @"bmp":@"general.filetype.bmp",
                                                @"bz2":@"general.filetype.bz2",
                                                @"c":@"general.filetype.c",
                                                @"cc":@"general.filetype.cpp",
                                                @"cdr":@"general.filetype.cdr",
-                                               @"cgi":@"CGI Script",
+                                               @"cgi":@"general.filetype.cgi",
                                                @"class":@"general.filetype.class",
                                                @"com":@"general.filetype.com",
                                                @"cpp":@"general.filetype.cpp",
@@ -684,8 +691,8 @@
                                                @"db":@"general.filetype.database",
                                                @"dbf":@"general.filetype.database",
                                                @"dcr":@"general.filetype.rawImage",
-                                               @"dhtml":@"Dynamic HTML",
-                                               @"dll":@"Dynamic Link Library",
+                                               @"dhtml":@"general.filetype.dhtml",
+                                               @"dll":@"general.filetype.dll",
                                                @"dng":@"Digital Negative",
                                                @"doc":@"MS Word",
                                                @"docx":@"MS Word",
@@ -755,7 +762,7 @@
                                                @"php4":@"general.filetype.php",
                                                @"php5":@"general.filetype.php",
                                                @"phtml":@"PHTML Web",
-                                               @"pl":@"Perl Script",
+                                               @"pl":@"general.filetype.pl",
                                                @"pls":@"general.filetype.pls",
                                                @"png":@"general.filetype.png",
                                                @"ppj":@"Adobe Premiere",
@@ -766,7 +773,7 @@
                                                @"ps":@"PostScript",
                                                @"psb":@"Photoshop",
                                                @"psd":@"Photoshop",
-                                               @"py":@"Python Script",
+                                               @"py":@"general.filetype.py",
                                                @"ra":@"Real Audio",
                                                @"ram":@"Real Audio",
                                                @"rar":@"general.filetype.rar",
@@ -774,7 +781,7 @@
                                                @"rtf":@"general.filetype.rtf",
                                                @"rw2":@"general.filetype.rw2",
                                                @"rwl":@"general.filetype.rawImage",
-                                               @"sh":@"Bash Shell",
+                                               @"sh":@"general.filetype.sh",
                                                @"shtml":@"general.filetype.shtml",
                                                @"sitx":@"general.filetype.sitx",
                                                @"sql":@"general.filetype.sql",
@@ -785,7 +792,7 @@
                                                @"swf":@"general.filetype.swf",
                                                @"tar":@"general.filetype.tar",
                                                @"tbz":@"general.filetype.compressed",
-                                               @"tga":@"Targa Graphic",
+                                               @"tga":@"general.filetype.tga",
                                                @"tgz":@"general.filetype.compressed",
                                                @"tif":@"general.filetype.tif",
                                                @"tiff":@"general.filetype.tiff",

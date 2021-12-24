@@ -19,8 +19,6 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
          delegate: FilesExplorerListSourceDelegate?)
     func reloadCell(withNode node: MEGANode)
     func updateCells(forNodes nodes: [MEGANode])
-    func onTransferStart(forNode node: MEGANode)
-    func updateProgress(_ progress: Float, forNode node: MEGANode, infoString: String)
     func onTransferCompleted(forNode node: MEGANode)
     func toggleSelection(at indexPath: IndexPath)
     func setEditingMode()
@@ -58,8 +56,6 @@ extension FilesExplorerListSourceProtocol {
         }
     }
     
-    func onTransferStart(forNode node: MEGANode) { }
-    func updateProgress(_ progress: Float, forNode node: MEGANode, infoString: String) { }
     func onTransferCompleted(forNode node: MEGANode) {}
 
     func toggleSelection(at indexPath: IndexPath) {

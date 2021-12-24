@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *incomingPermissionButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
 @property (weak, nonatomic) IBOutlet UIView *disclosureIndicatorView;

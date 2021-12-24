@@ -71,6 +71,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsMediaFile(isMediaFile)
             .setIsEditableTextFile(isEditableTextFile)
             .setIsFile(node.isFile())
+            .setVersionCount(node.mnz_numberOfVersions())
             .setIsFavourite(node.isFavourite)
             .setLabel(node.label)
             .setIsRestorable(node.mnz_isRestorable())

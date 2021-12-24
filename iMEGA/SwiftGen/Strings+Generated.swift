@@ -2982,9 +2982,17 @@ public enum Strings {
       }
     }
     public enum Chat {
+      /// Join Call
+      public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
       public enum Map {
         /// Location
         public static let location = Strings.tr("Localizable", "chat.map.location")
+        public enum Location {
+          /// Enable geolocation failed. Error: %@
+          public static func enableGeolocationFailedError(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "chat.map.location.enableGeolocationFailedError", String(describing: p1))
+          }
+        }
       }
       public enum Match {
         /// File
@@ -2993,6 +3001,10 @@ public enum Strings {
       public enum Message {
         /// Message…
         public static let placeholder = Strings.tr("Localizable", "chat.message.placeholder")
+      }
+      public enum Photos {
+        /// To share photos and videos allow MEGA to access your gallery
+        public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
       }
     }
     public enum CloudDrive {
@@ -3537,6 +3549,8 @@ public enum Strings {
         public static let header = Strings.tr("Localizable", "meetings.joinMeeting.header")
       }
       public enum JoinMega {
+        /// Join MEGA
+        public static let title = Strings.tr("Localizable", "meetings.joinMega.title")
         public enum Paragraph1 {
           /// Join the largest secure cloud storage and collaboration platform in the world.
           public static let description = Strings.tr("Localizable", "meetings.joinMega.paragraph1.description")
@@ -3595,8 +3609,12 @@ public enum Strings {
         }
       }
       public enum Participant {
+        /// Make Moderator
+        public static let makeModerator = Strings.tr("Localizable", "meetings.participant.makeModerator")
         /// MODERATOR
         public static let moderator = Strings.tr("Localizable", "meetings.participant.moderator")
+        /// Remove Moderator
+        public static let removeModerator = Strings.tr("Localizable", "meetings.participant.removeModerator")
       }
       public enum QuickAction {
         /// Switch

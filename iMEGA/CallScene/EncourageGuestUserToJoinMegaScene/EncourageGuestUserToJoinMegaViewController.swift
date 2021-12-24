@@ -22,7 +22,7 @@ class EncourageGuestUserToJoinMegaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NSLocalizedString("Join MEGA", comment: "")
+        title = Strings.Localizable.Meetings.JoinMega.title
         view.backgroundColor = .mnz_background()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(

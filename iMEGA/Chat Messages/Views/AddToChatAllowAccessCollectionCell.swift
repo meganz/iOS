@@ -8,7 +8,8 @@ class AddToChatAllowAccessCollectionCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        allowAccessTextLabel.text = NSLocalizedString("To share photos and videos allow MEGA to access your gallery", comment: "")
+        allowAccessTextLabel.text = Strings.Localizable.Chat.Photos.allowPhotoAccessMessage
+
         updateAppearance()
     }
     

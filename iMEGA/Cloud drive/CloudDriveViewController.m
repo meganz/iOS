@@ -89,8 +89,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
 
-@property (strong, nonatomic) Throttler *throttler;
-
 @property (nonatomic, assign) BOOL onlyUploadOptions;
 
 @end
@@ -165,7 +163,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchController.delegate = self;
     
     self.navigationController.delegate = self;
-    self.throttler = [Throttler.alloc initWithTimeInterval:.1 dispatchQueue:dispatch_get_main_queue()];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1515,23 +1512,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (transfer.isStreamingTransfer) {
         return;
     }
-    
-    [self.throttler startWithAction:^{
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        
-        if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.viewModePreference == ViewModePreferenceList) {
-            float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
-            NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-            NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
-            
-            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-            if (indexPath != nil) {
-                NodeTableViewCell *cell = (NodeTableViewCell *)[self.cdTableView.tableView cellForRowAtIndexPath:indexPath];
-                [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
-                cell.downloadProgressView.progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
-            }
-        }
-    }];
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1718,11 +1698,15 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            [node mnz_saveToPhotos];
             break;
             
         case MegaNodeActionTypeSendToChat:
             [node mnz_sendToChatInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeViewVersions:
+            [node mnz_showTextFileVersionsInViewController:self];
             break;
             
         default:

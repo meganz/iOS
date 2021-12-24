@@ -483,11 +483,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat heightForRow = UITableViewAutomaticDimension;
-    if (indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-            heightForRow = 0.0f;
-    }
-    return heightForRow;
+    return indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount ? 0.0f : UITableViewAutomaticDimension;
 }
 
 #pragma mark - MEGAPurchasePricingDelegate

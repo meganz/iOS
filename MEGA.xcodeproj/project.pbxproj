@@ -1319,6 +1319,9 @@
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
 		A8B8E02A273A689400C64E0A /* TransferUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */; };
 		A8B8E02E273A697200C64E0A /* MockTransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */; };
+		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
+		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
+		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
 		A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
@@ -1915,7 +1918,6 @@
 		BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */; };
 		BFAFB178252ACEF0003ADFE3 /* SDKFilesSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB177252ACEF0003ADFE3 /* SDKFilesSearchRepository.swift */; };
 		BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */; };
-		BFAFB199252C0A33003ADFE3 /* DownloadingNodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB198252C0A33003ADFE3 /* DownloadingNodeCell.xib */; };
 		BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */; };
 		BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */; };
 		BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */; };
@@ -2072,6 +2074,8 @@
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
 		C4652805265294C700371270 /* BannerContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4652804265294C700371270 /* BannerContainer.storyboard */; };
+		C4653A4D274BD09000BB14C2 /* BucketHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */; };
+		C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */; };
 		C466A7F726F4DED800905878 /* MEGANode+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466A7F626F4DED800905878 /* MEGANode+Backup.swift */; };
 		C466A7FB26F4E08B00905878 /* BrowserViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466A7FA26F4E08B00905878 /* BrowserViewController+Backup.swift */; };
 		C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */; };
@@ -3457,6 +3461,9 @@
 		A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatNotificationDelegate.m; sourceTree = "<group>"; };
 		A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferUseCaseTests.swift; sourceTree = "<group>"; };
 		A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferRepository.swift; sourceTree = "<group>"; };
+		A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineCollectionViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		A8C262971FA0B4A2006172CE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -4075,7 +4082,6 @@
 		BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModel.swift; sourceTree = "<group>"; };
 		BFAFB177252ACEF0003ADFE3 /* SDKFilesSearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKFilesSearchRepository.swift; sourceTree = "<group>"; };
 		BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocAndAudioListSource.swift; sourceTree = "<group>"; };
-		BFAFB198252C0A33003ADFE3 /* DownloadingNodeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadingNodeCell.xib; sourceTree = "<group>"; };
 		BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeTableViewCell.xib; sourceTree = "<group>"; };
 		BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModel.swift; sourceTree = "<group>"; };
 		BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewViewController.swift; sourceTree = "<group>"; };
@@ -4191,6 +4197,8 @@
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
 		C4652804265294C700371270 /* BannerContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BannerContainer.storyboard; sourceTree = "<group>"; };
+		C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BucketHeaderView.xib; sourceTree = "<group>"; };
+		C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketHeaderView.swift; sourceTree = "<group>"; };
 		C466A7F626F4DED800905878 /* MEGANode+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Backup.swift"; sourceTree = "<group>"; };
 		C466A7FA26F4E08B00905878 /* BrowserViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+Backup.swift"; sourceTree = "<group>"; };
 		C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASegmentedControl.swift; sourceTree = "<group>"; };
@@ -5096,6 +5104,8 @@
 				83FB1432219AC7DD00418BE6 /* OfflineCollectionViewController.h */,
 				83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */,
 				C4789ED2270E098500DFADF1 /* OfflineCollectionViewController+DynamicType.swift */,
+				A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */,
+				A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */,
 			);
 			path = Offline;
 			sourceTree = "<group>";
@@ -7114,7 +7124,6 @@
 				415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */,
 				415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */,
 				BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */,
-				BFAFB198252C0A33003ADFE3 /* DownloadingNodeCell.xib */,
 				832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */,
 				832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */,
 				832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */,
@@ -7126,6 +7135,8 @@
 				C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */,
 				5B16A736220D6E0900085F61 /* ThumbnailViewerTableViewCell.h */,
 				5B16A737220D6E0900085F61 /* ThumbnailViewerTableViewCell.m */,
+				C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */,
+				C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -9968,6 +9979,7 @@
 				C45F982A264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift */,
 				E8D5BF6A1BF3B28500955550 /* SharedItemsTableViewCell.h */,
 				E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */,
+				A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */,
 			);
 			path = "Shared Items";
 			sourceTree = "<group>";
@@ -10440,7 +10452,6 @@
 				BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */,
 				BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */,
 				5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */,
-				BFAFB199252C0A33003ADFE3 /* DownloadingNodeCell.xib in Resources */,
 				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
@@ -10487,6 +10498,7 @@
 				83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */,
 				BFB33D91263B922F006E203D /* EndMeetingOptionsViewViewController.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
+				C4653A4D274BD09000BB14C2 /* BucketHeaderView.xib in Resources */,
 				BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */,
 				5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */,
 				5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */,
@@ -11242,6 +11254,7 @@
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
 				B6ADE4DC2732189000C19F36 /* FileSystemRepository.swift in Sources */,
 				B662B89124FC40090089376A /* RegionListIndexedSource.swift in Sources */,
+				A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */,
 				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
 				C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */,
 				BF782D62269BA4BB0001D169 /* RecentItemEntity.swift in Sources */,
@@ -11368,6 +11381,7 @@
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
 				2F9F111F2508A3F400896DFF /* Services.swift in Sources */,
 				C4EDB734266550A5006A114F /* UIFont+Additions.swift in Sources */,
+				A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
 				B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */,
@@ -11445,6 +11459,7 @@
 				BF66DF362612CE3100066F35 /* InviteRequestDelegate.swift in Sources */,
 				BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
+				C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */,
 				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				0D7E5FA62634E1E800C5CB2A /* DownloadFileRepository.swift in Sources */,
@@ -11653,6 +11668,7 @@
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
+				A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,

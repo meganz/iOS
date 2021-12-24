@@ -137,7 +137,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         currentNode = node
         let name = node.name! as NSString
         let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
-        let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+        let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
         
         if FileManager.default.fileExists(atPath: previewFilePath) || FileManager.default.fileExists(atPath: originalImagePath) {
             loadingIndicator.stopAnimating()
@@ -168,7 +168,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         downloadGifIcon.isHidden = true
 
         if name.pathExtension == "gif" || name.pathExtension == "webp" {
-            let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+            let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
             if FileManager.default.fileExists(atPath: originalImagePath) {
                 imageView.sd_setImage(with: URL(fileURLWithPath: originalImagePath))
                 
@@ -251,7 +251,7 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 let megaMessage = chatMessage.message
                 let node = megaMessage.nodeList.node(at: 0)!
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
-                let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+                let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
 
                 if FileManager.default.fileExists(atPath: previewFilePath), let previewImage = UIImage(contentsOfFile: previewFilePath) {
                     width = previewImage.size.width
