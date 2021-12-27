@@ -2766,6 +2766,8 @@
 "general.filetype.7z"="7-Zip Compressed";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI Text File";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2776,6 +2778,12 @@
 "general.filetype.ascii"="ASCII Text";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW Image";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2788,12 +2796,18 @@
 "general.filetype.cpp"="C++ Source Code";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW Image";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS Command";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="Dynamic HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamic Link Library";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Template";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2870,16 +2884,22 @@
 "general.filetype.pdf"="PDF Document";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP Code";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl Script";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Audio Playlist";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG Image";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python Script";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR Compressed";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2898,6 +2918,8 @@
 "general.filetype.tar"="Archive";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension: .tiff. Commercial names should be stay on English */
