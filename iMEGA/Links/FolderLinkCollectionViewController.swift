@@ -34,13 +34,13 @@ class FolderLinkCollectionViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCollectionView()
         diffableDataSource.configureDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        setupCollectionView()
         reloadData()
     }
     
@@ -136,6 +136,8 @@ class FolderLinkCollectionViewController: UIViewController  {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension FolderLinkCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let node = getNode(at: indexPath) else {
@@ -193,6 +195,34 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
         setCollectionViewEditing(true, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
+            guard let node = self.getNode(at: indexPath) else { return nil }
+            if node.isFolder() {
+                let folderLinkVC = self.folderLink.fromNode(node)
+                return folderLinkVC
+            } else {
+                return nil
+            }
+        } actionProvider: { _ in
+            let selectAction = UIAction(title: Strings.Localizable.select,
+                                        image: Asset.Images.ActionSheetIcons.select.image) { _ in
+                self.setCollectionViewEditing(true, animated: true)
+                self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
+            }
+            return UIMenu(title: "", children: [selectAction])
+        }
+
+        return contextMenuConfiguration
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let folderLinkVC = animator.previewViewController as? FolderLinkViewController else { return }
+        animator.addCompletion {
+            self.navigationController?.pushViewController(folderLinkVC, animated: true)
+        }
     }
 }
 
