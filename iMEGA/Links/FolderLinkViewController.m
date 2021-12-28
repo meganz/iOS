@@ -755,11 +755,7 @@
 - (void)didSelectNode:(MEGANode *)node {
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:[NSBundle bundleForClass:self.class]];
-            FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
-            [folderLinkVC setParentNode:node];
-            [folderLinkVC setIsFolderRootNode:NO];
-            folderLinkVC.publicLinkString = self.publicLinkString;
+            FolderLinkViewController *folderLinkVC = [self folderLinkViewControllerFromNode:node];
             [self.navigationController pushViewController:folderLinkVC animated:YES];
             break;
         }
@@ -784,6 +780,15 @@
     } else {
         [self.flCollectionView setCollectionViewEditing:editMode animated:YES];
     }
+}
+
+- (FolderLinkViewController *)folderLinkViewControllerFromNode:(MEGANode *)node {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:[NSBundle bundleForClass:self.class]];
+    FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
+    [folderLinkVC setParentNode:node];
+    [folderLinkVC setIsFolderRootNode:NO];
+    folderLinkVC.publicLinkString = self.publicLinkString;
+    return folderLinkVC;
 }
 
 #pragma mark - UISearchBarDelegate

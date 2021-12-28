@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didDownloadTransferFinish:(MEGANode *)node;
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView;
+- (FolderLinkViewController *)folderLinkViewControllerFromNode:(MEGANode *)node;
 
 @end
 

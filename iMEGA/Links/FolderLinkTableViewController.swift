@@ -73,6 +73,8 @@ class FolderLinkTableViewController: UIViewController  {
     }
 }
 
+//MARK: - UITableViewDataSource
+
 extension FolderLinkTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if MEGAReachabilityManager.isReachable() {
@@ -142,6 +144,8 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
+
 extension FolderLinkTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let node = getNode(at: indexPath) else {
@@ -184,5 +188,34 @@ extension FolderLinkTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
         setTableViewEditing(true, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
+            guard let node = self.getNode(at: indexPath) else { return nil }
+            if node.isFolder() {
+                let folderLinkVC = self.folderLink.fromNode(node)
+                return folderLinkVC
+            } else {
+                return nil
+            }
+        } actionProvider: { _ in
+            let selectAction = UIAction(title: Strings.Localizable.select,
+                                        image: Asset.Images.ActionSheetIcons.select.image) { _ in
+                self.setTableViewEditing(true, animated: true)
+                self.tableView?.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+                self.tableView?.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+            }
+            return UIMenu(title: "", children: [selectAction])
+        }
+
+        return contextMenuConfiguration
+    }
+    
+    func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let folderLinkVC = animator.previewViewController as? FolderLinkViewController else { return }
+        animator.addCompletion {
+            self.navigationController?.pushViewController(folderLinkVC, animated: true)
+        }
     }
 }
