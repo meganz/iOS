@@ -85,8 +85,14 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                     guard visibleIndexPaths.contains(indexPath), error.type == .apiOk else {
                         return
                     }
-                    megaMessage.richString = NSString.mnz_string(byFiles: request.megaFolderInfo.files, andFolders: request.megaFolderInfo.folders)
-                    megaMessage.richNumber = NSNumber(floatLiteral: Double(request.megaFolderInfo.currentSize > 0 ? request.megaFolderInfo.currentSize : -1))
+                    let totalNumberOfFiles = request.megaFolderInfo.files;
+                    let numOfVersionedFiles = request.megaFolderInfo.versions;
+                    let totalFileSize = request.megaFolderInfo.currentSize;
+                    let versionsSize = request.megaFolderInfo.versionsSize;
+                    let sizeWithoutIncludingVersionsSize = totalFileSize - versionsSize
+                    
+                    megaMessage.richString = NSString.mnz_string(byFiles: totalNumberOfFiles - numOfVersionedFiles, andFolders: request.megaFolderInfo.folders)
+                    megaMessage.richNumber = NSNumber(floatLiteral: Double(sizeWithoutIncludingVersionsSize > 0 ? sizeWithoutIncludingVersionsSize : -1))
                     megaMessage.richTitle = request.text
                     
                     if self.isLastSectionVisible(collectionView: messagesCollectionView) {
