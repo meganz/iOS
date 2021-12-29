@@ -1252,6 +1252,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
             break;
             
+        case MegaNodeActionTypeRestore:
+            [node mnz_restore];
+            break;
+            
         default:
             break;
     }
