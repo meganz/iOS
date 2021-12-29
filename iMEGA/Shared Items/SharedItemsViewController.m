@@ -564,9 +564,11 @@
 
 - (void)selectSegment:(NSUInteger)index {
     if (index == 0) {
-        [self incomingTouchUpInside:nil];
+        [self incomingTouchUpInside:self.incomingButton];
     } else if (index == 1) {
-        [self outgoingTouchUpInside:nil];
+        [self outgoingTouchUpInside:self.outgoingButton];
+    } else if (index == 2) {
+        [self linksTouchUpInside:self.linksButton];
     }
 }
 
