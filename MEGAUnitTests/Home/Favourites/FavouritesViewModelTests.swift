@@ -14,10 +14,9 @@ final class FavouritesViewModelTests: XCTestCase {
         mockFavouriteNodesUC.getAllFavouriteNodes { [weak self] result in
             switch result {
             case .success(let nodeEntities):
-                let nodes = nodeEntities.map { NodeModel(nodeEntity: $0) }
                 self?.test(viewModel: viewModel,
                      action: .viewWillAppear,
-                     expectedCommands: [.showFavouritesNodes(nodes)])
+                     expectedCommands: [.showFavouritesNodes(nodeEntities)])
                 
             case .failure: break
             }
@@ -42,7 +41,7 @@ final class FavouritesViewModelTests: XCTestCase {
         let viewModel = FavouritesViewModel(router: mockFavouritesRouter,
                                             favouritesUseCase: mockFavouriteNodesUC)
         
-        let mockNodeModel = NodeModel(nodeEntity: NodeEntity())
+        let mockNodeModel = NodeEntity()
         test(viewModel: viewModel,
              action: .didSelectRow(mockNodeModel.handle),
              expectedCommands: [])

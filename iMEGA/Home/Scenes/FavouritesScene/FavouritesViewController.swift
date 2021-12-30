@@ -6,7 +6,7 @@ final class FavouritesViewController: UIViewController, ViewType {
     
     var viewModel: FavouritesViewModel!
     
-    var nodesArray: [NodeModel] = []
+    var nodesArray: [NodeEntity] = []
     
     // MARK: - View lifecycle
     

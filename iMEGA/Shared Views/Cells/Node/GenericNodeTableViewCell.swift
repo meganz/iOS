@@ -67,7 +67,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
     
     // MARK: - Private
     
-    private func config(_ nodeModel: NodeModel) {
+    private func config(_ nodeModel: NodeEntity) {
         viewModel.dispatch(.isDownloaded)
         
         favouriteView.isHidden = !nodeModel.isFavourite
@@ -103,7 +103,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
         thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
     }
     
-    private func attributedTakenDownNameWithHeight(nodeModel: NodeModel, height: CGFloat) -> NSAttributedString {
+    private func attributedTakenDownNameWithHeight(nodeModel: NodeEntity, height: CGFloat) -> NSAttributedString {
         let name = nodeModel.name + " "
         let nameMutableAttributedString = NSMutableAttributedString(string: name)
         let takendownImageName = "isTakendown"
@@ -114,14 +114,14 @@ final class GenericNodeTableViewCell: UITableViewCell {
         return nameMutableAttributedString
     }
     
-    private func sizeAndModicationDate(_ nodeModel: NodeModel) -> String {
+    private func sizeAndModicationDate(_ nodeModel: NodeEntity) -> String {
         let modificationTime = nodeModel.modificationTime as NSDate
         let modificationTimeString: String = modificationTime.mnz_formattedDateMediumTimeShortStyle()
         
         return sizeForFile(nodeModel) + " • " + modificationTimeString
     }
     
-    private func sizeForFile(_ nodeModel: NodeModel) -> String {
+    private func sizeForFile(_ nodeModel: NodeEntity) -> String {
         return Helper.memoryStyleString(fromByteCount: Int64(nodeModel.size));
     }
 }

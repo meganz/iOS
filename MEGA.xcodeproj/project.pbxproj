@@ -409,7 +409,6 @@
 		5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
-		5BEBF50926D5199A006245DB /* NodeLabelTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEBF50826D5199A006245DB /* NodeLabelTypeModel.swift */; };
 		5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */; };
 		5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */; };
 		5BF59EAB263C551C00A7CF9D /* TermsAndPoliciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF59EA8263C551C00A7CF9D /* TermsAndPoliciesViewModel.swift */; };
@@ -1461,7 +1460,6 @@
 		B66E8076275A0C4200502601 /* PhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E8075275A0C4200502601 /* PhotoCellViewModel.swift */; };
 		B66E8078275AF8FF00502601 /* BlurryBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E8077275AF8FE00502601 /* BlurryBackground.swift */; };
 		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
-		B6730B092734EC4D00A9CF5F /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6730B082734EC4D00A9CF5F /* NodeModel.swift */; };
 		B6730B0F27361BEC00A9CF5F /* MVVM-R.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BF3824FF123700A3CBC8 /* MVVM-R.swift */; };
 		B6730B1E2738482600A9CF5F /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311A2DE258775170027BEFF /* MEGAFileTypes.swift */; };
 		B67507AB2762EABA0034F951 /* PhotoLibraryViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */; };
@@ -2735,7 +2733,6 @@
 		5BE7BEE223745FC600BBD23F /* EmptyStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyStateView.h; sourceTree = "<group>"; };
 		5BE7BEE323745FC600BBD23F /* EmptyStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyStateView.m; sourceTree = "<group>"; };
 		5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyStateView.xib; sourceTree = "<group>"; };
-		5BEBF50826D5199A006245DB /* NodeLabelTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeLabelTypeModel.swift; sourceTree = "<group>"; };
 		5BF4B3B520AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoFactorAuthenticationViewController.h; sourceTree = "<group>"; };
 		5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoFactorAuthenticationViewController.m; sourceTree = "<group>"; };
 		5BF5387F23741DB70023F2E4 /* MEGA.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = MEGA.entitlements; path = ../../MEGA.entitlements; sourceTree = "<group>"; };
@@ -3621,7 +3618,6 @@
 		B66E8077275AF8FE00502601 /* BlurryBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurryBackground.swift; sourceTree = "<group>"; };
 		B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadOperation+Utils.h"; sourceTree = "<group>"; };
 		B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CameraUploadOperation+Utils.m"; sourceTree = "<group>"; };
-		B6730B082734EC4D00A9CF5F /* NodeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
 		B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewMode.swift; sourceTree = "<group>"; };
 		B67507AE276689520034F951 /* ScrollPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPositioning.swift; sourceTree = "<group>"; };
 		B67507B12766B8060034F951 /* PhotoLibrary+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoLibrary+Mapper.swift"; sourceTree = "<group>"; };
@@ -5612,11 +5608,9 @@
 		5B1C4DEB26C29A8800425A23 /* Node */ = {
 			isa = PBXGroup;
 			children = (
-				B6730B082734EC4D00A9CF5F /* NodeModel.swift */,
 				5B947A9D267A2A3400715B0C /* GenericNodeTableViewCell.swift */,
 				5B9CC936269DA6A8006342FC /* GenericNodeTableViewCell.xib */,
 				5B947A99267A20CD00715B0C /* NodeCellViewModel.swift */,
-				5BEBF50826D5199A006245DB /* NodeLabelTypeModel.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -11154,7 +11148,6 @@
 				A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
-				5BEBF50926D5199A006245DB /* NodeLabelTypeModel.swift in Sources */,
 				5D6D0F5325270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift in Sources */,
 				BF782D66269BA4BB0001D169 /* NodeEntity.swift in Sources */,
 				83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */,
@@ -11240,7 +11233,6 @@
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
 				832DA17926B0621F00F0B1F3 /* Result+Additions.swift in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
-				B6730B092734EC4D00A9CF5F /* NodeModel.swift in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
 				B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */,
 				B66E8078275AF8FF00502601 /* BlurryBackground.swift in Sources */,

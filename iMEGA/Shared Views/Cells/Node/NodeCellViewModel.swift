@@ -13,7 +13,7 @@ protocol NodeCellRouting: Routing {}
 final class NodeCellViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable {
-        case config(NodeModel)
+        case config(NodeEntity)
         case hideVideoIndicator(Bool)
         case hideLabel(Bool)
         case setLabel(String)
@@ -27,12 +27,12 @@ final class NodeCellViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     private let nodeOpener: NodeOpener
-    private var nodeModel: NodeModel
+    private var nodeModel: NodeEntity
     private var nodeActionUseCase: NodeActionUseCaseProtocol
     private var nodeThumbnailUseCase: ThumbnailUseCaseProtocol
     private var accountUseCase: AccountUseCaseProtocol
     
-    init(nodeOpener: NodeOpener, nodeModel: NodeModel, nodeActionUseCase: NodeActionUseCaseProtocol, nodeThumbnailUseCase: ThumbnailUseCaseProtocol, accountUseCase: AccountUseCaseProtocol) {
+    init(nodeOpener: NodeOpener, nodeModel: NodeEntity, nodeActionUseCase: NodeActionUseCaseProtocol, nodeThumbnailUseCase: ThumbnailUseCaseProtocol, accountUseCase: AccountUseCaseProtocol) {
         self.nodeOpener = nodeOpener
         self.nodeModel = nodeModel
         self.nodeActionUseCase = nodeActionUseCase
@@ -140,7 +140,7 @@ final class NodeCellViewModel: ViewModelType {
         }
     }
     
-    private func folderImageName(for nodeModel: NodeModel) -> String {
+    private func folderImageName(for nodeModel: NodeEntity) -> String {
         if nodeModel.isInShare {
             return "folder_incoming"
         } else if nodeModel.isOutShare {

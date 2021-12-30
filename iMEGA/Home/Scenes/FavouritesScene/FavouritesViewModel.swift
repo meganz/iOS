@@ -15,7 +15,7 @@ final class FavouritesViewModel: ViewModelType {
     private var favouritesUseCase: FavouriteNodesUseCaseProtocol
     
     enum Command: CommandType, Equatable {
-        case showFavouritesNodes([NodeModel])
+        case showFavouritesNodes([NodeEntity])
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -45,8 +45,7 @@ final class FavouritesViewModel: ViewModelType {
         favouritesUseCase.getAllFavouriteNodes { [weak self] result in
             switch result {
             case .success(let nodeEntities):
-                let nodesModel = nodeEntities.map { NodeModel(nodeEntity: $0) }
-                self?.invokeCommand?(.showFavouritesNodes(nodesModel))
+                self?.invokeCommand?(.showFavouritesNodes(nodeEntities))
                 
             case .failure(_):
                 MEGALogError("Error getting all favourites nodes")
