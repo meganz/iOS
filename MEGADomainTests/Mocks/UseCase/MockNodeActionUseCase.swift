@@ -15,7 +15,7 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     
     func downloadToOffline() { }
     
-    func labelString(label: NodeLabelTypeModel) -> String {
+    func labelString(label: NodeLabelTypeEntity) -> String {
         labelString
     }
     

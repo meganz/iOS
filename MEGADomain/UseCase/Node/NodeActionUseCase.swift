@@ -2,7 +2,7 @@
 protocol NodeActionUseCaseProtocol {
     func nodeAccessLevel() -> NodeAccessTypeEntity
     func downloadToOffline()
-    func labelString(label: NodeLabelTypeModel) -> String
+    func labelString(label: NodeLabelTypeEntity) -> String
     func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int)
     func hasVersions() -> Bool
     func isDownloaded() -> Bool
@@ -24,9 +24,8 @@ struct NodeActionUseCase: NodeActionUseCaseProtocol {
         repo.downloadToOffline()
     }
     
-    func labelString(label: NodeLabelTypeModel) -> String {
-        let nodeLabelTypeEntity = label.toNodeLabelTypeEntity()
-        return repo.labelString(label: nodeLabelTypeEntity)
+    func labelString(label: NodeLabelTypeEntity) -> String {
+        return repo.labelString(label: label)
     }
     
     func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int) {
