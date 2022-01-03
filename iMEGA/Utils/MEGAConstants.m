@@ -72,6 +72,11 @@ NSString * const MEGANodeHandleKey = @"nz.mega.nodeHandleKey";
 NSString * const MEGABackupRootFolderUpdatedInMemoryNotification = @"nz.mega.backup.rootFolderUpdatedInMemory";
 NSString * const MEGABackupRootFolderUpdatedInRemoteNotification = @"nz.mega.backup.rootFolderUpdatedInRemote";
 
+#pragma mark - my chat files notifications
+
+NSString * const MEGAMyChatFilesFolderUpdatedInMemoryNotification = @"nz.mega.myChatFilesFolderUpdatedInMemory";
+NSString * const MEGAMyChatFilesFolderUpdatedInRemoteNotification = @"nz.mega.myChatFilesFolderUpdatedInRemote";
+
 #pragma mark - audio player notification keys
 
 NSString * const MEGAAudioPlayerShouldUpdateContainerNotification = @"nz.mega.audioplayer.updateContainerView";

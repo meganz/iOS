@@ -62,6 +62,11 @@ extern NSString * const MEGACameraUploadCompleteNotification;
 extern NSString * const MEGABackupRootFolderUpdatedInMemoryNotification;
 extern NSString * const MEGABackupRootFolderUpdatedInRemoteNotification;
 
+#pragma mark - my chat files notifications
+
+extern NSString * const MEGAMyChatFilesFolderUpdatedInMemoryNotification;
+extern NSString * const MEGAMyChatFilesFolderUpdatedInRemoteNotification;
+
 #pragma mark - audio player notification keys
 
 extern NSString * const MEGAAudioPlayerShouldUpdateContainerNotification;
