@@ -2140,6 +2140,9 @@
 		C4E78E9B272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E78E9A272B4F9200DBF926 /* NodeLoadOperationProtocol.swift */; };
 		C4E78E9C272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E78E9A272B4F9200DBF926 /* NodeLoadOperationProtocol.swift */; };
 		C4E78E9D272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E78E9A272B4F9200DBF926 /* NodeLoadOperationProtocol.swift */; };
+		C4EACA912772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EACA902772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift */; };
+		C4EACA9C2772559E00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EACA902772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift */; };
+		C4EACA9F2772559F00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EACA902772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift */; };
 		C4EDB734266550A5006A114F /* UIFont+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB733266550A5006A114F /* UIFont+Additions.swift */; };
 		C4EDB73826655229006A114F /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB73726655229006A114F /* RoundedView.swift */; };
 		C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D673250DBA3900D74666 /* StoreUser.swift */; };
@@ -4243,6 +4246,7 @@
 		C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoRepository.swift; sourceTree = "<group>"; };
 		C4E78E8B272AF59D00DBF926 /* NodeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAccess.swift; sourceTree = "<group>"; };
 		C4E78E9A272B4F9200DBF926 /* NodeLoadOperationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeLoadOperationProtocol.swift; sourceTree = "<group>"; };
+		C4EACA902772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyChatFilesFolderNodeAccess.swift; sourceTree = "<group>"; };
 		C4EDB733266550A5006A114F /* UIFont+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Additions.swift"; sourceTree = "<group>"; };
 		C4EDB73726655229006A114F /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		C4F140372702236600C4D3DE /* ContactsViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Backup.swift"; sourceTree = "<group>"; };
@@ -9859,6 +9863,14 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		C4D6FAAE276BB9E500773333 /* MyChatFiles */ = {
+			isa = PBXGroup;
+			children = (
+				C4EACA902772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift */,
+			);
+			path = MyChatFiles;
+			sourceTree = "<group>";
+		};
 		C4E78E99272B4F5100DBF926 /* NodeAccess */ = {
 			isa = PBXGroup;
 			children = (
@@ -9867,6 +9879,7 @@
 				C48CE0132732ECE40081DEC4 /* NodeLoadOperation.swift */,
 				C46050552727FC3B00D67A44 /* Backups */,
 				C473CB962758130A000E633B /* Camera Uploads */,
+				C4D6FAAE276BB9E500773333 /* MyChatFiles */,
 			);
 			path = NodeAccess;
 			sourceTree = "<group>";
@@ -10933,6 +10946,7 @@
 				B6AADEAF25188F8D009A874C /* SMSRepositoryProtocol.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
 				12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */,
+				C4EACA912772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
 				5B9199F426E7CAF600402358 /* ThumbnailRepository.swift in Sources */,
 				A81971E126FCD118007DC7B1 /* FileVersionErrorEntity.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
@@ -12242,6 +12256,7 @@
 				A82D5CE226BC083500E73D27 /* PreferenceRepository.swift in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
 				83B906BE249A29EC0088F15C /* UIButton+Additions.swift in Sources */,
+				C4EACA9C2772559E00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
 				5BE689932417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */,
 				B695B603264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
@@ -12477,6 +12492,7 @@
 				C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */,
 				5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
+				C4EACA9F2772559F00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
 				5BE689B92419189300462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				C46517AA272C9E3E004F27A0 /* NodeChangeTypeEntity.swift in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,

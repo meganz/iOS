@@ -106,7 +106,13 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             return
         }
         
-        MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder(completion: { (parentNode) in
+        MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, error in
+            guard error == nil, let myChatFilesFolderNode = myChatFilesFolderNode else {
+                if let error = error {
+                    MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
+                }
+                return
+            }
             let paths = self.exportScannedDocs()
             paths.forEach { (path) in
                 var appData = NSString().mnz_appData(toSaveCoordinates: path.mnz_coordinatesOfPhotoOrVideo() ?? "")
@@ -114,11 +120,11 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 ChatUploader.sharedInstance.upload(filepath: path,
                                                    appData: appData,
                                                    chatRoomId: chatRoom.chatId,
-                                                   parentNode: parentNode,
+                                                   parentNode: myChatFilesFolderNode,
                                                    isSourceTemporary: false,
                                                    delegate: MEGAStartUploadTransferDelegate(completion: nil))
             }
-        })
+        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -357,22 +363,31 @@ extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegat
 
 extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate {
     func send(_ viewController: SendToViewController, toChats chats: [MEGAChatListItem], andUsers users: [MEGAUser]) {
-        MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder(completion: { (node) in
+        MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, error in
+            guard let myChatFilesFolderNode = myChatFilesFolderNode else {
+                if let error = error {
+                    MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
+                }
+                return
+            }
+            
             let paths = self.exportScannedDocs()
             var completionCounter = 0
             paths.forEach { (path) in
                 let appData = NSString().mnz_appData(toSaveCoordinates: path.mnz_coordinatesOfPhotoOrVideo() ?? "")
                 let startUploadTransferDelegate = MEGAStartUploadTransferDelegate { (transfer) in
-                    let node = MEGASdkManager.sharedMEGASdk().node(forHandle: transfer!.nodeHandle)
+                    guard let transferNodeHandle = transfer?.nodeHandle,
+                          let nodeHandle = MEGASdkManager.sharedMEGASdk().node(forHandle: transferNodeHandle)?.handle else { return }
+                    
                     chats.forEach { chatRoom in
-                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: nodeHandle)
                     }
                     users.forEach { user in
                         if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(byUser: user.handle) {
-                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: nodeHandle)
                         } else {
                             MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
-                                MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: node!.handle)
+                                MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: nodeHandle)
                             })
                         }
                     }
@@ -381,9 +396,9 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                     }
                     completionCounter = completionCounter + 1
                 }
-                MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: path, parent: node, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
+                MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: path, parent: myChatFilesFolderNode, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
             }
-        })
+        }
         dismiss(animated: true, completion: nil)
     }
 }

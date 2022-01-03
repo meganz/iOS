@@ -699,8 +699,12 @@ static MEGAIndexer *indexer;
                 MEGANode *resultNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 completion(resultNode);
             }];
-            [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
+        
+            [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {
+                if (error || myChatFilesFolderNode == nil) {
+                    MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
+                }
+                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesFolderNode delegate:copyRequestDelegate];
             }];
         }
     }

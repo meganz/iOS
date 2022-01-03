@@ -1282,6 +1282,9 @@
                     if ([user hasChangedType:MEGAUserChangeTypeBackupFolder]) {
                         [NSNotificationCenter.defaultCenter postNotificationName:MEGABackupRootFolderUpdatedInRemoteNotification object:nil];
                     }
+                    if ([user hasChangedType:MEGAUserChangeTypeMyChatFilesFolder]) {
+                        [NSNotificationCenter.defaultCenter postNotificationName:MEGAMyChatFilesFolderUpdatedInRemoteNotification object:nil];
+                    }
                 } else {
                     [user resetAvatarIfNeededInSdk:sdk];
                     

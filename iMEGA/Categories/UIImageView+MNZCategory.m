@@ -138,14 +138,8 @@ static const void *base64HandleKey = &base64HandleKey;
 - (void)mnz_imageForNode:(MEGANode *)node {
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:NSLocalizedString(@"My chat files", @"Destination folder name of chat files")]) {
-                [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-                    if (node.handle == myChatFilesNode.handle) {
-                        self.image = UIImage.mnz_folderMyChatFilesImage;
-                    } else {
-                        [self mnz_commonFolderImageForNode:node];
-                    }
-                }];
+            if ([MyChatFilesFolderNodeAccess.shared isTargetNodeFor:node]) {
+                self.image = UIImage.mnz_folderMyChatFilesImage;
             } else if ([node isBackupNode]) {
                 if ([node.parent isBackupRootNode]) {
                     ![node.deviceId isEqualToString:@""] ? self.image = UIImage.mnz_devicePCFolderBackUpImage : [self mnz_commonFolderImageForNode:node];

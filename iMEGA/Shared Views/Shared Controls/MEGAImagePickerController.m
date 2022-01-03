@@ -128,8 +128,12 @@
     } else if (self.toShareThroughChat) {
         [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
         self.filePath = imagePath.mnz_relativeLocalPath;
-        [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-            [self triggerPathCompletion:myChatFilesNode];
+        __weak __typeof__(self) weakSelf = self;
+        [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {
+            if (error || myChatFilesFolderNode == nil) {
+                MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
+            }
+            [weakSelf triggerPathCompletion:myChatFilesFolderNode];
         }];
     }
 }
@@ -139,8 +143,12 @@
         [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toShareThroughChat) {
-        [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-            [self triggerPathCompletion:myChatFilesNode];
+        __weak __typeof__(self) weakSelf = self;
+        [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {
+            if (error || myChatFilesFolderNode == nil) {
+                MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
+            }
+            [weakSelf triggerPathCompletion:myChatFilesFolderNode];
         }];
     }
 }

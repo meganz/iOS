@@ -8,19 +8,14 @@ struct AccountRepository: AccountRepositoryProtocol {
     }
     
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
-        sdk.getMyChatFilesFolder(with: RequestDelegate { (result) in
-            switch result {
-            case .success(let request):
-                guard let node = sdk.node(forHandle: request.nodeHandle) else {
-                    completion(.failure(AccountErrorEntity.generic))
-                    return
-                }
-                completion(.success(NodeEntity(node: node)))
-                
-            case .failure(_):
+        MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, error in
+            guard let myChatFilesFolderNode = myChatFilesFolderNode else {
                 completion(.failure(AccountErrorEntity.nodeNotFound))
+                return
             }
-        })
+            
+            completion(.success(NodeEntity(node: myChatFilesFolderNode)))
+        }
     }
     
     func totalNodesCount() -> UInt {

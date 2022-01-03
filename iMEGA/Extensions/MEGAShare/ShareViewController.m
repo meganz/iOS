@@ -851,8 +851,12 @@
     self.chats = chats;
     self.users = users;
     
-    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-        [self performUploadToParentNode:myChatFilesNode];
+    __weak __typeof__(self) weakSelf = self;
+    [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {
+        if (error || myChatFilesFolderNode == nil) {
+            MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
+        }
+        [weakSelf performUploadToParentNode:myChatFilesFolderNode];
     }];
 }
 
