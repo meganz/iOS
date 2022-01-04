@@ -54,8 +54,4 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     func showRenameChatAlert() {
         viewModel?.dispatch(.showRenameChatAlert)
     }
-    
-    func didAddFirstParticipant() {
-        viewModel?.dispatch(.didAddFirstParticipant)
-    }
 }

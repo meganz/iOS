@@ -27,7 +27,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false, isOneToOne: false),
                 .showWaitingForOthersMessage,
-                .startCompatibilityWarningViewTimer,
                 .updateHasLocalAudio(false)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)

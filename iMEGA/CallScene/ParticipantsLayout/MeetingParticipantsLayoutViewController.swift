@@ -16,7 +16,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var stackViewTopConstraint: NSLayoutConstraint!
     
     private var reconncectingNotificationView: CallNotificationView?
-    private var meetingCompatibilityWarning: MeetingCompatibilityWarning?
     private var appBecomeActiveObserver: NSObjectProtocol?
 
     // MARK: - Internal properties
@@ -123,10 +122,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             if isOneToOne {
                 navigationItem.rightBarButtonItems = nil
             }
-            let bottomPadding = MeetingFloatingPanelViewController.Constants.viewShortFormHeight + 16.0
-            meetingCompatibilityWarning = MeetingCompatibilityWarning(inView: view, bottomPadding: bottomPadding) { [weak self] in
-                self?.removeMeetingCompatibilityWarning()
-            }
         case .configLocalUserView(let position):
             localUserView.configure(for: position)
         case .switchMenusVisibility:
@@ -183,10 +178,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showWaitingForOthersMessageView()
         case .hideEmptyRoomMessage:
             removeEmptyRoomMessageView()
-        case .startCompatibilityWarningViewTimer:
-            meetingCompatibilityWarning?.startCompatibilityWarningViewTimer()
-        case .removeCompatibilityWarningView:
-            removeMeetingCompatibilityWarning()
         case .updateHasLocalAudio(let audio):
             localUserView.localAudio(enabled: audio)
         case .selectPinnedCellAt(let indexPath):
@@ -345,11 +336,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         emptyMeetingMessageView?.removeFromSuperview()
         emptyMeetingMessageView = nil
     }
-        
-    private func removeMeetingCompatibilityWarning() {
-        meetingCompatibilityWarning?.stopCompatibilityWarningViewTimer()
-        meetingCompatibilityWarning?.removeCompatibilityWarningView()
-    }
 }
 
 extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate {
@@ -374,17 +360,5 @@ extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
     
     func participantCellIsVisible(_ participant: CallParticipantEntity, at indexPath: IndexPath) {
         viewModel.dispatch(.particpantIsVisible(participant, index: indexPath.item))
-    }
-}
-
-// MARK:- UIGestureRecognizerDelegate
-
-extension MeetingParticipantsLayoutViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        // Avoid detecting the tap gesture when the compatibility popup is shown to the user.
-        if meetingCompatibilityWarning?.meetingCompatibilityWarningView?.superview != nil {
-            return false
-        }
-        return true
     }
 }
