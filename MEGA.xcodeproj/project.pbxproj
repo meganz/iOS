@@ -1706,9 +1706,6 @@
 		BF46B81C25A6B09A008641BB /* PSAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B81B25A6B09A008641BB /* PSAUseCase.swift */; };
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
-		BF4D8D4B269FD5AE004C512A /* MeetingCompatibilityWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF4D8D46269FD5AD004C512A /* MeetingCompatibilityWarningView.xib */; };
-		BF4D8D4C269FD5AE004C512A /* MeetingCompatibilityWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D47269FD5AD004C512A /* MeetingCompatibilityWarningView.swift */; };
-		BF4D8D4D269FD5AE004C512A /* MeetingCompatibilityWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D8D48269FD5AD004C512A /* MeetingCompatibilityWarning.swift */; };
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
 		BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
 		BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
@@ -3884,9 +3881,6 @@
 		BF46B81B25A6B09A008641BB /* PSAUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAUseCase.swift; sourceTree = "<group>"; };
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
-		BF4D8D46269FD5AD004C512A /* MeetingCompatibilityWarningView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingCompatibilityWarningView.xib; sourceTree = "<group>"; };
-		BF4D8D47269FD5AD004C512A /* MeetingCompatibilityWarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCompatibilityWarningView.swift; sourceTree = "<group>"; };
-		BF4D8D48269FD5AD004C512A /* MeetingCompatibilityWarning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCompatibilityWarning.swift; sourceTree = "<group>"; };
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
 		BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatCall+Additions.swift"; sourceTree = "<group>"; };
 		BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteUseCase.swift; sourceTree = "<group>"; };
@@ -7529,7 +7523,6 @@
 		83E1B16125CBF4BF00C18548 /* CallScene */ = {
 			isa = PBXGroup;
 			children = (
-				BF4D8D45269FD5AD004C512A /* CompatibilityWarning */,
 				2F879C4D2629251200D2FA78 /* EncourageGuestUserToJoinMegaScene */,
 				BFB33D89263B922F006E203D /* EndMeetingOptions */,
 				83850A3B26B2AACC00C62304 /* EnterMeetingLinkScene */,
@@ -9026,16 +9019,6 @@
 			path = PSA;
 			sourceTree = "<group>";
 		};
-		BF4D8D45269FD5AD004C512A /* CompatibilityWarning */ = {
-			isa = PBXGroup;
-			children = (
-				BF4D8D48269FD5AD004C512A /* MeetingCompatibilityWarning.swift */,
-				BF4D8D47269FD5AD004C512A /* MeetingCompatibilityWarningView.swift */,
-				BF4D8D46269FD5AD004C512A /* MeetingCompatibilityWarningView.xib */,
-			);
-			path = CompatibilityWarning;
-			sourceTree = "<group>";
-		};
 		BF5E34152559E39A0055395E /* ExplorerContainerState */ = {
 			isa = PBXGroup;
 			children = (
@@ -10388,7 +10371,6 @@
 				B695B60B264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,
 				BFAB114F23CEA5C300BCE72D /* AlbumsTableViewController.xib in Resources */,
-				BF4D8D4B269FD5AE004C512A /* MeetingCompatibilityWarningView.xib in Resources */,
 				5B3B0D272684B91B00479A68 /* altIconDay@3x~ipad.png in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				BF66DFE32613E7BE00066F35 /* MeetingParticipantTableViewCell.xib in Resources */,
@@ -11281,7 +11263,6 @@
 				B6DC7CBC2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				B6FD64F32689E87F00988A17 /* MEGASortOrderType+Mapper.swift in Sources */,
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
-				BF4D8D4C269FD5AE004C512A /* MeetingCompatibilityWarningView.swift in Sources */,
 				5D60D50424DF77E700313955 /* Array+EmbedInStackView.swift in Sources */,
 				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
@@ -11508,7 +11489,6 @@
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
 				5D6D95C0252039CD0098BCAC /* FileSearchHistoryRepository.swift in Sources */,
 				BF66DFBE2613CC4500066F35 /* ChatRoomEntity+Mapper.swift in Sources */,
-				BF4D8D4D269FD5AE004C512A /* MeetingCompatibilityWarning.swift in Sources */,
 				838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,

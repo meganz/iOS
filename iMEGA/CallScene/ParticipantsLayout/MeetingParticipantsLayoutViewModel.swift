@@ -1,7 +1,6 @@
 
 protocol MeetingParticipantsLayoutRouting: Routing {
     func showRenameChatAlert()
-    func didAddFirstParticipant()
 }
 
 enum CallViewAction: ActionType {
@@ -13,7 +12,6 @@ enum CallViewAction: ActionType {
     case tapOnBackButton
     case switchIphoneOrientation(_ orientation: DeviceOrientation)
     case showRenameChatAlert
-    case didAddFirstParticipant
     case setNewTitle(String)
     case discardChangeTitle
     case renameTitleDidChange(String)
@@ -65,8 +63,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case showNoOneElseHereMessage
         case showWaitingForOthersMessage
         case hideEmptyRoomMessage
-        case startCompatibilityWarningViewTimer
-        case removeCompatibilityWarningView
         case updateHasLocalAudio(Bool)
         case selectPinnedCellAt(IndexPath?)
         case shouldHideSpeakerView(Bool)
@@ -293,10 +289,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 if chatRoom.chatType == .meeting {
                     invokeCommand?(.showWaitingForOthersMessage)
                 }
-                
-                if call.numberOfParticipants < 2 {
-                    invokeCommand?(.startCompatibilityWarningViewTimer)
-                }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
         case .onViewReady:
@@ -347,8 +339,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.enableRenameButton(chatRoom.title != newTitle && !newTitle.isEmpty))
         case .tapParticipantToPinAsSpeaker(let participant, let indexPath):
             tappedParticipant(participant, at: indexPath)
-        case .didAddFirstParticipant:
-            invokeCommand?(.startCompatibilityWarningViewTimer)
         case .fetchAvatar(let participant):
             participantName(for: participant.participantId) { [weak self] name in
                 guard let name = name else { return }
@@ -458,7 +448,6 @@ struct CallDurationInfo {
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
         initTimerIfNeeded(with: Int(call.duration))
-        invokeCommand?(.removeCompatibilityWarningView)
         participantName(for: participant.participantId) { [weak self] in
             participant.name = $0
             self?.callParticipants.append(participant)

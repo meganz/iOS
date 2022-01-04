@@ -2969,12 +2969,6 @@ public enum Strings {
         }
       }
     }
-    public enum Calls {
-      public enum Incompatibility {
-        /// We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.
-        public static let warningMessage = Strings.tr("Localizable", "calls.incompatibility.warningMessage")
-      }
-    }
     public enum CameraUploads {
       public enum Years {
         /// Years

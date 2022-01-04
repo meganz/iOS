@@ -2608,8 +2608,6 @@
 "cloudDrive.nodeInfo.owner"="%@（创建者）";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-恢复密钥";
-/* This message is shown when calling and the receiver is not picking up the call */
-"calls.incompatibility.warningMessage"="我们正在升级MEGAchat。请所有参会者将MEGA App更新至最新版本，否则您的通话可能无法连接。";
 /* Hint text to display user's current email */
 "account.changeEmail.currentEmail"="当前电子邮件地址";
 /* Title of Over Disk Quota dialog */
