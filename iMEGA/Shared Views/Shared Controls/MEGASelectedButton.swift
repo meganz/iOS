@@ -47,7 +47,8 @@ class MEGAPlayerButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        self.layer.cornerRadius = frame.height / 2
+        let height: CGFloat = frame.height
+        let divisor: CGFloat = 2.0
+        self.layer.cornerRadius = height / divisor
     }
 }

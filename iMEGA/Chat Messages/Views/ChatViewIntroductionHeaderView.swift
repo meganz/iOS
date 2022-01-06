@@ -122,7 +122,9 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        let viewPadding: CGFloat = mainStackViewTopConstraint.constant + mainStackViewBottomConstraint.constant
+        let topConstraint: CGFloat = mainStackViewTopConstraint.constant
+        let bottomConstraint: CGFloat = mainStackViewBottomConstraint.constant
+        let viewPadding: CGFloat = topConstraint + bottomConstraint
         
         let participantsInformationAvailableWidth = avatarImageView.isHidden ? size.width : size.width - avatarImageViewWidthConstraint.constant
         let participantsInformationAvailableSize = CGSize(width: participantsInformationAvailableWidth, height: size.height)

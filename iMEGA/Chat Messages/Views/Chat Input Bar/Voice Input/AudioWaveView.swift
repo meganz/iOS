@@ -13,15 +13,17 @@ class AudioWaveView: UIView {
     }
 
     /// The value of level can be between 1 and 100
-    var level: Int = 1  {
+    var level: Int = 1 {
         didSet {
             guard level >= 1 && level <= 100 else {
                 fatalError("AudioWaveView: level range should be from 1 to 100 including both")
             }
-            
-            let range: CGFloat = 1.0 - proportionalDefaultMultiplier
-            let block: CGFloat = range / 99.0
-            let multiplier = proportionalDefaultMultiplier + (block * CGFloat(level))
+            let newLevel: CGFloat = CGFloat(level)
+            let defaultMultiplier: CGFloat = proportionalDefaultMultiplier
+            let range = 1.0 - defaultMultiplier
+            let block = range / 99.0
+            let blockLevel = block * newLevel
+            let multiplier = defaultMultiplier + blockLevel
             
             removeConstraint(proportionalHeightConstraint)
             proportionalHeightConstraint = representationView.heightAnchor.constraint(equalTo: heightAnchor,
