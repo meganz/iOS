@@ -357,7 +357,7 @@ class MessageInputBar: UIView {
         semiTransparentView.isHidden = false
 
         let keyboard = messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0
-        let contentHeight = keyboard + messageTextViewBottomConstraint.constant + messageTextView.intrinsicContentSize.height + editViewHeightConstraint.constant
+        let contentHeight = [keyboard, messageTextViewBottomConstraint.constant, messageTextView.intrinsicContentSize.height, editViewHeightConstraint.constant].reduce(0, +)
         let topConstraintValue = UIScreen.main.bounds.height - contentHeight
 
         editViewTopConstraint.constant = topConstraintValue

@@ -85,7 +85,8 @@ final class SlidePanelAnimationController {
             fatalError("animationOffsetY in SlidePanelAnimationController must be set.")
         }
         
-        var fraction: CGFloat = -translationY / animationOffsetY
+        let negativeTranslationY = translationY * -1
+        var fraction = negativeTranslationY / animationOffsetY
         
         if currentPosition == .top {
             fraction *= -1

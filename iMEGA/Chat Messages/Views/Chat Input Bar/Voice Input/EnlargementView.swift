@@ -43,8 +43,9 @@ class EnlargementView: UIView {
     }
     
     var width: CGFloat {
-        let extraWidth = (originalWidth * (finalRatio * progress))
-        return enlarge ? (originalWidth + extraWidth) : (originalWidth - extraWidth)
+        let ratio = finalRatio * progress
+        let extraWidth = originalWidth * ratio
+        return enlarge ? originalWidth + extraWidth : originalWidth - extraWidth
     }
     
     var height: CGFloat {
