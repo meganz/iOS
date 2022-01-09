@@ -11,9 +11,9 @@ struct UploadFromURL {
 extension UploadFromURL {
 
     static var live: Self {
-        let fileManager = FileManager.default
-        let megaSDK = MEGASdkManager.sharedMEGASdk()
-        let uploadDirectory = fileManager.uploadsDirectory() as NSString
+        let fileManager: FileManager = FileManager.default
+        let megaSDK: MEGASdk = MEGASdkManager.sharedMEGASdk()
+        let uploadDirectory: NSString = fileManager.uploadsDirectory() as NSString
 
         return Self { (url, parentNodeHandle) -> Void in
             let localFilePath = uploadDirectory.appendingPathComponent(url.lastPathComponent)

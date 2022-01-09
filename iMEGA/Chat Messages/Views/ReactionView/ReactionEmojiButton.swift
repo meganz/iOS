@@ -49,7 +49,7 @@ class ReactionEmojiButton: UIButton {
         if emojiSelected {
             layer.borderColor = UIColor.mnz_(fromHexString: "009476").cgColor
         } else {
-            layer.borderColor = UIColor.mnz_reactionBubbleBoarder(self.traitCollection).cgColor
+            layer.borderColor = UIColor(named: "reactionBubbleBoarder")?.cgColor ?? UIColor.white.cgColor
         }
         backgroundColor = UIColor.mnz_reactionBubbleBackgroundColor(self.traitCollection, selected: emojiSelected)
 

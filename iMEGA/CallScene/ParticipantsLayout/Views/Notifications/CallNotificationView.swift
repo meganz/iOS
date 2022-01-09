@@ -26,14 +26,19 @@ class CallNotificationView: UIView {
     
     func show(message: String, backgroundColor: UIColor, autoFadeOut: Bool) {
         translatesAutoresizingMaskIntoConstraints = false
+        
         guard let superview = superview else {
             return
         }
+        
         self.notificationLabel.text = message
         self.backgroundColor = backgroundColor
-        NSLayoutConstraint.activate([centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+        let height: CGFloat = frame.size.height * -1
+        let anchorX: NSLayoutXAxisAnchor = superview.centerXAnchor
+        let anchorTop: NSLayoutYAxisAnchor = superview.topAnchor
+        NSLayoutConstraint.activate([centerXAnchor.constraint(equalTo: anchorX),
                                      heightAnchor.constraint(equalToConstant: notificationHeight),
-                                     topAnchor.constraint(equalTo: superview.topAnchor, constant: -frame.size.height)
+                                     topAnchor.constraint(equalTo: anchorTop, constant: height)
         ])
         
         fadeIn()
@@ -46,14 +51,15 @@ class CallNotificationView: UIView {
     }
     
     func fadeIn(withDuration duration: TimeInterval = 0.5) {
-        var offset: CGFloat = frame.size.height + 16
+        var offsetY: CGFloat = frame.size.height + 16
+        let offsetX: CGFloat = 0
 
         if let topSafeAreaInsets = superview?.safeAreaInsets.top {
-            offset += topSafeAreaInsets
+            offsetY += topSafeAreaInsets
         }
         
         UIView.animate(withDuration: duration, animations: { [weak self] in
-            self?.transform = CGAffineTransform(translationX: 0, y: offset)
+            self?.transform = CGAffineTransform(translationX: offsetX, y: offsetY)
         })
     }
     

@@ -70,32 +70,37 @@ final class AudioPlaylistViewController: UIViewController {
             toolbarView.isHidden = false
             
             UIView.animate(withDuration: 0.5,
-                             delay: 0,
-                             usingSpringWithDamping: 1.0,
-                             initialSpringVelocity: 1.0,
-                             options: .curveEaseInOut,
-                             animations: {
-                                self.toolbarBottomConstraint.constant = 0
-                                self.toolbarView.layoutIfNeeded()
-                                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.toolbarView.frame.height, right: 0);
+                           delay: 0,
+                           usingSpringWithDamping: 1.0,
+                           initialSpringVelocity: 1.0,
+                           options: .curveEaseInOut,
+                           animations: {
+                self.toolbarBottomConstraint.constant = 0
+                self.toolbarView.layoutIfNeeded()
+                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.toolbarView.frame.height, right: 0);
             })
         }
     }
     
-    private func hideToolbarIfNeeded() {
-        if tableView.indexPathsForSelectedRows?.isEmpty ?? true {
-            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0);
-            
-            UIView.animate(withDuration: 0.5,
-                             delay: 0,
-                             usingSpringWithDamping: 1.0,
-                             initialSpringVelocity: 1.0,
-                             options: .curveEaseInOut) {
-                    self.toolbarBottomConstraint.constant = self.toolbarView.frame.height * -1
-                self.toolbarView.layoutIfNeeded()
-            } completion: { _ in
-                self.toolbarView.isHidden = true
-            }
+    private func hideToolbar() {
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        let duration: CGFloat = 0.5
+        let delay: CGFloat = 0.0
+        let damping: CGFloat = 1.0
+        let velocity: CGFloat = 1.0
+        let option: UIView.AnimationOptions = .curveEaseInOut
+        
+        UIView.animate(withDuration: duration,
+                       delay: delay,
+                       usingSpringWithDamping: damping,
+                       initialSpringVelocity: velocity,
+                       options: option) {
+            let height: CGFloat = self.toolbarView.frame.height
+            self.toolbarBottomConstraint.constant = height * -1
+            self.toolbarView.layoutIfNeeded()
+        } completion: { _ in
+            self.toolbarView.isHidden = true
         }
     }
     
@@ -118,7 +123,7 @@ final class AudioPlaylistViewController: UIViewController {
         if let item = item {
             indexPaths = playlistSource.indexPathsOf(item: item) ?? []
         }
-            
+        
         let selectedIndexPaths = tableView.indexPathsForSelectedRows
         
         tableView.beginUpdates()
@@ -126,13 +131,13 @@ final class AudioPlaylistViewController: UIViewController {
         tableView.endUpdates()
         
         let indexesToReload = item != nil ?
-            Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))) : selectedIndexPaths
+        Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))) : selectedIndexPaths
         
         indexesToReload?.forEach {
             tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
         }
     }
-
+    
     private func enableUserInteraction() {
         tableView.isUserInteractionEnabled = true
     }
@@ -140,7 +145,7 @@ final class AudioPlaylistViewController: UIViewController {
     private func disableUserInteraction() {
         tableView.isUserInteractionEnabled = false
     }
-
+    
     // MARK: - UI configurations
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundElevated(traitCollection)
@@ -197,13 +202,15 @@ final class AudioPlaylistViewController: UIViewController {
             titleLabel.text = title
         case .deselectAll:
             tableView.indexPathsForSelectedRows?.forEach { tableView.deselectRow(at: $0, animated: false) }
-            if tableView.numberOfRows(inSection: 1) == 0 {
-                hideToolbarIfNeeded()
+            if tableView.numberOfRows(inSection: 1) == 0 && tableView.indexPathsForSelectedRows?.isEmpty ?? true {
+                hideToolbar()
             }
         case .showToolbar:
             showToolbar()
         case .hideToolbar:
-            hideToolbarIfNeeded()
+            if tableView.indexPathsForSelectedRows?.isEmpty ?? true {
+                hideToolbar()
+            }
         case .enableUserInteraction:
             enableUserInteraction()
         case .disableUserInteraction:
