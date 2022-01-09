@@ -12,7 +12,7 @@ class CallCollectionView: UICollectionView {
     private weak var callCollectionViewDelegate: CallCollectionViewDelegate?
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
-
+    
     func configure(with callCollectionViewDelegate: CallCollectionViewDelegate) {
         dataSource = self
         delegate = self
@@ -57,8 +57,8 @@ class CallCollectionView: UICollectionView {
               case let indexPath = IndexPath(item: index, section: 0),
               let cell = cellForItem(at: indexPath) as? CallParticipantCell,
               cell.participant == participant else {
-            return
-        }
+                  return
+              }
         
         cell.setAvatar(image: image)
     }
@@ -123,39 +123,45 @@ extension CallCollectionView: UICollectionViewDelegate {
 }
 
 extension CallCollectionView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch layoutMode {
         case .grid:
+            let width: CGFloat = collectionView.frame.size.width
+            let height: CGFloat = collectionView.frame.size.height
+            
             if UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat {
                 switch callParticipants.count {
                 case 1:
                     return collectionView.frame.size
                 case 2:
-                    return  CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height / 2  - spacingForCells)
+                    return  CGSize(width: width, height: height / 2 - spacingForCells)
                 case 3:
-                    return  CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height / 3 - spacingForCells)
+                    return  CGSize(width: width, height: height / 3 - spacingForCells)
                 case 4:
-                    return  CGSize(width: collectionView.frame.size.width / 2  - spacingForCells, height: collectionView.frame.size.height / 2 - spacingForCells)
+                    return  CGSize(width: width / 2  - spacingForCells, height: height / 2 - spacingForCells)
                 default:
-                    return  CGSize(width: collectionView.frame.size.width / 2  - spacingForCells, height: collectionView.frame.size.height / 3 - spacingForCells)
+                    return  CGSize(width: width / 2 - spacingForCells, height: height / 3 - spacingForCells)
                 }
             } else {
                 switch callParticipants.count {
                 case 1:
                     return collectionView.frame.size
                 case 2:
-                    return  CGSize(width: collectionView.frame.size.width / 2 - spacingForCells, height: collectionView.frame.size.height)
+                    return  CGSize(width: width / 2 - spacingForCells, height: height)
                 case 3:
-                    return  CGSize(width: collectionView.frame.size.width / 3 - spacingForCells, height: collectionView.frame.size.height)
+                    return  CGSize(width: width / 3 - spacingForCells, height: height)
                 case 4:
-                    return  CGSize(width: collectionView.frame.size.width / 2 - spacingForCells, height: collectionView.frame.size.height / 2 - spacingForCells)
+                    return  CGSize(width: width / 2 - spacingForCells, height: height / 2 - spacingForCells)
                 default:
-                    return  CGSize(width: collectionView.frame.size.width / 3 - spacingForCells, height: collectionView.frame.size.height / 2 - spacingForCells)
+                    return  CGSize(width: width / 3 - spacingForCells, height: height / 2 - spacingForCells)
                 }
             }
         case .speaker:
-            return  CGSize(width: 100, height: 100)
+            let length: CGFloat = 100
+            return  CGSize(width: length, height: length)
         }
     }
     

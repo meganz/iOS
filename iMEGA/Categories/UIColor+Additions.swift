@@ -172,38 +172,47 @@ extension UIColor {
         }
     }
     
-    @objc class func mnz_reactionBubbleBoarder(_ traitCollection: UITraitCollection) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
-        case .dark:
-            return UIColor.mnz_(fromHexString: "38383A")
-        @unknown default:
-            return UIColor.white
-        }
-    }
-    
     @objc class func mnz_reactionBubbleBackgroundColor(_ traitCollection: UITraitCollection, selected: Bool) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if selected {
-                return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+                let red: CGFloat = 0.0
+                let green: CGFloat = 148.0/255.0
+                let blue: CGFloat = 118.0/255.0
+                let opacity: CGFloat = 0.1
+                
+                return UIColor(red: red, green: green, blue: blue, alpha: opacity)
             } else {
                 return  UIColor.mnz_secondaryBackground(for: traitCollection)
             }
             
         case .dark:
             if selected {
-                return UIColor(red: 0, green: 163.0/255.0, blue: 130.0/255.0, alpha: 0.3)
+                let red: CGFloat = 0
+                let green: CGFloat = 163.0/255.0
+                let blue: CGFloat = 130.0/255.0
+                let opacity: CGFloat = 0.3
+                
+                return UIColor(red: red, green: green, blue: blue, alpha: opacity)
             } else {
                 return  UIColor.mnz_secondaryBackground(for: traitCollection)
             }
             
         @unknown default:
             if selected {
-                return UIColor(red: 0, green: 148.0/255.0, blue: 118.0/255.0, alpha: 0.1)
+                let red: CGFloat = 0
+                let green: CGFloat = 148.0/255.0
+                let blue: CGFloat = 118.0/255.0
+                let opacity: CGFloat = 0.1
+                
+                return UIColor(red: red, green: green, blue: blue, alpha: opacity)
             } else {
-                return  UIColor(red: 3.0/255, green: 3.0/255.0, blue: 3.0/255.0, alpha: 0.1)
+                let red: CGFloat = 3.0/255
+                let green: CGFloat = 3.0/255.0
+                let blue: CGFloat = 3.0/255.0
+                let opacity: CGFloat = 0.1
+                
+                return  UIColor(red:red, green: green, blue: blue, alpha: opacity)
             }
         }
     }
