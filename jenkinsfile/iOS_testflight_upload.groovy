@@ -19,25 +19,47 @@ pipeline {
         APP_STORE_CONNECT_ISSUER_ID = credentials('APP_STORE_CONNECT_ISSUER_ID')
         APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
         MATCH_PASSWORD = credentials('MATCH_PASSWORD')
+        APP_STORE_CONNECT_API_KEY_VALUE = credentials('APP_STORE_CONNECT_API_KEY_VALUE')
+        TRANSIFIX_AUTHORIZATION_TOKEN = credentials('TRANSIFIX_AUTHORIZATION_TOKEN')
     }
     post {
         success {
-            slackSend color: "good", message: "Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Testflight"
+            script {
+                def slackMessage = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Testflight"
+                
+                if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
+                    slackMessage = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded"
+                }
+                
+                slackSend color: "good", message: slackMessage
+            }
         }
         failure {
             script {
+                def slackMessage = ":x: Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
+
+                if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
+                    slackMessage = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed"
+                }
+
                 withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
                     sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    slackUploadFile filePath:"console.txt", initialComment:"Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
+                    slackUploadFile filePath:"console.txt", initialComment: slackMessage
                 }
-            }
+            }                    
         }
         cleanup {
             cleanWs()
         }
     }
     stages {
-        stage('Prepare Source') {
+        stage('Update submodule and pods') {
+            when { 
+                anyOf {
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                }
+            }
             parallel {
                 stage('Submodule update and run cmake') {
                     steps {
@@ -56,18 +78,6 @@ pipeline {
                     }
                 }
 
-                stage('Downloading third party libraries') {
-                    steps {
-                        gitlabCommitStatus(name: 'Downloading third party libraries') {
-                            injectEnvironments({
-                                retry(3) {
-                                    sh "sh download_3rdparty.sh"
-                                }
-                            })
-                        }
-                    }
-                }
-
                 stage('Update pods') {
                     steps {
                         gitlabCommitStatus(name: 'Update pods') {
@@ -75,7 +85,29 @@ pipeline {
                                 sh "bundle install"
                                 sh "bundle exec pod repo update"
                                 sh "bundle exec pod cache clean --all --verbose"
-                                sh "bundle exec pod install --verbose "
+                                sh "bundle exec pod install --verbose"
+                            })
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Prepare') {
+            parallel {
+                stage('Downloading third party libraries') {
+                    when { 
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Downloading third party libraries') {
+                            injectEnvironments({
+                                retry(3) {
+                                    sh "sh download_3rdparty.sh"
+                                }
                             })
                         }
                     }
@@ -97,6 +129,12 @@ pipeline {
                 }
 
                 stage('Install certificate and provisioning profiles in temporary keychain') {
+                    when { 
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    }
                     steps {
                         gitlabCommitStatus(name: 'Install certificate and provisioning profiles in temporary keychain') {
                             injectEnvironments({
@@ -108,10 +146,32 @@ pipeline {
                         }
                     }
                 }
+
+                stage('Download app metadata') {
+                    when {
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Download app metadata') {
+                            injectEnvironments({
+                                sh 'bundle exec fastlane download_metadata'
+                            })
+                        }
+                    }
+                }
             }
         }
 
         stage('Archive') {
+            when { 
+                anyOf {
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                }
+            }
             steps {
                 gitlabCommitStatus(name: 'Archive') {
                     injectEnvironments({
@@ -121,9 +181,15 @@ pipeline {
             }
         }
 
-        stage('Upload build and debug symbols') {
+        stage('Upload') {
             parallel {
-                stage('Upload to Testflight') {     
+                stage('Upload to Testflight') {    
+                    when { 
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    } 
                     steps {
                         gitlabCommitStatus(name: 'Upload to Testflight') {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
@@ -136,6 +202,12 @@ pipeline {
                 }
 
                 stage('Upload symbols to crashlytics') {
+                    when { 
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    }
                     steps {
                         gitlabCommitStatus(name: 'Upload symbols to crashlytics') {
                             injectEnvironments({
@@ -144,10 +216,35 @@ pipeline {
                         }
                     }
                 }
+
+                stage('Update what\'s new to appstore connect') {
+                    when {
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Update what\'s new to appstore connect') {
+                            injectEnvironments({
+                                dir("fastlane/") {
+                                    sh 'python3 UploadChangeLogs.py \"$TRANSIFIX_AUTHORIZATION_TOKEN\" $MEGA_VERSION_NUMBER'
+                                }
+                                sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
+                            })
+                        }
+                    }
+                }
             }
         }
 
         stage('Delete temporary keychain') {
+            when { 
+                anyOf {
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                }
+            }
             steps {
                 gitlabCommitStatus(name: 'Delete temporary keychain') {
                     injectEnvironments({
