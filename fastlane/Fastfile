@@ -13,6 +13,7 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
+require 'json'
 
 # Directories
 BUILD_DIR       = File.expand_path('build')
@@ -191,4 +192,43 @@ platform :ios do
       devices: ["iPhone 8"]
     )
   end
+
+  desc "Download metadata"
+  lane :download_metadata do
+    api_key_value = ENV['APP_STORE_CONNECT_API_KEY_VALUE']
+    final_api_key_value = api_key_value.gsub("\\n", "\n")
+
+    api_key_json = {
+      "key_id": ENV['APP_STORE_CONNECT_KEY_ID'],
+      "issuer_id": ENV['APP_STORE_CONNECT_ISSUER_ID'],
+      "key": final_api_key_value,
+      "in_house": false 
+    }
+
+    File.write("api_key_path.json", JSON.dump(api_key_json))
+    sh "bundle exec fastlane deliver download_metadata --api_key_path api_key_path.json"
+  end
+
+  desc "Uploads metadata to app store connect"
+  lane :upload_metadata_to_appstore_connect do
+    
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+      is_key_content_base64: true,
+      in_house: false
+    )
+
+    get_version_number(target: "MEGA")
+
+    deliver(
+      api_key: api_key,
+      app_version: lane_context[SharedValues::VERSION_NUMBER],
+      force: true, # Skip HTMl report verification
+      skip_screenshots: true,
+      skip_binary_upload: true
+    )
+  end
+
 end

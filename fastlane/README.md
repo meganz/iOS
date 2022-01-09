@@ -103,6 +103,22 @@ Upload to iTunesConnect
 
 MEGA unit tests
 
+### ios download_metadata
+
+```sh
+[bundle exec] fastlane ios download_metadata
+```
+
+Download metadata
+
+### ios upload_metadata_to_appstore_connect
+
+```sh
+[bundle exec] fastlane ios upload_metadata_to_appstore_connect
+```
+
+Uploads metadata to app store connect
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
