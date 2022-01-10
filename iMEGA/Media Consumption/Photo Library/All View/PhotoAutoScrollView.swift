@@ -9,7 +9,7 @@ struct PhotoAutoScrollView: View {
     var body: some View {
         EmptyView()
             .onChange(of: viewModel.autoScroll) { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.default.speed(3.0)) {
                     scrollProxy.scrollTo(viewModel.position, anchor: .center)
                 }
             }

@@ -18,8 +18,8 @@ struct PhotoCard<Content: View>: View {
         GeometryReader { proxy in
             ZStack {
                 CardImage(container: viewModel.thumbnailContainer)
-                    .position(x: proxy.size.width / 2,
-                              y: proxy.size.height / 2)
+                    .position(x: proxy.size.width / CGFloat(2),
+                              y: proxy.size.height / CGFloat(2))
                 
                 VStack {
                     content
@@ -37,10 +37,8 @@ struct PhotoCard<Content: View>: View {
         }
         .cornerRadius(12)
         .contentShape(Rectangle())
-        .onLoad {
-            DispatchQueue.global(qos: .utility).async {
-                viewModel.loadThumbnail()
-            }
+        .onAppear {
+            viewModel.loadThumbnail()
         }
     }
 }

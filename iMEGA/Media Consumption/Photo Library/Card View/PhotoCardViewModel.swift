@@ -25,6 +25,15 @@ class PhotoCardViewModel: ObservableObject {
             return
         }
         
+        let cachedPreviewPath = thumbnailUseCase.cachedPreview(for: photo).path
+        if let image = Image(contentsOfFile: cachedPreviewPath) {
+            thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
+        } else {
+            loadThumbnailFromRemote(for: photo)
+        }
+    }
+    
+    private func loadThumbnailFromRemote(for photo: NodeEntity) {
         thumbnailUseCase
             .loadThumbnailAndPreview(for: photo)
             .receive(on: DispatchQueue.global(qos: .utility))

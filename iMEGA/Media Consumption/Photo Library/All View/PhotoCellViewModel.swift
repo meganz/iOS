@@ -28,7 +28,8 @@ final class PhotoCellViewModel: ObservableObject {
             return
         }
         
-        if let image = Image(contentsOfFile: thumbnailUseCase.cachedThumbnail(for: photo).path) {
+        let cachedThumbnailPath = thumbnailUseCase.cachedThumbnail(for: photo).path
+        if let image = Image(contentsOfFile: cachedThumbnailPath) {
             thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
         } else {
             DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.3) {
