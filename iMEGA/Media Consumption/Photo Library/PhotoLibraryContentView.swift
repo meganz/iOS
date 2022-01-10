@@ -48,27 +48,37 @@ struct PhotoLibraryContentView: View {
         if viewModel.library.isEmpty {
             EmptyView()
         } else {
-            switch viewModel.selectedMode {
-            case .year:
-                PhotoLibraryYearView(
-                    viewModel: PhotoLibraryYearViewModel(libraryViewModel: viewModel),
-                    router: router
-                )
-            case .month:
-                PhotoLibraryMonthView(
-                    viewModel: PhotoLibraryMonthViewModel(libraryViewModel: viewModel),
-                    router: router
-                )
-            case .day:
-                PhotoLibraryDayView(
-                    viewModel: PhotoLibraryDayViewModel(libraryViewModel: viewModel),
-                    router: router
-                )
-            case .all:
+            ZStack {
+                switch viewModel.selectedMode {
+                case .year:
+                    PhotoLibraryYearView(
+                        viewModel: PhotoLibraryYearViewModel(libraryViewModel: viewModel),
+                        router: router
+                    )
+                        .equatable()
+                case .month:
+                    PhotoLibraryMonthView(
+                        viewModel: PhotoLibraryMonthViewModel(libraryViewModel: viewModel),
+                        router: router
+                    )
+                        .equatable()
+                case .day:
+                    PhotoLibraryDayView(
+                        viewModel: PhotoLibraryDayViewModel(libraryViewModel: viewModel),
+                        router: router
+                    )
+                        .equatable()
+                case .all:
+                    EmptyView()
+                }
+                
                 PhotoLibraryAllView(
                     viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
                     router: router
                 )
+                    .equatable()
+                    .opacity(viewModel.selectedMode == .all ? 1 : 0)
+                    .zIndex(viewModel.selectedMode == .all ? 1 : -1)
             }
         }
     }

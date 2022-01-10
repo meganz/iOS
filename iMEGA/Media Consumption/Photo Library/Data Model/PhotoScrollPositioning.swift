@@ -9,6 +9,6 @@ extension PhotoScrollPosition {
     static let top = PhotoScrollPosition(handle: .invalid, date: Date(timeIntervalSince1970: 1))
 }
 
-protocol ScrollPositioning {
+protocol PhotoScrollPositioning {
     var position: PhotoScrollPosition? { get }
 }

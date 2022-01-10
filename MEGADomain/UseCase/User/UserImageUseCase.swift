@@ -31,7 +31,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
             return
         }
         
-        let destinationURLPath = fileRepo.cachedThumbnailURL(forHandle: base64Handle).path
+        let destinationURLPath = fileRepo.cachedThumbnailURL(for: base64Handle).path
         if let image = fetchImage(fromPath: destinationURLPath) {
             MEGALogDebug("UserImageUseCase: imaged fetched for \(base64Handle) at path \(destinationURLPath)")
             completion(.success(image))
@@ -56,7 +56,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
             return nil
         }
         
-        let destinationURL = fileRepo.cachedThumbnailURL(forHandle: base64Handle)
+        let destinationURL = fileRepo.cachedThumbnailURL(for: base64Handle)
         if let image = fetchImage(fromPath: destinationURL.path) {
             return image
         }

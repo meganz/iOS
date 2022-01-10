@@ -2,17 +2,17 @@ import Foundation
 
 @available(iOS 14.0, *)
 final class PhotoDayCardViewModel: PhotoCardViewModel {
-    private let photosByDay: PhotosByDay
+    private let photoByDay: PhotoByDay
     
     let title: String
     
     var badgeTitle: String? {
-        return photosByDay.photoNodeList.count > 1 ? "+\(photosByDay.photoNodeList.count - 1)": nil
+        return photoByDay.photoNodeList.count > 1 ? "+\(photoByDay.photoNodeList.count - 1)": nil
     }
     
     @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
-        var attr = photosByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day().attributed)
+        var attr = photoByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day().attributed)
         let bold = AttributeContainer.font(.title2.bold())
         attr.replaceAttributes(AttributeContainer.dateField(.month), with: bold)
         attr.replaceAttributes(AttributeContainer.dateField(.day), with: bold)
@@ -20,16 +20,16 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
         return attr
     }
     
-    init(photosByDay: PhotosByDay,
+    init(photoByDay: PhotoByDay,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
-        self.photosByDay = photosByDay
+        self.photoByDay = photoByDay
         
         if #available(iOS 15.0, *) {
-            title = photosByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day())
+            title = photoByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day())
         } else {
-            title = DateFormatter.dateLong().localisedString(from: photosByDay.categoryDate)
+            title = DateFormatter.dateLong().localisedString(from: photoByDay.categoryDate)
         }
         
-        super.init(coverPhoto: photosByDay.coverPhoto, thumbnailUseCase: thumbnailUseCase)
+        super.init(coverPhoto: photoByDay.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }
 }

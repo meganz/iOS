@@ -34,7 +34,7 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
     // MARK: - Shared Avatar Caching Path
 
     private func cachedAvatarFilePath(of userBase64Handle: MEGABase64Handle) -> URL {
-        fileRepo.cachedThumbnailURL(forHandle: userBase64Handle)
+        fileRepo.cachedThumbnailURL(for: userBase64Handle)
     }
 
     // MARK: - Search Local Cached Avatar

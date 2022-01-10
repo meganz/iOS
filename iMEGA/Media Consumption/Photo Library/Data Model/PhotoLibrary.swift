@@ -2,16 +2,16 @@ import Foundation
 import PinLayout
 import SwiftUI
 
-final class PhotoLibrary {
-    var allphotosByYearList: [PhotosByYear]
+struct PhotoLibrary {
+    let allphotoByYearList: [PhotoByYear]
     var underlyingMEGANodes: [MEGANode]
     
-    var allPhotosByMonthList: [PhotosByMonth] {
-        allphotosByYearList.flatMap { $0.photosByMonthList }
+    var allPhotosByMonthList: [PhotoByMonth] {
+        allphotoByYearList.flatMap { $0.photoByMonthList }
     }
     
-    var allPhotosByDayList: [PhotosByDay] {
-        allPhotosByMonthList.flatMap { $0.photosByDayList }
+    var allPhotosByDayList: [PhotoByDay] {
+        allPhotosByMonthList.flatMap { $0.photoByDayList }
     }
     
     var allPhotos: [NodeEntity] {
@@ -19,11 +19,17 @@ final class PhotoLibrary {
     }
     
     var isEmpty: Bool {
-        allphotosByYearList.isEmpty
+        allphotoByYearList.isEmpty
     }
     
-    init(photosByYearList: [PhotosByYear] = [], underlyingMEGANodes: [MEGANode] = []) {
-        self.allphotosByYearList = photosByYearList
+    init(photoByYearList: [PhotoByYear] = [], underlyingMEGANodes: [MEGANode] = []) {
+        self.allphotoByYearList = photoByYearList
         self.underlyingMEGANodes = underlyingMEGANodes
+    }
+}
+
+extension PhotoLibrary: Equatable {
+    static func == (lhs: PhotoLibrary, rhs: PhotoLibrary) -> Bool {
+        lhs.allphotoByYearList == rhs.allphotoByYearList
     }
 }

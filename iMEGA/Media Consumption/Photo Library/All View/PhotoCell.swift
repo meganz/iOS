@@ -17,10 +17,15 @@ struct PhotoCell: View {
             }
         }
         .gesture(viewModel.isEditingMode ? tap : nil)
-        .onLoad {
-            DispatchQueue.global(qos: .utility).async {
-                viewModel.loadThumbnail()
-            }
+        .onAppear {
+            viewModel.loadThumbnail()
         }
+    }
+}
+
+@available(iOS 14.0, *)
+extension PhotoCell: Equatable {
+    static func == (lhs: PhotoCell, rhs: PhotoCell) -> Bool {
+        true // we are taking over the update of the view
     }
 }

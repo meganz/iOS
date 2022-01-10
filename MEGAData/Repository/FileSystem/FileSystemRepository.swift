@@ -27,14 +27,14 @@ struct FileSystemRepository: FileRepositoryProtocol {
     }
 
     // MARK: - Thumbnail
-    func cachedThumbnailURL(forHandle base64Handle: MEGABase64Handle) -> URL {
+    func cachedThumbnailURL(for base64Handle: MEGABase64Handle) -> URL {
         let directory = appGroupSharedCacheURL.appendingPathComponent(Constants.thumbnailCacheDirectory, isDirectory: true)
         try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
         return directory.appendingPathComponent(base64Handle)
     }
     
     // MARK: - Preview
-    func cachedPreviewURL(forHandle base64Handle: MEGABase64Handle) -> URL {
+    func cachedPreviewURL(for base64Handle: MEGABase64Handle) -> URL {
         let directory = appGroupSharedCacheURL.appendingPathComponent(Constants.previewCacheDirectory, isDirectory: true)
         try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
         return directory.appendingPathComponent(base64Handle)

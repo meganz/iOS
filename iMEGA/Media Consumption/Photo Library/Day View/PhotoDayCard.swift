@@ -15,3 +15,10 @@ struct PhotoDayCard: View {
         }
     }
 }
+
+@available(iOS 14.0, *)
+extension PhotoDayCard: Equatable {
+    static func == (lhs: PhotoDayCard, rhs: PhotoDayCard) -> Bool {
+        true // we are taking over the update of the view
+    }
+}

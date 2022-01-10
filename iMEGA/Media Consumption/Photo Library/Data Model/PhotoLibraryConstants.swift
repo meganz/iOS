@@ -16,3 +16,7 @@ enum PhotoLibraryConstants {
         )
     ]
 }
+
+extension Notification.Name {
+    static let didFinishPhotoCardScrollPositionCalculation = Notification.Name("didFinishCardScrollPositionCalculation")
+}

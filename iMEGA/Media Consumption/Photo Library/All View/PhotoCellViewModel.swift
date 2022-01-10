@@ -6,8 +6,7 @@ import Combine
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    private var subscriptions = Set<AnyCancellable>()
-    private let placeholderImageContainer: ImageContainer
+    private let placeholderThumbnail: ImageContainer
 
     @Published var thumbnailContainer: ImageContainer
     let isEditingMode: Bool
@@ -18,24 +17,36 @@ final class PhotoCellViewModel: ObservableObject {
         self.photo = photo
         self.thumbnailUseCase = thumbnailUseCase
         self.isEditingMode = isEditingMode
+        
         let placeholderFileType = thumbnailUseCase.thumbnailPlaceholderFileType(forNodeName: photo.name)
-        placeholderImageContainer = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
-        thumbnailContainer = placeholderImageContainer
+        placeholderThumbnail = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
+        thumbnailContainer = placeholderThumbnail
     }
     
     func loadThumbnail() {
+        guard thumbnailContainer == placeholderThumbnail else {
+            return
+        }
+        
+        if let image = Image(contentsOfFile: thumbnailUseCase.cachedThumbnail(for: photo).path) {
+            thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
+        } else {
+            DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.3) {
+                self.loadThumbnailFromRemote()
+            }
+        }
+    }
+    
+    private func loadThumbnailFromRemote() {
         thumbnailUseCase
-            .getCachedThumbnail(for: photo.handle)
-            .receive(on: DispatchQueue.global(qos: .utility))
+            .loadThumbnail(for: photo)
+            .delay(for: .seconds(0.3), scheduler: DispatchQueue.global(qos: .userInitiated))
             .map { [weak self] in
                 ImageContainer(image: Image(contentsOfFile: $0.path), overlay: self?.photo.overlay)
             }
             .replaceError(with: nil)
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.thumbnailContainer = $0
-            }
-            .store(in: &subscriptions)
+            .assign(to: &$thumbnailContainer)
     }
 }

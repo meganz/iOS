@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 @available(iOS 14.0, *)
-struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, Content: View>: View where Category: PhotosChronologicalCategory {
+struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, Content: View>: View where Category: PhotoChronologicalCategory {
     @ObservedObject var viewModel: VM
     private let content: Content
     
@@ -17,7 +17,7 @@ struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, C
                 contentView()
                     .offset(in: .named("scrollView"))
                     .onPreferenceChange(OffsetPreferenceKey.self) {
-                        viewModel.scrollCalculator.recordContentOffset($0)
+                        viewModel.scrollTracker.trackContentOffset($0)
                     }
             }
             .coordinateSpace(name: "scrollView")

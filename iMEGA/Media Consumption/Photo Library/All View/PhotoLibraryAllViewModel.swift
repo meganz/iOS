@@ -1,51 +1,82 @@
 import Foundation
 
 @available(iOS 14.0, *)
-final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotosMonthSection> {
+final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSection> {
+    private var lastCardPosition: PhotoScrollPosition?
+    private var lastPhotoPosition: PhotoScrollPosition?
     
     override var position: PhotoScrollPosition? {
         guard let photoPosition = libraryViewModel.photoScrollPosition else {
-            MEGALogDebug("[Photos] uses card position \(String(describing: libraryViewModel.cardScrollPosition?.date))")
+            MEGALogDebug("[Photos] all position - uses card position \(String(describing: libraryViewModel.cardScrollPosition?.date))")
             return libraryViewModel.cardScrollPosition
         }
         
         guard let cardPosition = libraryViewModel.cardScrollPosition else {
-            MEGALogDebug("[Photos] uses photo position \(String(describing: photoPosition.date))")
+            MEGALogDebug("[Photos] all position - uses photo position \(String(describing: photoPosition.date))")
             return photoPosition
         }
         
-        let photosByDayList = photoCategoryList.flatMap { $0.photosByMonth.photosByDayList }
-        guard let dayCategory = photosByDayList.first(where: { $0.categoryDate == cardPosition.date.removeTimestamp() }) else {
-            MEGALogDebug("[Photos] can not find day category by card \(String(describing: cardPosition.date))")
+        let photoByDayList = photoCategoryList.flatMap { $0.photoByMonth.photoByDayList }
+        guard let dayCategory = photoByDayList.first(where: { $0.categoryDate == cardPosition.date.removeTimestamp() }) else {
+            MEGALogDebug("[Photos] all position - can not find day category by card \(String(describing: cardPosition.date))")
             return cardPosition
         }
         
         guard dayCategory.photoNodeList.first(where: { $0.handle == photoPosition.handle }) != nil else {
-            MEGALogDebug("[Photos] photo position \(String(describing: photoPosition.date)) is not in card: \(String(describing: cardPosition.date))")
+            MEGALogDebug("[Photos] all position - photo position \(String(describing: photoPosition.date)) is not in card: \(String(describing: cardPosition.date))")
             return cardPosition
         }
         
-        MEGALogDebug("[Photos] card contains photo position \(String(describing: photoPosition.date))")
+        MEGALogDebug("[Photos] all position - card contains photo position \(String(describing: photoPosition.date))")
         return photoPosition
     }
     
     override init(libraryViewModel: PhotoLibraryContentViewModel) {
         super.init(libraryViewModel: libraryViewModel)
         
+        photoCategoryList = libraryViewModel.library.allPhotosMonthSections
+        
+        subscribeToLibraryChange()
+        subscribeToSelectedModeChange()
+    }
+    
+    private func subscribeToLibraryChange() {
         libraryViewModel
             .$library
+            .dropFirst()
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .map {
                 $0.allPhotosMonthSections
             }
+            .filter { [weak self] in
+                self?.shouldRefreshTo($0) == true
+            }
+            .receive(on: DispatchQueue.main)
             .assign(to: &$photoCategoryList)
-        
-        
+    }
+    
+    private func shouldRefreshTo(_ categories: [PhotoMonthSection]) -> Bool {
+        photoCategoryList.flatMap {
+            $0.allPhotos
+        }
+        .shouldRefreshTo(
+            categories.flatMap {
+                $0.allPhotos
+            },
+            forVisiblePositions: scrollTracker.visiblePositions)
+    }
+    
+    private func subscribeToSelectedModeChange() {
         libraryViewModel
             .$selectedMode
             .dropFirst()
-            .sink { [weak self] _ in
+            .combinePrevious(.all)
+            .filter {
+                $0.previous == .all
+            }
+            .sink { [weak self, libraryViewModel = self.libraryViewModel] _ in
                 let previousPhotoPosition = libraryViewModel.photoScrollPosition
-                self?.scrollCalculator.calculateScrollPosition(&libraryViewModel.photoScrollPosition)
+                self?.scrollTracker.calculateScrollPosition(&libraryViewModel.photoScrollPosition)
                 
                 if previousPhotoPosition != libraryViewModel.photoScrollPosition {
                     // Clear card scroll position when photo scroll position changes
@@ -58,8 +89,16 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotosMonthSecti
                     libraryViewModel.photoScrollPosition = nil
                 }
                 
-                MEGALogDebug("[Photos] after calculation card:\(String(describing: libraryViewModel.cardScrollPosition?.date)), photo: \(String(describing: libraryViewModel.photoScrollPosition?.date))")
+                self?.lastCardPosition = libraryViewModel.cardScrollPosition
+                self?.lastPhotoPosition = libraryViewModel.photoScrollPosition
+                
+                MEGALogDebug("[Photos] all after calculation card:\(String(describing: libraryViewModel.cardScrollPosition?.date)), photo: \(String(describing: libraryViewModel.photoScrollPosition?.date))")
             }
             .store(in: &subscriptions)
+    }
+    
+    func hasPositionChange() -> Bool {
+        libraryViewModel.cardScrollPosition != lastCardPosition ||
+        libraryViewModel.photoScrollPosition != lastPhotoPosition
     }
 }
