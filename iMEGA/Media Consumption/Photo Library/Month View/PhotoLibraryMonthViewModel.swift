@@ -1,19 +1,16 @@
 import Foundation
 
 @available(iOS 14.0, *)
-final class PhotoLibraryMonthViewModel: PhotoLibraryModeCardViewModel<PhotosByMonth> {
+final class PhotoLibraryMonthViewModel: PhotoLibraryModeCardViewModel<PhotoByMonth> {
     init(libraryViewModel: PhotoLibraryContentViewModel) {
-        super.init(libraryViewModel: libraryViewModel) { $0.removeDay() }
-        
-        libraryViewModel
-            .$library
-            .map {
-                $0.allPhotosByMonthList
-            }
-            .assign(to: &$photoCategoryList)
+        super.init(libraryViewModel: libraryViewModel) {
+            $0.removeDay()
+        } categoryListTransformation: {
+            $0.allPhotosByMonthList
+        }
     }
     
-    override func didTapCategory(_ category: PhotosByMonth) {
+    override func didTapCategory(_ category: PhotoByMonth) {
         super.didTapCategory(category)
         libraryViewModel.selectedMode = .day
     }

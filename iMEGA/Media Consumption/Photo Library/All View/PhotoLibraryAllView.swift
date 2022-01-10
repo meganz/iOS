@@ -3,7 +3,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoLibraryAllView: View {
     @StateObject var viewModel: PhotoLibraryAllViewModel
-    var router: PhotoLibraryContentViewRouting
+    let router: PhotoLibraryContentViewRouting
     
     @State private var selectedNode: NodeEntity?
     @State private var columns: [GridItem] = Array(
@@ -13,32 +13,36 @@ struct PhotoLibraryAllView: View {
     
     var body: some View {
         GeometryReader { geoProxy in
-            PhotoLibraryModeView(viewModel: viewModel) {
-                LazyVGrid(columns: columns, spacing: 1, pinnedViews: .sectionHeaders) {
-                    ForEach(viewModel.photoCategoryList) { section in
-                        sectionView(for: section, viewPortSize: geoProxy.size)
+            ScrollViewReader { scrollProxy in
+                PhotoLibraryModeView(viewModel: viewModel) {
+                    LazyVGrid(columns: columns, spacing: 1, pinnedViews: .sectionHeaders) {
+                        ForEach(viewModel.photoCategoryList) { section in
+                            sectionView(for: section, viewPortSize: geoProxy.size)
+                                .id(section.categoryDate)
+                        }
                     }
                 }
+                .background(PhotoAutoScrollView(viewModel:
+                                                    PhotoAutoScrollViewModel(viewModel: viewModel),
+                                                scrollProxy: scrollProxy))
+                .fullScreenCover(item: $selectedNode) {
+                    router.photoBrowser(for: $0, viewModel: viewModel)
+                        .ignoresSafeArea()
+                }
             }
-            .fullScreenCover(item: $selectedNode) {
-                router.photoBrowser(for: $0, viewModel: viewModel)
-                    .ignoresSafeArea()
-            }
-            .id(UUID().uuidString)
         }
     }
     
-    private func sectionView(for section: PhotosMonthSection, viewPortSize: CGSize) -> some View {
-        Section(header: headerView(for: section)) {
-            ForEach(section.photosByMonth.allPhotos) { photo in
+    private func sectionView(for section: PhotoMonthSection, viewPortSize: CGSize) -> some View {
+        Section(header: PhotoMonthSectionHeader(section: section)) {
+            ForEach(section.photoByMonth.allPhotos) { photo in
                 Button(action: {
-                    if !viewModel.libraryViewModel.isEditingMode {
-                        withAnimation {
-                            selectedNode = photo
-                        }
+                    withAnimation {
+                        selectedNode = photo
                     }
                 }, label: {
-                    router.card(for: photo, isEditingMode: viewModel.libraryViewModel.isEditingMode)
+                    router.card(for: photo, viewModel: viewModel)
+                        .equatable()
                         .clipped()
                 })
                     .id(photo.position)
@@ -46,36 +50,22 @@ struct PhotoLibraryAllView: View {
                     .background(Color(white: 0, opacity: 0.1))
                     .frame(in: .named("scrollView"))
                     .onPreferenceChange(FramePreferenceKey.self) {
-                        viewModel.scrollCalculator.recordFrame($0, for: photo, inViewPort: viewPortSize)
+                        viewModel.scrollTracker.trackFrame($0, for: photo, inViewPort: viewPortSize)
                     }
                     .onAppear {
-                        viewModel.scrollCalculator.recordAppearedPosition(photo.position)
+                        viewModel.scrollTracker.trackAppearedPosition(photo.position)
                     }
                     .onDisappear {
-                        viewModel.scrollCalculator.recordDisappearedPosition(photo.position)
+                        viewModel.scrollTracker.trackDisappearedPosition(photo.position)
                     }
             }
         }
     }
-    
-    private func headerView(for section: PhotosMonthSection) -> some View {
-        HStack {
-            headerTitle(for: section)
-                .padding(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))
-                .blurryBackground(radius: 20)
-                .padding(EdgeInsets(top: 6, leading: 8, bottom: 6, trailing: 8))
-            
-            Spacer()
-        }
-    }
-    
-    @ViewBuilder
-    private func headerTitle(for section: PhotosMonthSection) -> some View {
-        if #available(iOS 15.0, *) {
-            Text(section.attributedTitle)
-        } else {
-            Text(section.title)
-                .font(.subheadline.weight(.semibold))
-        }
+}
+
+@available(iOS 14.0, *)
+extension PhotoLibraryAllView: Equatable {
+    static func == (lhs: PhotoLibraryAllView, rhs: PhotoLibraryAllView) -> Bool {
+        true // we are taking over the update of the view
     }
 }

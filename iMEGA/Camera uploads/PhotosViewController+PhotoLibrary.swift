@@ -11,8 +11,6 @@ extension PhotosViewController {
             router: PhotoLibraryContentViewRouter()
         )
         
-        photoLibraryPublisher.subscribe(photoLibraryContentViewModel)
-        
         let host = UIHostingController(rootView: content)
         addChild(host)
         container.wrap(host.view)
@@ -20,15 +18,21 @@ extension PhotosViewController {
         host.didMove(toParent: self)
     }
     
-    @objc func updatePhotoLibrary(by nodeList: MEGANodeList) {
+    @objc func updatePhotoLibrary(by nodes: [MEGANode]) {
         guard let libraryChild = children.first(where: { $0 is UIHostingController<PhotoLibraryContentView> }),
               let host = libraryChild as? UIHostingController<PhotoLibraryContentView> else {
                   return
               }
-        
-        let photoLibrary = nodeList.toPhotoLibrary()
-        host.view.isHidden = photoLibrary.isEmpty
-        photoLibraryPublisher.updatePhotoLibrary(photoLibrary)
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            MEGALogDebug("[Photos] update photo library")
+            let photoLibrary: PhotoLibrary = nodes.toPhotoLibrary()
+
+            DispatchQueue.main.async {
+                host.view.isHidden = photoLibrary.isEmpty
+                self.photoLibraryContentViewModel.library = photoLibrary
+            }
+        }
     }
     
     @objc func createPhotoLibraryContentViewModel() -> PhotoLibraryContentViewModel {

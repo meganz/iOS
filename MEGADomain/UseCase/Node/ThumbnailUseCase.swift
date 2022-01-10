@@ -3,11 +3,16 @@ import Combine
 
 // MARK: - Use case protocol -
 protocol ThumbnailUseCaseProtocol {
-    func getCachedThumbnail(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void)
-    func getCachedThumbnail(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity>
-    func getCachedPreview(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void)
-    func getCachedPreview(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity>
-    func getCachedThumbnailAndPreview(for handle: MEGAHandle) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity>
+    func hasCachedThumbnail(for node: NodeEntity) -> Bool
+    func hasCachedPreview(for node: NodeEntity) -> Bool
+    func cachedThumbnail(for node: NodeEntity) -> URL
+    func cachedPreview(for node: NodeEntity) -> URL
+    
+    func loadThumbnail(for node: NodeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void)
+    func loadThumbnail(for node: NodeEntity) -> Future<URL, ThumbnailErrorEntity>
+    func loadPreview(for node: NodeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void)
+    func loadPreview(for node: NodeEntity) -> Future<URL, ThumbnailErrorEntity>
+    func loadThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity>
     
     func thumbnailPlaceholderFileType(forNodeName name: String) -> MEGAFileType
 }
@@ -24,36 +29,52 @@ struct ThumbnailUseCase: ThumbnailUseCaseProtocol {
         self.repository = repository
     }
     
-    func getCachedThumbnail(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            repository.getCachedThumbnail(for: handle, completion: completion)
-        }
+    func hasCachedThumbnail(for node: NodeEntity) -> Bool {
+        repository.hasCachedThumbnail(for: node)
     }
     
-    func getCachedThumbnail(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity> {
-        Future { promise in
-            getCachedThumbnail(for: handle, completion: promise)
-        }
+    func hasCachedPreview(for node: NodeEntity) -> Bool {
+        repository.hasCachedPreview(for: node)
     }
     
-    func getCachedPreview(for handle: MEGAHandle, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
+    func cachedThumbnail(for node: NodeEntity) -> URL {
+        repository.cachedThumbnail(for: node)
+    }
+    
+    func cachedPreview(for node: NodeEntity) -> URL {
+        repository.cachedPreview(for: node)
+    }
+    
+    func loadThumbnail(for node: NodeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
         DispatchQueue.global(qos: .utility).async {
-            repository.getCachedPreview(for: handle, completion: completion)
+            repository.loadThumbnail(for: node, completion: completion)
         }
     }
     
-    func getCachedPreview(for handle: MEGAHandle) -> Future<URL, ThumbnailErrorEntity> {
+    func loadThumbnail(for node: NodeEntity) -> Future<URL, ThumbnailErrorEntity> {
         Future { promise in
-            getCachedPreview(for: handle, completion: promise)
+            loadThumbnail(for: node, completion: promise)
         }
     }
     
-    func getCachedThumbnailAndPreview(for handle: MEGAHandle) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity> {
-        getCachedThumbnail(for: handle)
+    func loadPreview(for node: NodeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
+        DispatchQueue.global(qos: .utility).async {
+            repository.loadPreview(for: node, completion: completion)
+        }
+    }
+    
+    func loadPreview(for node: NodeEntity) -> Future<URL, ThumbnailErrorEntity> {
+        Future { promise in
+            loadPreview(for: node, completion: promise)
+        }
+    }
+    
+    func loadThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity> {
+        loadThumbnail(for: node)
             .map(Optional.some)
             .prepend(nil)
             .combineLatest(
-                getCachedPreview(for: handle)
+                loadPreview(for: node)
                     .map(Optional.some)
                     .prepend(nil)
             )

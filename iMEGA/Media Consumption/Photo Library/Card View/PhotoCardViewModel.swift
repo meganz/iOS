@@ -6,7 +6,6 @@ import SwiftUI
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    private var subscriptions = Set<AnyCancellable>()
     private var placeholderImageContainer = ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)
     
     @Published var thumbnailContainer: ImageContainer
@@ -18,12 +17,17 @@ class PhotoCardViewModel: ObservableObject {
     }
     
     func loadThumbnail() {
-        guard let handle = coverPhoto?.handle else {
+        guard let photo = coverPhoto else {
+            return
+        }
+        
+        guard thumbnailContainer == placeholderImageContainer else {
             return
         }
         
         thumbnailUseCase
-            .getCachedThumbnailAndPreview(for: handle)
+            .loadThumbnailAndPreview(for: photo)
+            .receive(on: DispatchQueue.global(qos: .utility))
             .map { (thumbnailURL, previewURL) -> URL? in
                 if let url = previewURL {
                     return url
@@ -34,14 +38,10 @@ class PhotoCardViewModel: ObservableObject {
                 }
             }
             .replaceError(with: nil)
-            .receive(on: DispatchQueue.global(qos: .utility))
             .compactMap { [weak self] in
                 ImageContainer(image: Image(contentsOfFile: $0?.path), overlay: self?.coverPhoto?.overlay)
             }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.thumbnailContainer = $0
-            }
-            .store(in: &subscriptions)
+            .assign(to: &$thumbnailContainer)
     }
 }

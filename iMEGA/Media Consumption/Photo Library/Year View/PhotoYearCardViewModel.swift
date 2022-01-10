@@ -3,20 +3,20 @@ import Combine
 
 @available(iOS 14.0, *)
 final class PhotoYearCardViewModel: PhotoCardViewModel {
-    private let photosByYear: PhotosByYear
+    private let photoByYear: PhotoByYear
     
     let title: String
     
-    init(photosByYear: PhotosByYear,
+    init(photoByYear: PhotoByYear,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
-        self.photosByYear = photosByYear
+        self.photoByYear = photoByYear
         
         if #available(iOS 15.0, *) {
-            title = photosByYear.categoryDate.formatted(.dateTime.year().locale(.current))
+            title = photoByYear.categoryDate.formatted(.dateTime.year().locale(.current))
         } else {
-            title = DateFormatter.yearTemplate().localisedString(from: photosByYear.categoryDate)
+            title = DateFormatter.yearTemplate().localisedString(from: photoByYear.categoryDate)
         }
         
-        super.init(coverPhoto: photosByYear.coverPhoto, thumbnailUseCase: thumbnailUseCase)
+        super.init(coverPhoto: photoByYear.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }
 }

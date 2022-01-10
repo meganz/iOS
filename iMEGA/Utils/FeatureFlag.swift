@@ -1,5 +1,6 @@
 import Foundation
 
 final class FeatureFlag: NSObject {
-    @objc static let isNewPhotosLibraryEnabled = true
+    // Add your feature flag here, for example:
+    // @objc static let isNewPhotosLibraryEnabled = true
 }

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct ImageContainer {
+struct ImageContainer: Equatable {
     let image: Image
     var isPlaceholder = false
     var overlay: Image? = nil

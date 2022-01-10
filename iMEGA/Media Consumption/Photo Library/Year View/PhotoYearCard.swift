@@ -11,3 +11,10 @@ struct PhotoYearCard: View {
         }
     }
 }
+
+@available(iOS 14.0, *)
+extension PhotoYearCard: Equatable {
+    static func == (lhs: PhotoYearCard, rhs: PhotoYearCard) -> Bool {
+        true // we are taking over the update of the view
+    }
+}

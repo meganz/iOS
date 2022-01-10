@@ -2,13 +2,13 @@ import Foundation
 
 @available(iOS 14.0, *)
 final class PhotoMonthCardViewModel: PhotoCardViewModel {
-    private let photosByMonth: PhotosByMonth
+    private let photoByMonth: PhotoByMonth
     
     let title: String
     
     @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
-        var attr = photosByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).attributed)
+        var attr = photoByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).attributed)
         let month = AttributeContainer.dateField(.month)
         let bold = AttributeContainer.font(.title2.bold())
         attr.replaceAttributes(month, with: bold)
@@ -16,16 +16,16 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
         return attr
     }
 
-    init(photosByMonth: PhotosByMonth,
+    init(photoByMonth: PhotoByMonth,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
-        self.photosByMonth = photosByMonth
+        self.photoByMonth = photoByMonth
         
         if #available(iOS 15.0, *) {
-            title = photosByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide))
+            title = photoByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide))
         } else {
-            title = DateFormatter.monthTemplate().localisedString(from: photosByMonth.categoryDate)
+            title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
         }
         
-        super.init(coverPhoto: photosByMonth.coverPhoto, thumbnailUseCase: thumbnailUseCase)
+        super.init(coverPhoto: photoByMonth.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }
 }

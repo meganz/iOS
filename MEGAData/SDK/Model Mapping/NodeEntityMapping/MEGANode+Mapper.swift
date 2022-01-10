@@ -1,4 +1,5 @@
 import Foundation
+
 extension NodeEntity {
     init(node: MEGANode) {
         self.init(
@@ -63,7 +64,15 @@ extension NodeEntity {
             longitude                          : node.longitude?.doubleValue
         )
     }
-    
+}
+
+extension MEGANode {
+    func toNodeEntity() -> NodeEntity {
+        NodeEntity(node: self)
+    }
+}
+
+extension NodeEntity {
     func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
         sdk.node(forHandle: handle)
     }

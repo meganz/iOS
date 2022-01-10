@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-extension PhotosChronologicalCategory {
+extension PhotoChronologicalCategory {
     var overlay: Image? {
         guard let name = coverPhoto?.name else {
             return nil

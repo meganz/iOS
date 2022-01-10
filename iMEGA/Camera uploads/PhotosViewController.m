@@ -29,15 +29,11 @@
 @import StoreKit;
 @import Photos;
 
-static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
-static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
-
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate, BrowserViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
 @property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, strong) MEGANodeList *nodeList;
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *mediaNodesArray;
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 
@@ -81,7 +77,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
-    if (FeatureFlag.isNewPhotosLibraryEnabled) {
+    if (@available(iOS 14.0, *)) {
         self.navigationItem.rightBarButtonItems = nil;
     } else {
         self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
@@ -98,11 +94,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self setEditing:NO animated:NO];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadStatsChangedNotification) name:MEGACameraUploadStatsChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-
+    
+    [self.photoUpdatePublisher setupSubscriptions];
+    
     self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     
     [self loadTargetFolder];
@@ -128,10 +125,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [super viewWillDisappear:animated];
     
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadStatsChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    
+    [self.photoUpdatePublisher cancelSubscriptions];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -164,10 +162,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)configPhotoContainerView {
     [self configPhotoCollectionView];
     
-    if (!FeatureFlag.isNewPhotosLibraryEnabled) {
-        return;
-    }
-    
     if (@available(iOS 14.0, *)) {
         self.photosCollectionView.delegate = nil;
         self.photosCollectionView.dataSource = nil;
@@ -191,12 +185,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     return _photoLibraryContentViewModel;
 }
 
-- (PhotoLibraryPublisher *)photoLibraryPublisher {
-    if (_photoLibraryPublisher == nil) {
-        _photoLibraryPublisher = [[PhotoLibraryPublisher alloc] init];
+- (PhotoUpdatePublisher *)photoUpdatePublisher {
+    if (_photoUpdatePublisher == nil) {
+        _photoUpdatePublisher = [[PhotoUpdatePublisher alloc] initWithPhotosViewController:self];
     }
     
-    return _photoLibraryPublisher;
+    return _photoUpdatePublisher;
 }
 
 #pragma mark - load Camera Uploads target folder
@@ -215,10 +209,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)updateContents {
-    [self reloadPhotos];
+    [self buildMediaNodes];
+    [self.photoUpdatePublisher updatePhotoLibrary];
     [self reloadHeader];
     
-    if (self.nodeList.size.integerValue > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
+    if (self.mediaNodesArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
     } else if (CameraUploadManager.shared.isDiskStorageFull) {
         [self showLocalDiskIsFullWarningScreen];
@@ -232,12 +227,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     if (!MEGAReachabilityManager.isReachable) {
         self.currentState = MEGACameraUploadsStateNoInternetConnection;
-
+        
         return;
     }
     
     if (!CameraUploadManager.isCameraUploadEnabled) {
-        if (self.nodeList.size.integerValue == 0) {
+        if (self.mediaNodesArray.count == 0) {
             self.currentState = MEGACameraUploadsStateEmpty;
         } else {
             self.currentState = MEGACameraUploadsStateDisabled;
@@ -245,7 +240,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         return;
     }
-
+    
     [self loadUploadStats];
 }
 
@@ -347,7 +342,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             break;
         case MEGACameraUploadsStateNoInternetConnection:
-            if (self.nodeList.size.integerValue == 0) {
+            if (self.mediaNodesArray.count == 0) {
                 self.stateView.hidden = YES;
             } else {
                 self.stateLabel.text = NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
@@ -379,30 +374,22 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)reloadPhotos {
-    self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
+    [self buildMediaNodes];
     
-    if (FeatureFlag.isNewPhotosLibraryEnabled) {
-        if (@available(iOS 14.0, *)) {
-            [self updatePhotoLibraryBy:self.nodeList];
-            
-            if ([self.nodeList size].integerValue == 0) {
-                [self.photosCollectionView reloadData];
-            }
+    if (@available(iOS 14.0, *)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updatePhotoLibraryBy:self.mediaNodesArray];
+        });
+        
+        if (self.mediaNodesArray.count == 0) {
+            [self reloadPhotosCollectionView];
         }
     } else {
         NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
-        
         self.photosByMonthYearArray = [NSMutableArray new];
         NSMutableArray *photosArray = [NSMutableArray new];
-        self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.unsignedIntegerValue];
         
-        for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
-            MEGANode *node = [self.nodeList nodeAtIndex:i];
-            
-            if (!node.name.mnz_isVisualMediaPathExtension) {
-                continue;
-            }
-            
+        for (MEGANode *node in self.mediaNodesArray) {
             NSString *currentMonthYearString = node.modificationTime.mnz_formattedMonthAndYear;
             
             if (![photosByMonthYearDictionary objectForKey:currentMonthYearString]) {
@@ -414,18 +401,39 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             } else {
                 [photosArray addObject:node];
             }
-            
-            [self.mediaNodesArray addObject:node];
         }
         
-        [self.photosCollectionView reloadData];
+        [self reloadPhotosCollectionView];
     }
     
-    if ([self.photosCollectionView allowsMultipleSelection]) {
-        self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
-    } else {
-        self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+    [self updateNavigationTitle];
+}
+
+- (void)buildMediaNodes {
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
+    self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodeList.size.unsignedIntegerValue];
+    for (NSInteger i = 0; i < [nodeList.size integerValue]; i++) {
+        MEGANode *node = [nodeList nodeAtIndex:i];
+        if (node.name.mnz_isVisualMediaPathExtension) {
+            [self.mediaNodesArray addObject:node];
+        }
     }
+}
+
+- (void)reloadPhotosCollectionView {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.photosCollectionView reloadData];
+    });
+}
+
+- (void)updateNavigationTitle {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.photosCollectionView allowsMultipleSelection]) {
+            self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
+        } else {
+            self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+        }
+    });
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
@@ -464,18 +472,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (BOOL)shouldSelectIndexPath:(NSIndexPath * _Nonnull)indexPath {
     
     MEGANode *node = [self nodeFromIndexPath:indexPath];
-
+    
     return [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] != nil;
 }
 
 #pragma mark - notifications
-
-- (void)didReceiveCameraUploadStatsChangedNotification {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
-        [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
-    });
-}
 
 - (void)didReceiveInternetConnectionChangedNotification {
     self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
@@ -501,16 +502,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self.selectedItemsDictionary removeAllObjects];
     
     if (!allNodesSelected) {
-        MEGANode *n = nil;
-        NSInteger nodeListSize = [[self.nodeList size] integerValue];
-        
-        for (NSInteger i = 0; i < nodeListSize; i++) {
-            n = [self.nodeList nodeAtIndex:i];
-            [self.selectedItemsDictionary setObject:n forKey:[NSNumber numberWithLongLong:n.handle]];
+        for (MEGANode *node in self.mediaNodesArray) {
+            [self.selectedItemsDictionary setObject:node forKey:[NSNumber numberWithLongLong:node.handle]];
         }
         
         allNodesSelected = YES;
-        [self.navigationItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"%lu Items selected"), (long)[[self.nodeList size] unsignedIntegerValue]]];
+        [self.navigationItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"%lu Items selected"), (long)self.mediaNodesArray.count]];
     } else {
         allNodesSelected = NO;
         [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", @"Select title")];
@@ -713,7 +710,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
-        static NSString *headerIdentifier = @"photoHeaderId";        
+        static NSString *headerIdentifier = @"photoHeaderId";
         HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
         
         if (!headerView) {
@@ -778,7 +775,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         [self setToolbarActionsEnabled:YES];
         
-        if ([self.selectedItemsDictionary count] == self.nodeList.size.integerValue) {
+        if ([self.selectedItemsDictionary count] == self.mediaNodesArray.count) {
             allNodesSelected = YES;
         } else {
             allNodesSelected = NO;
@@ -1000,10 +997,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodeList.mnz_nodesArrayFromNodeList]) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotos) object:nil];
-        [self performSelector:@selector(reloadPhotos) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
-    }
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.mediaNodesArray]) {
+            [self.photoUpdatePublisher updatePhotoLibrary];
+        }
+    });
 }
 
 #pragma mark - BrowserViewControllerDelegate

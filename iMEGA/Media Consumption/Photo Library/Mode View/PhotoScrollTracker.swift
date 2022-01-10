@@ -1,13 +1,13 @@
 import Foundation
 import Combine
 
-final class ScrollPositionCalculator {
+final class PhotoScrollTracker {
     private var positionRecordDict = [PhotoScrollPosition?: CGRect]()
     private var viewPortSize = CGSize.zero
     private var offsetRecord: (first: CGFloat?, last: CGFloat?) = (nil, nil)
     private var tappedPosition: PhotoScrollPosition?
     
-    private var visiblePositionDict = [PhotoScrollPosition?: Bool]()
+    private(set) var visiblePositions = [PhotoScrollPosition?: Bool]()
     
     private let offsetSubject = PassthroughSubject<CGFloat, Never>()
     private var subscriptions = Set<AnyCancellable>()
@@ -25,25 +25,25 @@ final class ScrollPositionCalculator {
             .store(in: &subscriptions)
     }
     
-    func recordFrame<T: PhotosChronologicalCategory>(_ frame: CGRect, for category: T, inViewPort size: CGSize) {
+    func trackFrame<T: PhotoChronologicalCategory>(_ frame: CGRect, for category: T, inViewPort size: CGSize) {
         positionRecordDict[category.position] = frame
         viewPortSize = size
     }
     
-    func recordContentOffset(_ offset: CGFloat) {
+    func trackContentOffset(_ offset: CGFloat) {
         offsetSubject.send(offset)
     }
     
-    func recordTappedPosition(_ position: PhotoScrollPosition?) {
+    func trackTappedPosition(_ position: PhotoScrollPosition?) {
         tappedPosition = position
     }
     
-    func recordAppearedPosition(_ position: PhotoScrollPosition?) {
-        visiblePositionDict[position] = true
+    func trackAppearedPosition(_ position: PhotoScrollPosition?) {
+        visiblePositions[position] = true
     }
     
-    func recordDisappearedPosition(_ position: PhotoScrollPosition?) {
-        visiblePositionDict[position] = nil
+    func trackDisappearedPosition(_ position: PhotoScrollPosition?) {
+        visiblePositions[position] = nil
         positionRecordDict[position] = nil
     }
     
@@ -79,7 +79,7 @@ final class ScrollPositionCalculator {
         var shortestDistanceToViewPortCenter = CGFloat.zero
         
         var samplePosition: PhotoScrollPosition?
-        for positionKey in visiblePositionDict.keys {
+        for positionKey in visiblePositions.keys {
             guard let frame = positionRecordDict[positionKey] else {
                 continue
             }

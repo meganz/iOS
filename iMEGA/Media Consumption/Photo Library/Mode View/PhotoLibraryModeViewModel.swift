@@ -1,9 +1,9 @@
 import Foundation
 import Combine
 
-class PhotoLibraryModeViewModel<T: PhotosChronologicalCategory>: ScrollPositioning, ObservableObject {
+class PhotoLibraryModeViewModel<T: PhotoChronologicalCategory>: PhotoScrollPositioning, ObservableObject {
     var subscriptions = Set<AnyCancellable>()
-    let scrollCalculator = ScrollPositionCalculator()
+    let scrollTracker = PhotoScrollTracker()
     @Published var photoCategoryList = [T]()
     let libraryViewModel: PhotoLibraryContentViewModel
     

@@ -3,48 +3,48 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 protocol PhotoLibraryContentViewRouting {
-    func card(for photosByYear: PhotosByYear) -> PhotoYearCard
-    func card(for photosByMonth: PhotosByMonth) -> PhotoMonthCard
-    func card(for photosByDay: PhotosByDay) -> PhotoDayCard
-    func card(for photo: NodeEntity, isEditingMode: Bool) -> PhotoCell
+    func card(for photoByYear: PhotoByYear) -> PhotoYearCard
+    func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard
+    func card(for photoByDay: PhotoByDay) -> PhotoDayCard
+    func card(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoCell
     func photoBrowser(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoBrowser
 }
 
 @available(iOS 14.0, *)
-final class PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
-    func card(for photosByYear: PhotosByYear) -> PhotoYearCard {
+struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
+    func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
         return PhotoYearCard(
             viewModel: PhotoYearCardViewModel(
-                photosByYear: photosByYear,
+                photoByYear: photoByYear,
                 thumbnailUseCase: ThumbnailUseCase.default
             )
         )
     }
     
-    func card(for photosByMonth: PhotosByMonth) -> PhotoMonthCard {
+    func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard {
         return PhotoMonthCard(
             viewModel: PhotoMonthCardViewModel(
-                photosByMonth: photosByMonth,
+                photoByMonth: photoByMonth,
                 thumbnailUseCase: ThumbnailUseCase.default
             )
         )
     }
     
-    func card(for photosByDay: PhotosByDay) -> PhotoDayCard {
+    func card(for photoByDay: PhotoByDay) -> PhotoDayCard {
         return PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
-                photosByDay: photosByDay,
+                photoByDay: photoByDay,
                 thumbnailUseCase: ThumbnailUseCase.default
             )
         )
     }
     
-    func card(for photo: NodeEntity, isEditingMode: Bool) -> PhotoCell {
+    func card(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoCell {
         return PhotoCell(
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 thumbnailUseCase: ThumbnailUseCase.default,
-                isEditingMode: isEditingMode
+                isEditingMode: viewModel.libraryViewModel.isEditingMode
             )
         )
     }
