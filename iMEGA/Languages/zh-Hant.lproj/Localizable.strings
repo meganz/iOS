@@ -258,6 +258,10 @@
 "foldersAndFile"="%d資料夾 • 1檔案";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1資料夾 • %d檔案";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@個裝置";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@個裝置";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="已入佇列";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="群組對話";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="位置";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="啟用地理位置失敗。錯誤：%@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="語音剪輯";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu則未讀訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="訂閱將會自動更新，續期與第一次訂閱的相同，價格也相同。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的自動更新訂閱，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，可以在頁面下方以您的Apple ID登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下捲動到管理應用程式訂閱。在那裡您可以選擇你的MEGA Pro訂閱和查看您預定的續訂日期，選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
+"autorenewableDescription"="訂閱將會自動更新，續期與第一次訂閱的相同，價格也相同。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的自動更新訂閱，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，在頁面下方以您的Apple ID登入（如果您尚未登入），然後點擊查看帳號。您將前往您的帳戶頁面，向下捲動就可以看到應用程式訂閱管理。在那裡您可以選擇你的MEGA Pro訂閱和查看續訂日期、選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2035,7 +2041,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您確定要更改至測試伺服器？您的帳戶可能會遇到無法恢復的問題。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="授權存取您的通訊錄";
+"Enable Access to Your Address Book"="允許存取您的通訊錄";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="輕易的在您通訊錄中找到有在使用MEGA的聯絡人。";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2639,7 +2645,7 @@
 /* Change the default backup location warning message */
 "dialog.root.backup.folder.location.warning.message"="您正在更改預設的備份資料夾位置。這可能會影響您將來查找備份資料夾。 因此請記住它的位置，以便將來可以找到它。";
 /* Change the default backup location warning message */
-"dialog.backup.folder.location.warning.message"="移動此資料夾會更改備份目的地。為安全起見，備份將會停止。這是你想做的嗎？可以透過MEGA桌面應用程式重新啟用備份。";
+"dialog.backup.folder.location.warning.message"="移動此資料夾會更改備份目的地。為安全起見，備份將會停止。您確定要繼續嗎？備份可以透過MEGA桌面應用程式重新啟用。";
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="將“%@”移至垃圾筒";
 /* Delete the default backup folder warning message */
@@ -2649,7 +2655,7 @@
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="新增項目到“%@”";
 /* Add new items to a backup folder warning message */
-"dialog.add.items.backup.folder.warning.message"="新增項目到此資料夾會更改備份目的地。為安全起見，備份將被關閉。您確定要繼續嗎？備份可以透過MEGA桌面應用程式重新被啟用。";
+"dialog.add.items.backup.folder.warning.message"="新增項目到此資料夾會更改備份目的地。為安全起見，備份將被關閉。您確定要繼續嗎？備份可以透過MEGA桌面應用程式重新啟用。";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
 "dialog.backup.warning.confirm.message"="請輸入“%@”以確認此操作";
 /* Change the location of a backup folder placeholder for a textfield */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="與會者（%d）";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="主持人";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="設為主持人";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="移除主持人";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="重新命名會議名稱";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="加入會議";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="以訪客身份加入";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="加入MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="您的隱私非常重要";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip壓縮";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="資料庫";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="音訊交換格式";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI文字檔案";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ASCII文字";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="串流影片";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="高級串流";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="音訊/視訊交錯";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS批次檔";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW圖像";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="C++原始碼";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW圖像";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI語言";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS指令";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS樣式表";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="動態HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="動態連結函式庫";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word範本";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="PDF文件";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP程式碼";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl語言";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="音樂播放列表";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG圖片";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python語言";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR壓縮";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="富文本";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW圖像";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="封存";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="壓縮文件";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa影像";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF圖像";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP封存";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="選擇";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="加入通話";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="要分享照片和影片，請允許MEGA存取您的相簿";

@@ -258,6 +258,10 @@
 "foldersAndFile"="%d โฟลเดอร์ • 1 ไฟล์";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 โฟลเดอร์ • %d ไฟล์";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ อุปกรณ์";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ อุปกรณ์";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="อยู่ในคิว";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="สร้างกลุ่ม";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="ตำแหน่งที่ตั้ง";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="เปิดใช้งานตำแหน่งที่ตั้งทางภูมิศาสตร์ล้มเหลว ข้อผิดพลาด: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="คลิปเสียง";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -635,7 +641,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="รูปถ่าย";
 /* Photo view is empty */
-"photo.empty.title"="No Photos Found";
+"photo.empty.title"="ไม่พบรูปถ่าย";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="ถังขยะ";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ข้อความที่ยังไม่ได้อ่าน";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="การสมัครใช้งานจะเป็นการต่ออายุตามระยะเวลาที่สมัครไว้แบบต่อเนื่องโดยอัตโนมัติ คุณสามารถปิดใช้การต่ออายุ MEGA Pro ใหม่อัตโนมัติภายใน 24 ชั่วโมงก่อนการสมัครใช้งานรอบปัจจุบันจะสิ้นสุด ผ่านหน้าการตั้งค่าบัญชี iTunes ของคุณ ในการจัดการการสมัครใช้งานของคุณเพียงแตะที่ไอคอน App Store บนอุปกรณ์มือถือของคุณ ลงชื่อเข้าใช้ด้วย Apple ID ของคุณที่ด้านล่างของหน้า (กรณีที่ยังไม่ได้ลงชื่อเข้าใช้) จากนั้นคลิกดู ID คุณจะเข้าสู่หน้าบัญชีของคุณซึ่งคุณสามารถเลื่อนลงไปที่จัดการการสมัครใช้งานแอป จากตรงนั้นคุณสามารถเลือกการสมัครใช้งาน MEGA Pro และสามารถดูกำหนดการต่ออายุ เลือกแพ็คเกจการสมัครใช้งานอื่น ๆ หรือสลับสวิตช์เปิด-ปิดเป็นปิดเพื่อปิดใช้งานการต่ออายุการสมัครใช้งานของคุณ";
+"autorenewableDescription"="การสมัครใช้งานของคุณจะต่ออายุโดยอัตโนมัติในราคาเดียวกันและระยะเวลาเดียวกันกับรายละเอียดที่เลือกในตอนแรก คุณสามารถปิดการชำระเงินการสมัครใช้งาน MEGA Pro ของคุณอัตโนมัติได้ในหน้าการตั้งค่าบัญชี iTunes ของคุณ 24 ชั่วโมงก่อนการชำระเงินค่าสมัครครั้งต่อไป ในการจัดการการสมัครใช้งานของคุณ ให้แตะ App Store บนโทรศัพท์ของคุณ เข้าสู่ระบบด้วย Apple ID ของคุณที่ด้านล่างของหน้า (หากยังไม่ได้ดำเนินการ) แล้วแตะดู ID คุณจะเห็นหน้าบัญชีของคุณ ซึ่งจะพาคุณลงไปที่หน้าจัดการการสมัครใช้งานแอป จากที่นั่น คุณสามารถเลือกการสมัครใช้งาน MEGA Pro ดูวันที่ต่ออายุที่กำลังจะมาถึง เลือกแพ็คเกจการสมัครใช้งานอื่น หรือปิดสวิตช์เพื่อปิดการต่ออายุการสมัครโดยอัตโนมัติของคุณ";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="เปิด MEGA และลงชื่อเข้าใช้เพื่อดำเนินการต่อ";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2513,7 +2519,7 @@
 /* Image title for the photo explorer */
 "home.images.title"="รูปภาพ";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="No Images Found";
+"home.images.empty"="ไม่พบรูปภาพ";
 /* Accessibility label for Home section in tabbar item */
 "Home"="หน้าแรก";
 /* Home Screen: Explorer view card title - Documents */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="ผู้เข้าร่วม (%d คน)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="ผู้ดูแล";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="ตั้งเป็นผู้ดูแล";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="ลบออกจากการเป็นผู้ดูแล";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="เปลี่ยนชื่อการประชุม";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="เข้าร่วมการประชุม";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="เข้าร่วมในฐานะแขกรับเชิญ";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="เข้าร่วม MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="ความเป็นส่วนตัวของคุณมีความสำคัญเป็นอันดับแรก";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="บีบอัด 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="ไฟล์ฐานข้อมูล";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ไฟล์ข้อความ ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ข้อความ ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="สตรีมมิ่งวิดีโอ";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="ไฟล์รูปภาพ Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="ไฟล์โค้ด C++";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="ภาพ CorelDRAW";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="คลาส Java";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="คำสั่ง DOS";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="สไตล์ชีต CSS";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="Dynamic HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamic Link Library";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="เทมเพลตของ MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="ไฟล์เอกสาร PDF";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="ไฟล์โค้ด PHP";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl Script";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="ไฟล์เพลย์ลิสต์เสียง";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="ไฟล์ภาพ PNG";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python Script";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="ไฟล์บีบอัด RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="จัดเก็บ";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="เลือก";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="เข้าร่วมการโทร";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="หากต้องการแชร์รูปภาพและวิดีโอ กรุณาให้สิทธิ์ MEGA ในการเข้าถึงแกลเลอรีของคุณ";

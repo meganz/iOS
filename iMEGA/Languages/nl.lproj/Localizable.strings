@@ -258,6 +258,10 @@
 "foldersAndFile"="%d mappen • 1 bestand";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 map • %d bestanden";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ apparaat";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ apparaten";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Wachtrij";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="Groep Starten";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Lokatie";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Geolocatie inschakeling mislukt. Fout: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Spraakclip";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -653,7 +659,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Privacybeleid";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"general.cookiePolicy"="Cookie Beleid";
+"general.cookiePolicy"="Cookiebeleid";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cookie-Instellingen";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -913,7 +919,7 @@
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Help Centrum";
+"helpCentreLabel"="Helpcentrum";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Meedoen aan Beta";
 /* Title to rate the app */
@@ -989,17 +995,17 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Verwijzingsbonussen";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Installeer de MEGA desktop applicatie";
+"account.achievement.desktopApp.title"="Installeer de MEGA Desktop Applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA desktop applicatie.";
+"account.achievement.desktopApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA Desktop Applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="Wanneer u de MEGA desktop applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. De MEGA desktop applicatie is beschikbaar voor Windows, MacOS en de meeste Linux distributies.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Wanneer u de MEGA desktop applicatie installeert krijgt u %@ aan extra opslagruimte, geldig voor 365 dagen. De MEGA Desktop Applicatie is beschikbaar voor Windows, MacOS en de meeste Linux distributies.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Installeer de MEGA Mobile Applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA mobiele applicatie.";
+"account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA-mobiele applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA mobiele applicatie installeert, krijgt u %@ gratis  opslagruimte, 365 dagen geldig. De MEGA mobiele applicatie is beschikbaar voor iOS en Android.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA mobiele applicatie installeert, krijgt u %@ gratis  opslagruimte, 365 dagen geldig. De MEGA-Mobiele Applicatie is beschikbaar voor iOS en Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ aan opslag. Geldig voor 365 dagen.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ONGELEZEN BERICHTEN";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, tikt u op de Applicatie Winkel-pictogram op uw mobiele apparaat, logt u in met uw Apple ID onderaan de pagina (als u dat nog niet hebt gedaan) en klikt u vervolgens op ID bekijken. U wordt naar uw accountpagina geleid waar u omlaag kunt scrollen naar Applicatie-abonnementen beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
+"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, tikt u op de Applicatie Winkel-pictogram op uw mobiele apparaat, logt u in met uw Apple ID onderaan de pagina (als u dat nog niet hebt gedaan) en tikt u vervolgens op ID bekijken. U wordt naar uw accountpagina geleid waar u naar beneden kunt scrollen naar Applicatie-abonnementen beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA en login om door te gaan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2615,7 +2621,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Uw Cloud Drive is bijna vol. Upgrade nu naar een Pro-account en krijg tot%@ TB (%@GB) aan cloudopslagruimte.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Uw cloudopslag is vol. Upgrade naar een MEGA Pro-abonnement om uw opslagruimte te vergroten en van extra voordelen te genieten. Als u uw opslaglimiet overschrijdt en bepaalde gegevens niet opwaardeert of verwijdert, kan uw account worden vergrendeld. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie.";
+"dialog.storage.odq.detail"="Uw cloud opslag is vol. Upgrade naar een MEGA Pro-abonnement om uw opslagruimte te vergroten en van extra voordelen te genieten. Als u uw opslaglimiet overschrijdt en bepaalde gegevens niet opwaardeert of verwijdert, kan uw account worden vergrendeld. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Account Gesloten";
 /* Over Disk Quota paywall final title. */
@@ -2639,7 +2645,7 @@
 /* Change the default backup location warning message */
 "dialog.root.backup.folder.location.warning.message"="U wijzigt een standaardlocatie voor de back-up map. Dit kan van invloed zijn op uw vermogen om uw back-upmap in de toekomst te vinden. Onthoud waar het zich bevindt, zodat u het in de toekomst kunt vinden.";
 /* Change the default backup location warning message */
-"dialog.backup.folder.location.warning.message"="Als u deze map verplaatst, wordt de back-up bestemming gewijzigd. De back-up wordt voor de veiligheid uitgeschakeld. Is dit wat u wilt doen? Back-ups kunnen opnieuw worden ingeschakeld met de MEGA Desktop-applicatie.";
+"dialog.backup.folder.location.warning.message"="Als u deze map verplaatst, wordt de back-up bestemming gewijzigd. De back-up wordt voor de veiligheid uitgeschakeld. Is dit wat u wilt doen? Back-ups kunnen opnieuw worden ingeschakeld met de MEGA Bureablad-Applicatie.";
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="Verplaats “%@” naar Prullenbak";
 /* Delete the default backup folder warning message */
@@ -2649,7 +2655,7 @@
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Artikel toevoegen naar “%@”";
 /* Add new items to a backup folder warning message */
-"dialog.add.items.backup.folder.warning.message"="Als u items aan deze map toevoegt, wordt de back-upbestemming gewijzigd. De back-up wordt voor de veiligheid uitgeschakeld. Is dit wat u wilt doen? Back-ups kunnen opnieuw worden ingeschakeld met de MEGA Desktop-applicatie.";
+"dialog.add.items.backup.folder.warning.message"="Als u items aan deze map toevoegt, wordt de back-upbestemming gewijzigd. De back-up wordt voor de veiligheid uitgeschakeld. Is dit wat u wilt doen? Back-ups kunnen opnieuw worden ingeschakeld met de MEGA Desktop-Applicatie.";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
 "dialog.backup.warning.confirm.message"="Typ a.u.b. “%@” om deze actie te bevestigen";
 /* Change the location of a backup folder placeholder for a textfield */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Deelnemers (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="GESPREKSLEIDER";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Maak Gespreksleider";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Gespreksleider verwijderen";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Hernoem Vergadering";
 /* Action of a call/meeting to share its link */
@@ -2712,10 +2722,12 @@
 "meetings.link.loggedInUser.joinButtonText"=" Vergadering aansluiten";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Deelnemen als gast";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Aansluiten bij MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Uw privacy is belangrijk";
 /* Guest user join Mega: paragraph 1 description */
-"meetings.joinMega.paragraph1.description"="Word lid van het grootste veilige cloudopslag- en samenwerkingsplatform ter wereld.";
+"meetings.joinMega.paragraph1.description"="Word lid van het grootste veilige cloud opslag- en samenwerkingsplatform ter wereld.";
 /* Guest user join Mega: paragraph 2 title */
 "meetings.joinMega.paragraph2.title"="Krijg 20 GB gratis";
 /* Guest user join Mega: paragraph 2 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip Gecomprimeerd";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio-Uitwisseling";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI Text File";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ASCII Tekst";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Video Streamen";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Geavanceerde Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW Afbeelding";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="C++ Bron Code";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW Afbeelding";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java-Klasse";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS Commando";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS-Stijlblad";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="Dynamische HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamische Link Bibliotheek";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Sjabloon";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="PDF Document";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP Code";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl Script";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Audio Afspeellijst";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG Afbeelding";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Phyton Script";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR Gecomprimeerd";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Afbeelding";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Archiveren";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Gecomprimeerd";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF-Afbeelding";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP Archief";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Kiezen";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Aansluiten tot Oproep";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Verleen MEGA toegang tot uw galerij om foto's en video's te delen";

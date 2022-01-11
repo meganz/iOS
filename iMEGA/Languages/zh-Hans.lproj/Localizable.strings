@@ -258,6 +258,10 @@
 "foldersAndFile"="%d 文件夹• 1 文件";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 文件夹• %d 文件";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@个设备";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@个设备";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="已入进程";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="开启群聊";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="位置";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="启用地理定位失败。错误：%@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="语音剪辑";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="参会者（%d）";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="主持人";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="设为主持人";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="移除主持人";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="重命名会议";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="加入会议";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="以访客身份加入";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="加入MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="您的隐私是重中之重";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip压缩文件";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="数据库";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="音频交换格式";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI文本文件";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ASCII文本";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="流媒体视频";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="高级流媒体格式";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="音频/视频交换格式";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS批处理";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="卡西欧RAW图像";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="C++源代码";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW图像";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI脚本文件";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS命令";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS样式表";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="动态HTML文件";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="动态链接库";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word模板";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="PDF文件";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP代码";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl脚本";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="音频播放列表";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG图像";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python脚本";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR压缩文件";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="富文本";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="松下RAW图像";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="服务器HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="归档";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="压缩文件";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa图形文件";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF图像";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP归档";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="选择";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="加入通话";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="要分享照片和视频，请允许MEGA访问您的图片库";
