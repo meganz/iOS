@@ -4,6 +4,9 @@
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, NSStringFromClass([MEGAApplication class]), NSStringFromClass([AppDelegate class]));
+        return UIApplicationMain(argc,
+                                 argv,
+                                 NSStringFromClass([MEGAApplication class]),
+                                 NSStringFromClass(NSClassFromString(@"TestingAppDelegate")?: [AppDelegate class]));
     }
 }
