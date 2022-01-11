@@ -258,6 +258,10 @@
 "foldersAndFile"="%d cartelle • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 cartella • %d file";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ dispositivo";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ dispositivi";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="In coda";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="Inizia gruppo";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Posizione";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Geolocalizzazione fallita. Errore: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Nota vocale";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MESSAGGI NON LETTI";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Gli abbonamenti sono rinnovati automaticamente per periodi successivi della stessa durata e allo stesso prezzo del periodo inizialmente scelto. Puoi disattivare il rinnovo automatico del tuo abbonamento MEGA Pro massimo 24 ore prima del tuo prossimo pagamento tramite la pagina delle Impostazioni del tuo account iTunes. Per gestire i tuoi abbonamenti, clicca sull'icona dell'App Store sul tuo dispositivo, effettua l'accesso con il tuo Apple ID alla fine della pagina (se non l'hai già fatto) e poi clicca su Vedi ID. Ti porterà alla pagina del tuo account, dove potrai scendere fino a Gestisci abbonamenti app. Da lì, puoi selezionare il tuo abbonamento MEGA Pro e vedere la data programmata per il rinnovo, scegliere un abbonamento diverso o disattivare il rinnovo automatico del tuo abbonamento.";
+"autorenewableDescription"="Gli abbonamenti sono rinnovati automaticamente per periodi successivi della stessa durata e allo stesso prezzo del periodo inizialmente scelto. Puoi disattivare il rinnovo automatico del tuo abbonamento MEGA Pro non oltre 24 ore prima che il tuo prossimo pagamento sia processato tramite la pagina delle impostazioni dell'account iTunes. Per gestire i tuoi abbonamenti, clicca sull'icona dell'App Store sul tuo dispositivo, effettua l'accesso con il tuo Apple ID in fondo alla pagina (se non l'hai già fatto) e poi clicca su Vedi ID. Ti porterà alla pagina del tuo account dove puoi scorrere fino alla Gestione degli abbonamenti. Da lì, puoi selezionare il tuo abbonamento MEGA Pro e vedere la data prevista per il rinnovo, scegliere un diverso abbonamento o disattivare il rinnovo automatico del tuo abbonamento.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Apri MEGA e accedi per continuare";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2035,7 +2041,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sei sicuro di voler cambiare con un server di test? Il tuo account potrebbe avere dei problemi incurabili.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Dai l'accesso alla tua Rubrica";
+"Enable Access to Your Address Book"="Garantisci a MEGA l'accesso alla tua Rubrica";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Trova facilmente i tuoi contatti che hai in rubrica su MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Partecipanti (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATORE";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Rendi moderatore";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Rimuovi moderatore";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Rinomina meeting";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Unisciti al meeting";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Unisciti come ospite";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Unisciti a MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="La tua privacy importa";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="Compressione 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="Testo ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="Testo ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="Filmato AVI";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="File Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Immagine Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="Codice sprgente C++";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="Immagine CorelDRAW";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="Common Gateway Interface";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Classe Java";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="Comando DOS";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="Foglio CSS";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="HTML dinamico";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Libreria a collegamento dinamico";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="Template MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="Documento PDF";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="Codice PHP";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Script di Perl";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Playlist audio";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="Immagine PNG";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Script di Python";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="Compressione RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Immagine RAW Panasonic";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Script di Bash";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Archivia";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressione";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Grafica raster Targa";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Immagine TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="Archivio ZIP";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Scegli";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Unisciti alla chiamata";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Per condividere foto e video, garantisci a MEGA l'accesso alla tua galleria";

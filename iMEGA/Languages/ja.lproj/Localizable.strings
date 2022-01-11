@@ -258,6 +258,10 @@
 "foldersAndFile"="%d個のフォルダ・1個のファイル";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1個のフォルダ・%d個のファイル";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@端末";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@端末";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="待機中";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="グループを開始";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="場所";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="位置情報の有効化に失敗しました。エラー：%@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="ボイスクリップ";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="参加者 (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="モデレーター";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="モデレーターにする";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="モデレーターを削除";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="ミーティング名の変更";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="ミーティングに参加";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="ゲストとして参加";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="MEGAに参加";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="お客様のプライバシーは重要です";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip圧縮";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="データベース";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="オーディオインターチェンジ";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSIテキストファイル";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ASCIIテキスト";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="ストリーミングビデオ";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="高度なストリーム";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/Vインターリーブ";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOSバッチ";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW画像";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="C++ソースコード";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAWイメージ";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGIスクリプト";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Javaクラス";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOSコマンド";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSSスタイルシート";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="動的HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="ダイナミックリンクライブラリ";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MSワードテンプレート";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="PDFドキュメント";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHPコード";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perlスクリプト";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="オーディオプレイリスト";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG画像";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Pythonスクリプト";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR圧縮";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="リッチテキスト";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="パナソニックRAW画像";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bashシェル";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="サーバーHTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="アーカイブ";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="圧縮";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targaグラフィック";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIFイメージ";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIPアーカイブ";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="選ぶ";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="通話に参加";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="写真や動画を共有するには、MEGAにギャラリーへのアクセス権を付与してください";

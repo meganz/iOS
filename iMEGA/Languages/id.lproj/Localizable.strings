@@ -258,6 +258,10 @@
 "foldersAndFile"="%d folder • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 folder • %d file";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ perangkat ";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ perangkat";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Dimasukan antrian";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="Mulai Grup";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Lokasi";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Gagal mengaktifkan geolokasi. Kesalahan: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Klip Suara";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -635,7 +641,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto";
 /* Photo view is empty */
-"photo.empty.title"="No Photos Found";
+"photo.empty.title"="Tidak Ada Foto Ditemukan";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Tempat Sampah";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu PESAN BELUM TERBACA";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Langganan diperbarui secara otomatis untuk periode berlangganan berturut-turut dengan durasi yang sama dan dengan harga yang sama dengan periode awal yang dipilih. Anda dapat mematikan perpanjangan otomatis langganan MEGA Pro anda selambat-lambatnya 24 jam sebelum pembayaran langganan berikutnya jatuh tempo melalui halaman pengaturan akun iTunes anda. Untuk mengelola langganan anda, cukup ketuk ikon App Store di perangkat seluler anda, masuk dengan ID Apple anda di bagian bawah halaman (jika anda belum melakukannya), lalu klik Lihat ID. Anda akan dibawa ke halaman akun tempat anda dapat menggulir ke bawah ke Kelola Langganan Aplikasi. Dari sana, anda dapat memilih langganan MEGA Pro anda dan melihat tanggal perpanjangan terjadwal anda, memilih paket langganan yang berbeda, atau matikan sakelar hidup-mati untuk menonaktifkan perpanjangan otomatis langganan anda.";
+"autorenewableDescription"="Langganan diperbarui secara otomatis untuk periode berlangganan berturut-turut dengan durasi yang sama dan dengan harga yang sama dengan periode awal yang dipilih. Anda dapat mematikan pembaruan otomatis langganan MEGA Pro anda selambat-lambatnya 24 jam sebelum pembayaran langganan berikutnya jatuh tempo melalui halaman pengaturan akun iTunes anda. Untuk mengelola langganan anda, cukup ketuk ikon App Store di perangkat seluler anda, masuk dengan ID Apple anda di bagian bawah halaman (jika anda belum melakukannya), lalu ketuk Lihat ID. Anda akan dibawa ke halaman akun tempat anda dapat menggulir ke bawah ke Kelola Langganan Aplikasi. Dari sana, anda dapat memilih langganan MEGA Pro anda dan melihat tanggal perpanjangan terjadwal anda, memilih paket langganan yang berbeda, atau matikan sakelar hidup-mati untuk menonaktifkan perpanjangan otomatis langganan anda..";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Buka MEGA dan masuk untuk melanjutkan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2513,7 +2519,7 @@
 /* Image title for the photo explorer */
 "home.images.title"="Gambar-gambar";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="No Images Found";
+"home.images.empty"="Tidak Ada Gambar yang Ditemukan";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Beranda";
 /* Home Screen: Explorer view card title - Documents */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Peserta (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATOR";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Jadikan Moderator";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Hapus Moderator";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Ganti Nama Rapat";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Gabung rapat";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Gabung sebagai tamu";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Gabung dengan MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Privasi anda penting";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip Dikompresi";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="File Teks ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="Text ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Video Streaming";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Gambar Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="Kode Sumber C++";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="Gambar CorelDRAW";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS Command";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="HTML Dinamik";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Perpustakaan Tautan Dinamis";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="Template MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="Dokumen PDF";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP Code";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Script Perl";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Audio Playlist";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="Gambar PNG";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Script Python";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR Compressed";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Gambar Panasonic RAW";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Arsipkan";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Gambar TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Pilih";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Gabung Panggilan";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Untuk berbagi foto dan video, berikan MEGA akses ke galeri anda";

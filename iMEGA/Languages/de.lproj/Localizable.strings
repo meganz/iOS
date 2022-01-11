@@ -258,6 +258,10 @@
 "foldersAndFile"="%d Ordner • 1 Datei";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 Ordner • %d Dateien";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ Gerät";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ Geräte";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Bereit";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="Gruppenchat";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Ort";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Die Geolokalisierung konnte nicht aktiviert werden. Fehler: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Sprachnachricht";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -357,9 +363,9 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Hinweis zur Wahrung von Urheberrechten";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respektiert die Urheberrechte Dritter und erwartet von seinen Nutzern die Einhaltung aller relevanten Copyright-Gesetze.";
+"copyrightMessagePart1"="MEGA respektiert die Urheberrechte Dritter und erwartet von Nutzern der MEGA Cloud die Einhaltung aller relevanten Copyright-Gesetze.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Es ist Ihnen strikt untersagt, den MEGA-Clouddienst zur Verletzung von Urheberrechten zu missbrauchen. Sie dürfen Dateien, Daten oder Inhalte, die die Urheber- oder andere Eigentumsrechte Dritte verletzen, nicht uploaden, speichern, teilen, anzeigen, streamen, verteilen, emailen, verlinken, übertragen oder in irgendeiner anderen Form zugänglich machen.";
+"copyrightMessagePart2"="Es ist Ihnen strikt untersagt, den Dienst MEGA Cloud zur Verletzung von Urheberrechten zu missbrauchen. Sie dürfen Dateien, Daten oder Inhalte, die die Urheber- oder andere Eigentumsrechte Dritte verletzen, nicht uploaden, speichern, teilen, anzeigen, streamen, verteilen, emailen, verlinken, übertragen oder in irgendeiner anderen Form zugänglich machen.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Einverstanden";
 /* button caption text that the user clicks when he disagrees */
@@ -635,7 +641,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotos";
 /* Photo view is empty */
-"photo.empty.title"="No Photos Found";
+"photo.empty.title"="Keine Fotos vorhanden";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Papierkorb";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ungelesene Nachrichten";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonnements werden automatisch für den ursprünglich gewählten Abonnementzeitraum und zum gleichen Preis verlängert. Sie können die automatische Verlängerung Ihres MEGA Pro-Abonnements bis spätestens 24 Stunden vor Fälligkeit Ihrer nächsten Abonnementzahlung in Ihren iTunes-Accounteinstellungen deaktivieren. Um Ihre Abonnements zu verwalten, tippen Sie einfach auf das App-Store-Symbol auf Ihrem Mobilgerät und melden Sie sich unten auf der Seite mit Ihrer Apple-ID an (falls noch nicht geschehen). Klicken Sie anschließend auf „ID anzeigen“. Sie werden zu Ihrer Accountseite weitergeleitet, auf der Sie nach unten scrollen können, um Ihre App-Abonnements zu finden. Dort können Sie Ihr MEGA Pro-Abonnement auswählen, den nächsten Verlängerungsdatum einsehen, ein anderes Abonnementpaket auswählen oder den Ein/Aus-Schalter auf Aus stellen, um die automatische Verlängerung Ihres Abonnements zu deaktivieren.";
+"autorenewableDescription"="Abonnements werden automatisch für den ursprünglich gewählten Abonnementzeitraum und zum gleichen Preis verlängert. Sie können die automatische Verlängerung Ihres MEGA Pro-Abonnements bis spätestens 24 Stunden vor Fälligkeit Ihrer nächsten Abonnementzahlung in Ihren iTunes-Accounteinstellungen deaktivieren. Um Ihre Abonnements zu verwalten, tippen Sie einfach auf das App-Store-Symbol auf Ihrem Mobilgerät und melden Sie sich unten auf der Seite mit Ihrer Apple-ID an (falls noch nicht geschehen). Tippen Sie anschließend auf „ID anzeigen“. Sie werden zu Ihrer Accountseite weitergeleitet, auf der Sie nach unten scrollen können, um Ihre App-Abonnements zu finden. Dort können Sie Ihr MEGA Pro-Abonnement auswählen, den nächsten Verlängerungsdatum einsehen, ein anderes Abonnementpaket auswählen oder den Ein/Aus-Schalter auf Aus stellen, um die automatische Verlängerung Ihres Abonnements zu deaktivieren.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Zum Fortfahren öffnen Sie MEGA und melden Sie sich an";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2513,7 +2519,7 @@
 /* Image title for the photo explorer */
 "home.images.title"="Bilder";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="No Images Found";
+"home.images.empty"="Keine Bilder vorhanden";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Startseite";
 /* Home Screen: Explorer view card title - Documents */
@@ -2647,7 +2653,7 @@
 /* Delete the default backup folder warning message */
 "dialog.delete.backup.folder.warning.message"="Möchten Sie Ihren Backup-Ordner wirklich löschen und das eingerichtete Backup deaktivieren?";
 /* Add new items to a backup folder warning title. %@ is a folder */
-"dialog.add.items.backup.folder.warning.title"="Element zu “%@” hinzufügen";
+"dialog.add.items.backup.folder.warning.title"="Element zu „%@“ hinzufügen";
 /* Add new items to a backup folder warning message */
 "dialog.add.items.backup.folder.warning.message"="Durch Hinzufügen von Elementen zu diesem Ordner wird das Backup-Ziel geändert. Das Backup wird zur Sicherheit deaktiviert. Möchten Sie fortfahren? Backups können in der MEGA Desktop-App erneut aktiviert werden.";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Teilnehmer (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATOR";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Zum Moderator machen";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Moderatorstatus entziehen";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Meeting umbenennen";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Meeting beitreten";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Als Gast teilnehmen";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Jetzt MEGA-Nutzer werden";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Ihre Privatsphäre ist wichtig";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip-Archiv";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Datenbank";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI-Textdatei";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ASCII-Text";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW-Datei";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="C++-Quellcode";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW-Bild";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java-Klasse";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS-Kommando";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="Dynamic HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamic Link Library";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Template";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2807,7 +2833,7 @@
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="Spreadsheet";
 /* File extension: .gz. Commercial names should be stay on English */
-"general.filetype.gz"="GNU Compressed";
+"general.filetype.gz"="GNU-komprimiert";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
 "general.filetype.header"="Headerdatei";
 /* File extensions: .htm and .html. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="PDF-Dokument";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP-Code";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perlskript";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Audio-Playlist";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG-Bild";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python-Skript";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR-Archiv";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Archivieren";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Komprimiert";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF-Bild";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP-Archiv";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Auswahl";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="An Audio/Video-Konferenz teilnehmen";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Zum Teilen von Fotos und Videos benötigt MEGA Zugriff auf Ihre Fotobibliothek";

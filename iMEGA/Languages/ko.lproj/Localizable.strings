@@ -258,6 +258,10 @@
 "foldersAndFile"="폴더 %d개 • 파일 1개";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="폴더 1개 • 파일 %d개";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="장치 %@개";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="장치 %@개";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="대기 중";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="그룹 시작";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="위치";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="위치 활성화 실패. 오류: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="음성 클립";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -631,7 +637,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="카메라 업로드";
 /* Title of Photo Years tab */
-"cameraUploads.years.title"="Years";
+"cameraUploads.years.title"="년";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="사진";
 /* Photo view is empty */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu개의 읽지 않은 메시지";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 당신의 MEGA Pro 구독의 자동 결제를 끌 수 있습니다. 구독을 관리하려면, 휴대 전화에서 앱 스토어를 탭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA Pro 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
+"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 당신의 MEGA Pro 구독의 자동 결제를 끌 수 있습니다. 구독을 관리하려면, 휴대 전화에서 앱 스토어를 탭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 탭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA Pro 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="참가자 (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="중재자";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="중재자 임명";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="중재자 제거";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="회의 이름 변경";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="회의 참가";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="손님으로 참가";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="MEGA 가입";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="당신의 프라이버시가 중요합니다";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip 압축";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="데이터베이스";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="오디오 인터체인지";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI 텍스트 파일";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ASCII 텍스트";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="스트리밍 동영상";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="어드밴스드 스트림";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V 인터리브";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS 배치";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW 이미지";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="C++ 소스 코드";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW 이미지";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI 스크립트";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java 클래스";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS 명령";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS 스타일 시트";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="동적 HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="동적 링크 라이브러리";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word 템플릿";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="PDF 문서";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP 코드";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl 스크립트";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="오디오 재생목록";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG 이미지";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python 스크립트";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR 압축";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="서식 있는 텍스트";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW 이미지";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash 쉘";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="서버 HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="보관함";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="압축";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa 그래픽";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF 이미지";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2905,4 +2939,8 @@
 /* File extension: .zip. Commercial names should be stay on English */
 "general.filetype.zip"="ZIP 아카이브";
 /* Text show to highlight that you can choose a different option */
-"general.choose"="Select";
+"general.choose"="선택";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="통화 참여";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="사진과 동영상을 공유하려면 MEGA가 갤러리에 접근할 수 있게 허용해주세요";

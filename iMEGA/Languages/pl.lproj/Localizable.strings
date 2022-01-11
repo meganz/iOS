@@ -258,6 +258,10 @@
 "foldersAndFile"="%d katalogów • 1 plik";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 katalog • %d plików";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ urządzenie";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ urządzenia";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Zakolejkowane";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="Utwórz grupę";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Lokalizacja";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Włączenie geolokalizacji nie powiodło się. Błąd: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Klip głosowy";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -635,7 +641,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Zdjęcia";
 /* Photo view is empty */
-"photo.empty.title"="No Photos Found";
+"photo.empty.title"="Nie znaleziono żadnych zdjęć";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Kosz";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -1375,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu NIEODCZYTANE WIADOMOŚCI";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subskrypcje są automatycznie odnawiane na kolejne okresy subskrypcji o tym samym czasie trwania i po tej samej cenie, co wybrany okres początkowy. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA Pro nie później niż 24 godziny przed terminem kolejnej płatności za subskrypcję na stronie ustawień konta iTunes. Aby zarządzać swoją subskrypcją, po prostu stuknij w ikonę App Store na swoim urządzeniu mobilnym, zaloguj się za pomocą swojego Apple ID na dole strony (jeśli jeszcze tego nie zrobiłeś), a następnie kliknij Pokaż ID. Zostaniesz przeniesiony na stronę swojego konta, gdzie możesz przewinąć w dół do sekcji Zarządzaj subskrypcjami aplikacji. Stamtąd możesz wybrać swoją subskrypcję MEGA Pro i zobaczyć zaplanowaną datę odnowienia, wybrać inny pakiet subskrypcji lub przełączyć przełącznik on-off na off, aby wyłączyć automatyczne odnawianie subskrypcji.";
+"autorenewableDescription"="Subskrypcje są automatycznie odnawiane na kolejne okresy subskrypcji o tym samym czasie trwania i po tej samej cenie, co wybrany okres początkowy. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA Pro nie później niż 24 godziny przed terminem kolejnej płatności za subskrypcję na stronie ustawień konta iTunes. Aby zarządzać swoją subskrypcją, po prostu stuknij w ikonę App Store na swoim urządzeniu mobilnym, zaloguj się przy użyciu swojego Apple ID na dole strony (jeśli jeszcze tego nie zrobiłeś), a następnie stuknij w Pokaż ID. Zostaniesz przeniesiony na stronę swojego konta, gdzie możesz przewinąć w dół do sekcji Zarządzaj subskrypcjami aplikacji. Stamtąd możesz wybrać swoją subskrypcję MEGA Pro i zobaczyć zaplanowaną datę odnowienia, wybrać inny pakiet subskrypcji lub przełączyć przełącznik on-off na off, aby wyłączyć automatyczne odnawianie subskrypcji.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Otwórz MEGA i zapisz się aby kontynuować";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2513,7 +2519,7 @@
 /* Image title for the photo explorer */
 "home.images.title"="Obrazy";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="No Images Found";
+"home.images.empty"="Nie znaleziono obrazów";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Start";
 /* Home Screen: Explorer view card title - Documents */
@@ -2533,7 +2539,7 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Twoja prywatność";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Używamy plików cookie i podobnych technologii (\"pliki cookie\"), aby zapewnić i poprawić jakość korzystania z naszych usług. Zaakceptuj używanie przez nas plików cookie od początku wizyty lub dostosuj pliki cookie w Ustawieniach plików cookie. Przeczytaj więcej w naszej [A]Polityce plików cookie[/A].";
+"dialog.cookies.description"="Używamy plików cookie i podobnych technologii (“pliki cookie”), aby zapewnić i poprawić jakość korzystania z naszych usług. Zaakceptuj używanie przez nas plików cookie od początku wizyty lub dostosuj pliki cookie w Ustawieniach plików cookie. Przeczytaj więcej w naszej [A]Polityce plików cookie[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Zaakceptuj pliki cookie";
 /* Cookie settings dialog text. */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Uczestnicy (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERATOR";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Ustaw moderatora";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Usuń moderatora";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Zmień nazwę spotkania";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Dołącz do spotkania";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Dołącz jako gość";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Dołącz do MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Twoja prywatność ma znaczenie";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="7-Zip Compressed";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI Text File";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="ASCII Text";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW Image";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="C++ Source Code";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW Image";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="DOS Command";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="Dynamic HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamic Link Library";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Template";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="PDF Document";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="PHP Code";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Perl Script";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Audio Playlist";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="PNG Image";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Python Script";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="RAR Compressed";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Archiwizuj";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Wybierz";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Dołącz";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Aby udostępniać zdjęcia i filmy, przyznaj MEGA dostęp do swojej galerii";

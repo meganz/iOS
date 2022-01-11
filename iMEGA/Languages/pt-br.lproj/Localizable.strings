@@ -215,7 +215,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Adicionar contato ao MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Your contact [X] is not on MEGA. In order to call through MEGA’s encrypted chat you need to invite your contact";
+"dialog.callAttempt.contactNotInMEGA"="Seu contato [X] não está no MEGA. Para realizar uma ligação através do chat criptografado do MEGA, você precisa convidar seu contato";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Solicitação de contato enviada";
 /* Button title to allow the user postpone an action */
@@ -258,6 +258,10 @@
 "foldersAndFile"="%d pastas • 1 arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 pasta • %d arquivos";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ dispositivo";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ dispositivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Em fila";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="Criar grupo";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Localização";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="A ativação da geolocalização falhou. Erro: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Clipe de áudio";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -635,7 +641,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotos";
 /* Photo view is empty */
-"photo.empty.title"="No Photos Found";
+"photo.empty.title"="Não há fotos";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Lixeira";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -959,7 +965,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selecione entre os seus contatos ou digite vários emails";
 /*  */
-"insertYourFriendsEmails"="Insert your friends' emails:";
+"insertYourFriendsEmails"="Digite o(s) email(s) do(s) seu(s) amigo(s):";
 /*  */
 "howItWorks"="Como funciona";
 /*  */
@@ -2239,7 +2245,7 @@
 /* Setting title for Doc scan view */
 "Save Settings"="Salvar as configurações";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
-"cloudDrive.scanDocument.defaultName"="Scan %@";
+"cloudDrive.scanDocument.defaultName"="Digitalizado %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Tipo de arquivo";
 /* export Quality Option for Scan document */
@@ -2513,7 +2519,7 @@
 /* Image title for the photo explorer */
 "home.images.title"="Imagens";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="No Images Found";
+"home.images.empty"="Não há imagens";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Início";
 /* Home Screen: Explorer view card title - Documents */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Participantes (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODERADOR";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Converter em Moderador";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Remover Moderador";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Renomear reunião";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Entrar em uma reunião";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Participar como convidado";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Entrar no MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="A sua privacidade é importante";
 /* Guest user join Mega: paragraph 1 description */
@@ -2741,7 +2753,7 @@
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Há outra chamada em andamento. Finalize a sua chamada atual antes de fazer outra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
-"meetings.new.anotherAlreadyExistsError.endAndJoin"="End and join";
+"meetings.new.anotherAlreadyExistsError.endAndJoin"="Finalizar e participar";
 /* File extensions: .3dm and .3gp. Commercial names should be stay on English */
 "general.filetype.3DModel"="3D Model";
 /* File extension: .3ds. Commercial names should be stay on English */
@@ -2754,16 +2766,24 @@
 "general.filetype.7z"="Arquivo comprimido 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Base de dados";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
-"general.filetype.ans"="ANSI Text File";
+"general.filetype.ans"="Arquivo de texto ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="App para Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X App";
+"general.filetype.app"="Aplicativo para Mac OS X";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="Texto ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Imagem Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="Código fonte C++";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW Image";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
-"general.filetype.com"="DOS Command";
+"general.filetype.com"="Comando DOS";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="Dynamic HTML";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamic Link Library";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Template";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="Documento PDF";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="Código PHP";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Script Perl";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Lista de reprodução de áudio";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="Imagem PNG";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Script do Python";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="Arquivo comprimido RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Arquivar";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="ZIP Archive";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Selecionar";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Entrar na Chamada";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Para compartilhar fotos e vídeos, permita que o MEGA acesse a sua galeria";

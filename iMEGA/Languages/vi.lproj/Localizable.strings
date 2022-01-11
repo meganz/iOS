@@ -258,6 +258,10 @@
 "foldersAndFile"="%d thư mục • 1 tệp tin";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 thư mục • %d tệp tin";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ thiết bị";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ thiết bị";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Đang chờ";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -287,17 +291,19 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Chọn từ Ảnh";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Chụp ảnh";
+"capturePhotoVideo"="Chụp Ảnh";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Quét Tài Liệu";
 /* Menu option from the `Add` section that allows the user to make voice call. */
-"Voice"="Gọi thoại";
+"Voice"="Gọi Thoại";
 /* Menu option from the `Add` section that allows the user to share contact. */
-"Contact"="Tên liên lạc";
+"Contact"="Tên Liên Lạc";
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Tạo Nhóm Chát";
 /* Menu option from the `Add` section that allows the user to share Location */
-"chat.map.location"="Vị trí";
+"chat.map.location"="Định Vị";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Bật vị trí địa lý thất bại. Lỗi: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Tin Nhắn Thoại";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -357,9 +363,9 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Thông báo mới về luật bản quyền";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA tôn trọng luật bản quyền của người khác và yêu cầu người sử dụng dịch vụ đám mây MEGA nên thực hiện theo quy định của pháp luật về quyền tác giả.";
+"copyrightMessagePart1"="MEGA tôn trọng luật bản quyền của người khác và yêu cầu người sử dụng dịch vụ Ổ Mây MEGA nên thực hiện theo quy định của pháp luật về quyền tác giả.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Tất cả các người sử dụng đều bị giám sát chặt chẽ khi dùng dịch vụ đám mây của MEGA nhằm để tránh việc lưu trữ và phân phát nội dung vi phạm bản quyền. Bạn (khách hàng hay người sử dụng) không được phép đăng tải, tải xuống, lưu trữ, chia sẻ, cho xem, truyền nội dung, quản lý thư mục từ bạn bè, gửi email, lấy liên kết từ các tệp tin, dữ liệu có chứa nội dung vi phạm bản quyền hoặc tài sản độc quyền của cá nhân hay tập thể khác trong tài khoản của mình.";
+"copyrightMessagePart2"="Tất cả các người sử dụng đều bị giám sát chặt chẽ khi dùng dịch vụ Ổ Mây MEGA nhằm để tránh việc lưu trữ và phân phát nội dung vi phạm bản quyền. Bạn (khách hàng hay người sử dụng) không được phép đăng tải, tải xuống, lưu trữ, chia sẻ, cho xem, truyền nội dung, quản lý thư mục từ bạn bè, gửi email, lấy liên kết từ các tệp tin, dữ liệu có chứa nội dung vi phạm bản quyền hoặc tài sản độc quyền của cá nhân hay tập thể khác trong tài khoản của mình.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Đồng ý";
 /* button caption text that the user clicks when he disagrees */
@@ -689,7 +695,7 @@
 /* Title to show for upload in background */
 "Upload in Background"="Tải Lên trong Nền";
 /* Title for the location based background upload message */
-"Enable location services for background upload"="Bật dịch vụ dịnh vị để cho phép việc tải lên được chạy trong nền";
+"Enable location services for background upload"="Bật dịch vụ định vị để cho phép việc tải lên được chạy trong nền";
 /* Message for the location based background upload when the location data access is not denied by users */
 "MEGA can periodically start camera uploads in background when your location changes."="MEGA sẽ được thường xuyên thực hiện việc tải lên trong nền dựa vào các thay đổi vị trí của người dùng.";
 /* Message for the location based background upload when the location data access is denied by users */
@@ -759,9 +765,9 @@
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi quên mật khẩu.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Khóa Phục Hồi?";
+"whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Phục Hồi?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Mã Khóa Phục Hồi đã được lưu vào bộ ghi nhớ. Xin lưu giữ mã ở nơi an toàn.";
+"recoveryKeyCopiedToClipboard"="Mã Phục Hồi đã được lưu vào bảng nhớ tạm. Xin lưu giữ mã ở nơi an toàn.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Đã xuất Mã Phục Hồi";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -865,7 +871,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Thay mới tài khoản";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Tôi biết rằng tôi sẽ bắt đầu lại một tài khoản mới, hoàn toàn trống và tôi biết rằng tôi sẽ mất mọi dữ liệu tôi đang có trong tài khoản hiện tại. Trong vòng 60 ngày nếu tôi tìm được mã hay mật khẩu, tôi sẽ lấy lại được dữ liệu.";
+"startingFreshAccount"="Tôi biết rằng tôi sẽ bắt đầu lại một tài khoản mới, hoàn toàn trống và tôi biết rằng tôi sẽ mất mọi dữ liệu tôi đang có trong tài khoản hiện tại. Trong vòng 60 ngày nếu tôi tìm được Mã Phục Hồi hoặc mật khẩu, tôi sẽ lấy lại được dữ liệu.";
 /* Caption of the button to proceed */
 "startNewAccount"="Bắt đầu tài khoản mới";
 /*  */
@@ -1549,7 +1555,7 @@
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="Vì dạng thức thuật toán bảo mật của MEGA, mất Mã Phục Hồi và không có mật khẩu sẽ làm toàn bộ dữ liệu không thể lấy lại được. Xin hãy nhớ mật khẩu của chính mình.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Trước khi tiến hành việc đăng xuất, chúng tôi khuyên nên lưu lại Mã Khoá Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có mã sẽ không lấy lại được tài khoản.";
+"remindPasswordLogoutText"="Trước khi tiến hành việc đăng xuất, chúng tôi khuyên nên lưu lại Mã Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có mã sẽ không lấy lại được tài khoản.";
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Không hiện nữa";
 /* Label for test password button and titles */
@@ -1661,15 +1667,15 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Cần phải có một app lập xác thực để bật tính năng XT2B với MEGA. Bạn có thể tải và cài đặt Google Authenticator, Duo Mobile, Authy hoặc Microsoft Authenticator app về thiết bị của mình.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="Xác Minh 2-Bước được Bật";
+"twoFactorAuthenticationEnabled"="Xác Thực 2-Bước Được Bật";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Xin lưu lại Mã Khoá Phục Hồi ở nơi an toàn";
+"pleaseSaveYourRecoveryKey"="Xin lưu lại Mã Phục Hồi ở nơi an toàn";
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="MEGA sẽ không thể giúp phục hồi tài khoản nếu chủ tài khoản để mất Mã Phục Hồi, và có chức năng XT2B được bật.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
-"twoFactorAuthenticationDisabled"="Xác Minh 2-Bước Đã Tắt";
+"twoFactorAuthenticationDisabled"="Xác Thực 2-Bước Đã Tắt";
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp bị mất máy.";
 /* A button to help them restore their account if they have lost their 2FA device. */
@@ -1793,15 +1799,15 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Chưa thể lưu lại mục";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Luân Phiên Mã Khóa";
+"Encrypted Key Rotation"="Luân Phiên Chìa Khóa Mã";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Bật Luân Phiên Mã Khóa";
+"Enable Encrypted Key Rotation"="Bật Luân Phiên Chìa Khóa Mã";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Lấy liên kết vào cuộc chát";
+"Get Chat Link"="Lấy liên kết cuộc chát";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên mã khóa có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết phòng chát và những người mới tham gia sẽ không đọc được các tin nhắn cũ.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên chìa khóa mã có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết phòng chát và những người mới tham gia sẽ không đọc được các tin nhắn cũ.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Luân phiên mã khóa bị tắt đối với các cuộc trò chuyện có hơn 100 thành viên.";
+"Key rotation is disabled for conversations with more than 100 participants."="Luân phiên chìa khóa mã không áp dụng được đối với các cuộc trò chuyện có hơn 100 thành viên.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Để tạo ra liên kết tới chát, đặt tên cho nhóm trước.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1813,7 +1819,7 @@
 /* Users previewing a public chat */
 "Observers"="Người theo dõi";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên mã khóa.";
+"%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên chìa khóa mã.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ vừa mới tạo đường liên kết vào cuộc chát.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -1917,7 +1923,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Tin nhắn thoại";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
+"This action can not be completed as it would take you over your current storage limit"="Thao tác này không thể hoàn tất bởi vì toàn bộ không gian lưu trữ sẽ bị dùng hết";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Phiên tải lên không thể tiến hành vì tài khoản đã bị đầy";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1927,7 +1933,7 @@
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="Lần thấy cuối: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Lần thấy cuối, đã một thời gian rất lâu";
+"Last seen a long time ago"="Lần thấy cuối đã một thời gian rất lâu";
 /*  */
 "Today"="Hôm nay";
 /*  */
@@ -1943,7 +1949,7 @@
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Chính xác xấp xỉ %d mét";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Gửi Vị Trí";
+"Send Location"="Gửi Định Vị";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Vị trí địa lý này sẽ được mở bằng một ứng dụng cung cấp bản đồ không nằm trong hệ thống hỗ trợ mã hóa đầu-cuối thuộc nền tảng của MEGA.";
 /* Text shown in location-type messages */
@@ -1967,13 +1973,13 @@
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Cuộc Gọi Đã Bắt Đầu";
 /* Title for feature Password Reminder */
-"Password Reminder"="Kiểm Tra Mật Khẩu";
+"Password Reminder"="Nhắc Nhở Mật Khẩu";
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Tin nhắn";
 /* Title of the button in the contact info screen to start an audio call */
 "Call"="Gọi";
 /* Title of the button in the contact info screen to start a video call */
-"Video"="Video";
+"Video"="Gọi Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Được kích hoạt";
 /* Text button for init a group chat with link. */
@@ -1985,7 +1991,7 @@
 /* Title show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.title"="Hoạt Động Gần Đây Đã Ẩn Đi";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="Hiện Thị Hoạt Động";
+"recents.emptyState.activityHidden.button"="Hiển Thị Hoạt Động";
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 tệp Hình Ảnh";
 /* Multiple videos title shown in recents section of web client. */
@@ -2065,7 +2071,7 @@
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="Gói Cước";
 /*  */
-"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Bạn sẽ cần phải sử dụng Mã Phục Hồi này quên mất mật khẩu của mình,[B]không thì toàn bộ tệp tin và thư mục của bạn sẽ không thể truy cập được, ngay cả MEGA cũng không giúp được![/B]";
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Bạn sẽ cần phải sử dụng Mã Phục Hồi này quên mất mật khẩu của mình,[B]không thì toàn bộ tệp tin và thư mục của bạn sẽ không thể truy cập được, ngay cả MEGA cũng sẽ không giúp được[/B].";
 /*  */
 "Business"="Doanh Nghiệp";
 /*  */
@@ -2121,7 +2127,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 giờ";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Im lặng tất cả các âm báo chát trong";
+"Mute chat Notifications for"="Tắt tiếng tất cả các âm báo chát trong";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Tất cả các thông báo sẽ im lặng cho đến ngày mai, %@";
 /* Chat Notifications DND: Remaining time left if until today */
@@ -2139,11 +2145,11 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Cuộc chát bất hoạt động";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Đặt Tên";
+"Set Nickname"="Đặt Nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Sửa biệt danh";
+"Edit Nickname"="Sửa Nickname";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Xóa biệt danh";
+"Remove Nickname"="Xóa Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Tên khác hoặc Biệt danh";
 /* Business expired account Overdue payment page header. */
@@ -2505,11 +2511,11 @@
 /* Title for video explorer view */
 "Videos"="Videos";
 /* Photo Explorer Screen: No documents in the account */
-"No documents found"="Không có văn bản tài liệu nào";
+"No documents found"="Không có tệp tài liệu nào";
 /* Audio Explorer Screen: No audio files in the account */
 "No audio files found"="Không có tệp tin âm thanh nào";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="Không có video nào";
+"No videos found"="Không có tệp video nào";
 /* Image title for the photo explorer */
 "home.images.title"="Hình Ảnh";
 /* Photo Explorer Screen: No images in the account */
@@ -2517,7 +2523,7 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Trang Chủ";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Văn Bản";
+"Docs"="Tài Liệu";
 /* Message shown when a link is shared with separated key */
 "This link was shared without a decryption key. Do you want to share its key?"="Đường liên kết này đẽ được chia sẻ mà không có chìa khóa giải mã. Ban có muốn chia sẻ chìa khóa bây giờ không?";
 /* Title for password protect link alert */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Thành viên (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="NGƯỜI ĐIỀU HÀNH";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Trao Quyền Điều Hành";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Tước Quyền Điều Hành";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Đổi Tên Cuộc Họp";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Tham gia họp mặt";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Tham gia với tư cách khách";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Tham Gia Dùng MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Quyền riêng tư là điều quan trọng";
 /* Guest user join Mega: paragraph 1 description */
@@ -2754,6 +2766,8 @@
 "general.filetype.7z"="Tệp nén 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Audio Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="Tệp văn bản ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,6 +2778,12 @@
 "general.filetype.ascii"="Tệp văn bản ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Advanced Stream";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="A/V Interleave";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="DOS Batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Ảnh RAW của Casio";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2776,12 +2796,18 @@
 "general.filetype.cpp"="Mã nguồn C++";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="Ảnh CorelDRAW";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="Tập lệnh CGI";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java Class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="Lệnh DOS";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="Bảng dạng CSS";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="HTML Động";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Dynamic Link Library";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="Dạng mẫu MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2809,7 +2835,7 @@
 /* File extension: .gz. Commercial names should be stay on English */
 "general.filetype.gz"="GNU Nén";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
-"general.filetype.header"="Header";
+"general.filetype.header"="Header C++";
 /* File extensions: .htm and .html. Commercial names should be stay on English */
 "general.filetype.htmlDocument"="Tài liệu HTML";
 /* File extension: .iff. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="Tài liệu PDF";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="Mã PHP";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Tập lệnh Perl";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Playlist Âm thanh";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="Ảnh PNG";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Tập lệnh Python";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="Tệp nén RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Văn bản Đa dạng";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Ảnh RAW của Panasonic";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="HTML Máy chủ";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Dữ liệu nén TAR";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Tệp nén";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Đồ họa Targa";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Ảnh TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="Dữ liệu nén ZIP";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Chọn";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Tham Gia Cuộc Gọi";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Để có thể cia sẻ hình ảnh và videos, cấp phép cho MEGA quyền truy cập vào kho ảnh của bạn";

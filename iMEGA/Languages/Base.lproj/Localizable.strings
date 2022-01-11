@@ -47,7 +47,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Enter decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, please contact the creator of the link.";
+"decryptionKeyAlertMessage"="To access this folder or file, you will need its Decryption key. If you do not have the key, please contact the creator of the link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
@@ -81,7 +81,7 @@
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Log in";
+"login"="Log in";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Create Account";
 /* Message shown when the user writes a wrong email or password on login */
@@ -165,7 +165,7 @@
 /*  */
 "fileLinkUnavailableText1"="This could be due to the following reasons:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="The file has been removed because of a ToS/AUP violation.";
+"fileLinkUnavailableText2"="The file has been removed because of a ToS or AUP violation.";
 /*  */
 "fileLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */
@@ -183,7 +183,7 @@
 /*  */
 "folderLinkUnavailableText1"="This could be due to the following reasons:";
 /*  */
-"folderLinkUnavailableText2"="The folder link has been removed because of a ToS/AUP violation.";
+"folderLinkUnavailableText2"="The folder link has been removed because of a ToS or AUP violation.";
 /*  */
 "folderLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */
@@ -258,9 +258,9 @@
 "foldersAndFile"="%d folders • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 folder • %d files";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device"*/
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ device";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices"*/
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
 "cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Queued";
@@ -363,9 +363,9 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Copyright warning to all users";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.";
+"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA Cloud service comply with the laws of copyright.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="You are strictly prohibited from using the MEGA cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.";
+"copyrightMessagePart2"="You are strictly prohibited from using the MEGA Cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Agree";
 /* button caption text that the user clicks when he disagrees */
@@ -503,7 +503,7 @@
 /* Button title that skips the current action */
 "skipButton"="Skip";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Automatically backup your photos and videos to your Cloud Drive.";
+"Automatically backup your photos and videos to the Cloud Drive."="Automatically back up your photos and videos to your Cloud Drive.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Enable Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -969,7 +969,7 @@
 /*  */
 "howItWorks"="How it works";
 /*  */
-"howItWorksMain"="Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the sync client or one of our mobile apps)";
+"howItWorksMain"="Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
 /*  */
 "howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend’s email here prior to them registering with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -995,17 +995,17 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Referral bonuses";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install the MEGA desktop app";
+"account.achievement.desktopApp.title"="Install the MEGA Desktop App";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA desktop app.";
+"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA Desktop App.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.";
+"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %@ of complimentary storage space, valid for 365 days. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, valid for 365 days. The MEGA Mobile App is available for iOS and Android. ";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1035,7 +1035,7 @@
 /*  */
 "days"="days";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Log out";
+"logoutLabel"="Log out";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
@@ -1381,7 +1381,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu UNREAD MESSAGES";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then tap View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1443,7 +1443,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transfer failed due to a recursive directory structure";
 /* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
+"Not accessible due to ToS/AUP violation"="Not accessible due to a ToS or AUP violation";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL verification failed";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1561,7 +1561,7 @@
 /* Label for test password button and titles */
 "testPassword"="Test Password";
 /* Label for recovery key button */
-"backupRecoveryKey"="Backup Recovery Key";
+"backupRecoveryKey"="Back up Recovery Key";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
 /* Title text for the account confirmation. */
@@ -1669,7 +1669,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator App.";
+"twoFactorAuthenticationEnabledDescription"="Next time you log in to your account you will be asked to enter a 6-digit code provided by your Authenticator App.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1677,7 +1677,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Two-Factor Authentication Disabled";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to back up this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Lost your Authenticator device?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
@@ -1715,7 +1715,7 @@
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Setup MEGA";
+"Setup MEGA"="Set up MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
 /* Message warning the user about the risk of not setting up permissions */
@@ -1867,7 +1867,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Contact relationship established";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Account has been deleted/deactivated";
+"Account has been deleted/deactivated"="Account has been deleted or deactivated";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="Blocked you as a contact";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -2427,7 +2427,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A].";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities.";
+"Taken down due to severe violation of our terms of service"="This folder or file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Unavailable";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -2943,4 +2943,4 @@
 /* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
 "chat.joinCall"="Join Call";
 /* Description shown in chat screen if the user didn't allow access to photos */
-"chat.photos.allowPhotoAccessMessage"="To share photos and videos allow MEGA to access your gallery";
+"chat.photos.allowPhotoAccessMessage"="To share photos and videos, grant MEGA access to your gallery";

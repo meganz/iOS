@@ -258,6 +258,10 @@
 "foldersAndFile"="%d dossiers • 1 fichier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 dossier • %d fichiers";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
+"cloudDrive.root.backup.folder.device.subtitle"="%@ appareil";
+/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ appareils";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En attente";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -298,6 +302,8 @@
 "Start Group"="Commencer un groupe";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Emplacement";
+/* Error message shown when enabling geolocation failed */
+"chat.map.location.enableGeolocationFailedError"="Échec d’activation de la géolocalisation. Erreur :%@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Insert parlé";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -621,7 +627,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Droits";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Lecture seulement";
+"readOnly"="En lecture seule";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Lecture et écriture";
 /* Permissions given to the user you share your folder with */
@@ -765,7 +771,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="La Clé de récupération a été exportée";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="La Clé de récupération a été exportée dans la section Hors ligne sous MEGA-CLÉdeRÉCUPÉRATION.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
+"masterKeyExported_alertMessage"="La Clé de récupération a été exportée dans la section Hors ligne sous MEGA-CLÉdeRÉCUPÉRATION.txt. Remarque : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sur votre appareil";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -953,7 +959,7 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Inviter vos amis";
+"account.achievement.referral.title"="Inviter vos amies et amis";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ d’espace de stockage pour chaque parrainage. \nValide pendant 365 jours.";
 /* Text shown to explain how and where you can invite friends */
@@ -963,9 +969,9 @@
 /*  */
 "howItWorks"="Fonctionnement";
 /*  */
-"howItWorksMain"="Votre ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application client MEGA[/S] (soit le client de synchro, soit l’une de nos applis mobiles)";
+"howItWorksMain"="Votre amie ou ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application client MEGA[/S] (soit le client de synchro, soit l’une de nos applis mobiles)";
 /*  */
-"howItWorksSecondary"="Vous pouvez contacter votre ami de n’importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l’adresse courriel de votre ami avant qu’il ne s’inscrive avec cette adresse.";
+"howItWorksSecondary"="Vous pouvez contacter votre amie ou ami de n’importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l’adresse courriel de votre amie ou ami avant que cette personne ne s’inscrive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu’un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
 /* Header of block with achievements bonuses. */
@@ -1141,7 +1147,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activer le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent contenir des renseignements associés à votre compte.";
+"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent comprendre des renseignements associés à votre compte.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Désactiver le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1797,7 +1803,7 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Activer la rotation de la clé de chiffrement";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Obtenir le lien vers la conversation";
+"Get Chat Link"="Obtenir le lien de conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé de chiffrement est un peu plus sûre, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
@@ -2171,7 +2177,7 @@
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Ce lien n’est pas associé à ce compte. Veuillez vous connecter avec le bon compte.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Invitez des contacts maintenant";
+"Invite contact now"="Inviter des contacts maintenant";
 /* Text showing the user one contact would be invited */
 "Invite 1 contact"="Inviter 1 contact";
 /* Error message if user click next button without enter a valid phone number */
@@ -2694,6 +2700,10 @@
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="MODÉRATEUR";
+/* Meetings: Action on a meeting that change participant's role to moderator */
+"meetings.participant.makeModerator"="Désigner comme modérateur";
+/* Meetings: Action on a meeting that remove participant's moderator role */
+"meetings.participant.removeModerator"="Supprimer comme modérateur";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Renommer la réunion";
 /* Action of a call/meeting to share its link */
@@ -2712,6 +2722,8 @@
 "meetings.link.loggedInUser.joinButtonText"="Me joindre à une réunion";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Vous joindre en tant qu’invité";
+/* Encourage Guest User to Join Mega Screen Navigation Bar Title */
+"meetings.joinMega.title"="Joignez-vous à MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Votre vie privée compte";
 /* Guest user join Mega: paragraph 1 description */
@@ -2751,9 +2763,11 @@
 /* File extension: .3g2. Commercial names should be stay on English */
 "general.filetype.3g2"="Fichier multimédia";
 /* File extension: .7z. Commercial names should be stay on English */
-"general.filetype.7z"="Fichier compressé au format 7-Zip";
+"general.filetype.7z"="Fichier compressé 7-ZIP";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Base de données";
+/* File extension: .aif and .aiff. Is not a commercial name, but a standard */
+"general.filetype.audioInterchange"="Échange audio";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="Fichier texte ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2764,8 +2778,14 @@
 "general.filetype.ascii"="Texte ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Vidéo diffusée en continu";
+/* File extension: .asx. Is not a commercial name, but a file format name. */
+"general.filetype.asx"="Flux avancé";
+/* File extension: .avi. Name of a multimedia container format */
+"general.filetype.avi"="Entrelacement audio-vidéo";
+/* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
+"general.filetype.bat"="Fichier séquentiel DOS";
 /* File extension: .bay. Commercial names should be stay on English */
-"general.filetype.bay"="Image RAW Casio";
+"general.filetype.bay"="Image RAW de Casio";
 /* File extension: .bmp. Commercial names should be stay on English */
 "general.filetype.bmp"="Image Bitmap";
 /* File extension: .bz2. Commercial names should be stay on English */
@@ -2776,14 +2796,20 @@
 "general.filetype.cpp"="Code source C++";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="Image CorelDRAW";
+/* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
+"general.filetype.cgi"="Script CGI";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Classe Java";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="Command DOS";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="Feuille de style en cascade";
+/* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
+"general.filetype.dhtml"="HTML dynamique";
+/* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
+"general.filetype.dll"="Bibliothèque de liens dynamiques";
 /* File extension: .dotx. Commercial names should be stay on English */
-"general.filetype.wordTemplate"="Modèle Word de MS";
+"general.filetype.wordTemplate"="Modèle Word de Microsoft";
 /* File extension: .dxf. Commercial names should be stay on English */
 "general.filetype.dxf"="Image DXF";
 /* File extension: .eps. Commercial names should be stay on English */
@@ -2827,25 +2853,25 @@
 /* File extension: .3mu. Commercial names should be stay on English */
 "general.filetype.m3u"="Liste de lecture de médias";
 /* File extension: .m4a. Commercial names should be stay on English */
-"general.filetype.m4a"="Fichier son MPEG-4";
+"general.filetype.m4a"="Son MPEG-4";
 /* File extension: .max. Commercial names should be stay on English */
 "general.filetype.max"="Scène 3ds Max";
 /* File extension: .mdb. Commercial names should be stay on English */
-"general.filetype.mdb"="Access de MS";
+"general.filetype.mdb"="Access de Microsoft";
 /* File extensions: .mid and .midi. Commercial names should be stay on English */
-"general.filetype.mid"="Fichier son MIDI";
+"general.filetype.mid"="Son MIDI";
 /* File extension: .mkv. Commercial names should be stay on English */
 "general.filetype.mkv"="Vidéo MKV";
 /* File extension: .mov. Commercial names should be stay on English */
 "general.filetype.mov"="Film QuickTime";
 /* File extension: .mp3. Commercial names should be stay on English */
-"general.filetype.mp3"="Fichier son MP3";
+"general.filetype.mp3"="Son MP3";
 /* File extension: .mp4. Commercial names should be stay on English */
 "general.filetype.mp4"="Vidéo MP4";
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
 "general.filetype.mpeg"="Film MPEG";
 /* File extension: .msi. Commercial names should be stay on English */
-"general.filetype.msi"="Programme d’installation de MS";
+"general.filetype.msi"="Programme d’installation de Microsoft";
 /* File extensions: .txt and .odt. Commercial names should be stay on English */
 "general.filetype.textDocument"="Document texte";
 /* File extension: .otf. Commercial names should be stay on English */
@@ -2858,16 +2884,22 @@
 "general.filetype.pdf"="Document PDF";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="Code PHP";
+/* File extension: .pl. Is not a commercial name. "script" is a common noun */
+"general.filetype.pl"="Script Perl";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Liste de lecture de fichiers son";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="Image PNG";
+/* File extension: .py. Is not a commercial name. "script" is a common noun */
+"general.filetype.py"="Script Python";
 /* File extension: .rar. Commercial names should be stay on English */
-"general.filetype.rar"="Fichier compressé au format RAR";
+"general.filetype.rar"="Fichier compressé RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Texte enrichi";
 /* File extension: .rw2. Commercial names should be stay on English */
-"general.filetype.rw2"="Image RAW Panasonic";
+"general.filetype.rw2"="Image RAW de Panasonic";
+/* File extension: .sh. Is not a commercial name. "shell" is a common noun */
+"general.filetype.sh"="Script de commandes";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="HTML serveur";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2886,6 +2918,8 @@
 "general.filetype.tar"="Fichier compressé";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Fichier compressé";
+/* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
+"general.filetype.tga"="Graphique Targa";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Image TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2893,7 +2927,7 @@
 /* File extension: .ttf. Commercial names should be stay on English */
 "general.filetype.ttf"="Police TrueType";
 /* File extension: .wav. Commercial names should be stay on English */
-"general.filetype.wav"="Fichier son Wave";
+"general.filetype.wav"="Son Wave";
 /* File extension: .webm. Commercial names should be stay on English */
 "general.filetype.webm"="Vidéo WebM";
 /* File extension: .wma. Commercial names should be stay on English */
@@ -2906,3 +2940,7 @@
 "general.filetype.zip"="Fichier compressé ZIP";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Choisir";
+/* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
+"chat.joinCall"="Vous joindre à l’appel";
+/* Description shown in chat screen if the user didn't allow access to photos */
+"chat.photos.allowPhotoAccessMessage"="Afin de partager photos et vidéos, accorder l’accès à votre galerie à MEGA";
