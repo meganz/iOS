@@ -20,10 +20,15 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         super.tearDown()
         tracks.removeAll()
     }
+    
+    private func addTracks() {
+        audioPlayer.add(tracks: tracks)
+        audioPlayer.queuePlayer?.volume = 0.0
+    }
 
     func testAudioPlayerSetup() throws {
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
         XCTAssertTrue(audioPlayer.isPlaying)
     }
@@ -32,7 +37,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         let expect = expectation(description: "Play next item")
         
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         XCTAssertNotNil(audioPlayer.currentIndex)
         XCTAssertTrue(audioPlayer.currentIndex == 0)
         
@@ -53,7 +58,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         let expect = expectation(description: "Play previous item")
         
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         XCTAssertNotNil(audioPlayer.currentIndex)
         XCTAssertTrue(audioPlayer.currentIndex == 0)
         
@@ -80,7 +85,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         let expect = expectation(description: "Rewind forward")
         
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
         let currentTime = queuePlayer.currentTime()
         XCTAssertTrue(CMTIME_IS_VALID(currentTime))
@@ -107,7 +112,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         let expect = expectation(description: "Rewind backward")
         
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
         let currentTime = queuePlayer.currentTime()
         XCTAssertTrue(CMTIME_IS_VALID(currentTime))
@@ -134,7 +139,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
     
     func testAudioPlayerPause() {
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         audioPlayer.togglePlay()
         XCTAssertTrue(audioPlayer.isPaused)
         audioPlayer.togglePlay()
@@ -143,7 +148,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
     
     func testAudioPlayerDeleteItem() throws {
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
         let lastTrack = try XCTUnwrap(tracks.last)
         audioPlayer.deletePlaylist(items: [lastTrack])
@@ -154,7 +159,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         XCTAssertTrue(tracks.count > 0)
         let track = try XCTUnwrap(tracks.last)
         tracks.removeLast()
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         let tracksNumber = audioPlayer.tracks.count
         audioPlayer.insertInQueue(item: track, afterItem: nil)
         XCTAssertTrue(audioPlayer.tracks.count == tracksNumber + 1)
@@ -162,7 +167,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
     
     func testAudioPlayerMoveItems() throws {
         XCTAssertTrue(tracks.count > 0)
-        audioPlayer.add(tracks: tracks)
+        addTracks()
         XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
         let track = try XCTUnwrap(tracks.first)
         audioPlayer.move(of: track, to: IndexPath(row: audioPlayer.tracks.count - 1, section: 0), direction: .down)

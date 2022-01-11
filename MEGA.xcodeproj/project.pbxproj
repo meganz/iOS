@@ -1948,6 +1948,7 @@
 		BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */; };
 		BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */; };
 		BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933F024A5864C00BC2A75 /* SingleTapView.swift */; };
+		BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */; };
 		BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */; };
 		BFCA9A1D25ABA33900D1F4E0 /* PSAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */; };
 		BFCB8105250081C70096BD57 /* PhotoExplorerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9457C524FE07A30048F82B /* PhotoExplorerCollectionCell.xib */; };
@@ -4114,6 +4115,7 @@
 		BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageOptionsTableViewController.swift; sourceTree = "<group>"; };
 		BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapHandlerProtocol.swift; sourceTree = "<group>"; };
 		BFC933F024A5864C00BC2A75 /* SingleTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapView.swift; sourceTree = "<group>"; };
+		BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAView.swift; sourceTree = "<group>"; };
 		BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSAView.xib; sourceTree = "<group>"; };
 		BFCB81092501B1C80096BD57 /* PhotoExplorerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoExplorerViewModel.swift; sourceTree = "<group>"; };
@@ -4829,6 +4831,7 @@
 				4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */,
 				A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */,
 				1373618F1A6664C300B740E8 /* main.m */,
+				BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */,
 				5BF5387F23741DB70023F2E4 /* MEGA.entitlements */,
 			);
 			path = "Supporting Files";
@@ -12643,6 +12646,7 @@
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
 				5BF80BDF26F0CBF30086B81C /* MockThumbnailUseCase.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
+				BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
 				83993CFD26B9630D00223C92 /* ChatSessionEntity+Additions.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
