@@ -12,21 +12,14 @@ struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, C
     }
     
     var body: some View {
-        ScrollViewReader { scrollProxy in
-            ScrollView {
-                contentView()
-                    .offset(in: .named("scrollView"))
-                    .onPreferenceChange(OffsetPreferenceKey.self) {
-                        viewModel.scrollTracker.trackContentOffset($0)
-                    }
-            }
-            .coordinateSpace(name: "scrollView")
-            .onAppear {
-                DispatchQueue.main.async {
-                    scrollProxy.scrollTo(viewModel.position, anchor: .center)
+        ScrollView {
+            contentView()
+                .offset(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
+                .onPreferenceChange(OffsetPreferenceKey.self) {
+                    viewModel.scrollTracker.trackContentOffset($0)
                 }
-            }
         }
+        .coordinateSpace(name: PhotoLibraryConstants.scrollViewCoordinateSpaceName)
     }
     
     @ViewBuilder

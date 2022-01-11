@@ -48,7 +48,7 @@ struct PhotoLibraryAllView: View {
                     .id(photo.position)
                     .buttonStyle(.plain)
                     .background(Color(white: 0, opacity: 0.1))
-                    .frame(in: .named("scrollView"))
+                    .frame(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
                     .onPreferenceChange(FramePreferenceKey.self) {
                         viewModel.scrollTracker.trackFrame($0, for: photo, inViewPort: viewPortSize)
                     }

@@ -14,13 +14,20 @@ struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: Pho
     
     var body: some View {
         GeometryReader { geoProxy in
-            PhotoLibraryModeView(viewModel: viewModel) {
-                LazyVGrid(columns: PhotoLibraryConstants.cardColumns, spacing: PhotoLibraryConstants.cardRowPadding) {
-                    ForEach(viewModel.photoCategoryList) { category in
-                        card(for: category, viewPortSize: geoProxy.size)
+            ScrollViewReader { scrollProxy in
+                PhotoLibraryModeView(viewModel: viewModel) {
+                    LazyVGrid(columns: PhotoLibraryConstants.cardColumns, spacing: PhotoLibraryConstants.cardRowPadding) {
+                        ForEach(viewModel.photoCategoryList) { category in
+                            card(for: category, viewPortSize: geoProxy.size)
+                        }
+                    }
+                    .padding(PhotoLibraryConstants.libraryPadding)
+                }
+                .onAppear {
+                    DispatchQueue.main.async {
+                        scrollProxy.scrollTo(viewModel.position, anchor: .center)
                     }
                 }
-                .padding(PhotoLibraryConstants.libraryPadding)
             }
         }
     }
@@ -37,7 +44,7 @@ struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: Pho
         })
             .id(category.position)
             .buttonStyle(.plain)
-            .frame(in: .named("scrollView"))
+            .frame(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
             .onPreferenceChange(FramePreferenceKey.self) {
                 viewModel.scrollTracker.trackFrame($0, for: category, inViewPort: viewPortSize)
             }
