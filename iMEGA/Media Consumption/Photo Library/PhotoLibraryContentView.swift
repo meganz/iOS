@@ -12,15 +12,20 @@ struct PhotoLibraryContentView: View {
     }
     
     var body: some View {
-        if #available(iOS 15.0, *) {
-            photoContent()
-                .safeAreaInset(edge: .bottom) {
+        if viewModel.library.isEmpty {
+            ProgressView()
+                .scaleEffect(1.5)
+        } else {
+            if #available(iOS 15.0, *) {
+                photoContent()
+                    .safeAreaInset(edge: .bottom) {
+                        pickerFooter()
+                    }
+            } else {
+                ZStack(alignment: .bottom) {
+                    photoContent()
                     pickerFooter()
                 }
-        } else {
-            ZStack(alignment: .bottom) {
-                photoContent()
-                pickerFooter()
             }
         }
     }
@@ -45,41 +50,37 @@ struct PhotoLibraryContentView: View {
     
     @ViewBuilder
     private func photoContent() -> some View {
-        if viewModel.library.isEmpty {
-            EmptyView()
-        } else {
-            ZStack {
-                switch viewModel.selectedMode {
-                case .year:
-                    PhotoLibraryYearView(
-                        viewModel: PhotoLibraryYearViewModel(libraryViewModel: viewModel),
-                        router: router
-                    )
-                        .equatable()
-                case .month:
-                    PhotoLibraryMonthView(
-                        viewModel: PhotoLibraryMonthViewModel(libraryViewModel: viewModel),
-                        router: router
-                    )
-                        .equatable()
-                case .day:
-                    PhotoLibraryDayView(
-                        viewModel: PhotoLibraryDayViewModel(libraryViewModel: viewModel),
-                        router: router
-                    )
-                        .equatable()
-                case .all:
-                    EmptyView()
-                }
-                
-                PhotoLibraryAllView(
-                    viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
+        ZStack {
+            switch viewModel.selectedMode {
+            case .year:
+                PhotoLibraryYearView(
+                    viewModel: PhotoLibraryYearViewModel(libraryViewModel: viewModel),
                     router: router
                 )
                     .equatable()
-                    .opacity(viewModel.selectedMode == .all ? 1 : 0)
-                    .zIndex(viewModel.selectedMode == .all ? 1 : -1)
+            case .month:
+                PhotoLibraryMonthView(
+                    viewModel: PhotoLibraryMonthViewModel(libraryViewModel: viewModel),
+                    router: router
+                )
+                    .equatable()
+            case .day:
+                PhotoLibraryDayView(
+                    viewModel: PhotoLibraryDayViewModel(libraryViewModel: viewModel),
+                    router: router
+                )
+                    .equatable()
+            case .all:
+                EmptyView()
             }
+            
+            PhotoLibraryAllView(
+                viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
+                router: router
+            )
+                .equatable()
+                .opacity(viewModel.selectedMode == .all ? 1 : 0)
+                .zIndex(viewModel.selectedMode == .all ? 1 : -1)
         }
     }
     
