@@ -43,7 +43,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
-        if NotificationService.session == nil {
+        if let _ = NotificationService.session {
             guard NotificationService.initExtensionProcess(with: session) else {
                 return
             }
