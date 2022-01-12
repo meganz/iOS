@@ -15,14 +15,16 @@ extension MEGAChatRoom {
     }
     
     var participantNames: String {
+        let lastIndex = peerCount - 1
         return (0..<peerCount).reduce("") { (result, index) in
             let userHandle = peerHandle(at: index)
 
             if let name = participantName(forUserHandle: userHandle) {
-                if index < (peerCount - 1) {
-                    return result + name + ", "
+                let resultName = "\(result)\(name)"
+                if index < lastIndex {
+                    return "\(resultName), "
                 } else {
-                    return result + name
+                    return resultName
                 }
             }
             
