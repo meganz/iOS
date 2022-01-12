@@ -507,7 +507,8 @@ class ChatViewController: MessagesViewController {
         
         let contentInset = messagesCollectionView.adjustedContentInset.bottom
         
-        chatBottomInfoScreenBottomConstraint?.constant = -(contentInset + chatBottomInfoScreenBottomPadding)
+        let bottomConstant = contentInset + chatBottomInfoScreenBottomPadding
+        chatBottomInfoScreenBottomConstraint?.constant = bottomConstant * -1
         view.layoutIfNeeded()
         
         guard chatBottomInfoScreen.isHidden == true else {
