@@ -45,9 +45,12 @@ pipeline {
                 }
             }
         }
+        cleanup {
+            cleanWs()
+        }
     }
     stages {
-        stage('Update pods and submodules') {
+        stage('Installing dependencies') {
             parallel {
                 stage('Submodule update and run cmake') {
                     steps {
@@ -78,17 +81,17 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
 
-        stage('Downloading third party libraries') {
-            steps {
-                gitlabCommitStatus(name: 'Downloading third party libraries') {
-                    injectEnvironments({
-                        retry(3) {
-                            sh "sh download_3rdparty.sh"
+                stage('Downloading third party libraries') {
+                    steps {
+                        gitlabCommitStatus(name: 'Downloading third party libraries') {
+                            injectEnvironments({
+                                retry(3) {
+                                    sh "sh download_3rdparty.sh"
+                                }
+                            })
                         }
-                    })
+                    }
                 }
             }
         }
