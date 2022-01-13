@@ -30,15 +30,15 @@ class MockCallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
         completion?(requestHighResolutionVideoCompletion)
     }
     
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
         completion?(stopHighResolutionVideoCompletion)
     }
     
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
+    func requestLowResolutionVideos(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
         completion?(requestLowResolutionVideoCompletion)
     }
     
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion?) {
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
         completion?(stopLowResolutionVideoCompletion)
     }
 }
