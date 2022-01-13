@@ -65,61 +65,52 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         })
     }
     
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion? = nil) {
-        let clientIdsMapped = clientIds.map { NSNumber(value: $0) }
+    func stopHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
 
-        chatSdk.stopHiResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
+        chatSdk.stopHiResVideo(forChatId: chatId, clientIds: [NSNumber(value: clientId)], delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
-                MEGALogDebug("Success to stop high resolution video for clientIds: \(clientIds)")
+                MEGALogDebug("Success to stop high resolution video for clientId: \(clientId)")
                 completion?(.success)
             case .failure(_):
-                MEGALogError("Fail to stop high resolution video for clientIds: \(clientIds)")
+                MEGALogError("Fail to stop high resolution video for clientId: \(clientId)")
                 completion?(.failure(.stopHighResolutionVideo))
             }
         })
     }
     
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion? = nil) {
+    func requestLowResolutionVideos(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
         
-        var clientIdsMapped = [NSNumber]()
-        
-        clientIds.forEach {
-            if requestingLowResolutionIds.contains($0) {
-                MEGALogDebug("Low resolution for \($0) already requested")
-            } else {
-                clientIdsMapped.append(NSNumber(value: $0))
-                requestingLowResolutionIds.append($0)
-            }
+        if requestingLowResolutionIds.contains(clientId) {
+            MEGALogDebug("Low resolution for \(clientId) already requested")
+            return
+        } else {
+            requestingLowResolutionIds.append(clientId)
         }
         
-        chatSdk.requestLowResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
+        chatSdk.requestLowResVideo(forChatId: chatId, clientIds: [NSNumber(value: clientId)], delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
-                MEGALogDebug("Success to request low resolution video for clientIds: \(clientIds)")
+                MEGALogDebug("Success to request low resolution video for clientId: \(clientId)")
                 completion?(.success)
             case .failure(_):
-                MEGALogError("Fail to request low resolution video for clientIds: \(clientIds)")
+                MEGALogError("Fail to request low resolution video for clientId: \(clientId)")
                 completion?(.failure(.requestResolutionVideoChange))
             }
-            clientIds.forEach {
-                if let index = self.requestingLowResolutionIds.firstIndex(of: $0) {
-                    self.requestingLowResolutionIds.remove(at: index)
-                }
+            if let index = self.requestingLowResolutionIds.firstIndex(of: clientId) {
+                self.requestingLowResolutionIds.remove(at: index)
             }
         })
     }
     
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientIds: [MEGAHandle], completion: ResolutionVideoChangeCompletion? = nil) {
-        let clientIdsMapped = clientIds.map { NSNumber(value: $0) }
-
-        chatSdk.stopLowResVideo(forChatId: chatId, clientIds: clientIdsMapped, delegate: MEGAChatResultRequestDelegate { result in
+    func stopLowResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
+        chatSdk.stopLowResVideo(forChatId: chatId, clientIds: [NSNumber(value: clientId)], delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
-                MEGALogDebug("Success to stop low resolution video for clientIds: \(clientIds)")
+                MEGALogDebug("Success to stop low resolution video for clientId: \(clientId)")
                 completion?(.success)
             case .failure(_):
-                MEGALogError("Fail to stop low resolution video for clientIds: \(clientIds)")
+                MEGALogError("Fail to stop low resolution video for clientId: \(clientId)")
                 completion?(.failure(.stopLowResolutionVideo))
             }
         })
