@@ -359,7 +359,12 @@ final class AudioPlayerViewModel: ViewModelType {
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
         case .showActionsforCurrentNode(let sender):
             guard let node = playerHandler.playerCurrentItem()?.node else { return }
-            router.showAction(for: node, sender: sender)
+            guard let nodeUseCase = nodeInfoUseCase,
+                  let latestNode = nodeUseCase.node(fromHandle: node.handle) else {
+                    self.router.showAction(for: node, sender: sender)
+                    return
+                }
+            router.showAction(for: latestNode, sender: sender)
         case .deinit:
             playerHandler.removePlayer(listener: self)
             if !playerHandler.isPlayerDefined() {

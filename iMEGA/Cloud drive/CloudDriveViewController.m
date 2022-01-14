@@ -55,6 +55,7 @@
 @import Photos;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
+static const NSTimeInterval kHUDDismissDelay = .3;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable> {
@@ -980,18 +981,21 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     return numberOfRows;
 }
 
+- (void)dismissHUD {
+    [SVProgressHUD dismiss];
+}
+
 - (void)search {
     if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
-        [self.searchNodesArray removeAllObjects];
         self.cancelToken = MEGACancelToken.alloc.init;
         SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound, BOOL isCancelled) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
-                [SVProgressHUD dismiss];
                 [self reloadData];
                 self.cancelToken = nil;
+                [self performSelector:@selector(dismissHUD) withObject:nil afterDelay:kHUDDismissDelay];
             });
         }];
         [self.searchQueue addOperation:searchOperation];
@@ -1493,6 +1497,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
         [self.nodesIndexPathMutableDictionary removeAllObjects];
         [self reloadUI];
+        
+        if (self.searchController.isActive) {
+            [self search];
+        }
     }
 }
 
