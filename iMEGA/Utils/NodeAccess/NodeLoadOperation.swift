@@ -53,7 +53,18 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     
     // MARK: - Load from remote
     func loadNodeFromRemote() {
-        loadNodeRequest(RequestDelegate(completion: validate))
+        loadNodeRequest(RequestDelegate {  [weak self] result in
+            switch result {
+            case .success(let request):
+                self?.validateLoadedHandle(request.nodeHandle)
+            case .failure(let error):
+                if error.type == .apiENoent {
+                    self?.createNode()
+                } else {
+                    self?.finishOperation(node: nil, error: error)
+                }
+            }
+        })
     }
     
     // MARK: - Check loaded node handle
@@ -87,19 +98,13 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     }
     
     func setTargetFolder(forHandle handle: NodeHandle) {
-        setFolderHandleRequest?(handle, RequestDelegate(completion: validate))
-    }
-    
-    private func validate(result: Result<MEGARequest, MEGAError>) {
-        switch result {
-        case .success(let request):
-            validateLoadedHandle(request.nodeHandle)
-        case .failure(let error):
-            if error.type == .apiENoent {
-                createNode()
-            } else {
-                finishOperation(node: nil, error: error)
+        setFolderHandleRequest?(handle, RequestDelegate { [weak self] result in
+            switch result {
+            case .success:
+                self?.validateLoadedHandle(handle)
+            case .failure(let error):
+                self?.finishOperation(node: nil, error: error)
             }
-        }
+        })
     }
 }
