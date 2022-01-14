@@ -28,13 +28,13 @@ do
    sleep 20 
 done
 
-if [! -d "./iMEGA/Vendor/SDK/bindings/ios/3rdparty" ] 
+if [ ! -d "./iMEGA/Vendor/SDK/bindings/ios/3rdparty" ] 
 then
-    echo "Could not unzip the 3rd party libraries"
-	exit 1 
+   echo "Could not unzip the 3rd party libraries"
+   exit 1 
 else
-    echo "Unzipping the 3rd party libraries"
-	unzip -o ${filePath}/3rdparty.zip -d ./iMEGA/Vendor/SDK/bindings/ios/3rdparty/
-	echo "Unzip 3rd party libraries complete"
-	exit 0
+   echo "Unzipping the 3rd party libraries"
+   unzip -o ${filePath}/3rdparty.zip -d ./iMEGA/Vendor/SDK/bindings/ios/3rdparty/
+   echo "Unzip 3rd party libraries complete"
+   exit 0
 fi
