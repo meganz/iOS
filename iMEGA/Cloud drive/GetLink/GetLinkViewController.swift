@@ -716,7 +716,7 @@ extension GetLinkViewController: UITableViewDelegate {
                 if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
                     footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
                 } else {
-                    footer.configure(title: nil, topDistance: 0.5, isTopSeparatorVisible: false, isBottomSeparatorVisible: false)
+                    footer.configure(title: nil, topDistance: 0.5, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
                 }
             case .link, .key, .info, .passwordProtection:
                 footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
