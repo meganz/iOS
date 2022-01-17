@@ -1208,16 +1208,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }]];
     }
     
-    if (!self.onlyUploadOptions) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-            cloudDriveVC.displayMode = DisplayModeRubbishBin;
-            cloudDriveVC.title = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-            [weakSelf.navigationController pushViewController:cloudDriveVC animated:YES];
-        }]];
-    }
-    
     ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
     [self presentViewController:moreActionSheet animated:YES completion:nil];
 }
