@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
 @property (weak, nonatomic) id<GroupChatDetailsViewTableViewCellDelegate> delegate;
 
-
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
 
+@property (nonatomic, setter=setDestructive:, getter=isDestructive) BOOL destructive;
 @end

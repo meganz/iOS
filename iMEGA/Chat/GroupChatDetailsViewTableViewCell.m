@@ -17,8 +17,21 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     
+    [self setDefaultState];
+}
+
+- (void)setDefaultState {
     self.delegate = nil;
     [self.notificationsSwitch setOn:YES];
+    self.leftImageView.hidden = NO;
+    self.enableLabel.hidden = YES;
+    self.userInteractionEnabled = YES;
+    self.destructive = NO;
+}
+
+- (void)setDestructive:(BOOL)isDestructive {
+    _destructive = isDestructive;
+    _nameLabel.textColor = isDestructive ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -51,8 +64,8 @@
 
 - (void)updateAppearance {
     self.enableLabel.textColor = self.rightLabel.textColor = UIColor.mnz_secondaryLabel;
-    
     self.emailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.nameLabel.textColor = self.isDestructive ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
 }
 
 - (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {

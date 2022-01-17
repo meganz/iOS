@@ -11,11 +11,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="GenericHeaderFooterView" customModule="MEGA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="181"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="192"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ree-vC-yyq">
-                    <rect key="frame" x="0.0" y="44" width="414" height="137"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="148"/>
                     <subviews>
                         <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="034-96-4SB">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
@@ -31,24 +31,27 @@
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="FLb-Qm-8cJ">
-                            <rect key="frame" x="16" y="110" width="382" height="26.5"/>
+                            <rect key="frame" x="16" y="110" width="382" height="37.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHq-Vu-umU">
-                                    <rect key="frame" x="0.0" y="6" width="382" height="14.5"/>
+                                    <rect key="frame" x="0.0" y="8" width="382" height="21.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DETAIL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKD-F2-2oX">
-                                    <rect key="frame" x="0.0" y="6.5" width="0.0" height="13.5"/>
+                                    <rect key="frame" x="0.0" y="12" width="0.0" height="13.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="SHq-Vu-umU" secondAttribute="bottom" constant="8" id="yUd-Bc-DQc"/>
+                            </constraints>
                         </stackView>
                         <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIR-AY-jhu">
-                            <rect key="frame" x="0.0" y="136.5" width="414" height="0.5"/>
+                            <rect key="frame" x="0.0" y="147.5" width="414" height="0.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="mGD-Y3-Bqd"/>
                             </constraints>
@@ -82,7 +85,7 @@
                 <outlet property="titleLabel" destination="SHq-Vu-umU" id="Mhb-3P-v7k"/>
                 <outlet property="topSeparatorView" destination="034-96-4SB" id="AFt-xi-6wN"/>
             </connections>
-            <point key="canvasLocation" x="182.60869565217394" y="-55.245535714285715"/>
+            <point key="canvasLocation" x="182.60869565217394" y="-51.5625"/>
         </view>
     </objects>
 </document>
