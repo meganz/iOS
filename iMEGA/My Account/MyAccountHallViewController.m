@@ -33,7 +33,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     MyAccountNotifications,
     MyAccountAchievements,
     MyAccountTransfers,
-    MyAccountOffline
+    MyAccountOffline,
+    MyAccountRubbishBin
 };
 
 @interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
@@ -297,7 +298,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (section == MyAccountSectionMEGA) ? 6 : 1;
+    return (section == MyAccountSectionMEGA) ? 7 : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -413,6 +414,15 @@ typedef NS_ENUM(NSInteger, MyAccount) {
             cell.pendingLabel.text = nil;
             break;
         }
+        
+        case MyAccountRubbishBin: {
+            cell.sectionLabel.text = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+            cell.iconImageView.image = [UIImage imageNamed:@"rubbishBin"];
+            cell.detailLabel.text = [Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk];
+            cell.pendingView.hidden = YES;
+            cell.pendingLabel.text = nil;
+            break;
+        }
     }
     
     [cell.sectionLabel sizeToFit];
@@ -470,6 +480,14 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         case MyAccountOffline: {
             OfflineViewController *offlineVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
             [self.navigationController pushViewController:offlineVC animated:YES];
+            break;
+        }
+            
+        case MyAccountRubbishBin: {
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+            cloudDriveVC.displayMode = DisplayModeRubbishBin;
+            [self.navigationController pushViewController:cloudDriveVC animated:YES];
             break;
         }
     }
