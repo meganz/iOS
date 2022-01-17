@@ -510,7 +510,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         case GroupChatDetailsSectionManageChatHistory:
             cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
             cell.nameLabel.text = NSLocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
-            cell.nameLabel.textColor = UIColor.mnz_label;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
@@ -518,13 +517,13 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
             cell.leftImageView.tintColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             cell.nameLabel.text = self.chatRoom.isArchived ? NSLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : NSLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-            cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
+            [cell setDestructive:self.chatRoom.isArchived];
             break;
             
         case GroupChatDetailsSectionLeaveGroup:
             cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
             cell.nameLabel.text = self.chatRoom.isPreview ? NSLocalizedString(@"close", nil) : NSLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-            cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+            [cell setDestructive:YES];
             break;
 
         case GroupChatDetailsSectionEncryptedKeyRotation:
