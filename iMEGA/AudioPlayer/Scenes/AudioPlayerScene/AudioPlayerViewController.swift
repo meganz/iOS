@@ -221,7 +221,7 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func updateCloseButtonState() {
-        closeButton.isHidden = !(UIDevice.current.iPhoneDevice && (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight))
+        closeButton.isHidden = viewModel.playerType == .fileLink
         
         if !closeButton.isHidden {
             closeButton.setTitle(Strings.Localizable.close, for: .normal)
@@ -241,10 +241,10 @@ final class AudioPlayerViewController: UIViewController {
             bottomView.backgroundColor = .clear
             viewModel.dispatch(.refreshRepeatStatus)
             viewModel.dispatch(.refreshShuffleStatus)
-            updateCloseButtonState()
             separatorView.isHidden = true
         }
         
+        updateCloseButtonState()
         style(with: traitCollection)
         imageView.applyShadow(in: imageViewContainerView, alpha: 0.24, x: 0, y: 1.5, blur: 16, spread: 0)
     }
