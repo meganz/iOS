@@ -101,7 +101,8 @@ static NSString *kisDirectory = @"kisDirectory";
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     // If the user has activated the logs, then they are imported to the offline section from the shared sandbox:
-    if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"]) {
+    BOOL isDocumentDirectory = [self.currentOfflinePath isEqualToString:Helper.pathForOffline];
+    if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"] && isDocumentDirectory) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if ([fileManager fileExistsAtPath:logsPath]) {
