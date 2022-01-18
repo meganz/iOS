@@ -43,24 +43,24 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
-        if let _ = NotificationService.session {
-            guard NotificationService.initExtensionProcess(with: session) else {
-                return
-            }
-            NotificationService.session = session
-        } else {
-            if NotificationService.session != session {
+        if let currentSession = NotificationService.session {
+            guard currentSession == session else {
                 MEGALogDebug("Restart extension process: NSE session != Keychain session")
                 restartExtensionProcess(with: session)
                 return
             }
-            if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
-                if sharedUserDefaults.bool(forKey: MEGAInvalidateNSECache) {
-                    MEGALogDebug("Restart extension process: app invalidates the NSE cache")
-                    restartExtensionProcess(with: session)
-                    return
-                }
+            
+            if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier),
+               sharedUserDefaults.bool(forKey: MEGAInvalidateNSECache) {
+                MEGALogDebug("Restart extension process: app invalidates the NSE cache")
+                restartExtensionProcess(with: session)
+                return
             }
+        } else {
+            guard NotificationService.initExtensionProcess(with: session) else {
+                return
+            }
+            NotificationService.session = session
         }
         
         processNotification()
