@@ -5,12 +5,6 @@ struct PhotoLibraryContentView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
     var router: PhotoLibraryContentViewRouting
     
-    init(viewModel: PhotoLibraryContentViewModel, router: PhotoLibraryContentViewRouting) {
-        self.viewModel = viewModel
-        self.router = router
-        configSegmentedControlAppearance()
-    }
-    
     var body: some View {
         if viewModel.library.isEmpty {
             ProgressView()
@@ -19,33 +13,15 @@ struct PhotoLibraryContentView: View {
             if #available(iOS 15.0, *) {
                 photoContent()
                     .safeAreaInset(edge: .bottom) {
-                        pickerFooter()
+                        PhotoLibraryPicker(viewModel: viewModel)
                     }
             } else {
                 ZStack(alignment: .bottom) {
                     photoContent()
-                    pickerFooter()
+                    PhotoLibraryPicker(viewModel: viewModel)
                 }
             }
         }
-    }
-    
-    private func pickerFooter() -> some View {
-        viewModePicker()
-            .blurryBackground(radius: 7)
-            .padding(16)
-    }
-    
-    private func viewModePicker() -> some View {
-        Picker("View Mode", selection: $viewModel.selectedMode.animation()) {
-            ForEach(PhotoLibraryViewMode.allCases) {
-                Text($0.title)
-                    .font(.headline)
-                    .bold()
-                    .tag($0)
-            }
-        }
-        .pickerStyle(.segmented)
     }
     
     @ViewBuilder
@@ -82,27 +58,5 @@ struct PhotoLibraryContentView: View {
                 .opacity(viewModel.selectedMode == .all ? 1 : 0)
                 .zIndex(viewModel.selectedMode == .all ? 1 : -1)
         }
-    }
-    
-    private func configSegmentedControlAppearance() {
-        UISegmentedControl
-            .appearance()
-            .setTitleTextAttributes(
-                [.font: UIFont.systemFont(ofSize: 15, weight: .semibold),
-                 .foregroundColor: UIColor.systemBackground],
-                for: .selected
-            )
-        
-        UISegmentedControl
-            .appearance()
-            .setTitleTextAttributes(
-                [.font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                 .foregroundColor: UIColor.label],
-                for: .normal
-            )
-        
-        UISegmentedControl
-            .appearance()
-            .selectedSegmentTintColor = UIColor.label.withAlphaComponent(0.4)
     }
 }

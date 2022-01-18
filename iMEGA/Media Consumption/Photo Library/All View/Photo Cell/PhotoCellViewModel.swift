@@ -7,21 +7,35 @@ final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private let placeholderThumbnail: ImageContainer
-
+    private let selection: PhotoSelection
+    
     @Published var thumbnailContainer: ImageContainer
-    let isEditingMode: Bool
+    
+    @Published var isSelected: Bool = false {
+        didSet {
+            if isSelected != oldValue {
+                selection.photos[photo.handle] = isSelected ? photo : nil
+            }
+        }
+    }
+    
+    @Published var editMode: EditMode = .inactive
     
     init(photo: NodeEntity,
-         thumbnailUseCase: ThumbnailUseCaseProtocol,
-         isEditingMode: Bool = false) {
+         selection: PhotoSelection,
+         thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.photo = photo
+        self.selection = selection
         self.thumbnailUseCase = thumbnailUseCase
-        self.isEditingMode = isEditingMode
         
         let placeholderFileType = thumbnailUseCase.thumbnailPlaceholderFileType(forNodeName: photo.name)
         placeholderThumbnail = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
         thumbnailContainer = placeholderThumbnail
+        
+        configSelection()
     }
+    
+    // MARK: Internal
     
     func loadThumbnail() {
         guard thumbnailContainer == placeholderThumbnail else {
@@ -38,6 +52,8 @@ final class PhotoCellViewModel: ObservableObject {
         }
     }
     
+    // MARK: Private
+    
     private func loadThumbnailFromRemote() {
         thumbnailUseCase
             .loadThumbnail(for: photo)
@@ -49,5 +65,25 @@ final class PhotoCellViewModel: ObservableObject {
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .assign(to: &$thumbnailContainer)
+    }
+    
+    private func configSelection() {
+        selection
+            .$editMode
+            .filter { [weak self] in
+                self?.editMode != $0
+            }
+            .assign(to: &$editMode)
+        
+        selection
+            .$allSelected
+            .filter { [weak self] _ in
+                self?.editMode.isEditing == true
+            }
+            .assign(to: &$isSelected)
+        
+        if editMode.isEditing {
+            isSelected = selection.isPhotoSelected(photo)
+        }
     }
 }

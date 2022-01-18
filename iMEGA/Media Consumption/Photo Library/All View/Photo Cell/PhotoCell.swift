@@ -2,21 +2,22 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct PhotoCell: View {
-    @State private var selected: Bool = false
     @StateObject var viewModel: PhotoCellViewModel
     
-    private var tap: some Gesture { TapGesture().onEnded { _ in selected.toggle() }}
+    private var tap: some Gesture { TapGesture().onEnded { _ in
+        viewModel.isSelected.toggle()
+    }}
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
             PhotoCellImage(container: viewModel.thumbnailContainer)
             
-            if viewModel.isEditingMode {
-                CheckMarkView(markedSelected: $selected)
+            if viewModel.editMode.isEditing {
+                CheckMarkView(markedSelected: viewModel.isSelected)
                     .offset(x: -5, y: 5)
             }
         }
-        .gesture(viewModel.isEditingMode ? tap : nil)
+        .gesture(viewModel.editMode.isEditing ? tap : nil)
         .onAppear {
             viewModel.loadThumbnail()
         }

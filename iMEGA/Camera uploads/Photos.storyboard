@@ -216,7 +216,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="hxz-Hg-nRC">
                         <barButtonItem key="backBarButtonItem" title=" " id="JzG-HA-4B2"/>
-                        <barButtonItem key="rightBarButtonItem" title="Edit" width="22" id="jcN-8Q-JdP" userLabel="Edit Bar Button Item">
+                        <barButtonItem key="rightBarButtonItem" image="selectAll" width="22" id="jcN-8Q-JdP" userLabel="Edit Bar Button Item">
                             <connections>
                                 <action selector="editTapped:" destination="3GS-cK-Hw6" id="HKt-xR-Avl"/>
                             </connections>

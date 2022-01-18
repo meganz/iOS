@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CheckMarkView: View {
-    @Binding var markedSelected: Bool
+    var markedSelected: Bool
     
     private var imageName: String {
         markedSelected ? "checkmark.circle.fill" : "circle"
