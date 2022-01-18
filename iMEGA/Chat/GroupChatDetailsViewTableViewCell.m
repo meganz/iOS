@@ -53,6 +53,8 @@
     self.enableLabel.textColor = self.rightLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.emailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
+    self.nameLabel.textColor = UIColor.mnz_label;
 }
 
 - (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
