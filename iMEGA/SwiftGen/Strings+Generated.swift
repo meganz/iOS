@@ -155,7 +155,7 @@ public enum Strings {
     public static let accessProOnlyFeaturesLikeSettingPasswordProtectionAndExpiryDatesForPublicFiles = Strings.tr("Localizable", "Access Pro only features like setting password protection and expiry dates for public files.")
     /// Access to folders was removed.
     public static let accessToFoldersWasRemoved = Strings.tr("Localizable", "Access to folders was removed.")
-    /// Account has been deleted/deactivated
+    /// Account has been deleted or deactivated
     public static let accountHasBeenDeletedDeactivated = Strings.tr("Localizable", "Account has been deleted/deactivated")
     /// Your account has been activated. Please log in.
     public static let accountAlreadyConfirmed = Strings.tr("Localizable", "accountAlreadyConfirmed")
@@ -317,7 +317,7 @@ public enum Strings {
     public static let autoAway = Strings.tr("Localizable", "autoAway")
     /// Automatic
     public static let automatic = Strings.tr("Localizable", "Automatic")
-    /// Automatically backup your photos and videos to your Cloud Drive.
+    /// Automatically back up your photos and videos to your Cloud Drive.
     public static let automaticallyBackupYourPhotosAndVideosToTheCloudDrive = Strings.tr("Localizable", "Automatically backup your photos and videos to the Cloud Drive.")
     /// Automatically delete messages older than %1
     public static let automaticallyDeleteMessagesOlderThan1 = Strings.tr("Localizable", "Automatically delete messages older than %1")
@@ -329,7 +329,7 @@ public enum Strings {
     public static let automaticallyDeleteMessagesOlderThanOneMonth = Strings.tr("Localizable", "Automatically delete messages older than one month")
     /// Automatically delete messages older than one week.
     public static let automaticallyDeleteMessagesOlderThanOneWeek = Strings.tr("Localizable", "Automatically delete messages older than one week")
-    /// Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.
+    /// Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then tap View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.
     public static let autorenewableDescription = Strings.tr("Localizable", "autorenewableDescription")
     /// Available
     public static let availableLabel = Strings.tr("Localizable", "availableLabel")
@@ -337,7 +337,7 @@ public enum Strings {
     public static let awaitingEmailConfirmation = Strings.tr("Localizable", "awaitingEmailConfirmation")
     /// Away
     public static let away = Strings.tr("Localizable", "away")
-    /// Backup Recovery Key
+    /// Back up Recovery Key
     public static let backupRecoveryKey = Strings.tr("Localizable", "backupRecoveryKey")
     /// Bad session ID
     public static let badSessionID = Strings.tr("Localizable", "Bad session ID")
@@ -589,9 +589,9 @@ public enum Strings {
     public static let copyKey = Strings.tr("Localizable", "copyKey")
     /// Copy link
     public static let copyLink = Strings.tr("Localizable", "copyLink")
-    /// MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.
+    /// MEGA respects the copyrights of others and requires that users of the MEGA Cloud service comply with the laws of copyright.
     public static let copyrightMessagePart1 = Strings.tr("Localizable", "copyrightMessagePart1")
-    /// You are strictly prohibited from using the MEGA cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.
+    /// You are strictly prohibited from using the MEGA Cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.
     public static let copyrightMessagePart2 = Strings.tr("Localizable", "copyrightMessagePart2")
     /// Copyright warning
     public static let copyrightWarning = Strings.tr("Localizable", "copyrightWarning")
@@ -635,7 +635,7 @@ public enum Strings {
     public static let decrypt = Strings.tr("Localizable", "decrypt")
     /// Decryption key
     public static let decryptionKey = Strings.tr("Localizable", "decryptionKey")
-    /// To access this folder/file, you will need its Decryption key. If you do not have the key, please contact the creator of the link.
+    /// To access this folder or file, you will need its Decryption key. If you do not have the key, please contact the creator of the link.
     public static let decryptionKeyAlertMessage = Strings.tr("Localizable", "decryptionKeyAlertMessage")
     /// Enter decryption key
     public static let decryptionKeyAlertTitle = Strings.tr("Localizable", "decryptionKeyAlertTitle")
@@ -861,7 +861,7 @@ public enum Strings {
     public static let fileLink = Strings.tr("Localizable", "fileLink")
     /// This could be due to the following reasons:
     public static let fileLinkUnavailableText1 = Strings.tr("Localizable", "fileLinkUnavailableText1")
-    /// The file has been removed because of a ToS/AUP violation.
+    /// The file has been removed because of a ToS or AUP violation.
     public static let fileLinkUnavailableText2 = Strings.tr("Localizable", "fileLinkUnavailableText2")
     /// Invalid URL - the link you are trying to access does not exist
     public static let fileLinkUnavailableText3 = Strings.tr("Localizable", "fileLinkUnavailableText3")
@@ -937,7 +937,7 @@ public enum Strings {
     public static let folderLink = Strings.tr("Localizable", "folderLink")
     /// This could be due to the following reasons:
     public static let folderLinkUnavailableText1 = Strings.tr("Localizable", "folderLinkUnavailableText1")
-    /// The folder link has been removed because of a ToS/AUP violation.
+    /// The folder link has been removed because of a ToS or AUP violation.
     public static let folderLinkUnavailableText2 = Strings.tr("Localizable", "folderLinkUnavailableText2")
     /// Invalid URL - the link you are trying to access does not exist
     public static let folderLinkUnavailableText3 = Strings.tr("Localizable", "folderLinkUnavailableText3")
@@ -1021,7 +1021,7 @@ public enum Strings {
     public static let hours = Strings.tr("Localizable", "hours")
     /// How it works
     public static let howItWorks = Strings.tr("Localizable", "howItWorks")
-    /// Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the sync client or one of our mobile apps)
+    /// Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)
     public static let howItWorksMain = Strings.tr("Localizable", "howItWorksMain")
     /// You can notify your friend through any method. You will earn the quota if you have entered your friend’s email here prior to them registering with that address.
     public static let howItWorksSecondary = Strings.tr("Localizable", "howItWorksSecondary")
@@ -1221,9 +1221,9 @@ public enum Strings {
     public static let loggedOutFromAnotherLocation = Strings.tr("Localizable", "loggedOutFromAnotherLocation")
     /// Logging out
     public static let loggingOut = Strings.tr("Localizable", "loggingOut")
-    /// Log in
+    /// Log in
     public static let login = Strings.tr("Localizable", "login")
-    /// Log out
+    /// Log out
     public static let logoutLabel = Strings.tr("Localizable", "logoutLabel")
     /// Lost your Authenticator device?
     public static let lostYourAuthenticatorDevice = Strings.tr("Localizable", "lostYourAuthenticatorDevice")
@@ -1437,7 +1437,7 @@ public enum Strings {
     public static let noRequestPending = Strings.tr("Localizable", "noRequestPending")
     /// No Results
     public static let noResults = Strings.tr("Localizable", "noResults")
-    /// Not accessible due to ToS/AUP violation
+    /// Not accessible due to a ToS or AUP violation
     public static let notAccessibleDueToToSAUPViolation = Strings.tr("Localizable", "Not accessible due to ToS/AUP violation")
     /// Not enough quota
     public static let notEnoughQuota = Strings.tr("Localizable", "Not enough quota")
@@ -1925,7 +1925,7 @@ public enum Strings {
     public static let scanDocument = Strings.tr("Localizable", "Scan Document")
     /// Scan Code
     public static let scanCode = Strings.tr("Localizable", "scanCode")
-    /// Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.
+    /// Scan or copy the seed to your Authenticator App. Be sure to back up this seed to a safe place in case you lose your device.
     public static let scanOrCopyTheSeed = Strings.tr("Localizable", "scanOrCopyTheSeed")
     /// MEGA SDK Version
     public static let sdkVersion = Strings.tr("Localizable", "sdkVersion")
@@ -2023,7 +2023,7 @@ public enum Strings {
     }
     /// Settings
     public static let settingsTitle = Strings.tr("Localizable", "settingsTitle")
-    /// Setup MEGA
+    /// Set up MEGA
     public static let setupMEGA = Strings.tr("Localizable", "Setup MEGA")
     /// Share
     public static let share = Strings.tr("Localizable", "share")
@@ -2135,7 +2135,7 @@ public enum Strings {
     public static let takedownNotice = Strings.tr("Localizable", "Takedown notice")
     /// Takedown reinstated
     public static let takedownReinstated = Strings.tr("Localizable", "Takedown reinstated")
-    /// This folder/file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities.
+    /// This folder or file was reported to contain objectionable content, such as Child Exploitation Material, Violent Extremism, or Bestiality. The link creator’s account has been closed and their full details, including IP address, have been provided to the authorities.
     public static let takenDownDueToSevereViolationOfOurTermsOfService = Strings.tr("Localizable", "Taken down due to severe violation of our terms of service")
     /// The process is taking longer than expected. Please wait…
     public static let takingLongerThanExpected = Strings.tr("Localizable", "takingLongerThanExpected")
@@ -2285,7 +2285,7 @@ public enum Strings {
     public static let twoFactorAuthenticationDisabled = Strings.tr("Localizable", "twoFactorAuthenticationDisabled")
     /// Two-Factor Authentication Enabled
     public static let twoFactorAuthenticationEnabled = Strings.tr("Localizable", "twoFactorAuthenticationEnabled")
-    /// Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator App.
+    /// Next time you log in to your account you will be asked to enter a 6-digit code provided by your Authenticator App.
     public static let twoFactorAuthenticationEnabledDescription = Strings.tr("Localizable", "twoFactorAuthenticationEnabledDescription")
     /// If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.
     public static let twoFactorAuthenticationEnabledWarning = Strings.tr("Localizable", "twoFactorAuthenticationEnabledWarning")
@@ -2847,11 +2847,11 @@ public enum Strings {
           }
         }
         public enum DesktopApp {
-          /// Install the MEGA desktop app
+          /// Install the MEGA Desktop App
           public static let title = Strings.tr("Localizable", "account.achievement.desktopApp.title")
           public enum Complete {
             public enum Explaination {
-              /// You have received %@ storage space for installing the MEGA desktop app.
+              /// You have received %@ storage space for installing the MEGA Desktop App.
               public static func label(_ p1: Any) -> String {
                 return Strings.tr("Localizable", "account.achievement.desktopApp.complete.explaination.label", String(describing: p1))
               }
@@ -2859,7 +2859,7 @@ public enum Strings {
           }
           public enum Incomplete {
             public enum Explaination {
-              /// When you install the MEGA desktop app you get %@ of complimentary storage space, valid for 365 days. The MEGA desktop app is available for Windows, macOS and most Linux distros.
+              /// When you install the MEGA Desktop App you get %@ of complimentary storage space, valid for 365 days. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.
               public static func label(_ p1: Any) -> String {
                 return Strings.tr("Localizable", "account.achievement.desktopApp.incomplete.explaination.label", String(describing: p1))
               }
@@ -2885,7 +2885,7 @@ public enum Strings {
           }
           public enum Incomplete {
             public enum Explaination {
-              /// When you install the MEGA mobile app you get %@ of complimentary storage space, valid for 365 days. The MEGA mobile app is available for iOS and Android. 
+              /// When you install the MEGA Mobile App you get %@ of complimentary storage space, valid for 365 days. The MEGA Mobile App is available for iOS and Android. 
               public static func label(_ p1: Any) -> String {
                 return Strings.tr("Localizable", "account.achievement.mobileApp.incomplete.explaination.label", String(describing: p1))
               }
@@ -2997,7 +2997,7 @@ public enum Strings {
         public static let placeholder = Strings.tr("Localizable", "chat.message.placeholder")
       }
       public enum Photos {
-        /// To share photos and videos allow MEGA to access your gallery
+        /// To share photos and videos, grant MEGA access to your gallery
         public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
       }
     }
@@ -3299,6 +3299,14 @@ public enum Strings {
         public static let ascii = Strings.tr("Localizable", "general.filetype.ascii")
         /// Streaming Video
         public static let asf = Strings.tr("Localizable", "general.filetype.asf")
+        /// Advanced Stream
+        public static let asx = Strings.tr("Localizable", "general.filetype.asx")
+        /// Audio Interchange
+        public static let audioInterchange = Strings.tr("Localizable", "general.filetype.audioInterchange")
+        /// A/V Interleave
+        public static let avi = Strings.tr("Localizable", "general.filetype.avi")
+        /// DOS Batch
+        public static let bat = Strings.tr("Localizable", "general.filetype.bat")
         /// Casio RAW Image
         public static let bay = Strings.tr("Localizable", "general.filetype.bay")
         /// Bitmap Image
@@ -3309,6 +3317,8 @@ public enum Strings {
         public static let c = Strings.tr("Localizable", "general.filetype.c")
         /// CorelDRAW Image
         public static let cdr = Strings.tr("Localizable", "general.filetype.cdr")
+        /// CGI Script
+        public static let cgi = Strings.tr("Localizable", "general.filetype.cgi")
         /// Java Class
         public static let `class` = Strings.tr("Localizable", "general.filetype.class")
         /// DOS Command
@@ -3321,6 +3331,10 @@ public enum Strings {
         public static let css = Strings.tr("Localizable", "general.filetype.css")
         /// Database
         public static let database = Strings.tr("Localizable", "general.filetype.database")
+        /// Dynamic HTML
+        public static let dhtml = Strings.tr("Localizable", "general.filetype.dhtml")
+        /// Dynamic Link Library
+        public static let dll = Strings.tr("Localizable", "general.filetype.dll")
         /// DXF Image
         public static let dxf = Strings.tr("Localizable", "general.filetype.dxf")
         /// EPS Image
@@ -3389,12 +3403,16 @@ public enum Strings {
         public static let pdf = Strings.tr("Localizable", "general.filetype.pdf")
         /// PHP Code
         public static let php = Strings.tr("Localizable", "general.filetype.php")
+        /// Perl Script
+        public static let pl = Strings.tr("Localizable", "general.filetype.pl")
         /// Audio Playlist
         public static let pls = Strings.tr("Localizable", "general.filetype.pls")
         /// PNG Image
         public static let png = Strings.tr("Localizable", "general.filetype.png")
         /// Podcast
         public static let podcast = Strings.tr("Localizable", "general.filetype.podcast")
+        /// Python Script
+        public static let py = Strings.tr("Localizable", "general.filetype.py")
         /// RAR Compressed
         public static let rar = Strings.tr("Localizable", "general.filetype.rar")
         /// RAW Image
@@ -3403,6 +3421,8 @@ public enum Strings {
         public static let rtf = Strings.tr("Localizable", "general.filetype.rtf")
         /// Panasonic RAW Image
         public static let rw2 = Strings.tr("Localizable", "general.filetype.rw2")
+        /// Bash Shell
+        public static let sh = Strings.tr("Localizable", "general.filetype.sh")
         /// Server HTML
         public static let shtml = Strings.tr("Localizable", "general.filetype.shtml")
         /// X Compressed
@@ -3421,6 +3441,8 @@ public enum Strings {
         public static let tar = Strings.tr("Localizable", "general.filetype.tar")
         /// Text Document
         public static let textDocument = Strings.tr("Localizable", "general.filetype.textDocument")
+        /// Targa Graphic
+        public static let tga = Strings.tr("Localizable", "general.filetype.tga")
         /// TIF Image
         public static let tif = Strings.tr("Localizable", "general.filetype.tif")
         /// TIFF Image

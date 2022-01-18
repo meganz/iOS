@@ -2,7 +2,7 @@ import SwiftUI
 
 struct NumberBadge: View {
     let title: String
-    let backgroundColor = Color("photoNumbersBackground")
+    let backgroundColor = Color(Colors.MediaConsumption.photoNumbersBackground.color)
     
     var body: some View {
         Text(title)
