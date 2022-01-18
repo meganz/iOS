@@ -508,17 +508,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
-- (BOOL)isDirectorySelected {
-    BOOL isDirectory = NO;
-    for (NSURL *url in self.selectedItems) {
-        [[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDirectory];
-        if (isDirectory) {
-            return isDirectory;
-        }
-    }
-    return isDirectory;
-}
-
 - (void)sortBySortType:(MEGASortOrderType)sortOrderType {
     NSSortDescriptor *sortDescriptor = nil;
     NSSortDescriptor *sortDirectoryDescriptor = nil;
@@ -664,7 +653,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     } else if (self.selectedItems.count >= 1) {
-        [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
+        [self.activityBarButtonItem setEnabled:YES];
         [self.deleteBarButtonItem setEnabled:YES];
     }
     
@@ -782,7 +771,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     } else {
-        [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
+        [self.activityBarButtonItem setEnabled:YES];
         [self.deleteBarButtonItem setEnabled:YES];
     }
 }
@@ -1037,34 +1026,29 @@ static NSString *kisDirectory = @"kisDirectory";
             [self removeOfflineNodeCell:itemPath];
         } andCancelAction:nil];
     }]];
-    
-    BOOL isDirectory;
-    BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
-    if (fileExistsAtPath && !isDirectory) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ") detail:nil image:[UIImage imageNamed:@"share"] style:UIAlertActionStyleDefault actionHandler:^{
-            NSMutableArray *activitiesMutableArray = NSMutableArray.alloc.init;
-            
-            OpenInActivity *openInActivity = [OpenInActivity.alloc initOnView:self.view];
-            [activitiesMutableArray addObject:openInActivity];
-            
-            NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
-            
-            NSMutableArray *selectedItems = [NSMutableArray arrayWithCapacity:1];
-            [selectedItems addObject:itemPathURL];
-            
-            UIActivityViewController *activityViewController = [UIActivityViewController.alloc initWithActivityItems:selectedItems applicationActivities:activitiesMutableArray];
-            
-            [activityViewController setCompletionWithItemsHandler:nil];
-            
-            if (UIDevice.currentDevice.iPadDevice) {
-                activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-                activityViewController.popoverPresentationController.sourceView = sender;
-                activityViewController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-            }
-            
-            [weakSelf presentViewController:activityViewController animated:YES completion:nil];
-        }]];
-    }
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ") detail:nil image:[UIImage imageNamed:@"share"] style:UIAlertActionStyleDefault actionHandler:^{
+        NSMutableArray *activitiesMutableArray = NSMutableArray.alloc.init;
+        
+        OpenInActivity *openInActivity = [OpenInActivity.alloc initOnView:self.view];
+        [activitiesMutableArray addObject:openInActivity];
+        
+        NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
+        
+        NSMutableArray *selectedItems = [NSMutableArray arrayWithCapacity:1];
+        [selectedItems addObject:itemPathURL];
+        
+        UIActivityViewController *activityViewController = [UIActivityViewController.alloc initWithActivityItems:selectedItems applicationActivities:activitiesMutableArray];
+        
+        [activityViewController setCompletionWithItemsHandler:nil];
+        
+        if (UIDevice.currentDevice.iPadDevice) {
+            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+            activityViewController.popoverPresentationController.sourceView = sender;
+            activityViewController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+        }
+        
+        [weakSelf presentViewController:activityViewController animated:YES completion:nil];
+    }]];
     
     ActionSheetViewController *fileInfoActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
     [self presentViewController:fileInfoActionSheet animated:YES completion:nil];
