@@ -3,7 +3,6 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 extension PhotosViewController {
-    
     // MARK: - config views
     @objc func configPhotoLibraryView(in container: UIView) {
         let content = PhotoLibraryContentView(
@@ -23,11 +22,11 @@ extension PhotosViewController {
               let host = libraryChild as? UIHostingController<PhotoLibraryContentView> else {
                   return
               }
-
+        
         DispatchQueue.global(qos: .userInitiated).async {
             MEGALogDebug("[Photos] update photo library")
             let photoLibrary: PhotoLibrary = nodes.toPhotoLibrary()
-
+            
             DispatchQueue.main.async {
                 host.view.isHidden = photoLibrary.isEmpty
                 self.photoLibraryContentViewModel.library = photoLibrary
@@ -37,5 +36,31 @@ extension PhotosViewController {
     
     @objc func createPhotoLibraryContentViewModel() -> PhotoLibraryContentViewModel {
         PhotoLibraryContentViewModel(library: PhotoLibrary())
+    }
+    
+    @objc func updateNavigationTitle(withPhotoCount count: Int) {
+        var message = ""
+        
+        if count == 0 {
+            message = Strings.Localizable.selectTitle
+        } else if count == 1 {
+            message = Strings.Localizable.oneItemSelected(count)
+        } else {
+            message = Strings.Localizable.itemsSelected(count)
+        }
+        
+        navigationItem.title = message
+    }
+    
+    @objc func selectAllPhotoLibrary(_ shouldSelectAll: Bool) {
+        if shouldSelectAll {
+            photoLibraryContentViewModel.selection.selectAll(photos: photoLibraryContentViewModel.library.allPhotos)
+        } else {
+            photoLibraryContentViewModel.selection.unselectAll()
+        }
+    }
+    
+    @objc func enablePhotoLibraryEditMode(_ enable: Bool) {
+        photoLibraryContentViewModel.selection.editMode = enable ? .active : .inactive
     }
 }

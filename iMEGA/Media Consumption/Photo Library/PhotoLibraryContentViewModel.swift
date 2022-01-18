@@ -1,4 +1,6 @@
 import Foundation
+import Combine
+import SwiftUI
 
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published var library: PhotoLibrary
@@ -6,9 +8,9 @@ import Foundation
     
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?
+    lazy var selection = PhotoSelection()
     
-    @Published var isEditingMode = false
-    
+    // MARK: - Init
     init(library: PhotoLibrary) {
         self.library = library
         super.init()
