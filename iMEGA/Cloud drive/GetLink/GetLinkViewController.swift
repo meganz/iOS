@@ -679,7 +679,7 @@ extension GetLinkViewController: UITableViewDelegate {
             case .expiryDate:
                 header.configure(title: nil, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             case .passwordProtection:
-                header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: !(getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil)), isBottomSeparatorVisible: true)
+                header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             default:
                 header.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             }
@@ -710,13 +710,13 @@ extension GetLinkViewController: UITableViewDelegate {
                 footer.titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMoreTapped)))
                 footer.titleLabel.isUserInteractionEnabled = true
                 
-                footer.configure(attributedTitle: attributedString, topDistance: 17.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+                footer.configure(attributedTitle: attributedString, topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
 
             case .expiryDate:
                 if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
                     footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
                 } else {
-                    footer.configure(title: nil, topDistance: 0.5, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+                    footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
                 }
             case .link, .key, .info, .passwordProtection:
                 footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
