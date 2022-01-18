@@ -1376,6 +1376,20 @@
 		B53BDBEB27619171001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBEC27619172001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBED27619173001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
+		B5925B7A279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
+		B5925B7B279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
+		B5925B7C279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
+		B5925B7D279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
+		B5925B7E279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
+		B5925B7F279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
+		B5925B89279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B5925B8A279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B5925B8B279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B5925B8C279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B5925B8F279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
 		B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
@@ -3523,6 +3537,8 @@
 		A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.release.xcconfig"; sourceTree = "<group>"; };
 		AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
+		B5925B78279115FA00170CD6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		B5925B88279119E400170CD6 /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
@@ -4702,6 +4718,7 @@
 		120B4A732742442400312B35 /* SwiftGen */ = {
 			isa = PBXGroup;
 			children = (
+				B5925B88279119E400170CD6 /* Colors+Generated.swift */,
 				120B4A7827430F3E00312B35 /* Strings+Generated.swift */,
 				120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */,
 			);
@@ -4830,6 +4847,7 @@
 				41BADDA61A8E064E008408B3 /* Categories */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
 				1373619D1A6664C300B740E8 /* Images.xcassets */,
+				B5925B78279115FA00170CD6 /* Colors.xcassets */,
 				1373618D1A6664C300B740E8 /* Supporting Files */,
 				120B4A732742442400312B35 /* SwiftGen */,
 				A8AA4F6D1ED4295800E7BA23 /* API */,
@@ -10060,6 +10078,7 @@
 			buildConfigurationList = 137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "MEGA" */;
 			buildPhases = (
 				5D2EF5C25E3D5EA36A14929E /* [CP] Check Pods Manifest.lock */,
+				B5D57CB327968B820043BA50 /* SwiftGen Script */,
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
@@ -10493,6 +10512,7 @@
 				5B92CEE72423E9F100FE1BCC /* UpgradeAccount.storyboard in Resources */,
 				5B72739B240D3465005816AB /* altIconDay@3x.png in Resources */,
 				BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */,
+				B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */,
 				BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */,
 				5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */,
 				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
@@ -10562,6 +10582,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5925B7D279115FA00170CD6 /* Colors.xcassets in Resources */,
 				77BE2FEF24000CB600514DB8 /* Localizable.strings in Resources */,
 				B6873AD925A6C75400BBD15A /* GoogleService-Info.plist in Resources */,
 			);
@@ -10571,6 +10592,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5925B7E279115FA00170CD6 /* Colors.xcassets in Resources */,
 				83422B28255984C300D46907 /* Assets.xcassets in Resources */,
 				B6873AE425A6C7DD00BBD15A /* GoogleService-Info.plist in Resources */,
 				837DC5592565605100CA289E /* Localizable.strings in Resources */,
@@ -10582,6 +10604,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5925B7F279115FA00170CD6 /* Colors.xcassets in Resources */,
 				8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */,
 				B6873AF725A6C86100BBD15A /* GoogleService-Info.plist in Resources */,
 			);
@@ -10600,6 +10623,7 @@
 				B6873A8A25A6C5E500BBD15A /* GoogleService-Info.plist in Resources */,
 				5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */,
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
+				B5925B7A279115FA00170CD6 /* Colors.xcassets in Resources */,
 				B6831C0A25B65C7D0072827F /* CustomModalAlertViewController.xib in Resources */,
 				B695B60C264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 			);
@@ -10610,6 +10634,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6873A9325A6C5EB00BBD15A /* GoogleService-Info.plist in Resources */,
+				B5925B7B279115FA00170CD6 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10632,6 +10657,7 @@
 				5B74365226D78CBE00EEF758 /* GenericHeaderFooterView.xib in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
+				B5925B7C279115FA00170CD6 /* Colors.xcassets in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10812,6 +10838,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B5D57CB327968B820043BA50 /* SwiftGen Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftGen Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftGen/bin/swiftgen\" config run --config ./SwiftGen/swiftgen.yml\n";
 		};
 		C4BEDEAE5B76A0F7B4B12BDD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -11136,6 +11180,7 @@
 				8366518626497B3600BC02F0 /* LocalUserView.swift in Sources */,
 				83143B722604AB380033161A /* CallLocalVideoUseCase.swift in Sources */,
 				837B9BFB246D38E900D409B4 /* ActionSheetActions.swift in Sources */,
+				B5925B89279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				2FD6A26D25745B2C00C1997E /* PasteImagePreviewViewController.swift in Sources */,
@@ -12141,6 +12186,7 @@
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
 				774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
+				B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				A81DF35D2508FDAD009C8B60 /* Date+Formatting.swift in Sources */,
 				77FCB86523FD718A009E8032 /* NSString+MNZCategory.m in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
@@ -12232,6 +12278,7 @@
 				8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */,
 				830C274225E51E7700E9B56E /* Date+Comparion.swift in Sources */,
 				83C1B49225A8C14800814074 /* SectionDetail.swift in Sources */,
+				B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				835EE45A2582607D00D8E3B8 /* MEGAConstants.m in Sources */,
 				BF782D7C269BA58E0001D169 /* QuickAccessWidgetErrorEntity.swift in Sources */,
 				83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */,
@@ -12266,6 +12313,7 @@
 				831B4911256FED6F0086002B /* IntentHandler.swift in Sources */,
 				B5300AF72754A0AA001E516B /* Strings+Generated.swift in Sources */,
 				831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */,
+				B5925B8F279119E400170CD6 /* Colors+Generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12302,6 +12350,7 @@
 				C4EACA9C2772559E00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
 				5BE689932417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */,
+				B5925B8A279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				B695B603264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
@@ -12414,6 +12463,7 @@
 				77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */,
 				B53BDBEA27619170001D73F8 /* XCAssets+Generated.swift in Sources */,
 				942255041EDC04080074C51A /* FileProvider.m in Sources */,
+				B5925B8B279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				0DE3037826B25AA100E4A66B /* FileProviderItem.swift in Sources */,
 				942ED2AF1EDEE51600C9908D /* MEGASdkManager.m in Sources */,
 				7747B2DA208625B60011814E /* Reachability.m in Sources */,
@@ -12449,6 +12499,7 @@
 				5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */,
 				C482B7D4271F360A0074CFC4 /* MEGAError+MNZCategory.m in Sources */,
 				839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
+				B5925B8C279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,
 				C470F07F26F89F6F00669C3D /* MEGANode+Backup.swift in Sources */,
 				775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */,

@@ -68,13 +68,13 @@ enum SessionSectionRow: Int {
         
         nameLabel.text = MEGASdkManager.sharedMEGASdk().myUser?.mnz_fullName
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
-        nameLabel.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+        nameLabel.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
         nameLabel.layer.shadowRadius = 2.0
         nameLabel.layer.shadowOpacity = 1
         
         emailLabel.text = MEGASdkManager.sharedMEGASdk().myEmail
         emailLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
-        emailLabel.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+        emailLabel.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
         emailLabel.layer.shadowRadius = 2.0
         emailLabel.layer.shadowOpacity = 1
         
