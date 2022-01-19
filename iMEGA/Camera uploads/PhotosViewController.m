@@ -631,6 +631,8 @@
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selection.nodes sender:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
+    
+    [self setEditing:NO animated:YES];
 }
 
 - (IBAction)moveAction:(UIBarButtonItem *)sender {
@@ -651,6 +653,8 @@
         browserVC.selectedNodesArray = self.selection.nodes;
         [browserVC setBrowserAction:BrowserActionCopy];
         [self presentViewController:navigationController animated:YES completion:nil];
+        
+        [self setEditing:NO animated:YES];
     }
 }
 
