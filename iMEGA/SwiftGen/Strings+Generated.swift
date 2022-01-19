@@ -3268,6 +3268,8 @@ public enum Strings {
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
+      /// Join Meeting as Guest
+      public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
       public enum Button {
         /// Get Bonus
         public static let getBonus = Strings.tr("Localizable", "general.button.getBonus")
