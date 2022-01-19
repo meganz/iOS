@@ -72,6 +72,7 @@ static NSString* const B = @"[B]";
                                                  @"au",
                                                  @"caf",
                                                  @"eac3",
+                                                 @"ec3",
                                                  @"flac",
                                                  @"m4a",
                                                  @"mp3",

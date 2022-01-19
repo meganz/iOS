@@ -16,24 +16,24 @@ extension Array where Element: Equatable {
             move(at: index, to: newIndex)
         }
     }
-
+    
     mutating func bringToFront(item: Element) {
         move(item, to: 0)
     }
-
+    
     mutating func sendToBack(item: Element) {
         move(item, to: endIndex-1)
     }
     
     func shifted(_ distance: Int = 1) -> Array<Element> {
         let offsetIndex = distance >= 0 ?
-                                index(startIndex, offsetBy: distance, limitedBy: endIndex) :
-                                index(endIndex, offsetBy: distance, limitedBy: startIndex)
-
+        index(startIndex, offsetBy: distance, limitedBy: endIndex) :
+        index(endIndex, offsetBy: distance, limitedBy: startIndex)
+        
         guard let index = offsetIndex else { return self }
         return Array(self[index ..< endIndex] + self[startIndex ..< index])
     }
-
+    
     mutating func shift(_ distance: Int = 1) {
         self = shifted(distance)
     }
@@ -48,5 +48,17 @@ extension Array {
 extension Array where Element: Hashable {
     func removeDuplicatesWhileKeepingTheOriginalOrder() -> [Element] {
         NSOrderedSet(array: self).array as? [Element] ?? []
+    }
+}
+
+extension Array where Element: Equatable {
+    /// Remove the object from array
+    ///
+    /// - parameter object: The element need to remove
+    ///
+    /// Time Complexity: O(n)
+    mutating func remove(object: Element) {
+        guard let index = firstIndex(of: object) else { return }
+        remove(at: index)
     }
 }

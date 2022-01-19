@@ -5,9 +5,11 @@ extension UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         
-        [topAnchor.constraint(equalTo: view.topAnchor, constant: -insets.top),
+        let topInset = insets.top * -1
+        let leftInset = insets.left * -1
+        [topAnchor.constraint(equalTo: view.topAnchor, constant: topInset),
          bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: insets.bottom),
-         leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -insets.left),
+         leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leftInset),
          trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: insets.right)].activate()
     }
     

@@ -5,7 +5,9 @@ final class RoundedView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        layer.cornerRadius = frame.height / 2
+        let height = frame.height
+        let divisor: CGFloat = 2
+        layer.cornerRadius = height / divisor
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

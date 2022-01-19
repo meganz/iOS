@@ -58,7 +58,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         let label = UILabel()
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 12)
-        label.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+        label.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
         label.layer.shadowOffset = CGSize(width: 0, height: 1)
         label.layer.shadowRadius = 2
         label.layer.shadowOpacity = 1

@@ -10,8 +10,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
     
     func didTapAvatar(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
-            let chatMessage = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,
-            let cell = cell as? MessageContentCell
+              let dataSource = messagesCollectionView.messagesDataSource,
+              let chatMessage = dataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,
+              let cell = cell as? MessageContentCell
         else {
                 MEGALogInfo("Failed to identify message when audio cell receive tap gesture")
                 return
@@ -21,21 +22,22 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         guard let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
             return
         }
-        var actions = [ActionSheetAction]()
         
         let infoAction = ActionSheetAction(title: Strings.Localizable.info, detail: nil, image: nil, style: .default) { [weak self] in
+            guard let self = self else { return }
             guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
                 return
             }
             
-            contactDetailsVC.contactDetailsMode = self?.chatRoom.isGroup ?? false ? .fromGroupChat : .fromChat
+            contactDetailsVC.contactDetailsMode = self.chatRoom.isGroup ? .fromGroupChat : .fromChat
             contactDetailsVC.userEmail = userEmail
             contactDetailsVC.userName = userName
             contactDetailsVC.userHandle = chatMessage.message.userHandle
-            contactDetailsVC.groupChatRoom = self?.chatRoom
-            self?.navigationController?.pushViewController(contactDetailsVC, animated: true)
+            contactDetailsVC.groupChatRoom = self.chatRoom
+            self.navigationController?.pushViewController(contactDetailsVC, animated: true)
         }
-        actions.append(infoAction)
+        
+        var actions = [infoAction]
         
         let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: userEmail)
         if user == nil || user?.visibility != MEGAUserVisibility.visible {
