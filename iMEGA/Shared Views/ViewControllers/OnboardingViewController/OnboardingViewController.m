@@ -46,7 +46,7 @@
             
             [self.secondaryButton setTitle:NSLocalizedString(@"login", @"Button title which triggers the action to login in your MEGA account") forState:UIControlStateNormal];
            
-            [self.thirdButton setTitle:NSLocalizedString(@"Join Meeting as Guest", @"Button title which triggers the action to join meeting as Guest") forState:UIControlStateNormal];
+            [self.thirdButton setTitle:NSLocalizedString(@"general.joinMeetingAsGuest", @"Button title which triggers the action to join meeting as Guest") forState:UIControlStateNormal];
 
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
                 OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews.firstObject;
