@@ -803,9 +803,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }
     
-    
-   [MEGASdkManager.sharedMEGAChatSdk connect];
-
     [[MEGASdkManager sharedMEGAChatSdk] checkChatLink:chatLinkUrl delegate:[[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {

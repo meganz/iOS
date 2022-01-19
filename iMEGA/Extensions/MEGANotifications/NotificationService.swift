@@ -480,6 +480,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGAReachabilityManager.shared()?.reconnect()
         }
         
+        MEGASdkManager.sharedMEGAChatSdk().setBackgroundStatus(true)
         return true
     }
     
@@ -490,9 +491,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 MEGALogError("Login error \(error)")
                 return
             }
-
-            MEGALogDebug("Connect in background")
-            MEGASdkManager.sharedMEGAChatSdk().connectInBackground()
         })
     }
 

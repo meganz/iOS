@@ -890,9 +890,6 @@
         case MEGARequestTypeFetchNodes: {
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
-            @autoreleasepool {
-                [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
-            }
             [self addShareDestinationView];
             [self checkPasscode];
             break;
