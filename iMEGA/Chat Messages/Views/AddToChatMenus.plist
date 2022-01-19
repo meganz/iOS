@@ -6,7 +6,7 @@
 		<key>imageKey</key>
 		<string>attachGallery</string>
 		<key>nameKey</key>
-		<string>Photos</string>
+		<string>photo.navigation.title</string>
 		<key>dynamicKey</key>
 		<false/>
 	</dict>

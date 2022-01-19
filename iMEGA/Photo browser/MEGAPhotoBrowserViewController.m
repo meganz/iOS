@@ -1275,17 +1275,22 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (nodeList) {
         NSArray<MEGANode *> *updatedNodesArray = nodeList.mnz_nodesArrayFromNodeList;
         NSMutableArray<MEGANode *> *nodesToRemoveArray = NSMutableArray.new;
+        NSMutableArray<MEGANode *> *nodesToUpdateArray = NSMutableArray.new;
         
-        for (MEGANode *node in updatedNodesArray) {
-            for (MEGANode *mediaNode in self.mediaNodes) {
-                if (node.handle == mediaNode.handle) {
-                    if ([node hasChangedType:MEGANodeChangeTypeRemoved] || [node hasChangedType:MEGANodeChangeTypeParent]) {
-                        if ([self.mediaNodes indexOfObject:mediaNode] < self.currentIndex) {
-                            self.currentIndex--;
-                        }
-                        [nodesToRemoveArray addObject:mediaNode];
-                    }
+        NSMutableSet* updatedNodeSet = [NSMutableSet setWithArray:updatedNodesArray];
+        NSSet* oldNodeSet = [NSSet setWithArray:self.mediaNodes];
+        [updatedNodeSet intersectSet:oldNodeSet];
+
+        for (MEGANode *node in updatedNodeSet) {
+            if ([node hasChangedType:MEGANodeChangeTypeRemoved] ||
+                [node hasChangedType:MEGANodeChangeTypeParent]) {
+                if ([self.mediaNodes indexOfObject:node] < self.currentIndex) {
+                    self.currentIndex--;
                 }
+                [nodesToRemoveArray addObject:node];
+            } else if ([node hasChangedType:MEGANodeChangeTypeAttributes] ||
+                       [node hasChangedType:MEGANodeChangeTypePublicLink]) {
+                [nodesToUpdateArray addObject:node];
             }
         }
         
@@ -1299,6 +1304,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             } else {
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
+        }
+        
+        for (MEGANode *node in nodesToUpdateArray) {
+            NSInteger nodeIndex = [self.mediaNodes indexOfObject:node];
+            self.mediaNodes[nodeIndex] = node;
         }
     } else {
         [self reloadUI];

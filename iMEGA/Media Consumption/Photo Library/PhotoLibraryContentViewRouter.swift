@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Combine
 
 @available(iOS 14.0, *)
 protocol PhotoLibraryContentViewRouting {
@@ -43,8 +44,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoCell(
             viewModel: PhotoCellViewModel(
                 photo: photo,
-                thumbnailUseCase: ThumbnailUseCase.default,
-                isEditingMode: viewModel.libraryViewModel.isEditingMode
+                selection: viewModel.libraryViewModel.selection,
+                thumbnailUseCase: ThumbnailUseCase.default
             )
         )
     }

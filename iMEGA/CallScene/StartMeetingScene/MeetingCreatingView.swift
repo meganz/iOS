@@ -8,8 +8,8 @@ class MeetingCreatingView: UIView, UITextFieldDelegate {
         static let font = UIFont.preferredFont(forTextStyle: .title1).withWeight(.semibold)
         static let textColor = UIColor.white
         static let size = CGSize(width: 80, height: 80)
-        static let backgroundColor = UIColor.mnz_(fromHexString: "#FF6F00")
-        static let backgroundGradientColor = UIColor.mnz_(fromHexString: "#FFA700")
+        static let backgroundColor = Colors.CallScene.avatarBackground.color
+        static let backgroundGradientColor = Colors.CallScene.avatarBackgroundGradient.color
     }
     
     private struct Constants {

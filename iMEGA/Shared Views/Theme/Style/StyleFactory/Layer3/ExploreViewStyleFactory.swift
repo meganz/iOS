@@ -42,12 +42,13 @@ struct ExplorerCardConfiguration {
 
 extension ExplorerCardConfiguration {
     private static let foregroundColorsLight = [UIColor(white: 1.0, alpha: 0.95), UIColor.white]
-    private static let foregroundColorsDark = [UIColor.mnz_(fromHexString: "#1C1C1F"), UIColor.black]
+    private static let foregroundColorsDark = [Colors.SharedViews.Explorer.foregroundDark.color, UIColor.black]
     
     static func photosExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.Home.Images.title
         let image = Asset.Images.Home.explorerCardImage.image
-        let borderColors = [UIColor.mnz_(fromHexString: "#1695F8"), UIColor.mnz_(fromHexString: "#0054C3")]
+        let borderColors = [Colors.SharedViews.Explorer.photoFirstGradient.color,
+                            Colors.SharedViews.Explorer.photoSecondGradient.color]
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -60,7 +61,8 @@ extension ExplorerCardConfiguration {
     static func documentsExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.docs
         let image = Asset.Images.Home.explorerCardDocs.image
-        let borderColors = [UIColor.mnz_(fromHexString: "#FEB800"), UIColor.mnz_(fromHexString: "#FE8601")]
+        let borderColors = [Colors.SharedViews.Explorer.documentsFirstGradient.color,
+                            Colors.SharedViews.Explorer.documentsSecondGradient.color]
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -73,7 +75,8 @@ extension ExplorerCardConfiguration {
     static func audioExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.audio
         let image = Asset.Images.Home.explorerCardAudio.image
-        let borderColors = [UIColor.mnz_(fromHexString: "#2BA6DE"), UIColor.mnz_(fromHexString: "#00C398")]
+        let borderColors = [Colors.SharedViews.Explorer.audioFirstGradient.color,
+                            Colors.SharedViews.Explorer.audioSecondGradient.color]
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -87,7 +90,8 @@ extension ExplorerCardConfiguration {
         let title = Strings.Localizable.videos
         let iconForegroundImage = Asset.Images.Home.explorerCardVideoPlay.image
         let iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStrips.image
-        let borderColors = [UIColor.mnz_(fromHexString: "#EB1C5C"), UIColor.mnz_(fromHexString: "#E301CA")]
+        let borderColors = [Colors.SharedViews.Explorer.videoFirstGradient.color,
+                            Colors.SharedViews.Explorer.videoSecondGradient.color]
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: iconForegroundImage,
                                          iconBackgroundImage: iconBackgroundImage,

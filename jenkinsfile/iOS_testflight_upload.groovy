@@ -53,7 +53,7 @@ pipeline {
         }
     }
     stages {
-        stage('Update submodule and pods') {
+        stage('Installing dependencies') {
             when { 
                 anyOf {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
@@ -90,18 +90,8 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
 
-        stage('Prepare') {
-            parallel {
                 stage('Downloading third party libraries') {
-                    when { 
-                        anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
-                        }
-                    }
                     steps {
                         gitlabCommitStatus(name: 'Downloading third party libraries') {
                             injectEnvironments({
@@ -112,7 +102,11 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
 
+        stage('Prepare') {
+            parallel {
                 stage('Set build number') {
                     steps {
                         gitlabCommitStatus(name: 'Set build number') {

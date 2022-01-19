@@ -5,12 +5,6 @@ struct PhotoLibraryContentView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
     var router: PhotoLibraryContentViewRouting
     
-    init(viewModel: PhotoLibraryContentViewModel, router: PhotoLibraryContentViewRouting) {
-        self.viewModel = viewModel
-        self.router = router
-        configSegmentedControlAppearance()
-    }
-    
     var body: some View {
         if viewModel.library.isEmpty {
             ProgressView()
@@ -45,7 +39,6 @@ struct PhotoLibraryContentView: View {
                     .tag($0)
             }
         }
-        .pickerStyle(.segmented)
     }
     
     @ViewBuilder
@@ -100,9 +93,9 @@ struct PhotoLibraryContentView: View {
                  .foregroundColor: UIColor.label],
                 for: .normal
             )
-        
-        UISegmentedControl
-            .appearance()
-            .selectedSegmentTintColor = UIColor.label.withAlphaComponent(0.4)
+                .equatable()
+                .opacity(viewModel.selectedMode == .all ? 1 : 0)
+                .zIndex(viewModel.selectedMode == .all ? 1 : -1)
+        }
     }
 }
