@@ -97,6 +97,8 @@ static MEGAIndexer *indexer;
                                 @"dwg":@"cad",
                                 @"dxf":@"cad",
                                 @"dmg":@"dmg",
+                                @"eac3":@"audio",
+                                @"ec3":@"audio",
                                 @"eps":@"vector",
                                 @"exe":@"executable",
                                 @"fff":@"raw",
