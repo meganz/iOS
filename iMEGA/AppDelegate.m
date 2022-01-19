@@ -1576,12 +1576,6 @@
                 return;
             }
             
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-                [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
-            } else {
-                [[MEGASdkManager sharedMEGAChatSdk] connect];
-            }
-            
             if (!isAccountFirstLogin) {
                 [self showMainTabBar];
                 if (self.openChatLater) {

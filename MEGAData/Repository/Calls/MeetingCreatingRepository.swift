@@ -156,28 +156,25 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             return
         }
         
-        MEGALogDebug("Create meeting: connect to chat with link \(link) and request \(request)")
-        self.chatSdk.connect(with: MEGAChatResultRequestDelegate(completion: { _  in
-            MEGALogDebug("Create meeting: open chat preview for url \(url)")
-            self.chatSdk.openChatPreview(url, delegate: MEGAChatResultRequestDelegate(completion: { [weak self] in
-                guard let self = self else { return }
-                switch $0 {
-                case .success(let chatRequest):
-                    MEGALogDebug("Create meeting: open chat preview succeeded with request \(chatRequest)")
-                    self.chatResultDelegate = MEGAChatResultDelegate { sdk, chatId, newState in
-                        if chatRequest.chatHandle == chatId, newState == .online, let chatResultDelegate = self.chatResultDelegate {
-                            self.chatSdk.remove(chatResultDelegate)
-                            completion(.success(()))
-                        }
+        MEGALogDebug("Create meeting: open chat preview for url \(url)")
+        self.chatSdk.openChatPreview(url, delegate: MEGAChatResultRequestDelegate(completion: { [weak self] in
+            guard let self = self else { return }
+            switch $0 {
+            case .success(let chatRequest):
+                MEGALogDebug("Create meeting: open chat preview succeeded with request \(chatRequest)")
+                self.chatResultDelegate = MEGAChatResultDelegate { sdk, chatId, newState in
+                    if chatRequest.chatHandle == chatId, newState == .online, let chatResultDelegate = self.chatResultDelegate {
+                        self.chatSdk.remove(chatResultDelegate)
+                        completion(.success(()))
                     }
-                    if let chatResultDelegate = self.chatResultDelegate {
-                        self.chatSdk.add(chatResultDelegate)
-                    }
-                case .failure(let error):
-                    MEGALogDebug("Create meeting: open chat preview failure \(error)")
-                    completion(.failure(.unexpected))
                 }
-            }))
+                if let chatResultDelegate = self.chatResultDelegate {
+                    self.chatSdk.add(chatResultDelegate)
+                }
+            case .failure(let error):
+                MEGALogDebug("Create meeting: open chat preview failure \(error)")
+                completion(.failure(.unexpected))
+            }
         }))
     }
     
