@@ -93,9 +93,11 @@ struct PhotoLibraryContentView: View {
                  .foregroundColor: UIColor.label],
                 for: .normal
             )
-                .equatable()
-                .opacity(viewModel.selectedMode == .all ? 1 : 0)
-                .zIndex(viewModel.selectedMode == .all ? 1 : -1)
-        }
+        
+        UISegmentedControl
+            .appearance()
+            .selectedSegmentTintColor = UIColor.label.withAlphaComponent(0.4)
     }
+
 }
+
