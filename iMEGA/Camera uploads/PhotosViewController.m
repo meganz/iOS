@@ -99,7 +99,9 @@
     
     [self.photoUpdatePublisher setupSubscriptions];
     
-    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
+    if (!MEGAReachabilityManager.isReachable) {
+        self.editBarButtonItem.enabled = NO;
+    }
     
     [self loadTargetFolder];
     [self refreshMyAvatar];
@@ -382,6 +384,7 @@
 
 - (void)reloadPhotos {
     [self buildMediaNodes];
+    [self updateNavigationTitleBar];
     
     if (@available(iOS 14.0, *)) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -408,8 +411,6 @@
         
         [self reloadPhotosCollectionView];
     }
-    
-    [self updateNavigationTitleBar];
 }
 
 - (void)buildMediaNodes {
@@ -501,7 +502,10 @@
 #pragma mark - notifications
 
 - (void)didReceiveInternetConnectionChangedNotification {
-    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
+    if (!MEGAReachabilityManager.isReachable) {
+        self.editBarButtonItem.enabled = NO;
+    }
+    
     [self reloadHeader];
     [self.photosCollectionView reloadEmptyDataSet];
 }
