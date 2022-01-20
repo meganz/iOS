@@ -3625,6 +3625,8 @@ public enum Strings {
         public static func participantsCount(_ p1: Int) -> String {
           return Strings.tr("Localizable", "meetings.panel.ParticipantsCount", p1)
         }
+        /// Share Link
+        public static let shareLink = Strings.tr("Localizable", "meetings.panel.shareLink")
       }
       public enum Participant {
         /// Make Moderator
