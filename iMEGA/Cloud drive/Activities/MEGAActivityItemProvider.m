@@ -166,7 +166,7 @@
     LPLinkMetadata *metadata = LPLinkMetadata.new;
     metadata.title = self.node.name;
 
-    NSString *subtitleString;
+    NSString *subtitleString = @"";
     if (self.node.isFile) {
         subtitleString = [Helper sizeAndModicationDateForNode:self.node api:self.api];
     } else if (self.node.isFolder) {
