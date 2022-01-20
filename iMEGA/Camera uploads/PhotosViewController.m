@@ -387,10 +387,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updatePhotoLibraryBy:self.mediaNodesArray];
         });
-        
-        if (self.mediaNodesArray.count == 0) {
-            [self reloadPhotosCollectionView];
-        }
     } else {
         NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
         self.photosByMonthYearArray = [NSMutableArray new];
@@ -413,7 +409,7 @@
         [self reloadPhotosCollectionView];
     }
     
-    [self updateNavigationTitle];
+    [self updateNavigationTitleBar];
 }
 
 - (void)buildMediaNodes {
@@ -433,12 +429,33 @@
     });
 }
 
-- (void)updateNavigationTitle {
+- (void)updateEditBarButton {
+    if (self.mediaNodesArray.count == 0) {
+        self.editBarButtonItem.enabled = NO;
+        self.editBarButtonItem.title = @"";
+    } else if (self.mediaNodesArray.count > 0 && !self.isEditing) {
+        [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
+        self.editBarButtonItem.enabled = YES;
+    } else {
+        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.image = nil;
+    }
+}
+
+- (void)updateNavigationTitleBar {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([self.photosCollectionView allowsMultipleSelection]) {
-            self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
+        if (@available(iOS 14.0, *)) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self updateEditBarButton];
+            });
         } else {
-            self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+            if ([self.photosCollectionView allowsMultipleSelection]) {
+                self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
+            } else {
+                self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+            }
+            
+            [self updateEditBarButton];
         }
     });
 }
@@ -541,10 +558,9 @@
         self.photosCollectionView.allowsMultipleSelection = editing;
     }
     
+    [self updateEditBarButton];
+    
     if (editing) {
-        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
-        self.editBarButtonItem.image = nil;
-        
         [self updateNavigationTitleWithPhotoCount:self.selection.count];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
@@ -567,8 +583,6 @@
             }];
         }
     } else {
-        [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
-        
         allNodesSelected = NO;
         self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         [self.photosCollectionView setAllowsMultipleSelection:NO];

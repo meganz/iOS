@@ -119,6 +119,9 @@ internal enum Colors {
   internal enum Psa {
     internal static let imageBackground = ColorAsset(name: "imageBackground")
   }
+  internal enum Photos {
+    internal static let photoSeletionBorder = ColorAsset(name: "photoSeletionBorder")
+  }
   internal enum SharedViews {
     internal enum Explorer {
       internal static let audioFirstGradient = ColorAsset(name: "audioFirstGradient")
