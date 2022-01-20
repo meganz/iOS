@@ -2698,6 +2698,8 @@
 "meetings.alert.end.description"="The meeting you’re trying to join has already ended. You can still view the meeting chat history.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Invite Participants";
+/* Meetings: Floating panel share link option */
+"meetings.panel.shareLink"="Share Link";
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
