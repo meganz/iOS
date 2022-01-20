@@ -8,7 +8,7 @@ struct CheckMarkView: View {
     }
     
     private var foregroundColor: Color {
-        markedSelected ? .green : .white
+        markedSelected ? .green : Color(Colors.Photos.photoSeletionBorder.color)
     }
     
     private var backgroundView: some View {
