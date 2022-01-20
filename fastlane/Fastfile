@@ -65,7 +65,6 @@ platform :ios do
     create_keychain(
       name: TEMP_KEYCHAIN_NAME,
       password: TEMP_KEYCHAIN_PASSWORD,
-      default_keychain: true,
       unlock: true,
       timeout: 0,
       lock_when_sleeps: false,

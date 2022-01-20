@@ -243,7 +243,6 @@ pipeline {
                 gitlabCommitStatus(name: 'Delete temporary keychain') {
                     injectEnvironments({
                         sh "bundle exec fastlane delete_temporary_keychain"
-                        sh "security default-keychain -s ~/Library/keychains/login.keychain"
                     })
                 }
             }
