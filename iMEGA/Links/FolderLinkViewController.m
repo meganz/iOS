@@ -612,19 +612,17 @@
     if ([AudioPlayerManager.shared isPlayerAlive]) {
         [AudioPlayerManager.shared playerHidden:editing presenter:self];
     }
+    
+    [self reloadData];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [_selectedNodesArray removeAllObjects];
     
     if (![self areAllNodesSelected]) {
-        MEGANode *node = nil;
-        NSInteger nodeListSize = [[_nodeList size] integerValue];
-        for (NSInteger i = 0; i < nodeListSize; i++) {
-            node = [_nodeList nodeAtIndex:i];
-            [_selectedNodesArray addObject:node];
-        }
-        
+        BOOL isSearchActive = self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty;
+        NSArray *nodesArray = isSearchActive ? self.searchNodesArray : [self.nodeList mnz_nodesArrayFromNodeList];
+        self.selectedNodesArray = nodesArray.mutableCopy;
         [self setAllNodesSelected:YES];
     } else {
         [self setAllNodesSelected:NO];
