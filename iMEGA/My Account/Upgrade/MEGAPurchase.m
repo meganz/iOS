@@ -143,11 +143,14 @@
                 NSTimeInterval lastPublicTimestampAccessed = [NSUserDefaults.standardUserDefaults doubleForKey:MEGALastPublicTimestampAccessed];
                 uint64_t lastPublicHandleAccessed = [[NSUserDefaults.standardUserDefaults objectForKey:MEGALastPublicHandleAccessed] unsignedLongLongValue];
                 NSInteger lastPublicTypeAccessed = [NSUserDefaults.standardUserDefaults integerForKey:MEGALastPublicTypeAccessed];
+                NSString *receipt = [receiptData base64EncodedStringWithOptions:0];
                 if (lastPublicTimestampAccessed && lastPublicHandleAccessed && lastPublicTypeAccessed) {
-                    [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:self];
+                    [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:receipt lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:self];
                 } else {
-                    [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                    [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
                 }
+                
+                MEGALogDebug(@"[StoreKit] Transaction purchased, vpay receipt: %@", receipt);
                 
                 for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
                     [delegate successfulPurchase:self];
@@ -162,7 +165,9 @@
             case SKPaymentTransactionStateRestored:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 if (shouldSubmitReceiptOnRestore) {
-                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                    NSString *receipt = [receiptData base64EncodedStringWithOptions:0];
+                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
+                    MEGALogDebug(@"[StoreKit] Transaction restored, vpay receipt: %@", receipt);
                     for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
                         [restoreDelegate successfulRestore:self];
                     }
