@@ -143,7 +143,7 @@
     
     NSString *title = NSLocalizedString(@"account.upgrade.alreadyHaveASubscription.title", nil);
     NSString *message;
-    BOOL canCancelSubscription = (accountDetails.subscriptionMethodId == MEGAPaymentMethodECP) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodSabadell) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodStripe);
+    BOOL canCancelSubscription = (accountDetails.subscriptionMethodId == MEGAPaymentMethodECP) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodSabadell) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodStripe2);
     
     if (canCancelSubscription) {
         message = NSLocalizedString(@"account.upgrade.alreadyHaveACancellableSubscription.message", nil);
