@@ -263,7 +263,7 @@ extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
         let title = NSAttributedString(string: NSLocalizedString("No GIFs found", comment: ""),
                                        attributes: [
                                         NSAttributedString.Key.foregroundColor : UIColor.mnz_label().withAlphaComponent(0.5),
-                                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .semibold)
+                                        NSAttributedString.Key.font: UIFont.preferredFont(style: .body, weight: .semibold)
                                        ])
         return title
     }

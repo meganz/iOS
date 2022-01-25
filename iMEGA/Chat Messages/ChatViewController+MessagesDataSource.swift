@@ -31,7 +31,7 @@ extension ChatViewController: MessagesDataSource {
             
             return NSAttributedString(
                 string: topLabelString,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0, weight: .medium),
+                attributes: [NSAttributedString.Key.font: UIFont.preferredFont(style: .footnote, weight: .medium),
                              NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
         }
         return nil
@@ -41,7 +41,7 @@ extension ChatViewController: MessagesDataSource {
         if isDateLabelVisible(for: indexPath) {
             return NSAttributedString(
                 string: NSCalendar.current.isDateInToday(message.sentDate) ? Strings.Localizable.today : message.sentDate.string(withDateFormat: "E dd MMM"),
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
+                attributes: [NSAttributedString.Key.font: UIFont.preferredFont(style: .subheadline, weight: .bold),
                              NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
 
         }
@@ -89,13 +89,13 @@ extension ChatViewController: MessagesDataSource {
         
         let titleAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.mnz_red(for: traitCollection),
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
+            NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)
         ]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
         
         let descriptionAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection),
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
+            NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)
         ]
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)
         

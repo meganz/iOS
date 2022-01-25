@@ -9,3 +9,10 @@ extension Array where Element == NSLayoutConstraint {
         NSLayoutConstraint.deactivate(self)
     }
 }
+
+extension NSLayoutConstraint {
+    func using(priority: Float) -> NSLayoutConstraint {
+        self.priority = UILayoutPriority(rawValue: priority)
+        return self
+    }
+}

@@ -44,6 +44,7 @@ class MessageInputBar: UIView {
 
     @IBOutlet weak var editView: UIView!
     @IBOutlet weak var editViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var editMessageTitleLabel: MEGALabel!
     @IBOutlet weak var editViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var editMessageLabel: UILabel!
     var editMessage: ChatMessage? {
@@ -87,7 +88,6 @@ class MessageInputBar: UIView {
 
     private var keyboardHeight: CGFloat?
     private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
-    private let editViewTopConstraintValueWhenCollapsed: CGFloat = 38.0
     private var editViewTopConstraintValueWhenExpanded: CGFloat? {
         let minHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? minTopPaddingWhenExpanded
         
@@ -138,6 +138,10 @@ class MessageInputBar: UIView {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
         }
+        
+        if editViewHeightConstraint.constant > 0, traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            calculateEditViewHeight()
+        }
     }
     
     //MARK: - interface method.
@@ -167,6 +171,7 @@ class MessageInputBar: UIView {
         typingIndicatorLabel.isHidden = (text == nil)
 
         if let typingIndicatorText = text {
+            calculateEditViewHeight()
             typingIndicatorLabel.attributedText = typingIndicatorText
         }
     }
@@ -263,7 +268,7 @@ class MessageInputBar: UIView {
             sendButton.isEnabled = true
             return
         }
-        editViewHeightConstraint.constant = 40
+        calculateEditViewHeight()
         editMessageLabel.text = editMessage.message.content
         sendButton.setImage(Asset.Images.Chat.confirmEdit.image, for: .normal)
         sendButton.isEnabled = !editMessage.message.content.isEmpty
@@ -344,7 +349,7 @@ class MessageInputBar: UIView {
         semiTransparentView.isHidden = true
         semiTransparentView.alpha = 1.0
         
-        editViewTopConstraint.constant = editViewTopConstraintValueWhenCollapsed
+        calculateTopEditViewSpacing()
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
         expandCollapseButton.setImage(Asset.Images.Chat.InputToolbar.expand.image, for: .normal)
     }
@@ -376,7 +381,11 @@ class MessageInputBar: UIView {
     
     private func expandAnimationComplete(_ animationCompletion: Bool) {
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
-        editViewTopConstraint.constant = editViewTopConstraintValueWhenExpanded ?? editViewTopConstraintValueWhenCollapsed
+        if let editViewTopConstraintValueWhenExpanded = editViewTopConstraintValueWhenExpanded {
+            editViewTopConstraint.constant = editViewTopConstraintValueWhenExpanded
+        } else {
+            calculateTopEditViewSpacing()
+        }
         messageTextView.expandedHeight = expandedHeight
         expandCollapseButton.setImage(Asset.Images.Chat.InputToolbar.collapse.image, for: .normal)
     }
@@ -498,6 +507,15 @@ class MessageInputBar: UIView {
         }
     }
     
+    private func calculateEditViewHeight()  {
+        editViewHeightConstraint.constant = editMessageTitleLabel.sizeThatFits(CGSize(width: editMessageTitleLabel.frame.width, height: .greatestFiniteMagnitude)).height
+            + editMessageLabel.sizeThatFits(CGSize(width: editMessageLabel.frame.width, height: .greatestFiniteMagnitude)).height
+            + 12
+    }
+    
+    private func calculateTopEditViewSpacing() {
+        editViewTopConstraint.constant = typingIndicatorLabel.sizeThatFits(CGSize(width: typingIndicatorLabel.frame.width, height: .greatestFiniteMagnitude)).height + 25
+    }
     
     // MARK: - Deinit
     

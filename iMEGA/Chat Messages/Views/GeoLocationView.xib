@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,28 +24,38 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="awP-TD-ctc">
                     <rect key="frame" x="0.0" y="130" width="260" height="60"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pinned Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bf-a9-awX">
-                            <rect key="frame" x="10" y="10" width="113" height="18"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ugX-cN-mPw">
-                            <rect key="frame" x="10" y="34" width="33" height="16"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="g3D-I2-FHF">
+                            <rect key="frame" x="10" y="10" width="112.5" height="40"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Pinned Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bf-a9-awX" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="112.5" height="19.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                    </userDefinedRuntimeAttributes>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ugX-cN-mPw">
+                                    <rect key="frame" x="0.0" y="25.5" width="31" height="14.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="1bf-a9-awX" firstAttribute="top" secondItem="awP-TD-ctc" secondAttribute="top" constant="10" id="5CR-o3-rO5"/>
-                        <constraint firstItem="1bf-a9-awX" firstAttribute="leading" secondItem="awP-TD-ctc" secondAttribute="leading" constant="10" id="IeF-RL-73g"/>
-                        <constraint firstItem="ugX-cN-mPw" firstAttribute="top" secondItem="1bf-a9-awX" secondAttribute="bottom" constant="6" id="bDf-j9-7T6"/>
-                        <constraint firstItem="1bf-a9-awX" firstAttribute="leading" secondItem="ugX-cN-mPw" secondAttribute="leading" id="pOd-A2-jKa"/>
+                        <constraint firstItem="g3D-I2-FHF" firstAttribute="top" secondItem="awP-TD-ctc" secondAttribute="top" constant="10" id="7l1-uH-bVB"/>
+                        <constraint firstAttribute="bottom" secondItem="g3D-I2-FHF" secondAttribute="bottom" constant="10" id="BPR-gn-2IR"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g3D-I2-FHF" secondAttribute="trailing" constant="10" id="Vd0-HE-PlY"/>
+                        <constraint firstItem="g3D-I2-FHF" firstAttribute="leading" secondItem="awP-TD-ctc" secondAttribute="leading" constant="10" id="jDe-Zc-70o"/>
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="yQr-O4-oBQ"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="N9p-Or-zZH" firstAttribute="top" secondItem="yQr-O4-oBQ" secondAttribute="top" id="EU1-e2-7gh"/>
@@ -57,7 +67,6 @@
                 <constraint firstItem="awP-TD-ctc" firstAttribute="leading" secondItem="yQr-O4-oBQ" secondAttribute="leading" id="wTe-ao-zpI"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="yQr-O4-oBQ"/>
             <connections>
                 <outlet property="imageView" destination="N9p-Or-zZH" id="vNg-QA-XZX"/>
                 <outlet property="subtitleLabel" destination="ugX-cN-mPw" id="rEt-Xu-EdJ"/>
@@ -66,4 +75,9 @@
             <point key="canvasLocation" x="116" y="-87.256371814092958"/>
         </view>
     </objects>
+    <designables>
+        <designable name="1bf-a9-awX">
+            <size key="intrinsicContentSize" width="112.5" height="18"/>
+        </designable>
+    </designables>
 </document>

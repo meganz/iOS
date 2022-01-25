@@ -36,18 +36,47 @@ class ChatLocationCollectionViewCell: MessageContentCell {
 }
 
 open class ChatlocationCollectionViewSizeCalculator: MessageSizeCalculator {
+    let locationImageViewHeight: CGFloat = 129
+    let verticalPadding: CGFloat = 27 // Label's stackview spacing, padding top, bottom and container view top padding
+    
+    lazy var calculateTitleLabel: UILabel = {
+        let titleLabel = UILabel()
+        return titleLabel
+    }()
+    
+    lazy var calculateSubtitleLabel: UILabel = {
+        let subtitleLabel = UILabel()
+        return subtitleLabel
+    }()
    
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         configureAccessoryView()
     }
     
+    open override func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+        min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), 260)
+    }
+    
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
         case .custom:
-            return CGSize(width: min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), 260), height: 190)
+            let fitSize = CGSize(width: messageContainerMaxWidth(for: message), height: .greatestFiniteMagnitude)
+            return calculateDynamicSize(for: message, fitSize: fitSize)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
+    }
+    
+    private func calculateDynamicSize(for message: MessageType, fitSize: CGSize) -> CGSize {
+        calculateTitleLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+        calculateTitleLabel.text = Strings.Localizable.pinnedLocation
+        calculateSubtitleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        calculateSubtitleLabel.text = Strings.Localizable.pinnedLocation
+        
+        let titleLabelHeight = calculateTitleLabel.sizeThatFits(fitSize).height
+        let subtitleLabelHeight = calculateSubtitleLabel.sizeThatFits(fitSize).height
+        
+        return CGSize(width: fitSize.width, height: locationImageViewHeight + titleLabelHeight + subtitleLabelHeight + verticalPadding)
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,11 +18,11 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="Allow Acess" translatesAutoresizingMaskIntoConstraints="NO" id="gdV-GQ-DlW">
-                        <rect key="frame" x="20" y="11" width="80" height="78"/>
+                        <rect key="frame" x="10" y="11" width="80" height="78"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To share photos and videos allow MEGA to access your gallery" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkv-G7-T5K">
-                        <rect key="frame" x="115" y="5" width="364" height="90"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To share photos and videos allow MEGA to access your gallery" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkv-G7-T5K">
+                        <rect key="frame" x="100" y="5" width="389" height="90"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                         <color key="textColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.31764705882352939" alpha="0.54136344178082196" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -30,11 +30,11 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="gdV-GQ-DlW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="4rA-8q-xRW"/>
-                <constraint firstAttribute="trailing" secondItem="Hkv-G7-T5K" secondAttribute="trailing" constant="23" id="6Tq-7m-Tth"/>
+                <constraint firstItem="gdV-GQ-DlW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="4rA-8q-xRW"/>
+                <constraint firstAttribute="trailing" secondItem="Hkv-G7-T5K" secondAttribute="trailing" constant="13" id="6Tq-7m-Tth"/>
                 <constraint firstItem="gdV-GQ-DlW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="11" id="6ed-9R-D8g"/>
                 <constraint firstItem="gdV-GQ-DlW" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="OyZ-gc-EpS"/>
-                <constraint firstItem="Hkv-G7-T5K" firstAttribute="leading" secondItem="gdV-GQ-DlW" secondAttribute="trailing" constant="15" id="Ui8-9y-LhY"/>
+                <constraint firstItem="Hkv-G7-T5K" firstAttribute="leading" secondItem="gdV-GQ-DlW" secondAttribute="trailing" constant="10" id="Ui8-9y-LhY"/>
                 <constraint firstAttribute="bottom" secondItem="Hkv-G7-T5K" secondAttribute="bottom" constant="5" id="aDG-RT-XKK"/>
                 <constraint firstItem="Hkv-G7-T5K" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="cJ1-QL-hUJ"/>
                 <constraint firstAttribute="bottom" secondItem="gdV-GQ-DlW" secondAttribute="bottom" constant="11" id="lvY-zZ-gin"/>
