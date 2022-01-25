@@ -856,7 +856,9 @@
         if (error || myChatFilesFolderNode == nil) {
             MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
         }
-        [weakSelf performUploadToParentNode:myChatFilesFolderNode];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf performUploadToParentNode:myChatFilesFolderNode];
+        });
     }];
 }
 

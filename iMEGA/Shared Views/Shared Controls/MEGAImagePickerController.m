@@ -133,7 +133,9 @@
             if (error || myChatFilesFolderNode == nil) {
                 MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
             }
-            [weakSelf triggerPathCompletion:myChatFilesFolderNode];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf triggerPathCompletion:myChatFilesFolderNode];
+            });
         }];
     }
 }
@@ -148,7 +150,9 @@
             if (error || myChatFilesFolderNode == nil) {
                 MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
             }
-            [weakSelf triggerPathCompletion:myChatFilesFolderNode];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf triggerPathCompletion:myChatFilesFolderNode];
+            });
         }];
     }
 }
