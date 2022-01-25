@@ -667,7 +667,8 @@ extension GetLinkViewController: UITableViewDelegate {
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
         if getLinkVM.multilink {
-            header.configure(title: Strings.Localizable.link, topDistance: section == 0 ? 17.0 : 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.titleLabel.textAlignment = .left
+            header.configure(title: Strings.Localizable.link, topDistance: section == 0 ? 17.0 : 25.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         } else {
             switch sections()[section] {
             case .link:
@@ -696,10 +697,8 @@ extension GetLinkViewController: UITableViewDelegate {
         footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
 
         if getLinkVM.multilink {
-            if section == nodes.count - 1 {
-                footer.titleLabel.textAlignment = .center
-                footer.configure(title: Strings.Localizable.tapToCopy, topDistance: 4, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-            }
+            footer.titleLabel.textAlignment = .center
+            footer.configure(title: Strings.Localizable.tapToCopy, topDistance: 4, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
         } else {
             switch sections()[section] {
             case .decryptKeySeparate:
