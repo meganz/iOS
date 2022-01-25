@@ -35,7 +35,6 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        
         guard let chatMessage = message as? ChatMessage else {
             return
         }
@@ -51,8 +50,6 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             richPreviewContentView.isHidden = false
             return
         }
-
-       
         
         let megaLink = megaMessage.megaLink as NSURL
         switch megaLink.mnz_type() {
@@ -128,8 +125,6 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         default:
             richPreviewContentView.isHidden = true
         }
-        
-        
     }
     
     open override func setupSubviews() {
@@ -149,6 +144,29 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
 }
 
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {
+    
+    let chatRichPreviewMediaCollectionViewCell = ChatRichPreviewMediaCollectionViewCell()
+    let defaultPreviewSize: CGSize = CGSize(width: 100.0, height: 104.0)
+    let elementSpacing: CGFloat = 10.0
+    
+    lazy var calculateTitleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.numberOfLines = 1
+        return titleLabel
+    }()
+    
+    lazy var calculateDescriptionLabel: UILabel = {
+        let descriptionLabel = UILabel()
+        descriptionLabel.numberOfLines = 2
+        return descriptionLabel
+    }()
+    
+    lazy var calculateLinkLabel: UILabel = {
+        let linkLabel = UILabel()
+        linkLabel.numberOfLines = 1
+        return linkLabel
+    }()
+    
     override public init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         configureAccessoryView()
@@ -179,11 +197,86 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
                 return containerSize
             }
             
-            let width = max(maxWidth, containerSize.width)
-            return CGSize(width: width, height: containerSize.height + 104)
+            let messageInfo = messageInfo(for: chatMessage)
+            calculateTitleLabel.text = messageInfo.0
+            calculateTitleLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+            calculateDescriptionLabel.text = messageInfo.1
+            calculateDescriptionLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+            calculateLinkLabel.text = messageInfo.2
+            calculateLinkLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+            
+            let maxWidth = max(maxWidth, containerSize.width)
+            let maxSize = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+            let previewSize = calculatePreviewSize(for: chatMessage)
+            let labelsContainerSize = CGSize(width: maxSize.width - elementSpacing - previewSize.width - elementSpacing, height: maxSize.height)
+            let titleLabelSize = calculateTitleLabel.sizeThatFits(labelsContainerSize)
+            let descriptionLabelSize = calculateDescriptionLabel.sizeThatFits(labelsContainerSize)
+            let linkLabelSize = calculateTitleLabel.sizeThatFits(CGSize(width: labelsContainerSize.width - 2 * elementSpacing, height: labelsContainerSize.height))
+            
+            return CGSize(width: maxSize.width,
+                          height: containerSize.height
+                                    + max(defaultPreviewSize.height,
+                                          elementSpacing
+                                          + titleLabelSize.height
+                                          + elementSpacing
+                                          + descriptionLabelSize.height
+                                          + elementSpacing
+                                          + linkLabelSize.height)
+                                          + elementSpacing)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
     }
+    
+    private func calculatePreviewSize(for chatMessage: ChatMessage) -> CGSize {
+        guard chatMessage.message.containsMeta?.type == .richPreview,
+                let richPreview = chatMessage.message.containsMeta?.richPreview else {
+            return defaultPreviewSize
+        }
+    
+        if richPreview.image != nil,
+           Data(base64Encoded: richPreview.image, options: .ignoreUnknownCharacters) != nil {
+            return defaultPreviewSize
+        }
+        
+        if richPreview.icon != nil,
+           Data(base64Encoded: richPreview.icon, options: .ignoreUnknownCharacters) != nil {
+            return defaultPreviewSize
+        }
+        
+        return .zero
+    }
+    
+    private func messageInfo(for chatMessage: ChatMessage) -> (String, String, String) {
+        if chatMessage.message.containsMeta?.type == .richPreview {
+            guard let richPreview = chatMessage.message.containsMeta.richPreview else {
+                return  ("", "", "")
+            }
+            return (richPreview.title, richPreview.previewDescription, URL(string: richPreview.url)?.host ?? "")
+            
+        } else {
+            guard let megaLink = chatMessage.message.megaLink else {
+                return ("", "", "")
+            }
+            switch (megaLink as NSURL).mnz_type() {
+            case .fileLink:
+                return (chatMessage.message.node?.name ?? "",
+                        Helper.memoryStyleString(fromByteCount: Int64(truncating: chatMessage.message.node?.size ?? 0)),
+                        "mega.nz")
+                
+            case .folderLink:
+                return (chatMessage.message.richTitle,
+                        String(format: "%@\n%@", chatMessage.message.richString ?? "", Helper.memoryStyleString(fromByteCount: max(chatMessage.message.richNumber?.int64Value ?? 0, 0))),
+                        "mega.nz")
+                
+            case .publicChatLink:
+                return (chatMessage.message.richString,
+                        "\(chatMessage.message.richNumber?.int64Value ?? 0) \(Strings.Localizable.participants)",
+                        "mega.nz")
+                
+            default:
+                return ("", "", "")
+            }
+        }
+    }
 }
-

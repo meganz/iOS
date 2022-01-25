@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,13 +39,17 @@
                                                 <constraint firstItem="kfE-Ox-B7k" firstAttribute="height" secondItem="Egq-cg-GXs" secondAttribute="height" multiplier="0.645" id="r3x-Xh-J69"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6a-e9-hY4">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6a-e9-hY4" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705882352935" green="0.51764705882352935" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jBR-iZ-Cog">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jBR-iZ-Cog">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="T6I-WA-cp3"/>
@@ -90,13 +94,17 @@
                                                 <constraint firstItem="TjP-wc-AyL" firstAttribute="centerY" secondItem="aun-1c-vfJ" secondAttribute="centerY" id="prA-zH-T3p"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41h-S1-Ym9">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41h-S1-Ym9" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3S-X9-meK">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3S-X9-meK">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="mxe-9n-A2y"/>
@@ -141,13 +149,17 @@
                                                 <constraint firstItem="eqW-Ag-Lp4" firstAttribute="centerY" secondItem="Xia-Qd-Rdf" secondAttribute="centerY" id="u9f-At-adS"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Egb-yg-t4f">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Egb-yg-t4f" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRb-rG-fhE">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRb-rG-fhE">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="wr7-JW-1rT"/>
@@ -192,13 +204,17 @@
                                                 <constraint firstAttribute="width" secondItem="S7E-0Y-cGM" secondAttribute="height" id="zr6-lm-hKo"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxp-M0-HNv">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxp-M0-HNv" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HdW-56-49x">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HdW-56-49x">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="vMu-wr-lZI"/>
@@ -249,13 +265,17 @@
                                                 <constraint firstItem="ODp-cc-cUe" firstAttribute="centerY" secondItem="V1F-TF-c3y" secondAttribute="centerY" id="jY8-ma-0NO"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Dz-Ez-M0H">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Dz-Ez-M0H" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHZ-tU-cYu">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHZ-tU-cYu">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="QUQ-mf-owE"/>
@@ -300,13 +320,17 @@
                                                 <constraint firstItem="KjB-Gh-K9b" firstAttribute="width" secondItem="n5c-u4-SoS" secondAttribute="width" multiplier="0.645" id="z6j-zT-Asm"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYg-M1-a4f">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYg-M1-a4f" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQN-Kn-TsB">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQN-Kn-TsB">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="KTV-xT-s9X"/>
@@ -351,13 +375,17 @@
                                                 <constraint firstItem="Vd4-eF-pnc" firstAttribute="centerY" secondItem="I7E-pA-gr8" secondAttribute="centerY" id="nz6-n6-A9h"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcc-dF-All">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcc-dF-All" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTO-q6-SRK">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTO-q6-SRK">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="WeQ-qs-vHO"/>
@@ -402,13 +430,17 @@
                                                 <constraint firstItem="sov-ox-y35" firstAttribute="centerY" secondItem="kQl-zJ-FDm" secondAttribute="centerY" id="vN2-px-Ai4"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83h-WU-qd9">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83h-WU-qd9" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="99.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBd-ZJ-XXd">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBd-ZJ-XXd">
                                             <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="ifv-il-JNN"/>
@@ -441,6 +473,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="NMQ-zc-fjI"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="NMQ-zc-fjI" firstAttribute="bottom" secondItem="g9m-51-yXK" secondAttribute="bottom" id="0AZ-Py-vgd"/>
@@ -451,7 +484,6 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="NMQ-zc-fjI"/>
             <connections>
                 <outlet property="menuHolderStackView" destination="g9m-51-yXK" id="haF-NJ-3Gy"/>
                 <outletCollection property="menuViews" destination="pwS-dl-c8c" collectionClass="NSMutableArray" id="YLy-FC-lC0"/>

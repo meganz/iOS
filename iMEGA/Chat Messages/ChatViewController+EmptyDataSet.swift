@@ -16,7 +16,7 @@ extension ChatViewController: DZNEmptyDataSetSource {
         let placeholderView = UIView()
         placeholderView.backgroundColor = .clear
         
-        let chatMessageHeaderView =  ChatViewIntroductionHeaderView.instanceFromNib
+        let chatMessageHeaderView = ChatViewIntroductionHeaderView.instanceFromNib
         chatMessageHeaderView.chatRoom = chatRoom
         placeholderView.addSubview(chatMessageHeaderView)
 

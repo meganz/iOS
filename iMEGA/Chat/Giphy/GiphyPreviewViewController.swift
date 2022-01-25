@@ -9,7 +9,7 @@ class GiphyPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.send, style: .plain, target: self, action:#selector(send(sender:)))
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.preferredFont(style: .body, weight: .medium)], for: .normal)
         
         view.backgroundColor = .mnz_background()
         view.addSubview(previewImageView)

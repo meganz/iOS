@@ -272,48 +272,65 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             return
         }
         
-        let emojiHeader = UIStackView()
-        emojiHeader.axis = .horizontal
-        emojiHeader.distribution = .equalSpacing
-        emojiHeader.alignment = .fill
-
-        let emojis = ["😀", "☹", "🤣", "👍", "👎"]
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
+        stackView.spacing = 10
+        
+        let emojis = ["😀", "☹", "🤣", "👍", "👎", ""]
         emojis.forEach { (emoji) in
             let emojiView = UIButton()
             emojiView.addHaptic(.selection, forControlEvents: .touchDown)
-            let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 30) as Any])
-            emojiView.setAttributedTitle(attributedEmoji, for: .normal)
             emojiView.layer.cornerRadius = 22
-            emojiView.backgroundColor = UIColor.mnz_whiteF2F2F2()
-            emojiView.autoSetDimensions(to: CGSize(width: 44, height: 44))
-            emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
-            emojiViews.append(emojiView)
+            if emoji != "" {
+                let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 30) as Any])
+                emojiView.setAttributedTitle(attributedEmoji, for: .normal)
+                emojiView.backgroundColor = UIColor.mnz_whiteF2F2F2()
+                emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
+            } else {
+                emojiView.setImage(Asset.Images.Chat.addReactionSmall.image, for: .normal)
+                emojiView.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
+                emojiView.imageView?.contentMode = .scaleAspectFit
+                emojiView.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+                emojiView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
+            }
+            emojiView.heightAnchor.constraint(equalToConstant: 44).isActive = true
             
-            emojiHeader.addArrangedSubview(emojiView)
+            emojiViews.append(emojiView)
+            stackView.addArrangedSubview(emojiView)
         }
         
-        let addMoreView = UIButton()
-        addMoreView.setImage(Asset.Images.Chat.addReactionSmall.image, for: .normal)
-        addMoreView.layer.cornerRadius = 22
-        addMoreView.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
-        addMoreView.imageView?.contentMode = .scaleAspectFit
-        addMoreView.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        addMoreView.autoSetDimensions(to: CGSize(width: 44, height: 44))
-        addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
-        emojiViews.append(addMoreView)
-
-        emojiHeader.addArrangedSubview(addMoreView)
-
-        headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 60)
-        headerView?.addSubview(emojiHeader)
-        emojiHeader.autoPinEdgesToSuperviewMargins()
+        let headerContainer = UIView()
         
+        headerContainer.addSubview(stackView)
+        headerView?.addSubview(headerContainer)
         headerView?.addSubview(separatorLineView)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
-        separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
         
+        guard let superview = headerContainer.superview else { return }
+        
+        headerContainer.translatesAutoresizingMaskIntoConstraints = false
+        [headerContainer.topAnchor.constraint(equalTo: superview.topAnchor),
+         headerContainer.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+         headerContainer.leadingAnchor.constraint(equalTo: superview.leadingAnchor),
+         headerContainer.trailingAnchor.constraint(greaterThanOrEqualTo: superview.trailingAnchor)].activate()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        [stackView.topAnchor.constraint(equalTo: headerContainer.topAnchor),
+         stackView.bottomAnchor.constraint(equalTo: headerContainer.bottomAnchor),
+         stackView.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: 10),
+         stackView.trailingAnchor.constraint(greaterThanOrEqualTo: headerContainer.trailingAnchor, constant: -10).using(priority: 999)].activate()
+        
+        guard let superview = separatorLineView.superview else { return }
+        
+        separatorLineView.translatesAutoresizingMaskIntoConstraints = false
+        [separatorLineView.heightAnchor.constraint(equalToConstant: 1/UIScreen.main.scale),
+         separatorLineView.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+         separatorLineView.leadingAnchor.constraint(equalTo: superview.leadingAnchor),
+         separatorLineView.trailingAnchor.constraint(greaterThanOrEqualTo: superview.trailingAnchor)
+        ].activate()
+        
+        headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
     }
     
     

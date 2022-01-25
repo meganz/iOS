@@ -11,7 +11,6 @@ class ChatViewCallCollectionCell: MessageContentCell {
     
     open var reasonTextLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -79,6 +78,8 @@ class ChatViewCallCollectionCell: MessageContentCell {
         
         iconImageView.image = icon
         reasonTextLabel.text = reason
+        reasonTextLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+        reasonTextLabel.adjustsFontForContentSizeCategory = true
     }
 
 }

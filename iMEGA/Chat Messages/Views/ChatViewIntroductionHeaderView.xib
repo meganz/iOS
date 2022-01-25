@@ -1,53 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatViewIntroductionHeaderView" id="U6b-Vx-4bR" customClass="ChatViewIntroductionHeaderView" customModule="MEGA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="537"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatViewIntroductionHeaderView" id="vM1-dY-KQa" customClass="ChatViewIntroductionHeaderView" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="389"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mD6-if-CSl">
-                    <rect key="frame" x="20" y="10" width="280" height="517"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="u3n-yC-sGJ">
+                    <rect key="frame" x="20" y="10" width="280" height="369"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WQl-9w-mUT">
-                            <rect key="frame" x="0.0" y="0.0" width="280" height="165"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKc-Pm-Ngf">
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eV2-rC-NUl">
-                                    <rect key="frame" x="0.0" y="29.5" width="200" height="106.5"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0Dr-fh-Sdm">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="80"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chatting with" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8RD-QU-H2N">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="14.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Chatting with" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEg-5n-frR">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="13.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                            <color key="textColor" systemColor="systemRedColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Participants Names" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7a-43-IHM">
-                                            <rect key="frame" x="0.0" y="24.5" width="200" height="57.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Participants Names" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vV0-Cv-nam">
+                                            <rect key="frame" x="0.0" y="23.5" width="200" height="23"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="xbU-DC-CdD">
-                                            <rect key="frame" x="0.0" y="92" width="200" height="14.5"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jhd-x9-ICv">
+                                            <rect key="frame" x="0.0" y="56.5" width="200" height="23.5"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lhu-qp-SEB">
-                                                    <rect key="frame" x="0.0" y="3" width="8" height="8"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyI-XQ-t4W">
+                                                    <rect key="frame" x="0.0" y="8" width="8" height="8"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="8" id="DnJ-Z3-6SU"/>
-                                                        <constraint firstAttribute="width" constant="8" id="k9v-fh-4EZ"/>
+                                                        <constraint firstAttribute="height" constant="8" id="Mg1-LK-UuE"/>
+                                                        <constraint firstAttribute="width" constant="8" id="QvW-0e-H7B"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -55,9 +51,9 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdc-mg-TfR">
-                                                    <rect key="frame" x="13" y="0.0" width="187" height="14.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5s0-Tv-WXQ">
+                                                    <rect key="frame" x="13" y="5" width="187" height="13.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -65,11 +61,11 @@
                                         </stackView>
                                     </subviews>
                                 </stackView>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kno-2Q-Vgk">
-                                    <rect key="frame" x="200" y="42.5" width="80" height="80"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vqw-IR-XQQ">
+                                    <rect key="frame" x="200" y="0.0" width="80" height="80"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="80" id="gJB-iU-2jW"/>
-                                        <constraint firstAttribute="height" constant="80" id="weU-Hb-aAe"/>
+                                        <constraint firstAttribute="width" constant="80" id="X6N-iR-s6W"/>
+                                        <constraint firstAttribute="height" constant="80" id="e81-wZ-9AJ"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -79,96 +75,93 @@
                                 </imageView>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="UTm-9U-JgY">
-                            <rect key="frame" x="0.0" y="185" width="280" height="332"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jm-ZU-QM8">
+                            <rect key="frame" x="0.0" y="100" width="280" height="68"/>
+                            <string key="text">MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:</string>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                            <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WRK-BT-6p5">
+                            <rect key="frame" x="0.0" y="188" width="280" height="72.5"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Hh-k8-xT8">
-                                    <rect key="frame" x="0.0" y="0.0" width="280" height="72"/>
-                                    <string key="text">MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:</string>
-                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock_welcomeMessage" translatesAutoresizingMaskIntoConstraints="NO" id="HBV-sm-C6k" userLabel="Lock Image View">
+                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="32" id="YEj-lb-AYt"/>
+                                        <constraint firstAttribute="width" constant="32" id="lhF-8Q-xef"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confidentiality. Only the author and intended recipients are able to decipher the content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RgP-Hy-EQi">
+                                    <rect key="frame" x="0.0" y="42" width="256.5" height="30.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" alignment="top" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="w0p-lV-Vf7">
-                                    <rect key="frame" x="0.0" y="92" width="280" height="240"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QEq-l4-EEf">
-                                            <rect key="frame" x="0.0" y="0.0" width="254.5" height="96"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock_welcomeMessage" translatesAutoresizingMaskIntoConstraints="NO" id="t5C-MR-yAj" userLabel="Lock Image View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="32" id="2wZ-3f-Hb8"/>
-                                                        <constraint firstAttribute="width" constant="32" id="Dps-na-Ft2"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confidentiality. Only the author and intended recipients are able to decipher the content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ga-QQ-yb0">
-                                                    <rect key="frame" x="0.0" y="42" width="254.5" height="54"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                                                    <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WEO-ua-Ibq">
-                                            <rect key="frame" x="0.0" y="126" width="280" height="114"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark_welcomeMessage" translatesAutoresizingMaskIntoConstraints="NO" id="cWF-AG-eOg" userLabel="Check Image View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="32" id="DgJ-K4-Vf2"/>
-                                                        <constraint firstAttribute="height" constant="32" id="jje-nv-Twd"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFv-br-8Zk">
-                                                    <rect key="frame" x="0.0" y="42" width="280" height="72"/>
-                                                    <string key="text">Authenticity. The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.</string>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                                                    <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                </stackView>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Hw-Jd-5cY">
+                            <rect key="frame" x="0.0" y="280.5" width="280" height="88.5"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark_welcomeMessage" translatesAutoresizingMaskIntoConstraints="NO" id="kVQ-6D-G7Y" userLabel="Check Image View">
+                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="32" id="1h9-as-inM"/>
+                                        <constraint firstAttribute="width" constant="32" id="ftG-bu-1HU"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D8R-uV-KvR">
+                                    <rect key="frame" x="0.0" y="42" width="275.5" height="46.5"/>
+                                    <string key="text">Authenticity. The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.</string>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                    <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                         </stackView>
                     </subviews>
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="mD6-if-CSl" secondAttribute="trailing" constant="20" id="8Gm-ZT-56a"/>
-                <constraint firstItem="mD6-if-CSl" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="20" id="GkQ-eh-pDM"/>
-                <constraint firstAttribute="bottom" secondItem="mD6-if-CSl" secondAttribute="bottom" constant="10" id="P92-6U-pqr"/>
-                <constraint firstItem="mD6-if-CSl" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="nDE-Xf-KA9"/>
+                <constraint firstItem="u3n-yC-sGJ" firstAttribute="top" secondItem="vM1-dY-KQa" secondAttribute="top" constant="10" id="1EL-FX-l3O"/>
+                <constraint firstAttribute="trailing" secondItem="u3n-yC-sGJ" secondAttribute="trailing" constant="20" id="AC9-uS-gcd"/>
+                <constraint firstItem="u3n-yC-sGJ" firstAttribute="leading" secondItem="vM1-dY-KQa" secondAttribute="leading" constant="20" id="Hcr-Am-odP"/>
+                <constraint firstAttribute="bottom" secondItem="u3n-yC-sGJ" secondAttribute="bottom" constant="10" id="gGZ-G2-ugN"/>
             </constraints>
             <connections>
-                <outlet property="authenticityImageView" destination="cWF-AG-eOg" id="DZu-zh-a56"/>
-                <outlet property="authenticityStackView" destination="WEO-ua-Ibq" id="BVa-Td-wvv"/>
-                <outlet property="authenticityTextLabel" destination="GFv-br-8Zk" id="bBA-7o-b9c"/>
-                <outlet property="avatarImageView" destination="Kno-2Q-Vgk" id="Tpf-J1-ppV"/>
-                <outlet property="avatarImageViewHeightConstraint" destination="weU-Hb-aAe" id="Kzh-IL-Yy2"/>
-                <outlet property="avatarImageViewWidthConstraint" destination="gJB-iU-2jW" id="XCE-CJ-Vcg"/>
-                <outlet property="chattingWithTextLabel" destination="8RD-QU-H2N" id="5Wc-AR-3jZ"/>
-                <outlet property="confidentialityAndAuthenticityStackView" destination="w0p-lV-Vf7" id="VDy-2a-MSH"/>
-                <outlet property="confidentialityImageView" destination="t5C-MR-yAj" id="Ik0-8C-Muy"/>
-                <outlet property="confidentialityStackView" destination="QEq-l4-EEf" id="pAI-Ca-Oeq"/>
-                <outlet property="confidentialityTextLabel" destination="3ga-QQ-yb0" id="Fji-7r-34i"/>
-                <outlet property="descriptionLabel" destination="7Hh-k8-xT8" id="Ef4-th-WfM"/>
-                <outlet property="descriptionStackView" destination="UTm-9U-JgY" id="zKV-F6-OPc"/>
-                <outlet property="mainStackView" destination="mD6-if-CSl" id="qJt-bp-29n"/>
-                <outlet property="mainStackViewBottomConstraint" destination="P92-6U-pqr" id="vTa-ff-uGa"/>
-                <outlet property="mainStackViewTopConstraint" destination="nDE-Xf-KA9" id="sU0-kX-9g3"/>
-                <outlet property="participantsInformationStackView" destination="eV2-rC-NUl" id="kBU-46-CW3"/>
-                <outlet property="participantsLabel" destination="q7a-43-IHM" id="TwH-4a-bdE"/>
-                <outlet property="statusLabel" destination="jdc-mg-TfR" id="2sD-1O-V4c"/>
-                <outlet property="statusView" destination="lhu-qp-SEB" id="nDg-U6-4Qt"/>
+                <outlet property="authenticityImageView" destination="kVQ-6D-G7Y" id="nfe-Wk-IKR"/>
+                <outlet property="authenticityStackView" destination="4Hw-Jd-5cY" id="jj7-eN-KIv"/>
+                <outlet property="authenticityTextLabel" destination="D8R-uV-KvR" id="7bp-eD-j4M"/>
+                <outlet property="avatarImageView" destination="Vqw-IR-XQQ" id="ahC-kG-UA0"/>
+                <outlet property="avatarImageViewHeightConstraint" destination="e81-wZ-9AJ" id="qkg-Ts-7RU"/>
+                <outlet property="avatarImageViewWidthConstraint" destination="X6N-iR-s6W" id="rNE-gs-INb"/>
+                <outlet property="bottomConstraint" destination="gGZ-G2-ugN" id="OMr-WI-RQf"/>
+                <outlet property="chattingWithTextLabel" destination="vEg-5n-frR" id="E0f-ml-TcJ"/>
+                <outlet property="confidentialityImageView" destination="HBV-sm-C6k" id="u4K-en-8y5"/>
+                <outlet property="confidentialityStackView" destination="WRK-BT-6p5" id="BCG-OB-KmM"/>
+                <outlet property="confidentialityTextLabel" destination="RgP-Hy-EQi" id="bqK-Ia-79v"/>
+                <outlet property="descriptionLabel" destination="4jm-ZU-QM8" id="hlI-x1-CD7"/>
+                <outlet property="mainLeadingDistance" destination="Hcr-Am-odP" id="YRi-Ka-sLM"/>
+                <outlet property="mainStackView" destination="u3n-yC-sGJ" id="6Jz-Q8-f8e"/>
+                <outlet property="mainTrailingDistance" destination="AC9-uS-gcd" id="LCu-km-CTt"/>
+                <outlet property="participantsInformationStackView" destination="0Dr-fh-Sdm" id="uzw-qz-zYF"/>
+                <outlet property="participantsLabel" destination="vV0-Cv-nam" id="uZM-9l-TcQ"/>
+                <outlet property="statusLabel" destination="5s0-Tv-WXQ" id="Hgr-Jh-pYZ"/>
+                <outlet property="statusView" destination="WyI-XQ-t4W" id="5Br-Fa-xJh"/>
+                <outlet property="topConstraint" destination="1EL-FX-l3O" id="Tw4-uo-KGM"/>
+                <outlet property="topStackView" destination="fKc-Pm-Ngf" id="sP5-AS-6Sh"/>
             </connections>
-            <point key="canvasLocation" x="-91.304347826086968" y="252.79017857142856"/>
+            <point key="canvasLocation" x="-829" y="12"/>
         </collectionReusableView>
     </objects>
     <resources>
         <image name="checkmark_welcomeMessage" width="32" height="32"/>
         <image name="lock_welcomeMessage" width="32" height="32"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

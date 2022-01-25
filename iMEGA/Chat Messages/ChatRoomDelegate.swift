@@ -609,11 +609,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             if let handle = whoIsTyping.keys.first,
                 let username = username(forHandle: handle) {
                 let typingIndicatorString = Strings.Localizable.isTyping(username)
-                let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10, weight: .medium)]
+                let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)]
                 let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
                                                                                 attributes: attributes)
                 typingIndicatorAttributedString.addAttribute(NSAttributedString.Key.font,
-                                                             value: UIFont.boldSystemFont(ofSize: 10),
+                                                             value: UIFont.preferredFont(style: .caption2, weight: .medium),
                                                              range: NSMakeRange(0, username.utf16.count))
                 chatViewController?.updateTypingIndicatorView(withAttributedString: typingIndicatorAttributedString)
             } else {
@@ -645,11 +645,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             }
 
             if let typingIndicatorString = localizedString {
-                let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10, weight: .medium)]
+                let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)]
                 let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
                                                                                 attributes: attributes)
                 typingIndicatorAttributedString.addAttribute(NSAttributedString.Key.font,
-                                                             value: UIFont.boldSystemFont(ofSize: 10),
+                                                             value: UIFont.preferredFont(style: .caption2, weight: .medium),
                                                              range: NSMakeRange(0, typingIndicatorString.utf16.count))
                 chatViewController?.updateTypingIndicatorView(withAttributedString: typingIndicatorAttributedString)
             }

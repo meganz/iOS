@@ -323,7 +323,8 @@ class ChatViewController: MessagesViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        guard traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else {
+        guard traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) ||
+                traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else {
             return
         }
         messagesCollectionView.reloadData()

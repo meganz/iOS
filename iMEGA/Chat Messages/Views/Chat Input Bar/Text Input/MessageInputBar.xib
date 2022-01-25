@@ -43,22 +43,30 @@
                             <rect key="frame" x="0.0" y="0.0" width="2" height="44"/>
                             <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="44" id="1iP-xc-QM9"/>
                                 <constraint firstAttribute="width" constant="2" id="4M8-HI-W3x"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Edit Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sr5-Fl-Hfv">
-                            <rect key="frame" x="8" y="0.0" width="271" height="27"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                            <color key="textColor" red="0.0" green="0.74901960779999999" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNa-lb-8TV">
-                            <rect key="frame" x="8" y="27" width="271" height="17"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="uPe-zU-cqa">
+                            <rect key="frame" x="8" y="0.0" width="80.5" height="39.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Edit Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sr5-Fl-Hfv" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="80.5" height="17"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                    <color key="textColor" red="0.0" green="0.74901960779999999" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption1"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="bold"/>
+                                    </userDefinedRuntimeAttributes>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNa-lb-8TV">
+                                    <rect key="frame" x="0.0" y="25" width="80.5" height="14.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="39e-wu-39j">
                             <rect key="frame" x="326" y="10" width="24" height="24"/>
                             <constraints>
@@ -72,18 +80,17 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="Sr5-Fl-Hfv" firstAttribute="top" secondItem="af9-4d-CYz" secondAttribute="top" id="02i-dM-sSh"/>
+                        <constraint firstItem="AoK-GV-GnL" firstAttribute="top" secondItem="af9-4d-CYz" secondAttribute="top" id="67Q-jL-kZz"/>
                         <constraint firstItem="39e-wu-39j" firstAttribute="centerY" secondItem="af9-4d-CYz" secondAttribute="centerY" id="8CV-tF-n0s"/>
                         <constraint firstItem="AoK-GV-GnL" firstAttribute="centerY" secondItem="af9-4d-CYz" secondAttribute="centerY" id="A24-nj-fUa"/>
-                        <constraint firstItem="TNa-lb-8TV" firstAttribute="leading" secondItem="af9-4d-CYz" secondAttribute="leading" constant="8" id="F8g-do-45s"/>
-                        <constraint firstAttribute="trailing" secondItem="TNa-lb-8TV" secondAttribute="trailing" constant="88" id="LLK-Im-VhZ"/>
-                        <constraint firstItem="TNa-lb-8TV" firstAttribute="top" secondItem="Sr5-Fl-Hfv" secondAttribute="bottom" id="MHg-yE-tr2"/>
-                        <constraint firstAttribute="trailing" secondItem="Sr5-Fl-Hfv" secondAttribute="trailing" constant="88" id="NRZ-Fw-utP"/>
+                        <constraint firstItem="uPe-zU-cqa" firstAttribute="top" secondItem="af9-4d-CYz" secondAttribute="top" id="Kcc-TM-s2S"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uPe-zU-cqa" secondAttribute="trailing" constant="88" id="M0c-PC-YIl"/>
                         <constraint firstAttribute="trailing" secondItem="39e-wu-39j" secondAttribute="trailing" constant="17" id="O7d-5n-kkb"/>
+                        <constraint firstAttribute="bottom" secondItem="AoK-GV-GnL" secondAttribute="bottom" id="OZt-ft-dKn"/>
+                        <constraint firstItem="uPe-zU-cqa" firstAttribute="leading" secondItem="af9-4d-CYz" secondAttribute="leading" constant="8" id="Ri9-gN-ihS"/>
                         <constraint firstAttribute="height" constant="44" id="h2v-Gs-qWV"/>
                         <constraint firstItem="AoK-GV-GnL" firstAttribute="leading" secondItem="af9-4d-CYz" secondAttribute="leading" id="iRO-ap-gt5"/>
-                        <constraint firstItem="Sr5-Fl-Hfv" firstAttribute="leading" secondItem="af9-4d-CYz" secondAttribute="leading" constant="8" id="igt-5C-CKn"/>
-                        <constraint firstAttribute="bottom" secondItem="TNa-lb-8TV" secondAttribute="bottom" id="kew-eJ-1Zd"/>
+                        <constraint firstAttribute="bottom" secondItem="uPe-zU-cqa" secondAttribute="bottom" constant="4.5" id="lDi-Bd-xB2"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APV-vT-gYp">
@@ -150,18 +157,18 @@
                         <action selector="addButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Lfx-4M-4NB"/>
                     </connections>
                 </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ul9-iZ-5KV" customClass="MessageTextView" customModule="MEGA" customModuleProvider="target">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ul9-iZ-5KV" customClass="MessageTextView" customModule="MEGA" customModuleProvider="target">
                     <rect key="frame" x="62" y="82" width="274" height="148"/>
                     <color key="textColor" systemColor="labelColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <connections>
                         <outlet property="delegate" destination="iN0-l3-epB" id="QEN-W9-JLZ"/>
                     </connections>
                 </textView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mz-bo-tiI">
-                    <rect key="frame" x="17" y="6" width="380" height="12"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mz-bo-tiI">
+                    <rect key="frame" x="17" y="6" width="380" height="13.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                     <color key="textColor" red="0.51764705882352935" green="0.51764705882352935" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -181,6 +188,7 @@
                 <constraint firstItem="APV-vT-gYp" firstAttribute="leading" secondItem="af9-4d-CYz" secondAttribute="trailing" constant="-49.5" id="CF8-bS-Qlp"/>
                 <constraint firstItem="vXN-Gp-R34" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="EA7-CE-8BL"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="leading" secondItem="ul9-iZ-5KV" secondAttribute="trailing" constant="13" id="JjR-d1-KwI"/>
+                <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="8mz-bo-tiI" secondAttribute="bottom" constant="9.5" id="LNR-C0-ATf"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="trailing" secondItem="zpz-gS-Gkz" secondAttribute="trailing" id="OxB-4H-ddg"/>
                 <constraint firstItem="gyg-48-psi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Q33-kC-Y9H"/>
                 <constraint firstAttribute="trailing" secondItem="gyg-48-psi" secondAttribute="trailing" id="TjQ-Wj-1H6"/>
@@ -217,6 +225,7 @@
                 <outlet property="backgroundViewTrailingTextViewConstraint" destination="q8V-yt-DgD" id="IAU-5w-26A"/>
                 <outlet property="collapsedTextViewCoverView" destination="vXN-Gp-R34" id="wUf-Ru-xqw"/>
                 <outlet property="editMessageLabel" destination="TNa-lb-8TV" id="MN5-EU-Cxe"/>
+                <outlet property="editMessageTitleLabel" destination="Sr5-Fl-Hfv" id="7ez-sh-gdZ"/>
                 <outlet property="editView" destination="af9-4d-CYz" id="pnw-qh-wtd"/>
                 <outlet property="editViewHeightConstraint" destination="h2v-Gs-qWV" id="t09-Uy-CZf"/>
                 <outlet property="editViewTopConstraint" destination="2kO-jl-6zu" id="wB5-0B-l82"/>
@@ -239,6 +248,11 @@
             <point key="canvasLocation" x="-749.27536231884062" y="53.236607142857139"/>
         </view>
     </objects>
+    <designables>
+        <designable name="Sr5-Fl-Hfv">
+            <size key="intrinsicContentSize" width="80.5" height="14.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="add" width="28" height="28"/>
         <image name="clearEdit" width="24" height="24"/>

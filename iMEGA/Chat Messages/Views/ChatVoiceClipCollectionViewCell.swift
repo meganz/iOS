@@ -1,6 +1,13 @@
 import MessageKit
+import CoreGraphics
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
+    struct Dimensions {
+        static var waveViewSize = CGSize(width: 42, height: 25)
+        static var playButtonSize = CGSize(width: 15, height: 15)
+        static var itemSpacing: CGFloat = 10
+        static var containerDefaultHeight: CGFloat = 40
+    }
     
     var currentNode: MEGANode?
     weak var messagesCollectionView: MessagesCollectionView?
@@ -8,7 +15,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     open var waveView: UIImageView = {
         let waveView = UIImageView(image: Asset.Images.Chat.Wave.waveform0000.image)
         waveView.animationDuration = 1
-        waveView.frame = CGRect(x: 0, y: 0, width: 42, height: 25)
+        waveView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: Dimensions.waveViewSize)
         return waveView
     }()
     
@@ -30,16 +37,16 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     }
     
     override func setupConstraints() {
-        playButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        playButton.autoPinEdge(toSuperviewEdge: .leading, withInset: Dimensions.itemSpacing)
         playButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        playButton.autoSetDimensions(to: CGSize(width: 15, height: 15))
-        durationLabel.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 10)
-        durationLabel.autoPinEdge(.trailing, to: .leading, of: waveView, withOffset: 10)
+        playButton.autoSetDimensions(to: Dimensions.playButtonSize)
+        durationLabel.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: Dimensions.itemSpacing)
+        durationLabel.autoPinEdge(.trailing, to: .leading, of: waveView, withOffset: Dimensions.itemSpacing)
         durationLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        waveView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        waveView.autoPinEdge(toSuperviewEdge: .trailing, withInset: Dimensions.itemSpacing)
         waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        waveView.autoSetDimensions(to: CGSize(width: 42, height: 25))
+        waveView.autoSetDimensions(to: Dimensions.waveViewSize)
 
         loadingIndicator.autoPinEdge(.left, to: .left, of: playButton)
         loadingIndicator.autoPinEdge(.right, to: .right, of: playButton)
@@ -55,7 +62,8 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         playButton.setImage(Asset.Images.Chat.Messages.pauseVoiceClip.image.withRenderingMode(.alwaysTemplate), for: .selected)
         progressView.isHidden = true
         durationLabel.textAlignment = .left
-        durationLabel.font = UIFont.systemFont(ofSize: 15)
+        durationLabel.font = .preferredFont(forTextStyle: .subheadline)
+        durationLabel.adjustsFontForContentSizeCategory = true
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -133,19 +141,45 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         loadingIndicator.isHidden = true
         playButton.isHidden = false
     }
-    
 }
 
 open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
+    
+    
+    lazy var calculateDurationLabel: UILabel = {
+        let titleLabel = UILabel()
+        return titleLabel
+    }()
+    
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         configureAccessoryView()
         outgoingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
         incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets:  UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 0))
-
     }
     
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        return CGSize(width: 140, height: 40)
+        let fitSize = CGSize(width: messageContainerMaxWidth(for: message), height: .greatestFiniteMagnitude)
+        return calculateDynamicSize(for: message, fitSize: fitSize)
+    }
+    
+    private func calculateDynamicSize(for message: MessageType, fitSize: CGSize) -> CGSize {
+        calculateDurationLabel.textAlignment = .left
+        calculateDurationLabel.font = .preferredFont(forTextStyle: .subheadline)
+        calculateDurationLabel.text = "00:00"
+        
+        let durationLabelSize = calculateDurationLabel.sizeThatFits(fitSize)
+        
+        return CGSize(width:
+                        ChatVoiceClipCollectionViewCell.Dimensions.itemSpacing
+                      + ChatVoiceClipCollectionViewCell.Dimensions.playButtonSize.width
+                      + ChatVoiceClipCollectionViewCell.Dimensions.itemSpacing
+                      + durationLabelSize.width
+                      + ChatVoiceClipCollectionViewCell.Dimensions.itemSpacing
+                      + ChatVoiceClipCollectionViewCell.Dimensions.waveViewSize.width
+                      + ChatVoiceClipCollectionViewCell.Dimensions.itemSpacing,
+                      height:
+                        max(ChatVoiceClipCollectionViewCell.Dimensions.containerDefaultHeight,
+                            durationLabelSize.height))
     }
 }

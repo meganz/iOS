@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="SF-UI-Text-Medium.otf">
             <string>SFUIText-Medium</string>
-        </array>
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
         </array>
     </customFonts>
     <objects>
@@ -25,7 +23,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhR-kb-0LM">
                     <rect key="frame" x="0.0" y="0.0" width="277" height="104"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="goh-cu-3NH">
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="goh-cu-3NH">
                             <rect key="frame" x="0.0" y="0.0" width="277" height="104"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XNx-RR-LHH">
@@ -47,10 +45,10 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="3sq-Mn-ae8" secondAttribute="trailing" constant="6" id="bHl-T3-3rE"/>
-                                        <constraint firstAttribute="bottom" secondItem="3sq-Mn-ae8" secondAttribute="bottom" constant="10" id="gpF-FB-z6z"/>
+                                        <constraint firstItem="3sq-Mn-ae8" firstAttribute="centerY" secondItem="XNx-RR-LHH" secondAttribute="centerY" id="bbh-ZS-h70"/>
                                         <constraint firstAttribute="width" constant="100" id="ia2-Lj-aG4"/>
                                         <constraint firstItem="3sq-Mn-ae8" firstAttribute="leading" secondItem="XNx-RR-LHH" secondAttribute="leading" constant="10" id="j4c-TM-y1Y"/>
-                                        <constraint firstItem="3sq-Mn-ae8" firstAttribute="top" secondItem="XNx-RR-LHH" secondAttribute="top" constant="10" id="o1o-uF-OKS"/>
+                                        <constraint firstItem="3sq-Mn-ae8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="XNx-RR-LHH" secondAttribute="top" constant="10" id="o1o-uF-OKS"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -62,31 +60,31 @@
                                     <rect key="frame" x="100" y="0.0" width="177" height="104"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cWP-N2-J8c">
-                                            <rect key="frame" x="10" y="12" width="157" height="82"/>
+                                            <rect key="frame" x="10" y="10" width="157" height="84"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ba-m6-v2I">
-                                                    <rect key="frame" x="0.0" y="0.0" width="157" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="abn-Qf-frX"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ba-m6-v2I" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="157" height="0.5"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtb-ZB-02Z">
-                                                    <rect key="frame" x="0.0" y="28" width="157" height="30"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtb-ZB-02Z">
+                                                    <rect key="frame" x="0.0" y="10.5" width="157" height="13.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="CoJ-nJ-R4t">
-                                                    <rect key="frame" x="0.0" y="68" width="157" height="14"/>
+                                                    <rect key="frame" x="0.0" y="34" width="157" height="50"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="foO-yz-LOi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="14" height="14"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foO-yz-LOi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="14" id="XGz-H7-ceH"/>
-                                                                <constraint firstAttribute="height" constant="14" id="aBT-f2-Cfv"/>
+                                                                <constraint firstAttribute="width" secondItem="foO-yz-LOi" secondAttribute="height" multiplier="1:1" id="fLg-Rr-mnz"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -94,20 +92,14 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNr-FJ-HZg">
-                                                            <rect key="frame" x="20" y="0.0" width="137" height="14"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="14" id="uI1-87-doK"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="754" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNr-FJ-HZg">
+                                                            <rect key="frame" x="56" y="0.0" width="101" height="50"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="14" id="lRw-RV-7Zq"/>
-                                                    </constraints>
                                                 </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -116,7 +108,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="cWP-N2-J8c" secondAttribute="trailing" constant="10" id="6IN-Yf-deG"/>
-                                        <constraint firstItem="cWP-N2-J8c" firstAttribute="top" secondItem="tIu-0X-OOv" secondAttribute="top" constant="12" id="DBa-PH-AGp"/>
+                                        <constraint firstItem="cWP-N2-J8c" firstAttribute="top" secondItem="tIu-0X-OOv" secondAttribute="top" constant="10" id="DBa-PH-AGp"/>
                                         <constraint firstItem="cWP-N2-J8c" firstAttribute="leading" secondItem="tIu-0X-OOv" secondAttribute="leading" constant="10" id="J4S-gS-Xv8"/>
                                         <constraint firstAttribute="bottom" secondItem="cWP-N2-J8c" secondAttribute="bottom" constant="10" id="tfL-dC-Kgo"/>
                                     </constraints>
@@ -137,7 +129,6 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="goh-cu-3NH" secondAttribute="bottom" id="A8f-DG-7sZ"/>
-                        <constraint firstAttribute="height" constant="104" id="Ewn-T3-WYg"/>
                         <constraint firstAttribute="trailing" secondItem="goh-cu-3NH" secondAttribute="trailing" id="Qfi-Is-brj"/>
                         <constraint firstItem="goh-cu-3NH" firstAttribute="top" secondItem="MhR-kb-0LM" secondAttribute="top" id="YQD-UI-ks8"/>
                         <constraint firstItem="goh-cu-3NH" firstAttribute="leading" secondItem="MhR-kb-0LM" secondAttribute="leading" id="dd8-sn-9S4"/>
@@ -149,7 +140,8 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="MhR-kb-0LM" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Th4-NB-YOf"/>
                 <constraint firstItem="MhR-kb-0LM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="YHw-Q7-eGi"/>
@@ -157,7 +149,6 @@
                 <constraint firstItem="MhR-kb-0LM" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="owi-Vi-Ccb"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="descriptionLabel" destination="wtb-ZB-02Z" id="WeC-8A-F0S"/>
                 <outlet property="iconImageView" destination="foO-yz-LOi" id="r8P-mR-6en"/>
@@ -169,4 +160,14 @@
             <point key="canvasLocation" x="101.59999999999999" y="57.571214392803604"/>
         </view>
     </objects>
+    <designables>
+        <designable name="0ba-m6-v2I">
+            <size key="intrinsicContentSize" width="28.5" height="17.5"/>
+        </designable>
+    </designables>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

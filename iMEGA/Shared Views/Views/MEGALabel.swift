@@ -31,4 +31,10 @@ final class MEGALabel: UILabel, DynamicTypeComponentProtocol {
         guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
         font = Font(style: textStyle, weight: weight).value
     }
+    
+    func apply(style: Font.TextStyle, weight: Font.Weight = .regular) {
+        self.textStyle = style.rawValue
+        self.weight = weight.rawValue
+        font = Font(style: style, weight: weight).value
+    }
 }

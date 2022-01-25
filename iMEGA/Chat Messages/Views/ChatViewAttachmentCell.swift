@@ -1,53 +1,61 @@
 import MessageKit
 
 class ChatViewAttachmentCell: MessageContentCell {
+    
+    private let imageWidth: CGFloat = 40.0
+    private let defaultSpacing: CGFloat = 10.0
 
-    open var imageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    public lazy var imageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: imageWidth, height: imageWidth))
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
-    public lazy var titleLabel: UILabel = {
-        let titleLabel = UILabel(frame: CGRect.zero)
-        titleLabel.font = .systemFont(ofSize: 14, weight: .medium)
+    public lazy var titleLabel: MEGALabel = {
+        let titleLabel = MEGALabel(frame: .zero)
+        titleLabel.apply(style: .footnote, weight: .medium)
         titleLabel.textColor = UIColor.mnz_label()
         titleLabel.lineBreakMode = .byTruncatingMiddle
         return titleLabel
     }()
 
-    public lazy var detailLabel: UILabel = {
-        let detailLabel = UILabel(frame: CGRect.zero)
-        detailLabel.font = .systemFont(ofSize: 12)
+    public lazy var detailLabel: MEGALabel = {
+        let detailLabel = MEGALabel(frame: .zero)
+        detailLabel.apply(style: .caption1)
         detailLabel.textColor = UIColor.mnz_subtitles(for: UIScreen.main.traitCollection)
         detailLabel.lineBreakMode = .byTruncatingMiddle
         return detailLabel
+    }()
+    
+    public lazy var labelsStackView: UIStackView = {
+        let labelsStackView = UIStackView()
+        labelsStackView.axis = .vertical
+        labelsStackView.distribution  = .fill
+        labelsStackView.alignment = .fill
+        labelsStackView.spacing = 3.0
+        return labelsStackView
     }()
 
     // MARK: - Methods
 
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
-        imageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
+        imageView.autoSetDimensions(to: CGSize(width: imageWidth, height: imageWidth))
         imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-
-        titleLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
-        titleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        titleLabel.autoSetDimension(.height, toSize: 18)
-        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: messageContainerView, withOffset: -8)
-
-        detailLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
-        detailLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        detailLabel.autoSetDimension(.height, toSize: 18)
-        detailLabel.autoAlignAxis(.horizontal, toSameAxisOf: messageContainerView, withOffset: 8)
+        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultSpacing)
+        
+        labelsStackView.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: defaultSpacing)
+        labelsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultSpacing)
+        labelsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: defaultSpacing)
+        labelsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: defaultSpacing)
     }
 
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(imageView)
-        messageContainerView.addSubview(titleLabel)
-        messageContainerView.addSubview(detailLabel)
+        labelsStackView.addArrangedSubview(titleLabel)
+        labelsStackView.addArrangedSubview(detailLabel)
+        messageContainerView.addSubview(labelsStackView)
         setupConstraints()
     }
     
@@ -84,8 +92,19 @@ class ChatViewAttachmentCell: MessageContentCell {
         titleLabel.sizeToFit()
         detailLabel.sizeToFit()
         
-        let width = 75 + max(titleLabel.bounds.width, detailLabel.bounds.width)
-        return CGSize(width: width, height: 60)
+        let width = defaultSpacing
+            + imageWidth
+            + defaultSpacing
+            + max(titleLabel.bounds.width, detailLabel.bounds.width)
+            + defaultSpacing
+        
+        let height = defaultSpacing
+            + titleLabel.bounds.height
+            + labelsStackView.spacing
+            + detailLabel.bounds.height
+            + defaultSpacing
+        
+        return CGSize(width: width, height: height)
     }
 }
 
