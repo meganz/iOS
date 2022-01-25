@@ -1,7 +1,7 @@
 
 def injectEnvironments(Closure body) {
     withEnv([
-        "PATH=/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
+        "PATH=~/.rbenv/shims:~/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
         "LC_ALL=en_US.UTF-8",
         "LANG=en_US.UTF-8"
     ]) {
@@ -10,7 +10,7 @@ def injectEnvironments(Closure body) {
 }
 
 pipeline {
-    agent { label 'mac-slave' }
+    agent { label 'mac-jenkins-slave' }
     options {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
@@ -100,7 +100,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Run unit test') {
                     injectEnvironments({
-                        sh "arch -x86_64 bundle exec fastlane tests"
+                        sh "bundle exec fastlane tests"
                     })
                 }
             }
