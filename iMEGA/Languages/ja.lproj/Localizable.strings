@@ -84,6 +84,8 @@
 "login"="ログイン";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="アカウント作成";
+/* Button title which triggers the action to join meeting as Guest */
+"general.joinMeetingAsGuest"="ゲストとしてミーティングに参加";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="メールアドレスまたはパスワードが無効です。もう一度お試しください";
 /* Error message when to many attempts to login */
@@ -2696,6 +2698,8 @@
 "meetings.alert.end.description"="参加しようとしているミーティングはすでに終了しています。ミーティングのチャット履歴は引き続き見ることができます。";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="参加者を招待";
+/* Meetings: Floating panel share link option */
+"meetings.panel.shareLink"="リンクの共有";
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="参加者 (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */

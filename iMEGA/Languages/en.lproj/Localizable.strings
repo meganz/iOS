@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Attention";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Please give MEGA app permission to access your Camera in your Settings";
+"cameraPermissions"="Please give the MEGA App permission to access your Camera in your Settings";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Please give the MEGA App permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
+"photoLibraryPermissions"="Please give the MEGA App permission to access your photo library in Settings";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Your account has been activated. Please log in.";
 /*  */
@@ -1693,7 +1693,7 @@
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Save in Photos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA App in your device’s media library.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Spotlight Search";
 /* Title of the Spotlight Search section */
@@ -1721,7 +1721,7 @@
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA App may not work as expected without the required permissions. Are you sure?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 of %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
@@ -2505,7 +2505,7 @@
 /* Text title for shortcuts, ie in the widget */
 "Shortcuts"="Shortcuts";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Launch the MEGA app to perform an action";
+"Launch the MEGA app to perform an action"="Launch the MEGA App to perform an action";
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
@@ -2739,7 +2739,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="You are the new call moderator";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.";
+"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Speaker";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */

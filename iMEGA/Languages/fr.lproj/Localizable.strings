@@ -84,6 +84,8 @@
 "login"="Connexion";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Créer un compte";
+/* Button title which triggers the action to join meeting as Guest */
+"general.joinMeetingAsGuest"="Me joindre à une réunion en tant qu’invité";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="L’adresse courriel ou le mot de passe est invalide. Veuillez réessayer";
 /* Error message when to many attempts to login */
@@ -2085,9 +2087,9 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Immédiatement";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="Ce fichier a été l’objet d’un avis de retrait.";
+"This file has been the subject of a takedown notice."="Ce fichier a fait l’objet d’un avis de retrait.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="Ce dossier a été l’objet d’un avis de retrait.";
+"This folder has been the subject of a takedown notice."="Ce dossier a fait l’objet d’un avis de retrait.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contester le retrait";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
@@ -2696,6 +2698,8 @@
 "meetings.alert.end.description"="La réunion à laquelle vous tentez de vous rejoindre est déjà terminée. Vous pouvez quand même visualiser l'historique de la conversation de la réunion.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Inviter des participants";
+/* Meetings: Floating panel share link option */
+"meetings.panel.shareLink"="Partager le lien";
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */

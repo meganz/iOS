@@ -84,6 +84,8 @@
 "login"="Entrar";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Criar conta";
+/* Button title which triggers the action to join meeting as Guest */
+"general.joinMeetingAsGuest"="Entrar em uma reunião como convidado";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Email e/ou senha inválidos. Por favor, tente novamente.";
 /* Error message when to many attempts to login */
@@ -2696,6 +2698,8 @@
 "meetings.alert.end.description"="A reunião na qual você está tentando entrar já terminou. Você ainda pode ver o histórico do chat da reunião.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Convidar participantes";
+/* Meetings: Floating panel share link option */
+"meetings.panel.shareLink"="Compartilhar link";
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Participantes (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -2755,19 +2759,19 @@
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError.endAndJoin"="Finalizar e participar";
 /* File extensions: .3dm and .3gp. Commercial names should be stay on English */
-"general.filetype.3DModel"="3D Model";
+"general.filetype.3DModel"="Modelo 3D";
 /* File extension: .3ds. Commercial names should be stay on English */
-"general.filetype.3ds"="3D Scene";
+"general.filetype.3ds"="Cenas 3D";
 /* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
 "general.filetype.rawImage"="Imagem RAW";
 /* File extension: .3g2. Commercial names should be stay on English */
-"general.filetype.3g2"="Multimedia";
+"general.filetype.3g2"="Multimídia";
 /* File extension: .7z. Commercial names should be stay on English */
 "general.filetype.7z"="Arquivo comprimido 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Base de dados";
 /* File extension: .aif and .aiff. Is not a commercial name, but a standard */
-"general.filetype.audioInterchange"="Audio Interchange";
+"general.filetype.audioInterchange"="Interchange Áudio";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="Arquivo de texto ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2777,7 +2781,7 @@
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="Texto ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
-"general.filetype.asf"="Streaming Video";
+"general.filetype.asf"="Streaming de Vídeo";
 /* File extension: .asx. Is not a commercial name, but a file format name. */
 "general.filetype.asx"="Advanced Stream";
 /* File extension: .avi. Name of a multimedia container format */
@@ -2787,7 +2791,7 @@
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Imagem Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
-"general.filetype.bmp"="Bitmap Image";
+"general.filetype.bmp"="Imagem Bitmap";
 /* File extension: .bz2. Commercial names should be stay on English */
 "general.filetype.bz2"="UNIX Compressed";
 /* File extension: .c. Commercial names should be stay on English */
@@ -2795,7 +2799,7 @@
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
 "general.filetype.cpp"="Código fonte C++";
 /* File extension. Commercial names should be stay on English */
-"general.filetype.cdr"="CorelDRAW Image";
+"general.filetype.cdr"="Imagem CorelDRAW";
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
 "general.filetype.cgi"="CGI Script";
 /* File extension: .class. Commercial names should be stay on English */
@@ -2805,33 +2809,33 @@
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
-"general.filetype.dhtml"="Dynamic HTML";
+"general.filetype.dhtml"="HTML dinâmico";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
-"general.filetype.dll"="Dynamic Link Library";
+"general.filetype.dll"="Biblioteca de Links Dinâmicos";
 /* File extension: .dotx. Commercial names should be stay on English */
-"general.filetype.wordTemplate"="MS Word Template";
+"general.filetype.wordTemplate"="Modelo MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
-"general.filetype.dxf"="DXF Image";
+"general.filetype.dxf"="Imagem DXF";
 /* File extension: .eps. Commercial names should be stay on English */
-"general.filetype.eps"="EPS Image";
+"general.filetype.eps"="Imagem EPS";
 /* File extension: .exe. Commercial names should be stay on English */
 "general.filetype.exe"="Executável";
 /* File extension: .flac. Commercial names should be stay on English */
 "general.filetype.flac"="Lossless Audio";
 /* File extension: .flv. Commercial names should be stay on English */
-"general.filetype.flv"="Flash Video";
+"general.filetype.flv"="Vídeo Flash";
 /* File extension: .fnt. Commercial names should be stay on English */
-"general.filetype.fnt"="Windows Font";
+"general.filetype.fnt"="Fonte do Windows";
 /* File extension: .fon. Commercial names should be stay on English */
 "general.filetype.fon"="Fonte";
 /* File extension: .gadget. Commercial names should be stay on English */
-"general.filetype.gadget"="Windows Gadget";
+"general.filetype.gadget"="Gadget do Windows";
 /* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="Imagem GIF";
 /* File extension: .gpx. Commercial names should be stay on English */
 "general.filetype.gpx"="GPS Exchange";
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
-"general.filetype.spreadsheet"="Spreadsheet";
+"general.filetype.spreadsheet"="Planilha";
 /* File extension: .gz. Commercial names should be stay on English */
 "general.filetype.gz"="GNU Compressed";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
@@ -2867,13 +2871,13 @@
 /* File extension: .mp3. Commercial names should be stay on English */
 "general.filetype.mp3"="Áudio MP3";
 /* File extension: .mp4. Commercial names should be stay on English */
-"general.filetype.mp4"="MP4 Video";
+"general.filetype.mp4"="Vídeo MP4";
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
 "general.filetype.mpeg"="MPEG Movie";
 /* File extension: .msi. Commercial names should be stay on English */
-"general.filetype.msi"="MS Installer";
+"general.filetype.msi"="Instalador MS";
 /* File extensions: .txt and .odt. Commercial names should be stay on English */
-"general.filetype.textDocument"="Text Document";
+"general.filetype.textDocument"="Documento de texto";
 /* File extension: .otf. Commercial names should be stay on English */
 "general.filetype.otf"="Fonte OpenType";
 /* File extension: .pages. Commercial names should be stay on English */
@@ -2901,7 +2905,7 @@
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
 "general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
-"general.filetype.shtml"="Server HTML";
+"general.filetype.shtml"="Servidor HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Compressed";
 /* File extension: .sql. Commercial names should be stay on English */
@@ -2919,11 +2923,11 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa Graphic";
+"general.filetype.tga"="Gráfico Targa";
 /* File extension: .tif. Commercial names should be stay on English */
-"general.filetype.tif"="TIF Image";
+"general.filetype.tif"="Imagem TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
-"general.filetype.tiff"="TIFF Image";
+"general.filetype.tiff"="Imagem TIFF";
 /* File extension: .ttf. Commercial names should be stay on English */
 "general.filetype.ttf"="Fonte TrueType";
 /* File extension: .wav. Commercial names should be stay on English */
@@ -2931,9 +2935,9 @@
 /* File extension: .webm. Commercial names should be stay on English */
 "general.filetype.webm"="Vídeo WebM";
 /* File extension: .wma. Commercial names should be stay on English */
-"general.filetype.wma"="WM Audio";
+"general.filetype.wma"="Áudio WM";
 /* File extension: .wmv. Commercial names should be stay on English */
-"general.filetype.wmv"="WM Video";
+"general.filetype.wmv"="Vídeo WM";
 /* File extension: .xml. Commercial names should be stay on English */
 "general.filetype.xml"="Documento XML";
 /* File extension: .zip. Commercial names should be stay on English */
