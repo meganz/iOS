@@ -84,6 +84,8 @@
 "login"="Iniciar sesión";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Crear Cuenta";
+/* Button title which triggers the action to join meeting as Guest */
+"general.joinMeetingAsGuest"="Únete como invitado";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Correo electrónico y/o contraseña no válidos. Por favor, inténtalo de nuevo";
 /* Error message when to many attempts to login */
@@ -259,9 +261,9 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 carpeta • %d archivos";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
+"cloudDrive.root.backup.folder.device.subtitle"="%@ dispositivo";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ dispositivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cola";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -641,7 +643,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotos";
 /* Photo view is empty */
-"photo.empty.title"="No Photos Found";
+"photo.empty.title"="No se han encontrado fotos";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Papelera";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -1381,7 +1383,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MENSAJES NO LEÍDOS";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then tap View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente. Puedes desactivar la renovación automática de la suscripción a MEGA Pro en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada. Para gestionar tu suscripción, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si aún no lo has hecho) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las suscripciones que has contratado. Desde aquí, puedes seleccionar la suscripción a MEGA Pro y ver cuando se renovará, cambiar el tipo de suscripción o desactivar la opción de renovación automática para luego cancelar tu suscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abre MEGA e inicia sesión para continuar";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2519,7 +2521,7 @@
 /* Image title for the photo explorer */
 "home.images.title"="Imágenes";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="No Images Found";
+"home.images.empty"="No se han encontrado imágenes";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Inicio";
 /* Home Screen: Explorer view card title - Documents */
@@ -2696,6 +2698,8 @@
 "meetings.alert.end.description"="La reunión a la que intentas unirte ya ha finalizado. Aún puedes ver el historial de chat de la reunión.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Añadir participantes";
+/* Meetings: Floating panel share link option */
+"meetings.panel.shareLink"="Compartir enlace";
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Participantes (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */

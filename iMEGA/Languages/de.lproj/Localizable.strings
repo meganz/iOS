@@ -84,6 +84,8 @@
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Account erstellen";
+/* Button title which triggers the action to join meeting as Guest */
+"general.joinMeetingAsGuest"="Als Gast beitreten";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ungültige E-Mail-Adresse und/oder Passwort. Bitte versuchen Sie es noch einmal.";
 /* Error message when to many attempts to login */
@@ -1821,11 +1823,11 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ hat Schlüsselrotation aktiviert.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ hat einen Chatlink erstellt.";
+"%@ created a public link for the chat."="%@ hat einen Chatlink erstellt";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ hat den Chatlink gelöscht";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ hat den Chat betreten.";
+"%@ joined the group chat."="%@ ist dem Gruppenchat beigetreten.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Diese Konferenz hat die maximale Teilnehmerzahl erreicht. Sie können derzeit nicht teilnehmen.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -2696,6 +2698,8 @@
 "meetings.alert.end.description"="Das Meeting, dem Sie beitreten möchten, ist bereits beendet. Sie können den Chatverlauf des Meetings noch einsehen.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Teilnehmer einladen";
+/* Meetings: Floating panel share link option */
+"meetings.panel.shareLink"="Link teilen";
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Teilnehmer (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
