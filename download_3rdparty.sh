@@ -11,7 +11,7 @@ fi
 file="EYECGBDQ"
 key="2iFuoLVTqzXA2ARoNJr3tgM0eAlXoT_ce0skKycEF98"
 fileUrl="https://mega.nz/#!${file}!${key}"
-filePath="./download_3rdparty/${file}"
+filePath="./../download_3rdparty/${file}"
 
 mkdir -p $filePath
 echo "downloading the 3rd party libraries"
