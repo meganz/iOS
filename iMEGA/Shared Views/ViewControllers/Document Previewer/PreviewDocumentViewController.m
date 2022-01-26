@@ -319,7 +319,15 @@
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self isLink:self.isLink isPageView:self.collectionView.hidden sender:sender];
+    DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : DisplayModePreviewDocument;
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc
+                                             initWithNode:self.node
+                                             delegate:self
+                                             isLink:self.isLink
+                                             isPageView:self.collectionView.hidden
+                                             displayMode:displayMode
+                                             isInVersionsView:[self isPreviewingVersion]
+                                             sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
@@ -337,6 +345,16 @@
     [self dismissViewControllerAnimated:YES completion:^{
         [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
     }];
+}
+
+- (BOOL)isPreviewingVersion {
+    if ([[self.navigationController presentingViewController] isKindOfClass:[MEGANavigationController class]]) {
+        NSArray<UIViewController *>*viewcontrollers = [[self.navigationController presentingViewController] childViewControllers];
+        if ([viewcontrollers.lastObject isKindOfClass:[NodeVersionsViewController class]]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 #pragma mark - QLPreviewControllerDataSource
@@ -473,6 +491,17 @@
         case MegaNodeActionTypeSearch:
             [self searchTapped:nil];
             break;
+        
+        case MegaNodeActionTypeRestore:
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [node mnz_restore];
+            break;
+            
+        case MegaNodeActionTypeRemove:
+            [node mnz_removeInViewController:self];
+            
+        case MegaNodeActionTypeViewVersions:
+            [node mnz_showNodeVersionsInViewController:self];
             
         default:
             break;

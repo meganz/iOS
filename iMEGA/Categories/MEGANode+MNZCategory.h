@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_sendToChatInViewController:(UIViewController *)viewController;
 - (void)mnz_moveInViewController:(UIViewController *)viewController;
 - (void)mnz_copyInViewController:(UIViewController *)viewController;
-- (void)mnz_showTextFileVersionsInViewController:(UIViewController *)viewController;
+- (void)mnz_showNodeVersionsInViewController:(UIViewController *)viewController;
 
 #pragma mark - File links
 
@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;
 - (BOOL)mnz_isPlayable;
+- (BOOL)mnz_isInRubbishBin;
 - (NSString *)mnz_voiceCachePath;
 - (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
 

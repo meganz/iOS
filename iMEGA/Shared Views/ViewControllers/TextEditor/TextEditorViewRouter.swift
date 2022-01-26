@@ -110,13 +110,15 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     
     func showActions(sender button: Any) {
         guard let nodeHandle = nodeHandle,
-              let nodeActionViewController = NodeActionViewController(
-                nodeHandle: nodeHandle,
-                delegate: self,
-                displayMode: .textEditor,
-                sender: button
-        ) else { return }
+              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+                  return
+              }
         
+        let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
+        let nodeActionViewController = NodeActionViewController(node: node,
+                                                                delegate: self,
+                                                                displayMode: displayMode,
+                                                                sender: button)
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
@@ -184,6 +186,26 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         baseViewController?.present(UIActivityViewController(forNodes: [node], sender: button), animated: true, completion: nil)
     }
     
+    func restoreTextFile(node: MEGANode) {
+        dismissTextEditorVC()
+        node.mnz_restore()
+    }
+
+    func viewInfo(node: MEGANode) {
+        let nodeInfoViewController = NodeInfoViewController.instantiate(withNode: node, delegate: nil)
+        baseViewController?.present(nodeInfoViewController, animated: true, completion: nil)
+    }
+
+    func viewVersions(node: MEGANode) {
+        guard let controller = baseViewController else { return }
+        node.mnz_showVersions(in: controller)
+    }
+
+    func removeTextFile(node: MEGANode) {
+        guard let controller = baseViewController else { return }
+        node.mnz_remove(in: controller)
+    }
+    
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         let nodeHandle: MEGAHandle = node.handle
         switch action {
@@ -192,8 +214,13 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         case .import: importNode(nodeHandle: nodeHandle)
         case .sendToChat: sendToChat(nodeHandle: nodeHandle)
         case .share: share(nodeHandle: nodeHandle, sender: sender)
+        case .restore: restoreTextFile(node: node)
+        case .info: viewInfo(node: node)
+        case .viewVersions: viewVersions(node: node)
+        case .remove: removeTextFile(node: node)
         default:
             break
         }
     }
 }
+

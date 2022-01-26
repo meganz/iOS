@@ -57,6 +57,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) MEGARecentActionBucket *recentActionBucket;
+@property (nonatomic) BOOL isNodeInRubbishBin;
 
 @property (nonatomic) NodeTableViewCellFlavor cellFlavor;
 

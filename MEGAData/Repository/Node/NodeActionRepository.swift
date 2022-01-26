@@ -52,4 +52,12 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
         
         return (MEGAStore.shareInstance().offlineNode(with: node) != nil)
     }
+    
+    func isInRubbishBin() -> Bool {
+        guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
+            return false
+        }
+        
+        return sdk.isNode(inRubbish: node)
+    }
 }

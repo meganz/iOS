@@ -103,14 +103,19 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     func showAction(for node: MEGANode, sender: Any) {
+        let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
         let nodeActionViewController = NodeActionViewController(
                 node: node,
                 delegate: self,
-                displayMode: .cloudDrive,
-                isIncoming: false,
+                displayMode: displayMode,
+                isInVersionsView: isPlayingFromVersionView(),
                 sender: sender)
         
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
+    }
+    
+    private func isPlayingFromVersionView() -> Bool {
+        return presenter?.isKind(of: NodeVersionsViewController.self) == true
     }
 }
 

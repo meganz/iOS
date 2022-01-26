@@ -8,6 +8,7 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     var filesAndFolders = (0, 0)
     var versions: Bool = false
     var downloaded: Bool = false
+    var inRubbishBin: Bool = false
     
     func nodeAccessLevel() -> NodeAccessTypeEntity {
         return nodeAccessLevelVariable
@@ -29,5 +30,9 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     
     func isDownloaded() -> Bool {
         downloaded
+    }
+    
+    func isInRubbishBin() -> Bool {
+        inRubbishBin
     }
 }

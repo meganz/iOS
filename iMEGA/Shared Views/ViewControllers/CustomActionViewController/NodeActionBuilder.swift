@@ -18,6 +18,7 @@ final class NodeActionBuilder {
     private var isOutShare: Bool = false
     private var isChildVersion: Bool = false
     private var isBackupFolder: Bool = false
+    private var isInVersionsView: Bool = false
     private var viewMode: ViewModePreference = .list
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
@@ -100,6 +101,11 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setIsInVersionsView(_ isInVersionsView: Bool) -> NodeActionBuilder {
+        self.isInVersionsView = isInVersionsView
+        return self
+    }
+
     func setIsBackupFolder(_ isBackupFolder: Bool) -> NodeActionBuilder {
         self.isBackupFolder = isBackupFolder
         return self
@@ -114,7 +120,7 @@ final class NodeActionBuilder {
         
         var nodeActions = [NodeAction]()
         
-        if isRestorable {
+        if shouldAddRestoreAction() {
             nodeActions.append(NodeAction.restoreAction())
         }
         
@@ -124,6 +130,13 @@ final class NodeActionBuilder {
     }
     
     // MARK:- Private methods
+    private func shouldAddRestoreAction() -> Bool {
+        guard isRestorable else {
+            return false
+        }
+        
+        return displayMode == .rubbishBin ? !isInVersionsView : true
+    }
     
     private func folderLinkNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = [
@@ -305,7 +318,7 @@ final class NodeActionBuilder {
     private func ownerAccessLevelNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
-        if displayMode == .cloudDrive || displayMode == .rubbishBin || displayMode == .nodeInfo || displayMode == .recents {
+        if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
             if isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
                 nodeActions.append(NodeAction.textEditorAction())
             }
@@ -317,27 +330,25 @@ final class NodeActionBuilder {
                 nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
                 nodeActions.append(NodeAction.labelAction(label: label))
             }
-            
-            if displayMode != .rubbishBin {
-                if isMediaFile {
-                    nodeActions.append(NodeAction.saveToPhotosAction())
-                }
-                nodeActions.append(NodeAction.downloadAction())
-                if isExported {
-                    nodeActions.append(NodeAction.manageLinkAction())
-                    nodeActions.append(NodeAction.removeLinkAction())
-                } else {
-                    nodeActions.append(NodeAction.getLinkAction())
-                }
-                if !isFile {
-                    if isOutShare {
-                        nodeActions.append(NodeAction.manageFolderAction())
-                    } else {
-                        nodeActions.append(NodeAction.shareFolderAction())
-                    }
-                }
-                nodeActions.append(NodeAction.shareAction())
+
+            if isMediaFile {
+                nodeActions.append(NodeAction.saveToPhotosAction())
             }
+            nodeActions.append(NodeAction.downloadAction())
+            if isExported {
+                nodeActions.append(NodeAction.manageLinkAction())
+                nodeActions.append(NodeAction.removeLinkAction())
+            } else {
+                nodeActions.append(NodeAction.getLinkAction())
+            }
+            if !isFile {
+                if isOutShare {
+                    nodeActions.append(NodeAction.manageFolderAction())
+                } else {
+                    nodeActions.append(NodeAction.shareFolderAction())
+                }
+            }
+            nodeActions.append(NodeAction.shareAction())
             if isFile {
                 nodeActions.append(NodeAction.sendToChatAction())
             }
@@ -373,6 +384,15 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.shareAction())
+        } else if displayMode == .rubbishBin {
+            nodeActions.append(NodeAction.infoAction())
+
+            if !isInVersionsView {
+                if versionCount > 0 {
+                    nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+                }
+                nodeActions.append(NodeAction.removeAction())
+            }
         } else {
             nodeActions.append(NodeAction.infoAction())
             if versionCount > 0 {
@@ -431,5 +451,4 @@ final class NodeActionBuilder {
             }
         }
     }
-    
 }

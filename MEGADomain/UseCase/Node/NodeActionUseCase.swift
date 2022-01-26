@@ -6,6 +6,7 @@ protocol NodeActionUseCaseProtocol {
     func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int)
     func hasVersions() -> Bool
     func isDownloaded() -> Bool
+    func isInRubbishBin() -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -38,5 +39,9 @@ struct NodeActionUseCase: NodeActionUseCaseProtocol {
     
     func isDownloaded() -> Bool {
         repo.isDownloaded()
+    }
+    
+    func isInRubbishBin() -> Bool {
+        repo.isInRubbishBin()
     }
 }

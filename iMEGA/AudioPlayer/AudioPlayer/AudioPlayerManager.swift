@@ -52,6 +52,14 @@ import Foundation
         return .none
     }
     
+    @objc func isPlayingNode(_ node: MEGANode) -> Bool {
+        guard let currentNode = player?.currentNode,
+                isPlayerAlive() else {
+            return false
+        }
+        return node == currentNode
+    }
+    
     func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
         if self.player != nil {
             CrashlyticsLogger.log("[AudioPlayer] current instance of the player \(String(describing: player)) need to be closed")

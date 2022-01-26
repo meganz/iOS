@@ -57,7 +57,7 @@ final class NodeActionViewControllerGenericDelegate:
             showNodeInfo(node)
             
         case .viewVersions:
-            node.mnz_showTextFileVersions(in: viewController)
+            node.mnz_showVersions(in: viewController)
 
         case .leaveSharing:
             node.mnz_leaveSharing(in: viewController)
@@ -75,6 +75,12 @@ final class NodeActionViewControllerGenericDelegate:
             node.mnz_moveToTheRubbishBin { }
         case .remove:
             node.mnz_remove(in: viewController)
+            guard node.mnz_isPlayable(),
+                  AudioPlayerManager.shared.isPlayerAlive(),
+                  AudioPlayerManager.shared.isPlayingNode(node) else {
+                      return
+                  }
+            AudioPlayerManager.shared.closePlayer()
         case .removeSharing:
             node.mnz_removeSharing()
         case .sendToChat:
@@ -108,6 +114,10 @@ final class NodeActionViewControllerGenericDelegate:
             }
         case .label:
             node.mnz_labelActionSheet(in: viewController)
+        
+        case .restore:
+            node.mnz_restore()
+            
         default:
             break
         }
@@ -133,7 +143,7 @@ final class NodeActionViewControllerGenericDelegate:
         guard let viewController = viewController else {
             return
         }
-        node.mnz_showTextFileVersions(in: viewController)
+        node.mnz_showVersions(in: viewController)
     }
     
     private func showBrowserViewController(node: MEGANode, action: BrowserAction) {
