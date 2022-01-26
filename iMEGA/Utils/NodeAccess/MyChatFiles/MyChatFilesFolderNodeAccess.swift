@@ -3,7 +3,7 @@ import Foundation
 final class MyChatFilesFolderNodeAccess: NodeAccess {
     @objc static let shared = MyChatFilesFolderNodeAccess(
         configuration: NodeAccessConfiguration(
-            autoCreate: { true },
+            autoCreate: { MyChatFilesFolderManager.shared.isMyChatFilesFolderCreationEnabled },
             updateInMemoryNotificationName: .MEGAMyChatFilesFolderUpdatedInMemory,
             updateInRemoteNotificationName: .MEGAMyChatFilesFolderUpdatedInRemote,
             loadNodeRequest: MEGASdkManager.sharedMEGASdk().getMyChatFilesFolder,

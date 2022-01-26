@@ -343,6 +343,7 @@ extension ChatViewController {
     }
     
     private func startUpload(assets: [PHAsset]) {
+        MyChatFilesFolderManager.shared.isMyChatFilesFolderCreationEnabled = true
         MyChatFilesFolderNodeAccess.shared.loadNode { [weak self] myChatFilesFolderNode, error in
             guard let myChatFilesFolderNode = myChatFilesFolderNode, let `self` = self else {
                 if let error = error {
@@ -473,6 +474,7 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedSendAudio(atPath path: String) {
+        MyChatFilesFolderManager.shared.isMyChatFilesFolderCreationEnabled = true
         MyChatFilesFolderNodeAccess.shared.loadNode { [weak self] myChatFilesFolderNode, error in
             guard let myChatFilesFolderNode = myChatFilesFolderNode, let `self` = self else {
                 if let error = error {
