@@ -34,7 +34,7 @@ protocol TextEditorViewRouting: Routing {
 
 final class TextEditorViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool)
+        case configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool)
         case setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel)
         case setupLoadViews
         case showDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel)
@@ -112,18 +112,18 @@ final class TextEditorViewModel: ViewModelType {
         case .share(sender: let button):
             router.share(nodeHandle: nodeHandle, sender: button)
         }
-        
     }
     
     //MARK: - Private functions
     private func setupView(shallUpdateContent:Bool) {
+        let isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin()
         if textEditorMode == .load {
             invokeCommand?(.setupLoadViews)
-            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false))
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin))
             invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
             downloadToTempFolder()
         } else {
-            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent))
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent, isInRubbishBin: isNodeInRubbishBin))
             invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
         }
         

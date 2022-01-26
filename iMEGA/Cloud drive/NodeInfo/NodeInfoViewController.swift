@@ -54,7 +54,6 @@ class NodeInfoViewController: UIViewController {
         nodeInfoVC.node = node
         nodeInfoVC.delegate = delegate
         nodeInfoVC.nodeVersions = node.mnz_versions()
-        
         return MEGANavigationController.init(rootViewController: nodeInfoVC)
     }
     
@@ -280,17 +279,19 @@ class NodeInfoViewController: UIViewController {
         var sections = [NodeInfoTableViewSection]()
         sections.append(.info)
         sections.append(.details)
-        if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
-            sections.append(.link)
-        }
 
-        if node.isFolder() && MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
-            sections.append(.sharing)
-            if pendingOutShares().count > 0 {
-                sections.append(.pendingSharing)
+        if !self.node.mnz_isInRubbishBin() {
+            if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+                sections.append(.link)
             }
-            if activeOutShares().count > 0 {
-                sections.append(.removeSharing)
+            if node.isFolder() && MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+                sections.append(.sharing)
+                if pendingOutShares().count > 0 {
+                    sections.append(.pendingSharing)
+                }
+                if activeOutShares().count > 0 {
+                    sections.append(.removeSharing)
+                }
             }
         }
         
@@ -343,7 +344,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node, folderInfo: folderInfo)
+        cell.configure(forNode: node, isNodeInRubbish: node.mnz_isInRubbishBin(), folderInfo: folderInfo)
         return cell
     }
     

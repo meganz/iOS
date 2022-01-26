@@ -53,8 +53,10 @@
     
     [self reloadUI];
     
-    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     self.navigationItem.leftBarButtonItems = @[self.closeBarButtonItem];
+    if (!self.node.mnz_isInRubbishBin) {
+        self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    }
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
 }
@@ -125,6 +127,7 @@
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorVersions;
+    cell.isNodeInRubbishBin = [node mnz_isInRubbishBin];
     [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
     
     if (self.tableView.isEditing) {
@@ -178,8 +181,8 @@
         if (node.name.mnz_isVisualMediaPathExtension) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [[[MEGASdkManager sharedMEGASdk] versionsForNode:self.node] mnz_mediaNodesMutableArrayFromNodeList];
             
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeNodeVersions presentingNode:node preferredIndex:0];
-            
+            DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : DisplayModeNodeVersions;
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:node preferredIndex:0];
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
@@ -231,6 +234,11 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.node.mnz_isInRubbishBin) {
+        return nil;
+    }
+    
     self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
     NSMutableArray *rightActions = [NSMutableArray new];

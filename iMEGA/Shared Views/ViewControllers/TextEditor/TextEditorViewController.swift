@@ -50,8 +50,8 @@ final class TextEditorViewController: UIViewController {
 extension TextEditorViewController: ViewType {
     func executeCommand(_ command: TextEditorViewModel.Command) {
         switch command {
-        case .configView(let textEditorModel, let shallUpdateContent):
-            configView(textEditorModel, shallUpdateContent: shallUpdateContent)
+        case .configView(let textEditorModel, let shallUpdateContent, let isInRubbishBin):
+            configView(textEditorModel, shallUpdateContent: shallUpdateContent, isInRubbishBin: isInRubbishBin)
         case .setupNavbarItems(let navbarItemsModel):
             setupNavbarItems(navbarItemsModel)
         case .setupLoadViews:
@@ -83,7 +83,7 @@ extension TextEditorViewController: ViewType {
         viewModel.dispatch(.editAfterOpen)
     }
     
-    private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool) {
+    private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool) {
         navigationItem.title = textEditorModel.textFile.fileName
         
         let contentOffset = textView.contentOffset
@@ -109,7 +109,7 @@ extension TextEditorViewController: ViewType {
             progressView?.isHidden = true
         }
         
-        if textEditorModel.textEditorMode == .view {
+        if textEditorModel.textEditorMode == .view && !isInRubbishBin {
             configToolbar(accessLevel: textEditorModel.accessLevel ?? .unknown)
             navigationController?.setToolbarHidden(false, animated: true)
         } else {

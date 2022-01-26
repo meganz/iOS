@@ -30,6 +30,14 @@ class NodeActionsTests: XCTestCase {
         return containsAllActions
     }
     
+    func containsExact(nodeActionTypes types: [MegaNodeActionType]) -> Bool {
+        guard actions.count == types.count else {
+            return false
+        }
+        let actionTypes = actions.map{ $0.type }
+        return actionTypes == types
+    }
+    
     // MARK: - Cloud Drive tests
 
     func testCloudDriveNodeMediaFile() {
@@ -153,7 +161,15 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .share, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testRubbishBinNodeFolder() {
+    func testFileFolderNodeDoNotShowInfoAction() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeInfo)
+            .build()
+        XCTAssertFalse(contains(nodeActionType: .info))
+    }
+    
+    //MARK: - Rubbish Bin
+    func testRubbishBinNodeRestorableFolder() {
         actions = NodeActionBuilder()
             .setDisplayMode(.rubbishBin)
             .setAccessLevel(.accessOwner)
@@ -161,25 +177,53 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.restore, .info, .favourite, .label, .rename, .move, .copy, .remove]))
+        XCTAssertTrue(containsExact(nodeActionTypes: [.restore, .info, .remove]))
     }
     
-    func testRubbishBinNodeFile() {
+    func testRubbishBinNodeUnrestorableFolder() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.rubbishBin)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(false)
+            .setIsRestorable(false)
+            .build()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .remove]))
+    }
+    
+    func testRubbishBinNodeRestorableFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.rubbishBin)
             .setAccessLevel(.accessOwner)
             .setIsFile(true)
             .setIsRestorable(true)
+            .setIsInVersionsView(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.restore, .info, .favourite, .label, .sendToChat, .rename, .move, .copy, .remove]))
+        XCTAssertTrue(containsExact(nodeActionTypes: [.restore, .info, .remove]))
     }
     
-    func testFileFolderNodeDoNotShowInfoAction() {
+    func testRubbishBinNodeUnrestorableFile() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.nodeInfo)
+            .setDisplayMode(.rubbishBin)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setIsRestorable(false)
             .build()
-        XCTAssertFalse(contains(nodeActionType: .info))
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .remove]))
+    }
+    
+    func testRubbishBinNodeVersionPreview() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.rubbishBin)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setIsRestorable(true)
+            .setIsInVersionsView(true)
+            .build()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.info]))
     }
 
     //MARK: - Recent Items tests

@@ -51,7 +51,7 @@
             self.separatorInset = UIEdgeInsetsMake(0, 62, 0, 0);
             [self layoutIfNeeded];
         }];
-        self.moreButton.hidden = self.recentActionBucket ? self.moreButton.hidden : NO;
+        self.moreButton.hidden = self.recentActionBucket ? self.moreButton.hidden : self.isNodeInRubbishBin;
     }
 }
 
@@ -60,7 +60,7 @@
     
     self.downloadingArrowImageView.hidden = self.downloadProgressView.hidden = YES;
     
-    self.moreButton.hidden = NO;
+    self.moreButton.hidden = self.isNodeInRubbishBin;
     
     if (self.downloadingArrowView != nil) {
         self.downloadingArrowView.hidden = self.downloadingArrowImageView.isHidden;

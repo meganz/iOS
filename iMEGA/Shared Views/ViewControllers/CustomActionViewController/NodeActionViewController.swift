@@ -62,6 +62,28 @@ class NodeActionViewController: ActionSheetViewController {
         
         configurePresentationStyle(from: sender)
         
+        self.setupActions(node: node,
+                          displayMode: displayMode,
+                          isIncoming: isIncoming)
+    }
+    
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, sender: Any) {
+        self.node = node
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.setupActions(node: node,
+                          displayMode: displayMode,
+                          isInVersionsView: isInVersionsView)
+    }
+
+    
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false) {
         let isImageOrVideoFile = node.name?.mnz_isImagePathExtension == true || node.name?.mnz_isVideoPathExtension == true
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
@@ -81,6 +103,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsOutshare(node.isOutShare())
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsBackupFolder(node.isBackupNode() || node.isBackupRootNode())
+            .setIsInVersionsView(isInVersionsView)
             .build()
     }
     
@@ -101,9 +124,9 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, displayMode: DisplayMode = .previewDocument, isInVersionsView: Bool = false, sender: Any) {
         self.node = node
-        self.displayMode = .previewDocument
+        self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
         
@@ -117,6 +140,10 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsLink(isLink)
             .setIsPageView(isPageView)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .setIsRestorable(node.mnz_isRestorable())
+            .setVersionCount(node.mnz_numberOfVersions())
+            .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
+            .setIsInVersionsView(isInVersionsView)
             .build()
     }
     

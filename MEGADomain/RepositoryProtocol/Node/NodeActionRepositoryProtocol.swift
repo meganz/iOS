@@ -5,4 +5,5 @@ protocol NodeActionRepositoryProtocol {
     func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int)
     func hasVersions() -> Bool
     func isDownloaded() -> Bool
+    func isInRubbishBin() -> Bool
 }

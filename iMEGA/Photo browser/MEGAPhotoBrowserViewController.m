@@ -447,6 +447,16 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
 }
 
+- (BOOL)isPreviewingVersion {
+    if ([[self presentingViewController] isKindOfClass:[MEGANavigationController class]]) {
+        NSArray<UIViewController *>*viewcontrollers = [[self presentingViewController] childViewControllers];
+        if ([viewcontrollers.lastObject isKindOfClass:[NodeVersionsViewController class]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -745,7 +755,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
     
     [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:NO sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isInVersionsView: [self isPreviewingVersion] sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
@@ -1250,6 +1260,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
         case MegaNodeActionTypeRestore:
             [node mnz_restore];
+            break;
+            
+        case MegaNodeActionTypeViewVersions:
+            [node mnz_showNodeVersionsInViewController:self];
             break;
             
         default:

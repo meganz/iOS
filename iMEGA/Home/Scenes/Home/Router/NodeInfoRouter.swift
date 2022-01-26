@@ -23,7 +23,7 @@ final class NodeInfoRouter: NSObject {
     
     func showVersions(for node: MEGANode) {
         guard let nodeVersionNavigation = navigationController else { return }
-        node.mnz_showTextFileVersions(in: nodeVersionNavigation)
+        node.mnz_showVersions(in: nodeVersionNavigation)
     }
 }
 

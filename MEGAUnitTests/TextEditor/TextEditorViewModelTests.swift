@@ -59,7 +59,7 @@ final class TextEditorViewModelTests: XCTestCase {
             test(viewModel: viewModel,
                  action: .setUpView,
                  expectedCommands: [
-                    .configView(textEditorModel, shallUpdateContent: true),
+                    .configView(textEditorModel, shallUpdateContent: true, isInRubbishBin: false),
                     .setupNavbarItems(navbarItemsModel)
                  ]
             )
@@ -129,10 +129,10 @@ final class TextEditorViewModelTests: XCTestCase {
                  action: .setUpView,
                  expectedCommands: [
                     .setupLoadViews,
-                    .configView(textEditorLoadModel, shallUpdateContent: false),
+                    .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false),
                     .setupNavbarItems(navbarItemsLoadModel),
                     .updateProgressView(progress: percentage),
-                    .configView(textEditorViewModel, shallUpdateContent: true),
+                    .configView(textEditorViewModel, shallUpdateContent: true, isInRubbishBin: false),
                     .setupNavbarItems(navbarItemsViewModel)
                  ]
             )
@@ -190,7 +190,7 @@ final class TextEditorViewModelTests: XCTestCase {
              action: .setUpView,
              expectedCommands: [
                 .setupLoadViews,
-                .configView(textEditorLoadModel, shallUpdateContent: false),
+                .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false),
                 .setupNavbarItems(navbarItemsModel),
                 .updateProgressView(progress: percentage)
              ]
@@ -244,7 +244,7 @@ final class TextEditorViewModelTests: XCTestCase {
              action: .setUpView,
              expectedCommands: [
                 .setupLoadViews,
-                .configView(textEditorLoadModel, shallUpdateContent: false),
+                .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false),
                 .setupNavbarItems(navbarItemsModel),
                 .updateProgressView(progress: percentage),
                 .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download)
@@ -300,7 +300,7 @@ final class TextEditorViewModelTests: XCTestCase {
              expectedCommands: [
                 .startLoading,
                 .stopLoading,
-                .configView(textEditorViewModel, shallUpdateContent: false),
+                .configView(textEditorViewModel, shallUpdateContent: false, isInRubbishBin: false),
                 .setupNavbarItems(navbarItemsModel)
              ]
         )
@@ -662,7 +662,7 @@ final class TextEditorViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .editFile,
              expectedCommands: [
-                .configView(textEditorModel, shallUpdateContent: false),
+                .configView(textEditorModel, shallUpdateContent: false, isInRubbishBin: false),
                 .setupNavbarItems(navbarItemsModel)
              ]
         )
@@ -732,7 +732,7 @@ final class TextEditorViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .editAfterOpen,
              expectedCommands: [
-                .configView(textEditorModel, shallUpdateContent: true),
+                .configView(textEditorModel, shallUpdateContent: true, isInRubbishBin: false),
                 .setupNavbarItems(navbarItemsModel)
              ]
         )
@@ -901,7 +901,7 @@ final class TextEditorViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .cancelText(content: textFile.content),
              expectedCommands: [
-                .configView(textEditorViewModel, shallUpdateContent: true),
+                .configView(textEditorViewModel, shallUpdateContent: true, isInRubbishBin: false),
                 .setupNavbarItems(navbarItemsModel)
              ]
         )

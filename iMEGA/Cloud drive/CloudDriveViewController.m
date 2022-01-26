@@ -1685,6 +1685,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case MegaNodeActionTypeRemove:
             [node mnz_removeInViewController:self];
+            
+            if (node.mnz_isPlayable &&
+                [AudioPlayerManager.shared isPlayerAlive] &&
+                [AudioPlayerManager.shared isPlayingNode:node]) {
+                [AudioPlayerManager.shared closePlayer];
+            }
+
             break;
             
         case MegaNodeActionTypeRemoveSharing:
@@ -1704,7 +1711,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeViewVersions:
-            [node mnz_showTextFileVersionsInViewController:self];
+            [node mnz_showNodeVersionsInViewController:self];
             break;
             
         default:

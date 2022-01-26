@@ -518,7 +518,7 @@
     [viewController setEditing:NO animated:YES];
 }
 
-- (void)mnz_showTextFileVersionsInViewController:(UIViewController *)viewController {
+- (void)mnz_showNodeVersionsInViewController:(UIViewController *)viewController {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Node" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeVersionsNC"];
     NodeVersionsViewController *versionController = navigationController.viewControllers.firstObject;
     versionController.node = self;
@@ -837,6 +837,10 @@
     } else {
         return NO;
     }
+}
+
+- (BOOL)mnz_isInRubbishBin {
+    return [[MEGASdkManager sharedMEGASdk] isNodeInRubbish:self];
 }
 
 - (BOOL)mnz_isPlayable {
