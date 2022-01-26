@@ -24,6 +24,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
 
     @IBOutlet private weak var optionsStackView: UIStackView!
     @IBOutlet private var inviteParticpicantsView: UIView!
+    @IBOutlet private weak var shareLinkLabel: UILabel!
+    @IBOutlet private weak var inviteParticipantsLabel: UILabel!
     
     @IBOutlet private weak var optionsStackViewHeightConstraint: NSLayoutConstraint!
     
@@ -58,6 +60,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = Asset.Images.Meetings.hangCallMeetingAction.image
         endQuickActionView.name = Strings.Localizable.leave
+        shareLinkLabel.text = Strings.Localizable.Meetings.Panel.shareLink
+        inviteParticipantsLabel.text = Strings.Localizable.Meetings.Panel.inviteParticipants
         updateInTheMeetingLabel()
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
         flipQuickActionView.disabled = true

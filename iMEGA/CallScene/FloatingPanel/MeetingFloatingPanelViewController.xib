@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,12 +17,14 @@
                 <outlet property="flipQuickActionView" destination="jqF-mW-kle" id="SiV-Ye-by9"/>
                 <outlet property="floatingViewConstantViewWidthConstraint" destination="cwo-ng-u0o" id="h3R-X8-qc4"/>
                 <outlet property="floatingViewSuperViewWidthConstraint" destination="4Kz-jA-9Oy" id="hP9-Z0-3ve"/>
+                <outlet property="inviteParticipantsLabel" destination="DtN-Ff-MAL" id="NqY-m2-x4o"/>
                 <outlet property="inviteParticpicantsView" destination="upA-hv-YiE" id="eNs-eO-EiD"/>
                 <outlet property="muteQuickActionView" destination="5ZP-i7-Gtm" id="vcM-VD-cjA"/>
                 <outlet property="optionsStackView" destination="qcb-pq-yu0" id="xUV-d1-oIL"/>
                 <outlet property="optionsStackViewHeightConstraint" destination="eCq-qZ-zIr" id="2US-33-izC"/>
                 <outlet property="participantsCountLabel" destination="cXT-Bg-At9" id="0l0-hf-Qd4"/>
                 <outlet property="participantsTableView" destination="486-lX-0t8" id="hpj-zK-Y6v"/>
+                <outlet property="shareLinkLabel" destination="vIO-DY-5zh" id="Fmf-vL-GBu"/>
                 <outlet property="speakerQuickActionView" destination="y1D-bA-V06" id="5qk-QB-s4g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
