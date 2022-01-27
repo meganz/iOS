@@ -30,10 +30,8 @@
 @property (nonatomic) LaunchViewController *launchVC;
 @property (nonatomic) BrowserViewController *browserVC;
 @property (nonatomic) NSString *session;
-@property (nonatomic) UIView *privacyView;
 
 @property (nonatomic) BOOL pickerPresented;
-@property (nonatomic) BOOL passcodePresented;
 
 @property (nonatomic) NSDate *lastProgressChange;
 
@@ -100,7 +98,6 @@
     [self copyDatabasesFromMainApp];
     
     self.pickerPresented = NO;
-    self.passcodePresented = NO;
     
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
@@ -110,17 +107,6 @@
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
-    
-    // Add observers to get notified when the extension goes to background and comes back to foreground:
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
-                                                 name:NSExtensionHostWillResignActiveNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
-                                                 name:NSExtensionHostDidBecomeActiveNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
-                                                 name:NSExtensionHostDidEnterBackgroundNotification
-                                               object:nil];
     
     self.lastProgressChange = [NSDate new];
     
@@ -132,38 +118,6 @@
     if (!self.pickerPresented) {
         [self configureUI];
     }
-}
-
-- (void)willResignActive {
-    if (self.session) {
-        if ([MEGAReachabilityManager isReachable]) {
-            UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-            privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-            privacyVC.view.backgroundColor = UIColor.mnz_background;
-            self.privacyView = privacyVC.view;
-            [self.view addSubview:self.privacyView];
-        } else {
-            [self presentDocumentPicker];
-        }
-    }
-}
-
-- (void)didBecomeActive {
-    if (self.privacyView) {
-        [self.privacyView removeFromSuperview];
-        self.privacyView = nil;
-    }
-    
-    if (self.session) {
-        [self configureUI];
-    }
-}
-
-- (void)didEnterBackground {
-    if ([self.presentedViewController isKindOfClass:LTHPasscodeViewController.class]) {
-        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-    }
-    self.passcodePresented = NO;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -272,29 +226,27 @@
         [self.launchVC.view removeFromSuperview];
         self.launchVC = nil;
     }
-    
-    [[LTHPasscodeViewController sharedUser] setDelegate:self];
-    if ([LTHPasscodeViewController doesPasscodeExist]) {
-        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        [self presentPasscode];
-    }
+            
+    [self presentPasscodeIfNeeded];
 }
 
-- (void)presentPasscode {
-    LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
-    
-    if (!self.passcodePresented && !passcodeVC.isBeingPresented && (passcodeVC.presentingViewController == nil)) {
-        [passcodeVC showLockScreenOver:self.view.superview
-                         withAnimation:YES
-                            withLogout:YES
-                        andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
-        
-        [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-        passcodeVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentViewController:passcodeVC animated:NO completion:nil];
-        self.passcodePresented = YES;
+- (void)presentPasscodeIfNeeded {
+    if (![LTHPasscodeViewController doesPasscodeExist] || (UIApplication.mnz_visibleViewController == LTHPasscodeViewController.sharedUser)) {
+        return;
     }
     
+    LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
+    [passcodeVC setDelegate:self];
+    [passcodeVC setMaxNumberOfAllowedFailedAttempts:10];
+    
+    [passcodeVC showLockScreenOver:self.view.superview
+                     withAnimation:YES
+                        withLogout:YES
+                    andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
+    
+    [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    passcodeVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:passcodeVC animated:NO completion:nil];
 }
 
 - (void)copyDatabasesFromMainApp {
@@ -455,7 +407,7 @@
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    [LTHPasscodeViewController.sharedUser dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
