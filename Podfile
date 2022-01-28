@@ -31,6 +31,7 @@ abstract_target 'iMEGA' do
     pod 'WSTagsField'
     pod 'JustPieChart'
     pod 'SwiftGen'
+    pod 'CocoaLumberjack/Swift'
     
     # Pods for Debug only
     pod 'FLEX', :configurations => ['Debug']

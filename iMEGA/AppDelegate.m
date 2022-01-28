@@ -105,6 +105,15 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+    [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
+    [MEGAChatSdk setCatchException:false];
+#else
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
+    [MEGAChatSdk setLogLevel:MEGAChatLogLevelFatal];
+#endif
+    
     [UncaughtExceptionHandler registerHandler];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
     
@@ -115,18 +124,14 @@
     if (error.code == errSecInteractionNotAllowed) {
         exit(0);
     }
-
-#ifdef DEBUG
-    [MEGASdk setLogLevel:MEGALogLevelMax];
-    [MEGAChatSdk setCatchException:false];
-#else
-    [MEGASdk setLogLevel:MEGALogLevelFatal];
-#endif
     
     [MEGASdk setLogToConsole:YES];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] startLogging];
+        [MEGASdk setLogLevel:MEGALogLevelMax];
+        [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
+        [MEGASdkManager.sharedMEGASdk addLoggerDelegate:Logger.shared];
+        [MEGAChatSdk setLogObject:Logger.shared];
     }
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
@@ -213,6 +218,9 @@
         [self initProviderDelegate];
                 
         MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [MEGASdkManager.sharedMEGASdk removeLoggerDelegate:Logger.shared];
+        }
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere with session failed");
             NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
