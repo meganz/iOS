@@ -920,7 +920,19 @@ static MEGAIndexer *indexer;
     [logAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [logAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
+        if (enableLog) {
+#if MAIN_APP_TARGET
+            [MEGAChatSdk setLogObject:Logger.shared];
+#endif
+            [[MEGALogger sharedLogger] preparingForLogging];
+        } else {
+            [[MEGALogger sharedLogger] stopLogging];
+            
+#if MAIN_APP_TARGET
+            [MEGAChatSdk setLogObject:nil];
+            [Logger.shared removeLogsDirectory];
+#endif
+        }
     }]];
     
     [UIApplication.mnz_presentingViewController presentViewController:logAlertController animated:YES completion:nil];

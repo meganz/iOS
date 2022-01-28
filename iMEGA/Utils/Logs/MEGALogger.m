@@ -18,15 +18,7 @@ static MEGALogger *_megaLogger = nil;
     return _megaLogger;
 }
 
-- (void)startLogging {
-    NSString *logFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.log"];
-    [self startLoggingToFile:logFilePath];
-}
-
-- (void)startLoggingToFile:(NSString *)logFilePath {
-    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stdout);
-    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stderr);
-    
+- (void)preparingForLogging {
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
     
@@ -40,6 +32,13 @@ static MEGALogger *_megaLogger = nil;
     NSString *language = [NSLocale.currentLocale displayNameForKey:NSLocaleIdentifier value:languageArray.firstObject];
     
     MEGALogInfo(@"Device information:\nVersion: %@\nDevice: %@\niOS Version: %@\nLanguage: %@\nTimezone: %@", version, [[UIDevice currentDevice] deviceName], systemVersion, language, [NSTimeZone localTimeZone].name);
+}
+
+- (void)startLoggingToFile:(NSString *)logFilePath {
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stdout);
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stderr);
+    
+    [self preparingForLogging];
 }
 
 - (void)stopLogging {
