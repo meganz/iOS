@@ -2161,6 +2161,9 @@
 		C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */; };
 		C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */; };
 		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
+		C4C6A49827A4632600873165 /* MegaNode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Additions.swift */; };
+		C4C6A49927A4632600873165 /* MegaNode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Additions.swift */; };
+		C4C6A49A27A4632600873165 /* MegaNode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Additions.swift */; };
 		C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */; };
 		C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */; };
 		C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */; };
@@ -4285,6 +4288,7 @@
 		C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewRouter.swift; sourceTree = "<group>"; };
 		C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
+		C4C6A49527A4632600873165 /* MegaNode+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Additions.swift"; sourceTree = "<group>"; };
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
 		C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCurrentStateEntity.swift; sourceTree = "<group>"; };
 		C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCase.swift; sourceTree = "<group>"; };
@@ -5443,6 +5447,7 @@
 				5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */,
 				5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */,
 				C466A7F626F4DED800905878 /* MEGANode+Backup.swift */,
+				C4C6A49527A4632600873165 /* MegaNode+Additions.swift */,
 				411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */,
 				411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */,
 				41DC6F701D54E7080081832C /* NSFileManager+MNZCategory.h */,
@@ -11748,6 +11753,7 @@
 				BF782D7B269BA4BB0001D169 /* ShareAccessLevelEntity.swift in Sources */,
 				5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */,
 				124667FC275DB82000C94335 /* CustomModalAlertViewController+Storage.swift in Sources */,
+				C4C6A49827A4632600873165 /* MegaNode+Additions.swift in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				BF46B81225A6A524008641BB /* PSARepositoryProtocol.swift in Sources */,
 				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
@@ -12422,6 +12428,7 @@
 				C42C35792743D96D004D8BA9 /* NodeLoadOperation.swift in Sources */,
 				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
+				C4C6A49927A4632600873165 /* MegaNode+Additions.swift in Sources */,
 				5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				B695B600264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				C46517B1272C9FBC004F27A0 /* NodeTypeEntity+Mapper.swift in Sources */,
@@ -12665,6 +12672,7 @@
 				BF943E9F235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */,
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				5BC1276F2375A75600CCAF26 /* EmptyStateView.m in Sources */,
+				C4C6A49A27A4632600873165 /* MegaNode+Additions.swift in Sources */,
 				77892EA020E5029E0020A533 /* MOUser.m in Sources */,
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
 				A82D5CD726BC075500E73D27 /* PreferenceWrapper.swift in Sources */,
