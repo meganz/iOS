@@ -66,6 +66,7 @@
                 
             case 1:
                 [self sendFeedback];
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 break;
                 
             case 2: //Join Beta
@@ -127,7 +128,26 @@
             
             [mailComposeVC setMessageBody:messageBody isHTML:NO];
             
-            [self presentViewController:mailComposeVC animated:YES completion:nil];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"help.reportIssue.attachLogFiles.title", nil) message:NSLocalizedString(@"help.reportIssue.attachLogFiles.message", nil) preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    NSURL *sourceURL = Logger.shared.logsDirectoryUrl;
+                    NSData *compressedData = [LogFileCompressor.alloc zippedDataFrom:sourceURL];
+                    
+                    if (compressedData) {
+                        [mailComposeVC addAttachmentData:compressedData mimeType:@"text/plain" fileName:@"MEGAiOSLogs.zip"];
+                    }
+                    
+                    [self presentViewController:mailComposeVC animated:YES completion:nil];
+                }]];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [self presentViewController:mailComposeVC animated:YES completion:nil];
+                }]];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+            } else {
+                [self presentViewController:mailComposeVC animated:YES completion:nil];
+            }
         } else {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:NSLocalizedString(@"noEmailAccountConfigured", nil)];
         }

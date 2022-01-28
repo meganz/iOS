@@ -1253,6 +1253,7 @@
 		A837E62C27070A370069AB30 /* AccountDetailsErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837E62B27070A370069AB30 /* AccountDetailsErrorEntity.swift */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A83CFEA025DAAAF300622675 /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83CFE9F25DAAAF300622675 /* ThrottlerTest.swift */; };
+		A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */; };
 		A84533DF25ECF028007E0751 /* MEGANodeList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		A84E92E626FB708D00606AA7 /* FileVersionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */; };
@@ -1282,6 +1283,7 @@
 		A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
+		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
 		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
@@ -1308,6 +1310,7 @@
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
 		A896DFE325D68E8300BC481D /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A896DFE225D68E8300BC481D /* Throttler.swift */; };
+		A899F0E8278F3567001A2D43 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */; };
 		A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A715C126307B0A00DDC8E2 /* UIPasteboard+WebP.swift */; };
 		A8A716D62639A6B400DDC8E2 /* TurnOnNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A716D52639A6B400DDC8E2 /* TurnOnNotificationsViewController.swift */; };
 		A8A716E02639A71800DDC8E2 /* TurnOnNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A716DF2639A71800DDC8E2 /* TurnOnNotificationsViewModel.swift */; };
@@ -1346,6 +1349,7 @@
 		A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
 		A8E1CFA326EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */; };
+		A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D8EA277F316E009093C5 /* Logger.swift */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
@@ -3430,6 +3434,7 @@
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A83CFE9F25DAAAF300622675 /* ThrottlerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThrottlerTest.swift; sourceTree = "<group>"; };
+		A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDDLogFormatter.swift; sourceTree = "<group>"; };
 		A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+Mapper.swift"; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsUseCase.swift; sourceTree = "<group>"; };
@@ -3455,6 +3460,7 @@
 		A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTimeDurationTableViewController.swift; sourceTree = "<group>"; };
 		A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeDurationInfo.swift; sourceTree = "<group>"; };
+		A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileCompressor.swift; sourceTree = "<group>"; };
 		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
 		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
 		A88BFFCB1F0A52E90081BCE3 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcurl.a; sourceTree = "<group>"; };
@@ -3473,6 +3479,8 @@
 		A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAProviderDelegate.h; path = Chat/MEGAProviderDelegate.h; sourceTree = "<group>"; };
 		A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAProviderDelegate.m; path = Chat/MEGAProviderDelegate.m; sourceTree = "<group>"; };
 		A896DFE225D68E8300BC481D /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
+		A899F0E4278F3567001A2D43 /* CompressingLogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressingLogFileManager.h; sourceTree = "<group>"; };
+		A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressingLogFileManager.m; sourceTree = "<group>"; };
 		A89EEC3325599FA6009FBF33 /* MEGAWidget-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAWidget-PrefixHeader.pch"; sourceTree = "<group>"; };
 		A8A715C126307B0A00DDC8E2 /* UIPasteboard+WebP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPasteboard+WebP.swift"; sourceTree = "<group>"; };
 		A8A716D52639A6B400DDC8E2 /* TurnOnNotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnOnNotificationsViewController.swift; sourceTree = "<group>"; };
@@ -3511,6 +3519,7 @@
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
 		A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileVersionsRepositoryProtocol.swift; sourceTree = "<group>"; };
+		A8E1D8EA277F316E009093C5 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetPreviewRequestDelegate.h; path = API/Requests/MEGAGetPreviewRequestDelegate.h; sourceTree = "<group>"; };
 		A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPreviewRequestDelegate.m; path = API/Requests/MEGAGetPreviewRequestDelegate.m; sourceTree = "<group>"; };
 		A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocalNotificationManager.h; sourceTree = "<group>"; };
@@ -5204,9 +5213,7 @@
 				5B20B00920E61DDF00511C0F /* MEGALinkManager.m */,
 				A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */,
 				A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */,
-				41A4204D1C4EA02C002E192E /* MEGALogger.h */,
-				41A4204E1C4EA02C002E192E /* MEGALogger.m */,
-				416796CD1CC10CB6002CFE93 /* MEGALogMacros.h */,
+				A841886827832C5900291F4C /* Logs */,
 				E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */,
 				E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */,
 				8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */,
@@ -7845,6 +7852,21 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
+		A841886827832C5900291F4C /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				41A4204D1C4EA02C002E192E /* MEGALogger.h */,
+				41A4204E1C4EA02C002E192E /* MEGALogger.m */,
+				416796CD1CC10CB6002CFE93 /* MEGALogMacros.h */,
+				A8E1D8EA277F316E009093C5 /* Logger.swift */,
+				A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */,
+				A899F0E4278F3567001A2D43 /* CompressingLogFileManager.h */,
+				A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */,
+				A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */,
+			);
+			path = Logs;
+			sourceTree = "<group>";
+		};
 		A84E92E126FB5F6300606AA7 /* Versions */ = {
 			isa = PBXGroup;
 			children = (
@@ -10105,6 +10127,8 @@
 				831B4914256FED6F0086002B /* PBXTargetDependency */,
 			);
 			name = MEGA;
+			packageProductDependencies = (
+			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
 			productType = "com.apple.product-type.application";
@@ -10379,6 +10403,8 @@
 				"pt-BR",
 			);
 			mainGroup = 137361811A6664C300B740E8;
+			packageReferences = (
+			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -11214,6 +11240,7 @@
 				B6AADEA825188D77009A874C /* SMSRepository.swift in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
 				B6C5D0A02718DAAA004FB105 /* PhotoLibrary.swift in Sources */,
+				A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */,
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
 				A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */,
 				5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */,
@@ -11411,6 +11438,7 @@
 				BFB463F724342F7F00FB90B9 /* MEGAUser+Additions.swift in Sources */,
 				C45D792F2593AEBA00EB6C2F /* MiniPlayerDelegate.swift in Sources */,
 				BFB463F32434296000FB90B9 /* IndexPath+Additions.swift in Sources */,
+				A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */,
 				5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */,
 				B6C444D1274A280800268D9A /* PhotoLibraryDayView.swift in Sources */,
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
@@ -11585,6 +11613,7 @@
 				83B906BC249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
 				5DF9910925789B5400DDDA83 /* PageControlStyleFactoory.swift in Sources */,
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
+				A899F0E8278F3567001A2D43 /* CompressingLogFileManager.m in Sources */,
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				C48CE0142732ECE40081DEC4 /* NodeLoadOperation.swift in Sources */,
@@ -11920,6 +11949,7 @@
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
 				A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */,
+				A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				BF943E9523554054001C18E0 /* String+Additions.swift in Sources */,
 				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
