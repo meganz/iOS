@@ -118,6 +118,9 @@ final class NodeActionViewControllerGenericDelegate:
         case .restore:
             node.mnz_restore()
             
+        case .import:
+            node.openBrowserToImport(in: viewController)
+            
         default:
             break
         }
