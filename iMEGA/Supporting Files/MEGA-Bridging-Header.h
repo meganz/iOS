@@ -161,3 +161,4 @@
 #import "AchievementsViewController.h"
 #import "CloudDriveCollectionViewController.h"
 #import "OfflineCollectionViewController.h"
+#import "CompressingLogFileManager.h"

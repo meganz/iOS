@@ -7,7 +7,7 @@
 
 + (MEGALogger *)sharedLogger;
 
-- (void)startLogging;
+- (void)preparingForLogging;
 - (void)startLoggingToFile:(NSString *)file;
 - (void)stopLogging;
 - (void)stopLoggingToFile:(NSString *)file;
