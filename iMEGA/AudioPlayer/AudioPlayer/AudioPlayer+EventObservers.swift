@@ -139,7 +139,12 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         
         switch type {
         case .began:
-            guard !isAudioPlayerInterrupted, !isPaused else { return }
+            guard !isAudioPlayerInterrupted, !isPaused else {
+                if isPaused && !isAudioPlayerInterrupted {
+                    disableRemoteCommands()
+                }
+                return
+            }
             
             if let isAudioSessionSuspended = userInfo[AVAudioSessionInterruptionWasSuspendedKey] as? Bool, isAudioSessionSuspended {
                 MEGALogDebug("[AudioPlayer] The Audio Session was deactivated by the system")
