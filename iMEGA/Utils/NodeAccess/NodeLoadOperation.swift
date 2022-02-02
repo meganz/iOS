@@ -14,8 +14,8 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     private let createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)?
     private let setFolderHandleRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)?
     private let completion: NodeLoadCompletion
+    private let sdk: MEGASdk
     private let autoCreate: (() -> Bool)?
-    let sdk: MEGASdk
     
     // MARK: - Init
     init(autoCreate: (() -> Bool)?,
