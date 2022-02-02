@@ -105,7 +105,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckY-Kz-eqN">
-                    <rect key="frame" x="349" y="183.5" width="55" height="55"/>
+                    <rect key="frame" x="349" y="180.5" width="55" height="55"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvx-SE-Dth">
                             <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
@@ -146,7 +146,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Emu-CZ-PtI">
-                    <rect key="frame" x="18" y="191" width="44" height="44"/>
+                    <rect key="frame" x="18" y="186" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Jya-of-JXj"/>
                         <constraint firstAttribute="width" constant="44" id="SVd-fU-6yS"/>
@@ -190,14 +190,15 @@
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="leading" secondItem="ul9-iZ-5KV" secondAttribute="trailing" constant="13" id="JjR-d1-KwI"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="8mz-bo-tiI" secondAttribute="bottom" constant="9.5" id="LNR-C0-ATf"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="trailing" secondItem="zpz-gS-Gkz" secondAttribute="trailing" id="OxB-4H-ddg"/>
+                <constraint firstItem="Emu-CZ-PtI" firstAttribute="centerY" secondItem="ul9-iZ-5KV" secondAttribute="centerY" priority="999" id="PPU-RZ-QSw"/>
                 <constraint firstItem="gyg-48-psi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Q33-kC-Y9H"/>
                 <constraint firstAttribute="trailing" secondItem="gyg-48-psi" secondAttribute="trailing" id="TjQ-Wj-1H6"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ckY-Kz-eqN" secondAttribute="bottom" constant="6.5" id="Vpd-Qt-aKW"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="centerX" secondItem="APV-vT-gYp" secondAttribute="centerX" id="WrG-aE-4gw"/>
+                <constraint firstItem="ckY-Kz-eqN" firstAttribute="centerY" secondItem="Emu-CZ-PtI" secondAttribute="centerY" id="ZIQ-Er-sH9"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="leading" secondItem="Emu-CZ-PtI" secondAttribute="leading" constant="-5" id="cLk-mb-yNb"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="af9-4d-CYz" secondAttribute="top" constant="-9" id="fPC-Vq-M1z"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="50" id="fXP-Pm-6Nn"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="10" id="fij-A4-njj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="15" id="fij-A4-njj"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gmO-P0-T9e"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="9" id="iCm-C8-wxV"/>
                 <constraint firstItem="Emu-CZ-PtI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="jZ3-JP-Z6O"/>

@@ -17,11 +17,11 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="u3n-yC-sGJ">
                     <rect key="frame" x="20" y="10" width="280" height="369"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKc-Pm-Ngf">
-                            <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fKc-Pm-Ngf">
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="101.5"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0Dr-fh-Sdm">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="80"/>
+                                    <rect key="frame" x="0.0" y="16" width="200" height="70"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Chatting with" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEg-5n-frR">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="13.5"/>
@@ -36,10 +36,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jhd-x9-ICv">
-                                            <rect key="frame" x="0.0" y="56.5" width="200" height="23.5"/>
+                                            <rect key="frame" x="0.0" y="56.5" width="200" height="13.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyI-XQ-t4W">
-                                                    <rect key="frame" x="0.0" y="8" width="8" height="8"/>
+                                                    <rect key="frame" x="0.0" y="2.5" width="8" height="8"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="8" id="Mg1-LK-UuE"/>
@@ -52,7 +52,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5s0-Tv-WXQ">
-                                                    <rect key="frame" x="13" y="5" width="187" height="13.5"/>
+                                                    <rect key="frame" x="13" y="0.0" width="187" height="13.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -62,7 +62,7 @@
                                     </subviews>
                                 </stackView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vqw-IR-XQQ">
-                                    <rect key="frame" x="200" y="0.0" width="80" height="80"/>
+                                    <rect key="frame" x="200" y="11" width="80" height="80"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="80" id="X6N-iR-s6W"/>
                                         <constraint firstAttribute="height" constant="80" id="e81-wZ-9AJ"/>
@@ -76,7 +76,7 @@
                             </subviews>
                         </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jm-ZU-QM8">
-                            <rect key="frame" x="0.0" y="100" width="280" height="68"/>
+                            <rect key="frame" x="0.0" y="121.5" width="280" height="46.5"/>
                             <string key="text">MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:</string>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                             <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
