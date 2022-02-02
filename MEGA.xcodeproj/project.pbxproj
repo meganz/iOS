@@ -2018,9 +2018,6 @@
 		C42C35782743D924004D8BA9 /* NodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E78E8B272AF59D00DBF926 /* NodeAccess.swift */; };
 		C42C35792743D96D004D8BA9 /* NodeLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CE0132732ECE40081DEC4 /* NodeLoadOperation.swift */; };
 		C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CE0132732ECE40081DEC4 /* NodeLoadOperation.swift */; };
-		C42C5E3F27A06DB700205DB8 /* MyChatFilesFolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C5E3E27A06DB700205DB8 /* MyChatFilesFolderManager.swift */; };
-		C42C5E4027A06DB700205DB8 /* MyChatFilesFolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C5E3E27A06DB700205DB8 /* MyChatFilesFolderManager.swift */; };
-		C42C5E4127A06DB700205DB8 /* MyChatFilesFolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C5E3E27A06DB700205DB8 /* MyChatFilesFolderManager.swift */; };
 		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
 		C43817B92746925E00EA82A8 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
@@ -4188,7 +4185,6 @@
 		BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
-		C42C5E3E27A06DB700205DB8 /* MyChatFilesFolderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyChatFilesFolderManager.swift; sourceTree = "<group>"; };
 		C44080B4273580AF00E3EDDE /* UIViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Backup.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
 		C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+RemoteCommand.swift"; sourceTree = "<group>"; };
@@ -9952,7 +9948,6 @@
 		C4D6FAAE276BB9E500773333 /* MyChatFiles */ = {
 			isa = PBXGroup;
 			children = (
-				C42C5E3E27A06DB700205DB8 /* MyChatFilesFolderManager.swift */,
 				C4EACA902772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift */,
 			);
 			path = MyChatFiles;
@@ -11836,7 +11831,6 @@
 				8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				B6E7A8D72500D74600CD6AC2 /* NSLayoutConstraint+Layout.swift in Sources */,
 				B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */,
-				C42C5E3F27A06DB700205DB8 /* MyChatFilesFolderManager.swift in Sources */,
 				833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */,
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,
@@ -12469,7 +12463,6 @@
 				5BE689892417CB3C00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */,
 				5B3740C8241FAA8700BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
-				C42C5E4027A06DB700205DB8 /* MyChatFilesFolderManager.swift in Sources */,
 				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
 				9456054E1EDD7DBD0094EF0F /* OpenInActivity.m in Sources */,
@@ -12605,7 +12598,6 @@
 				C42C35782743D924004D8BA9 /* NodeAccess.swift in Sources */,
 				12466818275DB8F700C94335 /* CustomModalBackupAlertRouter.swift in Sources */,
 				C460506B27282D7200D67A44 /* NodeHandle+Additions.swift in Sources */,
-				C42C5E4127A06DB700205DB8 /* MyChatFilesFolderManager.swift in Sources */,
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				77C2E07C24BCBB9C00B4894A /* ActionSheetActions.swift in Sources */,
 				2FBBE77E25E4544900B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */,
