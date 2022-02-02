@@ -92,7 +92,7 @@
 
 - (void)reloadUI {
     if (self.node.mnz_numberOfVersions == 0) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:true completion:nil];
     }  else {
         [self.nodesIndexPathMutableDictionary removeAllObjects];
         
