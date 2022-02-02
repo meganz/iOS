@@ -479,6 +479,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     
     if (indexPath.section != GroupChatDetailsSectionParticipants && indexPath.section != GroupChatDetailsSectionObservers && indexPath.section != GroupChatDetailsSectionChatNotifications) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
+        cell.enableLabel.text = @"";
     }
     
     switch (indexPath.section) {
@@ -535,7 +536,8 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             } else {
                 cell.enableLabel.hidden = cell.userInteractionEnabled = NO;
             }
-            cell.enableLabel.text = NSLocalizedString(@"Enabled", @"The label of the toggle switch to indicate that file versioning is enabled.");
+            cell.accessoryType = cell.enableLabel.hidden ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+            cell.enableLabel.text = cell.enableLabel.hidden ? @"" : NSLocalizedString(@"Enabled", @"The label of the toggle switch to indicate that file versioning is enabled.");
             break;
             
         case GroupChatDetailsSectionObservers:
