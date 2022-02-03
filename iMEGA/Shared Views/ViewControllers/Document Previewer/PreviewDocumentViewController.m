@@ -659,8 +659,16 @@
     } else {
         PDFPage *page = [self.pdfView.document pageAtIndex:indexPath.item];
         if (page) {
-            imageView.image = [page thumbnailOfSize:CGSizeMake(100, 100) forBox:kPDFDisplayBoxMediaBox];
-            [self.thumbnailCache setObject:imageView.image forKey:cachedImageKey];
+            @try {
+                UIImage *thumbnail = [page thumbnailOfSize:CGSizeMake(100, 100) forBox:kPDFDisplayBoxMediaBox];
+                if (thumbnail) {
+                    imageView.image = thumbnail;
+                    [self.thumbnailCache setObject:thumbnail forKey:cachedImageKey];
+                }
+            } @catch (NSException *exception) {
+                imageView.image = [UIImage imageNamed:@"pdf"];
+                MEGALogError(@"Exception during thumbnail caching: %@", exception);
+            }
         }
     }
 }
