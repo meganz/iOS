@@ -1160,7 +1160,7 @@
     }
 }
 
-- (IBAction)addContact:(UIView *)sender {
+- (IBAction)addContact:(id)sender {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
@@ -1230,8 +1230,9 @@
         } else if (self.insertAnEmailBarButtonItem) {
             addContactAlertController.popoverPresentationController.barButtonItem = self.insertAnEmailBarButtonItem;
         } else {
-            addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
-            addContactAlertController.popoverPresentationController.sourceView = sender.superview;
+            UIView *senderView = (UIView *)sender;
+            addContactAlertController.popoverPresentationController.sourceRect = senderView.frame;
+            addContactAlertController.popoverPresentationController.sourceView = senderView.superview;
         }
         
         [self presentViewController:addContactAlertController animated:YES completion:nil];
