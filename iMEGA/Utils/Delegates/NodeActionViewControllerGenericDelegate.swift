@@ -74,13 +74,12 @@ final class NodeActionViewControllerGenericDelegate:
         case .moveToRubbishBin:
             node.mnz_moveToTheRubbishBin { }
         case .remove:
-            node.mnz_remove(in: viewController)
-            guard node.mnz_isPlayable(),
-                  AudioPlayerManager.shared.isPlayerAlive(),
-                  AudioPlayerManager.shared.isPlayingNode(node) else {
-                      return
-                  }
-            AudioPlayerManager.shared.closePlayer()
+            node.mnz_remove(in: viewController) { shouldRemove in
+                if shouldRemove {
+                    guard node.mnz_isPlaying() else { return }
+                    AudioPlayerManager.shared.closePlayer()
+                }
+            }
         case .removeSharing:
             node.mnz_removeSharing()
         case .sendToChat:

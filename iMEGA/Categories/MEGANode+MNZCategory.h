@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^ _Nullable)(MEGARequest *request))completion;
 - (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController;
 - (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion;
-- (void)mnz_removeInViewController:(UIViewController *)viewController;
+- (void)mnz_removeInViewController:(UIViewController *)viewController completion:(void (^ _Nullable)(BOOL shouldRemove))actionCompletion;
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;
 - (BOOL)mnz_isPlayable;
+- (BOOL)mnz_isPlaying;
 - (BOOL)mnz_isInRubbishBin;
 - (NSString *)mnz_voiceCachePath;
 - (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
