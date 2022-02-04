@@ -203,7 +203,7 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
 
     func removeTextFile(node: MEGANode) {
         guard let controller = baseViewController else { return }
-        node.mnz_remove(in: controller)
+        node.mnz_remove(in: controller, completion: nil)
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {

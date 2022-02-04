@@ -393,14 +393,16 @@
     }
 }
 
-- (void)mnz_removeInViewController:(UIViewController *)viewController {
+- (void)mnz_removeInViewController:(UIViewController *)viewController completion:(void (^)(BOOL shouldRemove))actionCompletion {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *alertTitle = NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
         NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? NSLocalizedString(@"removeFolderToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 folder'") : NSLocalizedString(@"removeFileToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 file'");
         
         UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            actionCompletion(NO);
+        }]];
         
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
@@ -416,6 +418,7 @@
                 }
                 MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:1 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
                 [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
+                actionCompletion(YES);
             }
         }]];
         
@@ -897,6 +900,10 @@
     supportedVideoCodecId = [videoCodecIds containsObject:@(self.videoCodecId)];
     
     return supportedShortFormat || supportedVideoCodecId;
+}
+
+- (BOOL)mnz_isPlaying {
+    return self.mnz_isPlayable && [AudioPlayerManager.shared isPlayerAlive] && [AudioPlayerManager.shared isPlayingNode:self];
 }
 
 - (NSString *)mnz_voiceCachePath {

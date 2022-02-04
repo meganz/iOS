@@ -498,8 +498,8 @@
             break;
             
         case MegaNodeActionTypeRemove:
-            [node mnz_removeInViewController:self];
-            
+            [node mnz_removeInViewController:self completion:nil];
+
         case MegaNodeActionTypeViewVersions:
             [node mnz_showNodeVersionsInViewController:self];
             

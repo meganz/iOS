@@ -1215,6 +1215,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (IBAction)moreMinimizedAction:(UIBarButtonItem *)sender {
     __weak __typeof__(self) weakSelf = self;
     
+    if (self.parentNode.isFolder &&
+        self.displayMode == DisplayModeRubbishBin &&
+        self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rubbishNode].handle) {
+        [self showCustomActionsForNode:self.parentNode sender:sender];
+        return;
+    }
+    
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     if ([self numberOfRows]) {
         NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
@@ -1362,7 +1369,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentSortByActionSheet];
 }
 
-- (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {
+- (void)showCustomActionsForNode:(MEGANode *)node sender:(id)sender {
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
@@ -1683,16 +1690,20 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             break;
             
-        case MegaNodeActionTypeRemove:
-            [node mnz_removeInViewController:self];
+        case MegaNodeActionTypeRemove: {
+            [node mnz_removeInViewController:self completion:^(BOOL shouldRemove) {
+                if (shouldRemove) {
+                    if (node.mnz_isPlaying) {
+                        [AudioPlayerManager.shared closePlayer];
+                    } else if (node.isFolder &&
+                               self.parentNode.handle == node.handle) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                }
+            }];
             
-            if (node.mnz_isPlayable &&
-                [AudioPlayerManager.shared isPlayerAlive] &&
-                [AudioPlayerManager.shared isPlayingNode:node]) {
-                [AudioPlayerManager.shared closePlayer];
-            }
-
             break;
+        }
             
         case MegaNodeActionTypeRemoveSharing:
             [node mnz_removeSharing];
@@ -1700,6 +1711,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case MegaNodeActionTypeRestore:
             [node mnz_restore];
+            
+            if (node.isFolder &&
+                self.parentNode.handle == node.handle) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             break;
             
         case MegaNodeActionTypeSaveToPhotos:

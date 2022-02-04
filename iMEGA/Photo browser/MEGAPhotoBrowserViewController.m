@@ -1226,7 +1226,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeRemove:
-            [node mnz_removeInViewController:self];
+            [node mnz_removeInViewController:self completion:nil];
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
