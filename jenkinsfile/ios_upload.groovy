@@ -28,7 +28,9 @@ pipeline {
                 def slackMessage = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Testflight"
                 
                 if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
-                    slackMessage = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded"
+                    slackMessage = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded \nbranch: ${GIT_BRANCH}"
+                } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.GIT_BRANCH == 'origin/develop') {
+                    slackMessage = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Firebase \nbranch: ${GIT_BRANCH}"
                 }
                 
                 slackSend color: "good", message: slackMessage
@@ -36,10 +38,12 @@ pipeline {
         }
         failure {
             script {
-                def slackMessage = ":x: Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
+                def slackMessage = ":x: Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed \nbranch: ${GIT_BRANCH}"
 
                 if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
-                    slackMessage = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed"
+                    slackMessage = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed \nbranch: ${GIT_BRANCH}"
+                } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.GIT_BRANCH == 'origin/develop') {
+                    slackMessage = ":x: Firebase Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed \nbranch: ${GIT_BRANCH}"
                 }
 
                 withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
@@ -53,11 +57,48 @@ pipeline {
         }
     }
     stages {
-        stage('Installing dependencies') {
+        stage('Prepare') {
+            parallel {
+                stage('Set build number and fetch version') {
+                    steps {
+                        gitlabCommitStatus(name: 'Set build number') {
+                            injectEnvironments({
+                                sh "bundle exec fastlane set_time_as_build_number"
+                                sh "bundle exec fastlane fetch_version_number"
+                                script {
+                                    env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
+                                    env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
+                                }
+                            })
+                        }
+                    }
+                }
+
+                stage('Download app metadata') {
+                    when {
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Download app metadata') {
+                            injectEnvironments({
+                                sh 'bundle exec fastlane download_metadata'
+                            })
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Install Dependencies') {
             when { 
                 anyOf {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_qa' 
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                    environment name: 'GIT_BRANCH', value: 'origin/develop'
                 }
             }
             parallel {
@@ -102,57 +143,16 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
-
-        stage('Prepare') {
-            parallel {
-                stage('Set build number') {
-                    steps {
-                        gitlabCommitStatus(name: 'Set build number') {
-                            injectEnvironments({
-                                sh "bundle exec fastlane set_time_as_build_number"
-                                sh "bundle exec fastlane fetch_version_number"
-                                script {
-                                    env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
-                                    env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
-                                }
-                            })
-                        }
-                    }
-                }
 
                 stage('Install certificate and provisioning profiles in temporary keychain') {
-                    when { 
-                        anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
-                        }
-                    }
                     steps {
                         gitlabCommitStatus(name: 'Install certificate and provisioning profiles in temporary keychain') {
                             injectEnvironments({
                                 sh "bundle exec fastlane create_temporary_keychain"
                                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore'"                                   
-                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'adhoc'"
+                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore' readonly:true"                                   
+                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'adhoc' readonly:false"
                                 }
-                            })
-                        }
-                    }
-                }
-
-                stage('Download app metadata') {
-                    when {
-                        anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect' 
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
-                        }
-                    }
-                    steps {
-                        gitlabCommitStatus(name: 'Download app metadata') {
-                            injectEnvironments({
-                                sh 'bundle exec fastlane download_metadata'
                             })
                         }
                     }
@@ -160,7 +160,7 @@ pipeline {
             }
         }
 
-        stage('Archive') {
+        stage('Archive appstore') {
             when { 
                 anyOf {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
@@ -168,9 +168,25 @@ pipeline {
                 }
             }
             steps {
-                gitlabCommitStatus(name: 'Archive') {
+                gitlabCommitStatus(name: 'Archive appstore') {
                     injectEnvironments({
                         sh "bundle exec fastlane archive_appstore"
+                    })
+                }
+            }
+        }
+
+        stage('Archive adhoc') {
+            when { 
+                anyOf {
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_qa' 
+                    environment name: 'GIT_BRANCH', value: 'origin/develop'
+                }
+            }
+            steps {
+                gitlabCommitStatus(name: 'Archive adhoc') {
+                    injectEnvironments({
+                        sh "bundle exec fastlane archive_adhoc"
                     })
                 }
             }
@@ -200,13 +216,34 @@ pipeline {
                     when { 
                         anyOf {
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                            environment name: 'GIT_BRANCH', value: 'origin/develop'
                         }
                     }
                     steps {
                         gitlabCommitStatus(name: 'Upload symbols to crashlytics') {
                             injectEnvironments({
                                 sh "bundle exec fastlane upload_symbols"
+                            })
+                        }
+                    }
+                }
+
+                stage('Upload build to Firebase') {
+                    when { 
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
+                            environment name: 'GIT_BRANCH', value: 'origin/develop'
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Upload build to Firebase') {
+                            injectEnvironments({
+                                withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
+                                    sh "cp \$firebase_credentials service_credentials_file.json"
+                                    sh "bundle exec fastlane upload_build_to_firebase"
+                                } 
                             })
                         }
                     }
@@ -237,7 +274,9 @@ pipeline {
             when { 
                 anyOf {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                    environment name: 'GIT_BRANCH', value: 'origin/develop'
                 }
             }
             steps {

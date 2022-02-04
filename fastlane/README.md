@@ -119,6 +119,22 @@ Download metadata
 
 Uploads metadata to app store connect
 
+### ios archive_adhoc
+
+```sh
+[bundle exec] fastlane ios archive_adhoc
+```
+
+Archive using Adhoc
+
+### ios upload_build_to_crashlytics
+
+```sh
+[bundle exec] fastlane ios upload_build_to_crashlytics
+```
+
+Upload build to Crashlytics
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
