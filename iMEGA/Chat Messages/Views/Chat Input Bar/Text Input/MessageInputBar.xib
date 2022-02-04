@@ -190,7 +190,6 @@
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="leading" secondItem="ul9-iZ-5KV" secondAttribute="trailing" constant="13" id="JjR-d1-KwI"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="8mz-bo-tiI" secondAttribute="bottom" constant="9.5" id="LNR-C0-ATf"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="trailing" secondItem="zpz-gS-Gkz" secondAttribute="trailing" id="OxB-4H-ddg"/>
-                <constraint firstItem="Emu-CZ-PtI" firstAttribute="centerY" secondItem="ul9-iZ-5KV" secondAttribute="centerY" priority="999" id="PPU-RZ-QSw"/>
                 <constraint firstItem="gyg-48-psi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Q33-kC-Y9H"/>
                 <constraint firstAttribute="trailing" secondItem="gyg-48-psi" secondAttribute="trailing" id="TjQ-Wj-1H6"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="centerX" secondItem="APV-vT-gYp" secondAttribute="centerX" id="WrG-aE-4gw"/>
@@ -198,7 +197,7 @@
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="leading" secondItem="Emu-CZ-PtI" secondAttribute="leading" constant="-5" id="cLk-mb-yNb"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="af9-4d-CYz" secondAttribute="top" constant="-9" id="fPC-Vq-M1z"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="50" id="fXP-Pm-6Nn"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="15" id="fij-A4-njj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="15" id="fij-A4-njj"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gmO-P0-T9e"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="9" id="iCm-C8-wxV"/>
                 <constraint firstItem="Emu-CZ-PtI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="jZ3-JP-Z6O"/>
@@ -222,6 +221,7 @@
             </variation>
             <connections>
                 <outlet property="addButton" destination="Emu-CZ-PtI" id="271-GU-ORY"/>
+                <outlet property="addButtonBottomConstraint" destination="fij-A4-njj" id="YRD-g2-uyp"/>
                 <outlet property="backgroundViewTrailingButtonConstraint" destination="OxB-4H-ddg" id="N85-NG-AkL"/>
                 <outlet property="backgroundViewTrailingTextViewConstraint" destination="q8V-yt-DgD" id="IAU-5w-26A"/>
                 <outlet property="collapsedTextViewCoverView" destination="vXN-Gp-R34" id="wUf-Ru-xqw"/>
@@ -237,7 +237,6 @@
                 <outlet property="messageTextViewCoverView" destination="zpz-gS-Gkz" id="La3-y5-h5F"/>
                 <outlet property="messageTextViewCoverViewBottomConstraint" destination="iCm-C8-wxV" id="wwT-vs-FgJ"/>
                 <outlet property="messageTextViewCoverViewTopConstraint" destination="fPC-Vq-M1z" id="QeO-wq-vZV"/>
-                <outlet property="messageTextViewTopConstraint" destination="fPC-Vq-M1z" id="8D6-ME-bhk"/>
                 <outlet property="micButton" destination="dvx-SE-Dth" id="vkL-aN-Rtz"/>
                 <outlet property="rightButtonHolderView" destination="ckY-Kz-eqN" id="eAE-kF-QNn"/>
                 <outlet property="rightButtonHolderViewHeightConstraint" destination="eSg-B9-bf9" id="yIW-Aa-UIG"/>
@@ -246,7 +245,7 @@
                 <outlet property="sendButton" destination="aIG-GH-GIp" id="RVs-PK-Uwf"/>
                 <outlet property="typingIndicatorLabel" destination="8mz-bo-tiI" id="bDk-T8-0kU"/>
             </connections>
-            <point key="canvasLocation" x="-749.27536231884062" y="53.236607142857139"/>
+            <point key="canvasLocation" x="-1003" y="31"/>
         </view>
     </objects>
     <designables>
