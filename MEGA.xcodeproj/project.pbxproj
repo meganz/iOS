@@ -2152,6 +2152,7 @@
 		C49FB1EE258B6F1000B1280D /* CALayer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */; };
 		C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C4A9146725814E2B008D879F /* UICollectionView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */; };
+		C4AC9E6627ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC9E6527ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift */; };
 		C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */; };
 		C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */; };
 		C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */; };
@@ -4270,6 +4271,7 @@
 		C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Additions.swift"; sourceTree = "<group>"; };
 		C4A5F0E7266E31DD001D783B /* MEGALabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGALabel.swift; sourceTree = "<group>"; };
 		C4A9146625814E2B008D879F /* UICollectionView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Additions.swift"; sourceTree = "<group>"; };
+		C4AC9E6527ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarComponentsSizeCalculator.swift; sourceTree = "<group>"; };
 		C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
 		C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewRouter.swift; sourceTree = "<group>"; };
 		C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
@@ -9308,6 +9310,7 @@
 				BF15894B2436EB8D007AF9EC /* MessageTextView.swift */,
 				BF1589232436A27A007AF9EC /* MessageInputBar.swift */,
 				BF1589252436A296007AF9EC /* MessageInputBar.xib */,
+				C4AC9E6527ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift */,
 			);
 			path = "Text Input";
 			sourceTree = "<group>";
@@ -10924,6 +10927,7 @@
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
 				BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */,
 				B6E5D24E274C2E8600C8AB96 /* PhotoDayCard.swift in Sources */,
+				C4AC9E6627ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift in Sources */,
 				830C27C125E64DF000E9B56E /* MOOfflineNode+Mapper.swift in Sources */,
 				2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */,
 				9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */,

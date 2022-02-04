@@ -16,9 +16,9 @@ class MessageInputBar: UIView {
     
     // MARK:- Outlets
     @IBOutlet weak var addButton: UIButton!
-
+    @IBOutlet weak var addButtonBottomConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var messageTextView: MessageTextView!
-    @IBOutlet weak var messageTextViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageTextViewBottomConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var collapsedTextViewCoverView: UIView!
@@ -96,6 +96,7 @@ class MessageInputBar: UIView {
     }
     
     private let animationDuration: TimeInterval = 0.4
+    private let componentsSizeCalculator = MessageInputBarComponentsSizeCalculator()
     
     // MARK: - Overriden methods.
     
@@ -125,6 +126,7 @@ class MessageInputBar: UIView {
         let cover: CGFloat = messageTextViewCoverViewTopConstraint.constant + messageTextViewCoverViewBottomConstraint.constant
         messageTextViewCoverView.maxCornerRadius = messageTextViewFont.lineHeight + inset + cover
         
+        calculateAddButtonBotomSpacing()
         updateAppearance()
     }
     
@@ -139,8 +141,10 @@ class MessageInputBar: UIView {
             updateAppearance()
         }
         
-        if editViewHeightConstraint.constant > 0, traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            calculateEditViewHeight()
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            if editViewHeightConstraint.constant > 0 { calculateEditViewHeight() }
+            calculateAddButtonBotomSpacing()
+            calculateTopEditViewSpacing()
         }
     }
     
@@ -169,9 +173,13 @@ class MessageInputBar: UIView {
     
     func setTypingIndicator(text: NSAttributedString?) {
         typingIndicatorLabel.isHidden = (text == nil)
+        
+        calculateTopEditViewSpacing()
 
         if let typingIndicatorText = text {
-            calculateEditViewHeight()
+            if editViewHeightConstraint.constant > 0 {
+                calculateEditViewHeight()
+            }
             typingIndicatorLabel.attributedText = typingIndicatorText
         }
     }
@@ -514,7 +522,11 @@ class MessageInputBar: UIView {
     }
     
     private func calculateTopEditViewSpacing() {
-        editViewTopConstraint.constant = typingIndicatorLabel.sizeThatFits(CGSize(width: typingIndicatorLabel.frame.width, height: .greatestFiniteMagnitude)).height + 25
+        editViewTopConstraint.constant = componentsSizeCalculator.calculateTypingLabelSize(fitSize: CGSize(width: frame.width, height: .greatestFiniteMagnitude)).height + 25
+    }
+    
+    private func calculateAddButtonBotomSpacing() {
+        addButtonBottomConstraint.constant = messageTextViewBottomConstraint.constant + (componentsSizeCalculator.calculateTextViewSize(fitSize: CGSize(width: frame.width, height: .greatestFiniteMagnitude)).height - addButton.frame.height) / 2
     }
     
     // MARK: - Deinit
@@ -535,5 +547,3 @@ extension MessageInputBar: UITextViewDelegate {
         delegate?.textDidEndEditing()
     }
 }
-
-

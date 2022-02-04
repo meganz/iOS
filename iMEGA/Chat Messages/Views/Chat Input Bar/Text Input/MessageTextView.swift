@@ -7,6 +7,10 @@ class MessageTextView: UITextView {
     var collapsedMaxHeightReachedAction: ((Bool) -> Void)?
     var pasteAction: ((UIImage) -> Void)?
     
+    lazy var lineIntrinsicContentSize: CGFloat = {
+        (font?.lineHeight ?? 21.0) + textContainerInset.top + textContainerInset.bottom
+    }()
+    
     var placeholderText: String? {
         didSet {
             guard let placeholderText = placeholderText else {
