@@ -13,10 +13,11 @@ struct NodeAccessConfiguration {
 }
 
 class NodeAccess: NSObject {
-    let sdk = MEGASdkManager.sharedMEGASdk()
+    private let sdk = MEGASdkManager.sharedMEGASdk()
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
-    private var nodeAccessConfiguration: NodeAccessConfiguration
     private var nodeLoadOperation: NodeLoadOperation?
+    
+    var nodeAccessConfiguration: NodeAccessConfiguration
     
     /// All changes in the SDK and in memory are notified so that the handle value is always up to date. This handle is the single source of truth on target node handle check.
     private var handle: NodeHandle? {
@@ -74,7 +75,7 @@ class NodeAccess: NSObject {
         nodeAccessSemaphore.wait()
         
         guard let node = handle?.validNode(in: sdk) else {
-            let operation = NodeLoadOperation(autoCreate:nodeAccessConfiguration.autoCreate,
+            let operation = NodeLoadOperation(autoCreate: nodeAccessConfiguration.autoCreate,
                                               loadNodeRequest: nodeAccessConfiguration.loadNodeRequest,
                                               newNodeName: nodeAccessConfiguration.nodeName,
                                               createNodeRequest: nodeAccessConfiguration.createNodeRequest,

@@ -2,6 +2,9 @@ PODS:
   - CHTCollectionViewWaterfallLayout (0.9.8):
     - CHTCollectionViewWaterfallLayout/ObjC (= 0.9.8)
   - CHTCollectionViewWaterfallLayout/ObjC (0.9.8)
+  - CocoaLumberjack/Core (3.7.2)
+  - CocoaLumberjack/Swift (3.7.2):
+    - CocoaLumberjack/Core
   - DateTools (2.0.0)
   - DZNEmptyDataSet (1.8.1)
   - Firebase/CoreOnly (8.9.1):
@@ -89,6 +92,7 @@ PODS:
 
 DEPENDENCIES:
   - CHTCollectionViewWaterfallLayout
+  - CocoaLumberjack/Swift
   - DateTools
   - DZNEmptyDataSet (from `https://github.com/meganz/DZNEmptyDataSet.git`, commit `3db6295`)
   - Firebase/Crashlytics
@@ -113,6 +117,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - CHTCollectionViewWaterfallLayout
+    - CocoaLumberjack
     - DateTools
     - Firebase
     - FirebaseCore
@@ -174,6 +179,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   CHTCollectionViewWaterfallLayout: 5f241d2480ab4939aa0d1ad4981de9eef1fbe60d
+  CocoaLumberjack: b7e05132ff94f6ae4dfa9d5bce9141893a21d9da
   DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
   DZNEmptyDataSet: b94434220f87d9dda46660eb4f07a424778e93b4
   Firebase: fb5114cd2bf96e2ff7bcb01d0d9a156cf5fd2f07
@@ -206,6 +212,6 @@ SPEC CHECKSUMS:
   WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: d8695ae148d51d84235cff4ad6fa9c1b0f438f71
+PODFILE CHECKSUM: 96a7d1d2e9611aaaf5c2ad9f1b2e2ea5a829b4b5
 
 COCOAPODS: 1.11.2
