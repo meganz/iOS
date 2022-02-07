@@ -607,11 +607,15 @@
 - (void)beginBackgroundTaskWithName:(NSString *)name {
     MEGALogDebug(@"Begin background task with name: %@", name);
     
-    UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:name expirationHandler:^{
-        [self endBackgroundTaskWithName:name];
-    }];
-    
-    [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
+    @try {
+        UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:name expirationHandler:^{
+            [self endBackgroundTaskWithName:name];
+        }];
+        
+        [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
+    } @catch (NSException *exception) {
+        MEGALogDebug(@"Can't begin background task with name %@ and with exception %@", name, exception);
+    }
 }
 
 - (void)endBackgroundTaskWithName:(NSString *)name {
