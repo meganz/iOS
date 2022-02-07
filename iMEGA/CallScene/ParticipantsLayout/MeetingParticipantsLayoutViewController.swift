@@ -60,6 +60,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        if let appBecomeActiveObserver = appBecomeActiveObserver {
+            NotificationCenter.default.removeObserver(appBecomeActiveObserver)
+        }
+    }
+    
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
