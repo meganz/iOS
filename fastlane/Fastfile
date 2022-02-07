@@ -87,7 +87,7 @@ platform :ios do
       api_key: api_key,
       keychain_name: TEMP_KEYCHAIN_NAME,
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
-      readonly: true,
+      readonly: options[:readonly],
       verbose: true
     )
   end
@@ -227,6 +227,46 @@ platform :ios do
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
       skip_binary_upload: true
+    )
+  end
+
+  desc "Archive using Adhoc"
+  lane :archive_adhoc do
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      clean: true,
+      export_method: "ad-hoc",
+      output_name: "MEGA",
+      output_directory: BUILD_DIR,
+      configuration: 'Release',
+      verbose: true,
+      export_options: {
+        iCloudContainerEnvironment: "Production"
+      }
+    )
+  end
+
+  desc "Upload build to Firebase"
+  lane :upload_build_to_firebase do
+    # Get the 20 latest commints from the current branch.
+    changelog_from_git_commits(
+      commits_count: 20,  
+      pretty: "- %s",
+      date_format: "short",
+      match_lightweight_tag: false,
+      merge_commit_filtering: "include_merges"
+    )
+
+    gsp_path = "./iMEGA/Supporting Files/GoogleService-Info.plist"
+    google_app_id = get_info_plist_value(path: gsp_path, key: 'GOOGLE_APP_ID')
+
+    firebase_app_distribution(
+      app: google_app_id,
+      service_credentials_file: "service_credentials_file.json",
+      ipa_path: "#{BUILD_DIR}/MEGA.ipa",
+      groups: "internal-testers",
+      release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
   end
 

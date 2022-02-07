@@ -3481,6 +3481,16 @@ public enum Strings {
         }
       }
     }
+    public enum Help {
+      public enum ReportIssue {
+        public enum AttachLogFiles {
+          /// Do you want to attach diagnostic log files to assist with debug?
+          public static let message = Strings.tr("Localizable", "help.reportIssue.attachLogFiles.message")
+          /// Attach log files
+          public static let title = Strings.tr("Localizable", "help.reportIssue.attachLogFiles.title")
+        }
+      }
+    }
     public enum Home {
       public enum Images {
         /// No Images Found
