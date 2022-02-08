@@ -619,6 +619,11 @@
     [self setToolbarActionsEnabled:count > 0];
 }
 
+
+- (void)shouldEnableEditButton:(BOOL)boolValue {
+    self.editBarButtonItem.enabled = boolValue;
+}
+
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     for (MEGANode *n in self.selection.nodes) {
         if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {

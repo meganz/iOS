@@ -8,6 +8,9 @@ enum PhotoLibraryConstants {
     static let cardRowPadding: CGFloat = 16
     static let libraryPadding: CGFloat = 16
     static let scrollViewCoordinateSpaceName = "scrollView"
+    static let defaultColumnsNumber = 3
+    static let oneColumnNumber = 1
+    static let fiveColumnsNumber = 5
     
     @available(iOS 14.0, *)
     static let cardColumns = [
@@ -20,4 +23,5 @@ enum PhotoLibraryConstants {
 
 extension Notification.Name {
     static let didFinishPhotoCardScrollPositionCalculation = Notification.Name("didFinishCardScrollPositionCalculation")
+    static let didFinishZoom = Notification.Name("didFinishZoom")
 }
