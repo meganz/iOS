@@ -121,6 +121,7 @@ internal enum Colors {
   }
   internal enum Photos {
     internal static let photoSeletionBorder = ColorAsset(name: "photoSeletionBorder")
+    internal static let zoomButtonForeground = ColorAsset(name: "zoomButtonForeground")
   }
   internal enum SharedViews {
     internal enum Explorer {

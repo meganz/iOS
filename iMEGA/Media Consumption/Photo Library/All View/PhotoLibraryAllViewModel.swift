@@ -1,10 +1,12 @@
-import Foundation
+import SwiftUI
 
 @available(iOS 14.0, *)
 final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSection> {
     private var lastCardPosition: PhotoScrollPosition?
     private var lastPhotoPosition: PhotoScrollPosition?
     
+    @Published var zoomLevel: ZoomLevel = .default(PhotoLibraryConstants.defaultColumnsNumber)
+
     override var position: PhotoScrollPosition? {
         calculateCurrentScrollPosition()
     }
@@ -17,6 +19,14 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
         subscribeToLibraryChange()
         subscribeToSelectedModeChange()
     }
+    
+    func zoom(to level: Int) {
+        calculateLastScrollPosition()
+        
+        NotificationCenter.default.post(name: .didFinishZoom, object: ["zoomLevel": level])
+    }
+    
+    // MARK: Private
     
     private func subscribeToLibraryChange() {
         libraryViewModel

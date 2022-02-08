@@ -66,6 +66,11 @@
 		12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682A275DBE0500C94335 /* TextEditorViewModel.swift */; };
 		12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */; };
 		12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */; };
+		12696B0E27A8B122008628EA /* ZoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0A27A8B121008628EA /* ZoomButton.swift */; };
+		12696B0F27A8B122008628EA /* ZoomViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0B27A8B121008628EA /* ZoomViewModifier.swift */; };
+		12696B1027A8B122008628EA /* ZoomLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0C27A8B121008628EA /* ZoomLevel.swift */; };
+		12696B1127A8B122008628EA /* ZoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0D27A8B122008628EA /* ZoomViewModel.swift */; };
+		12696B1527A8B58A008628EA /* Binding+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B1427A8B58A008628EA /* Binding+Additions.swift */; };
 		129C341E275FECF100019019 /* PhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129C341D275FECF100019019 /* PhotoBrowser.swift */; };
 		12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
@@ -2363,6 +2368,11 @@
 		1246682A275DBE0500C94335 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorViewRouter.swift; sourceTree = "<group>"; };
 		1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewModel.swift; sourceTree = "<group>"; };
+		12696B0A27A8B121008628EA /* ZoomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomButton.swift; sourceTree = "<group>"; };
+		12696B0B27A8B121008628EA /* ZoomViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomViewModifier.swift; sourceTree = "<group>"; };
+		12696B0C27A8B121008628EA /* ZoomLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomLevel.swift; sourceTree = "<group>"; };
+		12696B0D27A8B122008628EA /* ZoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomViewModel.swift; sourceTree = "<group>"; };
+		12696B1427A8B58A008628EA /* Binding+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Additions.swift"; sourceTree = "<group>"; };
 		129C341D275FECF100019019 /* PhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowser.swift; sourceTree = "<group>"; };
 		12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelection.swift; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4780,6 +4790,17 @@
 				1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */,
 			);
 			path = TextEditor;
+			sourceTree = "<group>";
+		};
+		12696B0727A8B0FB008628EA /* Zoom */ = {
+			isa = PBXGroup;
+			children = (
+				12696B0A27A8B121008628EA /* ZoomButton.swift */,
+				12696B0C27A8B121008628EA /* ZoomLevel.swift */,
+				12696B0D27A8B122008628EA /* ZoomViewModel.swift */,
+				12696B0B27A8B121008628EA /* ZoomViewModifier.swift */,
+			);
+			path = Zoom;
 			sourceTree = "<group>";
 		};
 		12E14BA5278CC93700AE1BE8 /* Photo Cell */ = {
@@ -8789,6 +8810,7 @@
 		B6C444DB274A285700268D9A /* All View */ = {
 			isa = PBXGroup;
 			children = (
+				12696B0727A8B0FB008628EA /* Zoom */,
 				12E14BA5278CC93700AE1BE8 /* Photo Cell */,
 				B6C444D4274A282500268D9A /* PhotoLibraryAllView.swift */,
 				B6C444D6274A283300268D9A /* PhotoLibraryAllViewModel.swift */,
@@ -8956,6 +8978,7 @@
 			isa = PBXGroup;
 			children = (
 				B6E6727B2785377B00158FA0 /* Publisher+Additions.swift */,
+				12696B1427A8B58A008628EA /* Binding+Additions.swift */,
 			);
 			path = Combine;
 			sourceTree = "<group>";
@@ -11157,6 +11180,7 @@
 				5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */,
 				5B33F0FA26601E4100E5F0F4 /* FavouritesRouter.swift in Sources */,
 				83E345CD25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift in Sources */,
+				12696B1127A8B122008628EA /* ZoomViewModel.swift in Sources */,
 				C475D60026E28622005E9049 /* CloudDriveViewController+Backup.swift in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
@@ -11279,6 +11303,7 @@
 				A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
+				12696B0F27A8B122008628EA /* ZoomViewModifier.swift in Sources */,
 				5D6D0F5325270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift in Sources */,
 				BF782D66269BA4BB0001D169 /* NodeEntity.swift in Sources */,
 				83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */,
@@ -11678,6 +11703,7 @@
 				A81C658B254B2D3000105BF4 /* GiphyCategoryView.swift in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
 				C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */,
+				12696B1027A8B122008628EA /* ZoomLevel.swift in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				BF782D5D269BA4BB0001D169 /* FavouriteItemEntity.swift in Sources */,
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
@@ -11853,6 +11879,7 @@
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
+				12696B1527A8B58A008628EA /* Binding+Additions.swift in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
 				2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
@@ -12135,6 +12162,7 @@
 				5D9DC3CC253EB7AF0055F4C4 /* Debouncer.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				5D83042025638DE70082CA18 /* MEGABanner.swift in Sources */,
+				12696B0E27A8B122008628EA /* ZoomButton.swift in Sources */,
 				B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */,
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
@@ -13069,7 +13097,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 2202031349;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -13107,7 +13135,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.2.1;
+				MARKETING_VERSION = 7.3;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -13142,7 +13170,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 2202031349;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -13178,7 +13206,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.2.1;
+				MARKETING_VERSION = 7.3;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
