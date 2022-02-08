@@ -6,9 +6,8 @@ final class PhotoAutoScrollViewModel: ObservableObject, PhotoScrollPositioning {
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel: PhotoLibraryAllViewModel
     
-    @Published var autoScroll = 0
-    
-    var shouldAnimate: Bool = false
+    @Published var autoScrollWithAnimation = 0
+    @Published var autoScrollWithoutAnimation = 0
     
     var position: PhotoScrollPosition? {
         viewModel.position
@@ -18,7 +17,7 @@ final class PhotoAutoScrollViewModel: ObservableObject, PhotoScrollPositioning {
         self.viewModel = viewModel
         
         subscribeToCardScrollFinishNotification()
-        subscribeToZoomFinishNotification()
+        subscribeToZoomState()
     }
     
     private func subscribeToCardScrollFinishNotification() {
@@ -29,19 +28,17 @@ final class PhotoAutoScrollViewModel: ObservableObject, PhotoScrollPositioning {
                 self?.viewModel.hasPositionChange() == true
             }
             .sink { [weak self] _ in
-                self?.shouldAnimate = true
-                self?.autoScroll += 1
+                self?.autoScrollWithAnimation += 1
             }
             .store(in: &subscriptions)
     }
     
-    private func subscribeToZoomFinishNotification() {
-        NotificationCenter
-            .default
-            .publisher(for: .didFinishZoom)
+    private func subscribeToZoomState() {
+        viewModel
+            .$zoomState
+            .dropFirst()
             .sink { [weak self] _ in
-                self?.shouldAnimate = false
-                self?.autoScroll += 1
+                self?.autoScrollWithoutAnimation += 1
             }
             .store(in: &subscriptions)
     }
