@@ -165,7 +165,6 @@
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
 		2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */; };
 		2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */; };
-		2FEEE9A225FEDE2E0031AB78 /* MeetingCreatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */; };
 		2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */; };
 		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */; };
@@ -1028,6 +1027,7 @@
 		83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
+		83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */; };
 		83E3454E25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */; };
 		83E3454F25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */; };
 		83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */; };
@@ -1341,7 +1341,6 @@
 		A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
 		A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
 		A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */; };
-		A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */; };
 		A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */; };
 		A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
@@ -2472,7 +2471,6 @@
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
 		2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModelTests.swift; sourceTree = "<group>"; };
 		2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingCreatingUseCase.swift; sourceTree = "<group>"; };
-		2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingView.swift; sourceTree = "<group>"; };
 		2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepLinkingTests.m; sourceTree = "<group>"; };
 		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
@@ -3318,6 +3316,7 @@
 		83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
+		83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingCreatingViewController.xib; sourceTree = "<group>"; };
 		83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+QuickAccessWidget.swift"; sourceTree = "<group>"; };
@@ -3514,8 +3513,6 @@
 		A8C262A61FA0B60B006172CE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		A8C262AB1FA1D85E006172CE /* MEGARemoteImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGARemoteImageView.h; sourceTree = "<group>"; };
 		A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGARemoteImageView.m; sourceTree = "<group>"; };
-		A8C262AE1FA1D876006172CE /* MEGALocalImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocalImageView.h; sourceTree = "<group>"; };
-		A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocalImageView.m; sourceTree = "<group>"; };
 		A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAccountType+Mapper.swift"; sourceTree = "<group>"; };
 		A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASubscriptionStatus+Mapper.swift"; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -5042,9 +5039,9 @@
 			isa = PBXGroup;
 			children = (
 				2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */,
-				2FEEE9A125FEDE2E0031AB78 /* MeetingCreatingView.swift */,
 				2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */,
 				2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */,
+				83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */,
 			);
 			path = StartMeetingScene;
 			sourceTree = "<group>";
@@ -5054,8 +5051,6 @@
 			children = (
 				A8C262AB1FA1D85E006172CE /* MEGARemoteImageView.h */,
 				A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */,
-				A8C262AE1FA1D876006172CE /* MEGALocalImageView.h */,
-				A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -10517,6 +10512,7 @@
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				5B727399240D3465005816AB /* altIconMinimal@3x.png in Resources */,
 				5B86D7C5248957E100B7888D /* ContactsTableViewHeader.xib in Resources */,
+				83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */,
 				BF5E33922558D2890055395E /* FileExplorerGridCell.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				B6A11A0E2283987D0017CD59 /* SMSVerification.storyboard in Resources */,
@@ -11203,7 +11199,6 @@
 				BFE6909325351F7700CD21F9 /* PhotosExplorerRouter.swift in Sources */,
 				A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */,
 				BF782D74269BA4BB0001D169 /* ChatLinkErrorEntity.swift in Sources */,
-				A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */,
 				BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */,
@@ -11722,7 +11717,6 @@
 				83143B682604A4540033161A /* CallLocalVideoRepository.swift in Sources */,
 				5D8DC6B3248CB1340067A4F9 /* UIColor+Image.swift in Sources */,
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,
-				2FEEE9A225FEDE2E0031AB78 /* MeetingCreatingView.swift in Sources */,
 				C45D791B2593AAB100EB6C2F /* MiniPlayerSource.swift in Sources */,
 				BF782D67269BA4BB0001D169 /* NodeTypeEntity.swift in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,

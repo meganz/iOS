@@ -144,7 +144,6 @@
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatError.h"
 #import "MEGAChatStartCallRequestDelegate.h"
-#import "MEGALocalImageView.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "UIControl+YYAdd.h"
 #import "MEGAProviderDelegate.h"
