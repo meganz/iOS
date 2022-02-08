@@ -19,8 +19,6 @@ final class PhotoCellViewModel: ObservableObject {
         }
     }
     
-    @Published var editMode: EditMode = .inactive
-    
     init(photo: NodeEntity,
          selection: PhotoSelection,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
@@ -69,20 +67,14 @@ final class PhotoCellViewModel: ObservableObject {
     
     private func configSelection() {
         selection
-            .$editMode
-            .filter { [weak self] in
-                self?.editMode != $0
-            }
-            .assign(to: &$editMode)
-        
-        selection
             .$allSelected
-            .filter { [weak self] _ in
-                self?.editMode.isEditing == true
+            .dropFirst()
+            .filter { [weak self] in
+                self?.isSelected != $0
             }
             .assign(to: &$isSelected)
         
-        if editMode.isEditing {
+        if selection.editMode.isEditing {
             isSelected = selection.isPhotoSelected(photo)
         }
     }
