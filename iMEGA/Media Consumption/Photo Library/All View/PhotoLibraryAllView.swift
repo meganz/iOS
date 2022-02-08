@@ -3,40 +3,31 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoLibraryAllView: View {
     @StateObject var viewModel: PhotoLibraryAllViewModel
-    
     let router: PhotoLibraryContentViewRouting
     
-    @State private var selectedNode: NodeEntity?
-    @State private var columns: [GridItem] = Array(
-        repeating: .init(.flexible(), spacing: 4),
-        count: PhotoLibraryConstants.defaultColumnsNumber
-    )
-    
     var body: some View {
-        GeometryReader { geoProxy in
-            ZStack(alignment: .topTrailing) {
+        ZStack(alignment: .topTrailing) {
+            GeometryReader { geoProxy in
                 ScrollViewReader { scrollProxy in
                     PhotoLibraryModeView(viewModel: viewModel) {
-                        LazyVGrid(columns: columns, spacing: 4, pinnedViews: .sectionHeaders) {
+                        LazyVGrid(columns: viewModel.columns, spacing: 4, pinnedViews: .sectionHeaders) {
                             ForEach(viewModel.photoCategoryList) { section in
                                 sectionView(for: section, viewPortSize: geoProxy.size)
                                     .id(section.categoryDate)
                             }
                         }
                     }
-                    .zoom(default: $viewModel.zoomLevel.onChange(zoomLevelChange), enable: false)
                     .background(PhotoAutoScrollView(viewModel:
                                                         PhotoAutoScrollViewModel(viewModel: viewModel),
                                                     scrollProxy: scrollProxy))
-                    .fullScreenCover(item: $selectedNode) {
-                        router.photoBrowser(for: $0, viewModel: viewModel)
-                            .ignoresSafeArea()
-                    }
                 }
-                
-                ZoomButton(zoomLevel: $viewModel.zoomLevel.onChange(zoomLevelChange))
-                    .opacity(viewModel.libraryViewModel.selection.editMode == .active ? 0 : 1)
             }
+            
+            PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
+        }
+        .fullScreenCover(item: $viewModel.selectedNode) {
+            router.photoBrowser(for: $0, viewModel: viewModel)
+                .ignoresSafeArea()
         }
     }
     
@@ -62,19 +53,11 @@ struct PhotoLibraryAllView: View {
                     }
                     .onTapGesture(count: 1) {
                         withAnimation {
-                            selectedNode = photo
+                            viewModel.selectedNode = photo
                         }
                     }
             }
         }
-    }
-    
-    private func zoomLevelChange(newLevel level: ZoomLevel) {
-        columns = Array(
-            repeating: .init(.flexible(), spacing: 4),
-            count: level.value)
-        
-        viewModel.zoom(to: level.value)
     }
 }
 

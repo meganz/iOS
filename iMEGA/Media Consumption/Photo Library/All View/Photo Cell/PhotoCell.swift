@@ -3,6 +3,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoCell: View {
     @StateObject var viewModel: PhotoCellViewModel
+    @Environment(\.editMode) var editMode
     
     private var tap: some Gesture { TapGesture().onEnded { _ in
         viewModel.isSelected.toggle()
@@ -12,12 +13,12 @@ struct PhotoCell: View {
         ZStack(alignment: .topTrailing) {
             PhotoCellImage(container: viewModel.thumbnailContainer)
             
-            if viewModel.editMode.isEditing {
+            if editMode?.wrappedValue.isEditing == true {
                 CheckMarkView(markedSelected: viewModel.isSelected)
                     .offset(x: -5, y: 5)
             }
         }
-        .gesture(viewModel.editMode.isEditing ? tap : nil)
+        .gesture(editMode?.wrappedValue.isEditing == true ? tap : nil)
         .onAppear {
             viewModel.loadThumbnail()
         }

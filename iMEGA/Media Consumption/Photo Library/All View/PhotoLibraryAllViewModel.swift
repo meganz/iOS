@@ -5,7 +5,17 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
     private var lastCardPosition: PhotoScrollPosition?
     private var lastPhotoPosition: PhotoScrollPosition?
     
-    @Published var zoomLevel: ZoomLevel = .default(PhotoLibraryConstants.defaultColumnsNumber)
+    @Published var zoomState = PhotoLibraryZoomState() {
+        willSet {
+            zoomStateWillChange(to: newValue)
+        }
+    }
+    
+    @Published var selectedNode: NodeEntity?
+    @Published var columns: [GridItem] = Array(
+        repeating: .init(.flexible(), spacing: 4),
+        count: PhotoLibraryZoomState.defaultScaleFactor
+    )
 
     override var position: PhotoScrollPosition? {
         calculateCurrentScrollPosition()
@@ -18,12 +28,6 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
         
         subscribeToLibraryChange()
         subscribeToSelectedModeChange()
-    }
-    
-    func zoom(to level: Int) {
-        calculateLastScrollPosition()
-        
-        NotificationCenter.default.post(name: .didFinishZoom, object: ["zoomLevel": level])
     }
     
     // MARK: Private
@@ -66,6 +70,14 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
                 self?.calculateLastScrollPosition()
             }
             .store(in: &subscriptions)
+    }
+    
+    private func zoomStateWillChange(to newState: PhotoLibraryZoomState) {
+        calculateLastScrollPosition()
+        
+        columns = Array(
+            repeating: .init(.flexible(), spacing: 4),
+            count: newState.scaleFactor)
     }
 }
 

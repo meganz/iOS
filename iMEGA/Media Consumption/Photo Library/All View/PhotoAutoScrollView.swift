@@ -8,14 +8,13 @@ struct PhotoAutoScrollView: View {
     
     var body: some View {
         EmptyView()
-            .onChange(of: viewModel.autoScroll) { _ in
-                if viewModel.shouldAnimate {
-                    withAnimation(.default.speed(3)) {
-                        scrollProxy.scrollTo(viewModel.position, anchor: .center)
-                    }
-                } else {
+            .onChange(of: viewModel.autoScrollWithAnimation) { _ in
+                withAnimation(.default.speed(3)) {
                     scrollProxy.scrollTo(viewModel.position, anchor: .center)
                 }
+            }
+            .onChange(of: viewModel.autoScrollWithoutAnimation) { _ in
+                scrollProxy.scrollTo(viewModel.position, anchor: .center)
             }
     }
 }
