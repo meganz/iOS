@@ -67,6 +67,13 @@ class LocalUserView: UIView {
         isHidden = false
     }
     
+    func configureForFullSize() {
+        isUserInteractionEnabled = false
+        mutedImageView.isHidden = true
+        videoImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
+        isHidden = false
+    }
+    
     func updateAvatar(image: UIImage) {
         avatarImageView.image = image
     }
