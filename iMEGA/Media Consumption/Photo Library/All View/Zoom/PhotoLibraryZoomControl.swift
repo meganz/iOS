@@ -7,10 +7,10 @@ struct PhotoLibraryZoomControl: View {
     
     var body: some View {
         HStack {
-            zoomInButton()
+            zoomOutButton()
             Divider()
                 .padding(EdgeInsets(top: 13, leading: 3, bottom: 13, trailing: 3))
-            zoomOutButton()
+            zoomInButton()
         }
         .frame(width: 80, height: 40)
         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
@@ -26,7 +26,7 @@ struct PhotoLibraryZoomControl: View {
         Button {
             zoomState.zoom(.in)
         } label: {
-            Image(systemName: "minus")
+            Image(systemName: "plus")
                 .imageScale(.large)
         }
         .foregroundColor(zoomState.canZoom(.in) ? Color(Colors.Photos.zoomButtonForeground.color) : Color.gray)
@@ -37,7 +37,7 @@ struct PhotoLibraryZoomControl: View {
         Button {
             zoomState.zoom(.out)
         } label: {
-            Image(systemName: "plus")
+            Image(systemName: "minus")
                 .imageScale(.large)
         }
         .foregroundColor(zoomState.canZoom(.out) ? Color(Colors.Photos.zoomButtonForeground.color) : Color.gray)
