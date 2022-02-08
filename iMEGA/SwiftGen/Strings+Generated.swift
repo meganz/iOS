@@ -379,7 +379,7 @@ public enum Strings {
     public static let callWasRejected = Strings.tr("Localizable", "callWasRejected")
     /// Camera
     public static let camera = Strings.tr("Localizable", "Camera")
-    /// Please give MEGA app permission to access your Camera in your Settings
+    /// Please give the MEGA App permission to access your Camera in your Settings
     public static let cameraPermissions = Strings.tr("Localizable", "cameraPermissions")
     /// Camera uploads complete
     public static let cameraUploadsComplete = Strings.tr("Localizable", "cameraUploadsComplete")
@@ -1153,7 +1153,7 @@ public enum Strings {
     public static let later = Strings.tr("Localizable", "later")
     /// Launch
     public static let launch = Strings.tr("Localizable", "Launch")
-    /// Launch the MEGA app to perform an action
+    /// Launch the MEGA App to perform an action
     public static let launchTheMEGAAppToPerformAnAction = Strings.tr("Localizable", "Launch the MEGA app to perform an action")
     /// Layout
     public static let layout = Strings.tr("Localizable", "Layout")
@@ -1273,7 +1273,7 @@ public enum Strings {
     public static let messageFileNotSupported = Strings.tr("Localizable", "message_fileNotSupported")
     /// Messages sent
     public static let messagesSent = Strings.tr("Localizable", "messagesSent")
-    /// Please give MEGA app permission to access your Microphone in your Settings
+    /// Please give the MEGA App permission to access your Microphone in your Settings
     public static let microphonePermissions = Strings.tr("Localizable", "microphonePermissions")
     /// Minimal
     public static let minimal = Strings.tr("Localizable", "Minimal")
@@ -1601,7 +1601,7 @@ public enum Strings {
     public static let permissionTitle = Strings.tr("Localizable", "permissionTitle")
     /// Phone Number
     public static let phoneNumber = Strings.tr("Localizable", "Phone Number")
-    /// Please give MEGA app permission to access your photo library in Settings
+    /// Please give the MEGA App permission to access your photo library in Settings
     public static let photoLibraryPermissions = Strings.tr("Localizable", "photoLibraryPermissions")
     /// Photos and videos will be uploaded to the Camera Uploads folder.
     public static let photosAndVideosWillBeUploadedToCameraUploadsFolder = Strings.tr("Localizable", "Photos and videos will be uploaded to Camera Uploads folder.")
@@ -1893,7 +1893,7 @@ public enum Strings {
     public static let satellite = Strings.tr("Localizable", "Satellite")
     /// Save
     public static let save = Strings.tr("Localizable", "save")
-    /// Save a copy of the images and videos taken from the MEGA app in your device’s media library.
+    /// Save a copy of the images and videos taken from the MEGA App in your device’s media library.
     public static let saveACopyOfTheImagesAndVideosTakenFromTheMEGAAppInYourDeviceSMediaLibrary = Strings.tr("Localizable", "Save a copy of the images and videos taken from the MEGA app in your device’s media library.")
     /// Save HEIC photos as
     public static let saveHeicPhotosAs = Strings.tr("Localizable", "SAVE HEIC PHOTOS AS")
@@ -2707,7 +2707,7 @@ public enum Strings {
       public static let enableLocationServicesAndSetMEGAToWhileUsingTheAppOrAlways = Strings.tr("Localizable", "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.")
     }
     public enum TheMEGAAppMayNotWorkAsExpectedWithoutTheRequiredPermissions {
-      /// The MEGA app may not work as expected without the required permissions. Are you sure?
+      /// The MEGA App may not work as expected without the required permissions. Are you sure?
       public static let areYouSure = Strings.tr("Localizable", "The MEGA app may not work as expected without the required permissions. Are you sure?")
     }
     public enum TheRubbishBinCanBeCleanedForYouAutomatically {
@@ -3567,7 +3567,7 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.enterMeetingLink.title")
       }
       public enum Incompatibility {
-        /// We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA apps to the latest version.
+        /// We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.
         public static let warningMessage = Strings.tr("Localizable", "meetings.incompatibility.warningMessage")
       }
       public enum JoinMeeting {

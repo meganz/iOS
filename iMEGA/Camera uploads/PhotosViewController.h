@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 - (void)showToolbar:(BOOL)showToolbar;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)didSelectedPhotoCountChange:(NSInteger)count;
+- (void)shouldEnableEditButton:(BOOL)boolValue;
 
 
 @end
