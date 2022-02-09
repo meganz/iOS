@@ -401,7 +401,9 @@
         UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
 
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            actionCompletion(NO);
+            if (actionCompletion) {
+                actionCompletion(NO);
+            }
         }]];
         
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -418,7 +420,10 @@
                 }
                 MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:1 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
                 [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
-                actionCompletion(YES);
+                
+                if (actionCompletion) {
+                    actionCompletion(YES);
+                }
             }
         }]];
         
