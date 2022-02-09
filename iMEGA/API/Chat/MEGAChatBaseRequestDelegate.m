@@ -19,7 +19,8 @@
             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
             return;
         }
-        if (request.type == MEGAChatRequestTypeAutojoinPublicChat && error.type == MEGAChatErrorTypeArgs) {
+        if ((request.type == MEGAChatRequestTypeAutojoinPublicChat && error.type == MEGAChatErrorTypeArgs)
+            || (request.type == MEGAChatRequestTypeAnswerChatCall && error.type == MegaChatErrorTypeExist)) {
             return;
         }
 
