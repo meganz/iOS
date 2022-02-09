@@ -829,6 +829,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (IBAction)startAudioVideoCallTouchUpInside:(UIButton *)sender {
     if (!MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+        self.callButton.enabled = self.videoCallButton.enabled = NO;
         [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
             if (granted) {
                 if (sender.tag) {
@@ -837,6 +838,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                             [self performCallWithVideo:sender.tag];
                         } else {
                             [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                            [self updateCallButtonsState];
                         }
                     }];
                 } else {
@@ -844,6 +846,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                 }
             } else {
                 [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+                [self updateCallButtonsState];
             }
         }];
     }
