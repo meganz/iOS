@@ -303,7 +303,7 @@ enum SessionSectionRow: Int {
         return [.logout]
     }
     
-    func presentChangeViewController(changeType: ChangeType) -> Void {
+    func presentChangeViewController(changeType: ChangeType, indexPath: IndexPath) -> Void {
         let changePasswordViewController = UIStoryboard.init(name: "ChangeCredentials", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
         if changeType == .email || changeType == .password {
@@ -315,7 +315,7 @@ enum SessionSectionRow: Int {
                 
                 MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
                     self.twoFactorAuthStatus = request.flag ? .enabled : .disabled
-                    self.tableView.reloadData()
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
                     let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
                     navigationController.addLeftDismissButton(withText: Strings.Localizable.cancel)
@@ -323,7 +323,7 @@ enum SessionSectionRow: Int {
                     self.present(navigationController, animated: true, completion: nil)
                 }))
                 twoFactorAuthStatus = .querying
-                tableView.reloadData()
+                tableView.reloadRows(at: [indexPath], with: .none)
             case .querying:
                 return
             case .disabled, .enabled:
@@ -584,7 +584,7 @@ extension ProfileViewController: UITableViewDelegate {
                 }
                 presentChangeAvatarController(tableView:tableView, cell: cell)
             case .changeEmail:
-                presentChangeViewController(changeType: .email)
+                presentChangeViewController(changeType: .email, indexPath: indexPath)
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     showAddPhoneNumber()
@@ -592,7 +592,7 @@ extension ProfileViewController: UITableViewDelegate {
                     showPhoneNumberView()
                 }
             case .changePassword:
-                presentChangeViewController(changeType: .password)
+                presentChangeViewController(changeType: .password, indexPath: indexPath)
             }
         case .security:
             switch rowsForSecuritySection()[indexPath.row] {
