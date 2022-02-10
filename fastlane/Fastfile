@@ -136,6 +136,8 @@ platform :ios do
         }
       }
     )
+    
+    File.write("archive_path.txt", lane_context[SharedValues::XCODEBUILD_ARCHIVE]) 
   end
 
   desc "Delete the temporary created keychain"
@@ -267,6 +269,14 @@ platform :ios do
       ipa_path: "#{BUILD_DIR}/MEGA.ipa",
       groups: "internal-testers",
       release_notes: lane_context[SharedValues::FL_CHANGELOG]
+    )
+  end
+
+  desc "zip archive to path"
+  lane :zip_Archive do |options|
+    zip(
+      path: options[:archive_path],
+      output_path: options[:zip_path]
     )
   end
 
