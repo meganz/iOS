@@ -16,7 +16,6 @@ struct PhotoLibraryAllView: View {
                                     .id(section.categoryDate)
                             }
                         }
-                        .zoom($viewModel.zoomState)
                     }
                     .background(PhotoAutoScrollView(viewModel:
                                                         PhotoAutoScrollViewModel(viewModel: viewModel),
