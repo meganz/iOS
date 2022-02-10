@@ -171,6 +171,9 @@ pipeline {
                 gitlabCommitStatus(name: 'Archive appstore') {
                     injectEnvironments({
                         sh "bundle exec fastlane archive_appstore"
+                        script {
+                            env.MEGA_BUILD_ARCHIVE_PATH = readFile(file: './fastlane/archive_path.txt')
+                        }
                     })
                 }
             }
@@ -243,6 +246,27 @@ pipeline {
                                 withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
                                     sh "cp \$firebase_credentials service_credentials_file.json"
                                     sh "bundle exec fastlane upload_build_to_firebase"
+                                } 
+                            })
+                        }
+                    }
+                }
+
+                stage('Prepare archive zip to be uploaded to MEGA') {
+                    when { 
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Prepare archive zip to be uploaded to MEGA') {
+                            injectEnvironments({
+                                script {
+                                    def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}.zip"
+                                    def zipPath = "${WORKSPACE}/${fileName}"
+                                    sh "bundle exec fastlane zip_Archive archive_path:\'${env.MEGA_BUILD_ARCHIVE_PATH}\' zip_path:${zipPath}"
+                                    sh "mkdir -p ./../iOS-Archives/ && mv ${zipPath} ./../iOS-Archives/"
                                 } 
                             })
                         }
