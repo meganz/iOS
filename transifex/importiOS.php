@@ -1,8 +1,11 @@
 <?php
+include __DIR__.'/packageLoader.php';
 $config = file_get_contents('transifexConfig.json');
 $configDecode = json_decode($config, true);
 $token = getenv('TRANSIFEX_TOKEN') ?: $configDecode['apiToken'];
 $gitlabToken = getenv('GITLAB_TOKEN') ?: $configDecode['gitLabToken'];
+$loader = new PackageLoader\PackageLoader();
+$loader->load(__DIR__."/custom_vendor/CFPropertyList");
 
 define("TRANSIFEX_API_TOKEN", $token);
 define("GITLAB_TOKEN", $gitlabToken);
@@ -13,11 +16,13 @@ const ALL_LANGUAGES_URL = "https://rest.api.transifex.com/projects/o:" . ORGANIZ
 const ALL_RESOURCES_URL = "https://rest.api.transifex.com/resources?filter[project]=o:" . ORGANIZATION . ":p:" . PROJECT;
 const APPLICATION_JSON_HEADER = ["Content-Type: application/vnd.api+json", "Authorization: Bearer " . TRANSIFEX_API_TOKEN];
 const MAIN_LOCALIZABLE_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2FLocalizable.strings/raw?ref=develop";
+const MAIN_PLURALS_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2FLocalizable.stringsdict/raw?ref=develop";
 const MAIN_INFOPLIST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2FInfoPlist.strings/raw?ref=develop";
 
 const CHANGELOGS_PATH = "";
 const INFOPLIST_PATH = "../iMEGA/Languages/Base.lproj/InfoPlist.strings";
 const LOCALIZABLE_PATH = "../iMEGA/Languages/Base.lproj/Localizable.strings";
+const PLURALS_PATH = "../iMEGA/Languages/Base.lproj/Localizable.stringsdict";
 const LTHPASSCODEVIEWCONTROLLER_PATH = "../iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/LTHPasscodeViewController.strings";
 
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
@@ -291,6 +296,7 @@ function addNewSourceFile($stringsToPush, $resourceName,$isPlural)
         $resourceMapping = parseAppleStrings(trimUnicode($stringsToPush));
         $stringsToPush = buildResourceFileFromArray($resourceMapping);
     }
+
     $stringsToPush = json_encode($stringsToPush, JSON_UNESCAPED_UNICODE);
 
     $postData = '{
@@ -484,10 +490,24 @@ function updateStringLock($hashes, $arrLangCodes){
     $res = makeGenericMultiCurlRequest("PATCH",$reqs,APPLICATION_JSON_HEADER,$urls);
 }
 
+/**
+ * Converts string to file stream for reading into CFPropertyList
+ *
+ * @param string $string
+ * @return false|resource
+ */
+function strToStream(string $string)
+{
+    $stream = fopen('php://memory','r+');
+    fwrite($stream, $string);
+    rewind($stream);
+    return $stream;
+}
+
 function resourceChooser(): string
 {
     do{
-        echo "\n1. Changelogs \n2. Localizable \n3. InfoPlist \n4. LTHPasscodeViewController \n5. (q) to quit \n";
+        echo "\n1. Changelogs \n2. Localizable \n3. InfoPlist \n4. LTHPasscodeViewController \n5. Plurals \n6. (q) to quit";
         $cmd = trim(strtolower(readline("\n \n> Which resource would you want to import (Enter the digit):\n")));
         readline_add_history($cmd);
         if ($cmd == 'q' || $cmd == '6') {
@@ -503,6 +523,8 @@ function resourceChooser(): string
             case '4':
                 return LTHPASSCODEVIEWCONTROLLER_PATH;
             case '5':
+                return PLURALS_PATH;
+            case '6':
                 exit;
         }
     }while ($cmd != 'q');
@@ -549,16 +571,20 @@ if (in_array(str_replace(PHP_EOL, "", $branchName), ["master", "develop"])) {
     echo PHP_EOL . "Error: Updating string is not allowed in this branch." . PHP_EOL;
     return false;
 }
-$branchResourceName = $fileParts['filename'] . "-" .  preg_replace("/[^A-Za-z0-9]/", '', $branchName);
 
 // get the gitlab strings for comparisons
 $stringsToPush = "";
+// TODO change for testing
 $ourStrings =  file_get_contents($filePath);
+
 $gitlabResourceStrings = "";
 if($fileParts['filename'] == "InfoPlist"){
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_INFOPLIST_URL);
-}else if ($fileParts['filename'] == "Localizable"){
+}else if ($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'strings'){
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_LOCALIZABLE_URL);
+}else if ($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'stringsdict'){
+    // TODO, change when pushed, for testing
+    $gitlabResourceStrings = getGitLabResourceFile(MAIN_PLURALS_URL);
 }
 // parse
 if($fileParts['extension'] == "strings"){
@@ -567,8 +593,69 @@ if($fileParts['extension'] == "strings"){
     $stringsToPush = getDiffOfResource($gitlabResArr,$ourStringsArr);
 }else if ($fileParts['extension'] == "stringsdict"){
 // TODO stringsdict format
-    die("Stringsdict not supported yet");
+    $gitlabStrings = new CFPropertyList\CFPropertyList(strToStream($gitlabResourceStrings), CFPropertyList\CFPropertyList::FORMAT_XML );
+    $localStrings = new CFPropertyList\CFPropertyList(strToStream($ourStrings), CFPropertyList\CFPropertyList::FORMAT_XML );
+    $stringsToPush = new CFPropertyList\CFPropertyList(null, CFPropertyList\CFPropertyList::FORMAT_XML );
+    // Add or replace, depending if upper key exists.
+    $localStringsDict = $localStrings->getValue();
+    $gitlabStringsDict = $gitlabStrings->getValue();
+    $stringsToPushDict = new \CFPropertyList\CFDictionary([]);
+    foreach( $localStrings->getValue(true) as $newKeys => $newValues )
+    {
+        // if outer key exists in gitlabString, we have to check if it is an edit, if there are edited fields, we add it, otherwise, if identical, we omit.
+        if($existDict = $gitlabStringsDict->get($newKeys)) {
+            // check equality of fields via array equality
+            $addDict = $localStringsDict->get($newKeys);
+            $addArray = $addDict->toArray();
+            $existArray = $existDict->toArray();
+            $areEqual = $addArray === $existArray;
+            if($areEqual) {
+                // skip if equal (do not add)
+                continue;
+            }
+            else {
+                // sanitising code
+                foreach($newValues->getValue(true) as $key => $value) {
+                    if($value->getValue(true) && is_array($value->getValue(true)) ) {
+                        foreach($value->getValue(true) as $innerKey => $innerValue) {
+                            $innerValue->setValue(sanitiseSingleResourceString(trimUnicode($innerValue->getValue(true))));
+                        }
+                    } else {
+                        $value->setValue(sanitiseSingleResourceString(trimUnicode($value->getValue(true))));
+                    }
+                }
+                // adding code
+                $stringsToPushDict->add($newKeys,$newValues);
+                $stringsToPush->purge();
+                $stringsToPush->add($stringsToPushDict);
+            }
+        }
+        else {   // completely new key, we can just sanitise and add
+            // sanitising code
+            foreach($newValues->getValue(true) as $key => $value) {
+                if($value->getValue(true) && is_array($value->getValue(true)) ) {
+                    foreach($value->getValue(true) as $innerKey => $innerValue) {
+                        $innerValue->setValue(sanitiseSingleResourceString(trimUnicode($innerValue->getValue(true))));
+                    }
+                } else {
+                    $value->setValue(sanitiseSingleResourceString(trimUnicode($value->getValue(true))));
+                }
+            }
+            // adding code
+            $stringsToPushDict->add($newKeys,$newValues);
+            $stringsToPush->purge();
+            $stringsToPush->add($stringsToPushDict);
+        }
+    }
+    $stringsToPush = $stringsToPush->toXML(true);
 }
+$branchResourceName = "";
+if($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'stringsdict') {
+    $branchResourceName = "Plurals". "-" . preg_replace("/[^A-Za-z0-9]/", '', $branchName);
+} else {
+    $branchResourceName = $fileParts['filename'] . "-" . preg_replace("/[^A-Za-z0-9]/", '', $branchName);
+}
+
 $shouldLock = true;
 if($argv[1] && $argv[1] === 'nolock'){
     $shouldLock = false;
@@ -580,11 +667,19 @@ if (getResourceDetails(strtolower($fileParts['filename']))) {
         addNewSourceFile($stringsToPush, $branchResourceName,false);
     } else if ($fileParts['extension'] == "stringsdict") {
         createNewResource($branchResourceName,true);
-        addNewSourceFile($filePath, $branchResourceName,true);
+        addNewSourceFile($stringsToPush, $branchResourceName,true);
     }
     if ($shouldLock) {
+        $stringsToPushKeys = [];
         sleep(5);
-        $stringsToPushKeys = array_keys(parseAppleStrings($stringsToPush));
+        if ($fileParts['extension'] == "strings") {
+            $stringsToPushKeys = array_keys(parseAppleStrings($stringsToPush));
+        }
+        else if($fileParts['extension'] == "stringsdict") {
+            $stringsToPushXML =  new CFPropertyList\CFPropertyList(strToStream($stringsToPush), CFPropertyList\CFPropertyList::FORMAT_XML );
+            $stringsToPushArr = $stringsToPushXML->toArray();
+            $stringsToPushKeys = array_keys($stringsToPushArr);
+        }
         $hashes = getStringHash($stringsToPushKeys, $branchResourceName);
         $arrLangCodes = getLockedLangCodes();
         updateStringLock($hashes, $arrLangCodes);
