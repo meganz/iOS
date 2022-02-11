@@ -1,3 +1,4 @@
+import CoreGraphics
 
 class CondensationView: EnlargementView {
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -13,7 +14,7 @@ class CondensationView: EnlargementView {
     override func updateUI() {
         super.updateUI()
         
-        bottomConstraint.constant = originalBottomValue + singleSideAddedWidth
+        bottomConstraint.constant = originalBottomValue ?? CGFloat.zero + singleSideAddedWidth
     }
     
     override func updateAppearance() {

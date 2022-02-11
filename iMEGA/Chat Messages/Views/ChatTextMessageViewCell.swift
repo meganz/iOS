@@ -1,4 +1,5 @@
 import MessageKit
+import CoreGraphics
 
 class ChatTextMessageViewCell: TextMessageCell {
     override open func setupSubviews() {
@@ -47,7 +48,7 @@ class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
         }
         
         let megaMessage = chatMessage.message
-        let maxWidth = messageContainerMaxWidth(for: message)
+        let maxWidth: CGFloat = messageContainerMaxWidth(for: message)
         
         let attributedText = megaMessage.attributedText
         calculateLabel.attributedText = attributedText

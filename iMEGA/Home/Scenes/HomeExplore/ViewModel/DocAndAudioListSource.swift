@@ -45,11 +45,11 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     }
     
     private func reloadCell(withNode node: MEGANode, afterDelay delay: Int) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) { [weak self] in
+        let deadline: DispatchTime = DispatchTime.now() + DispatchTimeInterval.seconds(delay)
+        DispatchQueue.main.asyncAfter(deadline: deadline) { [weak self] in
             self?.reloadCell(withNode: node)
         }
     }
-
 }
 
 // MARK:- UITableViewDataSource

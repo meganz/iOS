@@ -30,6 +30,6 @@ extension UIImageView {
     private func updateShadowPath(for container: UIView, spread: CGFloat) {
         let shadowRect = bounds.insetBy(dx: -spread, dy: -spread)
         let shadowPath = UIBezierPath(rect: shadowRect)
-        container.layer.shadowPath = spread == 0 ? nil : shadowPath.cgPath
+        container.layer.shadowPath = spread == CGFloat.zero ? nil : shadowPath.cgPath
     }
 }
