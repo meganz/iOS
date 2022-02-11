@@ -21,9 +21,8 @@ class ContactsTableViewHeader: UIView {
         
         requestsImageView.image = Asset.Images.Contacts.contactRequests.image.imageFlippedForRightToLeftLayoutDirection()
         requestsLabel.text = Strings.Localizable.requests
-        let incomingContactsLists: MEGAContactRequestList = MEGASdkManager.sharedMEGASdk().incomingContactRequests()
-        let text = (incomingContactsLists.size.intValue == 0) ? "" : incomingContactsLists.size.stringValue
-        requestsDetailLabel.text = text
+        
+        configDetailsLabel()
         
         groupsImageView.image = Asset.Images.Contacts.groups.image.imageFlippedForRightToLeftLayoutDirection()
         groupsLabel.text = Strings.Localizable.groups
@@ -46,6 +45,12 @@ class ContactsTableViewHeader: UIView {
         
         requestsDetailLabel.textColor = .mnz_secondaryLabel()
         requestsSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+    }
+    
+    private func configDetailsLabel() {
+        let incomingContactsLists = MEGASdkManager.sharedMEGASdk().incomingContactRequests()
+        let contactsCount = incomingContactsLists.size?.intValue ?? 0
+        requestsDetailLabel.text = contactsCount == 0 ? "" : incomingContactsLists.size.stringValue
     }
     
     //MARK: - IBAction

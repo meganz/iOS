@@ -34,7 +34,7 @@ class MegaAvatarView: UIView {
         firstPeerAvatarImageView.layer.masksToBounds = true
         firstPeerAvatarImageView.layer.borderWidth = 1
         firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background().cgColor
-        firstPeerAvatarImageView.layer.cornerRadius = firstPeerAvatarImageView.bounds.width / 2
+        firstPeerAvatarImageView.layer.cornerRadius = firstPeerAvatarImageView.bounds.width / CGFloat(2)
         
         avatarImageView.accessibilityIgnoresInvertColors            = true
         firstPeerAvatarImageView.accessibilityIgnoresInvertColors   = true
@@ -56,13 +56,13 @@ class MegaAvatarView: UIView {
     
     @objc func setup(for chatRoom: MEGAChatRoom) {
         if chatRoom.peerCount == 0 {
+            let font = UIFont.systemFont(ofSize: avatarImageView.frame.size.width / CGFloat(2.0))
             avatarImageView.image = UIImage.init(forName: chatRoom.title?.uppercased(),
                                                  size: avatarImageView.frame.size,
                                                  backgroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
                                                  backgroundGradientColor: UIColor.mnz_grayDBDBDB(),
                                                  textColor: UIColor.white,
-                                                 font: UIFont.systemFont(ofSize: avatarImageView.frame.size.width/2.0)
-            )
+                                                 font: font)
             configure(mode: .single)
         } else {
             let firstPeerHandle = chatRoom.peerHandle(at: 0)

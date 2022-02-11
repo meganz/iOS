@@ -3,10 +3,10 @@ import SwiftUI
 
 struct QuickAccessWidgetView: View {
     var entry: QuickAccessWidgetEntry
-        
+    
     func headerView() -> some View {
-        let headerView = VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
                 if entry.value.status == .noSession {
                     Image(Asset.Images.Logo.megaLogoGrayscale.name)
                         .resizable()
@@ -26,11 +26,10 @@ struct QuickAccessWidgetView: View {
                 .background(Color.black)
                 .opacity(0.3)
         }
-        return AnyView(headerView)
     }
     
     func detailView() -> some View {
-        let detailView = VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             if entry.value.items.count == 0 {
                 switch entry.link {
                 case SectionDetail.recents.link:
@@ -45,62 +44,57 @@ struct QuickAccessWidgetView: View {
                     .padding([.top, .leading, .trailing], 8)
                 Spacer()
                 if entry.value.items.count == 8 {
-                    HStack (alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
+                    HStack {
                         Spacer()
                         Text(Strings.Localizable.viewMore)
                             .font(.system(size: 10, weight: .medium, design: .default))
                             .opacity(0.2)
                         Spacer()
-                    })
+                    }
                     .padding(.bottom, 16)
                 }
             }
         }
-        return AnyView(detailView)
     }
     
     func emptyView(_ emptyImage: String, _ emptyDescription: String) -> some View {
-        let view = VStack {
+        VStack {
             Spacer()
             Image(emptyImage)
             Spacer()
-            HStack (alignment: .center, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
+            HStack {
                 Spacer()
                 Text(emptyDescription)
                     .font(.system(size: 18, weight: .regular, design: .default))
                 Spacer()
-            })
+            }
             Spacer()
         }
-    
-        return AnyView(view)
     }
     
     func errorView() -> some View {
-        let view = VStack {
+        VStack {
             Spacer()
-            HStack (alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
+            HStack {
                 Spacer()
                 Text("Error")
                     .font(.system(size: 18, weight: .regular, design: .default))
                 Spacer()
-            })
+            }
             Spacer()
         }
-    
-        return AnyView(view)
     }
     
     func noSessionView() -> some View {
-        let view = VStack {
+        VStack {
             Spacer()
-            HStack (alignment: .center, spacing: 0, content: {
+            HStack (spacing: 0) {
                 Spacer()
                 Text(Strings.Localizable.login)
                     .font(.system(size: 17, weight: .semibold, design: .default))
                     .foregroundColor(Color("#00A886"))
                 Spacer()
-            })
+            }
             .frame(maxWidth: .infinity, minHeight: 44)
             .background(Color("BasicButton"))
             .cornerRadius(8)
@@ -109,38 +103,33 @@ struct QuickAccessWidgetView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
-    
-        return AnyView(view)
     }
     
     func connectingView() -> some View {
-        let view = VStack {
+        VStack {
             Spacer()
-            HStack (alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
+            HStack {
                 Spacer()
                 Text(Strings.Localizable.loading)
                     .font(.system(size: 20, weight: .medium, design: .default))
                 Spacer()
-            })
+            }
             Spacer()
         }
-    
-        return AnyView(view)
     }
     
+    @ViewBuilder
     func viewBuilder() -> some View {
-        let view: AnyView
         switch entry.value.status {
         case .connected:
-            view = AnyView(detailView())
+            detailView()
         case .error:
-            view = AnyView(errorView())
+            errorView()
         case .noSession:
-            view = AnyView(noSessionView())
+            noSessionView()
         default:
-            view = AnyView(connectingView())
+            connectingView()
         }
-        return view
     }
     
     var body: some View {

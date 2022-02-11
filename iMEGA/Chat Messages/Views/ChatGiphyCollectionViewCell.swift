@@ -1,4 +1,5 @@
 import MessageKit
+import CoreGraphics
 
 class ChatGiphyCollectionViewCell: MessageContentCell {
     open var imageView: UIImageView = {
@@ -77,18 +78,36 @@ open class ChatGiphyCollectionViewSizeCalculator: MessageSizeCalculator {
             return .zero
         }
         
-        var width = CGFloat(giphy.width)
-        var height = CGFloat(giphy.height)
-
-        let ratio = width / height
-        if ratio > 1 {
-            width = min(maxWidth, width)
+        return size(for: giphy, maxSize: CGSize(width: maxWidth, height: maxHeight))
+    }
+    
+    private func size(for giphy: MEGAChatGiphy, maxSize: CGSize) -> CGSize {
+        var width = giphy.floatWidth
+        var height = giphy.floatHeight
+        let ratio = giphy.sizeRatio
+        
+        if ratio > CGFloat(1) {
+            width = min(maxSize.width, width)
             height = width / ratio
         } else {
-            height = min(maxHeight, height)
+            height = min(maxSize.height, height)
             width = height * ratio
         }
 
         return CGSize(width: width, height: height)
+    }
+}
+
+private extension MEGAChatGiphy {
+    var floatWidth: CGFloat {
+        CGFloat(width)
+    }
+    
+    var floatHeight: CGFloat {
+        CGFloat(height)
+    }
+    
+    var sizeRatio: CGFloat {
+        floatWidth / floatHeight
     }
 }

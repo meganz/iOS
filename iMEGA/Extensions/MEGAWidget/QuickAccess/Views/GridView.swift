@@ -4,32 +4,34 @@ import SwiftUI
 struct GridView: View {
     let items: [QuickAccessItemModel]
     
-    var columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 0),
-        GridItem(.flexible(), spacing: 0)
-    ]
-
+    private let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 0), count: 2)
+    
     var body: some View {
-            GeometryReader { geometry in
-                LazyVGrid(
-                    columns: columns,
-                    alignment: .center,
-                    spacing: 0
-                ) {
-                    Section() {
-                        ForEach(0...items.count-1, id: \.self) { index in
-                            if let url = items[index].url {
-                                Link(destination: url, label: {
-                                    DetailItemView(item: items[index])
-                                        .frame(maxWidth: .infinity, maxHeight: geometry.size.height * 0.25)
-                                })
-                            } else {
-                                DetailItemView(item: items[index])
-                                    .frame(maxWidth: .infinity, maxHeight: geometry.size.height * 0.25)
-                            }
-                        }
-                    }
+        GeometryReader { proxy in
+            LazyVGrid(columns: columns, spacing: 0) {
+                ForEach(0..<items.count) { index in
+                    cell(for: items[index], maxHeight: proxy.size.height * CGFloat(0.25))
                 }
             }
+        }
+    }
+    
+    private func cell(for item: QuickAccessItemModel, maxHeight: CGFloat) -> some View {
+        GridCell(item: item)
+            .frame(maxWidth: .infinity, maxHeight: maxHeight)
+    }
+}
+
+private struct GridCell: View {
+    let item: QuickAccessItemModel
+    
+    var body: some View {
+        if let url = item.url {
+            Link(destination: url) {
+                DetailItemView(item: item)
+            }
+        } else {
+            DetailItemView(item: item)
+        }
     }
 }

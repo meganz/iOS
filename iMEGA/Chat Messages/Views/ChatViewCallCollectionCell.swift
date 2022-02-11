@@ -97,13 +97,13 @@ class ChatViewCallCollectionCellCalculator: MessageSizeCalculator {
     override func messageContainerSize(for message: MessageType) -> CGSize {
         guard let layout = layout else { return .zero }
 
-        let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
+        let collectionViewWidth = layout.collectionView?.bounds.width ?? .zero
         let contentInset = layout.collectionView?.contentInset ?? .zero
         let inset = layout.sectionInset.left + layout.sectionInset.right + contentInset.left + contentInset.right
         
         layoutCell.configure(with: message, at: IndexPath(row: 0, section: 0), and: messagesLayout.messagesCollectionView)
         
-        let height = layoutCell.reasonTextLabel.text?.height(withConstrainedWidth: collectionViewWidth - inset, font: layoutCell.reasonTextLabel.font) ?? 0.0
+        let height = layoutCell.reasonTextLabel.text?.height(withConstrainedWidth: collectionViewWidth - inset, font: layoutCell.reasonTextLabel.font) ?? .zero
         
         return CGSize(width: collectionViewWidth - inset, height: max(height, layoutCell.defaultIconSize))
     }
