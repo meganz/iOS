@@ -25,7 +25,7 @@ public enum Strings {
     public static let nsMicrophoneUsageDescription = Strings.tr("InfoPlist", "NSMicrophoneUsageDescription")
     /// MEGA requires access to your photo library to add photos and videos to your device gallery
     public static let nsPhotoLibraryAddUsageDescription = Strings.tr("InfoPlist", "NSPhotoLibraryAddUsageDescription")
-    /// MEGA accesses your photos/videos when you upload them, share them through the chat and when Camera Uploads is enabled.
+    /// MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera Uploads is enabled.
     public static let nsPhotoLibraryUsageDescription = Strings.tr("InfoPlist", "NSPhotoLibraryUsageDescription")
     /// Offline
     public static let quickActionOfflineString = Strings.tr("InfoPlist", "quickActionOfflineString")
