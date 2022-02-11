@@ -419,7 +419,11 @@
     for (NSInteger i = 0; i < [nodeList.size integerValue]; i++) {
         MEGANode *node = [nodeList nodeAtIndex:i];
         if (node.name.mnz_isVisualMediaPathExtension) {
-            [self.mediaNodesArray addObject:node];
+            @try {
+                [self.mediaNodesArray addObject:node];
+            } @catch (NSException *exception) {
+                MEGALogError(@"Exception on adding object to mediaNodes: %@", exception);
+            }
         }
     }
 }
