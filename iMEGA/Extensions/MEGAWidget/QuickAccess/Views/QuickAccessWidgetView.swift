@@ -7,24 +7,30 @@ struct QuickAccessWidgetView: View {
     func headerView() -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                if entry.value.status == .noSession {
-                    Image(Asset.Images.Logo.megaLogoGrayscale.name)
-                        .resizable()
-                        .frame(width: 31, height: 28, alignment: .leading)
-                        .padding()
-                } else {
-                    Text(entry.section)
-                        .font(.system(size: 17, weight: .bold, design: .default))
-                        .foregroundColor(Color(UIColor.label))
-                        .padding(.leading, 24)
-                }
+                headerEntry()
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("SecondaryBackground"))
+            
             Divider()
                 .background(Color.black)
                 .opacity(0.3)
+        }
+    }
+    
+    @ViewBuilder
+    private func headerEntry() -> some View {
+        if entry.value.status == .noSession {
+            Image(Asset.Images.Logo.megaLogoGrayscale.name)
+                .resizable()
+                .frame(width: 31, height: 28, alignment: .leading)
+                .padding()
+        } else {
+            Text(entry.section)
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(Color(UIColor.label))
+                .padding(.leading, 24)
         }
     }
     
