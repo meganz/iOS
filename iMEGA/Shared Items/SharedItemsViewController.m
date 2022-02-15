@@ -429,9 +429,11 @@
     }
     
     NSString *userEmail = share.user;
-    self.incomingNodesForEmailMutableDictionary[node.base64Handle] = userEmail;
-    self.incomingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
-    
+    if (node.base64Handle) {
+        self.incomingNodesForEmailMutableDictionary[node.base64Handle] = userEmail;
+        self.incomingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
+    }
+
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
     cell.nameLabel.text = node.name;
