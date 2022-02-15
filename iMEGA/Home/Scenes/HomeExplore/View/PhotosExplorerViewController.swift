@@ -1,25 +1,29 @@
-
 import UIKit
 
-
-class PhotosExplorerViewController: ExplorerBaseViewController {
-    
+final class PhotosExplorerViewController: ExplorerBaseViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
-
+    
     private var cellSize: CGSize = .zero
     private var cellInset: CGFloat = 1.0
     private var listSource: PhotoExplorerListSource?
     private let viewModel: PhotoExplorerViewModel
+
     
-    private lazy var selectAllBarButtonItem = UIBarButtonItem(
+    lazy var editBarButtonItem = UIBarButtonItem(
         image: Asset.Images.NavigationBar.selectAll.image,
         style: .plain,
         target: self,
-        action: #selector(selectButtonPressed(_:))
+        action: #selector(editButtonPressed(_:))
     )
+    
+    @available(iOS 14.0, *)
+    lazy var publisher = ImageUpdatePublisher(photoExplorerViewController: self)
+    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+    lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
     
     init(viewModel: PhotoExplorerViewModel) {
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,14 +32,22 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     }
     
     // MARK: - Overriden methods.
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerNibs()
-        configureRightBarButton()
-        selectAllBarButtonItem.isEnabled = false
         
-        cellSize = collectionView.mnz_calculateCellSize(forInset: cellInset)
+        configureRightBarButton()
+        editBarButtonItem.isEnabled = false
+        
+        if #available(iOS 14.0, *) {
+            configPhotoLibraryView(in: view)
+            publisher.setupSubscriptions()
+        } else {
+            registerNibs()
+            cellSize = collectionView.mnz_calculateCellSize(forInset: cellInset)
+        }
+        
+        collectionView.emptyDataSetSource = self
         
         viewModel.invokeCommand = { [weak self] command in
             self?.excuteCommand(command)
@@ -72,13 +84,18 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     private func registerNibs() {
         collectionView?.register(PhotoExplorerCollectionCell.nib, forCellWithReuseIdentifier: PhotoExplorerCollectionCell.reuseIdentifier)
         collectionView?.register(PhotoExplorerCollectionSectionHeaderView.nib,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: PhotoExplorerCollectionSectionHeaderView.reuseIdentifier)
-
+                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                 withReuseIdentifier: PhotoExplorerCollectionSectionHeaderView.reuseIdentifier)
+        
     }
     
     private func excuteCommand(_ command: PhotoExplorerViewModel.Command) {
         switch command {
+        case .reloadImages(let nodes):
+            if #available(iOS 14.0, *) {
+                updateImageLibrary(by: nodes)
+                editBarButtonItem.isEnabled = !nodes.isEmpty
+            }
         case .reloadData(let nodesByDay):
             listSource = PhotoExplorerListSource(
                 nodesByDay: nodesByDay,
@@ -87,9 +104,8 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
                 allowMultipleSelection: listSource?.allowMultipleSelection ?? false
             )
             collectionView.dataSource = listSource
-            collectionView.emptyDataSetSource = self
             collectionView.reloadData()
-            selectAllBarButtonItem.isEnabled = !(listSource?.isDataSetEmpty() ?? true)
+            editBarButtonItem.isEnabled = !(listSource?.isDataSetEmpty() ?? true)
         case .modified(nodes: let nodes, indexPaths: let indexPaths):
             guard !(collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking) else { return }
             listSource?.update(nodes: nodes, atIndexPaths: indexPaths)
@@ -108,19 +124,19 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     }
     
     private func configureRightBarButton() {
-        if collectionView.allowsMultipleSelection {
+        if collectionView.allowsMultipleSelection || isEditing {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .cancel,
                 target: self,
                 action: #selector(cancelButtonPressed(_:))
             )
         } else {
-            navigationItem.rightBarButtonItem = selectAllBarButtonItem
+            navigationItem.rightBarButtonItem = editBarButtonItem
         }
     }
     
     private func configureLeftBarButton() {
-        if collectionView.allowsMultipleSelection {
+        if collectionView.allowsMultipleSelection || isEditing {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 image: Asset.Images.NavigationBar.selectAll.image,
                 style: .plain,
@@ -133,16 +149,21 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     }
     
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
-        listSource?.toggleSelectAllNodes()
+        if #available(iOS 14.0, *) {
+            selectAllPhotoLibrary()
+        } else {
+            listSource?.toggleSelectAllNodes()
+            viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
+        }
+        
         configureToolbarButtons()
-        viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))
     }
     
     @objc private func cancelButtonPressed(_ barButtonItem: UIBarButtonItem) {
         endEditingMode()
     }
     
-    @objc private func selectButtonPressed(_ barButtonItem: UIBarButtonItem) {
+    @objc private func editButtonPressed(_ barButtonItem: UIBarButtonItem) {
         startEditingMode()
     }
     
@@ -155,7 +176,8 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         collectionView.allowsMultipleSelection = true
         
         if #available(iOS 14, *) {
-            collectionView.allowsMultipleSelectionDuringEditing = true;
+            setEditing(true, animated: true)
+            enablePhotoLibraryEditMode(isEditing)
         }
         
         if (listSource?.allowMultipleSelection ?? false) == false {
@@ -174,7 +196,8 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
         collectionView.allowsMultipleSelection = false
         
         if #available(iOS 14, *) {
-            collectionView.allowsMultipleSelectionDuringEditing = false;
+            setEditing(false, animated: true)
+            enablePhotoLibraryEditMode(isEditing)
         }
         
         listSource?.allowMultipleSelection = false
@@ -186,7 +209,11 @@ class PhotosExplorerViewController: ExplorerBaseViewController {
     }
     
     override func selectedNodes() -> [MEGANode]? {
-        listSource?.selectedNodes
+        if #available(iOS 14.0, *) {
+            return selection.nodes
+        } else {
+            return listSource?.selectedNodes
+        }
     }
     
     private func audioPlayer(hidden: Bool) {
