@@ -18,7 +18,7 @@ class PhotoExplorerViewModel: NSObject {
     private let router: PhotosExplorerRouter
     private var fileSearchUseCase: FilesSearchUseCaseProtocol
     private var nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
-
+    
     private var nodes: [MEGANode] = []
     private var sectionMarker: [Int] = []
     var invokeCommand: ((Command) -> Void)?
@@ -26,7 +26,7 @@ class PhotoExplorerViewModel: NSObject {
     // MARK: - Debouncer
     private static let REQUESTS_DELAY: TimeInterval = 0.35
     private let debouncer = Debouncer(delay: REQUESTS_DELAY)
-
+    
     private var title: String {
         return Strings.Localizable.Home.Images.title
     }
@@ -110,9 +110,9 @@ class PhotoExplorerViewModel: NSObject {
     
     @objc private func loadAllPhotos() {
         fileSearchUseCase.search(string: nil,
-                       inNode: nil,
-                       sortOrderType: .modificationDesc,
-                       cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
+                                 inNode: nil,
+                                 sortOrderType: .modificationDesc,
+                                 cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
             DispatchQueue.main.async {
                 guard let self = self, !isCancelled else { return }
                 self.nodes = nodes ?? []
@@ -160,15 +160,16 @@ class PhotoExplorerViewModel: NSObject {
     }
     
     private func onNodesUpdate(updatedNodes: [MEGANode]) {
-        if isAnyNodeMovedToTrash(nodes: nodes, updatedNodes: updatedNodes)
-            || updatedNodes.containsNewNode() {
+        if isAnyNodeMovedToTrash(nodes: nodes, updatedNodes: updatedNodes) ||
+            updatedNodes.containsNewNode() ||
+            updatedNodes.hasModifiedAttributes() {
             debouncer.start { [weak self] in
                 self?.loadAllPhotos()
             }
         } else {
             var resultNodes = [MEGANode]()
             var resultIndexPaths = [IndexPath]()
-
+            
             updatedNodes.forEach { node in
                 if let index = nodes.firstIndex(of: node) {
                     nodes[index] = node
@@ -182,7 +183,6 @@ class PhotoExplorerViewModel: NSObject {
             if resultNodes.count > 0 {
                 invokeCommand?(.modified(nodes: resultNodes, indexPaths: resultIndexPaths))
             }
-
         }
     }
     
@@ -199,4 +199,4 @@ class PhotoExplorerViewModel: NSObject {
         
         invokeCommand?(.setTitle(title))
     }
- }
+}

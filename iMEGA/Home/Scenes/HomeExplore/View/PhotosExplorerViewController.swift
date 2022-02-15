@@ -7,7 +7,6 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
     private var cellInset: CGFloat = 1.0
     private var listSource: PhotoExplorerListSource?
     private let viewModel: PhotoExplorerViewModel
-
     
     lazy var editBarButtonItem = UIBarButtonItem(
         image: Asset.Images.NavigationBar.selectAll.image,
@@ -108,6 +107,7 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
             editBarButtonItem.isEnabled = !(listSource?.isDataSetEmpty() ?? true)
         case .modified(nodes: let nodes, indexPaths: let indexPaths):
             guard !(collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking) else { return }
+            
             listSource?.update(nodes: nodes, atIndexPaths: indexPaths)
             collectionView.reloadItems(at: indexPaths)
         case .setTitle(let title):
