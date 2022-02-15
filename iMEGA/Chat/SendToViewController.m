@@ -378,7 +378,7 @@
             case MEGAChatMessageTypeContact: {
                 for (NSNumber *chatIdNumber in self.chatIdNumbers) {
                     uint64_t chatId = chatIdNumber.unsignedLongLongValue;
-                    MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] forwardContactFromChat:message.chatId messageId:message.messageId targetChatId:chatId];
+                    MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] forwardContactFromChat:self.sourceChatId messageId:message.messageId targetChatId:chatId];
                     [self completeForwardingMessage:newMessage toChat:chatId];
                 }
                 
