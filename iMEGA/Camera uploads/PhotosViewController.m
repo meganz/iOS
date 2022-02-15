@@ -547,7 +547,7 @@
     }
     
     if (@available(iOS 14.0, *)) {
-        [self selectAllPhotoLibrary:allNodesSelected];
+        [self selectAllPhotoLibrary];
     }
     
     [self.photosCollectionView reloadData];

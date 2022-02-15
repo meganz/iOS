@@ -9,6 +9,7 @@ enum PhotoExplorerAction {
 
 class PhotoExplorerViewModel: NSObject {
     enum Command: Equatable {
+        case reloadImages(nodes: [MEGANode])
         case reloadData(nodesByDay: [[MEGANode]])
         case modified(nodes: [MEGANode], indexPaths: [IndexPath])
         case setTitle(String)
@@ -137,7 +138,11 @@ class PhotoExplorerViewModel: NSObject {
     }
     
     private func invokeReloadDataCommand() {
-        invokeCommand?(.reloadData(nodesByDay: buildPhotosSections()))
+        if #available(iOS 14.0, *) {
+            invokeCommand?(.reloadImages(nodes: nodes))
+        } else {
+            invokeCommand?(.reloadData(nodesByDay: buildPhotosSections()))
+        }
     }
     
     private func isAnyNodeMovedToTrash(nodes: [MEGANode], updatedNodes: [MEGANode]) -> Bool {
