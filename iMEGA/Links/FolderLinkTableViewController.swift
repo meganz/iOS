@@ -95,7 +95,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let node = getNode(at: indexPath),
               let cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
-            fatalError("Could not instantiate NodeCollectionViewCell or node at index")
+            fatalError("Could not instantiate NodeCollectionViewCell. Node at \(indexPath) not found: \(getNode(at: indexPath) == nil)")
         }
         
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
