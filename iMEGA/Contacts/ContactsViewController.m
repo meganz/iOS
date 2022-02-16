@@ -553,6 +553,10 @@
     
     if (!boolValue) {
         [self hideSearchIfNotActive];
+        
+        if (self.visibleUsersArray.count == 0) {
+            self.tableView.tableFooterView = UIView.new;
+        }
     }
     
     boolValue ? [self reloadUI] : [self.tableView reloadData];
