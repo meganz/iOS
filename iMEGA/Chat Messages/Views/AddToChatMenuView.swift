@@ -37,7 +37,7 @@ class AddToChatMenuView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageBackgroundView.layer.cornerRadius = imageBackgroundView.bounds.width / 2.0
+        imageBackgroundView.layer.cornerRadius = imageBackgroundView.bounds.width / CGFloat(2.0)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

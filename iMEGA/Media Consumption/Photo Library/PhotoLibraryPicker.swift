@@ -9,23 +9,27 @@ struct PhotoLibraryPicker: View {
         if editMode?.wrappedValue.isEditing == true {
             EmptyView()
         } else {
-            Picker("View Mode", selection: $selectedMode.animation()) {
-                ForEach(PhotoLibraryViewMode.allCases) {
-                    Text($0.title)
-                        .font(.headline)
-                        .bold()
-                        .tag($0)
-                }
-            }
-            .pickerStyle(.segmented)
-            .blurryBackground(radius: 7)
-            .padding(16)
-            .onAppear {
-                configSegmentedControlAppearance()
+            pickerView()
+        }
+    }
+    
+    private func pickerView() -> some View {
+        Picker("View Mode", selection: $selectedMode.animation()) {
+            ForEach(PhotoLibraryViewMode.allCases) {
+                Text($0.title)
+                    .font(.headline)
+                    .bold()
+                    .tag($0)
             }
         }
-        
+        .pickerStyle(.segmented)
+        .blurryBackground(radius: 7)
+        .padding(16)
+        .onAppear {
+            configSegmentedControlAppearance()
+        }
     }
+
     
     private func configSegmentedControlAppearance() {
         UISegmentedControl

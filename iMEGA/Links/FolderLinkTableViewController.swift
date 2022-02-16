@@ -101,6 +101,12 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
         cell.infoLabel.textColor = UIColor.mnz_label()
         
+        config(cell, by: node, at: indexPath)
+        
+        return cell
+    }
+    
+    private func config(_ cell: NodeTableViewCell, by node: MEGANode, at indexPath: IndexPath) {
         if node.isFile() {
             if node.hasThumbnail() {
                 Helper.thumbnail(for: node, api: MEGASdkManager.sharedMEGASdkFolder(), cell: cell)
@@ -139,8 +145,6 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
         let isDownloaded = node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil
         cell.downloadedView.isHidden = !isDownloaded
-        
-        return cell
     }
 }
 

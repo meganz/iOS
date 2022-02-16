@@ -6,6 +6,14 @@ struct PhotoLibraryZoomControl: View {
     @Environment(\.editMode) var editMode
     
     var body: some View {
+        zoomControl()
+            .alignmentGuide(.trailing, computeValue: { d in d[.trailing] + 12})
+            .alignmentGuide(.top, computeValue: { d in d[.top] - 10})
+            .opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
+    }
+    
+    // MARK: - Private
+    private func zoomControl() -> some View {
         HStack {
             zoomOutButton()
             Divider()
@@ -16,12 +24,8 @@ struct PhotoLibraryZoomControl: View {
         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
         .blurryBackground(radius: 18)
         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-        .alignmentGuide(.trailing, computeValue: { d in d[.trailing] + 12})
-        .alignmentGuide(.top, computeValue: { d in d[.top] - 10})
-        .opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
     }
-    
-    // MARK: - Private
+
     private func zoomInButton() -> some View {
         Button {
             zoomState.zoom(.in)

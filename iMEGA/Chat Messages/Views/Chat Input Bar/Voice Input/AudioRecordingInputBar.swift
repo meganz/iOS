@@ -93,12 +93,13 @@ class AudioRecordingInputBar: UIView {
     
     func lock(completionBlock: @escaping (() -> Void)) {
         locked = true
-        voiceView.finalRatio = (voiceView.bounds.width - trashView.bounds.width) / voiceView.bounds.width
+        let width = voiceView.bounds.width - trashView.bounds.width
+        voiceView.finalRatio = width / voiceView.bounds.width
         voiceView.selectionView.backgroundColor = #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1)
         voiceView.imageView.image = Asset.Images.Chat.sendChatDisabled.image
         voiceView.imageView.renderImage(withColor: .white)
         let audioWaveTrailing = self.trashView.frame.width
-            + (self.trashView.frame.origin.x * 2.0)
+            + (self.trashView.frame.origin.x * CGFloat(2.0))
         audioWavesholderViewTrailingConstraint.constant = audioWaveTrailing
 
         voiceView.tapHandler = completionBlock

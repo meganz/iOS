@@ -8,7 +8,7 @@ final class NodeActionViewControllerGenericDelegate:
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
-
+    
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         guard let viewController = viewController else { return }
         switch action {
@@ -16,11 +16,7 @@ final class NodeActionViewControllerGenericDelegate:
             showEditTextFile(for: node)
             
         case .download:
-            SVProgressHUD.show(
-                Asset.Images.Hud.hudDownload.image,
-                status: Strings.Localizable.downloadStarted
-            )
-            node.mnz_downloadNode()
+            download(node)
         
         case .copy, .move:
             showBrowserViewController(node: node, action: (action == .copy) ? .copy : .move)
@@ -33,25 +29,10 @@ final class NodeActionViewControllerGenericDelegate:
             viewController.present(activityViewController, animated: true, completion: nil)
 
         case .shareFolder:
-            let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
-            guard let navigationController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? MEGANavigationController else { return }
-            let contactsViewController = navigationController.viewControllers.first as! ContactsViewController
-            contactsViewController.nodesArray = [node]
-            contactsViewController.contactsMode = .shareFoldersWith
-            
-            viewController.present(navigationController, animated: true)
+            shareFolder(node)
             
         case .manageShare:
-            let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
-            guard let contactsViewController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else { return }
-            contactsViewController.node = node
-            contactsViewController.contactsMode = .folderSharedWith
-            
-            if let navigationController = viewController as? UINavigationController {
-                navigationController.pushViewController(contactsViewController, animated: true)
-            } else {
-                viewController.present(contactsViewController, animated: true)
-            }
+            manageShare(node)
             
         case .info:
             showNodeInfo(node)
@@ -82,35 +63,16 @@ final class NodeActionViewControllerGenericDelegate:
             }
         case .removeSharing:
             node.mnz_removeSharing()
+            
         case .sendToChat:
             node.mnz_sendToChat(in: viewController)
+            
         case .saveToPhotos:
             node.mnz_saveToPhotos()
+            
         case .favourite:
-            let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk()))
-            if node.isFavourite {
-                nodefavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { (result) in
-                    switch result {
-                    case .success():
-                        if #available(iOS 14.0, *) {
-                            QuickAccessWidgetManager().deleteFavouriteItem(for: node)
-                        }
-                    case .failure(_):
-                        break
-                    }
-                }
-            } else {
-                nodefavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle) { (result) in
-                    switch result {
-                    case .success():
-                        if #available(iOS 14.0, *) {
-                            QuickAccessWidgetManager().insertFavouriteItem(for: node)
-                        }
-                    case .failure(_):
-                        break
-                    }
-                }
-            }
+            favourite(node)
+            
         case .label:
             node.mnz_labelActionSheet(in: viewController)
         
@@ -155,6 +117,64 @@ final class NodeActionViewControllerGenericDelegate:
             if let browserViewController = navigationController.viewControllers.first as? BrowserViewController {
                 browserViewController.selectedNodesArray = [node]
                 browserViewController.browserAction = action
+            }
+        }
+    }
+    
+    private func download(_ node: MEGANode) {
+        SVProgressHUD.show(
+            Asset.Images.Hud.hudDownload.image,
+            status: Strings.Localizable.downloadStarted
+        )
+        node.mnz_downloadNode()
+    }
+    
+    private func shareFolder(_ node: MEGANode) {
+        let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
+        guard let navigationController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? MEGANavigationController else { return }
+        let contactsViewController = navigationController.viewControllers.first as! ContactsViewController
+        contactsViewController.nodesArray = [node]
+        contactsViewController.contactsMode = .shareFoldersWith
+        
+        viewController?.present(navigationController, animated: true)
+    }
+    
+    private func manageShare(_ node: MEGANode) {
+        let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
+        guard let contactsViewController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else { return }
+        contactsViewController.node = node
+        contactsViewController.contactsMode = .folderSharedWith
+        
+        if let navigationController = viewController as? UINavigationController {
+            navigationController.pushViewController(contactsViewController, animated: true)
+        } else {
+            viewController?.present(contactsViewController, animated: true)
+        }
+    }
+    
+    private func favourite(_ node: MEGANode) {
+        let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        if node.isFavourite {
+            nodefavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { (result) in
+                switch result {
+                case .success():
+                    if #available(iOS 14.0, *) {
+                        QuickAccessWidgetManager().deleteFavouriteItem(for: node)
+                    }
+                case .failure(_):
+                    break
+                }
+            }
+        } else {
+            nodefavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle) { (result) in
+                switch result {
+                case .success():
+                    if #available(iOS 14.0, *) {
+                        QuickAccessWidgetManager().insertFavouriteItem(for: node)
+                    }
+                case .failure(_):
+                    break
+                }
             }
         }
     }
