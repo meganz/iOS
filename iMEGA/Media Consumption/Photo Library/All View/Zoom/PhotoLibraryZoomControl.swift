@@ -25,7 +25,7 @@ struct PhotoLibraryZoomControl: View {
         .blurryBackground(radius: 18)
         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
     }
-
+    
     private func zoomInButton() -> some View {
         Button {
             zoomState.zoom(.in)

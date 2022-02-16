@@ -29,7 +29,6 @@ struct PhotoLibraryPicker: View {
             configSegmentedControlAppearance()
         }
     }
-
     
     private func configSegmentedControlAppearance() {
         UISegmentedControl
