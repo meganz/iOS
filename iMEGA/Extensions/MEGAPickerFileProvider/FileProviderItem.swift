@@ -9,15 +9,32 @@ import MobileCoreServices
     
     var filename: String
     
-    var documentSize: NSNumber?
+    lazy var documentSize: NSNumber? = {
+        try? FileManager.default.attributesOfItem(atPath: url.path)[FileAttributeKey.size] as? NSNumber
+    }()
     
-    var typeIdentifier: String
+    lazy var typeIdentifier: String = {
+        if url.hasDirectoryPath {
+            return kUTTypeFolder as String
+        } else {
+            let pathExtension = url.pathExtension
+            let unmanaged = UTTypeCreatePreferredIdentifierForTag(
+                kUTTagClassFilenameExtension,
+                pathExtension as CFString,
+                nil
+            )
+            let retained = unmanaged?.takeRetainedValue()
+            
+            return (retained as String?) ?? ""
+        }
+    }()
     
     private let url: URL
     
     @objc init(url: URL) {
         self.url = url
         filename = url.lastPathComponent
+        
         if url.path == "/" {
             itemIdentifier = .rootContainer
             parentItemIdentifier = itemIdentifier
@@ -30,20 +47,6 @@ import MobileCoreServices
             )
         }
         
-        documentSize = try? FileManager.default.attributesOfItem(atPath: url.path)[FileAttributeKey.size] as? NSNumber
-        
-        if url.hasDirectoryPath {
-            typeIdentifier = kUTTypeFolder as String
-        } else {
-            let pathExtension = url.pathExtension
-            let unmanaged = UTTypeCreatePreferredIdentifierForTag(
-              kUTTagClassFilenameExtension,
-              pathExtension as CFString,
-              nil
-            )
-            let retained = unmanaged?.takeRetainedValue()
-            
-            typeIdentifier = (retained as String?) ?? ""
-        }
+        super.init()
     }
 }

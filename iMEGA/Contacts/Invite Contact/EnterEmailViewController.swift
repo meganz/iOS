@@ -117,7 +117,8 @@ class EnterEmailViewController: UIViewController {
 
     private func enableInviteContactsButton() {
         inviteContactsButton.mnz_setupPrimary(traitCollection)
-        let tagsNumber = tagsField.tags.count + (tagsField.text?.mnz_isValidEmail() ?? false ? 1 : 0)
+        let emailTag = tagsField.text?.mnz_isValidEmail() == true ? 1 : 0
+        let tagsNumber = tagsField.tags.count + emailTag
         let inviteContactsString = tagsNumber == 1 ?
         Strings.Localizable.invite1Contact.replacingOccurrences(of: "[X]", with: String(tagsNumber)) :
         Strings.Localizable.inviteXContacts.replacingOccurrences(of: "[X]", with: String(tagsNumber))

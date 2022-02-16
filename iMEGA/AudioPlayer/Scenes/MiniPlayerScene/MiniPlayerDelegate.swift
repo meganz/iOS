@@ -55,7 +55,7 @@ final class MiniPlayerDelegate: NSObject, UICollectionViewDelegateFlowLayout, UI
         if let node = cell.item?.node {
             delegate?.showPlayer(node: node, filePath: cell.item?.url.absoluteString)
         } else {
-            delegate?.showPlayer(filePath: cell.item?.url.path)
+            delegate?.showPlayer(filePath: cell.item?.url.absoluteString)
         }
     }
 }

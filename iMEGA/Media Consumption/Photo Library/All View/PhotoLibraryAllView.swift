@@ -17,6 +17,7 @@ struct PhotoLibraryAllView: View {
                             }
                         }
                     }
+                    .zoom($viewModel.zoomState)
                     .background(PhotoAutoScrollView(viewModel:
                                                         PhotoAutoScrollViewModel(viewModel: viewModel),
                                                     scrollProxy: scrollProxy))

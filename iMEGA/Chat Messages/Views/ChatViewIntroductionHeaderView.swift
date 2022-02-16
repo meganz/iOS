@@ -1,5 +1,6 @@
 
 import MessageKit
+import CoreGraphics
 
 class ChatViewIntroductionHeaderView: MessageReusableView {
     @IBOutlet weak var mainStackView: UIStackView!
@@ -131,30 +132,34 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         
         let participantsInformationHeight = max(avatarImageViewHeightConstraint.constant, participantInformationHeight)
         
+        let totalHeight = calculateFittingHeight(withParticipantsInformationHeight: participantsInformationHeight, maxSize: maxSize)
+        
+        return CGSize(width: size.width, height: totalHeight)
+    }
+    
+    private func calculateFittingHeight(withParticipantsInformationHeight height: CGFloat, maxSize: CGSize) -> CGFloat {
         let descriptionLabelSize = descriptionLabel.sizeThatFits(maxSize)
         let confidentialityLabelSize = confidentialityTextLabel.sizeThatFits(maxSize)
         let authenticityLabelSize = authenticityTextLabel.sizeThatFits(maxSize)
         
         let confidentialityAreaHeight = confidentialityStackView.spacing
-            + confidentialityImageView.bounds.height
-            + confidentialityLabelSize.height
+        + confidentialityImageView.bounds.height
+        + confidentialityLabelSize.height
         
         let authenticityAreaHeight = authenticityStackView.spacing
-            + authenticityImageView.bounds.height
-            + authenticityLabelSize.height
+        + authenticityImageView.bounds.height
+        + authenticityLabelSize.height
         
         
-        let totalHeight = topConstraint.constant
-            + participantsInformationHeight
-            + mainStackView.spacing
-            + descriptionLabelSize.height
-            + mainStackView.spacing
-            + confidentialityAreaHeight
-            + mainStackView.spacing
-            + authenticityAreaHeight
-            + bottomConstraint.constant
-        
-        return CGSize(width: size.width, height: totalHeight)
+        return topConstraint.constant
+        + height
+        + mainStackView.spacing
+        + descriptionLabelSize.height
+        + mainStackView.spacing
+        + confidentialityAreaHeight
+        + mainStackView.spacing
+        + authenticityAreaHeight
+        + bottomConstraint.constant
     }
 }
 

@@ -71,6 +71,8 @@
 		12696B1527A8B58A008628EA /* Binding+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B1427A8B58A008628EA /* Binding+Additions.swift */; };
 		129C341E275FECF100019019 /* PhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129C341D275FECF100019019 /* PhotoBrowser.swift */; };
 		12BC3E7D27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7C27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift */; };
+		12BC3E7127B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7027B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift */; };
+		12BC3E7327B30915009F7987 /* ImageUpdatePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7227B30915009F7987 /* ImageUpdatePublisher.swift */; };
 		12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
@@ -2371,6 +2373,8 @@
 		12696B1427A8B58A008628EA /* Binding+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Additions.swift"; sourceTree = "<group>"; };
 		129C341D275FECF100019019 /* PhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowser.swift; sourceTree = "<group>"; };
 		12BC3E7C27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomViewModifier.swift; sourceTree = "<group>"; };
+		12BC3E7027B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoExplorerViewController+PhotoLibrary.swift"; sourceTree = "<group>"; };
+		12BC3E7227B30915009F7987 /* ImageUpdatePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpdatePublisher.swift; sourceTree = "<group>"; };
 		12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelection.swift; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -4797,6 +4801,15 @@
 			path = Zoom;
 			sourceTree = "<group>";
 		};
+		12BC3E6D27B3042E009F7987 /* Photolibrary */ = {
+			isa = PBXGroup;
+			children = (
+				12BC3E7027B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift */,
+				12BC3E7227B30915009F7987 /* ImageUpdatePublisher.swift */,
+			);
+			path = Photolibrary;
+			sourceTree = "<group>";
+		};
 		12E14BA5278CC93700AE1BE8 /* Photo Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -6416,6 +6429,7 @@
 		5D570D0B2537E702006C5670 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				12BC3E6D27B3042E009F7987 /* Photolibrary */,
 				5D9DE5B2254BE9C400FA69C8 /* SearchController */,
 				5D62D89824D150590004301A /* ExploreView */,
 				5D570D0E2537E83C006C5670 /* Cells */,
@@ -10379,10 +10393,9 @@
 			};
 			buildConfigurationList = 137361851A6664C300B740E8 /* Build configuration list for PBXProject "MEGA" */;
 			compatibilityVersion = "Xcode 12.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				es,
@@ -11319,6 +11332,7 @@
 				5DAC09D524CFCA16001B6476 /* MEGACarouselFlowLayout.swift in Sources */,
 				B6E5D248274C2A2D00C8AB96 /* PhotoLibraryMonthViewModel.swift in Sources */,
 				B654BF3924FF123700A3CBC8 /* MVVM-R.swift in Sources */,
+				12BC3E7127B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift in Sources */,
 				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				2F9F11162508A3E800896DFF /* LogManager.swift in Sources */,
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
@@ -11959,6 +11973,7 @@
 				5BC609E226B9475D002F12A4 /* NodeOpener.swift in Sources */,
 				BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */,
 				83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */,
+				12BC3E7327B30915009F7987 /* ImageUpdatePublisher.swift in Sources */,
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				B6E7A8D92500D7A800CD6AC2 /* UIView+Layout.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
@@ -13010,7 +13025,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100 -Xfrontend -warn-long-expression-type-checking=100";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
@@ -13066,7 +13081,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100 -Xfrontend -warn-long-expression-type-checking=100";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
@@ -13087,7 +13102,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2202031349;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -13160,7 +13175,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2202031349;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -13235,7 +13250,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-PrefixHeader.pch";
@@ -13299,7 +13314,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-PrefixHeader.pch";
@@ -13361,7 +13376,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-PrefixHeader.pch";
@@ -13424,7 +13439,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-PrefixHeader.pch";
@@ -13479,7 +13494,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -13521,7 +13536,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -13558,7 +13573,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -13606,7 +13621,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -13654,7 +13669,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13718,7 +13733,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13779,7 +13794,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13842,7 +13857,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2201261415;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

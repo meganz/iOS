@@ -60,21 +60,21 @@ final class PhotoScrollTracker {
             return
         }
         
-        firstOffset = max(firstOffset, 0) // Ignore negative offset
-        lastOffset = max(lastOffset, 0) // Ignore negative offset
+        firstOffset = max(firstOffset, CGFloat.zero) // Ignore negative offset
+        lastOffset = max(lastOffset, CGFloat.zero) // Ignore negative offset
         
-        guard abs(lastOffset - firstOffset) > 16 else {
+        guard abs(lastOffset - firstOffset) > CGFloat(16) else {
             // Don't update position when the scroll offset change is neglectable
             return
         }
         
-        guard lastOffset > 24 else {
+        guard lastOffset > CGFloat(24) else {
             // When it closes to top, we prefer top over center
             position = .top
             return
         }
 
-        let viewPortCenter = viewPortSize.height / 2
+        let viewPortCenter = viewPortSize.height / CGFloat(2)
         var scrolledPosition: PhotoScrollPosition?
         var shortestDistanceToViewPortCenter = CGFloat.zero
         

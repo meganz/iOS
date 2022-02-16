@@ -402,19 +402,23 @@ function mergePlurals($originalPluralLanguages,$pluralLanguages,$isLan){
 
         $existingStrings = new CFPropertyList\CFPropertyList(strToStream($originalPluralLanguage['text']), CFPropertyList\CFPropertyList::FORMAT_XML );
         $stringsToAdd = new CFPropertyList\CFPropertyList(strToStream($pluralLanguages[$key]['text']), CFPropertyList\CFPropertyList::FORMAT_XML );
+        $stringsToExport = new CFPropertyList\CFPropertyList(null, CFPropertyList\CFPropertyList::FORMAT_XML );
+        $stringsToExportDict = new \CFPropertyList\CFDictionary([]);
 
         // Add or replace, depending if upper key exists.
         foreach( $stringsToAdd->getValue(true) as $newKeys => $newValues )
         {
             $existingStringsDict = $existingStrings->getValue();
+            if($existingStringsDict->get($newKeys)) {
+                $existingStringsDict->del($newKeys);
+            }
             $existingStringsDict->add($newKeys,$newValues);
-            $existingStrings->purge();
-            $existingStrings->add($existingStringsDict);
         }
 
         // Create files
             $branchName = substr($pluralLanguages[$key]['resource'], strrpos($pluralLanguages[$key]['resource'], ':r:') + 3);
-        $path = "Translations-" . TIME . "/{$branchName}";
+
+        $path = "Translations-" . TIME . "/localizable";
         if(!file_exists($path)){
             mkdir($path, 0777, true);
         }
@@ -423,17 +427,17 @@ function mergePlurals($originalPluralLanguages,$pluralLanguages,$isLan){
                 $languageName = str_replace(array_keys(REMAPPED_LANG_CODES), array_values(REMAPPED_LANG_CODES), explode(":", $pluralLanguages[$key]['language'])[1]);
                 $resourceName = str_replace(array_keys(REMAPPED_RESOURCE_NAMES), array_values(REMAPPED_RESOURCE_NAMES), explode("-", $branchName)[0]);
                 mkdir("{$path}/{$languageName}.lproj");
-                $existingStrings->save("{$path}/{$languageName}.lproj/{$resourceName}.stringsdict", CFPropertyList\CFPropertyList::FORMAT_AUTO);
-                echo "Created File: {$path}/{$languageName}.lproj/{$resourceName}.stringsdict\n";
+                $existingStrings->save("{$path}/{$languageName}.lproj/Localizable.stringsdict", CFPropertyList\CFPropertyList::FORMAT_AUTO);
+                echo "Created File: {$path}/{$languageName}.lproj/Localizable.stringsdict\n";
             }else{
                 //base files
                 mkdir("{$path}/Base.lproj");
                 mkdir("{$path}/en.lproj");
                 $resourceName = str_replace(array_keys(REMAPPED_RESOURCE_NAMES), array_values(REMAPPED_RESOURCE_NAMES), explode("-", $branchName)[0]);
-                $existingStrings->save("{$path}/en.lproj/{$resourceName}.stringsdict", CFPropertyList\CFPropertyList::FORMAT_AUTO);
-                $existingStrings->save("{$path}/Base.lproj/{$resourceName}.stringsdict", CFPropertyList\CFPropertyList::FORMAT_AUTO);
-                echo "Created File: {$path}/en.lproj/{$resourceName}.stringsdict\n";
-                echo "Created File: {$path}/Base.lproj/{$resourceName}.stringsdict\n";
+                $existingStrings->save("{$path}/en.lproj/Localizable.stringsdict", CFPropertyList\CFPropertyList::FORMAT_AUTO);
+                $existingStrings->save("{$path}/Base.lproj/Localizable.stringsdict", CFPropertyList\CFPropertyList::FORMAT_AUTO);
+                echo "Created File: {$path}/en.lproj/Localizable.stringsdict\n";
+                echo "Created File: {$path}/Base.lproj/Localizable.stringsdict\n";
             }
     }
 }
@@ -755,7 +759,7 @@ function getTranslations($resources, $languages)
     // Merge plurals
     mergePlurals($originalPluralTranslations,$translations['pluralTranslation'],true);
 
-    // move infoplist into same folder as localizable
+    // move infoplist and plurals into same folder as localizable
     $pathOverride = false;
     if(count($finalContent) > 1 && $finalContent['localizable'] !== null) {
         $pathOverride = true;
@@ -766,7 +770,7 @@ function getTranslations($resources, $languages)
             $languageName = str_replace(array_keys(REMAPPED_LANG_CODES), array_values(REMAPPED_LANG_CODES), explode(":", $language)[1]);
             $resourceName = str_replace(array_keys(REMAPPED_RESOURCE_NAMES), array_values(REMAPPED_RESOURCE_NAMES), explode("-", $branchResource)[0]);
             $path = "Translations-" . TIME . "/{$branchResource}";
-            if ($pathOverride && $branchResource == 'infoplist') {
+            if ($pathOverride && ($branchResource == 'infoplist' || $branchResource == 'plurals')) {
                 $path = "Translations-" . TIME . "/localizable";
             }
             if(!file_exists($path)){
@@ -922,10 +926,10 @@ foreach($resourceMapping['source'] as $resource){
 
 function resourceChooser($resourceMapping){
     do{
-        echo "\n1. Changelogs \n2. Localizable \n3. InfoPlist \n4. LTHPasscodeViewController \n5. All \n6. (q) to quit \n";
+        echo "\n1. Changelogs \n2. Localizable \n3. InfoPlist \n4. LTHPasscodeViewController \n5. Plurals \n6. All \n7. (q) to quit \n";
         $cmd = trim(strtolower(readline("\n > Which resource would you want to export (Enter the digit):\n")));
         readline_add_history($cmd);
-        if ($cmd == 'q' || $cmd == '6') {
+        if ($cmd == 'q' || $cmd == '7') {
             exit;
         }
         switch(strtolower($cmd)){
@@ -938,12 +942,14 @@ function resourceChooser($resourceMapping){
             case '4':
                 return array($resourceMapping['LTHPasscodeViewController']);
             case '5':
+                return array($resourceMapping['Plurals']);
+            case '6':
                 return $resourceMapping;
         }
     }while ($cmd != 'q');
 }
 
 echo "\nWelcome to iOS Transifex Export \n";
-$res = resourceChooser($resourceMapping['source']);
+$res = resourceChooser($resourceMapping[$trimmedBranchName]);
 getTranslations($res, $languageMapping);
 getSourceLanguageFile($res);

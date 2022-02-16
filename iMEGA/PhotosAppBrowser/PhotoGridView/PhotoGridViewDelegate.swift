@@ -18,11 +18,15 @@ class PhotoGridViewDelegate: NSObject {
 
 // MARK:- Private methods.
 
-extension PhotoGridViewDelegate {
-    private var cellSize: CGSize {
-        let number: CGFloat = CGFloat(cellsPerRow())
-        let cellWidth: CGFloat = collectionView.bounds.width / number
+private extension PhotoGridViewDelegate {
+    var cellSize: CGSize {
+        let cellWidth = collectionView.bounds.width / cellsCountPerRow
         return CGSize(width: cellWidth, height: cellWidth)
+    }
+    
+    var cellsCountPerRow: CGFloat {
+        let count = cellsPerRow()
+        return CGFloat(count)
     }
 }
 

@@ -1,3 +1,4 @@
+import CoreData
 
 extension MEGAStore {
     
@@ -42,6 +43,12 @@ extension MEGAStore {
             return
         }
         
+        let batchInsert = buildBatchInsertRequest(for: items)
+        performBatchInsertRequest(batchInsert, completion: completion)
+    }
+    
+    @available(iOS 14.0, *)
+    private func buildBatchInsertRequest(for items:[RecentItemEntity]) -> NSBatchInsertRequest {
         var insertIndex = 0
         let batchInsert = NSBatchInsertRequest(entity: QuickAccessWidgetRecentItem.entity()) { (managedObject: NSManagedObject) -> Bool in
             guard insertIndex < items.count else { return true }
@@ -50,7 +57,7 @@ extension MEGAStore {
             if let recentItem = managedObject as? QuickAccessWidgetRecentItem {
                 recentItem.handle = entity.base64Handle
                 recentItem.name = entity.name
-                recentItem.isUpdate = entity.isUpdate as NSNumber
+                recentItem.isUpdate = NSNumber(value: entity.isUpdate)
                 recentItem.timestamp = entity.timestamp
             }
             
@@ -58,15 +65,7 @@ extension MEGAStore {
             return false
         }
         
-        stack.performBackgroundTask { context in
-            do {
-                try context.execute(batchInsert)
-                completion?(.success(()))
-            } catch {
-                MEGALogError("error when to batch insert recent items \(error)")
-                completion?(.failure(.megaStore))
-            }
-        }
+        return batchInsert
     }
     
     func fetchAllQuickAccessRecentItem() -> [RecentItemEntity] {
@@ -128,12 +127,16 @@ extension MEGAStore {
             return false
         }
         
+        performBatchInsertRequest(batchInsert, completion: completion)
+    }
+    
+    private func performBatchInsertRequest(_ request: NSBatchInsertRequest, completion: ((Result<Void, QuickAccessWidgetErrorEntity>) -> Void)? = nil) {
         stack.performBackgroundTask { context in
             do {
-                try context.execute(batchInsert)
+                try context.execute(request)
                 completion?(.success(()))
             } catch {
-                MEGALogError("error when to batch insert favourite items \(error)")
+                MEGALogError("error when to batch insert items \(error)")
                 completion?(.failure(.megaStore))
             }
         }

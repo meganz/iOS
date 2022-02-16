@@ -136,7 +136,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private func shouldInitializePlayer() -> Bool {
         if playerHandler.isPlayerDefined() {
             guard let node = node else {
-                return URL(fileURLWithPath: selectedFilePath ?? "") != playerHandler.playerCurrentItem()?.url
+                return selectedFilePath != playerHandler.playerCurrentItem()?.url.absoluteString
             }
             if fileLink != nil {
                 return streamingInfoUseCase?.info(from: node)?.node != playerHandler.playerCurrentItem()?.node

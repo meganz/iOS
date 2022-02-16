@@ -32,11 +32,11 @@ class GiphyPreviewViewController: UIViewController {
     private func configurePreviewImage() {
         previewImageView.contentMode = .scaleAspectFit
 
-        guard let giphy = giphy, let width = Double(giphy.width), let height = Double(giphy.height) else {
-            return
-        }
+        guard let giphy = giphy,
+              let ratio = giphy.sizeRatio else {
+                  return
+              }
         
-        let ratio: CGFloat = getRatio(height: height, width: width)
         previewImageView.autoCenterInSuperview()
         previewImageView.autoPinEdge(toSuperviewEdge: .left)
         previewImageView.autoPinEdge(toSuperviewEdge: .right)
@@ -44,9 +44,31 @@ class GiphyPreviewViewController: UIViewController {
         previewImageView.sd_setImage(with: URL(string: giphy.webp))
         previewImageView.backgroundColor = UIColor(patternImage: Asset.Images.Chat.giphyCellBackground.image)
     }
+}
+
+private extension GiphyResponseModel {
+    var floatWidth: CGFloat? {
+        guard let width = Double(width) else {
+            return nil
+        }
+        
+        return CGFloat(width)
+    }
     
-    private func getRatio(height: Double, width: Double) -> CGFloat {
-        let ratio: CGFloat = height / width
-        return ratio
+    var floatHeight: CGFloat? {
+        guard let height = Double(height) else {
+            return nil
+        }
+        
+        return CGFloat(height)
+    }
+    
+    var sizeRatio: CGFloat? {
+        guard let width = floatWidth,
+              let height = floatHeight else {
+                  return nil
+              }
+        
+        return height / width
     }
 }
