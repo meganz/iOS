@@ -14,7 +14,6 @@
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "MEGAApplication.h"
-#import "MEGAIndexer.h"
 #import "MEGALinkManager.h"
 #import "MEGALogger.h"
 #import "MEGANavigationController.h"
@@ -99,6 +98,7 @@
 @property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
 
 @property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
+@property (nonatomic, strong) SpotlightIndexer *spotlightIndexer;
 
 @end
 
@@ -274,10 +274,6 @@
         }
     }
     
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [Helper setIndexer:MEGAIndexer.sharedIndexer];
-    });
-    
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
         if (isFetchNodesDone) {
@@ -386,8 +382,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
-    
-    [MEGAIndexer.sharedIndexer stopIndexing];
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
@@ -561,8 +555,6 @@
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     MEGALogWarning(@"[App Lifecycle] Application did receive memory warning");
-    
-    [MEGAIndexer.sharedIndexer stopIndexing];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
@@ -1119,6 +1111,11 @@
     [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
 }
 
+- (void)indexFavourites {
+    self.spotlightIndexer = [[SpotlightIndexer alloc] initWithSdk:MEGASdkManager.sharedMEGASdk passcodeEnabled:LTHPasscodeViewController.doesPasscodeExist];
+    [self.spotlightIndexer indexFavourites];
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1141,7 +1138,7 @@
 }
 
 - (void)passcodeWasEnabled {
-    MEGAIndexer.sharedIndexer.enableSpotlight = NO;
+    [self.spotlightIndexer deindexAllSearchableItems];
 }
 
 - (void)passcodeViewControllerWillClose {
@@ -1349,6 +1346,7 @@
             
         case EventNodesCurrent:
             [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesCurrentNotification object:self];
+            [self indexFavourites];
             break;
             
         case EventMediaInfoReady:
@@ -1594,8 +1592,6 @@
                     [self.mainTBC openChatRoomNumber:self.openChatLater];
                 }
             }
-      
-            [MEGAIndexer.sharedIndexer reindexSpotlightIfNeeded];
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
 

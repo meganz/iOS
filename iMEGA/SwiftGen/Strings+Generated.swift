@@ -2097,8 +2097,6 @@ public enum Strings {
     public static let sortingPreference = Strings.tr("Localizable", "Sorting preference")
     /// Sort by
     public static let sortTitle = Strings.tr("Localizable", "sortTitle")
-    /// Spotlight Search
-    public static let spotlightSearch = Strings.tr("Localizable", "Spotlight Search")
     /// SSL verification failed
     public static let sslVerificationFailed = Strings.tr("Localizable", "SSL verification failed")
     /// MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.
@@ -2453,8 +2451,6 @@ public enum Strings {
     public static let weeks = Strings.tr("Localizable", "weeks")
     /// Two-Factor Authentication is a second layer of security for your account.
     public static let whatIsTwoFactorAuthentication = Strings.tr("Localizable", "whatIsTwoFactorAuthentication")
-    /// When enabled, allows searching for MEGA files and folders in Spotlight Search.
-    public static let whenEnabledAllowSearchAndLookUpMEGAFilesFoldersInSpotlightSearch = Strings.tr("Localizable", "When enabled, allow search and look up MEGA files/folders in Spotlight Search.")
     /// When enabled, photos will be uploaded.
     public static let whenEnabledPhotosWillBeUploaded = Strings.tr("Localizable", "When enabled, photos will be uploaded.")
     /// When enabled, videos will be uploaded.

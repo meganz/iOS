@@ -34,8 +34,6 @@
 #import "NodeTableViewCell.h"
 #import "PhotoCollectionViewCell.h"
 
-static MEGAIndexer *indexer;
-
 @implementation Helper
 
 #pragma mark - Images
@@ -625,7 +623,7 @@ static MEGAIndexer *indexer;
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
     NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-        [Helper setThumbnailForNode:node api:api cell:cell reindexNode:NO];
+        [Helper setThumbnailForNode:node api:api cell:cell];
     } else {
         [api getThumbnailNode:node destinationFilePath:thumbnailFilePath];
         if ([cell isKindOfClass:[NodeTableViewCell class]]) {
@@ -638,7 +636,7 @@ static MEGAIndexer *indexer;
     }
 }
 
-+ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex {
++ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
     NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
@@ -647,12 +645,6 @@ static MEGAIndexer *indexer;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-    }
-    
-    if (reindex) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [indexer index:node];
-        });
     }
 }
 
@@ -710,10 +702,6 @@ static MEGAIndexer *indexer;
             }];
         }
     }
-}
-
-+ (void)setIndexer:(MEGAIndexer* )megaIndexer {
-    indexer = megaIndexer;
 }
 
 #pragma mark - Utils for UI
@@ -841,11 +829,11 @@ static MEGAIndexer *indexer;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
     
     // Delete Spotlight index
-    [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
+    [[CSSearchableIndex defaultSearchableIndex] deleteAllSearchableItemsWithCompletionHandler:^(NSError * _Nullable error) {
         if (error) {
-            MEGALogError(@"Error deleting spotligth index");
+            MEGALogError("[Spotlight] Deindexing all searchable items error: %@", error.localizedDescription);
         } else {
-            MEGALogInfo(@"Spotlight index deleted");
+            MEGALogDebug(@"[Spotlight] All searchable items deindexed");
         }
     }];
 }

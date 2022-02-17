@@ -1694,12 +1694,8 @@
 "Save in Photos"="Lưu vào Ảnh";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào kho thư viện ảnh của máy.";
-/* Settings section title where you can enable the option to 'Spotlight search' */
-"Spotlight Search"="Cho phép Spotlight Search";
 /* Title of the Spotlight Search section */
 "Search"="Tìm kiếm";
-/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Khi được bật, Spotlight Search của iOS sẽ được phép hiển thị nội dung tìm kiếm có trong MEGA.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Chính bạn là người giữ chìa khóa";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */

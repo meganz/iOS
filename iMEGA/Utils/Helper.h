@@ -1,8 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGAIndexer.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
@@ -65,7 +63,7 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
-+ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex;
++ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
 
 + (NSString *)sizeAndCreationHourAndMininuteForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
@@ -76,8 +74,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
-
-+ (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
 #pragma mark - Utils for UI
 

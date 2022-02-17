@@ -5,7 +5,6 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "MEGAIndexer.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -30,9 +29,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *saveMediaInGalleryLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *saveMediaInGallerySwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *spotlightLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *spotlightSwitch;
 
 @property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
 
@@ -66,7 +62,6 @@
     self.savePhotosLabel.text = NSLocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
     self.saveVideosLabel.text = NSLocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
     self.saveMediaInGalleryLabel.text = NSLocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
-    self.spotlightLabel.text = NSLocalizedString(@"Spotlight Search", @"Settings section title where you can enable the option to 'Spotlight search'");
     BOOL useHttpsOnly = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
     
@@ -79,8 +74,6 @@
     BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
     [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
     
-    BOOL isSpotlightEnabled = MEGAIndexer.sharedIndexer.enableSpotlight;
-    [self.spotlightSwitch setOn:isSpotlightEnabled];
     [self.tableView reloadData];
 }
 
@@ -172,18 +165,14 @@
     [self checkPhotosPermissionForUserDefaultSetting:@"isSaveMediaCapturedToGalleryEnabled" settingSwitch:self.saveMediaInGallerySwitch];
 }
 
-- (IBAction)spotlightValueChanged:(UISwitch *)sender {
-    MEGAIndexer.sharedIndexer.enableSpotlight = sender.isOn;
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        return 4;
+        return 3;
     }
     
-    return 5;
+    return 4;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -199,10 +188,6 @@
             
         case 2: //Camera
             titleHeader = NSLocalizedString(@"Camera", @"Setting associated with the 'Camera' of the device");
-            break;
-      
-        case 3:  //Spotlight
-            titleHeader = NSLocalizedString(@"Search", @"Title of the Spotlight Search section");
             break;
         
     }
@@ -225,11 +210,6 @@
             
         case 2: { //Camera
             titleFooter = NSLocalizedString(@"Save a copy of the images and videos taken from the MEGA app in your device’s media library.", @"Footer text shown under the Camera setting to explain the option 'Save in Photos'");
-            break;
-        }
-            
-        case 3: { //Spotlight
-            titleFooter = NSLocalizedString(@"When enabled, allow search and look up MEGA files/folders in Spotlight Search.", @"Footer text shown under the Spotlight search setting to explain the option 'Spotlight search'");
             break;
         }
     }

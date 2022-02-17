@@ -1694,12 +1694,8 @@
 "Save in Photos"="In Photos speichern";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Die aus der App heraus aufgenommenen Fotos und Videos werden auch in den lokalen Mediendateien gespeichert.";
-/* Settings section title where you can enable the option to 'Spotlight search' */
-"Spotlight Search"="Spotlight-Suche";
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
-/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Wenn diese Option aktiviert ist, können Sie in der Spotlight-Suche nach MEGA-Dateien und -Ordnern suchen.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
