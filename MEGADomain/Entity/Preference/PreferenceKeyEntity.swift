@@ -17,4 +17,5 @@ enum PreferenceKeyEntity: String {
     case rootBackupFolder
     case sortingPreference = "MEGASortingPreference"
     case sortingPreferenceType = "SortOrderType"
+    case favouritesIndexed
 }

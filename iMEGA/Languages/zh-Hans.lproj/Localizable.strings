@@ -1694,12 +1694,8 @@
 "Save in Photos"="保存至照片";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
-/* Settings section title where you can enable the option to 'Spotlight search' */
-"Spotlight Search"="搜索热点";
 /* Title of the Spotlight Search section */
 "Search"="搜索";
-/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="开启后，允许在Spotlight搜索中搜索MEGA文件和文件夹。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */

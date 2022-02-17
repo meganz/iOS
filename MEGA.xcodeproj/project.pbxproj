@@ -1074,7 +1074,6 @@
 		941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		941135651F011C8400D33428 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
-		9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
 		9419B6C61F20DC5700FEBE31 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */; };
 		942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254DC1EDC03130074C51A /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1281,6 +1280,7 @@
 		A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
+		A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */; };
 		A873E84426E117A400CBB174 /* AppReinstallationCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */; };
 		A873E84526E117A400CBB174 /* AppReinstallationCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */; };
 		A873E84626E117A400CBB174 /* AppReinstallationCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */; };
@@ -3343,8 +3343,6 @@
 		83FB1438219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
-		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
-		9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAIndexer.m; path = Spotlight/MEGAIndexer.m; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		942254DC1EDC03130074C51A /* MEGAPicker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPicker.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPickerFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3464,6 +3462,7 @@
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
+		A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexer.swift; sourceTree = "<group>"; };
 		A873E84326E117A400CBB174 /* AppReinstallationCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReinstallationCleaner.swift; sourceTree = "<group>"; };
 		A873E85A26E2228400CBB174 /* FileVersioningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewModel.swift; sourceTree = "<group>"; };
 		A873E85C26E2248E00CBB174 /* FileVersioningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewRouter.swift; sourceTree = "<group>"; };
@@ -7686,10 +7685,9 @@
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
-				9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */,
-				9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */,
+				A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */,
 			);
-			name = Spotlight;
+			path = Spotlight;
 			sourceTree = "<group>";
 		};
 		942254D71EDC02CB0074C51A /* Extensions */ = {
@@ -10985,7 +10983,6 @@
 				C4AC9E6627ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift in Sources */,
 				830C27C125E64DF000E9B56E /* MOOfflineNode+Mapper.swift in Sources */,
 				2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */,
-				9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */,
 				B6B73E6E22C5713700ACAD48 /* RegionListViewController.swift in Sources */,
 				5D8C5AB924F0AE3200EDD7A9 /* PhotoPermission.swift in Sources */,
 				BFAAF717252E85810053A9BF /* VideoExplorerTableViewCell.swift in Sources */,
@@ -11955,6 +11952,7 @@
 				C466A7FB26F4E08B00905878 /* BrowserViewController+Backup.swift in Sources */,
 				B662B85424EC982D0089376A /* AuthUseCase.swift in Sources */,
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
+				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
 				B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */,
 				B662B88D24FC3F990089376A /* RegionListSource.swift in Sources */,

@@ -1068,7 +1068,7 @@
             for (NodeTableViewCell *nodeTableViewCell in self.tableView.visibleCells) {
                 if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:YES];
+                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
                 }
             }
             break;

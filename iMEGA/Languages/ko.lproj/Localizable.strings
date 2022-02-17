@@ -1694,12 +1694,8 @@
 "Save in Photos"="사진에 저장";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA 앱에서 촬영한 이미지 또는 동영상의 사본을 기기의 미디어 라이브러리에 저장합니다.";
-/* Settings section title where you can enable the option to 'Spotlight search' */
-"Spotlight Search"="스포트라이트 검색";
 /* Title of the Spotlight Search section */
 "Search"="검색";
-/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="활성화하면, Spotlight 검색에서 MEGA의 파일과 폴더 검색을 허용";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
