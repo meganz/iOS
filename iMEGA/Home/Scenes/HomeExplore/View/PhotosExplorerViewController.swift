@@ -92,7 +92,7 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
         switch command {
         case .reloadImages(let nodes):
             if #available(iOS 14.0, *) {
-                updateImageLibrary(by: nodes)
+                updatePhotoLibrary(by: nodes)
                 editBarButtonItem.isEnabled = !nodes.isEmpty
             }
         case .reloadData(let nodesByDay):
@@ -150,7 +150,7 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
     
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
         if #available(iOS 14.0, *) {
-            selectAllPhotoLibrary()
+            configPhotoLibrarySelectAll()
         } else {
             listSource?.toggleSelectAllNodes()
             viewModel.dispatch(.updateTitle(nodeCount: listSource?.selectedNodes?.count ?? 0))

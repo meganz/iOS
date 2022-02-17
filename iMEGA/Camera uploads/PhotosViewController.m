@@ -167,7 +167,7 @@
         self.photosCollectionView.delegate = nil;
         self.photosCollectionView.dataSource = nil;
         
-        [self configPhotoLibraryViewIn:self.photoContainerView];
+        [self objcWrapper_configPhotoLibraryViewIn:self.photoContainerView];
     }
 }
 
@@ -388,7 +388,7 @@
     
     if (@available(iOS 14.0, *)) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self updatePhotoLibraryBy:self.mediaNodesArray];
+            [self objcWrapper_updatePhotoLibraryBy:self.mediaNodesArray];
         });
     } else {
         NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
@@ -547,7 +547,7 @@
     }
     
     if (@available(iOS 14.0, *)) {
-        [self selectAllPhotoLibrary];
+        [self objcWrapper_configPhotoLibrarySelectAll];
     }
     
     [self.photosCollectionView reloadData];
@@ -561,7 +561,7 @@
     [super setEditing:editing animated:animated];
     
     if (@available(iOS 14.0, *)) {
-        [self enablePhotoLibraryEditMode:editing];
+        [self objcWrapper_enablePhotoLibraryEditMode:editing];
     } else {
         self.photosCollectionView.allowsMultipleSelection = editing;
     }
@@ -569,7 +569,7 @@
     [self updateEditBarButton];
     
     if (editing) {
-        [self updateNavigationTitleWithPhotoCount:self.selection.count];
+        [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
@@ -619,13 +619,8 @@
 }
 
 - (void)didSelectedPhotoCountChange:(NSInteger)count {
-    [self updateNavigationTitleWithPhotoCount:count];
+    [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:count];
     [self setToolbarActionsEnabled:count > 0];
-}
-
-
-- (void)shouldEnableEditButton:(BOOL)boolValue {
-    self.editBarButtonItem.enabled = boolValue;
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -806,7 +801,7 @@
         [collectionView clearSelectedItemsWithAnimated:NO];
     } else {
         self.selection[node.handle] = node;
-        [self updateNavigationTitleWithPhotoCount:self.selection.count];
+        [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
         [self setToolbarActionsEnabled:YES];
         
         if (self.selection.count == self.mediaNodesArray.count) {
