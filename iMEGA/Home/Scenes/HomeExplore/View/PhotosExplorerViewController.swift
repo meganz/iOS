@@ -16,9 +16,12 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
     )
     
     @available(iOS 14.0, *)
-    lazy var publisher = ImageUpdatePublisher(photoExplorerViewController: self)
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+    
     lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
+    
+    @available(iOS 14.0, *)
+    lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
     
     init(viewModel: PhotoExplorerViewModel) {
         self.viewModel = viewModel
@@ -40,7 +43,7 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
         
         if #available(iOS 14.0, *) {
             configPhotoLibraryView(in: view)
-            publisher.setupSubscriptions()
+            setupPhotoLibrarySubscriptions()
         } else {
             registerNibs()
             cellSize = collectionView.mnz_calculateCellSize(forInset: cellInset)
