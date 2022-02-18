@@ -10,4 +10,15 @@ extension PhotosExplorerViewController: PhotoLibraryProvider {
         updateNavigationTitle(withSelectedPhotoCount: count)
         configureToolbarButtons()
     }
+    
+    func setupPhotoLibrarySubscriptions() {
+        photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] in
+            self?.showNavigationRightBarButton($0 == .all)
+        }
+        
+        photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
+            self?.selection.setSelectedNodes(Array($0.values))
+            self?.didSelectedPhotoCountChange($0.count)
+        }
+    }
 }

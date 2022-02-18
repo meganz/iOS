@@ -10,9 +10,11 @@ import Combine
     private let photoLibrarySubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     private weak var photosVC: PhotosViewController?
+    private let photoLibraryPublisher: PhotoLibraryPublisher
     
     @objc init(photosViewController: PhotosViewController) {
         photosVC = photosViewController
+        photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photosViewController.photoLibraryContentViewModel)
         
         super.init()
     }
@@ -22,12 +24,20 @@ import Combine
     @objc func setupSubscriptions() {
         subscribleToCameraUploadStatsChange()
         subscribleToPhotoLibraryUpdate()
-        subscribeSelectedModeChange()
-        subscribeSelectedPhotosChange()
+        
+        photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] in
+            self?.photosVC?.showToolbar($0 == .all)
+        }
+        
+        photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
+            self?.photosVC?.selection.setSelectedNodes(Array($0.values))
+            self?.photosVC?.didSelectedPhotoCountChange($0.count)
+        }
     }
     
     @objc func cancelSubscriptions() {
         subscriptions.removeAll()
+        photoLibraryPublisher.cancelSubscriptions()
     }
     
     // MARK: - send message
@@ -53,29 +63,6 @@ import Combine
             .throttle(for: .seconds(Constants.photoUpdateThrottleInterval), scheduler: DispatchQueue.global(qos: .userInitiated), latest: true)
             .sink { [weak self] in
                 self?.photosVC?.reloadPhotos()
-            }
-            .store(in: &subscriptions)
-    }
-    
-    private func subscribeSelectedModeChange() {
-        photosVC?
-            .photoLibraryContentViewModel
-            .$selectedMode
-            .sink { [weak self] in
-                self?.photosVC?.showToolbar($0 == .all)
-            }
-            .store(in: &subscriptions)
-    }
-    
-    private func subscribeSelectedPhotosChange() {
-        photosVC?
-            .photoLibraryContentViewModel
-            .selection
-            .$photos
-            .dropFirst()
-            .sink { [weak self] in
-                self?.photosVC?.selection.setSelectedNodes(Array($0.values))
-                self?.photosVC?.didSelectedPhotoCountChange($0.count)
             }
             .store(in: &subscriptions)
     }
