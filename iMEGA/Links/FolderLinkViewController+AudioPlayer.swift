@@ -37,6 +37,8 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
     }
     
     func resetMiniPlayerContainer() {
+        CrashlyticsLogger.log("[AudioPlayer] Reset mini player. Is bottomView nil: \(bottomView == nil)")
+        
         DispatchQueue.main.async {
             self.bottomView?.removeFromSuperview()
             self.bottomView = nil
