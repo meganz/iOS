@@ -7,7 +7,7 @@ struct CredentialRepository: CredentialRepositoryProtocol {
         static let keychainSessionIdAccountName = "sessionId"
         static let keychainEmailAccountName = "email"
         static let keychainNameAccountName = "name"
-        static let keychainBase64pwkeyAccountName = "base64pwkey"
+        static let keychainPasswordAccountName = "password"
     }
     
     func sessionId(service: String, account: String) -> String? {
@@ -27,6 +27,6 @@ struct CredentialRepository: CredentialRepositoryProtocol {
         SAMKeychain.deletePassword(forService: Constants.keychainServiceName,
                                    account: Constants.keychainNameAccountName)
         SAMKeychain.deletePassword(forService: Constants.keychainServiceName,
-                                   account: Constants.keychainBase64pwkeyAccountName)
+                                   account: Constants.keychainPasswordAccountName)
     }
 }

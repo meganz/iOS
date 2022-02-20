@@ -796,7 +796,7 @@
     [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
     [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
     [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-    [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
 }
 
 + (void)clearSession {

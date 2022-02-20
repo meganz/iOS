@@ -32,9 +32,8 @@
             MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
             loginRequestDelegate.confirmAccountInOtherClient = YES;
             NSString *email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
-            NSString *base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
-            NSString *stringHash = [api hashForBase64pwkey:base64pwkey email:email];
-            [api fastLoginWithEmail:email stringHash:stringHash base64pwKey:base64pwkey delegate:loginRequestDelegate];
+            NSString *password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
+            [api loginWithEmail:email password:password delegate:loginRequestDelegate];
         } else {
             if (self.completion) {
                 self.completion(error);
@@ -58,8 +57,7 @@
         [SAMKeychain setPassword:request.sessionKey forService:@"MEGA" account:@"sessionId"];
         [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
         [SAMKeychain setPassword:request.name forService:@"MEGA" account:@"name"];
-        NSString *base64pwkey = request.privateKey;
-        [SAMKeychain setPassword:base64pwkey forService:@"MEGA" account:@"base64pwkey"];
+        [SAMKeychain setPassword:request.password forService:@"MEGA" account:@"password"];
         
         if (self.completion) {
             self.completion(error);

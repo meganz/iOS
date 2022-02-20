@@ -50,9 +50,8 @@
                 
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 loginRequestDelegate.confirmAccountInOtherClient = YES;
-                NSString *base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
-                NSString *stringHash = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:base64pwkey email:request.email];
-                [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:request.email stringHash:stringHash base64pwKey:base64pwkey delegate:loginRequestDelegate];
+                NSString *password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
+                [MEGASdkManager.sharedMEGASdk loginWithEmail:request.email password:password delegate:loginRequestDelegate];
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
