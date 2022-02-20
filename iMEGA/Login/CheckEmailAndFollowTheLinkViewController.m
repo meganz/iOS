@@ -25,7 +25,7 @@
 
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *base64pwkey;
+@property (nonatomic, copy) NSString *password;
 
 @end
 
@@ -40,7 +40,7 @@
     
     self.email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
     self.name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
-    self.base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
+    self.password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
 
     self.awaitingEmailConfirmationLabel.text = NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
     self.checkYourEmailLabel.text = NSLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
@@ -132,7 +132,10 @@
         if (validEmail) {
             [self.emailInputView.inputTextField resignFirstResponder];
             MEGASendSignupLinkRequestDelegate *sendSignupLinkRequestDelegate = [[MEGASendSignupLinkRequestDelegate alloc] init];
-            [[MEGASdkManager sharedMEGASdk] fastSendSignupLinkWithEmail:self.emailInputView.inputTextField.text base64pwkey:self.base64pwkey name:self.name delegate:sendSignupLinkRequestDelegate];
+            [MEGASdkManager.sharedMEGASdk sendSignupLinkWithEmail:self.emailInputView.inputTextField.text
+                                                             name:self.name
+                                                         password:self.password
+                                                         delegate:sendSignupLinkRequestDelegate];
         }
         [self setErrorState:!validEmail];
     }
@@ -160,8 +163,7 @@
 
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
         loginRequestDelegate.confirmAccountInOtherClient = YES;
-        NSString *stringHash = [api hashForBase64pwkey:self.base64pwkey email:event.text];
-        [api fastLoginWithEmail:event.text stringHash:stringHash base64pwKey:self.base64pwkey delegate:loginRequestDelegate];
+        [api loginWithEmail:self.email password:self.password delegate:loginRequestDelegate];
     }
 }
 
