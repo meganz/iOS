@@ -20,7 +20,7 @@ public enum Strings {
     /// This will let you use MEGA to place and receive calls through devices that are on the same Wi-Fi or local network.
     public static let nsLocalNetworkUsageDescription = Strings.tr("InfoPlist", "NSLocalNetworkUsageDescription")
     /// MEGA accesses your location when you share it with your contacts in chat.
-    public static let nsLocationAlwaysAndWhenInUseUsageDescription = Strings.tr("InfoPlist", "NSLocationAlwaysAndWhenInUseUsageDescription")
+    public static let nsLocationWhenInUseUsageDescription = Strings.tr("InfoPlist", "NSLocationWhenInUseUsageDescription")
     /// MEGA accesses your microphone when you capture a video, make a call or record voice messages inside the app.
     public static let nsMicrophoneUsageDescription = Strings.tr("InfoPlist", "NSMicrophoneUsageDescription")
     /// MEGA requires access to your photo library to add photos and videos to your device gallery
@@ -1453,8 +1453,8 @@ public enum Strings {
     }
     /// Not Now
     public static let notNow = Strings.tr("Localizable", "notNow")
-    /// MEGA accesses your location when you share it with your contacts in chat or when you enable  “Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.
-    public static let nsLocationAlwaysAndWhenInUseUsageDescription = Strings.tr("Localizable", "NSLocationAlwaysAndWhenInUseUsageDescription")
+    /// MEGA accesses your location when you share it with your contacts in chat.
+    public static let nsLocationWhenInUseUsageDescription = Strings.tr("Localizable", "NSLocationWhenInUseUsageDescription")
     /// Observers
     public static let observers = Strings.tr("Localizable", "Observers")
     /// Off
