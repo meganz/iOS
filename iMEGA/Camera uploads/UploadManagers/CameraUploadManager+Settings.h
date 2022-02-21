@@ -15,7 +15,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 #pragma mark - camera settings
 
 @property (class, getter=isCameraUploadEnabled) BOOL cameraUploadEnabled;
-@property (class, getter=isBackgroundUploadAllowed) BOOL backgroundUploadAllowed;
 @property (class, getter=shouldIncludeGPSTags) BOOL includeGPSTags;
 
 @property (class, nullable) NSDate *boardingScreenLastShowedDate;
@@ -45,7 +44,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 @property (class, readonly, getter=shouldShowCameraUploadBoardingScreen) BOOL showCameraUploadBoardingScreen;
 @property (class, readonly, getter=shouldScanLivePhotosForVideos) BOOL scanLivePhotosForVideos;
-@property (class, readonly) BOOL canBackgroundUploadBeStarted;
 @property (class, readonly) BOOL canCameraUploadBeStarted;
 @property (class, readonly, getter=isCameraUploadPausedBecauseOfNoWiFiConnection) BOOL cameraUploadPausedBecauseOfNoWifiConnection;
 @property (class, readonly) NSArray<NSNumber *> * enabledMediaTypes;

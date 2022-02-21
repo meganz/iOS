@@ -10,9 +10,8 @@
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "TransferSessionManager.h"
-@import CoreLocation;
 
-@interface CameraUploadsTableViewController () <CLLocationManagerDelegate, BrowserViewControllerDelegate>
+@interface CameraUploadsTableViewController () <BrowserViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
@@ -36,9 +35,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionForVideosLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionForVideosSwitch;
 
-@property (weak, nonatomic) IBOutlet UILabel *backgroundUploadLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *backgroundUploadSwitch;
-
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *targetFolderLabel;
@@ -51,15 +47,12 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *includeGPSTagsCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataForVideosCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *uploadInBackgroundCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *advancedCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *targetFolderCell;
 
 @property (strong, nonatomic) NSArray<NSArray<UITableViewCell *> *> *tableSections;
 @property (strong, nonatomic) NSArray<NSString *> *sectionHeaderTitles;
 @property (strong, nonatomic) NSArray<NSString *> *sectionFooterTitles;
-
-@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -79,7 +72,6 @@
     self.useCellularConnectionLabel.text = NSLocalizedString(@"useMobileData", nil);
     self.useCellularConnectionForVideosLabel.text = NSLocalizedString(@"Use Mobile Data for Videos", nil);
 
-    self.backgroundUploadLabel.text = NSLocalizedString(@"Upload in Background", nil);
     self.advancedLabel.text = NSLocalizedString(@"advanced", nil);
     
     self.includeGPSTagsLabel.text = NSLocalizedString(@"Include Location Tags", @"Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file");
@@ -98,7 +90,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(configBackgroudUploadUI) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [self configUI];
 }
@@ -118,15 +109,6 @@
 }
 
 #pragma mark - Private
-
-- (CLLocationManager *)locationManager {
-    if (_locationManager == nil) {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-    }
-    
-    return _locationManager;
-}
 
 - (void)configImageFormatTexts {
     NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : UIColor.mnz_label};
@@ -183,11 +165,6 @@
 - (void)configOptionsUI {
     self.useCellularConnectionSwitch.on = CameraUploadManager.isCellularUploadAllowed;
     self.useCellularConnectionForVideosSwitch.on = CameraUploadManager.isCellularUploadForVideosAllowed;
-    [self configBackgroudUploadUI];
-}
-
-- (void)configBackgroudUploadUI {
-    self.backgroundUploadSwitch.on = CameraUploadManager.canBackgroundUploadBeStarted;
 }
 
 - (void)configTableSections {
@@ -235,7 +212,7 @@
     if ([self shouldShowMobileDataForVideos]) {
         [optionSection addObject:self.mobileDataForVideosCell];
     }
-    [optionSection addObjectsFromArray:@[self.uploadInBackgroundCell, self.advancedCell]];
+    [optionSection addObjectsFromArray:@[self.advancedCell]];
     [sections addObject:[optionSection copy]];
     [headerTitles addObject:NSLocalizedString(@"options", @"Camera Upload options")];
     [footerTitles addObject:@""];
@@ -348,50 +325,6 @@
     }
 }
 
-- (IBAction)backgroundUploadButtonTouched:(UIButton *)sender {
-    if (self.backgroundUploadSwitch.isOn) {
-        CameraUploadManager.backgroundUploadAllowed = NO;
-        [self configBackgroudUploadUI];
-    } else {
-        [self showBackgroundUploadBoardingScreen];
-    }
-}
-
-- (void)showBackgroundUploadBoardingScreen {
-    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.image = [UIImage imageNamed:@"backgroundUploadLocation"];
-    customModalAlertVC.viewTitle = NSLocalizedString(@"Enable location services for background upload", nil);
-    NSString *actionTitle;
-    NSString *detail;
-    if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways || CLLocationManager.authorizationStatus == kCLAuthorizationStatusNotDetermined) {
-        actionTitle = NSLocalizedString(@"Turn On", nil);
-        detail = NSLocalizedString(@"MEGA can periodically start camera uploads in background when your location changes.", nil);
-    } else {
-        actionTitle = NSLocalizedString(@"Turn On in Settings", nil);
-        detail = NSLocalizedString(@"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes.", nil);
-    }
-    customModalAlertVC.detail = detail;
-    customModalAlertVC.firstButtonTitle = actionTitle;
-    customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"notNow", nil);
-    customModalAlertVC.firstCompletion = ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-        switch (CLLocationManager.authorizationStatus) {
-            case kCLAuthorizationStatusNotDetermined:
-                [self.locationManager requestAlwaysAuthorization];
-                break;
-            case kCLAuthorizationStatusAuthorizedAlways:
-                CameraUploadManager.backgroundUploadAllowed = YES;
-                [self configBackgroudUploadUI];
-                break;
-            default:
-                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-                break;
-        }
-    };
-    
-    [self presentViewController:customModalAlertVC animated:YES completion:nil];
-}
-
 - (IBAction)includeGPSTagsSwitchValueChanged:(UISwitch *)sender {
     CameraUploadManager.includeGPSTags = sender.on;
 }
@@ -458,13 +391,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 0;
-}
-
-#pragma mark - Location manager delegate
-
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    CameraUploadManager.backgroundUploadAllowed = status == kCLAuthorizationStatusAuthorizedAlways;
-    [self configBackgroudUploadUI];
 }
 
 #pragma mark - util methods

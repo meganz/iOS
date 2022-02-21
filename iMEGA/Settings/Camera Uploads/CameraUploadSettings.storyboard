@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -68,7 +68,7 @@
                                         <rect key="frame" x="0.0" y="89" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xJP-C8-8rb" id="oEI-tg-o1g">
-                                            <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="350.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Upload Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="9Lu-Gx-ccv">
@@ -79,7 +79,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="ZZc-KJ-13j">
-                                                    <rect key="frame" x="322" y="15" width="19.5" height="16"/>
+                                                    <rect key="frame" x="323" y="15" width="19.5" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>
@@ -142,11 +142,11 @@
                                         <rect key="frame" x="0.0" y="226" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xUA-U1-1gu" id="2mH-lc-OrS">
-                                            <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="350.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="PGe-3h-dij">
-                                                    <rect key="frame" x="16" y="0.0" width="325.5" height="43.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="326.5" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -366,64 +366,15 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="rVL-Aj-5pu" userLabel="Upload in background">
-                                        <rect key="frame" x="0.0" y="640" width="375" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="rVL-Aj-5pu" id="j20-CG-gjb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Upload in Background" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmG-6X-jAS">
-                                                    <rect key="frame" x="16" y="13.5" width="142.5" height="17.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tAf-hK-tam">
-                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="lhf-oL-Sxv"/>
-                                                    </constraints>
-                                                </switch>
-                                                <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="49" placeholderIntrinsicHeight="31" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOM-uP-22O">
-                                                    <rect key="frame" x="310" y="7" width="49" height="31"/>
-                                                    <connections>
-                                                        <action selector="backgroundUploadButtonTouched:" destination="0gq-O0-v8H" eventType="touchUpInside" id="1f0-OZ-wrD"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="wmG-6X-jAS" firstAttribute="top" secondItem="j20-CG-gjb" secondAttribute="top" constant="13.5" id="7TZ-lk-94h"/>
-                                                <constraint firstItem="VOM-uP-22O" firstAttribute="height" secondItem="tAf-hK-tam" secondAttribute="height" id="L56-Y2-eeX"/>
-                                                <constraint firstAttribute="bottom" secondItem="wmG-6X-jAS" secondAttribute="bottom" constant="13.5" id="YLf-sT-LQj"/>
-                                                <constraint firstItem="wmG-6X-jAS" firstAttribute="leading" secondItem="j20-CG-gjb" secondAttribute="leadingMargin" id="aAT-mS-vMV"/>
-                                                <constraint firstItem="tAf-hK-tam" firstAttribute="trailing" secondItem="j20-CG-gjb" secondAttribute="trailingMargin" id="aAh-Dn-usH"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="tAf-hK-tam" secondAttribute="trailing" id="ee2-Kq-Vj6"/>
-                                                <constraint firstItem="tAf-hK-tam" firstAttribute="centerY" secondItem="j20-CG-gjb" secondAttribute="centerY" id="eyE-0Q-W1G"/>
-                                                <constraint firstItem="tAf-hK-tam" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wmG-6X-jAS" secondAttribute="trailing" constant="8" id="i3n-QQ-z1X"/>
-                                                <constraint firstItem="wmG-6X-jAS" firstAttribute="leading" secondItem="j20-CG-gjb" secondAttribute="leadingMargin" id="rBn-NY-ue2"/>
-                                                <constraint firstItem="VOM-uP-22O" firstAttribute="width" secondItem="tAf-hK-tam" secondAttribute="width" id="vxQ-Fp-z2I"/>
-                                                <constraint firstItem="VOM-uP-22O" firstAttribute="centerY" secondItem="tAf-hK-tam" secondAttribute="centerY" id="wk8-lI-dkC"/>
-                                                <constraint firstItem="VOM-uP-22O" firstAttribute="leading" secondItem="tAf-hK-tam" secondAttribute="leading" id="z6Q-IK-ZUz"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="aAT-mS-vMV"/>
-                                                    <exclude reference="aAh-Dn-usH"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="A5s-xC-BfJ" style="IBUITableViewCellStyleDefault" id="Psx-Ud-pgM" userLabel="Advanced">
-                                        <rect key="frame" x="0.0" y="684.5" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="640" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Psx-Ud-pgM" id="DJ3-Aj-WRE">
-                                            <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="350.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Advanced" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="A5s-xC-BfJ">
-                                                    <rect key="frame" x="16" y="0.0" width="325.5" height="43.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="326.5" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -458,8 +409,6 @@
                         <outlet property="JPGRedCheckmarkImageView" destination="NYC-ui-LoU" id="TiM-cf-dc7"/>
                         <outlet property="advancedCell" destination="Psx-Ud-pgM" id="sYP-AN-xLZ"/>
                         <outlet property="advancedLabel" destination="A5s-xC-BfJ" id="0Ps-Ux-tf4"/>
-                        <outlet property="backgroundUploadLabel" destination="wmG-6X-jAS" id="k3M-b1-lDQ"/>
-                        <outlet property="backgroundUploadSwitch" destination="tAf-hK-tam" id="DA9-N1-0sz"/>
                         <outlet property="cameraUploadCell" destination="hGs-DP-h4r" id="F9r-0q-9hX"/>
                         <outlet property="enableCameraUploadsLabel" destination="SAf-Xv-FaX" id="bVX-Gk-mJU"/>
                         <outlet property="enableCameraUploadsSwitch" destination="QSG-mz-TTu" id="117-v2-ahs"/>
@@ -470,7 +419,6 @@
                         <outlet property="mobileDataForVideosCell" destination="SFt-KB-vuw" id="gsZ-io-Zzp"/>
                         <outlet property="targetFolderCell" destination="xUA-U1-1gu" id="MIU-mR-Xwm"/>
                         <outlet property="targetFolderLabel" destination="PGe-3h-dij" id="Gxv-jG-KwS"/>
-                        <outlet property="uploadInBackgroundCell" destination="rVL-Aj-5pu" id="2jJ-Gx-h6E"/>
                         <outlet property="uploadVideosInfoLabel" destination="9Lu-Gx-ccv" id="jPG-87-ibZ"/>
                         <outlet property="uploadVideosInfoRightDetailLabel" destination="ZZc-KJ-13j" id="Ndb-BT-9cW"/>
                         <outlet property="uploadVideosLabel" destination="oH3-dT-UG7" id="OmM-rY-Pw6"/>
@@ -624,7 +572,7 @@
                                         <rect key="frame" x="0.0" y="275.5" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q2r-pO-aqa" id="AEm-ts-ZLo">
-                                            <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="350.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Video quality" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="Ia5-rl-AZF">
@@ -635,7 +583,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Medium" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="mie-wj-ddk">
-                                                    <rect key="frame" x="293" y="15" width="48.5" height="16"/>
+                                                    <rect key="frame" x="294" y="15" width="48.5" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>

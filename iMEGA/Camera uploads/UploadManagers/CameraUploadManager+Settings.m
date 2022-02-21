@@ -17,7 +17,6 @@ static NSString * const IsCellularForVideosAllowedKey = @"IsUseCellularConnectio
 static NSString * const ShouldConvertHEICPhotoKey = @"ShouldConvertHEICPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
-static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
 static NSString * const IncludeGPSTags = @"IncludeGPSTags";
 static NSString * const UploadHiddenAlbumKey = @"UploadHiddenAlbum";
 static NSString * const UploadAllBurstAssetsKey = @"UploadAllBurstAssets";
@@ -71,19 +70,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     
     if ([NSUserDefaults.standardUserDefaults objectForKey:UploadSyncedAlbumsKey] == nil) {
         [self setUploadSyncedAlbums:NO];
-    }
-}
-
-+ (BOOL)isBackgroundUploadAllowed {
-    return [NSUserDefaults.standardUserDefaults boolForKey:IsLocationBasedBackgroundUploadAllowedKey];
-}
-
-+ (void)setBackgroundUploadAllowed:(BOOL)backgroundUploadAllowed {
-    [NSUserDefaults.standardUserDefaults setBool:backgroundUploadAllowed forKey:IsLocationBasedBackgroundUploadAllowedKey];
-    if (backgroundUploadAllowed) {
-        [CameraUploadManager.shared startBackgroundUploadIfPossible];
-    } else {
-        [CameraUploadManager.shared stopBackgroundUpload];
     }
 }
 
@@ -230,10 +216,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     }
     
     return show;
-}
-
-+ (BOOL)canBackgroundUploadBeStarted {
-    return CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways && CLLocationManager.significantLocationChangeMonitoringAvailable;
 }
 
 + (BOOL)canCameraUploadBeStarted {

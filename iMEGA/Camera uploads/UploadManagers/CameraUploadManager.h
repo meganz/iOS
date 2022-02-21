@@ -45,11 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)enableBackgroundRefreshIfNeeded;
 + (void)disableBackgroundRefresh;
 
-#pragma mark - background upload
-
-- (void)startBackgroundUploadIfPossible;
-- (void)stopBackgroundUpload;
-
 #pragma mark - fetch upload stats
 
 - (void)loadCurrentUploadStatsWithCompletion:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;

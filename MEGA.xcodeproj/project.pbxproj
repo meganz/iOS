@@ -1602,7 +1602,6 @@
 		B6C524DA21DEC20100AE3575 /* PHAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524D921DEC20100AE3575 /* PHAsset+CameraUpload.m */; };
 		B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */; };
 		B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */; };
-		B6C524EC21E59DC700AE3575 /* BackgroundUploadMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */; };
 		B6C5D09C2718D19B004FB105 /* PhotoLibraryContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */; };
 		B6C5D0A02718DAAA004FB105 /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C5D09F2718DAAA004FB105 /* PhotoLibrary.swift */; };
 		B6C95969268561EF00CF73A8 /* RatingRequestMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C95966268561EF00CF73A8 /* RatingRequestMonitor.swift */; };
@@ -3790,8 +3789,6 @@
 		B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C524DE21E3E00C00AE3575 /* AVURLAsset+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVURLAsset+CameraUpload.h"; sourceTree = "<group>"; };
 		B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVURLAsset+CameraUpload.m"; sourceTree = "<group>"; };
-		B6C524EA21E59DC700AE3575 /* BackgroundUploadMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadMonitor.h; sourceTree = "<group>"; };
-		B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundUploadMonitor.m; sourceTree = "<group>"; };
 		B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewModel.swift; sourceTree = "<group>"; };
 		B6C5D09F2718DAAA004FB105 /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
 		B6C95966268561EF00CF73A8 /* RatingRequestMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingRequestMonitor.swift; sourceTree = "<group>"; };
@@ -8937,8 +8934,6 @@
 				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
 				B68BAEC4221DEB4E00FF6FCD /* SavedIdentifierParser.h */,
 				B68BAEC5221DEB4E00FF6FCD /* SavedIdentifierParser.m */,
-				B6C524EA21E59DC700AE3575 /* BackgroundUploadMonitor.h */,
-				B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */,
 				B6575FD1220101BB00B7AD82 /* MediaInfoLoader.h */,
 				B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */,
 				B61F01C4220D37A400F4A917 /* DiskSpaceDetector.h */,
@@ -11226,7 +11221,6 @@
 				BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */,
 				1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */,
 				B67A2C73251755D500B40D89 /* L10nRepositoryProtocol.swift in Sources */,
-				B6C524EC21E59DC700AE3575 /* BackgroundUploadMonitor.m in Sources */,
 				BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */,
 				B654BF5D24FF4D7B00A3CBC8 /* PreferenceUseCase.swift in Sources */,
 				5D8303BC256262350082CA18 /* BannerRepository.swift in Sources */,

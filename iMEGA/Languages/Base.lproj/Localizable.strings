@@ -694,18 +694,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to the Camera Uploads folder.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to the Camera Uploads folder.";
-/* Title to show for upload in background */
-"Upload in Background"="Upload in Background";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="Enable location services for background upload";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA can periodically start camera uploads in the background when your location changes.";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Please select “Always” at your Location page in Settings, so that MEGA can periodically start camera uploads in background when your location changes.";
-/* Title for turn on a feature */
-"Turn On"="Turn On";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="Turn On in Settings";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Videos will be uploaded to the Camera Uploads folder.";
 /* Footer for video uploads switch section when disabled */
