@@ -231,7 +231,10 @@
 }
 
 - (void)presentPasscodeIfNeeded {
-    if (![LTHPasscodeViewController doesPasscodeExist] || (UIApplication.mnz_visibleViewController == LTHPasscodeViewController.sharedUser)) {
+    if (![LTHPasscodeViewController doesPasscodeExist] ||
+        (UIApplication.mnz_visibleViewController == LTHPasscodeViewController.sharedUser) ||
+        [LTHPasscodeViewController.sharedUser isBeingPresented] ||
+        [LTHPasscodeViewController.sharedUser presentingViewController] != nil) {
         return;
     }
     
