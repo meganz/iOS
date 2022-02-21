@@ -7,7 +7,6 @@
 #import "AttributeUploadManager.h"
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
-#import "BackgroundUploadMonitor.h"
 #import "TransferSessionManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSURL+CameraUpload.h"
@@ -42,7 +41,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 @property (strong, nonatomic) CameraScanner *cameraScanner;
 @property (strong, nonatomic) UploadRecordsCollator *uploadRecordsCollator;
-@property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
@@ -193,20 +191,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     });
     
     return _uploadRecordsCollator;
-}
-
-- (BackgroundUploadMonitor *)backgroundUploadMonitor {
-    if (_backgroundUploadMonitor) {
-        return _backgroundUploadMonitor;
-    }
-    
-    dispatch_sync(self.propertySerialQueue, ^{
-        if (self->_backgroundUploadMonitor == nil) {
-            self->_backgroundUploadMonitor = [[BackgroundUploadMonitor alloc] init];
-        }
-    });
-    
-    return _backgroundUploadMonitor;
 }
 
 - (CameraScanner *)cameraScanner {
@@ -603,7 +587,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)initializeCameraUpload {
     [self setupCameraUploadQueues];
     [self registerNotificationsForUpload];
-    [self startBackgroundUploadIfPossible];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
     [self.cameraScanner observePhotoLibraryChanges];
 }
@@ -632,7 +615,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
     [self.cameraScanner unobservePhotoLibraryChanges];
     [CameraUploadManager disableBackgroundRefresh];
-    [self stopBackgroundUpload];
 }
 
 - (void)disableVideoUpload {
@@ -896,16 +878,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
     }];
-}
-
-#pragma mark - background upload
-
-- (void)startBackgroundUploadIfPossible {
-    [self.backgroundUploadMonitor startBackgroundUploadIfPossible];
-}
-
-- (void)stopBackgroundUpload {
-    [self.backgroundUploadMonitor stopBackgroundUpload];
 }
 
 @end
