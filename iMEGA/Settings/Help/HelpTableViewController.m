@@ -155,7 +155,7 @@
 }
 
 - (void)openHelpCentre {
-    [[NSURL URLWithString:@"https://mega.nz/help/client/ios/"] mnz_presentSafariViewController];
+    [[NSURL URLWithString:@"https://help.mega.io"] mnz_presentSafariViewController];
 }
 
 - (void)rateApp {
