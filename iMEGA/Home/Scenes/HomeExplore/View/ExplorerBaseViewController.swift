@@ -7,10 +7,10 @@ class ExplorerBaseViewController: UIViewController {
     var isToolbarShown: Bool {
         return toolbar.superview != nil
     }
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-
+        
         if isToolbarShown {
             endEditingMode()
         }
@@ -62,8 +62,8 @@ class ExplorerBaseViewController: UIViewController {
     fileprivate func downloadBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
-            return
-        }
+                  return
+              }
         
         SVProgressHUD.show(Asset.Images.Hud.hudDownload.image,
                            status: Strings.Localizable.downloadStarted)
@@ -79,28 +79,33 @@ class ExplorerBaseViewController: UIViewController {
     fileprivate func shareBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
-            return
-        }
+                  return
+              }
         
         let activityVC = UIActivityViewController(forNodes: selectedNodes, sender: button)
         activityVC.completionWithItemsHandler = { [weak self] activityType, _, _, _ in
             self?.endEditingMode()
         }
+        
         present(activityVC, animated: true)
+        
+        if #available(iOS 14.0, *) {
+            endEditingMode()
+        }
     }
     
     fileprivate func deleteButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty,
               let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode else {
-            return
-        }
+                  return
+              }
         
         let moveRequestDelegate = MEGAMoveRequestDelegate(
             files: UInt(selectedNodes.count),
             folders: 0) { [weak self] in
-            self?.endEditingMode()
-        }
+                self?.endEditingMode()
+            }
         
         selectedNodes.forEach {
             MEGASdkManager.sharedMEGASdk().move(
@@ -123,8 +128,8 @@ class ExplorerBaseViewController: UIViewController {
               !selectedNodes.isEmpty,
               let navigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
               let browserVC = navigationController.viewControllers.first as? BrowserViewController else {
-            return
-        }
+                  return
+              }
         
         browserVC.selectedNodesArray = selectedNodes
         browserVC.browserAction = action
