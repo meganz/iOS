@@ -10,6 +10,7 @@ workspace 'iMEGA'
 abstract_target 'iMEGA' do
   pod 'SDWebImageWebPCoder'
   pod 'Firebase/Crashlytics'
+  pod 'Firebase/Performance'  
   pod 'PureLayout', :git => 'https://github.com/PureLayout/PureLayout.git'
   pod 'GKContactImage', :git => 'https://github.com/meganz/GKContactImage.git'
 
