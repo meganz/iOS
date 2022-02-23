@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Чтобы изменить адрес электронной почты, необходимо войти в свою учётную запись. Пожалуйста, снова войдите с текущим адресом электронной почты и затем перейдите по ссылке подтверждения.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Войти";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="Уже есть аккаунт?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Регистрация";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="Впервые в MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Присоединиться к встрече как гость";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Фото будут загружаться в папку «Загрузки из камеры»";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Фото и видео будут загружаться в папку «Загрузки из камеры»";
-/* Title to show for upload in background */
-"Upload in Background"="Загружать в фоне";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="Включить сервисы геолокации для фоновой загрузки";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA может периодически начинать загрузки из камеры в фоне, когда ваше местоположение меняется";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Пожалуйста, выберите «Всегда» на странице «Местоположение» в настройках, чтобы MEGA могла периодически начинать загрузку из камеры в фоне при изменении вашего местоположения.";
-/* Title for turn on a feature */
-"Turn On"="Включить";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="Включить в настройках";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Видео будут загружаться в папку «Загрузки из камеры»";
 /* Footer for video uploads switch section when disabled */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Перейдите в раздел «Конфиденциальность» в настройках вашего устройства. Включите службы определения местоположения и установите MEGA на «Во время использования приложения» или «Всегда».";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA получает доступ к вашему местоположению, когда вы делитесь им со своими контактами в чате или когда вы включаете «Загружать в фоновом режиме» для загрузок из камеры, чтобы ваши фотографии и видео загружались при изменении вашего местоположения.";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Мобильные данные отключены";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */

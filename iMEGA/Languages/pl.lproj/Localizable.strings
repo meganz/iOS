@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany a dokończyć zmianę adresu email. Zaloguj się używając dotychczasowego adresu email a następnie kliknij ponownie w link.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="Masz już konto?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Utwórz konto";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="Pierwszy raz na MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Dołącz do spotkania jako gość";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Zdjęcia zostaną przesłane do folderu Uploads aparatu.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Zdjęcia i filmy zostaną przesłane do folderu Uploads aparatu.";
-/* Title to show for upload in background */
-"Upload in Background"="Wgrywanie w tle";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="Włącz usługi lokalizacji do przesyłania w tle";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA może okresowo uruchamiać przesyłanie z kamery w tle, gdy zmienia się lokalizacja";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Wybierz „Zawsze” na stronie Lokalizacja w Ustawieniach, aby MEGA mogła okresowo uruchamiać przesyłanie z kamery w tle, gdy zmieni się lokalizacja";
-/* Title for turn on a feature */
-"Turn On"="Włącz";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="Włącz w ustawieniach";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Filmy zostaną przesłane do folderu Uploads aparatu.";
 /* Footer for video uploads switch section when disabled */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Przejdź do sekcji Prywatność w Ustawieniach urządzenia.  Włącz usługi lokalizacji i ustaw MEGA na Podczas korzystania z aplikacji lub Zawsze.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA uzyskuje dostęp do Twojej lokalizacji, gdy udostępniasz ją swoim kontaktom na czacie lub gdy włączasz opcję „Prześlij w tle” dla Przesyłania z aparatu, aby Twoje zdjęcia i filmy były przesyłane, gdy zmieni się Twoja lokalizacja.";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Dane mobilne są wyłączone";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */

@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="您必须登入以完成您的电子邮件地址变更作业。请您使用目前的电子邮件地址重新登入，然后再次点击您的确认链接。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登录";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="已经有账号了？";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="创建账号";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="还没有MEGA帐户？";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="以访客身份加入";
 /* Message shown when the user writes a wrong email or password on login */
@@ -165,7 +169,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="不可用的链接";
 /*  */
-"fileLinkUnavailableText1"="这可能因下列因素造成:";
+"fileLinkUnavailableText1"="这可能因下列因素造成：";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="这个文件因违反ToS服务条款或AUP可接受的使用政策而被移除。";
 /*  */
@@ -183,7 +187,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="文件夹'%@' 创建失败";
 /*  */
-"folderLinkUnavailableText1"="这可能因下列因素造成:";
+"folderLinkUnavailableText1"="这可能因下列因素造成：";
 /*  */
 "folderLinkUnavailableText2"="该文件夹链接因违反ToS/AUP使用条款已被移除。";
 /*  */
@@ -655,7 +659,7 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="发送反馈";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="请于此处写下您的意见";
+"pleaseWriteYourFeedback"="请于此处写下您的意见：";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您在该设备中尚未登录";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="照片会上传至您的相机上传文件夹";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="照片与视频会上传至您的相机上传文件夹";
-/* Title to show for upload in background */
-"Upload in Background"="后台上传";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="为后台上传开启定位服务";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="当您的位置发生变化时，MEGA可以在后台定期开启相机上传功能。";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="请在“设置”中的“位置”页面选择“始终”，以便当您的位置发生变化时，MEGA可以在后台定期开启相机上传功能。";
-/* Title for turn on a feature */
-"Turn On"="启用";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="在设置中启用";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="视频会被上传至相机上传文件夹";
 /* Footer for video uploads switch section when disabled */
@@ -1059,7 +1051,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="可用";
 /* title of the My Account screen */
-"accountType"="账号类型:";
+"accountType"="账号类型：";
 /* Label to indicate that the current user has a Free account. */
 "Free"="免费";
 /* Text that shows the expiry date of the account PRO level */
@@ -1085,7 +1077,7 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ /月";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="请从下列选取一个计划:";
+"choosePlan"="请从下列选取一个计划：";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="选择一个账户类型：";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
@@ -1103,7 +1095,7 @@
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="洽询定制专属方案";
 /* Header shown to help on the purchasin process */
-"selectMembership"="选择会员资格:";
+"selectMembership"="选择会员资格：";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="节省16%";
 /* Error message shown when the purchase has failed */
@@ -1393,7 +1385,7 @@
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="已分享";
 /* Notification message shown when a transfer failed. Keep colon. */
-"Transfer failed:"="传输失败";
+"Transfer failed:"="传输失败：";
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="无误";
 /* Label to show that an Internal error occurs during a SDK operation. */
@@ -1749,7 +1741,7 @@
 /* Settings preference title to show file versions info of the account */
 "File Versions"="文件版本";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
-"Total size taken up by file versions:"="文件版本占用量:";
+"Total size taken up by file versions:"="文件版本占用量：";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="删除所有旧版本的文件";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
@@ -1859,7 +1851,7 @@
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="联系人邀请已被删除";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="提醒: 您有一个联系人邀请";
+"Reminder: You have a contact request"="提醒：您有一个联系人邀请";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
 "Deleted you as a contact"="联系人将您删除";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="请转到设备的“设置”中的“隐私”部分。启用定位服务并将MEGA设置为使用App时开启或者始终开启。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="当您与聊天中的联系人共享位置或启用“相机上传”的“后台上传”功能时，MEGA会访问您的位置，以便在位置更改时上传照片和视频。";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="移动数据已关闭";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2349,13 +2341,13 @@
 /* Label to indicate not to use any proxy. String as short as possible. */
 "No proxy"="不使用代理";
 /* Label to indicate the server IP to be used. String as short as possible. */
-"Server:"="服务器:";
+"Server:"="服务器：";
 /* Label to indicate a server port to be used. String as short as possible. */
 "Port"="端口";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="Proxy代理服务器需输入密码";
 /* Label to indicate the username of the proxy. String as short as possible. */
-"Username:"="使用者名称:";
+"Username:"="使用者名称：";
 /* Text used for a title or header listing the details of something. */
 "DETAILS"="详细信息";
 /* Text used as title or header for reference an url, for instance, a node link. */

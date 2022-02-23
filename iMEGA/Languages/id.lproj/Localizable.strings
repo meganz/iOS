@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Anda harus masuk untuk menyelesaikan perubahan email anda. Harap masuk kembali dengan alamat email anda sekarang dan klik link konfirmasi anda lagi.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Masuk";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="Sudah punya akun?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Buat Akun";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="Baru di MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Gabung Rapat sebagai Tamu";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Foto akan diunggah ke folder Unggah Kamera.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Foto dan video akan diunggah ke folder Unggah Kamera.";
-/* Title to show for upload in background */
-"Upload in Background"="Unggah di Latar Belakang";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="Aktifkan layanan lokasi untuk unggahan latar belakang";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi anda berubah.";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Silakan pilih “Selalu” di halaman Lokasi anda di Pengaturan, sehingga MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi anda berubah.";
-/* Title for turn on a feature */
-"Turn On"="Nyalakan";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="Nyalakan di Pengaturan";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Video akan diunggah ke folder Unggah Kamera.";
 /* Footer for video uploads switch section when disabled */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Silakan buka bagian Privasi di Pengaturan perangkat Anda. Aktifkan Layanan Lokasi dan atur MEGA ke Saat Menggunakan Aplikasi atau Selalu.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA mengakses lokasi anda ketika anda membaginya dengan kontak anda dalam obrolan atau ketika anda mengaktifkan \"Unggah di Latar Belakang\" untuk Unggah Kamera sehingga foto dan video Anda diunggah saat lokasi anda berubah.";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Data Seluler dimatikan";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */

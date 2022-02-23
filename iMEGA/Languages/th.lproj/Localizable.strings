@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="คุณต้องเข้าสู่ระบบเพื่อทำการเปลี่ยนแปลงอีเมลของคุณ กรุณาเข้าสู่ระบบด้วยอยู่อีเมลปัจจุบันของคุณ จากนั้นคลิกที่ลิงก์ยืนยันของคุณอีกครั้ง";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="เข้าสู่ระบบ";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="มีบัญชีอยู่แล้วใช่ไหม";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="สร้างบัญชี";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="เป็นผู้ใช้ MEGA ใหม่";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="เข้าร่วมประชุมในฐานะแขกรับเชิญ";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="รูปภาพจะถูกอัปโหลดไปยังโฟลเดอร์อัปโหลดจากกล้อง";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="รูปภาพและวิดีโอจะถูกอัปโหลดไปยังโฟลเดอร์อัปโหลดจากกล้อง";
-/* Title to show for upload in background */
-"Upload in Background"="อัปโหลดในพื้นหลัง";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="ปิดใช้งานบริการระบุตำแหน่งเพื่ออัปโหลดพื้นหลัง";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA สามารถเริ่มต้นการอัปโหลดจากกล้องในพื้นหลังเป็นระยะเมื่อตำแหน่งของคุณเปลี่ยนไป";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="กรุณาเลือก “เสมอ” ที่หน้าตำแหน่งของคุณในการตั้งค่า เพื่อให้ MEGA สามารถเริ่มการอัปโหลดกล้องเป็นพื้นหลังเมื่อตำแหน่งของคุณเปลี่ยนไป";
-/* Title for turn on a feature */
-"Turn On"="เปิด";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="เปิดในการตั้งค่า";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="วิดีโอจะถูกอัปโหลดไปยังโฟลเดอร์อัปโหลดจากกล้อง";
 /* Footer for video uploads switch section when disabled */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="กรุณาไปที่ส่วนความเป็นส่วนตัวในการตั้งค่าอุปกรณ์ของคุณ เปิดใช้งานบริการระบุตำแหน่งและตั้งค่า MEGA เป็นขณะใช้งานแอปหรือตลอดเวลา";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA จะเข้าถึงตำแหน่งของคุณเมื่อคุณแชร์กับผู้ติดต่อของคุณในการแชทหรือเมื่อคุณเปิดใช้งาน \"อัปโหลดในเบื้องหลัง\" ของการอัปโหลดจากกล้อง เพื่อให้รูปภาพและวิดีโอของคุณอัปโหลดเมื่อตำแหน่งของคุณมีการเปลี่ยนแปลง";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="ข้อมูลมือถือถูกปิด";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2767,7 +2759,7 @@
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="ไฟล์ฐานข้อมูล";
 /* File extension: .aif and .aiff. Is not a commercial name, but a standard */
-"general.filetype.audioInterchange"="Audio Interchange";
+"general.filetype.audioInterchange"="ไฟล์เสียงที่บีบอัดข้อมูลไม่ได้";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ไฟล์ข้อความ ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2779,11 +2771,11 @@
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="สตรีมมิ่งวิดีโอ";
 /* File extension: .asx. Is not a commercial name, but a file format name. */
-"general.filetype.asx"="Advanced Stream";
+"general.filetype.asx"="ไฟล์สำหรับสตรีมขั้นสูง";
 /* File extension: .avi. Name of a multimedia container format */
 "general.filetype.avi"="A/V Interleave";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
-"general.filetype.bat"="DOS Batch";
+"general.filetype.bat"="ไฟล์ชุดคำสั่ง DOS";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="ไฟล์รูปภาพ Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2797,7 +2789,7 @@
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="ภาพ CorelDRAW";
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
-"general.filetype.cgi"="CGI Script";
+"general.filetype.cgi"="ไฟล์สคริปต์ CGI";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="คลาส Java";
 /* File extension: .com. Commercial names should be stay on English */
@@ -2805,9 +2797,9 @@
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="สไตล์ชีต CSS";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
-"general.filetype.dhtml"="Dynamic HTML";
+"general.filetype.dhtml"="ไฟล์ไดนามิก HTML";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
-"general.filetype.dll"="Dynamic Link Library";
+"general.filetype.dll"="ไฟล์ไดนามิกลิงก์ไลบรารี";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="เทมเพลตของ MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2885,13 +2877,13 @@
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
 "general.filetype.php"="ไฟล์โค้ด PHP";
 /* File extension: .pl. Is not a commercial name. "script" is a common noun */
-"general.filetype.pl"="Perl Script";
+"general.filetype.pl"="ไฟล์สคริปต์ Perl";
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="ไฟล์เพลย์ลิสต์เสียง";
 /* File extension: .png. Commercial names should be stay on English */
 "general.filetype.png"="ไฟล์ภาพ PNG";
 /* File extension: .py. Is not a commercial name. "script" is a common noun */
-"general.filetype.py"="Python Script";
+"general.filetype.py"="ไฟล์สคริปต์ไพธอน";
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="ไฟล์บีบอัด RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
@@ -2899,7 +2891,7 @@
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
-"general.filetype.sh"="Bash Shell";
+"general.filetype.sh"="ไฟล์ชุดคำสั่ง Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2919,7 +2911,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa Graphic";
+"general.filetype.tga"="ไฟล์กราฟิก Targa";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2945,6 +2937,6 @@
 /* Description shown in chat screen if the user didn't allow access to photos */
 "chat.photos.allowPhotoAccessMessage"="หากต้องการแชร์รูปภาพและวิดีโอ กรุณาให้สิทธิ์ MEGA ในการเข้าถึงแกลเลอรีของคุณ";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.title"="Attach log files";
+"help.reportIssue.attachLogFiles.title"="แนบไฟล์บันทึก";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.message"="Do you want to attach diagnostic log files to assist with debug?";
+"help.reportIssue.attachLogFiles.message"="คุณต้องการแนบไฟล์บันทึกการวินิจฉัยเพื่อช่วยเป็นข้อมูลในการแก้ไขข้อผิดพลาดหรือไม่";

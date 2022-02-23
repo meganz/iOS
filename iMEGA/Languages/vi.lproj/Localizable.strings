@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi email. Xin sử dụng email hiện thời của tài khoản này và sau đó clíck vào đường liên kết để xác nhận.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Đăng nhập";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="Bạn đã tạo một tài khoản rồi?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Tạo Tài Khoản";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="Mới đến MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Tham gia họp mặt với tư cách khách";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh sẽ được tải lên vào thư mục Camera Uploads.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh và videos sẽ được tải lên vào thư mục Camera Uploads.";
-/* Title to show for upload in background */
-"Upload in Background"="Tải Lên trong Nền";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="Bật dịch vụ định vị để cho phép việc tải lên được chạy trong nền";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA sẽ được thường xuyên thực hiện việc tải lên trong nền dựa vào các thay đổi vị trí của người dùng.";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Xin chọn dòng “Luôn luôn” ở phần Dịch Vụ Định Vị trong Cài Đặt, để MEGA được thường xuyên thực hiện việc tải lên trong nền dựa vào các thay đổi vị trí của người dùng.";
-/* Title for turn on a feature */
-"Turn On"="Bật";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="Bật trong Cài Đặt";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Tất cả các videos sẽ được tải lên vào thư mục Camera Uploads.";
 /* Footer for video uploads switch section when disabled */
@@ -727,7 +719,7 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Cài đặt > Cài đặt chung > Dung lượng %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload Videos for Live Photos"="Tải lên các ảnh Live Photos dưới dạng Videos";
+"Upload Videos for Live Photos"="Tải lên các Ảnh Live Photos dưới dạng Videos";
 /* Title of the switch to config whether to upload all burst photos */
 "Upload All Burst Photos"="Tải lên các ảnh Chụp Liên Tục";
 /* Title of the switch to config whether to upload Hidden Album */
@@ -1243,7 +1235,7 @@
 /* Button title */
 "verified"="Đã xác thực";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Dọn Lịch Sử Tin Nhắn";
+"clearChatHistory"="Dọn Lịch Sử Chát";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
 /* Message show when the history of a chat has been successfully deleted. */
@@ -1687,13 +1679,13 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Lưu videos vào Ảnh";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh/và video tải về sẽ được lưu thẳng vào kho thư viện của máy thay vì được đưa vào mục Ngoại Tuyến.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh và videos tải về sẽ được lưu thẳng vào thư viện phương tiện số của máy thay vì được đưa vào mục Ngoại Tuyến.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Lưu vào Ảnh";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào kho thư viện ảnh của máy.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào thư viện phương tiện số của máy.";
 /* Title of the Spotlight Search section */
 "Search"="Tìm kiếm";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
@@ -1709,7 +1701,7 @@
 /* Description shown in a page of the onboarding screens explaining contacts */
 "Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Thêm tên liên lạc, tạo kết nối, cộng tác với nhau, trao đổi qua gọi thoại và video ngay trong MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Hình Ảnh được gửi lên Mây";
+"Your Photos in the Cloud"="Hình Ảnh được gửi lên Ổ Mây";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp. Tạo tài khoản ngay.";
 /* Button which triggers the initial setup */
@@ -1789,7 +1781,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Đang lưu vào Ảnh…";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="Tất Cả Media";
+"All Media"="Tất Cả Phương Tiện Số";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="Đang tải về %@";
 /* Text shown when a photo or video is saved to Photos app */
@@ -1967,7 +1959,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Cuộc Gọi Đang Diễn Ra";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="Việc phát phim ảnh hay âm thanh không có khả thi khi có cuộc gọi đang diễn ra.";
+"It is not possible to play content while there is a call in progress"="Việc phát nội dung phương tiện số không thực hiện được khi có cuộc gọi đang diễn ra.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Cuộc Gọi Đã Bắt Đầu";
 /* Title for feature Password Reminder */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Xin đi vào mục Quyền Riêng Tư trong Cài Đặt của iOS. Bật chức năng Dịch Vụ Định Vị và chỉnh MEGA từ “Khi dùng Ứng dụng” sang “Luôn luôn”.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA truy cập vào dịch vụ dịnh vị khi người dùng chia sẻ địa điểm của mình tới các người khác trong khi chát hoặc có tùy chọn ”Tải Lên trong Nền” cho Camera Uploads để thực hiện việc tải lên hình ảnh và videos dựa vào các thay đổi vị trí của người dùng.";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Sử dụng Mạng Viễn Thông đã tắt";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2141,7 +2133,7 @@
 /* Title shown when the user reconnect in a call. */
 "You are back!"="Cuộc gọi đã được kết nối trở lại.";
 /* Subtitle of chat screen when the chat is inactive */
-"Inactive chat"="Cuộc chát bất hoạt động";
+"Inactive chat"="Cuộc chát không hoạt động đã lâu";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Đặt Nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
@@ -2767,7 +2759,7 @@
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Database";
 /* File extension: .aif and .aiff. Is not a commercial name, but a standard */
-"general.filetype.audioInterchange"="Audio Interchange";
+"general.filetype.audioInterchange"="Trao đổi âm thanh";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="Tệp văn bản ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2779,11 +2771,11 @@
 /* File extension: .asf. Commercial names should be stay on English */
 "general.filetype.asf"="Streaming Video";
 /* File extension: .asx. Is not a commercial name, but a file format name. */
-"general.filetype.asx"="Advanced Stream";
+"general.filetype.asx"="Phát trực tuyến nâng cao";
 /* File extension: .avi. Name of a multimedia container format */
-"general.filetype.avi"="A/V Interleave";
+"general.filetype.avi"="Âm thanh / Video xen kẽ";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
-"general.filetype.bat"="DOS Batch";
+"general.filetype.bat"="Tệp hàng loạt DOS";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Ảnh RAW của Casio";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2807,7 +2799,7 @@
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
 "general.filetype.dhtml"="HTML Động";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
-"general.filetype.dll"="Dynamic Link Library";
+"general.filetype.dll"="Thư viện liên kết động";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="Dạng mẫu MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2851,7 +2843,7 @@
 /* File extension: .log. Commercial names should be stay on English */
 "general.filetype.log"="Log";
 /* File extension: .3mu. Commercial names should be stay on English */
-"general.filetype.m3u"="Playlist Media";
+"general.filetype.m3u"="Danh sách phát Phương tiện số";
 /* File extension: .m4a. Commercial names should be stay on English */
 "general.filetype.m4a"="Âm thanh MPEG-4";
 /* File extension: .max. Commercial names should be stay on English */
@@ -2899,7 +2891,7 @@
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Ảnh RAW của Panasonic";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
-"general.filetype.sh"="Bash Shell";
+"general.filetype.sh"="Lệnh Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="HTML Máy chủ";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2945,6 +2937,6 @@
 /* Description shown in chat screen if the user didn't allow access to photos */
 "chat.photos.allowPhotoAccessMessage"="Để có thể cia sẻ hình ảnh và videos, cấp phép cho MEGA quyền truy cập vào kho ảnh của bạn";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.title"="Attach log files";
+"help.reportIssue.attachLogFiles.title"="Kèm theo tệp tin ghi nhật ký log";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.message"="Do you want to attach diagnostic log files to assist with debug?";
+"help.reportIssue.attachLogFiles.message"="Bạn có muốn đính kèm tệp tin ghi nhật ký log để chẩn đoán việc gỡ lỗi không?";

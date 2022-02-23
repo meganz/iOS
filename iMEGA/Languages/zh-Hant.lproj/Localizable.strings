@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="您必須登入以完成您的電子郵件地址變更作業。請您使用目前的電子郵件地址重新登入，然後再次點擊您的確認連結。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="已有帳戶了嗎？";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="建立帳戶";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="還沒有MEGA帳戶？";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="以訪客身份加入會議";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="相片將上傳到「相機上傳」資料夾。";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="相片與影片將上傳到「相機上傳」資料夾。";
-/* Title to show for upload in background */
-"Upload in Background"="在背景作業中上傳";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="為背景作業上傳開啟位置服務";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="當您的位置改變時，MEGA可以在背景作業中定期的開啟相機上傳。";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="請在設定中的位置頁面選擇 “總是”，以便在您的位置改變時，MEGA可以在背景中定期的進行相機上傳作業。";
-/* Title for turn on a feature */
-"Turn On"="開啟";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="在設定中開啟";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="影片將上傳到「相機上傳」資料夾。";
 /* Footer for video uploads switch section when disabled */
@@ -739,7 +731,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="將上傳您連拍照片序列的所有照片。";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您連拍照片序列中最喜歡的照片。";
+"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您連拍照片序列中收藏的照片。";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隱藏相簿是在您裝置的相片應用程式中隱藏照片或影片的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
@@ -1509,7 +1501,7 @@
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="條碼已掃描";
 /* title of the screen that shows the users with whom the user has shared a folder */
-"sharedWidth"="共享者";
+"sharedWidth"="共享者：";
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="共享中";
 /* Title of section to display number of all historical versions of files. */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="請到您裝置設定的隱私權選項。啟用定位服務並設定MEGA為「使用App期間」或「永遠」。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="當您分享位置給聊天中的聯絡人或啟用「相機上傳」的「在背景中上傳」功能時，MEGA會存取您的位置，以便在位置變更時上傳照片和影片。";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="行動數據已關閉";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2363,9 +2355,9 @@
 /* Text referencing the date of creation of a link */
 "Link Creation"="連結建立";
 /* Context menu item. Allows user to add file/folder to favourites */
-"Favourite"="喜歡";
+"Favourite"="收藏";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="移除喜歡";
+"Remove Favourite"="移除收藏";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "cloudDrive.sort.label"="標籤";
 /* Context menu item which allows to mark folders with own color label */
@@ -2561,17 +2553,17 @@
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="我的帳戶";
 /* Text for title for favourite nodes */
-"Favourites"="喜歡";
+"Favourites"="收藏";
 /* Text describing that there is not any node marked as favourite */
-"No Favourites"="沒有喜歡的";
+"No Favourites"="沒有收藏";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="查看更多";
 /* Title for the QuickAccess widget */
 "Quick Access"="快速存取";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="快速存取在近期的、我喜歡的、或離線存取區的檔案";
+"Quickly access files on Recents, Favourites, or Offline section"="快速存取在近期的、收藏的、或離線存取的檔案";
 /* Text description for the Favourites QuickAccess widget */
-"Quickly access files on Favourites section"="快速存取我喜歡的檔案";
+"Quickly access files on Favourites section"="快速從您的收藏存取檔案";
 /* Text description for the Recents QuickAccess widget */
 "Quickly access files on Recents section"="快速存取近期活動的檔案";
 /* Text description for the Offline QuickAccess widget */
