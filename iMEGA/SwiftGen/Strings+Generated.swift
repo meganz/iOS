@@ -2928,6 +2928,10 @@ public enum Strings {
           public static let currentPassword = Strings.tr("Localizable", "account.changePassword.error.currentPassword")
         }
       }
+      public enum Login {
+        /// New to MEGA?
+        public static let newToMega = Strings.tr("Localizable", "account.login.newToMega")
+      }
       public enum Storage {
         /// [B]20 GB+[/B] Storage
         public static let freePlan = Strings.tr("Localizable", "account.storage.freePlan")

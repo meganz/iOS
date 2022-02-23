@@ -84,6 +84,8 @@
 "login"="Log in";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Create Account";
+/*Message on login screen for Create Account*/
+"account.login.newToMega"="New to MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Join Meeting as Guest";
 /* Message shown when the user writes a wrong email or password on login */
