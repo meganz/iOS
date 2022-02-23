@@ -1578,6 +1578,7 @@
 		B6AADF122518BB67009A874C /* MockAchievementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADF112518BB67009A874C /* MockAchievementRepository.swift */; };
 		B6AB264927BEF6F1006C8AA0 /* PhotoLibraryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */; };
 		B6AB265127BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */; };
+		B6AB268827C5E493006C8AA0 /* UILayoutPriority+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB268727C5E493006C8AA0 /* UILayoutPriority+Additions.swift */; };
 		B6ADE4D52731E54E00C19F36 /* PhotoYearCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADE4D42731E54E00C19F36 /* PhotoYearCardViewModel.swift */; };
 		B6ADE4D927320C3300C19F36 /* PhotoYearCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADE4D827320C3300C19F36 /* PhotoYearCard.swift */; };
 		B6ADE4DC2732189000C19F36 /* FileSystemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADE4DB2732189000C19F36 /* FileSystemRepository.swift */; };
@@ -3755,6 +3756,7 @@
 		B6AADF112518BB67009A874C /* MockAchievementRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAchievementRepository.swift; sourceTree = "<group>"; };
 		B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryProvider.swift; sourceTree = "<group>"; };
 		B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPublisher.swift; sourceTree = "<group>"; };
+		B6AB268727C5E493006C8AA0 /* UILayoutPriority+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutPriority+Additions.swift"; sourceTree = "<group>"; };
 		B6ADE4D42731E54E00C19F36 /* PhotoYearCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoYearCardViewModel.swift; sourceTree = "<group>"; };
 		B6ADE4D827320C3300C19F36 /* PhotoYearCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoYearCard.swift; sourceTree = "<group>"; };
 		B6ADE4DB2732189000C19F36 /* FileSystemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemRepository.swift; sourceTree = "<group>"; };
@@ -6118,6 +6120,7 @@
 				5DD6B17324D6D67900F14515 /* UIView+RoundCornerShadow.swift */,
 				5DD5D12F25591C930078BC5E /* UITextField+LeftView.swift */,
 				A8A715C126307B0A00DDC8E2 /* UIPasteboard+WebP.swift */,
+				B6AB268727C5E493006C8AA0 /* UILayoutPriority+Additions.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -11119,6 +11122,7 @@
 				C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */,
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */,
+				B6AB268827C5E493006C8AA0 /* UILayoutPriority+Additions.swift in Sources */,
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
 				B6F39F232773D338002386BE /* PhotoCellImage.swift in Sources */,
 				B67507C527684FC00034F951 /* PhotoLibraryModeViewModel.swift in Sources */,
@@ -13025,7 +13029,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=250 -Xfrontend -warn-long-expression-type-checking=250";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
@@ -13081,7 +13085,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=250 -Xfrontend -warn-long-expression-type-checking=250";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;

@@ -46,7 +46,7 @@ final class SegmentTitleView: UIView {
 
     private func setTitles(_ titles: [SegmentTitleViewModel.Title]) {
         let titleButtonStyler = traitCollection.theme.buttonStyle.styler(of: .segmentTitleButton)
-        let buttons: [UIButton] = titles.enumerated().map { index, title in
+        let buttons: [UIButton] = titles.enumerated().map { (index: Int, title: SegmentTitleViewModel.Title)  in
             let button = UIButton(type: .custom)
             button.setTitle(title.text, for: .normal)
             button.tag = title.index

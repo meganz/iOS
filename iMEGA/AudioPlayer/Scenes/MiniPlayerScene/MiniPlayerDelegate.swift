@@ -32,16 +32,22 @@ final class MiniPlayerDelegate: NSObject, UICollectionViewDelegateFlowLayout, UI
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let collectionView = scrollView as? UICollectionView,
-              let lastContentOffset = lastContentOffset,
-              case let collectionViewCenterX = collectionView.frame.width / 2.0,
-              case let collectionViewCenterY = collectionView.frame.height / 2.0,
-              case let collectionViewCenter = CGPoint(x: collectionView.contentOffset.x + collectionViewCenterX, y: collectionViewCenterY),
-              let currentIndexPath = collectionView.indexPathForItem(at: collectionViewCenter) else {
-                  return
-              }
+        guard let collectionView = scrollView as? UICollectionView else {
+            return
+        }
         
-        let lastIndexPath = collectionView.indexPathForItem(at: lastContentOffset)
+        let collectionViewCenterX = collectionView.frame.width / CGFloat(2.0)
+        let collectionViewCenterY = collectionView.frame.height / CGFloat(2.0)
+        let collectionViewCenter = CGPoint(x: collectionView.contentOffset.x + collectionViewCenterX, y: collectionViewCenterY)
+        guard let currentIndexPath = collectionView.indexPathForItem(at: collectionViewCenter) else {
+            return
+        }
+        
+        didScrollFinish(at: currentIndexPath, in: collectionView)
+    }
+    
+    private func didScrollFinish(at currentIndexPath: IndexPath, in collectionView: UICollectionView) {
+        let lastIndexPath = lastContentOffset.flatMap { collectionView.indexPathForItem(at: $0) }
         
         if loopMode, currentIndexPath.row == itemsNumber {
             collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
