@@ -71,6 +71,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.tapGesture.delegate = self;
     [self.scrollView addGestureRecognizer:self.tapGesture];
     
+    [self.loginLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapLogin)]];
+    
     self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
     
     self.firstNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
@@ -134,6 +136,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
         [self setTermsOfServiceAttributedText];
         [self setTermsForLosingPasswordAttributedText];
+        [self setLoginAttributedText];
     }
 }
 
@@ -358,6 +361,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self setTermsForLosingPasswordAttributedText];
     
     [self.createAccountButton mnz_setupPrimary:self.traitCollection];
+    
+    [self setLoginAttributedText];
 }
 
 #pragma mark - IBActions

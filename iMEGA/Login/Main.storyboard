@@ -71,7 +71,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ptk-b4-EIp" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="-82" width="320" height="598"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="598"/>
                                         <subviews>
                                             <imageView contentMode="scaleToFill" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
                                                 <rect key="frame" x="75" y="68" width="170" height="54"/>
@@ -100,7 +100,7 @@
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NEs-0T-7bT" customClass="PasswordView">
-                                                <rect key="frame" x="0.0" y="261" width="320" height="60"/>
+                                                <rect key="frame" x="0.0" y="262" width="320" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="CnO-WG-FFi"/>
                                                 </constraints>
@@ -386,7 +386,7 @@
                                                 </connections>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="439" width="288" height="50"/>
+                                                <rect key="frame" x="16" y="432.5" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="HJ1-8d-saO"/>
                                                     <constraint firstAttribute="width" constant="288" id="tvp-HT-1O6"/>
@@ -401,11 +401,18 @@
                                                     <action selector="createAccountTouchUpInside:" destination="iCg-Wh-kpi" eventType="touchUpInside" id="X1E-98-mtl"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account? Log in" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqs-Go-fGX">
+                                                <rect key="frame" x="69" y="497.5" width="182.5" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <viewLayoutGuide key="safeArea" id="Sm7-b3-lKu"/>
                                         <constraints>
                                             <constraint firstItem="Klv-H8-jVM" firstAttribute="top" secondItem="hkb-3j-jnC" secondAttribute="bottom" id="2Ap-Xk-fDt"/>
                                             <constraint firstItem="fqq-un-Bih" firstAttribute="centerY" secondItem="3lS-2G-m6G" secondAttribute="centerY" id="2g0-FR-OGP"/>
+                                            <constraint firstItem="Sqs-Go-fGX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sm7-b3-lKu" secondAttribute="leading" constant="16" id="3fD-ZO-b2S"/>
                                             <constraint firstItem="fqq-un-Bih" firstAttribute="width" secondItem="3lS-2G-m6G" secondAttribute="width" id="4uJ-09-8yw"/>
                                             <constraint firstItem="fqq-un-Bih" firstAttribute="height" secondItem="3lS-2G-m6G" secondAttribute="height" id="7oq-go-bdu"/>
                                             <constraint firstItem="fqq-un-Bih" firstAttribute="centerX" secondItem="3lS-2G-m6G" secondAttribute="centerX" id="9mp-Uq-RA6"/>
@@ -414,8 +421,11 @@
                                             <constraint firstItem="hkb-3j-jnC" firstAttribute="leading" secondItem="Sm7-b3-lKu" secondAttribute="leading" id="HPt-JP-be9"/>
                                             <constraint firstItem="Klv-H8-jVM" firstAttribute="leading" secondItem="L2c-lr-kWP" secondAttribute="leading" id="Jon-9D-g5s"/>
                                             <constraint firstItem="Wh7-Wf-VZs" firstAttribute="top" secondItem="HZu-aK-JZa" secondAttribute="top" constant="3" id="KAl-dp-ZLR"/>
+                                            <constraint firstItem="Sqs-Go-fGX" firstAttribute="top" secondItem="bak-ZA-1ZU" secondAttribute="bottom" constant="15" id="MOp-NV-nUI"/>
                                             <constraint firstItem="3lS-2G-m6G" firstAttribute="centerY" secondItem="l5v-Oj-XXr" secondAttribute="centerY" id="NmT-ya-9ES"/>
                                             <constraint firstItem="Klv-H8-jVM" firstAttribute="trailing" secondItem="L2c-lr-kWP" secondAttribute="trailing" id="PBf-6T-u0w"/>
+                                            <constraint firstItem="Sqs-Go-fGX" firstAttribute="centerX" secondItem="bak-ZA-1ZU" secondAttribute="centerX" id="QMs-kX-PEd"/>
+                                            <constraint firstItem="Sm7-b3-lKu" firstAttribute="bottom" secondItem="Sqs-Go-fGX" secondAttribute="bottom" constant="12" id="SQf-MX-XQS"/>
                                             <constraint firstItem="qlZ-z1-r9I" firstAttribute="centerX" secondItem="bak-ZA-1ZU" secondAttribute="centerX" id="VSB-qk-Xgz"/>
                                             <constraint firstItem="L2c-lr-kWP" firstAttribute="top" secondItem="Klv-H8-jVM" secondAttribute="bottom" constant="20" id="Vz1-v3-j03"/>
                                             <constraint firstItem="L2c-lr-kWP" firstAttribute="leading" secondItem="qlZ-z1-r9I" secondAttribute="leading" id="WIL-aw-hOy"/>
@@ -426,9 +436,9 @@
                                             <constraint firstItem="l5v-Oj-XXr" firstAttribute="top" secondItem="qlZ-z1-r9I" secondAttribute="bottom" constant="47" id="bar-GS-MgF"/>
                                             <constraint firstItem="hkb-3j-jnC" firstAttribute="top" secondItem="Sm7-b3-lKu" secondAttribute="top" constant="36" id="bb1-vK-sGg"/>
                                             <constraint firstItem="L2c-lr-kWP" firstAttribute="trailing" secondItem="qlZ-z1-r9I" secondAttribute="trailing" id="bhf-n9-ICc"/>
+                                            <constraint firstItem="Sm7-b3-lKu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Sqs-Go-fGX" secondAttribute="trailing" constant="16" id="igG-Ms-hE2"/>
                                             <constraint firstItem="3lS-2G-m6G" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="WFG-hb-soU" secondAttribute="trailing" constant="-17" id="ij1-aJ-9Zm"/>
                                             <constraint firstItem="Wh7-Wf-VZs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="WFG-hb-soU" secondAttribute="trailing" constant="-17" id="nJE-zg-chJ"/>
-                                            <constraint firstItem="Sm7-b3-lKu" firstAttribute="bottom" secondItem="bak-ZA-1ZU" secondAttribute="bottom" constant="35" id="qVn-cX-Png"/>
                                             <constraint firstItem="qlZ-z1-r9I" firstAttribute="top" secondItem="L2c-lr-kWP" secondAttribute="bottom" constant="20" id="qrD-JX-Pao"/>
                                             <constraint firstItem="HZu-aK-JZa" firstAttribute="top" secondItem="l5v-Oj-XXr" secondAttribute="bottom" constant="20" id="r8R-I7-Kfd"/>
                                             <constraint firstItem="hkb-3j-jnC" firstAttribute="leading" secondItem="Klv-H8-jVM" secondAttribute="leading" id="sxx-C7-MmS"/>
@@ -476,6 +486,7 @@
                         <outlet property="emailInputView" destination="L2c-lr-kWP" id="Yrw-8R-FJQ"/>
                         <outlet property="firstNameInputView" destination="hkb-3j-jnC" id="tvf-Ll-Mgh"/>
                         <outlet property="lastNameInputView" destination="Klv-H8-jVM" id="gpJ-fy-23N"/>
+                        <outlet property="loginLabel" destination="Sqs-Go-fGX" id="dND-Z6-AjV"/>
                         <outlet property="passwordStackView" destination="qlZ-z1-r9I" id="7zY-Ac-ciL"/>
                         <outlet property="passwordStrengthIndicatorContainerView" destination="ch3-Ql-DgM" id="Ag0-wG-Xse"/>
                         <outlet property="passwordStrengthIndicatorView" destination="ELz-jx-ahD" id="oUj-EM-Ef3"/>
@@ -495,7 +506,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1853.90625" y="-1100.390625"/>
+            <point key="canvasLocation" x="1852.5" y="-1100.7042253521126"/>
         </scene>
         <!--Confirm Account View Controller-->
         <scene sceneID="Ab9-Nf-IcS">
