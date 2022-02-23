@@ -82,11 +82,11 @@
 "needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Log in";
-/* Message for login option on Create Account screen*/
+/* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Already have an account?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Create Account";
-/*Message on login screen for Create Account*/
+/* Message on login screen for Create Account */
 "account.login.newToMega"="New to MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Join Meeting as Guest";
@@ -2019,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable  “Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Mobile Data is turned off";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */

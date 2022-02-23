@@ -82,11 +82,11 @@
 "needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Log in";
-/* Message for login option on Create Account screen*/
+/* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Already have an account?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Create Account";
-/*Message on login screen for Create Account*/
+/* Message on login screen for Create Account */
 "account.login.newToMega"="New to MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Join Meeting as Guest";

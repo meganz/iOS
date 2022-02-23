@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie sich zunächst einloggen. Bitte benutzen Sie hierzu ihre bestehende E-Mail-Adresse. Klicken Sie dann erneut auf den Bestäigungslink.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="Haben Sie bereits einen Account?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Account erstellen";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="Neu bei MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Als Gast beitreten";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Hochgeladene Fotos werden im Ordner Camera Uploads gespeichert.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Hochgeladene Fotos und Videos werden im Ordner Camera Uploads gespeichert.";
-/* Title to show for upload in background */
-"Upload in Background"="Upload im Hintergrund";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="Aktivieren Sie für den Upload im Hintergrund Ihren Standort";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA kann bei jedem Standortwechsel einige Fotos und Videos hochladen.";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Wählen Sie „Immer“ als Option für den Standort, sodass MEGA bei Standortwechsel das Hochladen von Fotos und Videos fortsetzen kann.";
-/* Title for turn on a feature */
-"Turn On"="Aktivieren";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="In den Einstellungen aktivieren";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Videos werden im Ordner Camera Uploads gespeichert.";
 /* Footer for video uploads switch section when disabled */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Bitte öffnen Sie die Privatsphäreneinstellungen und erlauben Sie der MEGA-App Zugriff auf Ihren Standort.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA greift auf Ihren Standort zu, wenn Sie ihn im Chat teilen oder wenn Sie „Upload im Hintergrund“ für Kamera-Uploads aktivieren, damit Ihre Fotos und Videos hochgeladen werden können, wenn sich Ihr Standort ändert.";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Mobildatenzugang ist gesperrt";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2783,7 +2775,7 @@
 /* File extension: .avi. Name of a multimedia container format */
 "general.filetype.avi"="A/V Interleave";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
-"general.filetype.bat"="DOS Batch";
+"general.filetype.bat"="DOS-Batchdatei";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Casio RAW-Datei";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2797,7 +2789,7 @@
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="CorelDRAW-Bild";
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
-"general.filetype.cgi"="CGI Script";
+"general.filetype.cgi"="CGI-Skript";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Java-Klasse";
 /* File extension: .com. Commercial names should be stay on English */
@@ -2805,9 +2797,9 @@
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
-"general.filetype.dhtml"="Dynamic HTML";
+"general.filetype.dhtml"="Dynamisches HTML";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
-"general.filetype.dll"="Dynamic Link Library";
+"general.filetype.dll"="DLL-Bibliothek";
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word Template";
 /* File extension: .dxf. Commercial names should be stay on English */
@@ -2899,7 +2891,7 @@
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
-"general.filetype.sh"="Bash Shell";
+"general.filetype.sh"="Bash-Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2919,7 +2911,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Komprimiert";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa Graphic";
+"general.filetype.tga"="Targa-Grafik";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF-Bild";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2945,6 +2937,6 @@
 /* Description shown in chat screen if the user didn't allow access to photos */
 "chat.photos.allowPhotoAccessMessage"="Zum Teilen von Fotos und Videos benötigt MEGA Zugriff auf Ihre Fotobibliothek";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.title"="Attach log files";
+"help.reportIssue.attachLogFiles.title"="Protokolldateien anhängen";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.message"="Do you want to attach diagnostic log files to assist with debug?";
+"help.reportIssue.attachLogFiles.message"="Möchten Sie zur Unterstützung der Fehlersuche die Diagnoseprotokolldateien anhängen?";

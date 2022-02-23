@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d’adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et retoucher ensuite le lien de confirmation.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Connexion";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="Avez-vous un compte ?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Créer un compte";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="Première fois sur MEGA ?";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Me joindre à une réunion en tant qu’invité";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Les photos seront téléversées dans le dossier Téléversements de l’appareil photo.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Les photos et les vidéos seront téléversées dans le dossier Téléversements de l’appareil photo.";
-/* Title to show for upload in background */
-"Upload in Background"="Téléverser en arrière-plan";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="Activer le service de localisation pour le téléversement en arrière-plan";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA peut régulièrement démarrer en arrière-plan les téléversements de l’appareil photo si votre position géographique change.";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Veuillez sélectionner « Toujours » dans la page du service de localisation des Réglages, afin que MEGA puisse régulièrement démarrer en arrière-plan les téléversements de l’appareil photo si votre position géographique change.";
-/* Title for turn on a feature */
-"Turn On"="Activer";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="Activer dans Réglages";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="Les vidéos seront téléversées dans le dossier Téléversements de l’appareil photo.";
 /* Footer for video uploads switch section when disabled */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Veuillez vous rendre dans la section Confidentialité des réglages de votre appareil. Activez le service de localisation et définissez MEGA à Quand l’appli est active ou à Toujours.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accède à votre position quand vous le partagez avec vos contacts dans une conversation ou quand vous activez « Téléverser en arrière-plan » pour Téléversements de l’appareil photo, afin que vos photos et vidéos soient téléversées quand votre position géographique change.";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Les données mobiles sont désactivées";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */

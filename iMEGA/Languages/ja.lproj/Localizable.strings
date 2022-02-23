@@ -82,8 +82,12 @@
 "needToBeLoggedInToCompleteYourEmailChange"="メールの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、確認リンクをもう一度クリックしてください。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ログイン";
+/* Message for login option on Create Account screen */
+"account.createAccount.alreadyHaveAnAccount"="すでにアカウントをお持ちですか？";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="アカウント作成";
+/* Message on login screen for Create Account */
+"account.login.newToMega"="MEGAは初めてですか？";
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="ゲストとしてミーティングに参加";
 /* Message shown when the user writes a wrong email or password on login */
@@ -694,18 +698,6 @@
 "Photos will be uploaded to Camera Uploads folder."="写真はカメラアップロードフォルダにアップロードされます。";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="写真と動画はカメラアップロードフォルダにアップロードされます。";
-/* Title to show for upload in background */
-"Upload in Background"="バックグラウンドでアップロード";
-/* Title for the location based background upload message */
-"Enable location services for background upload"="バックグラウンドアップロード用に位置情報サービスを有効にする";
-/* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGAは、あなたの場所が変わっても、定期的にバックグラウンドでカメラのアップロードを開始できます。";
-/* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="設定のあなたの位置情報ページで「常に」を選択してください。それによりMEGAは、あなたの場所が変わっても、定期的にバックグラウンドでカメラのアップロードを開始できます。";
-/* Title for turn on a feature */
-"Turn On"="オンにする";
-/* Title for turn on a feature in settings */
-"Turn On in Settings"="設定でオンにする";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="動画はカメラアップロードフォルダにアップロードされます。";
 /* Footer for video uploads switch section when disabled */
@@ -2027,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="端末の「設定」の「プライバシー」セクションに移動してください。位置情報サービスを有効にし、MEGAを「アプリの使用中」または「常に」に設定します。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGAは、チャットで連絡先と共有したり、場所が変更されたときに写真や動画がアップロードされるように　カメラアップロードの「バックグラウンドでアップロード」を有効にした際に、あなたの現在地にアクセスします。";
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="モバイルデータがオフになっています";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
