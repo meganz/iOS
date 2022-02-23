@@ -56,16 +56,9 @@ final class Album: NSObject {
     // Fetches the first "count" asset from album.
     // Returns the max number of assets if count is greater than max
     func assets(count: Int) -> [PHAsset] {
-        var assets: [PHAsset] = []
-
-        fetchResult.enumerateObjects { asset, index, stop in
-            assets.append(asset)
-            if index == (count - 1)  {
-                stop.pointee = true
-            }
-        }
-
-        return assets
+        let count = min(count, fetchResult.count)
+        let indexSet = IndexSet(integersIn: 0..<count)
+        return fetchResult.objects(at: indexSet)
     }
 }
 

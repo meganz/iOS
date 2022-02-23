@@ -51,13 +51,21 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         
         participantsLabel.text = chatRoom.participantNames
 
+        updateAvatar(for: chatRoom)
+        updateStatusView(for: chatRoom)
+        updateAppearance()
+    }
+    
+    private func updateAvatar(for chatRoom: MEGAChatRoom) {
         if chatRoom.isGroup {
             avatarImageView.isHidden = true
         } else {
             let userHandle = chatRoom.peerHandle(at: 0)
             avatarImageView.image = UIImage.mnz_image(forUserHandle: userHandle, name: chatRoom.title ?? "", size: CGSize(width: 80, height: 80), delegate: self)
         }
-        
+    }
+    
+    private func updateStatusView(for chatRoom: MEGAChatRoom) {
         if let status = chatRoom.onlineStatus {
             statusView.isHidden = (status == .invalid)
             statusView.backgroundColor = UIColor.mnz_color(for: status)
@@ -68,7 +76,6 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             statusView.isHidden = true
             statusLabel.isHidden = true
         }
-        updateAppearance()
     }
     
     private func updateAppearance() {

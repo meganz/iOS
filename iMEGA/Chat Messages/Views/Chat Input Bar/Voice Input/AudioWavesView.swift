@@ -13,7 +13,7 @@ class AudioWavesView: UIView {
         //Width of each view and spacing is 4.0
         let eachViewAndSpacingWidth: CGFloat = 4.0
         let totalWidthAvailable = bounds.width + eachViewAndSpacingWidth
-        let eachBlockWidth = eachViewAndSpacingWidth * 2.0
+        let eachBlockWidth = eachViewAndSpacingWidth * CGFloat(2.0)
         let numberOfViews = Int(round(totalWidthAvailable / eachBlockWidth))
         
         guard stackView.arrangedSubviews.count != numberOfViews else {

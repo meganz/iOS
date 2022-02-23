@@ -7,19 +7,22 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         bottomView?.removeFromSuperview()
         
         view.addSubview(miniPlayerView)
-        
-        miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        bottomViewBottomConstraint = miniPlayerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabBar.frame.size.height)
-        bottomViewBottomConstraint?.isActive = true
-        
-        miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
-        miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
-        miniPlayerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
+        layoutMiniPlayerView(miniPlayerView)
         bottomView = miniPlayerView
         
         shouldUpdateProgressViewLocation()
+    }
+    
+    private func layoutMiniPlayerView(_ miniPlayerView: UIView) {
+        miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let bottomConstant = -tabBar.frame.size.height
+        bottomViewBottomConstraint = miniPlayerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: bottomConstant)
+        bottomViewBottomConstraint?.isActive = true
+        
+        [miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+         miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+         miniPlayerView.heightAnchor.constraint(equalToConstant: 60)].activate()
     }
     
     func showMiniPlayer() {

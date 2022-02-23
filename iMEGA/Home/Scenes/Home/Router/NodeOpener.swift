@@ -37,21 +37,22 @@ final class NodeOpener {
     //MARK: - Private
     
     private func openFileNode(_ node: MEGANode, allNodes: [MEGANode]?) {
-        if let nodeName = node.name as NSString?, nodeName.mnz_isVisualMediaPathExtension {
-            let nodes = allNodes ?? [node]
-            let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
-            let mediaNodes = NSMutableArray(array: nodes)
-            guard let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
-                withMediaNodes: mediaNodes,
-                api: MEGASdkManager.sharedMEGASdk(),
-                displayMode: .cloudDrive,
-                presenting: .none,
-                preferredIndex: UInt(truncatingIfNeeded: index)
-            ) else { return }
-            navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)
+        guard (node.name as NSString?)?.mnz_isVisualMediaPathExtension == true else {
+            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
             return
         }
-        node.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
+        
+        let nodes = allNodes ?? [node]
+        let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
+        let mediaNodes = NSMutableArray(array: nodes)
+        guard let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
+            withMediaNodes: mediaNodes,
+            api: MEGASdkManager.sharedMEGASdk(),
+            displayMode: .cloudDrive,
+            presenting: .none,
+            preferredIndex: UInt(truncatingIfNeeded: index)
+        ) else { return }
+        navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)
     }
 
     private func openFolderNode(_ node: MEGANode) {

@@ -44,23 +44,13 @@ final class NodeActionViewControllerGenericDelegate:
             node.mnz_leaveSharing(in: viewController)
 
         case .getLink, .manageLink:
-            if MEGAReachabilityManager.isReachableHUDIfNot() {
-                CopyrightWarningViewController.presentGetLinkViewController(
-                    for: [node],
-                    in: UIApplication.mnz_presentingViewController()
-                )
-            }
+            showLink(for: node)
         case .removeLink:
             node.mnz_removeLink()
         case .moveToRubbishBin:
             node.mnz_moveToTheRubbishBin { }
         case .remove:
-            node.mnz_remove(in: viewController) { shouldRemove in
-                if shouldRemove {
-                    guard node.mnz_isPlaying() else { return }
-                    AudioPlayerManager.shared.closePlayer()
-                }
-            }
+            remove(node, in: viewController)
         case .removeSharing:
             node.mnz_removeSharing()
             
@@ -84,6 +74,24 @@ final class NodeActionViewControllerGenericDelegate:
             
         default:
             break
+        }
+    }
+    
+    private func remove(_ node: MEGANode, in viewController: UIViewController) {
+        node.mnz_remove(in: viewController) { shouldRemove in
+            if shouldRemove {
+                guard node.mnz_isPlaying() else { return }
+                AudioPlayerManager.shared.closePlayer()
+            }
+        }
+    }
+    
+    private func showLink(for node: MEGANode) {
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            CopyrightWarningViewController.presentGetLinkViewController(
+                for: [node],
+                   in: UIApplication.mnz_presentingViewController()
+            )
         }
     }
     
