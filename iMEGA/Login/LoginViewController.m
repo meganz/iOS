@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet UIImageView *forgotPasswordImageView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
+@property (weak, nonatomic) IBOutlet UILabel *createAccountLabel;
 
 @end
 
@@ -50,6 +51,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.tapGesture.cancelsTouchesInView = NO;
     self.tapGesture.delegate = self;
     [self.scrollView addGestureRecognizer:self.tapGesture];
+    
+    [self.createAccountLabel addGestureRecognizer:[UITapGestureRecognizer.alloc initWithTarget:self action:@selector(createAccountDidTap)]];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
@@ -107,6 +110,10 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         
         [self updateAppearance];
+    }
+    
+    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self setCreateAccountAttributedText];
     }
 }
 
@@ -256,6 +263,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.forgotPasswordImageView.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     [self.loginButton mnz_setupPrimary:self.traitCollection];
+    
+    [self setCreateAccountAttributedText];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -332,6 +341,37 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     return YES;
+}
+
+#pragma mark - Create Account
+- (void)setCreateAccountAttributedText {
+    NSString *newToMegaString = NSLocalizedString(@"account.login.newToMega", "New to MEGA?");
+    NSString *createAccountString = NSLocalizedString(@"createAccount", "Create Account");
+    
+    UIFont *font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightRegular];
+    NSAttributedString *newToMegaAttributedString = [NSAttributedString.alloc
+                                                     initWithString:newToMegaString
+                                                     attributes:@{NSFontAttributeName : font,
+                                                                  NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSAttributedString *createAccountAttributedString = [NSAttributedString.alloc
+                                                         initWithString:createAccountString
+                                                         attributes:@{NSFontAttributeName : font,
+                                                                      NSForegroundColorAttributeName:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]}];
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
+    [attributedString appendAttributedString:newToMegaAttributedString];
+    [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedString appendAttributedString:createAccountAttributedString];
+    [self.createAccountLabel setAttributedText:attributedString];
+}
+
+- (void)createAccountDidTap {
+    [self dismissViewControllerAnimated:true completion:^{
+        if ([UIApplication.mnz_visibleViewController isKindOfClass:OnboardingViewController.class]) {
+            OnboardingViewController *onboardingVC = (OnboardingViewController *)[UIApplication mnz_visibleViewController];
+            [onboardingVC presentCreateAccountViewController];
+        }
+    }];
 }
 
 @end

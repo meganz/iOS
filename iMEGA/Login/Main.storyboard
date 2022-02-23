@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,11 +67,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C2Y-Yd-Fhv">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2Y-Yd-Fhv">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ptk-b4-EIp" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="598"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ptk-b4-EIp" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="-82" width="320" height="598"/>
                                         <subviews>
                                             <imageView contentMode="scaleToFill" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
                                                 <rect key="frame" x="75" y="68" width="170" height="54"/>
@@ -79,7 +79,7 @@
                                                     <constraint firstAttribute="height" constant="54" id="Llm-JX-oSv"/>
                                                 </constraints>
                                             </imageView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-y6-Xtd" customClass="InputView">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-y6-Xtd" customClass="InputView">
                                                 <rect key="frame" x="0.0" y="187" width="320" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="68t-xJ-P8k"/>
@@ -99,8 +99,8 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEs-0T-7bT" customClass="PasswordView">
-                                                <rect key="frame" x="0.0" y="262" width="320" height="60"/>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NEs-0T-7bT" customClass="PasswordView">
+                                                <rect key="frame" x="0.0" y="261" width="320" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="CnO-WG-FFi"/>
                                                 </constraints>
@@ -119,7 +119,7 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="175" y="330" width="108" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="hjN-Kb-jeD"/>
@@ -134,10 +134,10 @@
                                                     <action selector="forgotPasswordTouchUpInside:" destination="y7g-EC-7mD" eventType="touchUpInside" id="0iO-Wq-K0q"/>
                                                 </connections>
                                             </button>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="littleQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="littleQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
                                                 <rect key="frame" x="291" y="338" width="12" height="12"/>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="513" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="M9c-MZ-MYw"/>
@@ -153,22 +153,32 @@
                                                     <action selector="tapLogin:" destination="y7g-EC-7mD" eventType="touchUpInside" id="a04-W6-hXS"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="New to MEGA? Create Account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEJ-r0-KdP">
+                                                <rect key="frame" x="73" y="569" width="174.5" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="NEs-0T-7bT" firstAttribute="leading" secondItem="ptk-b4-EIp" secondAttribute="leading" id="0K6-yz-Axz"/>
                                             <constraint firstItem="UnQ-C2-8bb" firstAttribute="top" secondItem="NEs-0T-7bT" secondAttribute="bottom" constant="8" id="14p-KH-qQj"/>
                                             <constraint firstItem="EcF-LZ-UjW" firstAttribute="top" secondItem="UnQ-C2-8bb" secondAttribute="bottom" constant="155" id="9yD-n8-Q8E"/>
+                                            <constraint firstItem="sEJ-r0-KdP" firstAttribute="top" secondItem="EcF-LZ-UjW" secondAttribute="bottom" constant="15" id="B2Z-zi-acL"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="sEJ-r0-KdP" secondAttribute="bottom" constant="8" id="F62-ZA-fS3"/>
                                             <constraint firstItem="aOs-mq-CX2" firstAttribute="top" secondItem="ptk-b4-EIp" secondAttribute="top" constant="68" id="MEe-9z-NdN"/>
+                                            <constraint firstItem="sEJ-r0-KdP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ptk-b4-EIp" secondAttribute="leading" constant="16" id="Q98-Z4-v6l"/>
                                             <constraint firstAttribute="trailing" secondItem="Ssu-EP-cXE" secondAttribute="trailing" constant="17" id="TCg-FR-GUF"/>
                                             <constraint firstItem="NEs-0T-7bT" firstAttribute="trailing" secondItem="Ssu-EP-cXE" secondAttribute="trailing" constant="17" id="Ta1-OW-RWP"/>
                                             <constraint firstItem="Cud-y6-Xtd" firstAttribute="leading" secondItem="ptk-b4-EIp" secondAttribute="leading" id="UVT-10-iXU"/>
                                             <constraint firstItem="Ssu-EP-cXE" firstAttribute="leading" secondItem="UnQ-C2-8bb" secondAttribute="trailing" constant="8" id="UZE-68-3nk"/>
+                                            <constraint firstItem="sEJ-r0-KdP" firstAttribute="centerX" secondItem="EcF-LZ-UjW" secondAttribute="centerX" id="Vib-Sn-8xk"/>
                                             <constraint firstItem="NEs-0T-7bT" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="Wid-5N-tY8"/>
                                             <constraint firstItem="aOs-mq-CX2" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="faI-h2-unT"/>
                                             <constraint firstItem="Cud-y6-Xtd" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="kqE-Jr-Dkf"/>
                                             <constraint firstItem="Ssu-EP-cXE" firstAttribute="centerY" secondItem="UnQ-C2-8bb" secondAttribute="centerY" id="oeJ-GX-JT9"/>
                                             <constraint firstItem="EcF-LZ-UjW" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="qBC-7o-ixt"/>
-                                            <constraint firstAttribute="bottom" secondItem="EcF-LZ-UjW" secondAttribute="bottom" constant="35" id="vZE-oa-Wig"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sEJ-r0-KdP" secondAttribute="trailing" constant="16" id="uwk-R0-YRh"/>
                                             <constraint firstItem="Cud-y6-Xtd" firstAttribute="top" secondItem="aOs-mq-CX2" secondAttribute="bottom" constant="65" id="wAq-ZV-ptX"/>
                                             <constraint firstItem="NEs-0T-7bT" firstAttribute="top" secondItem="Cud-y6-Xtd" secondAttribute="bottom" constant="20" id="yZC-eq-ATw"/>
                                         </constraints>
@@ -213,6 +223,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="2nL-g4-dVf" id="3Oj-ZO-QYL"/>
+                        <outlet property="createAccountLabel" destination="sEJ-r0-KdP" id="Nkl-px-hrL"/>
                         <outlet property="emailInputView" destination="Cud-y6-Xtd" id="BeF-cI-CfR"/>
                         <outlet property="forgotPasswordButton" destination="UnQ-C2-8bb" id="sfk-E1-nda"/>
                         <outlet property="forgotPasswordImageView" destination="Ssu-EP-cXE" id="lwh-4v-vQf"/>
@@ -224,7 +235,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Bb-77-UMw" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="301.60000000000002" y="-1099.7001499250375"/>
+            <point key="canvasLocation" x="300" y="-1100.7042253521126"/>
         </scene>
         <!--Create Account-->
         <scene sceneID="GtU-xi-4Q2">
@@ -238,9 +249,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p9V-22-W3Y" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="635.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkb-3j-jnC" customClass="InputView">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkb-3j-jnC" customClass="InputView">
                                                 <rect key="frame" x="0.0" y="36" width="320" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="mnX-6G-ICQ"/>
@@ -260,23 +271,23 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Klv-H8-jVM" customClass="InputView">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Klv-H8-jVM" customClass="InputView">
                                                 <rect key="frame" x="0.0" y="91" width="320" height="55"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="lastName"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L2c-lr-kWP" customClass="InputView">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L2c-lr-kWP" customClass="InputView">
                                                 <rect key="frame" x="0.0" y="166" width="320" height="55"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="qlZ-z1-r9I">
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="qlZ-z1-r9I">
                                                 <rect key="frame" x="0.0" y="241" width="320" height="120"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7hM-BK-Re1" customClass="PasswordView">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hM-BK-Re1" customClass="PasswordView">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-key-only"/>
@@ -302,7 +313,7 @@
                                                             <constraint firstAttribute="height" constant="112" id="x4w-9e-80R"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFG-hb-soU" userLabel="Confirm Password View" customClass="PasswordView">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WFG-hb-soU" userLabel="Confirm Password View" customClass="PasswordView">
                                                         <rect key="frame" x="0.0" y="60" width="320" height="60"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <userDefinedRuntimeAttributes>
@@ -317,7 +328,7 @@
                                                     <constraint firstItem="7hM-BK-Re1" firstAttribute="leading" secondItem="WFG-hb-soU" secondAttribute="leading" id="c2f-Za-7eI"/>
                                                 </constraints>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5v-Oj-XXr" userLabel="Checkbox">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5v-Oj-XXr" userLabel="Checkbox">
                                                 <rect key="frame" x="10" y="408" width="40" height="40"/>
                                                 <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
                                                 <constraints>
@@ -332,13 +343,13 @@
                                                     <action selector="termsCheckboxTouchUpInside:" destination="iCg-Wh-kpi" eventType="touchUpInside" id="yBJ-nr-2C4"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I agree with the MEGA Terms of Service" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lS-2G-m6G">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="I agree with the MEGA Terms of Service" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lS-2G-m6G">
                                                 <rect key="frame" x="58" y="414.5" width="207.5" height="27"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="58" y="414.5" width="207.5" height="27"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <userDefinedRuntimeAttributes>
@@ -349,7 +360,7 @@
                                                     <action selector="termOfServiceTouchUpInside:" destination="iCg-Wh-kpi" eventType="touchUpInside" id="XAl-df-HJN"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HZu-aK-JZa" userLabel="Checkbox">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HZu-aK-JZa" userLabel="Checkbox">
                                                 <rect key="frame" x="10" y="468" width="40" height="40"/>
                                                 <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
                                                 <constraints>
@@ -364,7 +375,7 @@
                                                     <action selector="termsForLosingPasswordCheckboxButtonPressed:" destination="iCg-Wh-kpi" eventType="touchUpInside" id="GPH-bM-NxM"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I understand that if I lose my password, I may lose my data. Read more about MEGA’s end-to-end encryption." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wh7-Wf-VZs">
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="I understand that if I lose my password, I may lose my data. Read more about MEGA’s end-to-end encryption." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wh7-Wf-VZs">
                                                 <rect key="frame" x="58" y="471" width="240" height="39.5"/>
                                                 <gestureRecognizers/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
@@ -375,7 +386,7 @@
                                                 </connections>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="550.5" width="288" height="50"/>
+                                                <rect key="frame" x="16" y="439" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="HJ1-8d-saO"/>
                                                     <constraint firstAttribute="width" constant="288" id="tvp-HT-1O6"/>
@@ -491,10 +502,10 @@
             <objects>
                 <viewController storyboardIdentifier="ConfirmAccountViewControllerID" id="Q0l-3c-nfd" customClass="ConfirmAccountViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tEv-K7-MM9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQu-15-Np8">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hQu-15-Np8">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="GSl-YH-DKg">
@@ -509,7 +520,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61x-Df-ghm" customClass="InputView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="61x-Df-ghm" customClass="InputView">
                                         <rect key="frame" x="20" y="198" width="280" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="622" id="rom-nM-9vD"/>
@@ -529,7 +540,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6i-73-vzN" customClass="PasswordView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w6i-73-vzN" customClass="PasswordView">
                                         <rect key="frame" x="20" y="273" width="280" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="622" id="eXM-ON-4d5"/>
@@ -549,7 +560,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="455" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="tQT-7u-kru"/>
@@ -565,7 +576,7 @@
                                             <action selector="confirmTouchUpInside:" destination="Q0l-3c-nfd" eventType="touchUpInside" id="nvt-q6-kIM"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="522" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="0Ya-eN-Z6a"/>
@@ -651,7 +662,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DU4-vX-4QG" customClass="InputView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DU4-vX-4QG" customClass="InputView">
                                         <rect key="frame" x="20" y="254.5" width="280" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="622" id="sRi-dv-ouv"/>
@@ -671,13 +682,13 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you have misspelled your email address, correct it and click 'Resend'." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ey0-Yn-d6F">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="If you have misspelled your email address, correct it and click 'Resend'." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ey0-Yn-d6F">
                                         <rect key="frame" x="20" y="315.5" width="280" height="26.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Pg-W1e" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Pg-W1e" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="382" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="gmy-wV-QdT"/>
@@ -693,7 +704,7 @@
                                             <action selector="resendTouchUpInside:" destination="lG1-F0-uSF" eventType="touchUpInside" id="ONB-p9-fJV"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-HK-PQg" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-HK-PQg" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="449" width="288" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Cancel"/>
@@ -797,6 +808,9 @@
         </designable>
         <designable name="gCw-HK-PQg">
             <size key="intrinsicContentSize" width="53" height="33"/>
+        </designable>
+        <designable name="urs-kB-QJB">
+            <size key="intrinsicContentSize" width="133" height="33"/>
         </designable>
     </designables>
     <resources>
