@@ -184,6 +184,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 
                 uint64_t chatId = request.chatHandle;
                 NSString *chatTitle = request.text;
+                NSURL *chatLink = request.link;
                 MEGAChatGenericRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (!error.type) {
                         [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
@@ -194,6 +195,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                         } else {
                             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
                                 if (granted) {
+                                    [self createChatAndShow:chatId publicChatLink:chatLink];
+                                    
                                     UNMutableNotificationContent *content = [UNMutableNotificationContent new];
                                     content.body = notificationText;
                                     content.sound = UNNotificationSound.defaultSound;
@@ -217,7 +220,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                     [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autojoinOrRejoinPublicChatDelegate];
                     [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                 } else {
-                    [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                    if (chatRoom.ownPrivilege == MEGAChatRoomPrivilegeUnknown) {
+                        [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                    } else {
+                        [self createChatAndShow:chatId publicChatLink:request.link];
+                    }
                 }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:MEGALinkManager.secondaryLinkURL delegate:openChatPreviewDelegate];
