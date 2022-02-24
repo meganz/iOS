@@ -1,11 +1,13 @@
 <?php
-include __DIR__.'/packageLoader.php';
+
+include __DIR__ . '/packageLoader.php';
+
 $config = file_get_contents('transifexConfig.json');
 $configDecode = json_decode($config, true);
 $token = getenv('TRANSIFEX_TOKEN') ?: $configDecode['apiToken'];
 $gitlabToken = getenv('GITLAB_TOKEN') ?: $configDecode['gitLabToken'];
 $loader = new PackageLoader\PackageLoader();
-$loader->load(__DIR__."/custom_vendor/CFPropertyList");
+$loader->load(__DIR__ . "/custom_vendor/CFPropertyList");
 
 define("TRANSIFEX_API_TOKEN", $token);
 define("GITLAB_TOKEN", $gitlabToken);
@@ -27,14 +29,15 @@ const LTHPASSCODEVIEWCONTROLLER_PATH = "../iMEGA/Vendor/LTHPasscodeViewControlle
 
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-function getGitLabResourceFile($url){
+function getGitLabResourceFile($url)
+{
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HTTPGET, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, ["PRIVATE-TOKEN: " . GITLAB_TOKEN]);
     $result = curl_exec($ch);
-    if($responseJson = json_decode($result,true) != null){
-        if($responseJson['Message'] == "401 Unauthorized"){
+    if (($responseJson = json_decode($result, true)) != null) {
+        if ($responseJson['Message'] == "401 Unauthorized") {
             die("Please enter a valid gitlab token in config.\n");
         }
         die($responseJson['message']);
@@ -54,38 +57,38 @@ function stripQuotes($text)
  * @param $resourceName
  * @param $force
  */
-function createNewResource($resourceName,$isPlural)
+function createNewResource($resourceName, $isPlural)
 {
     $resourceSlug = strtolower($resourceName);
-    if($isPlural){
+    if ($isPlural) {
         $id = "STRINGSDICT";
-    }else{
+    } else {
         $id = "STRINGS";
     }
     $postData = '{
         "data": {
             "attributes": {
                 "accept_translations": true,
-      "name": "' . $resourceName . '",
-      "slug": "' . $resourceSlug . '"
-    },
-    "relationships": {
+                "name": "' . $resourceName . '",
+                "slug": "' . $resourceSlug . '"
+            },
+            "relationships": {
                 "i18n_format": {
                     "data": {
                         "id": "' . $id . '",
-          "type": "i18n_formats"
-        }
-      },
-      "project": {
+                        "type": "i18n_formats"
+                    }
+                },
+                "project": {
                     "data": {
                         "id": "o:' . ORGANIZATION . ":p:" . PROJECT . '",
-          "type": "projects"
+                        "type": "projects"
+                    }
+                }
+            },
+            "type": "resources"
         }
-      }
-    },
-    "type": "resources"
-  }
-}';
+    }';
 
     $ch = curl_init("https://rest.api.transifex.com/resources");
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -101,10 +104,10 @@ function createNewResource($resourceName,$isPlural)
             if ($cmd == 'q' || $cmd == 'n') {
                 die();
             }
-            if($cmd == 'y') {
+            if ($cmd == 'y') {
                 return false;
             }
-        }while ($cmd != 'q' && $cmd != 'y');
+        } while ($cmd != 'q' && $cmd != 'y');
     }
     echo("Created new Resource: {$resourceName}.\n");
     curl_close($ch);
@@ -284,15 +287,14 @@ function buildResourceFileFromArray($resourceMapping): string
     return $finalContent;
 }
 
-function addNewSourceFile($stringsToPush, $resourceName,$isPlural)
+function addNewSourceFile($stringsToPush, $resourceName, $isPlural)
 {
-    // Todo build the new source here (we create our own content from the diff).
     $resourceSlug = strtolower($resourceName);
 
     if (!mb_detect_encoding($stringsToPush, 'UTF-8', true)) {
         $stringsToPush = mb_convert_encoding($stringsToPush, "UTF-8", "UTF-16LE");
     }
-    if(!$isPlural) {
+    if (!$isPlural) {
         $resourceMapping = parseAppleStrings(trimUnicode($stringsToPush));
         $stringsToPush = buildResourceFileFromArray($resourceMapping);
     }
@@ -300,22 +302,22 @@ function addNewSourceFile($stringsToPush, $resourceName,$isPlural)
     $stringsToPush = json_encode($stringsToPush, JSON_UNESCAPED_UNICODE);
 
     $postData = '{
-  "data": {
-    "attributes": {
-      "content": ' . $stringsToPush . ',
-      "content_encoding": "text"
-    },
-    "relationships": {
-      "resource": {
         "data": {
-          "id": "o:' . ORGANIZATION . ":p:" . PROJECT . ":r:" . $resourceSlug . '",
-          "type": "resources"
+            "attributes": {
+                "content": ' . $stringsToPush . ',
+                "content_encoding": "text"
+            },
+            "relationships": {
+                "resource": {
+                    "data": {
+                        "id": "o:' . ORGANIZATION . ":p:" . PROJECT . ":r:" . $resourceSlug . '",
+                        "type": "resources"
+                    }
+                }
+            },
+            "type": "resource_strings_async_uploads"
         }
-      }
-    },
-    "type": "resource_strings_async_uploads"
-  }
-}';
+    }';
 
     // Upload source file for that project -> language
     $ch = curl_init("https://rest.api.transifex.com/resource_strings_async_uploads");
@@ -344,32 +346,46 @@ function addNewSourceFile($stringsToPush, $resourceName,$isPlural)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer " . TRANSIFEX_API_TOKEN]);
-
-    while (true) {
-        $result = curl_exec($ch);
-        $resultDecode = json_decode($result, true);
-        if ($resultDecode['data']['attributes']['status'] != "pending" || $resultDecode['data']['attributes']['status'] != "processing" || $resultDecode['data']['attributes']['status'] != "failed") {
-            foreach ($resultDecode['data']['attributes']['errors'] as $error) {
-                echo "Error {$error['code']}: {$error['detail']}.\n";
-            }
-            break;
-        }
+    $status = $response["data"]["attributes"]["status"];
+    while (in_array($status, ["pending", "processing"])) {
         sleep(1);
+        $response = json_decode(curl_exec($ch), true);
+        if ($response) {
+            if (isset($response["data"]["attributes"]["status"])) {
+                $status = $response["data"]["attributes"]["status"];
+            }
+            if (isset($response["data"]["attributes"]["errors"]) && count($response["data"]["attributes"]["errors"])) {
+                foreach ($response["data"]["attributes"]["errors"] as $error) {
+                    echo "Error {$error["code"]}: {$error["detail"]}.\n";
+                }
+                die();
+            }
+        }
+        else {
+            echo "Error: Failed to upload file\n";
+            die();
+        }
     }
     curl_close($ch);
+    if ($status === "failed") {
+        echo "Error: Failed to upload file\n";
+        die();
+    }
     echo "Uploaded source file for resource {$resourceName}.\n";
+    return true;
 }
 
-function getDiffOfResource($gitlabArr,$ourStringsArr){
+function getDiffOfResource($gitlabArr, $ourStringsArr)
+{
     $stringsToPush = "";
 
-    foreach($ourStringsArr as $ourStringsKey => $ourStringsValue){
-        if(!isset($gitlabArr[$ourStringsKey])){
+    foreach ($ourStringsArr as $ourStringsKey => $ourStringsValue) {
+        if (!isset($gitlabArr[$ourStringsKey])) {
             $stringsToPush .= "/*{$ourStringsValue['stringDescription']}*/\n";
             $stringsToPush .= "\"{$ourStringsKey}\"=\"{$ourStringsValue['stringText']}\";\n";
-        }else{
-            if($gitlabArr[$ourStringsKey]['stringDescription'] != $ourStringsValue['stringDescription'] ||
-                $gitlabArr[$ourStringsKey]['stringText'] != $ourStringsValue['stringText'] ){
+        } else {
+            if ($gitlabArr[$ourStringsKey]['stringDescription'] != $ourStringsValue['stringDescription'] ||
+                $gitlabArr[$ourStringsKey]['stringText'] != $ourStringsValue['stringText']) {
                 $stringsToPush .= "/*{$ourStringsValue['stringDescription']}*/\n";
                 $stringsToPush .= "\"{$ourStringsKey}\"=\"{$ourStringsValue['stringText']}\";\n";
             }
@@ -387,7 +403,7 @@ function getDiffOfResource($gitlabArr,$ourStringsArr){
  * @param $url
  * @return array
  */
-function makeGenericMultiCurlRequest($method, $requests = null, $headers, $urls): array
+function makeGenericMultiCurlRequest($method, $requests, $headers, $urls): array
 {
     // array of all curls
     $multiCurl = array();
@@ -433,7 +449,8 @@ function makeGenericMultiCurlRequest($method, $requests = null, $headers, $urls)
     return $result;
 }
 
-function getLockedLangCodes(){
+function getLockedLangCodes()
+{
     $arrOfLangCodes = [];
     $ch = curl_init("https://rest.api.transifex.com/projects/o:" . ORGANIZATION . ":p:" . PROJECT . "/languages");
     curl_setopt($ch, CURLOPT_HTTPGET, true);
@@ -448,7 +465,7 @@ function getLockedLangCodes(){
         die();
     }
     curl_close($ch);
-    foreach($responseJson as $data) {
+    foreach ($responseJson as $data) {
         foreach ($data as $val) {
             $arrOfLangCodes[] = "locked_" . $val['attributes']['code'];
         }
@@ -457,37 +474,40 @@ function getLockedLangCodes(){
 }
 
 // get array of string hashes from transifex by providing an array of string keys.
-function getStringHash($stringKeys, $branchResourceName){
+function getStringHash($stringKeys, $branchResourceName)
+{
     $urls = [];
     $hashes = [];
-    foreach($stringKeys as $key) {
+    foreach ($stringKeys as $key) {
         $urls[] = "https://rest.api.transifex.com/resource_strings?filter[resource]=o:" . ORGANIZATION . ":p:" . PROJECT . ":r:" . strtolower($branchResourceName) . "&filter[key]=" . urlencode($key);
     }
-    $result =  makeGenericMultiCurlRequest("GET",null,APPLICATION_JSON_HEADER,$urls);
-    foreach($result as $res) {
-        if(count($res['data'][0]['attributes']['tags']) == 0 && strtotime($res['data'][0]['attributes']['strings_datetime_modified']) >= time() - 120)
-        $hashes[] = $res['data'][0]['id'];
+    $result = makeGenericMultiCurlRequest("GET", null, APPLICATION_JSON_HEADER, $urls);
+    foreach ($result as $res) {
+        if (count($res['data'][0]['attributes']['tags']) == 0 && strtotime($res['data'][0]['attributes']['strings_datetime_modified']) >= time() - 120) {
+            $hashes[] = $res['data'][0]['id'];
+        }
     }
     return $hashes;
 }
 
-function updateStringLock($hashes, $arrLangCodes){
+function updateStringLock($hashes, $arrLangCodes)
+{
     $urls = [];
     $reqs = [];
     $arrLangCodes[] = "do_not_translate";
-    foreach($hashes as $hash){
+    foreach ($hashes as $hash) {
         $urls[] = "https://rest.api.transifex.com/resource_strings/" . $hash;
         $reqs[] = '{
-  "data": {
-    "attributes": {
-      "tags": ' . json_encode($arrLangCodes) . '
-    },
-    "id": "'. $hash .'",
-    "type": "resource_strings"
-  }
-}';
+            "data": {
+                "attributes": {
+                    "tags": ' . json_encode($arrLangCodes) . '
+                },
+                "id": "' . $hash . '",
+                "type": "resource_strings"
+            }
+        }';
     }
-    $res = makeGenericMultiCurlRequest("PATCH",$reqs,APPLICATION_JSON_HEADER,$urls);
+    $res = makeGenericMultiCurlRequest("PATCH", $reqs, APPLICATION_JSON_HEADER, $urls);
 }
 
 /**
@@ -498,7 +518,7 @@ function updateStringLock($hashes, $arrLangCodes){
  */
 function strToStream(string $string)
 {
-    $stream = fopen('php://memory','r+');
+    $stream = fopen('php://memory', 'r+');
     fwrite($stream, $string);
     rewind($stream);
     return $stream;
@@ -506,14 +526,14 @@ function strToStream(string $string)
 
 function resourceChooser(): string
 {
-    do{
+    do {
         echo "\n1. Changelogs \n2. Localizable \n3. InfoPlist \n4. LTHPasscodeViewController \n5. Plurals \n6. (q) to quit";
         $cmd = trim(strtolower(readline("\n \n> Which resource would you want to import (Enter the digit):\n")));
         readline_add_history($cmd);
         if ($cmd == 'q' || $cmd == '6') {
             exit;
         }
-        switch(strtolower($cmd)){
+        switch (strtolower($cmd)) {
             case '1' :
                 return CHANGELOGS_PATH;
             case '2':
@@ -527,13 +547,13 @@ function resourceChooser(): string
             case '6':
                 exit;
         }
-    }while ($cmd != 'q');
+    } while ($cmd != 'q');
 }
 
 $filePath = resourceChooser();
 
 // changelogs case
-if($filePath == "") {
+if ($filePath == "") {
     $cmd = readline("\n \n> Please enter Changelogs path: \n");
     readline_add_history($cmd);
     $filePath = $cmd;
@@ -553,10 +573,38 @@ if ($fileParts['extension'] !== "strings" && $fileParts['extension'] !== "string
     die();
 }
 
+$shouldLock = !(isset($argv[1]) && $argv[1] === "nolock");
+
 // Push to main resource file directly
-if($fileParts['filename'] == "Changelogs" || $fileParts['filename'] == "LTHPasscodeViewController" ){
+if ($fileParts['filename'] == "Changelogs" || $fileParts['filename'] == "LTHPasscodeViewController") {
     echo "Updating Main Resource as file is Changelogs/LTHPassCodeViewController and not updated often.\n";
-    addNewSourceFile(file_get_contents($filePath), $fileParts['filename'],false);
+    $now = time();
+    addNewSourceFile(file_get_contents($filePath), $fileParts['filename'], false);
+    if ($shouldLock) {
+        $ch = curl_init("https://rest.api.transifex.com/resource_strings?filter[resource]=o:" . ORGANIZATION . ":p:" . PROJECT . ":r:" . strtolower($fileParts["filename"]));
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/vnd.api+json", "Authorization: Bearer " . TRANSIFEX_API_TOKEN]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = json_decode(curl_exec($ch), true);
+        curl_close($ch);
+        $arrLangCodes = getLockedLangCodes();
+        $hashes = [];
+        foreach ($response["data"] as $data) {
+            if (strtotime($data["attributes"]["strings_datetime_modified"]) >= $now) {
+                $stringTags = $data["attributes"]["tags"];
+                $notFullyLocked = false;
+                foreach ($arrLangCodes as $lock) {
+                    if (!in_array($lock, $stringTags)) {
+                        $notFullyLocked = true;
+                    }
+                }
+                if ($notFullyLocked) {
+                    $hashes[] = $data["id"];
+                }
+            }
+        }
+        updateStringLock($hashes, $arrLangCodes);
+    }
     die();
 }
 
@@ -574,50 +622,45 @@ if (in_array(str_replace(PHP_EOL, "", $branchName), ["master", "develop"])) {
 
 // get the gitlab strings for comparisons
 $stringsToPush = "";
-// TODO change for testing
-$ourStrings =  file_get_contents($filePath);
+$ourStrings = file_get_contents($filePath);
 
 $gitlabResourceStrings = "";
-if($fileParts['filename'] == "InfoPlist"){
+if ($fileParts['filename'] == "InfoPlist") {
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_INFOPLIST_URL);
-}else if ($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'strings'){
+} else if ($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'strings') {
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_LOCALIZABLE_URL);
-}else if ($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'stringsdict'){
-    // TODO, change when pushed, for testing
+} else if ($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'stringsdict') {
     $gitlabResourceStrings = getGitLabResourceFile(MAIN_PLURALS_URL);
 }
 // parse
-if($fileParts['extension'] == "strings"){
-    $gitlabResArr =  parseAppleStrings(trimUnicode($gitlabResourceStrings));
+if ($fileParts['extension'] == "strings") {
+    $gitlabResArr = parseAppleStrings(trimUnicode($gitlabResourceStrings));
     $ourStringsArr = parseAppleStrings(trimUnicode($ourStrings));
-    $stringsToPush = getDiffOfResource($gitlabResArr,$ourStringsArr);
-}else if ($fileParts['extension'] == "stringsdict"){
-// TODO stringsdict format
-    $gitlabStrings = new CFPropertyList\CFPropertyList(strToStream($gitlabResourceStrings), CFPropertyList\CFPropertyList::FORMAT_XML );
-    $localStrings = new CFPropertyList\CFPropertyList(strToStream($ourStrings), CFPropertyList\CFPropertyList::FORMAT_XML );
-    $stringsToPush = new CFPropertyList\CFPropertyList(null, CFPropertyList\CFPropertyList::FORMAT_XML );
+    $stringsToPush = getDiffOfResource($gitlabResArr, $ourStringsArr);
+} else if ($fileParts['extension'] == "stringsdict") {
+    $gitlabStrings = new CFPropertyList\CFPropertyList(strToStream($gitlabResourceStrings), CFPropertyList\CFPropertyList::FORMAT_XML);
+    $localStrings = new CFPropertyList\CFPropertyList(strToStream($ourStrings), CFPropertyList\CFPropertyList::FORMAT_XML);
+    $stringsToPush = new CFPropertyList\CFPropertyList(null, CFPropertyList\CFPropertyList::FORMAT_XML);
     // Add or replace, depending if upper key exists.
     $localStringsDict = $localStrings->getValue();
     $gitlabStringsDict = $gitlabStrings->getValue();
     $stringsToPushDict = new \CFPropertyList\CFDictionary([]);
-    foreach( $localStrings->getValue(true) as $newKeys => $newValues )
-    {
+    foreach ($localStrings->getValue(true) as $newKeys => $newValues) {
         // if outer key exists in gitlabString, we have to check if it is an edit, if there are edited fields, we add it, otherwise, if identical, we omit.
-        if($existDict = $gitlabStringsDict->get($newKeys)) {
+        if ($existDict = $gitlabStringsDict->get($newKeys)) {
             // check equality of fields via array equality
             $addDict = $localStringsDict->get($newKeys);
             $addArray = $addDict->toArray();
             $existArray = $existDict->toArray();
             $areEqual = $addArray === $existArray;
-            if($areEqual) {
+            if ($areEqual) {
                 // skip if equal (do not add)
                 continue;
-            }
-            else {
+            } else {
                 // sanitising code
-                foreach($newValues->getValue(true) as $key => $value) {
-                    if($value->getValue(true) && is_array($value->getValue(true)) ) {
-                        foreach($value->getValue(true) as $innerKey => $innerValue) {
+                foreach ($newValues->getValue(true) as $key => $value) {
+                    if ($value->getValue(true) && is_array($value->getValue(true))) {
+                        foreach ($value->getValue(true) as $innerKey => $innerValue) {
                             $innerValue->setValue(sanitiseSingleResourceString(trimUnicode($innerValue->getValue(true))));
                         }
                     } else {
@@ -625,16 +668,15 @@ if($fileParts['extension'] == "strings"){
                     }
                 }
                 // adding code
-                $stringsToPushDict->add($newKeys,$newValues);
+                $stringsToPushDict->add($newKeys, $newValues);
                 $stringsToPush->purge();
                 $stringsToPush->add($stringsToPushDict);
             }
-        }
-        else {   // completely new key, we can just sanitise and add
+        } else {   // completely new key, we can just sanitise and add
             // sanitising code
-            foreach($newValues->getValue(true) as $key => $value) {
-                if($value->getValue(true) && is_array($value->getValue(true)) ) {
-                    foreach($value->getValue(true) as $innerKey => $innerValue) {
+            foreach ($newValues->getValue(true) as $key => $value) {
+                if ($value->getValue(true) && is_array($value->getValue(true))) {
+                    foreach ($value->getValue(true) as $innerKey => $innerValue) {
                         $innerValue->setValue(sanitiseSingleResourceString(trimUnicode($innerValue->getValue(true))));
                     }
                 } else {
@@ -642,7 +684,7 @@ if($fileParts['extension'] == "strings"){
                 }
             }
             // adding code
-            $stringsToPushDict->add($newKeys,$newValues);
+            $stringsToPushDict->add($newKeys, $newValues);
             $stringsToPush->purge();
             $stringsToPush->add($stringsToPushDict);
         }
@@ -650,33 +692,26 @@ if($fileParts['extension'] == "strings"){
     $stringsToPush = $stringsToPush->toXML(true);
 }
 $branchResourceName = "";
-if($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'stringsdict') {
-    $branchResourceName = "Plurals". "-" . preg_replace("/[^A-Za-z0-9]/", '', $branchName);
+if ($fileParts['filename'] == "Localizable" && $fileParts['extension'] == 'stringsdict') {
+    $branchResourceName = "Plurals" . "-" . preg_replace("/[^A-Za-z0-9]/", '', $branchName);
 } else {
     $branchResourceName = $fileParts['filename'] . "-" . preg_replace("/[^A-Za-z0-9]/", '', $branchName);
 }
 
-$shouldLock = true;
-if($argv[1] && $argv[1] === 'nolock'){
-    $shouldLock = false;
-}
-// TODO stringsdict file when they upload to gitlab
 if (getResourceDetails(strtolower($fileParts['filename']))) {
     if ($fileParts['extension'] == "strings") {
-        createNewResource($branchResourceName,false);
-        addNewSourceFile($stringsToPush, $branchResourceName,false);
+        createNewResource($branchResourceName, false);
+        addNewSourceFile($stringsToPush, $branchResourceName, false);
     } else if ($fileParts['extension'] == "stringsdict") {
-        createNewResource($branchResourceName,true);
-        addNewSourceFile($stringsToPush, $branchResourceName,true);
+        createNewResource($branchResourceName, true);
+        addNewSourceFile($stringsToPush, $branchResourceName, true);
     }
     if ($shouldLock) {
         $stringsToPushKeys = [];
-        sleep(5);
         if ($fileParts['extension'] == "strings") {
             $stringsToPushKeys = array_keys(parseAppleStrings($stringsToPush));
-        }
-        else if($fileParts['extension'] == "stringsdict") {
-            $stringsToPushXML =  new CFPropertyList\CFPropertyList(strToStream($stringsToPush), CFPropertyList\CFPropertyList::FORMAT_XML );
+        } else if ($fileParts['extension'] == "stringsdict") {
+            $stringsToPushXML = new CFPropertyList\CFPropertyList(strToStream($stringsToPush), CFPropertyList\CFPropertyList::FORMAT_XML);
             $stringsToPushArr = $stringsToPushXML->toArray();
             $stringsToPushKeys = array_keys($stringsToPushArr);
         }
@@ -688,4 +723,3 @@ if (getResourceDetails(strtolower($fileParts['filename']))) {
     echo "File name should be the name of the resource (Case Sensitive).\n";
     die();
 }
-?>
