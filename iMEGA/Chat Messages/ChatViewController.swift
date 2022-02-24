@@ -933,6 +933,11 @@ class ChatViewController: MessagesViewController {
                 MEGASdkManager.sharedMEGAChatSdk().logout()
                 
                 if MEGALinkManager.selectedOption == .joinChatLink, let onboardingVC = UIApplication.mnz_visibleViewController() as? OnboardingViewController {
+                    
+                    if let publicChatLink = self.publicChatLink {
+                        MEGALinkManager.linkURL = publicChatLink
+                        MEGALinkManager.urlType = .publicChatLink
+                    }
                     onboardingVC.presentLoginViewController()
                 }
             }
