@@ -45,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *clearAllButton;
 
+@property (strong, nonatomic) TransferUseCaseHelper *transfersUseCaseHelper;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *transfers;
 @property (strong, nonatomic) NSMutableArray<NSString *> *uploadTransfersQueued;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *completedTransfers;
@@ -69,12 +70,13 @@ static TransfersWidgetViewController* instance = nil;
     return instance;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.uploadTransfersQueued = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
-    self.completedTransfers = [MEGASdkManager.sharedMEGASdk completedTransfers];
+    self.transfersUseCaseHelper = [[TransferUseCaseHelper alloc] init];
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -424,7 +426,7 @@ static TransfersWidgetViewController* instance = nil;
             TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             [cell cancelTransfer:nil];
         } else {
-            [self.completedTransfers removeObject:self.completedTransfers[indexPath.row]];
+            [self removeFromCompletedTransfers:self.completedTransfers[indexPath.row]];
             [self.tableView reloadData];
         }
     }
@@ -459,19 +461,7 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)getAllTransfers {
-    NSMutableArray *transfers = NSMutableArray.new;
-    
-    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-    if (transferList.size.integerValue) {
-        [transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
-    }
-    
-    transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
-    if (transferList.size.integerValue) {
-        [transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
-    }
-    
-    self.transfers = transfers;
+    self.transfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper transfers]];
     
     [self getQueuedUploadTransfers];
 }
@@ -518,6 +508,18 @@ static TransfersWidgetViewController* instance = nil;
     if (direction == 1) {
         [[MEGAStore shareInstance] removeAllUploadTransfers];
     }
+}
+
+- (void)removeFromCompletedTransfers:(MEGATransfer *)transfer {
+    [[MEGASdkManager.sharedMEGASdk completedTransfers] removeObject:transfer];
+}
+
+- (void)removeSelectedTransfers {
+    [[MEGASdkManager.sharedMEGASdk completedTransfers] removeObjectsInArray:self.selectedTransfers];
+}
+
+- (void)removeAllCompletedTransfers {
+    [[MEGASdkManager.sharedMEGASdk completedTransfers] removeAllObjects];
 }
 
 - (NSIndexPath *)indexPathForPendingTransfer:(MEGATransfer *)transfer {
@@ -707,10 +709,10 @@ static TransfersWidgetViewController* instance = nil;
             break;
         case TransfersWidgetSelectedCompleted:
             if (self.tableView.isEditing) {
-                [self.completedTransfers removeObjectsInArray:self.selectedTransfers];
+                [self removeSelectedTransfers];
                 [self.selectedTransfers removeAllObjects];
             } else {
-                [self.completedTransfers removeAllObjects];
+                [self removeAllCompletedTransfers];
             }
             [self switchEdit];
             
@@ -817,7 +819,7 @@ static TransfersWidgetViewController* instance = nil;
     
     switch ([request type]) {
         case MEGARequestTypeLogout: {
-            [self.completedTransfers removeAllObjects];
+            [self removeAllCompletedTransfers];
             [self reloadView];
             break;
         }
@@ -844,21 +846,14 @@ static TransfersWidgetViewController* instance = nil;
 
 - (NSMutableArray *)transfers {
     if (!_transfers) {
-        NSMutableArray *transfers = NSMutableArray.new;
-        
-        MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-        if (transferList.size.integerValue) {
-            [transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
-        }
-        
-        transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
-        if (transferList.size.integerValue) {
-            [transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
-        }
-        
-        _transfers = transfers;
+        _transfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper transfers]];
     }
     return _transfers;
+}
+
+- (NSMutableArray *)completedTransfers {
+    _completedTransfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper completedTransfers]];
+    return _completedTransfers;
 }
 
 #pragma mark - MEGATransferDelegate
@@ -967,7 +962,7 @@ static TransfersWidgetViewController* instance = nil;
         case MegaNodeActionTypeRetry: {
 
             [MEGASdkManager.sharedMEGASdk retryTransfer:transfer];
-            [self.completedTransfers removeObject:transfer];
+            [self removeFromCompletedTransfers:transfer];
             [self.tableView reloadData];
             break;
         }
@@ -979,7 +974,7 @@ static TransfersWidgetViewController* instance = nil;
                     *stop = YES;
                 };
             }];
-            [self.completedTransfers removeObject:selectedTransfer];
+            [self removeFromCompletedTransfers:selectedTransfer];
             [self.tableView reloadData];
             break;
 
@@ -994,7 +989,8 @@ static TransfersWidgetViewController* instance = nil;
 
 
 - (void)switchEdit {
-    [self.tableView setEditing:!self.tableView.editing animated:YES];
+    BOOL isEditing = self.completedTransfers.count > 0 ? !self.tableView.editing : false;
+    [self.tableView setEditing:isEditing animated:YES];
     [self.editBarButtonItem setTitle:self.tableView.isEditing ? NSLocalizedString(@"done", @"") : NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected")];
     self.navigationItem.rightBarButtonItems = self.tableView.isEditing ? @[self.editBarButtonItem, self.cancelBarButtonItem] : @[self.editBarButtonItem];
 
