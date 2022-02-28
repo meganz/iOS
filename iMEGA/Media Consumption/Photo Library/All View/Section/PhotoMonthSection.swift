@@ -1,15 +1,28 @@
 import Foundation
 
-struct PhotoMonthSection {
+final class PhotoMonthSection: PhotoDateSection {
     var photoByMonth: PhotoByMonth
-    var title: String
     
-    var allPhotos: [NodeEntity] {
+    override var categoryDate: Date {
+        photoByMonth.categoryDate
+    }
+    
+    override var coverPhoto: NodeEntity? {
+        photoByMonth.coverPhoto
+    }
+    
+    override var allPhotos: [NodeEntity] {
         photoByMonth.allPhotos
+    }
+    
+    override var photoByDayList: [PhotoByDay] {
+        photoByMonth.photoByDayList
     }
     
     init(photoByMonth: PhotoByMonth) {
         self.photoByMonth = photoByMonth
+        
+        super.init()
         
         if #available(iOS 15.0, *) {
             title = photoByMonth.categoryDate.formatted(.dateTime.year().locale(.current))
@@ -19,23 +32,13 @@ struct PhotoMonthSection {
     }
     
     @available(iOS 15.0, *)
-    var attributedTitle: AttributedString {
+    override var attributedTitle: AttributedString {
         var attr = photoByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).attributed)
         let month = AttributeContainer.dateField(.month)
         let semibold = AttributeContainer.font(.subheadline.weight(.semibold))
         attr.replaceAttributes(month, with: semibold)
         
         return attr
-    }
-}
-
-extension PhotoMonthSection: PhotoChronologicalCategory {
-    var categoryDate: Date {
-        photoByMonth.categoryDate
-    }
-    
-    var coverPhoto: NodeEntity? {
-        photoByMonth.coverPhoto
     }
 }
 

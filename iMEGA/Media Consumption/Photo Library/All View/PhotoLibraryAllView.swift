@@ -33,10 +33,9 @@ struct PhotoLibraryAllView: View {
     }
     
     // MARK: - Private
-    
-    private func sectionView(for section: PhotoMonthSection, viewPortSize: CGSize) -> some View {
-        Section(header: PhotoMonthSectionHeader(section: section)) {
-            ForEach(section.photoByMonth.allPhotos) { photo in
+    private func sectionView(for section: PhotoDateSection, viewPortSize: CGSize) -> some View {
+        Section(header: PhotoSectionHeader(section: section)) {
+            ForEach(section.allPhotos) { photo in
                 router.card(for: photo, viewModel: viewModel)
                     .equatable()
                     .clipped()

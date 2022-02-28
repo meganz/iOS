@@ -374,11 +374,7 @@ fileprivate extension Date {
         let format = "HH:mm"
         return string(dateFormat: format)
     }
-    
-    private var isThisYear: Bool {
-        return Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
-    }
-    
+
     private func string(dateFormat: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat

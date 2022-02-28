@@ -44,7 +44,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoCell(
             viewModel: PhotoCellViewModel(
                 photo: photo,
-                selection: viewModel.libraryViewModel.selection,
+                viewModel: viewModel,
                 thumbnailUseCase: ThumbnailUseCase.default
             )
         )
