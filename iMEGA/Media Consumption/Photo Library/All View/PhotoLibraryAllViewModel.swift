@@ -1,7 +1,7 @@
 import SwiftUI
 
 @available(iOS 14.0, *)
-final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSection> {
+final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> {
     private var lastCardPosition: PhotoScrollPosition?
     private var lastPhotoPosition: PhotoScrollPosition?
     
@@ -16,7 +16,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
         repeating: .init(.flexible(), spacing: 4),
         count: PhotoLibraryZoomState.defaultScaleFactor
     )
-
+    
     override var position: PhotoScrollPosition? {
         calculateCurrentScrollPosition()
     }
@@ -37,8 +37,8 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
             .$library
             .dropFirst()
             .receive(on: DispatchQueue.global(qos: .userInitiated))
-            .map {
-                $0.allPhotosMonthSections
+            .map { [weak self] in
+                $0.allPhotosDateSections(forZoomScaleFactor: self?.zoomState.scaleFactor)
             }
             .filter { [weak self] in
                 self?.shouldRefreshTo($0) == true
@@ -47,7 +47,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
             .assign(to: &$photoCategoryList)
     }
     
-    private func shouldRefreshTo(_ categories: [PhotoMonthSection]) -> Bool {
+    private func shouldRefreshTo(_ categories: [PhotoDateSection]) -> Bool {
         photoCategoryList.flatMap {
             $0.allPhotos
         }
@@ -73,6 +73,8 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoMonthSectio
     }
     
     private func zoomStateWillChange(to newState: PhotoLibraryZoomState) {
+        photoCategoryList = libraryViewModel.library.allPhotosDateSections(forZoomScaleFactor: newState.scaleFactor)
+        
         calculateLastScrollPosition()
         
         columns = Array(
@@ -101,7 +103,10 @@ extension PhotoLibraryAllViewModel {
                 return photoPosition
             }
             
-            let photoByDayList = photoCategoryList.flatMap { $0.photoByMonth.photoByDayList }
+            let photoByDayList: [PhotoByDay] = photoCategoryList.flatMap {
+                $0.photoByDayList
+            }
+            
             guard let dayCategory = photoByDayList.first(where: { $0.categoryDate == cardPosition.date.removeTimestamp() }) else {
                 MEGALogDebug("[Photos] all position - can not find day category by card \(String(describing: cardPosition.date))")
                 return cardPosition

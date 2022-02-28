@@ -33,3 +33,11 @@ extension PhotoLibrary: Equatable {
         lhs.allphotoByYearList == rhs.allphotoByYearList
     }
 }
+
+extension PhotoLibrary {
+    func allPhotosDateSections(forZoomScaleFactor scaleFactor: Int?) -> [PhotoDateSection] {
+        guard let factor = scaleFactor else { return [] }
+        
+        return factor == 1 ? allPhotosDaySections : allPhotosMonthSections
+    }
+}
