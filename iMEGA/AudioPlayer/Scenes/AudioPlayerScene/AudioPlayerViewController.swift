@@ -379,6 +379,9 @@ final class AudioPlayerViewController: UIViewController {
         case .goToPlaylistAction(let enabled):
             gotoplaylistButton.isEnabled = enabled
             gotoplaylistButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
+        case .nextTrackAction(let enabled):
+            nextButton.isEnabled = enabled
+            nextButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
         }
     }
 }
