@@ -7,15 +7,15 @@ struct PhotoLibrary {
     var underlyingMEGANodes: [MEGANode]
     
     var allPhotosByMonthList: [PhotoByMonth] {
-        allphotoByYearList.flatMap { $0.photoByMonthList }
+        allphotoByYearList.flatMap { $0.contentList }
     }
     
     var allPhotosByDayList: [PhotoByDay] {
-        allPhotosByMonthList.flatMap { $0.photoByDayList }
+        allPhotosByMonthList.flatMap { $0.contentList }
     }
     
     var allPhotos: [NodeEntity] {
-        allPhotosByDayList.flatMap { $0.photoNodeList }
+        allPhotosByDayList.flatMap { $0.contentList }
     }
     
     var isEmpty: Bool {

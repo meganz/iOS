@@ -1,6 +1,9 @@
 import Foundation
 
-protocol PhotoChronologicalCategory: Identifiable, PhotoScrollPositioning, Refreshable {
+protocol PhotoChronologicalCategory: Identifiable, PhotoScrollPositioning, Refreshable, Equatable {
+    associatedtype Content: Equatable
+    var contentList: [Content] { get }
+    
     var categoryDate: Date { get }
     var coverPhoto: NodeEntity? { get }
 }
@@ -19,12 +22,18 @@ extension PhotoChronologicalCategory {
     }
 }
 
+extension PhotoChronologicalCategory {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.contentList == rhs.contentList
+    }
+}
+
 struct PhotoByYear: PhotoChronologicalCategory {
     let categoryDate: Date
-    private(set) var photoByMonthList = [PhotoByMonth]()
+    private(set) var contentList = [PhotoByMonth]()
     
     var coverPhoto: NodeEntity? {
-        photoByMonthList.first?.coverPhoto
+        contentList.first?.coverPhoto
     }
     
     init(categoryDate: Date) {
@@ -32,26 +41,20 @@ struct PhotoByYear: PhotoChronologicalCategory {
     }
     
     mutating func append(_ photoByMonth: PhotoByMonth) {
-        photoByMonthList.append(photoByMonth)
-    }
-}
-
-extension PhotoByYear: Equatable {
-    static func == (lhs: PhotoByYear, rhs: PhotoByYear) -> Bool {
-        lhs.photoByMonthList == rhs.photoByMonthList
+        contentList.append(photoByMonth)
     }
 }
 
 struct PhotoByMonth: PhotoChronologicalCategory {
     let categoryDate: Date
-    private(set) var photoByDayList = [PhotoByDay]()
+    private(set) var contentList = [PhotoByDay]()
     
     var allPhotos: [NodeEntity] {
-        photoByDayList.flatMap { $0.photoNodeList }
+        contentList.flatMap { $0.contentList }
     }
     
     var coverPhoto: NodeEntity? {
-        photoByDayList.first?.coverPhoto
+        contentList.first?.coverPhoto
     }
     
     init(categoryDate: Date) {
@@ -59,22 +62,16 @@ struct PhotoByMonth: PhotoChronologicalCategory {
     }
     
     mutating func append(_ photoByDay: PhotoByDay) {
-        photoByDayList.append(photoByDay)
-    }
-}
-
-extension PhotoByMonth: Equatable {
-    static func == (lhs: PhotoByMonth, rhs: PhotoByMonth) -> Bool {
-        lhs.photoByDayList == rhs.photoByDayList
+        contentList.append(photoByDay)
     }
 }
 
 struct PhotoByDay: PhotoChronologicalCategory {
     let categoryDate: Date
-    private(set) var photoNodeList = [NodeEntity]()
+    private(set) var contentList = [NodeEntity]()
     
     var coverPhoto: NodeEntity? {
-        photoNodeList.first
+        contentList.first
     }
     
     init(categoryDate: Date) {
@@ -82,13 +79,7 @@ struct PhotoByDay: PhotoChronologicalCategory {
     }
     
     mutating func append(_ photo: NodeEntity) {
-        photoNodeList.append(photo)
-    }
-}
-
-extension PhotoByDay: Equatable {
-    static func == (lhs: PhotoByDay, rhs: PhotoByDay) -> Bool {
-        lhs.photoNodeList == rhs.photoNodeList
+        contentList.append(photo)
     }
 }
 
@@ -99,5 +90,9 @@ extension NodeEntity: PhotoChronologicalCategory {
     
     var coverPhoto: NodeEntity? {
         self
+    }
+    
+    var contentList: [NodeEntity] {
+        [self]
     }
 }

@@ -49,11 +49,11 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
     
     private func shouldRefreshTo(_ categories: [PhotoDateSection]) -> Bool {
         photoCategoryList.flatMap {
-            $0.allPhotos
+            $0.contentList
         }
         .shouldRefreshTo(
             categories.flatMap {
-                $0.allPhotos
+                $0.contentList
             },
             forVisiblePositions: scrollTracker.visiblePositions)
     }
@@ -112,7 +112,7 @@ extension PhotoLibraryAllViewModel {
                 return cardPosition
             }
             
-            guard dayCategory.photoNodeList.first(where: { $0.handle == photoPosition.handle }) != nil else {
+            guard dayCategory.contentList.first(where: { $0.handle == photoPosition.handle }) != nil else {
                 MEGALogDebug("[Photos] all position - photo position \(String(describing: photoPosition.date)) is not in card: \(String(describing: cardPosition.date))")
                 return cardPosition
             }
@@ -125,7 +125,7 @@ extension PhotoLibraryAllViewModel {
             return position
         } else {
             // Scroll to top which is the first photo
-            return photoCategoryList.first?.allPhotos.first?.position
+            return photoCategoryList.first?.contentList.first?.position
         }
     }
     
