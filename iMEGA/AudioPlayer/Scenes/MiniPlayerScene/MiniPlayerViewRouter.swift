@@ -85,6 +85,6 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     func showPlayer(node: MEGANode?, filePath: String?) {
         guard let presenter = presenter else { return }
         
-        AudioPlayerManager.shared.initFullScreenPlayer(node: node, fileLink: filePath, filePaths: filePaths, isFolderLink: isFolderLink ?? false, presenter: presenter)
+        AudioPlayerManager.shared.initFullScreenPlayer(node: node, fileLink: node == nil ? filePath: nil, filePaths: filePaths, isFolderLink: isFolderLink ?? false, presenter: presenter)
     }
 }
