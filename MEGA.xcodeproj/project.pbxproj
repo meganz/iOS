@@ -1743,6 +1743,9 @@
 		BF46B81C25A6B09A008641BB /* PSAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B81B25A6B09A008641BB /* PSAUseCase.swift */; };
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
+		BF4AC32927CC499800366C25 /* AnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32827CC499800366C25 /* AnalyticsUseCase.swift */; };
+		BF4AC32B27CC4A1300366C25 /* GoogleAnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32A27CC4A1300366C25 /* GoogleAnalyticsRepository.swift */; };
+		BF4AC32D27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */; };
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
 		BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
 		BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
@@ -2000,6 +2003,8 @@
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
+		BFDDF19127C7108A0034C5D6 /* AnalayticsEventEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDDF19027C7108A0034C5D6 /* AnalayticsEventEntity.swift */; };
+		BFDDF19327C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDDF19227C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift */; };
 		BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */; };
 		BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -3946,6 +3951,9 @@
 		BF46B81B25A6B09A008641BB /* PSAUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAUseCase.swift; sourceTree = "<group>"; };
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
+		BF4AC32827CC499800366C25 /* AnalyticsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsUseCase.swift; sourceTree = "<group>"; };
+		BF4AC32A27CC4A1300366C25 /* GoogleAnalyticsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsRepository.swift; sourceTree = "<group>"; };
+		BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
 		BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatCall+Additions.swift"; sourceTree = "<group>"; };
 		BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteUseCase.swift; sourceTree = "<group>"; };
@@ -4186,6 +4194,8 @@
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
+		BFDDF19027C7108A0034C5D6 /* AnalayticsEventEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalayticsEventEntity.swift; sourceTree = "<group>"; };
+		BFDDF19227C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Analytics.swift"; sourceTree = "<group>"; };
 		BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserInviteUseCase.swift; sourceTree = "<group>"; };
 		BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExplorerViewConfiguration.swift; sourceTree = "<group>"; };
@@ -5674,6 +5684,7 @@
 			children = (
 				41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */,
 				41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */,
+				BFDDF19227C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift */,
 				B6CCC36421E6F67B00B68E2C /* VideoUploadsTableViewController.h */,
 				B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */,
 				B6CCC36721E800E400B68E2C /* VideoUploadsQualityTableViewController.h */,
@@ -8231,6 +8242,7 @@
 				5BC494D526AF10350075F941 /* AccountUseCase.swift */,
 				BFAD51172607F2B600DFBD1B /* UserUseCase.swift */,
 				5B9F5D44259DD57700BADB11 /* CookieSettingsUseCase.swift */,
+				BF4AC32827CC499800366C25 /* AnalyticsUseCase.swift */,
 				B6B278DB24E1E89C00BB3E9A /* SMSUseCase.swift */,
 				B662B87424F70A570089376A /* GetSMSUseCase.swift */,
 				B662B87624F75FEF0089376A /* CheckSMSUseCase.swift */,
@@ -8270,6 +8282,7 @@
 			isa = PBXGroup;
 			children = (
 				5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */,
+				BF4AC32A27CC4A1300366C25 /* GoogleAnalyticsRepository.swift */,
 				B6AADEA725188D77009A874C /* SMSRepository.swift */,
 				B6AADEBA251893FD009A874C /* AchievementRepository.swift */,
 				BF46B7F125A68316008641BB /* PSARepository.swift */,
@@ -8300,6 +8313,7 @@
 			isa = PBXGroup;
 			children = (
 				5B9F5D50259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift */,
+				BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */,
 				B6AADEAE25188F8D009A874C /* SMSRepositoryProtocol.swift */,
 				B6AADEC1251894C1009A874C /* AchievementRepositoryProtocol.swift */,
 				BF46B81125A6A524008641BB /* PSARepositoryProtocol.swift */,
@@ -9305,6 +9319,7 @@
 		BF782D3C269BA4BA0001D169 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				BFDDF19027C7108A0034C5D6 /* AnalayticsEventEntity.swift */,
 				BF782D3D269BA4BA0001D169 /* AchievementTypeEntity.swift */,
 				BF782D3E269BA4BA0001D169 /* SMS */,
 				BF782D41269BA4BA0001D169 /* PSAEntity.swift */,
@@ -11240,6 +11255,7 @@
 				BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */,
+				BFDDF19127C7108A0034C5D6 /* AnalayticsEventEntity.swift in Sources */,
 				BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */,
 				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
@@ -11635,6 +11651,7 @@
 				BFD6534B25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift in Sources */,
 				B6472E082581D35D0040B2DB /* HeartbeatRequestDelegate.swift in Sources */,
 				83143BB62604E61B0033161A /* CallRemoteVideoUseCase.swift in Sources */,
+				BF4AC32D27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift in Sources */,
 				BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */,
 				BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */,
 				83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */,
@@ -11954,6 +11971,7 @@
 				A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				5B8B3DDD26FE47FA00882245 /* NodeLabelTypeEntity.swift in Sources */,
+				BF4AC32927CC499800366C25 /* AnalyticsUseCase.swift in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */,
@@ -12146,9 +12164,11 @@
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
 				83A49E79270475AB00FD0D85 /* TransfersRepositoryProtocol.swift in Sources */,
 				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
+				BFDDF19327C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift in Sources */,
 				830C26D825DFDDE800E9B56E /* RecentNodesUseCase.swift in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				B6B278DC24E1E89C00BB3E9A /* SMSUseCase.swift in Sources */,
+				BF4AC32B27CC4A1300366C25 /* GoogleAnalyticsRepository.swift in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
 				BFAB115123CEA5C300BCE72D /* AlbumTableViewCell.swift in Sources */,
 				B6FD650C268D3EC900988A17 /* RatingRequesting.swift in Sources */,

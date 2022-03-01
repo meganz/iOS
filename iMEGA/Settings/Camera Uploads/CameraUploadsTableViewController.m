@@ -269,9 +269,11 @@
                         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"enable", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [CameraUploadManager.shared enableCameraUpload];
                             [self configUI];
+                            [self didToggleCameraUploads:sender.isOn];
                         }]];
                         [self presentViewController:alertController animated:YES completion:nil];
                     } else {
+                        [self didToggleCameraUploads:sender.isOn];
                         [CameraUploadManager.shared enableCameraUpload];
                     }
                 } else {
@@ -284,6 +286,7 @@
     } else {
         [CameraUploadManager.shared disableCameraUpload];
         [self configUI];
+        [self didToggleCameraUploads:sender.isOn];
     }
 }
 

@@ -10,14 +10,18 @@ protocol CookieSettingsUseCaseProtocol {
     func setCookieSettings(with settings: Int, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void)
     
     func setCrashlyticsEnabled(_ bool: Bool) -> Void
+
+    func setAnalyticsEnabled(_ bool: Bool)
 }
 
 // MARK: - Use case implementation
 struct CookieSettingsUseCase: CookieSettingsUseCaseProtocol {
     private let repository: CookieSettingsRepositoryProtocol
+    private let analyticsUseCase: AnalyticsUseCaseProtocol
     
-    init(repository: CookieSettingsRepositoryProtocol) {
+    init(repository: CookieSettingsRepositoryProtocol, analyticsUseCase: AnalyticsUseCaseProtocol) {
         self.repository = repository
+        self.analyticsUseCase = analyticsUseCase
     }
     
     func cookieBannerEnabled() -> Bool {
@@ -34,5 +38,9 @@ struct CookieSettingsUseCase: CookieSettingsUseCaseProtocol {
     
     func setCrashlyticsEnabled(_ bool: Bool) -> Void {
         repository.setCrashlyticsEnabled(bool)
+    }
+    
+    func setAnalyticsEnabled(_ bool: Bool) {
+        analyticsUseCase.setAnalyticsEnabled(bool)
     }
 }

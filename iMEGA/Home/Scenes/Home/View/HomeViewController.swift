@@ -474,11 +474,21 @@ extension HomeViewController: SlidePanelDelegate {
 
 extension HomeViewController: ExploreViewStackDelegate {
     func tappedCard(_ card: MEGAExploreViewStyle) {
+        let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
+
         switch card {
-        case .images:   router.photosExplorerSelected()
-        case .documents:    router.documentsExplorerSelected()
-        case .audio:    router.audioExplorerSelected()
-        case .video:    router.videoExplorerSelected()
+        case .images:
+            analyticsUseCase.logEvent(AnalayticsEventEntity.imagesExplorerCardTappedString, parameters: nil)
+            router.photosExplorerSelected()
+        case .documents:
+            analyticsUseCase.logEvent(AnalayticsEventEntity.docsExplorerCardTappedString, parameters: nil)
+            router.documentsExplorerSelected()
+        case .audio:
+            analyticsUseCase.logEvent(AnalayticsEventEntity.audioExplorerCardTappedString, parameters: nil)
+            router.audioExplorerSelected()
+        case .video:
+            analyticsUseCase.logEvent(AnalayticsEventEntity.videoExplorerCardTappedString, parameters: nil)
+            router.videoExplorerSelected()
         }
     }
 }
