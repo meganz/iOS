@@ -21,12 +21,16 @@ final class PhotoDaySection: PhotoDateSection {
     @available(iOS 15.0, *)
     override var attributedTitle: AttributedString {
         var attr: AttributedString
+        let bold = AttributeContainer.font(.body.bold())
         
         if categoryDate.isThisYear {
             attr = categoryDate.formatted(.dateTime.locale(.current).day().month(.wide).attributed)
         } else {
             attr = categoryDate.formatted(.dateTime.locale(.current).year().day().month(.wide).attributed)
         }
+        
+        attr.replaceAttributes(AttributeContainer.dateField(.month), with: bold)
+        attr.replaceAttributes(AttributeContainer.dateField(.day), with: bold)
         
         return attr
     }
