@@ -59,6 +59,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case didResumePlayback
         case shuffleAction(enabled: Bool)
         case goToPlaylistAction(enabled: Bool)
+        case nextTrackAction(enabled: Bool)
     }
     
     var playerType: PlayerType = .default
@@ -85,6 +86,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
         }
     }
+    private var isSingleTrackPlayer: Bool = false
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -182,14 +184,11 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func configurePlayerType(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
-        
         switch playerType {
-        case .default, .folderLink:
-            invokeCommand?(.configureDefaultPlayer)
+        case .default, .folderLink, .offline:
+            invokeCommand?(playerType == .offline ? .configureOfflinePlayer : .configureDefaultPlayer)
             updateTracksActionStatus(enabled: tracks.count > 1)
-        case .offline:
-            invokeCommand?(.configureOfflinePlayer)
-            updateTracksActionStatus(enabled: tracks.count > 1)
+            isSingleTrackPlayer = tracks.count == 1
         case .fileLink:
             invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: Strings.Localizable.fileLink))
         }
@@ -225,6 +224,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private func updateTracksActionStatus(enabled: Bool) {
         invokeCommand?(.shuffleAction(enabled: enabled))
         invokeCommand?(.goToPlaylistAction(enabled: enabled))
+        invokeCommand?(.nextTrackAction(enabled: enabled))
     }
 
     // MARK: - Node Initialize
@@ -408,6 +408,9 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     
     func audioPlayerDidFinishBlockingAction() {
         invokeCommand?(.enableUserInteraction(true))
+        if isSingleTrackPlayer {
+            updateTracksActionStatus(enabled: false)
+        }
     }
     
     func audioPlayerDidPausePlayback() {
