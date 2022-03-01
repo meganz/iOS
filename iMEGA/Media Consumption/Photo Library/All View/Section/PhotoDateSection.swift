@@ -14,6 +14,7 @@ extension PhotoSection {
 }
 
 class PhotoDateSection: PhotoSection {
+    let id = UUID()
     let contentList: [NodeEntity]
     let photoByDayList: [PhotoByDay]
     let categoryDate: Date

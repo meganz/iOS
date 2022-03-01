@@ -73,13 +73,22 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
     }
     
     private func zoomStateWillChange(to newState: PhotoLibraryZoomState) {
-        photoCategoryList = libraryViewModel.library.allPhotosDateSections(forZoomScaleFactor: newState.scaleFactor)
+        if shouldReloadPhotoCategoryList(onNewState: newState) {
+            photoCategoryList = libraryViewModel.library.allPhotosDateSections(forZoomScaleFactor: newState.scaleFactor)
+        }
         
         calculateLastScrollPosition()
         
         columns = Array(
             repeating: .init(.flexible(), spacing: 4),
             count: newState.scaleFactor)
+    }
+    
+    /// Only reload category list section title when columns changed from 3 to 1 or 1 to 3
+    /// - Parameter newState:  new zoom state
+    /// - Returns: Should reload data or not
+    private func shouldReloadPhotoCategoryList(onNewState newState: PhotoLibraryZoomState) -> Bool {
+        newState.scaleFactor == 1 || zoomState.scaleFactor == 1
     }
 }
 

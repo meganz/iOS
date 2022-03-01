@@ -33,7 +33,7 @@ struct PhotoLibraryAllView: View {
     
     // MARK: - Private
     private func sectionView(for section: PhotoDateSection, viewPortSize: CGSize) -> some View {
-        Section(header: PhotoSectionHeader(section: section)) {
+        Section(header: PhotoSectionHeader(section: section).id(section.id)) {
             ForEach(section.contentList) { photo in
                 router.card(for: photo, viewModel: viewModel)
                     .equatable()
