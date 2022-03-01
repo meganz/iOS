@@ -1,26 +1,31 @@
 import Foundation
 
-class PhotoDateSection: PhotoChronologicalCategory {
-    var categoryDate: Date {
-        Date()
-    }
-    
+protocol PhotoSection: PhotoChronologicalCategory where Content == NodeEntity {
+    var title: String { get }
+
+    @available(iOS 15.0, *)
+    var attributedTitle: AttributedString { get }
+}
+
+extension PhotoSection {
     var coverPhoto: NodeEntity? {
-        nil
+        contentList.first?.coverPhoto
+    }
+}
+
+class PhotoDateSection: PhotoSection {
+    var contentList: [NodeEntity]
+    
+    init(contentList: [NodeEntity]) {
+        self.contentList = contentList
     }
     
-    var allPhotos: [NodeEntity] {
-        []
-    }
-    
-    var photoByDayList: [PhotoByDay] {
-        return []
-    }
-    
-    var title: String = ""
+    var photoByDayList = [PhotoByDay]()
+    var categoryDate = Date()
+    var title = ""
 
     @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
-        AttributedString("")
+        AttributedString()
     }
 }
