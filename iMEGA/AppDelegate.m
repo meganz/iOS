@@ -1607,6 +1607,7 @@
             
             [self presentBusinessExpiredViewIfNeeded];
             
+            [self configAppWithNewCookieSettings];
             break;
         }
             
