@@ -14,15 +14,17 @@ extension PhotoSection {
 }
 
 class PhotoDateSection: PhotoSection {
-    var contentList: [NodeEntity]
+    let contentList: [NodeEntity]
+    let photoByDayList: [PhotoByDay]
+    let categoryDate: Date
+    let title: String
     
-    init(contentList: [NodeEntity]) {
+    init(contentList: [NodeEntity], photoByDayList: [PhotoByDay], categoryDate: Date, title: String) {
         self.contentList = contentList
+        self.photoByDayList = photoByDayList
+        self.categoryDate = categoryDate
+        self.title = title
     }
-    
-    var photoByDayList = [PhotoByDay]()
-    var categoryDate = Date()
-    var title = ""
 
     @available(iOS 15.0, *)
     var attributedTitle: AttributedString {

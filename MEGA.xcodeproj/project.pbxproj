@@ -73,7 +73,6 @@
 		12696B1527A8B58A008628EA /* Binding+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B1427A8B58A008628EA /* Binding+Additions.swift */; };
 		129C341E275FECF100019019 /* PhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129C341D275FECF100019019 /* PhotoBrowser.swift */; };
 		12BC3E7127B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7027B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift */; };
-		12BC3E7327B30915009F7987 /* ImageUpdatePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7227B30915009F7987 /* ImageUpdatePublisher.swift */; };
 		12BC3E7D27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7C27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift */; };
 		12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
@@ -1387,8 +1386,8 @@
 		B53BDBEB27619171001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBEC27619172001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBED27619173001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
-		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransfersUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */; };
+		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
 		B5925B7A279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
 		B5925B7B279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
@@ -2381,7 +2380,6 @@
 		12696B1427A8B58A008628EA /* Binding+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Additions.swift"; sourceTree = "<group>"; };
 		129C341D275FECF100019019 /* PhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowser.swift; sourceTree = "<group>"; };
 		12BC3E7027B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoExplorerViewController+PhotoLibrary.swift"; sourceTree = "<group>"; };
-		12BC3E7227B30915009F7987 /* ImageUpdatePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpdatePublisher.swift; sourceTree = "<group>"; };
 		12BC3E7C27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomViewModifier.swift; sourceTree = "<group>"; };
 		12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelection.swift; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3566,8 +3564,8 @@
 		A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.release.xcconfig"; sourceTree = "<group>"; };
 		AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
-		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersUseCaseHelper.swift; sourceTree = "<group>"; };
+		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5925B78279115FA00170CD6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B5925B88279119E400170CD6 /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
@@ -13059,7 +13057,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=250 -Xfrontend -warn-long-expression-type-checking=250";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
@@ -13115,7 +13113,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=250 -Xfrontend -warn-long-expression-type-checking=250";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;

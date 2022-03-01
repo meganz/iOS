@@ -19,12 +19,7 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
     init(photoByMonth: PhotoByMonth,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.photoByMonth = photoByMonth
-        
-        if #available(iOS 15.0, *) {
-            title = photoByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide))
-        } else {
-            title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
-        }
+        title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
         
         super.init(coverPhoto: photoByMonth.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }

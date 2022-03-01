@@ -2,20 +2,17 @@ import Foundation
 
 final class PhotoDaySection: PhotoDateSection {
     init(photoByDay: PhotoByDay) {
-        super.init(contentList: photoByDay.contentList)
-        
-        photoByDayList = [photoByDay]
-        categoryDate = photoByDay.categoryDate
-        
-        if #available(iOS 15.0, *) {
-            title = categoryDate.formatted(.dateTime.year().locale(.current))
+        let title: String
+        if photoByDay.categoryDate.isThisYear {
+            title = DateFormatter.fromTemplate("MMMMd").localisedString(from: photoByDay.categoryDate)
         } else {
-            if categoryDate.isThisYear {
-                title = DateFormatter.fromTemplate("MMMMd").localisedString(from: photoByDay.categoryDate)
-            } else {
-                title = DateFormatter.fromTemplate("MMMMdyyyy").localisedString(from: photoByDay.categoryDate)
-            }
+            title = DateFormatter.fromTemplate("MMMMdyyyy").localisedString(from: photoByDay.categoryDate)
         }
+        
+        super.init(contentList: photoByDay.contentList,
+                   photoByDayList: [photoByDay],
+                   categoryDate: photoByDay.categoryDate,
+                   title: title)
     }
     
     @available(iOS 15.0, *)
