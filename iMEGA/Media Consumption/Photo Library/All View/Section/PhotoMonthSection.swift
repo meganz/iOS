@@ -2,16 +2,10 @@ import Foundation
 
 final class PhotoMonthSection: PhotoDateSection {
     init(photoByMonth: PhotoByMonth) {
-        super.init(contentList: photoByMonth.allPhotos)
-        
-        photoByDayList = photoByMonth.contentList
-        categoryDate = photoByMonth.categoryDate
-        
-        if #available(iOS 15.0, *) {
-            title = categoryDate.formatted(.dateTime.year().locale(.current))
-        } else {
-            title = DateFormatter.monthTemplate().localisedString(from: categoryDate)
-        }
+        super.init(contentList: photoByMonth.allPhotos,
+                   photoByDayList: photoByMonth.contentList,
+                   categoryDate: photoByMonth.categoryDate,
+                   title: DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate))
     }
     
     @available(iOS 15.0, *)
