@@ -7,7 +7,7 @@ struct GoogleAnalyticsRepository: AnalyticsRepositoryProtocol {
         Analytics.setAnalyticsCollectionEnabled(bool)
     }
     
-    func logEvent(_ name: AnalayticsEventEntity.Name, parameters: [AnalayticsEventEntity.Name : Any]?) {
+    func logEvent(_ name: AnalyticsEventEntity.Name, parameters: [AnalyticsEventEntity.Name : Any]?) {
         Analytics.logEvent(name, parameters: parameters)
     }
 }

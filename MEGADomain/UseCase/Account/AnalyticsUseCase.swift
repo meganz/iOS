@@ -3,7 +3,7 @@ import Foundation
 
 protocol AnalyticsUseCaseProtocol {
     func setAnalyticsEnabled(_ bool: Bool)
-    func logEvent(_ name: AnalayticsEventEntity.Name, parameters: [AnalayticsEventEntity.Name : Any]?)
+    func logEvent(_ name: AnalyticsEventEntity.Name, parameters: [AnalyticsEventEntity.Name : Any]?)
 }
 
 struct AnalyticsUseCase: AnalyticsUseCaseProtocol {
@@ -17,7 +17,7 @@ struct AnalyticsUseCase: AnalyticsUseCaseProtocol {
         repository.setAnalyticsEnabled(bool)
     }
     
-    func logEvent(_ name: AnalayticsEventEntity.Name, parameters: [AnalayticsEventEntity.Name : Any]?) {
+    func logEvent(_ name: AnalyticsEventEntity.Name, parameters: [AnalyticsEventEntity.Name : Any]?) {
         repository.logEvent(name, parameters: parameters)
     }
 }

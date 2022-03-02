@@ -2003,7 +2003,7 @@
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
-		BFDDF19127C7108A0034C5D6 /* AnalayticsEventEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDDF19027C7108A0034C5D6 /* AnalayticsEventEntity.swift */; };
+		BFDDF19127C7108A0034C5D6 /* AnalyticsEventEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDDF19027C7108A0034C5D6 /* AnalyticsEventEntity.swift */; };
 		BFDDF19327C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDDF19227C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift */; };
 		BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */; };
 		BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */; };
@@ -4194,7 +4194,7 @@
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
-		BFDDF19027C7108A0034C5D6 /* AnalayticsEventEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalayticsEventEntity.swift; sourceTree = "<group>"; };
+		BFDDF19027C7108A0034C5D6 /* AnalyticsEventEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEventEntity.swift; sourceTree = "<group>"; };
 		BFDDF19227C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Analytics.swift"; sourceTree = "<group>"; };
 		BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserInviteUseCase.swift; sourceTree = "<group>"; };
 		BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDiffableDataSource.swift; sourceTree = "<group>"; };
@@ -9319,7 +9319,7 @@
 		BF782D3C269BA4BA0001D169 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				BFDDF19027C7108A0034C5D6 /* AnalayticsEventEntity.swift */,
+				BFDDF19027C7108A0034C5D6 /* AnalyticsEventEntity.swift */,
 				BF782D3D269BA4BA0001D169 /* AchievementTypeEntity.swift */,
 				BF782D3E269BA4BA0001D169 /* SMS */,
 				BF782D41269BA4BA0001D169 /* PSAEntity.swift */,
@@ -11255,7 +11255,7 @@
 				BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */,
-				BFDDF19127C7108A0034C5D6 /* AnalayticsEventEntity.swift in Sources */,
+				BFDDF19127C7108A0034C5D6 /* AnalyticsEventEntity.swift in Sources */,
 				BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */,
 				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,

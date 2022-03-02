@@ -1,6 +1,6 @@
 import Foundation
 
-enum AnalayticsEventEntity {
+enum AnalyticsEventEntity {
     typealias Name = String
     
     static let imagesExplorerCardTappedString: Name = "image_explorer_card_tapped"
