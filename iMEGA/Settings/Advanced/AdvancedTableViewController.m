@@ -225,7 +225,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 4: { //Cancel account
+        case 3: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
