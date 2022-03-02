@@ -478,16 +478,16 @@ extension HomeViewController: ExploreViewStackDelegate {
 
         switch card {
         case .images:
-            analyticsUseCase.logEvent(AnalayticsEventEntity.imagesExplorerCardTappedString, parameters: nil)
+            analyticsUseCase.logEvent(AnalyticsEventEntity.imagesExplorerCardTappedString, parameters: nil)
             router.photosExplorerSelected()
         case .documents:
-            analyticsUseCase.logEvent(AnalayticsEventEntity.docsExplorerCardTappedString, parameters: nil)
+            analyticsUseCase.logEvent(AnalyticsEventEntity.docsExplorerCardTappedString, parameters: nil)
             router.documentsExplorerSelected()
         case .audio:
-            analyticsUseCase.logEvent(AnalayticsEventEntity.audioExplorerCardTappedString, parameters: nil)
+            analyticsUseCase.logEvent(AnalyticsEventEntity.audioExplorerCardTappedString, parameters: nil)
             router.audioExplorerSelected()
         case .video:
-            analyticsUseCase.logEvent(AnalayticsEventEntity.videoExplorerCardTappedString, parameters: nil)
+            analyticsUseCase.logEvent(AnalyticsEventEntity.videoExplorerCardTappedString, parameters: nil)
             router.videoExplorerSelected()
         }
     }
