@@ -133,6 +133,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.centerToolbarItem.image = [UIImage imageNamed:@"saveToPhotos"];
             break;
             
+        case DisplayModeRubbishBin:
         case DisplayModeSharedItem:
         case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];

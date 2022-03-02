@@ -534,7 +534,13 @@
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         if (self.node) {
-            [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
+            
+            if (self.node.mnz_isInRubbishBin) {
+                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem] animated:YES];
+            } else {
+                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
+            }
+            
         } else {
             [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         }
