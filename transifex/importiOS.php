@@ -588,6 +588,9 @@ if ($fileParts['filename'] == "Changelogs" || $fileParts['filename'] == "LTHPass
         $response = json_decode(curl_exec($ch), true);
         curl_close($ch);
         $arrLangCodes = getLockedLangCodes();
+        if ($fileParts["filename"] === "Changelogs") {
+            $arrLangCodes[] = "change_log";
+        }
         $hashes = [];
         foreach ($response["data"] as $data) {
             if (strtotime($data["attributes"]["strings_datetime_modified"]) >= $now) {
