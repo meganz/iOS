@@ -83,7 +83,7 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Connexion";
 /* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Avez-vous un compte ?";
+"account.createAccount.alreadyHaveAnAccount"="Avez-vous déjà un compte ?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Créer un compte";
 /* Message on login screen for Create Account */
@@ -1293,7 +1293,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Chargement impossible. [RED]Touchez pour réessayer[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA protège votre conversation grâce au chiffrement de bout en bout (contrôlé par l’utilisateur) apportant ainsi une garantie de sécurité essentielle";
+"chatIntroductionMessage"="MEGA protège votre conversation grâce au chiffrement de bout en bout (contrôlé par l’utilisateur) apportant ainsi une garantie de sécurité essentielle :";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidentialité.[/S] Seuls l’auteur et les destinataires visés peuvent déchiffrer et lire le contenu.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -2019,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Veuillez vous rendre dans la section Confidentialité des réglages de votre appareil. Activez le service de localisation et définissez MEGA à Quand l’appli est active ou à Toujours.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA accède à votre position quand vous la partagez avec vos contacts dans une conversation";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Les données mobiles sont désactivées";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
