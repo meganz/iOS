@@ -1529,6 +1529,10 @@
 		B68BAEC6221DEB4E00FF6FCD /* SavedIdentifierParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B68BAEC5221DEB4E00FF6FCD /* SavedIdentifierParser.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
+		B68ED08A27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68ED08927D0591B00713850 /* ThumbnailTypeEntity.swift */; };
+		B68ED08B27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68ED08927D0591B00713850 /* ThumbnailTypeEntity.swift */; };
+		B68ED08C27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68ED08927D0591B00713850 /* ThumbnailTypeEntity.swift */; };
+		B68ED09327D05F9F00713850 /* ThumbnailUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68ED09227D05F9F00713850 /* ThumbnailUseCase+Additions.swift */; };
 		B695B5FF264B43160050DF09 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */; };
 		B695B600264B43160050DF09 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */; };
 		B695B601264B43160050DF09 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */; };
@@ -3720,6 +3724,8 @@
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
 		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
+		B68ED08927D0591B00713850 /* ThumbnailTypeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailTypeEntity.swift; sourceTree = "<group>"; };
+		B68ED09227D05F9F00713850 /* ThumbnailUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailUseCase+Additions.swift"; sourceTree = "<group>"; };
 		B695B5F5264B43160050DF09 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		B695B5F6264B43160050DF09 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		B695B5F7264B43160050DF09 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -5483,6 +5489,7 @@
 		41BADDA61A8E064E008408B3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				B68ED09127D05F8700713850 /* DomainExtensions */,
 				83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */,
 				B6E7A8D52500D6BC00CD6AC2 /* Auto Layout */,
 				2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */,
@@ -8659,6 +8666,14 @@
 			path = RepositoryProtocol;
 			sourceTree = "<group>";
 		};
+		B68ED09127D05F8700713850 /* DomainExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				B68ED09227D05F9F00713850 /* ThumbnailUseCase+Additions.swift */,
+			);
+			path = DomainExtensions;
+			sourceTree = "<group>";
+		};
 		B693963C21C0ACF000B58F98 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -9312,6 +9327,7 @@
 				BF782D39269BA4BA0001D169 /* NodeAccessTypeEntity.swift */,
 				BF782D3A269BA4BA0001D169 /* NodeEntity.swift */,
 				BF782D3B269BA4BA0001D169 /* NodeTypeEntity.swift */,
+				B68ED08927D0591B00713850 /* ThumbnailTypeEntity.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -11147,6 +11163,7 @@
 				A8A716E02639A71800DDC8E2 /* TurnOnNotificationsViewModel.swift in Sources */,
 				5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */,
 				C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */,
+				B68ED08A27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */,
 				B662B85B24ECC7A30089376A /* AddPhoneNumberRouter.swift in Sources */,
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
 				BF782D5A269BA4BB0001D169 /* TransferEntity.swift in Sources */,
@@ -12144,6 +12161,7 @@
 				B6C444CB274A27DE00268D9A /* PhotoLibraryMonthView.swift in Sources */,
 				2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */,
 				2F9F11182508A3E800896DFF /* ErrorModel.swift in Sources */,
+				B68ED09327D05F9F00713850 /* ThumbnailUseCase+Additions.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
 				5BCF7E43263170E900BE769B /* TermsAndPoliciesTableViewController.swift in Sources */,
@@ -12449,6 +12467,7 @@
 				C4E78E9C272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
 				5B9F33672444907900E2A15B /* NSDate+MNZCategory.m in Sources */,
 				77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */,
+				B68ED08B27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */,
 				83FB143D219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				5BC1276E2375A73000CCAF26 /* EmptyStateView.m in Sources */,
 				77F0522222CB8BBE00032138 /* MEGAGenericRequestDelegate.m in Sources */,
@@ -12644,6 +12663,7 @@
 				777AC33F21AD420F00E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				A82D5CDD26BC07A900E73D27 /* PreferenceRepositoryProtocol.swift in Sources */,
+				B68ED08C27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */,
 				B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				77892E9D20E5012C0020A533 /* ChatRoomCell.m in Sources */,
 				C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */,

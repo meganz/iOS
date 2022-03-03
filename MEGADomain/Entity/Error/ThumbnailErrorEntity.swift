@@ -1,8 +1,9 @@
 import Foundation
 
-enum ThumbnailErrorEntity: Error, CaseIterable {
+enum ThumbnailErrorEntity: Error {
     case generic
-    case noThumbnail
-    case noPreview
+    case noThumbnail(ThumbnailTypeEntity)
+    case noThumbnails
     case nodeNotFound
+    case previewIsAlreadyLoaded
 }
