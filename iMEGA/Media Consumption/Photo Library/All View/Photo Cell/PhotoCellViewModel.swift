@@ -47,30 +47,51 @@ final class PhotoCellViewModel: ObservableObject {
     
     // MARK: Internal
     
-    func loadThumbnail() {
-        let cachedThumbnailPath = currentZoomScaleFactor == 1 ? thumbnailUseCase.cachedPreview(for: photo).path :
-        thumbnailUseCase.cachedThumbnail(for: photo).path
-        if let image = Image(contentsOfFile: cachedThumbnailPath) {
-            thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
-        } else {
-            DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.3) { [weak self] in
-                self?.loadThumbnailFromRemote()
-            }
+    func loadThumbnailIfNeeded() {
+        guard thumbnailContainer == placeholderThumbnail else {
+            return
         }
+        
+        loadThumbnail()
     }
     
     // MARK: Private
     
-    private func loadThumbnailFromRemote() {
-        let loadPublisher = currentZoomScaleFactor == 1 ? thumbnailUseCase.loadPreview(for: photo) : thumbnailUseCase.loadThumbnail(for: photo)
+    private func loadThumbnail() {
+        let type: ThumbnailTypeEntity = currentZoomScaleFactor == 1 ? .preview : .thumbnail
         
-        loadPublisher
+        if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: type) {
+            thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
+        } else {
+            if type != .thumbnail, let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .thumbnail) {
+                thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
+            }
+            
+            DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                self?.loadThumbnailFromRemote(type: type)
+            }
+        }
+    }
+    
+    private func loadThumbnailFromRemote(type: ThumbnailTypeEntity) {
+        let publisher: AnyPublisher<URL, ThumbnailErrorEntity>
+        switch type {
+        case .thumbnail:
+            publisher = thumbnailUseCase.loadThumbnail(for: photo, type: type).eraseToAnyPublisher()
+        case .preview:
+            publisher = thumbnailUseCase.loadPreview(for: photo)
+        }
+        
+        publisher
             .delay(for: .seconds(0.3), scheduler: DispatchQueue.global(qos: .userInitiated))
             .map { [weak self] in
                 ImageContainer(image: Image(contentsOfFile: $0.path), overlay: self?.photo.overlay)
             }
             .replaceError(with: nil)
             .compactMap { $0 }
+            .filter { [weak self] in
+                $0 != self?.thumbnailContainer
+            }
             .receive(on: DispatchQueue.main)
             .assign(to: &$thumbnailContainer)
     }

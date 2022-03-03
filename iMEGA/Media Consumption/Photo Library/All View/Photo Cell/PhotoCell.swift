@@ -20,7 +20,7 @@ struct PhotoCell: View {
         }
         .gesture(editMode?.wrappedValue.isEditing == true ? tap : nil)
         .onAppear {
-            viewModel.loadThumbnail()
+            viewModel.loadThumbnailIfNeeded()
         }
     }
 }
