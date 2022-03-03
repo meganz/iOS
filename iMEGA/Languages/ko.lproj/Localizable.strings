@@ -1293,7 +1293,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="불러올 수 없습니다. [RED]탭하여 다시 시도하세요[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간 (이용자가 제어하는) 암호화를 통해 보호합니다.";
+"chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간 (이용자가 제어하는) 암호화를 통해 보호합니다:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]기밀성.[/S] 오직 작성자와 의도된 수신자만 항목을 복호화하고 읽을 수 있습니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -2019,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="당신의 기기의 개인정보 보호 섹션으로 가세요. 위치 서비스를 활성화하고 MEGA를 앱을 사용중일 때 또는 항상으로 설정해주세요.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA는 당신이 대화에서 연락처와 위치를 공유할 때 당신의 위치에 접근합니다.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="모바일 데이터가 꺼져있습니다";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */

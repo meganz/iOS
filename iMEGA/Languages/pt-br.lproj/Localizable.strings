@@ -2347,7 +2347,7 @@
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
 "Proxy server requires a password"="O proxy solicita uma senha";
 /* Label to indicate the username of the proxy. String as short as possible. */
-"Username:"="Usuário";
+"Username:"="Usuário:";
 /* Text used for a title or header listing the details of something. */
 "DETAILS"="DETALHES";
 /* Text used as title or header for reference an url, for instance, a node link. */

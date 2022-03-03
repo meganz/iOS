@@ -1051,7 +1051,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Dostępne";
 /* title of the My Account screen */
-"accountType"="Rodzaj konta";
+"accountType"="Rodzaj konta:";
 /* Label to indicate that the current user has a Free account. */
 "Free"="Darmowe";
 /* Text that shows the expiry date of the account PRO level */
@@ -1079,7 +1079,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Wybierz konto z listy poniżej:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Wybierz jeden rodzaj konta";
+"selectOneAccountType"="Wybierz jeden rodzaj konta:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Roczna subskrypcja jest o 16% tańsza niż 12 pojedynczych płatności";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
@@ -1293,7 +1293,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Nie można załadować. [RED]Kliknij aby ponowić[/RED].";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA zabezpiecza Twoje rozmowy poprzez szyfrowanie danych po stronie użytkownika.";
+"chatIntroductionMessage"="MEGA zabezpiecza Twoje rozmowy poprzez szyfrowanie danych po stronie użytkownika:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Poufność.[/S] Tylko autor i odbiorcy są upoważnieni do przeglądania zawartości.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */

@@ -1385,7 +1385,7 @@
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Общий доступ предоставлен успешно";
 /* Notification message shown when a transfer failed. Keep colon. */
-"Transfer failed:"="Пересылка не удалось";
+"Transfer failed:"="Пересылка не удалось:";
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Ошибок нет";
 /* Label to show that an Internal error occurs during a SDK operation. */
@@ -2019,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Перейдите в раздел «Конфиденциальность» в настройках вашего устройства. Включите службы определения местоположения и установите MEGA на «Во время использования приложения» или «Всегда».";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA получает доступ к вашему местоположению, когда вы делитесь им со своими контактами в чате.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Мобильные данные отключены";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */

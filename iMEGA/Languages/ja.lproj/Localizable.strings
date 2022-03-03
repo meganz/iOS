@@ -2019,7 +2019,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="端末の「設定」の「プライバシー」セクションに移動してください。位置情報サービスを有効にし、MEGAを「アプリの使用中」または「常に」に設定します。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGAでは、チャットで連絡先と位置情報を共有する際に、位置情報にアクセスします。";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="モバイルデータがオフになっています";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2341,7 +2341,7 @@
 /* Label to indicate not to use any proxy. String as short as possible. */
 "No proxy"="プロキシなし";
 /* Label to indicate the server IP to be used. String as short as possible. */
-"Server:"="サーバー";
+"Server:"="サーバー：";
 /* Label to indicate a server port to be used. String as short as possible. */
 "Port"="ポート";
 /* Label to indicate if the proxy used requires a password. String as short as possible. */
