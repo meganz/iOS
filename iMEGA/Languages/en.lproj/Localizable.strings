@@ -2756,6 +2756,8 @@
 "account.delete.subscription.huaweiAppGallery"="You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Visit AppGallery";
+/* Dialog message shown before deleting an account with active Stripe or ECP subscription */
+"account.delete.subscription.stripeOrEcp"="You have an active MEGA subscription. It will be canceled automatically after the account has be deleted. Visit our Help Centre for more information.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */

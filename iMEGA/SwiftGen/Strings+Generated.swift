@@ -2938,6 +2938,8 @@ public enum Strings {
           public static let googlePlay = Strings.tr("Localizable", "account.delete.subscription.googlePlay")
           /// You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
           public static let huaweiAppGallery = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery")
+          /// You have an active MEGA subscription. It will be canceled automatically after the account has be deleted. Visit our Help Centre for more information.
+          public static let stripeOrEcp = Strings.tr("Localizable", "account.delete.subscription.stripeOrEcp")
           /// Active Subscription
           public static let title = Strings.tr("Localizable", "account.delete.subscription.title")
           public enum GooglePlay {
