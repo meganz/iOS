@@ -25,7 +25,8 @@ final class AudioPlayerViewModelTests: XCTestCase {
     func testPlaybackActions() {
         test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.showLoading(true),
                                                                               .configureFileLinkPlayer(title: "Track 5", subtitle: Strings.Localizable.fileLink),
-                                                                              .updateShuffle(status: playerHandler.isShuffleEnabled())], timeout: 0.5)
+                                                                              .updateShuffle(status: playerHandler.isShuffleEnabled()),
+                                                                              .updateSpeed(mode: .normal)], timeout: 0.5)
         XCTAssertEqual(playerHandler.addPlayerListener_calledTimes, 1)
         XCTAssertEqual(playerHandler.addPlayer_calledTimes, 1)
         XCTAssertEqual(playerHandler.addPlayerTracks_calledTimes, 1)
@@ -68,6 +69,18 @@ final class AudioPlayerViewModelTests: XCTestCase {
         
         test(viewModel: viewModel, action: .deinit, expectedCommands: [])
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
+        
+        test(viewModel: viewModel, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .oneAndAHalf)])
+        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 1)
+        
+        test(viewModel: viewModel, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .double)])
+        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 2)
+        
+        test(viewModel: viewModel, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .half)])
+        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 3)
+        
+        test(viewModel: viewModel, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .normal)])
+        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 4)
     }
     
     func testRouterActions() {

@@ -12,6 +12,7 @@ enum AudioPlayerAction: ActionType {
     case onGoBackward
     case onGoForward
     case onRepeatPressed
+    case onChangeSpeedModePressed
     case showPlaylist
     case initMiniPlayer
     case `import`
@@ -39,6 +40,10 @@ protocol AudioPlayerViewRouting: Routing {
     case none, loop, repeatOne
 }
 
+@objc enum SpeedMode: Int {
+    case normal, oneAndAHalf, double, half
+}
+
 enum PlayerType: String {
     case `default`, folderLink, fileLink, offline
 }
@@ -50,6 +55,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case reloadPlayerStatus(currentTime: String, remainingTime: String, percentage: Float, isPlaying: Bool)
         case showLoading(_ show: Bool)
         case updateRepeat(status: RepeatMode)
+        case updateSpeed(mode: SpeedMode)
         case updateShuffle(status: Bool)
         case configureDefaultPlayer
         case configureOfflinePlayer
@@ -86,6 +92,12 @@ final class AudioPlayerViewModel: ViewModelType {
             }
         }
     }
+    private var speedModeState: SpeedMode {
+        didSet {
+            invokeCommand?(.updateSpeed(mode: speedModeState))
+            playerHandler.changePlayer(speed: speedModeState)
+        }
+    }
     private var isSingleTrackPlayer: Bool = false
     
     // MARK: - Internal properties
@@ -111,6 +123,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.streamingInfoUseCase = streamingInfoUseCase
         self.offlineInfoUseCase = nil
         self.repeatItemsState = playerHandler.currentRepeatMode()
+        self.speedModeState = playerHandler.currentSpeedMode()
         self.dispatchQueue = dispatchQueue
     }
     
@@ -131,6 +144,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.streamingInfoUseCase = nil
         self.offlineInfoUseCase = offlineInfoUseCase
         self.repeatItemsState = playerHandler.currentRepeatMode()
+        self.speedModeState = playerHandler.currentSpeedMode()
         self.dispatchQueue = dispatchQueue
     }
     
@@ -305,6 +319,7 @@ final class AudioPlayerViewModel: ViewModelType {
                 configurePlayer()
             }
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
+            invokeCommand?(.updateSpeed(mode: speedModeState))
         case .updateCurrentTime(let percentage):
             playerHandler.playerProgressCompleted(percentage: percentage)
         case .progressDragEventBegan:
@@ -334,6 +349,13 @@ final class AudioPlayerViewModel: ViewModelType {
             case .none: repeatItemsState = .loop
             case .loop: repeatItemsState = .repeatOne
             case .repeatOne: repeatItemsState = .none
+            }
+        case .onChangeSpeedModePressed:
+            switch speedModeState {
+            case .normal: speedModeState = .oneAndAHalf
+            case .oneAndAHalf: speedModeState = .double
+            case .double: speedModeState = .half
+            case .half: speedModeState = .normal
             }
         case .showPlaylist:
             router.goToPlaylist()
