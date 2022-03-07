@@ -51,8 +51,9 @@
         
         case URLTypeCancelAccountLink:
             self.confirmTextLabel.text = NSLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
-            [self.confirmAccountButton setTitle:NSLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
+            [self.confirmAccountButton setTitle:NSLocalizedString(@"cancelYourAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
             
+            [self showSubscriptionDialogIfNeeded];
             break;
             
         default:
@@ -166,7 +167,12 @@
     self.passwordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     [self.passwordView updateAppearance];
     
-    [self.confirmAccountButton mnz_setupPrimary:self.traitCollection];
+    if (self.urlType == URLTypeCancelAccountLink) {
+        [self.confirmAccountButton mnz_setupDelete:self.traitCollection];
+    } else {
+        [self.confirmAccountButton mnz_setupPrimary:self.traitCollection];
+    }
+    
     [self.cancelButton mnz_setupCancel:self.traitCollection];
 }
 

@@ -6,6 +6,7 @@
     case primaryDisabled
     case destructive
     case cancel
+    case delete
 }
 
 extension UIButton {
@@ -26,6 +27,9 @@ extension UIButton {
             
         case .cancel:
             mnz_setupCancel(traitCollection)
+        
+        case .delete:
+            mnz_setupDelete(traitCollection)
             
         default:
             mnz_setupBasic(traitCollection)
@@ -62,6 +66,13 @@ extension UIButton {
     @objc func mnz_setupDestructive(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_basicButton(for: traitCollection)
         setTitleColor(UIColor.mnz_red(for: traitCollection), for: UIControl.State.normal)
+        
+        setupLayer()
+    }
+    
+    @objc func mnz_setupDelete(_ traitCollection: UITraitCollection) {
+        backgroundColor = UIColor.mnz_red(for: traitCollection)
+        setTitleColor(UIColor.white, for: UIControl.State.normal)
         
         setupLayer()
     }
