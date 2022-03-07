@@ -52,6 +52,16 @@ import Foundation
         return .none
     }
     
+    func currentSpeedMode() -> SpeedMode {
+        switch player?.rate {
+        case 0.5: return SpeedMode.half
+        case 1.0: return SpeedMode.normal
+        case 1.5: return SpeedMode.oneAndAHalf
+        case 2.0: return SpeedMode.double
+        default: return SpeedMode.normal
+        }
+    }
+    
     @objc func isPlayingNode(_ node: MEGANode) -> Bool {
         guard let currentNode = player?.currentNode,
                 isPlayerAlive() else {
@@ -181,6 +191,19 @@ import Foundation
     func playerRepeatDisabled() {
         player?.repeatAll(false)
         player?.repeatOne(false)
+    }
+    
+    func changePlayer(speed: SpeedMode) {
+        switch speed {
+        case .normal:
+            player?.rate = 1.0
+        case .oneAndAHalf:
+            player?.rate = 1.5
+        case .double:
+            player?.rate = 2.0
+        case .half:
+            player?.rate = 0.5
+        }
     }
     
     func refreshCurrentItemState() {

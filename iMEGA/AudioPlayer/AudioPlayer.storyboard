@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -45,24 +46,24 @@
                                 <inset key="separatorInset" minX="110" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="trackCell" id="0HM-6I-7Wu" customClass="PlaylistItemTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="183.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="200.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0HM-6I-7Wu" id="jJS-th-AcV">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="183.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="200.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9nH-Mm-CMX">
-                                                    <rect key="frame" x="18" y="72" width="40" height="40"/>
+                                                    <rect key="frame" x="18" y="80.5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="9nH-Mm-CMX" secondAttribute="height" multiplier="1:1" id="BEe-G9-eKj"/>
                                                         <constraint firstAttribute="height" constant="40" id="TJK-Al-luf"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="4Mf-jY-cec">
-                                                    <rect key="frame" x="68" y="12" width="336" height="159.5"/>
+                                                    <rect key="frame" x="68" y="12" width="336" height="176.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sH-gw-fBp" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="80"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="88.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -72,7 +73,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nu5-we-luX">
-                                                            <rect key="frame" x="0.0" y="80" width="50" height="79.5"/>
+                                                            <rect key="frame" x="0.0" y="88.5" width="50" height="88"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -572,68 +573,68 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kil-15-Cv5">
                                 <rect key="frame" x="0.0" y="779" width="414" height="83"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qRk-rd-3x8">
-                                        <rect key="frame" x="346" y="16.5" width="50" height="50"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Wgf-PM-ENd">
+                                        <rect key="frame" x="25" y="16.5" width="364" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m46-Pw-6Gc" customClass="MEGASelectedButton" customModule="MEGA" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="2Iy-uI-wXf"/>
+                                                    <constraint firstAttribute="width" secondItem="m46-Pw-6Gc" secondAttribute="height" multiplier="1:1" id="pbn-zP-RnQ"/>
+                                                </constraints>
+                                                <state key="normal" image="shuffleAudio"/>
+                                                <connections>
+                                                    <action selector="shuffleButtonAction:" destination="lET-6j-KAM" eventType="touchUpInside" id="irA-ng-Nos"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXJ-01-yEp" customClass="MEGASelectedButton" customModule="MEGA" customModuleProvider="target">
+                                                <rect key="frame" x="104.5" y="0.0" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="KXJ-01-yEp" secondAttribute="height" multiplier="1:1" id="pUA-cn-k70"/>
+                                                    <constraint firstAttribute="width" constant="50" id="pXH-Uu-w2E"/>
+                                                </constraints>
+                                                <state key="normal" image="repeatAudio"/>
+                                                <connections>
+                                                    <action selector="repeatButtonAction:" destination="lET-6j-KAM" eventType="touchUpInside" id="I9a-ie-YDC"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8C-fL-7G8">
+                                                <rect key="frame" x="209.5" y="0.0" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="p8C-fL-7G8" secondAttribute="height" multiplier="1:1" id="BdJ-mE-0bQ"/>
+                                                    <constraint firstAttribute="width" constant="50" id="HHB-Xk-Q3C"/>
+                                                </constraints>
+                                                <state key="normal" image="normal"/>
+                                                <connections>
+                                                    <action selector="changePlaybackSpeedButtonAction:" destination="lET-6j-KAM" eventType="touchUpInside" id="ikm-lf-z98"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qRk-rd-3x8">
+                                                <rect key="frame" x="314" y="0.0" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="qRk-rd-3x8" secondAttribute="height" multiplier="1:1" id="2yo-XA-tcr"/>
+                                                    <constraint firstAttribute="width" constant="50" id="ioY-Q2-puY"/>
+                                                </constraints>
+                                                <state key="normal" image="viewPlaylist"/>
+                                                <connections>
+                                                    <action selector="goToPlaylistButtonAction:" destination="lET-6j-KAM" eventType="touchUpInside" id="gVH-09-2fD"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="qRk-rd-3x8" secondAttribute="height" multiplier="1:1" id="2yo-XA-tcr"/>
-                                            <constraint firstAttribute="width" constant="50" id="ioY-Q2-puY"/>
+                                            <constraint firstItem="p8C-fL-7G8" firstAttribute="width" secondItem="p8C-fL-7G8" secondAttribute="height" multiplier="1:1" id="Feo-a2-OQE"/>
                                         </constraints>
-                                        <state key="normal" image="viewPlaylist"/>
-                                        <connections>
-                                            <action selector="goToPlaylistButtonAction:" destination="lET-6j-KAM" eventType="touchUpInside" id="gVH-09-2fD"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXJ-01-yEp" customClass="MEGASelectedButton" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="182" y="16.5" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="KXJ-01-yEp" secondAttribute="height" multiplier="1:1" id="pUA-cn-k70"/>
-                                            <constraint firstAttribute="width" constant="50" id="pXH-Uu-w2E"/>
-                                        </constraints>
-                                        <state key="normal" image="repeatAudio"/>
-                                        <connections>
-                                            <action selector="repeatButtonAction:" destination="lET-6j-KAM" eventType="touchUpInside" id="I9a-ie-YDC"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m46-Pw-6Gc" customClass="MEGASelectedButton" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="18" y="16.5" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="2Iy-uI-wXf"/>
-                                            <constraint firstAttribute="width" secondItem="m46-Pw-6Gc" secondAttribute="height" multiplier="1:1" id="pbn-zP-RnQ"/>
-                                        </constraints>
-                                        <state key="normal" image="shuffleAudio"/>
-                                        <connections>
-                                            <action selector="shuffleButtonAction:" destination="lET-6j-KAM" eventType="touchUpInside" id="irA-ng-Nos"/>
-                                        </connections>
-                                    </button>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailingMargin" secondItem="qRk-rd-3x8" secondAttribute="trailing" constant="18" id="3jQ-mO-ENJ">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="40"/>
+                                    <constraint firstItem="Wgf-PM-ENd" firstAttribute="centerX" secondItem="Kil-15-Cv5" secondAttribute="centerX" id="Gd4-Dz-1la"/>
+                                    <constraint firstItem="Wgf-PM-ENd" firstAttribute="leading" secondItem="Kil-15-Cv5" secondAttribute="leading" constant="25" id="OgQ-x7-fCX">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="5"/>
                                     </constraint>
-                                    <constraint firstAttribute="trailing" secondItem="qRk-rd-3x8" secondAttribute="trailing" constant="18" id="TcY-jp-J1s">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="40"/>
-                                    </constraint>
-                                    <constraint firstItem="qRk-rd-3x8" firstAttribute="centerY" secondItem="Kil-15-Cv5" secondAttribute="centerY" id="UNs-5Y-zXH"/>
-                                    <constraint firstItem="KXJ-01-yEp" firstAttribute="centerX" secondItem="Kil-15-Cv5" secondAttribute="centerX" id="fzL-aw-8on"/>
-                                    <constraint firstItem="KXJ-01-yEp" firstAttribute="centerY" secondItem="qRk-rd-3x8" secondAttribute="centerY" id="qUj-AG-klf"/>
-                                    <constraint firstItem="m46-Pw-6Gc" firstAttribute="centerY" secondItem="KXJ-01-yEp" secondAttribute="centerY" id="su9-jp-gql"/>
-                                    <constraint firstItem="m46-Pw-6Gc" firstAttribute="leading" secondItem="Kil-15-Cv5" secondAttribute="leading" constant="18" id="uwJ-IE-AJe">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="40"/>
-                                    </constraint>
+                                    <constraint firstItem="Wgf-PM-ENd" firstAttribute="centerY" secondItem="Kil-15-Cv5" secondAttribute="centerY" id="jkY-kI-sXV"/>
                                     <constraint firstAttribute="height" constant="83" id="vp8-fh-TVW"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="3jQ-mO-ENJ"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="3jQ-mO-ENJ"/>
-                                        <exclude reference="TcY-jp-J1s"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bQ-Op-Qcm">
                                 <rect key="frame" x="339" y="44" width="45" height="45"/>
@@ -759,6 +760,7 @@
                         <outlet property="moreButton" destination="9bQ-Op-Qcm" id="9os-aP-qJ1"/>
                         <outlet property="nextButton" destination="enq-tf-EoG" id="TCk-KC-6by"/>
                         <outlet property="playPauseButton" destination="agp-y8-nML" id="EOB-EH-taw"/>
+                        <outlet property="playbackSpeedButton" destination="p8C-fL-7G8" id="qNg-dK-LF5"/>
                         <outlet property="previousButton" destination="v5Q-Qv-Puz" id="1Iy-ch-jOy"/>
                         <outlet property="remainingTimeLabel" destination="xIg-6j-Kpa" id="JeV-hs-K0S"/>
                         <outlet property="repeatButton" destination="KXJ-01-yEp" id="dkd-gR-iTu"/>
@@ -792,6 +794,7 @@
         <image name="miniplayerClose" width="28" height="28"/>
         <image name="miniplayerPause" width="28" height="28"/>
         <image name="moreNavigationBar" width="28" height="28"/>
+        <image name="normal" width="28" height="28"/>
         <image name="play" width="28" height="28"/>
         <image name="repeatAudio" width="28" height="28"/>
         <image name="shuffleAudio" width="28" height="28"/>

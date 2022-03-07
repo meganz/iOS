@@ -31,6 +31,7 @@ final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var gotoplaylistButton: UIButton!
+    @IBOutlet weak var playbackSpeedButton: UIButton!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var separatorView: UIView!
     
@@ -120,6 +121,19 @@ final class AudioPlayerViewController: UIViewController {
             repeatButton.setImage(Asset.Images.AudioPlayer.repeatOneAudio.image, for: .normal)
         }
         updateRepeatButtonAppearance(status: status)
+    }
+    
+    private func updateSpeed(_ mode: SpeedMode) {
+        switch mode {
+        case .normal:
+            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.normal.image, for: .normal)
+        case .oneAndAHalf:
+            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.oneAndAHalf.image, for: .normal)
+        case .double:
+            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.double.image, for: .normal)
+        case .half:
+            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.half.image, for: .normal)
+        }
     }
     
     private func updateShuffle(_ status: Bool) {
@@ -345,6 +359,10 @@ final class AudioPlayerViewController: UIViewController {
         viewModel.dispatch(.showActionsforCurrentNode(sender: sender))
     }
     
+    @IBAction func changePlaybackSpeedButtonAction(_ sender: Any) {
+        viewModel.dispatch(.onChangeSpeedModePressed)
+    }
+    
     // MARK: - Execute command
     func executeCommand(_ command: AudioPlayerViewModel.Command) {
         switch command {
@@ -359,6 +377,8 @@ final class AudioPlayerViewController: UIViewController {
             refreshStateOfLoadingView(enabled)
         case .updateRepeat(let status):
             updateRepeat(status)
+        case .updateSpeed(let mode):
+            updateSpeed(mode)
         case .updateShuffle(let status):
             updateShuffle(status)
         case .configureDefaultPlayer:

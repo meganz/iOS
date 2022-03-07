@@ -85,6 +85,12 @@ internal enum Asset {
         internal static let miniplayerPause = ImageAsset(name: "miniplayerPause")
         internal static let miniplayerPlay = ImageAsset(name: "miniplayerPlay")
       }
+      internal enum SpeedMode {
+        internal static let double = ImageAsset(name: "double")
+        internal static let half = ImageAsset(name: "half")
+        internal static let normal = ImageAsset(name: "normal")
+        internal static let oneAndAHalf = ImageAsset(name: "oneAndAHalf")
+      }
       internal static let backTrack = ImageAsset(name: "backTrack")
       internal static let defaultArtwork = ImageAsset(name: "defaultArtwork")
       internal static let fastForward = ImageAsset(name: "fastForward")

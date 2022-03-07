@@ -13,6 +13,14 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         }
     }
     
+    private func updatePlayerRateIfNeeded() {
+        guard let rate = storedRate else { return }
+        if rate != 0.0 {
+            queuePlayer?.rate = rate
+            storedRate = 0.0
+        }
+    }
+    
     func setProgressCompleted(_ position: TimeInterval) {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
         
@@ -125,11 +133,14 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     
     @objc func play() {
         queuePlayer?.play()
+        updatePlayerRateIfNeeded()
         isPaused = false
     }
     
     @objc func pause() {
-        queuePlayer?.pause()
+        guard let queuePlayer = queuePlayer else { return }
+        storedRate = queuePlayer.rate
+        queuePlayer.pause()
         isPaused = true
     }
     
