@@ -2742,6 +2742,20 @@
 "account.upgrade.alreadyHaveASubscription.message"="You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
+/* Dialog title shown before deleting an account with active subscription */
+"account.delete.subscription.title"="Active Subscription";
+/* Dialog message shown before deleting an account with active iTunes subscription (iOS 15 and above) */
+"account.delete.subscription.itunes.withManage"="You have an active MEGA subscription with Apple. Please manage your subscription before continuing as MEGA is not able to cancel it for you";
+/* Dialog message shown before deleting an account with active iTunes subscription (under iOS 15) */
+"account.delete.subscription.itunes.withoutManage"="You have an active MEGA subscription with Apple. You must cancel it separately from your iTunes account, as MEGA is not able to cancel it for you. Visit our help Centre for more information.";
+/* Dialog message shown before deleting an account with active Google play subscription */
+"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately at Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit Google play */
+"account.delete.subscription.googlePlay.visit"="Visit Google Play";
+/* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
+"account.delete.subscription.huaweiAppGallery"="You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit Huawei app gallery */
+"account.delete.subscription.huaweiAppGallery.visit"="Visit AppGallery";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */

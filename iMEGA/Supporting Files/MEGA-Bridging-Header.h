@@ -162,3 +162,4 @@
 #import "OfflineCollectionViewController.h"
 #import "CompressingLogFileManager.h"
 #import "CameraUploadsTableViewController.h"
+#import "ConfirmAccountViewcontroller.h"

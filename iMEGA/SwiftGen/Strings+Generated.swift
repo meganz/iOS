@@ -2932,6 +2932,30 @@ public enum Strings {
         /// Already have an account?
         public static let alreadyHaveAnAccount = Strings.tr("Localizable", "account.createAccount.alreadyHaveAnAccount")
       }
+      public enum Delete {
+        public enum Subscription {
+          /// You have an active MEGA subscription with Google. You must cancel it separately at Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
+          public static let googlePlay = Strings.tr("Localizable", "account.delete.subscription.googlePlay")
+          /// You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
+          public static let huaweiAppGallery = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery")
+          /// Active Subscription
+          public static let title = Strings.tr("Localizable", "account.delete.subscription.title")
+          public enum GooglePlay {
+            /// Visit Google Play
+            public static let visit = Strings.tr("Localizable", "account.delete.subscription.googlePlay.visit")
+          }
+          public enum HuaweiAppGallery {
+            /// Visit AppGallery
+            public static let visit = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery.visit")
+          }
+          public enum Itunes {
+            /// You have an active MEGA subscription with Apple. Please manage your subscription before continuing as MEGA is not able to cancel it for you
+            public static let withManage = Strings.tr("Localizable", "account.delete.subscription.itunes.withManage")
+            /// You have an active MEGA subscription with Apple. You must cancel it separately from your iTunes account, as MEGA is not able to cancel it for you. Visit our help Centre for more information.
+            public static let withoutManage = Strings.tr("Localizable", "account.delete.subscription.itunes.withoutManage")
+          }
+        }
+      }
       public enum Login {
         /// New to MEGA?
         public static let newToMega = Strings.tr("Localizable", "account.login.newToMega")
