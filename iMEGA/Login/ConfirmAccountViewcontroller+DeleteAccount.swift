@@ -34,6 +34,10 @@ extension ConfirmAccountViewController {
                         url.mnz_presentSafariViewController()
                     }
                 }
+            
+        case .stripe2, .ECP:
+            showSubscriptionDialog(message: Strings.Localizable.Account.Delete.Subscription.stripeOrEcp)
+            
         default:
             return
         }
