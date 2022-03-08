@@ -24,9 +24,8 @@ final class NodeActionViewControllerGenericDelegate:
         case .rename:
             node.mnz_renameNode(in: viewController)
             
-        case .share:
-            let activityViewController = UIActivityViewController(forNodes: [node], sender: sender)
-            viewController.present(activityViewController, animated: true, completion: nil)
+        case .exportFile:
+            exportFile(node: node, sender: sender)
 
         case .shareFolder:
             shareFolder(node)
@@ -43,14 +42,18 @@ final class NodeActionViewControllerGenericDelegate:
         case .leaveSharing:
             node.mnz_leaveSharing(in: viewController)
 
-        case .getLink, .manageLink:
+        case .shareLink, .manageLink:
             showLink(for: node)
+            
         case .removeLink:
             node.mnz_removeLink()
+            
         case .moveToRubbishBin:
             node.mnz_moveToTheRubbishBin { }
+            
         case .remove:
             remove(node, in: viewController)
+            
         case .removeSharing:
             node.mnz_removeSharing()
             
@@ -185,6 +188,11 @@ final class NodeActionViewControllerGenericDelegate:
                 }
             }
         }
+    }
+    
+    private func exportFile(node: MEGANode, sender: Any) {
+        guard let viewController = viewController else { return }
+        ExportFileRouter(presenter: viewController, sender: sender).export(node: NodeEntity(node: node))
     }
 }
 

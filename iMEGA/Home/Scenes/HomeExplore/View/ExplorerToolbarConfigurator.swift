@@ -2,7 +2,7 @@
 class ExplorerToolbarConfigurator {
     typealias ButtonAction = (UIBarButtonItem) -> Void
     let downloadAction : ButtonAction
-    let shareAction: ButtonAction
+    let shareLinkAction: ButtonAction
     let moveAction: ButtonAction
     let copyAction: ButtonAction
     let deleteAction: ButtonAction
@@ -20,8 +20,8 @@ class ExplorerToolbarConfigurator {
         action: #selector(buttonPressed(_:))
     )
     
-    lazy var shareItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.share.image,
+    lazy var shareLinkItem = UIBarButtonItem(
+        image: Asset.Images.Generic.link.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
@@ -49,12 +49,12 @@ class ExplorerToolbarConfigurator {
     )
 
     init(downloadAction: @escaping ButtonAction,
-         shareAction: @escaping ButtonAction,
+         shareLinkAction: @escaping ButtonAction,
          moveAction: @escaping ButtonAction,
          copyAction: @escaping ButtonAction,
          deleteAction: @escaping ButtonAction) {
         self.downloadAction = downloadAction
-        self.shareAction = shareAction
+        self.shareLinkAction = shareLinkAction
         self.moveAction = moveAction
         self.copyAction = copyAction
         self.deleteAction = deleteAction
@@ -64,8 +64,8 @@ class ExplorerToolbarConfigurator {
         switch barButtonItem {
         case downloadItem:
             downloadAction(barButtonItem)
-        case shareItem:
-            shareAction(barButtonItem)
+        case shareLinkItem:
+            shareLinkAction(barButtonItem)
         case moveItem:
             moveAction(barButtonItem)
         case copyItem:
@@ -82,7 +82,7 @@ class ExplorerToolbarConfigurator {
             let barButtonItems = [
                 downloadItem,
                 flexibleItem,
-                shareItem,
+                shareLinkItem,
                 flexibleItem,
                 moveItem,
                 flexibleItem,
@@ -111,13 +111,13 @@ class ExplorerToolbarConfigurator {
             )
             
         case .accessOwner:
-            shareItem.isEnabled = nodes.count < 100
+            shareLinkItem.isEnabled = nodes.count < 100
             return enable(
                 true,
                 barButtonItems: [
                     downloadItem,
                     flexibleItem,
-                    shareItem,
+                    shareLinkItem,
                     flexibleItem,
                     moveItem,
                     flexibleItem,
@@ -125,7 +125,7 @@ class ExplorerToolbarConfigurator {
                     flexibleItem,
                     deleteItem
                 ],
-                excludeBarButtonItems: [shareItem]
+                excludeBarButtonItems: [shareLinkItem]
             )
         default:
             break

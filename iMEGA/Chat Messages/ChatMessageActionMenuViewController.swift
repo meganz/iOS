@@ -75,18 +75,12 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.saveToPhotos([chatMessage])
     }
     
-    lazy var shareAction = ActionSheetAction(title: Strings.Localizable.share, detail: nil, image: Asset.Images.NodeActions.share.image, style: .default) {
-        guard let chatMessage = self.chatMessage else {
-            return
-        }
-        guard let activityViewController = UIActivityViewController(for: [chatMessage.message], sender: self.sender) else {
-            SVProgressHUD.showError(withStatus: Strings.Localizable.linkUnavailable)
+    lazy var exportMessagesAction = ActionSheetAction(title: Strings.Localizable.General.export, detail: nil, image: Asset.Images.NodeActions.export.image, style: .default) {
+        guard let chatMessage = self.chatMessage, let presenter = self.chatViewController else {
             return
         }
         
-        if let sourceView = self.sender {
-            self.chatViewController?.present(viewController: activityViewController)
-        }
+        ExportFileRouter.init(presenter: presenter, sender: self.sender).export(messages: [chatMessage.message])
     }
     
     lazy var selectAction = ActionSheetAction(title: Strings.Localizable.select, detail: nil, image: UIImage(named: "select"), style: .default) {
@@ -182,7 +176,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             }
             
             if chatMessage.message.containsMeta.type != .giphy {
-                actions.append(contentsOf: [shareAction])
+                actions.append(contentsOf: [exportMessagesAction])
             }
             
             //Your messages
@@ -208,7 +202,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [copyAction]
             
         case .attachment:
-            actions = [saveForOfflineAction, forwardAction, shareAction, selectAction]
+            actions = [saveForOfflineAction, forwardAction, exportMessagesAction, selectAction]
             
             if chatMessage.message.nodeList.size.uintValue == 1,
                let name = chatMessage.message.nodeList.node(at: 0)?.name, name.mnz_isVisualMediaPathExtension {
@@ -227,7 +221,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 actions.append(contentsOf: [importAction])
             }
         case .voiceClip:
-            actions = [saveForOfflineAction, shareAction, selectAction]
+            actions = [saveForOfflineAction, exportMessagesAction, selectAction]
             if (chatMessage.message.richNumber) != nil {
                 actions.append(forwardAction)
             }
@@ -240,7 +234,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 actions.append(contentsOf: [importAction])
             }
         case .contact:
-            actions = [forwardAction, shareAction, selectAction]
+            actions = [forwardAction, exportMessagesAction, selectAction]
          
             if chatMessage.message.usersCount == 1 {
                 if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
@@ -332,7 +326,6 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         
         headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
     }
-    
     
     @objc func emojiPress(_ sender: UIButton) {
         guard let emoji = sender.attributedTitle(for: .normal)?.string,

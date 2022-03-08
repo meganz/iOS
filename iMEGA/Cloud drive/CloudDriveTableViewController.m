@@ -6,7 +6,6 @@
 #import "UIImageView+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIActivityViewController+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
@@ -290,13 +289,14 @@
             return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
         }
     } else {
-        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-            [self presentViewController:activityVC animated:YES completion:nil];
+        UIContextualAction *shareLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
             [self setTableViewEditing:NO animated:YES];
         }];
-        shareAction.image = [[UIImage imageNamed:@"share"] imageWithTintColor:UIColor.whiteColor];
-        shareAction.backgroundColor = UIColor.systemOrangeColor;
+        shareLinkAction.image = [[UIImage imageNamed:@"link"] imageWithTintColor:UIColor.whiteColor];
+        shareLinkAction.backgroundColor = UIColor.systemOrangeColor;
         
         UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             if ([node isBackupNode] || [node isBackupRootNode]) {
@@ -324,7 +324,7 @@
         downloadAction.image = [[UIImage imageNamed:@"offline"] imageByTintColor:UIColor.whiteColor];
         downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
         
-        return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction, downloadAction]];
+        return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareLinkAction, downloadAction]];
     }
     
     return [UISwipeActionsConfiguration configurationWithActions:@[]];

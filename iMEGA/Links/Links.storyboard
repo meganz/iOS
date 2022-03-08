@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,7 +39,7 @@
                         <outlet property="importBarButtonItem" destination="UE7-2a-Z7U" id="Gdc-hQ-k02"/>
                         <outlet property="moreBarButtonItem" destination="wnU-Yc-6PL" id="Zj5-hn-uzQ"/>
                         <outlet property="selectAllBarButtonItem" destination="zfR-jK-5T1" id="E25-XE-D5X"/>
-                        <outlet property="shareBarButtonItem" destination="3v0-rP-iq6" id="0Z0-9C-Ero"/>
+                        <outlet property="shareLinkBarButtonItem" destination="3v0-rP-iq6" id="0Z0-9C-Ero"/>
                         <outlet property="toolbar" destination="XS0-b6-FQU" id="gsd-9e-1KP"/>
                     </connections>
                 </viewController>
@@ -76,9 +76,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="HiR-aM-9uh"/>
-                        <barButtonItem tag="2" image="share" style="plain" id="3v0-rP-iq6">
+                        <barButtonItem tag="2" image="link" style="plain" id="3v0-rP-iq6">
                             <connections>
-                                <action selector="shareAction:" destination="9ZV-tM-uu1" id="2Y6-km-Zvi"/>
+                                <action selector="shareLinkAction:" destination="9ZV-tM-uu1" id="2Y6-km-Zvi"/>
                             </connections>
                         </barButtonItem>
                     </items>
@@ -251,7 +251,7 @@
                         <outlet property="nameLabel" destination="JP0-wf-1Tc" id="MBz-LK-AJ3"/>
                         <outlet property="openButton" destination="Jw5-t8-g06" id="Ag1-Or-6j0"/>
                         <outlet property="sendToBarButtonItem" destination="mCa-gQ-sq9" id="LpZ-df-cGQ"/>
-                        <outlet property="shareBarButtonItem" destination="tCc-eK-W9t" id="aCK-gr-36f"/>
+                        <outlet property="shareLinkBarButtonItem" destination="tCc-eK-W9t" id="aCK-gr-36f"/>
                         <outlet property="sizeLabel" destination="zOn-5Q-P3K" id="AmD-4N-6rY"/>
                         <outlet property="thumbnailImageView" destination="4lW-Ow-gtQ" id="aW2-mM-DMU"/>
                         <outlet property="toolbar" destination="6vY-o5-7Ao" id="uKP-CE-JdE"/>
@@ -279,9 +279,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="JdF-Ry-rzp"/>
-                        <barButtonItem tag="2" title="Download" image="share" style="plain" id="tCc-eK-W9t" userLabel="Share">
+                        <barButtonItem tag="2" image="link" style="plain" id="tCc-eK-W9t">
                             <connections>
-                                <action selector="shareAction:" destination="2U9-0D-RuC" id="SxN-0S-V9t"/>
+                                <action selector="shareLinkAction:" destination="2U9-0D-RuC" id="SxN-0S-V9t"/>
                             </connections>
                         </barButtonItem>
                     </items>
@@ -543,12 +543,12 @@
     <resources>
         <image name="downloaded" width="12" height="12"/>
         <image name="import" width="28" height="28"/>
+        <image name="link" width="28" height="28"/>
         <image name="moreList" width="28" height="28"/>
         <image name="moreNavigationBar" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
         <image name="selectAll" width="28" height="28"/>
         <image name="sendMessage" width="28" height="28"/>
-        <image name="share" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

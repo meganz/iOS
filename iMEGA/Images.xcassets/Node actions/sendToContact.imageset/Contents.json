@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "sendMessage.pdf",
+      "filename" : "sendToContact.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "sendMessageDark.pdf",
+      "filename" : "sendToContactDark.pdf",
       "idiom" : "universal"
     }
   ],

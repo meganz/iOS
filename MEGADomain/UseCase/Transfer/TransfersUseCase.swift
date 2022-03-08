@@ -53,7 +53,15 @@ struct TransfersUseCase: TransfersUseCaseProtocol {
     
     private func filterUserTransfers(_ transfers: [TransferEntity]) -> [TransferEntity] {
         transfers.filter {
-            $0.type == .upload || $0.path?.hasPrefix(Helper.relativePathForOffline()) ?? false
+            $0.type == .upload || isOfflineTransfer($0) || isExportFileTransfer($0)
         }
+    }
+    
+    private func isOfflineTransfer(_ transfer: TransferEntity) -> Bool {
+        transfer.path?.hasPrefix(Helper.relativePathForOffline()) ?? false
+    }
+    
+    private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
+        transfer.appData?.contains(NSString.mnz_appDataToExportFile()) ?? false
     }
 }

@@ -987,10 +987,6 @@ public enum Strings {
     public static let generatingLinks = Strings.tr("Localizable", "generatingLinks")
     /// Get chat link
     public static let getChatLink = Strings.tr("Localizable", "Get Chat Link")
-    /// Get Link
-    public static let getLink = Strings.tr("Localizable", "getLink")
-    /// Get Links
-    public static let getLinks = Strings.tr("Localizable", "getLinks")
     /// Good
     public static let good = Strings.tr("Localizable", "good")
     /// Green
@@ -1237,10 +1233,6 @@ public enum Strings {
     public static let manageChatHistory = Strings.tr("Localizable", "Manage Chat History")
     /// Manage share
     public static let manageShare = Strings.tr("Localizable", "Manage Share")
-    /// Manage Link
-    public static let manageLink = Strings.tr("Localizable", "manageLink")
-    /// Manage Links
-    public static let manageLinks = Strings.tr("Localizable", "manageLinks")
     /// Map settings
     public static let mapSettings = Strings.tr("Localizable", "Map settings")
     /// Mark as Read
@@ -2019,8 +2011,6 @@ public enum Strings {
     public static let settingsTitle = Strings.tr("Localizable", "settingsTitle")
     /// Set up MEGA
     public static let setupMEGA = Strings.tr("Localizable", "Setup MEGA")
-    /// Share
-    public static let share = Strings.tr("Localizable", "share")
     /// Share with
     public static let shareWith = Strings.tr("Localizable", "Share with")
     /// Shared
@@ -3038,6 +3028,16 @@ public enum Strings {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
         }
       }
+      public enum NodeOptions {
+        /// Manage Link
+        public static let manageLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLink")
+        /// Manage Links
+        public static let manageLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLinks")
+        /// Share Link
+        public static let shareLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLink")
+        /// Share Links
+        public static let shareLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLinks")
+      }
       public enum Root {
         public enum Backup {
           public enum Folder {
@@ -3292,8 +3292,16 @@ public enum Strings {
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
+      /// Export
+      public static let export = Strings.tr("Localizable", "general.export")
+      /// Export File
+      public static let exportFile = Strings.tr("Localizable", "general.exportFile")
+      /// Export Files
+      public static let exportFiles = Strings.tr("Localizable", "general.exportFiles")
       /// Join Meeting as Guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
+      /// Share
+      public static let share = Strings.tr("Localizable", "general.share")
       public enum Button {
         /// Get Bonus
         public static let getBonus = Strings.tr("Localizable", "general.button.getBonus")

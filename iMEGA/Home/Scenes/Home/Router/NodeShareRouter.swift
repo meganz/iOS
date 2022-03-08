@@ -1,18 +1,21 @@
 import Foundation
+import MessageKit
 
 final class NodeShareRouter: NSObject {
 
-    private weak var navigationController: UINavigationController?
+    private weak var viewController: UIViewController?
 
-    init(navigationController: UINavigationController? = nil) {
-        self.navigationController = navigationController
+    init(viewController: UIViewController? = nil) {
+        self.viewController = viewController
     }
 
     // MARK: -
 
-    func showSharing(for node: MEGANode, sender: Any?) {
-        let activityViewController = UIActivityViewController(forNodes: [node], sender: sender)
-        navigationController?.present(activityViewController, animated: true, completion: nil)
+    func exportFile(from node: MEGANode, sender: Any?) {
+        guard let presenter = viewController else {
+            return
+        }
+        ExportFileRouter(presenter: presenter, sender: sender).export(node: NodeEntity(node: node))
     }
 
     func showSharingFolder(for node: MEGANode) {
@@ -22,7 +25,8 @@ final class NodeShareRouter: NSObject {
         let contactViewController = navigation.viewControllers.first as? ContactsViewController
         contactViewController?.nodesArray = [node]
         contactViewController?.contactsMode = .shareFoldersWith
-        navigationController?.present(navigation, animated: true, completion: nil)
+        
+        viewController?.present(navigation, animated: true, completion: nil)
     }
 
     func showManageSharing(for node: MEGANode) {
@@ -31,6 +35,7 @@ final class NodeShareRouter: NSObject {
             else { return }
         contactViewController.node = node
         contactViewController.contactsMode = .folderSharedWith
-        navigationController?.present(contactViewController, animated: true, completion: nil)
+        
+        viewController?.present(contactViewController, animated: true, completion: nil)
     }
 }

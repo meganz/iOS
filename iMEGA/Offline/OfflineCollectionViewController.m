@@ -11,7 +11,6 @@
 
 #import "NodeCollectionViewCell.h"
 #import "OfflineViewController.h"
-#import "OpenInActivity.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "MEGA-Swift.h"
 

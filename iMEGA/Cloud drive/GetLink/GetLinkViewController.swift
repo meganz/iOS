@@ -109,7 +109,7 @@ class GetLinkViewController: UIViewController {
         
         processNodes()
         
-        shareBarButton.title = Strings.Localizable.share
+        shareBarButton.title = Strings.Localizable.CloudDrive.NodeOptions.shareLink
         copyLinkBarButton.title = getLinkVM.multilink ? Strings.Localizable.copyAll : Strings.Localizable.copyLink
         copyKeyBarButton.title = Strings.Localizable.copyKey
         
@@ -145,9 +145,9 @@ class GetLinkViewController: UIViewController {
         navigationController?.setToolbarHidden(false, animated: true)
         
         if getLinkVM.multilink {
-            title = nodes.filter { !$0.isExported() }.count == 0 ? Strings.Localizable.manageLinks : Strings.Localizable.getLinks
+            title = nodes.filter { !$0.isExported() }.count == 0 ? Strings.Localizable.CloudDrive.NodeOptions.manageLinks : Strings.Localizable.CloudDrive.NodeOptions.shareLinks
         } else {
-            title = nodes[0].isExported() ? Strings.Localizable.manageLink : Strings.Localizable.getLink
+            title = nodes[0].isExported() ? Strings.Localizable.CloudDrive.NodeOptions.manageLink : Strings.Localizable.CloudDrive.NodeOptions.shareLink
         }
         
         setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
@@ -366,7 +366,7 @@ class GetLinkViewController: UIViewController {
         alert.addAction(UIAlertAction(title: Strings.Localizable.dismiss, style: .default, handler: { _ in
             alert.dismiss(animated: true, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: Strings.Localizable.share, style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: Strings.Localizable.General.share, style: .default, handler: { _ in
             completion()
         }))
         present(alert, animated: true, completion: nil)

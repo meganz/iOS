@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -55,7 +55,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ojh-69-QhP"/>
-                                    <barButtonItem image="share" style="plain" id="Rck-W5-yGE">
+                                    <barButtonItem image="export" style="plain" id="Rck-W5-yGE">
                                         <connections>
                                             <action selector="didPressRightToolbarButton:" destination="yD8-RT-K0O" id="08B-ip-amX"/>
                                         </connections>
@@ -95,6 +95,7 @@
                         <outlet property="centerToolbarItem" destination="Ytc-aC-zrZ" id="HwJ-in-pI9"/>
                         <outlet property="closeBarButtonItem" destination="Bfh-QP-H1o" id="5tf-Af-tnV"/>
                         <outlet property="customActionsButton" destination="YVt-M3-aSH" id="YEr-Op-Iyv"/>
+                        <outlet property="exportFileToolbarItem" destination="R7p-5g-SRq" id="S90-Xu-Fya"/>
                         <outlet property="forwardToolbarItem" destination="hCM-73-xr9" id="L4l-Oi-XD7"/>
                         <outlet property="importToolbarItem" destination="dRR-FQ-Z4n" id="lFP-nZ-x7Y"/>
                         <outlet property="leftToolbarItem" destination="xTs-Xs-c6Q" id="SN4-Os-Oha"/>
@@ -105,7 +106,6 @@
                         <outlet property="saveToolbarItem" destination="ktG-X9-E0r" id="8F1-iZ-j9I"/>
                         <outlet property="scrollView" destination="ulA-CI-VZp" id="oyd-Da-pqT"/>
                         <outlet property="scrollViewTrailingConstraint" destination="74B-e7-8rm" id="CER-Bv-MAS"/>
-                        <outlet property="shareToolbarItem" destination="R7p-5g-SRq" id="S90-Xu-Fya"/>
                         <outlet property="statusBarBackground" destination="PCJ-Sw-nnM" id="QXl-Rh-SvD"/>
                         <outlet property="toolbar" destination="Z54-Be-FUS" id="BbJ-Aa-yik"/>
                     </connections>
@@ -130,9 +130,9 @@
                         <action selector="didPressAllMediasButton:" destination="yD8-RT-K0O" id="a77-VF-aUT"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="share" style="plain" id="R7p-5g-SRq" userLabel="shareItem">
+                <barButtonItem image="export" style="plain" id="R7p-5g-SRq" userLabel="exportFileItem">
                     <connections>
-                        <action selector="didPressSharebarButton:" destination="yD8-RT-K0O" id="8M7-Ra-iTF"/>
+                        <action selector="didPressExportFile:" destination="yD8-RT-K0O" id="8M7-Ra-iTF"/>
                     </connections>
                 </barButtonItem>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tmH-uB-CiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -254,11 +254,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="export" width="28" height="28"/>
         <image name="forwardToolbar" width="28" height="28"/>
         <image name="import" width="28" height="28"/>
         <image name="moreNavigationBar" width="28" height="28"/>
         <image name="saveToPhotos" width="28" height="28"/>
-        <image name="share" width="28" height="28"/>
         <image name="thumbnailsThin" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">

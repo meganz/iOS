@@ -2,7 +2,7 @@ import Foundation
 @testable import MEGA
 
 extension NodeEntity {
-    init(isFile: Bool = false, isFolder: Bool = false, hasThumbnail: Bool = false, label: NodeLabelTypeEntity = .unknown) {
+    init(handle: MEGAHandle = .invalid, isFile: Bool = false, isFolder: Bool = false, hasThumbnail: Bool = false, label: NodeLabelTypeEntity = .unknown) {
         self.init(changeTypes: .attributes,
                   nodeType: nil,
                   name: "",

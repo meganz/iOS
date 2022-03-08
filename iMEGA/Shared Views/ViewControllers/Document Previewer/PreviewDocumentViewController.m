@@ -20,7 +20,6 @@
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIActivityViewController+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -37,7 +36,7 @@
 @property (weak, nonatomic) IBOutlet PDFView *pdfView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *thumbnailBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *openInBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *exportFileBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
@@ -194,7 +193,7 @@
     NSMutableArray *toolbarItems = NSMutableArray.new;
     [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem]];
     if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
-        [toolbarItems addObject:self.openInBarButtonItem];
+        [toolbarItems addObject:self.exportFileBarButtonItem];
     } else {
         [toolbarItems addObject:self.importBarButtonItem];
     }
@@ -275,28 +274,28 @@
     self.openZipButton = openZipButton;
 }
 
+- (void)presentActivityVC:(NSArray *)activityItems barButtonItem:(id)sender {
+    UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:activityItems applicationActivities:nil];
+    activityVC.popoverPresentationController.barButtonItem = sender;
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
 #pragma mark - IBActions
 
-- (IBAction)shareAction:(id)sender {
-    if (self.isLink && self.fileLink) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.fileLink] applicationActivities:nil];
-        activityVC.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
-        [self presentViewController:activityVC animated:YES completion:nil];
+- (IBAction)exportFileAction:(id)sender {
+    if (self.node) {
+        [self exportFileFrom:self.node sender:sender];
     } else {
-        if (self.node) {
-            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
-            [self presentViewController:activityVC animated:YES completion:nil];
-        } else {
-            if (self.filePath) {
-                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[[NSURL fileURLWithPath:self.filePath]] applicationActivities:nil];
-                activityVC.popoverPresentationController.barButtonItem = sender;
-                [self presentViewController:activityVC animated:YES completion:nil];
-            }
+        if (self.filePath) {
+            [self presentActivityVC:@[[NSURL fileURLWithPath:self.filePath]] barButtonItem:sender];
         }
     }
 }
 
 - (IBAction)doneTapped:(id)sender {
+    [TransfersWidgetViewController.sharedTransferViewController resetToMainTabBar];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -408,8 +407,8 @@
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
-        case MegaNodeActionTypeShare:
-            [self shareAction:sender];
+        case MegaNodeActionTypeExportFile:
+            [self exportFileAction:sender];
             break;
             
         case MegaNodeActionTypeDownload:
@@ -467,8 +466,10 @@
             break;
             
         case MegaNodeActionTypeManageLink:
-        case MegaNodeActionTypeGetLink: {
-            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+        case MegaNodeActionTypeShareLink: {
+            if (self.isLink && self.fileLink) {
+                [self presentActivityVC:@[self.fileLink] barButtonItem:self.moreBarButtonItem];
+            } else if (MEGAReachabilityManager.isReachableHUDIfNot) {
                 [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
             }
             break;
@@ -534,15 +535,13 @@
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         if (self.node) {
-            
             if (self.node.mnz_isInRubbishBin) {
                 [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem] animated:YES];
             } else {
-                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.openInBarButtonItem : self.importBarButtonItem] animated:YES];
+                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
             }
-            
         } else {
-            [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
+            [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.exportFileBarButtonItem] animated:YES];
         }
         [self.navigationController setToolbarHidden:NO animated:YES];
         

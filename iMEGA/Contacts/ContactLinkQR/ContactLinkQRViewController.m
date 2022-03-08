@@ -237,7 +237,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
     [moreAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     if (self.contactLinkLabel.text.length>0) {
-        UIAlertAction *shareAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"share", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *shareAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactLinkLabel.text] applicationActivities:nil];
             [activityVC.popoverPresentationController setSourceView:self.view];
             [activityVC.popoverPresentationController setSourceRect:sender.frame];

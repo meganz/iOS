@@ -1,7 +1,7 @@
 
 typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeDownload = 0,
-    MegaNodeActionTypeShare,
+    MegaNodeActionTypeExportFile,
     MegaNodeActionTypeCopy,
     MegaNodeActionTypeMove,
     MegaNodeActionTypeInfo,
@@ -22,7 +22,7 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeManageShare,
     MegaNodeActionTypeShareFolder,
     MegaNodeActionTypeManageLink,
-    MegaNodeActionTypeGetLink,
+    MegaNodeActionTypeShareLink,
     MegaNodeActionTypeSendToChat,
     MegaNodeActionTypePdfPageView,
     MegaNodeActionTypePdfThumbnailView,
