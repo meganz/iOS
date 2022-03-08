@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PhotoCellImage: View {
     let container: ImageContainer
+    var aspectRatio: CGFloat?
     
     var body: some View {
         if container.isPlaceholder {
@@ -23,6 +24,6 @@ struct PhotoCellImage: View {
     private func thumbnail() -> some View {
         container.image
             .resizable()
-            .aspectRatio(1, contentMode: .fill)
+            .aspectRatio(aspectRatio, contentMode: .fill)
     }
 }

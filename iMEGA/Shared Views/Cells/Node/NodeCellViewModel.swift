@@ -76,7 +76,7 @@ final class NodeCellViewModel: ViewModelType {
     
     private func manageThumbnail() {
         invokeCommand?(.hideVideoIndicator(!(nodeModel.name as NSString).mnz_isVideoPathExtension))
-        nodeThumbnailUseCase.loadThumbnail(for: nodeModel) { [weak self] result in
+        nodeThumbnailUseCase.loadThumbnail(for: nodeModel, type: .thumbnail) { [weak self] result in
             switch result {
             case .success(let url):
                 self?.invokeCommand?(.setThumbnail(url.path))

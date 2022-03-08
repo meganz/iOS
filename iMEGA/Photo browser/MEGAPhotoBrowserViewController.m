@@ -8,7 +8,6 @@
 #import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
-#import "MEGAActivityItemProvider.h"
 #import "CopyrightWarningViewController.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
@@ -24,7 +23,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIActivityViewController+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "MEGA-Swift.h"
@@ -50,7 +48,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveToolbarItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *importToolbarItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *exportFileToolbarItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *forwardToolbarItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *allMediaToolBarItem;
 
@@ -133,6 +131,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.centerToolbarItem.image = [UIImage imageNamed:@"saveToPhotos"];
             break;
             
+        case DisplayModeRubbishBin:
         case DisplayModeSharedItem:
         case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];
@@ -141,7 +140,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeChatAttachment:
         {
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            [self.toolbar setItems:@[self.shareToolbarItem, flexibleItem, self.importToolbarItem, flexibleItem, self.saveToolbarItem, flexibleItem, self.forwardToolbarItem]];
+            [self.toolbar setItems:@[self.exportFileToolbarItem, flexibleItem, self.importToolbarItem, flexibleItem, self.saveToolbarItem, flexibleItem, self.forwardToolbarItem]];
             self.allMediaToolBarItem.title = NSLocalizedString(@"All Media", @"");
             
             self.navigationItem.rightBarButtonItem = self.allMediaToolBarItem;
@@ -367,6 +366,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [TransfersWidgetViewController.sharedTransferViewController resetToMainTabBar];
+    
     [super dismissViewControllerAnimated:flag completion:^{
         if ([self.delegate respondsToSelector:@selector(didDismissPhotoBrowser:)]) {
             [self.delegate didDismissPhotoBrowser:self];
@@ -386,15 +387,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)shareFileLink {
     NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
+    NSArray *excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
     
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-    [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
-    [activityVC.popoverPresentationController setBarButtonItem:self.rightToolbarItem];
-    
-    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-        [self reloadUI];
-    };
-    [self presentViewController:activityVC animated:YES completion:nil];
+    [self presentActivityVC:@[link] excludedActivityTypes:excludedActivityTypes sender:self.rightToolbarItem];
 }
 
 - (void)sendLinkToChat {
@@ -816,32 +811,31 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [node mnz_sendToChatInViewController:self];
 }
 
-- (IBAction)didPressSharebarButton:(UIBarButtonItem *)sender {
+- (IBAction)didPressExportFile:(UIBarButtonItem *)sender {
     MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
     if (node == nil) {
         return;
     }
-    UIActivityViewController *activityViewController;
-    if (node.name.mnz_isVideoPathExtension) {
-        activityViewController = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
+    
+    [TransfersWidgetViewController.sharedTransferViewController showProgressWithView:self.view];
+    
+    if (self.displayMode == DisplayModeChatAttachment) {
+        [self exportMessageFileFrom:node sender:sender];
     } else {
-        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node api:MEGASdkManager.sharedMEGASdk];
-        NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-        if (node.name.mnz_isImagePathExtension) {
-            SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node api:self.api];
-            [activitiesMutableArray addObject:saveToCameraRollActivity];
-        }
-        activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
-        activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard];
-        activityViewController.popoverPresentationController.barButtonItem = sender;
+        [self exportFileFrom:node sender:sender];
     }
+}
+
+- (void)presentActivityVC:(NSArray *)activityItems excludedActivityTypes:(NSArray<UIActivityType> *)excludedActivityTypes sender:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityViewController = [UIActivityViewController.alloc initWithActivityItems:activityItems applicationActivities:nil];
+    activityViewController.excludedActivityTypes = excludedActivityTypes;
+    activityViewController.popoverPresentationController.barButtonItem = sender;
     
     activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         [self reloadUI];
     };
     
     [self presentViewController:activityViewController animated:YES completion:nil];
-
 }
 
 - (IBAction)didPressRightToolbarButton:(UIBarButtonItem *)sender {
@@ -856,7 +850,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         default: {
-            [self didPressSharebarButton:sender];
+            [self didPressExportFile:sender];
             break;
         }
     }
@@ -1123,22 +1117,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
-        case MegaNodeActionTypeShare: {
-            
-            switch (self.displayMode) {
-                case DisplayModeFileLink:
-                    [self shareFileLink];
-                    break;
-                    
-                default: {
-                    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-                    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-                        [self reloadUI];
-                    };
-                    [self presentViewController:activityVC animated:YES completion:nil];
-                    break;
-                }
-            }
+        case MegaNodeActionTypeExportFile: {
+            [self didPressExportFile:sender];
             break;
         }
             
@@ -1233,10 +1213,14 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [node mnz_saveToPhotos];
             break;
             
-        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeShareLink:
         case MegaNodeActionTypeManageLink: {
-            if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            if (self.displayMode == DisplayModeFileLink) {
+                [self shareFileLink];
+            } else {
+                if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                    [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+                }
             }
             break;
         }

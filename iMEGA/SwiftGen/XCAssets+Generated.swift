@@ -51,6 +51,7 @@ internal enum Asset {
       }
       internal static let capture = ImageAsset(name: "capture")
       internal static let gridThin = ImageAsset(name: "gridThin")
+      internal static let mediaDiscovery = ImageAsset(name: "mediaDiscovery")
       internal static let newFolder = ImageAsset(name: "newFolder")
       internal static let scanDocument = ImageAsset(name: "scanDocument")
       internal static let select = ImageAsset(name: "select")
@@ -84,6 +85,12 @@ internal enum Asset {
         internal static let miniplayerClose = ImageAsset(name: "miniplayerClose")
         internal static let miniplayerPause = ImageAsset(name: "miniplayerPause")
         internal static let miniplayerPlay = ImageAsset(name: "miniplayerPlay")
+      }
+      internal enum SpeedMode {
+        internal static let double = ImageAsset(name: "double")
+        internal static let half = ImageAsset(name: "half")
+        internal static let normal = ImageAsset(name: "normal")
+        internal static let oneAndAHalf = ImageAsset(name: "oneAndAHalf")
       }
       internal static let backTrack = ImageAsset(name: "backTrack")
       internal static let defaultArtwork = ImageAsset(name: "defaultArtwork")
@@ -553,6 +560,7 @@ internal enum Asset {
       internal static let copy = ImageAsset(name: "copy")
       internal static let delete = ImageAsset(name: "delete")
       internal static let edittext = ImageAsset(name: "edittext")
+      internal static let export = ImageAsset(name: "export")
       internal static let favourite = ImageAsset(name: "favourite")
       internal static let history = ImageAsset(name: "history")
       internal static let label = ImageAsset(name: "label")
@@ -564,7 +572,7 @@ internal enum Asset {
       internal static let restore = ImageAsset(name: "restore")
       internal static let rubbishBin = ImageAsset(name: "rubbishBin")
       internal static let saveToPhotos = ImageAsset(name: "saveToPhotos")
-      internal static let sendMessage = ImageAsset(name: "sendMessage")
+      internal static let sendToContact = ImageAsset(name: "sendToContact")
       internal static let share = ImageAsset(name: "share")
       internal static let shareFolder = ImageAsset(name: "shareFolder")
       internal static let textfile = ImageAsset(name: "textfile")

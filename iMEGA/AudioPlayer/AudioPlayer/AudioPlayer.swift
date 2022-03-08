@@ -79,13 +79,20 @@ final class AudioPlayer: NSObject {
         PlayerCurrentStateEntity(currentTime: currentTime, remainingTime: duration > currentTime ? duration - currentTime: 0.0, percentage: percentageCompleted, isPlaying: isPlaying)
     }
     
-    var rate: Float {
-        get { queuePlayer?.rate ?? 0.0 }
-        set { queuePlayer?.rate = newValue }
+    var rate: Float? {
+        get { queuePlayer?.rate }
+        set {
+            guard let newValue = newValue else { return }
+            if newValue == 0 { storedRate = queuePlayer?.rate }
+            queuePlayer?.rate = newValue
+        }
     }
     
+    var storedRate: Float?
+    
     var isPlaying: Bool {
-        rate > Float(0.0)
+        guard let rate = rate else { return false }
+        return rate > Float(0.0)
     }
     
     var isAlive: Bool {
@@ -159,7 +166,7 @@ final class AudioPlayer: NSObject {
             
             self.tracks = tracks
             self.audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
-            self.queuePlayer?.pause()
+            self.pause()
             
             CrashlyticsLogger.log("[AudioPlayer] Player replaced Items: \(String(describing: self.queuePlayer?.items()))")
             self.secureReplaceCurrentItem(with: tracks.first)

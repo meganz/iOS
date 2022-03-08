@@ -22,6 +22,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var addPlayerListener_calledTimes = 0
     var removePlayerListener_calledTimes = 0
     var playItem_calledTimes = 0
+    var changePlayerRate_calledTimes = 0
     
     func isPlayerDefined() -> Bool { false }
     func isPlayerEmpty() -> Bool { false }
@@ -115,6 +116,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         onRepeatDisabled_calledTimes += 1
     }
     
+    func changePlayer(speed: SpeedMode) {
+        changePlayerRate_calledTimes += 1
+    }
+    
     func playerCurrentItem() -> AudioPlayerItem? { AudioPlayerItem.mockItem }
     func playerCurrentItemTime() -> TimeInterval { 0.0 }
     func playerQueueItems() -> [AudioPlayerItem]? { nil }
@@ -141,4 +146,5 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func resetAudioPlayerConfiguration() {}
     func playerTracksContains(url: URL) -> Bool { true }
     func resetCurrentItem() {}
+    func currentSpeedMode() -> SpeedMode { .normal }
 }

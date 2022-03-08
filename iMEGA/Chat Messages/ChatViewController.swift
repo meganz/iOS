@@ -28,7 +28,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    let shareBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.share.image.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.shareSelectedMessages))
+    let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.exportSelectedMessages))
     let forwardBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.forwardToolbar.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
     let copyBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.copy.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
     let offlineBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.offline.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
@@ -268,7 +268,7 @@ class ChatViewController: MessagesViewController {
             customModalAlertVC.image = Asset.Images.Chat.chatLinkCreation.image
             customModalAlertVC.viewTitle = chatRoom.title
             customModalAlertVC.detail = Strings.Localizable.peopleCanJoinYourGroupByUsingThisLink
-            customModalAlertVC.firstButtonTitle = Strings.Localizable.share
+            customModalAlertVC.firstButtonTitle = Strings.Localizable.General.share
             customModalAlertVC.link = publicChatLink?.absoluteString
             customModalAlertVC.secondButtonTitle = Strings.Localizable.delete
             customModalAlertVC.dismissButtonTitle = Strings.Localizable.dismiss
@@ -933,6 +933,11 @@ class ChatViewController: MessagesViewController {
                 MEGASdkManager.sharedMEGAChatSdk().logout()
                 
                 if MEGALinkManager.selectedOption == .joinChatLink, let onboardingVC = UIApplication.mnz_visibleViewController() as? OnboardingViewController {
+                    
+                    if let publicChatLink = self.publicChatLink {
+                        MEGALinkManager.linkURL = publicChatLink
+                        MEGALinkManager.urlType = .publicChatLink
+                    }
                     onboardingVC.presentLoginViewController()
                 }
             }

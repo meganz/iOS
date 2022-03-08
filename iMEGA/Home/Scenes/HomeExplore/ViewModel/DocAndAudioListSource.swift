@@ -122,11 +122,11 @@ extension DocAndAudioListSource {
         }
 
         if !isNodeInRubbishBin(node){
-            let shareAction = contextualAction(
-                withImageName: Asset.Images.NodeActions.share.name,
+            let shareLinkAction = contextualAction(
+                withImageName: Asset.Images.Generic.link.name,
                 backgroundColor: .systemOrange
             ) { [weak self] in
-                self?.share(node: nodeCell.node)
+                self?.shareLink(node: nodeCell.node)
             }
             let rubbishBinAction = contextualAction(
                 withImageName: Asset.Images.NodeActions.rubbishBin.name,
@@ -138,7 +138,7 @@ extension DocAndAudioListSource {
                 self?.download(node: node)
             }
 
-            let actions = [rubbishBinAction, shareAction, downloadAction]
+            let actions = [rubbishBinAction, shareLinkAction, downloadAction]
             
             return UISwipeActionsConfiguration(actions: actions)
         }
@@ -157,15 +157,11 @@ extension DocAndAudioListSource {
         return IndexPath(row: index, section: 0)
     }
 
-    private func share(node: MEGANode) {
-        guard let indexPath = indexPath(forNode: node),
-              let cell = tableView.cellForRow(at: indexPath) else {
-            MEGALogDebug("Could not find the node with name \(node.name ?? "no node name") as cell or the indexPath is nil")
-            return
+    private func shareLink(node: MEGANode) {
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: UIApplication.mnz_presentingViewController())
         }
-
-        let activityVC = UIActivityViewController(forNodes: [node], sender: cell)
-        delegate?.present(activityVC, animated: true)
+        
         tableView.setEditing(false, animated: true)
     }
 

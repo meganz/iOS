@@ -31,7 +31,7 @@ final class HomeViewController: UIViewController {
     var bannerViewModel: HomeBannerViewModelType!
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel!
-
+    
     // MARK: - Router
 
     var router: HomeRouter!
@@ -474,11 +474,21 @@ extension HomeViewController: SlidePanelDelegate {
 
 extension HomeViewController: ExploreViewStackDelegate {
     func tappedCard(_ card: MEGAExploreViewStyle) {
+        let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
+
         switch card {
-        case .images:   router.photosExplorerSelected()
-        case .documents:    router.documentsExplorerSelected()
-        case .audio:    router.audioExplorerSelected()
-        case .video:    router.videoExplorerSelected()
+        case .images:
+            analyticsUseCase.logEvent(AnalyticsEventEntity.imagesExplorerCardTappedString, parameters: nil)
+            router.photosExplorerSelected()
+        case .documents:
+            analyticsUseCase.logEvent(AnalyticsEventEntity.docsExplorerCardTappedString, parameters: nil)
+            router.documentsExplorerSelected()
+        case .audio:
+            analyticsUseCase.logEvent(AnalyticsEventEntity.audioExplorerCardTappedString, parameters: nil)
+            router.audioExplorerSelected()
+        case .video:
+            analyticsUseCase.logEvent(AnalyticsEventEntity.videoExplorerCardTappedString, parameters: nil)
+            router.videoExplorerSelected()
         }
     }
 }
@@ -556,7 +566,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
                 router?.didTap(on: .fileInfo(node))
 
             // MARK: Links
-            case .manageLink, .getLink:
+            case .manageLink, .shareLink:
                 router?.didTap(on: .linkManagement(node))
             case .removeLink:
                 router?.didTap(on: .removeLink(node))
@@ -585,9 +595,9 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             case .rename:
                 node.mnz_renameNode(in: self)
 
-            // MARK: Share
-            case .share:
-                router?.didTap(on: .share(node, sender))
+            // MARK: Export File
+            case .exportFile:
+                router?.didTap(on: .exportFile(node, sender))
             case .shareFolder:
                 router?.didTap(on: .shareFolder(node))
             case .manageShare:

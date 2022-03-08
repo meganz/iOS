@@ -24,7 +24,12 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouterProtocol {
             fatalError("Could not instantiate CookieSettingsTableViewController")
         }
         
-        let viewModel = CookieSettingsViewModel(cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository(sdk:  MEGASdkManager.sharedMEGASdk())), router: self)
+        let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
+
+        let viewModel = CookieSettingsViewModel(
+            cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository(sdk:  MEGASdkManager.sharedMEGASdk()), analyticsUseCase: analyticsUseCase),
+            router: self
+        )
         
         cookieSettingsTVC.router = self
         cookieSettingsTVC.viewModel = viewModel

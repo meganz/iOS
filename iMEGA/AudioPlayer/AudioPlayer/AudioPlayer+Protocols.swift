@@ -120,6 +120,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func isPlayerAlive() -> Bool
     func currentPlayer() -> AudioPlayer?
     func currentRepeatMode() -> RepeatMode
+    func currentSpeedMode() -> SpeedMode
     func playerCurrentItem() -> AudioPlayerItem?
     func playerCurrentItemTime() -> TimeInterval
     func playerQueueItems() -> [AudioPlayerItem]?
@@ -146,6 +147,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func playerRepeatAll(active: Bool)
     func playerRepeatOne(active: Bool)
     func playerRepeatDisabled()
+    func changePlayer(speed: SpeedMode)
     func refreshCurrentItemState()
     func resetCurrentItem()
 }

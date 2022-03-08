@@ -235,7 +235,7 @@
                         <outlet property="photosUploadedProgressView" destination="LTG-PV-qaW" id="7QC-xy-ZSK"/>
                         <outlet property="progressStackView" destination="Hs5-aX-s89" id="JE0-dm-vCl"/>
                         <outlet property="selectAllBarButtonItem" destination="gRA-OU-vS7" id="icK-jO-9bw"/>
-                        <outlet property="shareBarButtonItem" destination="84D-T8-1ui" id="4Mx-PC-8YH"/>
+                        <outlet property="shareLinkBarButtonItem" destination="84D-T8-1ui" id="4Mx-PC-8YH"/>
                         <outlet property="stateLabel" destination="ZiR-gp-d1i" id="bn5-7e-Dba"/>
                         <outlet property="stateView" destination="nyf-uB-Tb3" id="bIY-EK-Yoh"/>
                         <outlet property="toolbar" destination="qZy-vw-98U" id="kqk-6K-svX"/>
@@ -252,9 +252,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="mbb-fa-sBd"/>
-                        <barButtonItem enabled="NO" image="share" width="32" style="plain" id="84D-T8-1ui" userLabel="Share Bar Button Item">
+                        <barButtonItem enabled="NO" image="link" width="32" style="plain" id="84D-T8-1ui" userLabel="Share Link Bar Button Item">
                             <connections>
-                                <action selector="shareAction:" destination="3GS-cK-Hw6" id="0z0-Dw-LjO"/>
+                                <action selector="shareLinkAction:" destination="3GS-cK-Hw6" id="0z0-Dw-LjO"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ujf-9f-8Qy"/>
@@ -314,11 +314,11 @@
     <resources>
         <image name="cameraUploadsIcon" width="31" height="28"/>
         <image name="copy" width="28" height="28"/>
+        <image name="link" width="28" height="28"/>
         <image name="move" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="selectAll" width="28" height="28"/>
-        <image name="share" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
         <image name="white_checkmark" width="12" height="12"/>
         <systemColor name="systemBackgroundColor">

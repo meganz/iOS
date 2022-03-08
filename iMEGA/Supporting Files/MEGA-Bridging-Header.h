@@ -26,7 +26,6 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIActivityViewController+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
@@ -161,3 +160,5 @@
 #import "CloudDriveCollectionViewController.h"
 #import "OfflineCollectionViewController.h"
 #import "CompressingLogFileManager.h"
+#import "CameraUploadsTableViewController.h"
+#import "ConfirmAccountViewcontroller.h"

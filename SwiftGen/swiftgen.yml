@@ -12,24 +12,18 @@ strings:
         enumName: Strings
       output: Strings+Generated.swift
 
-## Images
 xcassets:
- inputs:
-   - Images.xcassets
- outputs:
-    templateName: swift5
-    params:
-       forceProvidesNamespaces: true
-       forceFileNameEnum: true
-    output: XCAssets+Generated.swift
-    
-## Colors
-xcassets:
- inputs:
-   - Colors.xcassets
- outputs:
-    templateName: swift5
-    params:
-       forceProvidesNamespaces: true
-       enumName: Colors
-    output: Colors+Generated.swift
+  - inputs: Colors.xcassets
+    outputs:
+      - templateName: swift5
+        output: Colors+Generated.swift
+        params:
+            forceProvidesNamespaces: true
+            enumName: Colors
+  - inputs: Images.xcassets
+    outputs:
+      - templateName: swift5
+        output: XCAssets+Generated.swift
+        params:
+            forceProvidesNamespaces: true
+            forceFileNameEnum: true

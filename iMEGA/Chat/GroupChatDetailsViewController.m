@@ -297,7 +297,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.detail = NSLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
-    customModalAlertVC.firstButtonTitle = NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ");
+    customModalAlertVC.firstButtonTitle = NSLocalizedString(@"general.share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
     customModalAlertVC.link = link;
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
         customModalAlertVC.secondButtonTitle = NSLocalizedString(@"delete", nil);

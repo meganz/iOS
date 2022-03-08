@@ -52,4 +52,8 @@ extension Date {
     func isTomorrow(on calendar: Calendar) -> Bool {
         return calendar.isDateInTomorrow(self)
     }
+    
+    var isThisYear: Bool {
+        return Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
+    }
 }

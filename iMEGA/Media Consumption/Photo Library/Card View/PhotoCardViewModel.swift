@@ -25,8 +25,7 @@ class PhotoCardViewModel: ObservableObject {
             return
         }
         
-        let cachedPreviewPath = thumbnailUseCase.cachedPreview(for: photo).path
-        if let image = Image(contentsOfFile: cachedPreviewPath) {
+        if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .preview) {
             thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
         } else {
             loadThumbnailFromRemote(for: photo)
@@ -35,20 +34,15 @@ class PhotoCardViewModel: ObservableObject {
     
     private func loadThumbnailFromRemote(for photo: NodeEntity) {
         thumbnailUseCase
-            .loadThumbnailAndPreview(for: photo)
+            .loadPreview(for: photo)
             .receive(on: DispatchQueue.global(qos: .utility))
-            .map { (thumbnailURL, previewURL) -> URL? in
-                if let url = previewURL {
-                    return url
-                } else if let url = thumbnailURL {
-                    return url
-                } else {
-                    return nil
-                }
+            .map { [weak self] in
+                ImageContainer(image: Image(contentsOfFile: $0.path), overlay: self?.coverPhoto?.overlay)
             }
             .replaceError(with: nil)
-            .compactMap { [weak self] in
-                ImageContainer(image: Image(contentsOfFile: $0?.path), overlay: self?.coverPhoto?.overlay)
+            .compactMap { $0 }
+            .filter { [weak self] in
+                $0 != self?.thumbnailContainer
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$thumbnailContainer)

@@ -987,10 +987,6 @@ public enum Strings {
     public static let generatingLinks = Strings.tr("Localizable", "generatingLinks")
     /// Get chat link
     public static let getChatLink = Strings.tr("Localizable", "Get Chat Link")
-    /// Get Link
-    public static let getLink = Strings.tr("Localizable", "getLink")
-    /// Get Links
-    public static let getLinks = Strings.tr("Localizable", "getLinks")
     /// Good
     public static let good = Strings.tr("Localizable", "good")
     /// Green
@@ -1237,10 +1233,6 @@ public enum Strings {
     public static let manageChatHistory = Strings.tr("Localizable", "Manage Chat History")
     /// Manage share
     public static let manageShare = Strings.tr("Localizable", "Manage Share")
-    /// Manage Link
-    public static let manageLink = Strings.tr("Localizable", "manageLink")
-    /// Manage Links
-    public static let manageLinks = Strings.tr("Localizable", "manageLinks")
     /// Map settings
     public static let mapSettings = Strings.tr("Localizable", "Map settings")
     /// Mark as Read
@@ -2019,8 +2011,6 @@ public enum Strings {
     public static let settingsTitle = Strings.tr("Localizable", "settingsTitle")
     /// Set up MEGA
     public static let setupMEGA = Strings.tr("Localizable", "Setup MEGA")
-    /// Share
-    public static let share = Strings.tr("Localizable", "share")
     /// Share with
     public static let shareWith = Strings.tr("Localizable", "Share with")
     /// Shared
@@ -2932,6 +2922,32 @@ public enum Strings {
         /// Already have an account?
         public static let alreadyHaveAnAccount = Strings.tr("Localizable", "account.createAccount.alreadyHaveAnAccount")
       }
+      public enum Delete {
+        public enum Subscription {
+          /// You have an active MEGA subscription with Google. You must cancel it separately at Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
+          public static let googlePlay = Strings.tr("Localizable", "account.delete.subscription.googlePlay")
+          /// You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
+          public static let huaweiAppGallery = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery")
+          /// You have an active MEGA subscription. It will be canceled automatically after the account has be deleted. Visit our Help Centre for more information.
+          public static let stripeOrEcp = Strings.tr("Localizable", "account.delete.subscription.stripeOrEcp")
+          /// Active Subscription
+          public static let title = Strings.tr("Localizable", "account.delete.subscription.title")
+          public enum GooglePlay {
+            /// Visit Google Play
+            public static let visit = Strings.tr("Localizable", "account.delete.subscription.googlePlay.visit")
+          }
+          public enum HuaweiAppGallery {
+            /// Visit AppGallery
+            public static let visit = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery.visit")
+          }
+          public enum Itunes {
+            /// You have an active MEGA subscription with Apple. Please manage your subscription before continuing as MEGA is not able to cancel it for you
+            public static let withManage = Strings.tr("Localizable", "account.delete.subscription.itunes.withManage")
+            /// You have an active MEGA subscription with Apple. You must cancel it separately from your iTunes account, as MEGA is not able to cancel it for you. Visit our help Centre for more information.
+            public static let withoutManage = Strings.tr("Localizable", "account.delete.subscription.itunes.withoutManage")
+          }
+        }
+      }
       public enum Login {
         /// New to MEGA?
         public static let newToMega = Strings.tr("Localizable", "account.login.newToMega")
@@ -3000,11 +3016,27 @@ public enum Strings {
           public static let location = Strings.tr("Localizable", "cloudDrive.info.node.location")
         }
       }
+      public enum Menu {
+        public enum MediaDiscovery {
+          /// Media Discovery
+          public static let title = Strings.tr("Localizable", "cloudDrive.menu.mediaDiscovery.title")
+        }
+      }
       public enum NodeInfo {
         /// %@ (Owner)
         public static func owner(_ p1: Any) -> String {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
         }
+      }
+      public enum NodeOptions {
+        /// Manage Link
+        public static let manageLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLink")
+        /// Manage Links
+        public static let manageLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLinks")
+        /// Share Link
+        public static let shareLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLink")
+        /// Share Links
+        public static let shareLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLinks")
       }
       public enum Root {
         public enum Backup {
@@ -3260,8 +3292,16 @@ public enum Strings {
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
+      /// Export
+      public static let export = Strings.tr("Localizable", "general.export")
+      /// Export File
+      public static let exportFile = Strings.tr("Localizable", "general.exportFile")
+      /// Export Files
+      public static let exportFiles = Strings.tr("Localizable", "general.exportFiles")
       /// Join Meeting as Guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
+      /// Share
+      public static let share = Strings.tr("Localizable", "general.share")
       public enum Button {
         /// Get Bonus
         public static let getBonus = Strings.tr("Localizable", "general.button.getBonus")

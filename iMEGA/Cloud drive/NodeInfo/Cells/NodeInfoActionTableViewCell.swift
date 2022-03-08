@@ -12,9 +12,9 @@ class NodeInfoActionTableViewCell: UITableViewCell {
         iconImageView.image = Asset.Images.Generic.link.image
         iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
         if node.isExported() {
-            titleLabel.text = Strings.Localizable.manageLink
+            titleLabel.text = Strings.Localizable.CloudDrive.NodeOptions.manageLink
         } else {
-            titleLabel.text = Strings.Localizable.getLink
+            titleLabel.text = Strings.Localizable.CloudDrive.NodeOptions.shareLink
         }
         subtitleLabel.isHidden = true
         separatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)

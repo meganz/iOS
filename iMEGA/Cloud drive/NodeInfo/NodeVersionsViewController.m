@@ -454,6 +454,10 @@
             [node mnz_saveToPhotos];
             break;
             
+        case MegaNodeActionTypeExportFile:
+            [self exportFileFrom:node sender:sender];
+            break;
+            
         default:
             break;
     }
