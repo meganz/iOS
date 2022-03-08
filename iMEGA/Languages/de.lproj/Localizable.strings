@@ -959,7 +959,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Nutzer aus Ihren Kontakten auswählen oder E-Mail-Adresse(n) eingeben";
 /*  */
-"insertYourFriendsEmails"="E-Mail-Adresse(n) Ihrer Freunde:";
+"insertYourFriendsEmails"="E-Mail-Adressen Ihrer Freunde:";
 /*  */
 "howItWorks"="Funktionsprinzip";
 /*  */

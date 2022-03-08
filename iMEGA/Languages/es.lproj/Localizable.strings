@@ -959,7 +959,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleccionar contactos telefónicos o añadir correos electrónicos";
 /*  */
-"insertYourFriendsEmails"="Introduce el correo electrónico de tu(s) amigo(s):";
+"insertYourFriendsEmails"="Introduce los correos electrónicos de tus amigos:";
 /*  */
 "howItWorks"="Cómo funciona";
 /*  */
@@ -2633,7 +2633,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Mover “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="Vas a cambiar la ubicación de tu carpeta de copias de seguridad. Esto puede afectar tu capacidad para encontrar esa carpeta en el futuro. Recuerda la nueva ubicación para que puedas encontrarla en el futuro.";
+"dialog.root.backup.folder.location.warning.message"="Vas a cambiar la ubicación de tu carpeta de respaldo. Esto puede afectar tu capacidad para encontrar esa carpeta en el futuro. Recuerda la nueva ubicación para que puedas encontrarla en el futuro.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Al mover esta carpeta se cambiará el destino de las copias de seguridad y se desactivará esta función. ¿Es esto lo que quieres hacer? Puedes volver a activar las copias de seguridad a través de la aplicación de escritorio de MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2641,7 +2641,7 @@
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="Vas a eliminar tu carpeta de copias de seguridad. Se borrarán todas las copias de seguridad que hayas configurado. ¿Seguro que quieres hacer esto?";
 /* Delete the default backup folder warning message */
-"dialog.delete.backup.folder.warning.message"="¿Estás seguro de que quieres eliminar tu carpeta de copias de seguridad y desactivar las copias de seguridad que has configurado?";
+"dialog.delete.backup.folder.warning.message"="¿Estás seguro de que quieres eliminar tu carpeta de respaldo y desactivar las copias de seguridad que has configurado?";
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Añadir elemento a “%@”";
 /* Add new items to a backup folder warning message */
