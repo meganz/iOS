@@ -2,6 +2,7 @@
 #import "TransferSessionTaskDelegate.h"
 #import "CameraUploadCompletionManager.h"
 #import "TransferResponseValidator.h"
+#import "MEGA-Swift.h"
 
 static const NSUInteger MEGATransferTokenLength = 36;
 
@@ -91,9 +92,9 @@ static const NSUInteger MEGATransferTokenLength = 36;
         return;
     }
 
-    if (token.length == 0) {
+    if ([token isChunkUploadToken]) {
         MEGALogDebug(@"[Camera Upload] Session %@ task %@ completed with empty token", session.configuration.identifier, localIdentifier);
-        [CameraUploadCompletionManager.shared handleEmptyTransferTokenInSessionTask:task];
+        [CameraUploadCompletionManager.shared handleChunkUploadTask:task];
     } else if (token.length == MEGATransferTokenLength) {
         [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:localIdentifier token:token];
     } else {

@@ -41,14 +41,15 @@
 
 #pragma mark - handle transfer completion data
 
-- (void)handleEmptyTransferTokenInSessionTask:(NSURLSessionTask *)task {
+- (void)handleChunkUploadTask:(NSURLSessionTask *)task {
     NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:task.taskDescription];
     NSError *error;
     AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchivedObjectOfClass:AssetUploadInfo.class fromData:[NSData dataWithContentsOfURL:archivedURL] error:&error];
     if (error) {
         MEGALogError(@"[Camera Upload] failed to unarchive data with error: %@", error);
+        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
     } else if (uploadInfo.encryptedChunksCount == 1) {
-        MEGALogError(@"[Camera Upload] empty transfer token for single chunk %@, fileSize: %llu, response %@", task.taskDescription, uploadInfo.fileSize, task.response);
+        MEGALogError(@"[Camera Upload] chunk task for single file %@, fileSize: %llu, response %@", task.taskDescription, uploadInfo.fileSize, task.response);
         [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
     }
 }

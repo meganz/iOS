@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)shared;
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token;
-- (void)handleEmptyTransferTokenInSessionTask:(NSURLSessionTask *)task;
+- (void)handleChunkUploadTask:(NSURLSessionTask *)task;
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status;
 
