@@ -318,6 +318,8 @@
 "file_name"="ファイル名";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新規フォルダ";
+/* Menu option from the `Add` section that displays all media files under current folder */
+"cloudDrive.menu.mediaDiscovery.title"="メディアディスカバリー";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="新規フォルダ名";
 /* Title button for the create folder alert. */
@@ -1375,7 +1377,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu件の未読メッセージ";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA PROサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをタップし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDの表示」をタップします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理」まで下にスクロールします。そこから、MEGA Proサブスクリプションを選択したり、お客様の予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
+"autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA Proサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをタップし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDの表示」をタップします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理」まで下にスクロールします。そこから、MEGA Proサブスクリプションを選択したり、お客様の予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="MEGAを開いて、ログインして続行してください";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1899,7 +1901,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="%1プランのお支払いは受領できませんでした。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="お客様のPROメンバーシッププランは明日失効いたします。";
+"Your PRO membership plan will expire in 1 day."="お客様のProメンバーシッププランは明日失効いたします。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="お客様のProメンバーシッププランは%1日後に失効いたします。";
 /* The professional pricing plan which the user was on expired one day ago. */

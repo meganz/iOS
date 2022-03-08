@@ -1135,7 +1135,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Jeżeli anulowałeś zgłoszenie lub zakup nie może być przywrócony, spróbuj ponownie lub skontaktuj się z ios@mega.nz.";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="Wybierz PRO";
+"Upgrade to Pro"="Wybierz Pro";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Plan Pro ma tylko takie funkcje, jak ustawianie ochrony hasłem i dat wygaśnięcia dla plików publicznych.";
 /* Alert title shown when the DEBUG mode is enabled */

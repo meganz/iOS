@@ -1067,9 +1067,9 @@
 /*  */
 "chooseYourAccountType"="Kies uw accounttype";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S]aan cloud opslagruimte.";
+"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een Pro-account en krijg [S] tot %@TB (%@GB) [/S]aan cloud opslagruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S]tot %@TB (%@GB) [/S] aan cloud opslagruimte.";
+"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een Pro-account en krijg [S]tot %@TB (%@GB) [/S] aan cloud opslagruimte.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Opslag";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1137,7 +1137,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Upgraden naar Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Krijg toegang tot exclusieve PRO account functies zoals het instellen van wachtwoord bescherming en een verloopdatum voor openbare bestanden.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Krijg toegang tot exclusieve Pro-account functies zoals het instellen van wachtwoord bescherming en een verloopdatum voor openbare bestanden.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG modus ingeschakeld";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1707,7 +1707,7 @@
 /* Button which triggers the initial setup */
 "Setup MEGA"="MEGA Instellen";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Om volledig voordeel te krijgen van uw MEGA account hebben we sommige toestemmingen nodig.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Om volledig voordeel te krijgen van uw MEGA-account hebben we sommige toestemmingen nodig.";
 /* Message warning the user about the risk of not setting up permissions */
 "The MEGA app may not work as expected without the required permissions. Are you sure?"="De MEGA applicatie kan niet werken zoals verwacht zonder de vereiste toestemmingen. Weet u het zeker?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
@@ -2179,7 +2179,7 @@
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Onjuiste code. Probeer nogmaals of verstuur opnieuw.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
-"This number is already associated with a Mega account"="Dit nummer is al geassocieerd met een MEGA account.";
+"This number is already associated with a Mega account"="Dit nummer is al geassocieerd met een MEGA-account.";
 /* Country label for a button, title, etc. */
 "Country"="Land";
 /* Error message that will show to user its account is already verified */
@@ -2205,7 +2205,7 @@
 /* Title of a helping view about locked accounts */
 "Locked Accounts"="Gesloten Accounts";
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
-"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Het is mogelijk dat u hetzelfde wachtwoord gebruikt voor uw MEGA-account als voor andere services en dat ten minste een van deze andere diensten een gegevenslek heeft geleden.";
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Het is mogelijk dat u hetzelfde wachtwoord gebruikt voor uw MEGA-account als voor andere diensten en dat ten minste één van deze andere diensten een gegevenslek heeft geleden.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.";
 /* Label indicating transfer over quota. */
@@ -2311,7 +2311,7 @@
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph> We hebben per e-mail contact met u opgenomen naar <b>%@</b> op <b>%@</b> maar u heeft nog steeds %@ bestanden die <b>%@</b> in uw MEGA opnemen account, waarvoor u moet upgraden naar <b>%@</b>.</paragraph>";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
-"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>We hebben per e-mail contact met u opgenomen <b>%@</b> op <b>%@</b> maar u heeft nog steeds %@ bestanden opgenomen <b>%@</b> in uw MEGA account, waardoor u contact moet opnemen met de ondersteuning voor een aangepast abonnement.</paragraph>";
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>We hebben per e-mail contact met u opgenomen <b>%@</b> op <b>%@</b> maar u heeft nog steeds %@ bestanden opgenomen <b>%@</b> in uw MEGA-account, waardoor u contact moet opnemen met de ondersteuning voor een aangepast abonnement.</paragraph>";
 /* Over Disk Quota of number of days */
 "%d days"="%d dagen";
 /* Over Disk Quota of must act immediately to save your data */
@@ -2619,7 +2619,7 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Helaas heeft u geen actie ondernomen in de <b>%@</b>sinds onze e-mails zijn verzonden naar<b>%@</b>, op<b>%@</b>. U gebruikt nog steeds<b>%@</b> opslagruimte, wat uw gratis limiet overschrijdt. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie over wat u moet doen.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Helaas heeft u uw account nog niet geüpgraded. Als u nu niet upgradet, worden uw gegevens morgen verwijderd. Zie u e-mail voor meer informatie over wat u moet doen.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Helaas heeft u uw account nog niet geüpgraded. Als u nu niet upgraded, worden uw gegevens morgen verwijderd. Zie u e-mail voor meer informatie over wat u moet doen.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
 "dialog.storage.paywall.notFinal.warning"="<body>Voer een upgrade uit binnen <warn>%@</warn> om te voorkomen dat uw gegevens worden verwijderd.</body>";
 /* Over Disk Quota paywall, final warning label. */

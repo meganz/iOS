@@ -1763,15 +1763,15 @@
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾筒定時清理排程或設定更長的保留期限，您需要訂閱Pro方案。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他工作階段嗎？這將使您登出除了目前工作階段之外的所有其他工作階段。";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他工作階段嗎？這將使您登出除了目前頁面之外的所有其他進行中的工作階段。";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@加入通話。";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@離開通話。";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="有一個群組通話進行中。點擊即可加入。";
+"There is an active group call. Tap to join."="有一個進行中的群組通話。點擊即可加入。";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="有一個通話進行中。點擊即可加入。";
+"There is an active call. Tap to join."="有一個進行中的通話。點擊即可加入。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="輕觸可返回與%@的通話";
 /* Message shown in a chat room for a one on one call */
@@ -1917,7 +1917,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="由於您的帳戶已滿，您的上傳（多個）無法繼續";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人查看您上次在MEGA上線是什麼時候。";
+"Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人查看您上次在MEGA活動是什麼時候。";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="顯示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2133,7 +2133,7 @@
 /* Title shown when the user reconnect in a call. */
 "You are back!"="你回來了。";
 /* Subtitle of chat screen when the chat is inactive */
-"Inactive chat"="沒在進行的對話";
+"Inactive chat"="沒有進行中的對話";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="設定暱稱";
 /* Contact details screen: Edit the alias(nickname) for a user */
@@ -2243,7 +2243,7 @@
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="您的帳戶已被您的管理員停用。相關詳細資訊請與您的商業帳戶管理員聯絡。";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
-"Your account has been removed by your administrator. Please contact your business account administrator for further details."="您的帳戶已被您的管理員刪除。有關更多資訊請與您的商業帳戶管理員聯絡。";
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="您的帳戶已被您的管理員刪除。有關更多資訊請與您的商業帳戶管理員聯繫。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
