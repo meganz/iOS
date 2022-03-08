@@ -477,13 +477,13 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 файл перемещён в корзину";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d файлов перемещено в корзину";
+"filesMovedToRubbishBinMessage"="Файлы (%d) перемещены в корзину";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 папка перемещена в корзину";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
 "foldersMovedToRubbishBinMessage"="%d папки(ок) перемещено в корзину";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 файл и 1 папка были перемещены в Корзину";
+"fileFolderMovedToRubbishBinMessage"="1 файл и 1 папка были перемещены в корзину";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
 "fileFoldersMovedToRubbishBinMessage"="1 файл и %d папок(и) перемещены в Корзину";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
@@ -853,7 +853,7 @@
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Введите ключ восстановления";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Ключ Восстановления";
+"recoveryKey"="Ключ восстановления";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Неверный ключ восстановления";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
@@ -975,7 +975,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ на диске";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 ГБ+[/B] на диске";
+"account.storage.freePlan"="[B]20+ ГБ[/B] на диске";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Квота на передачу";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1571,7 +1571,7 @@
 /* state previous to import a file */
 "loading"="Загрузка…";
 /*  */
-"next"="Вперёд";
+"next"="Далее";
 /* Button title to allow the user ignore something */
 "ignore"="Игнорировать";
 /* Button title to allow the user open the default browser */
@@ -1613,11 +1613,11 @@
 /*  */
 "xHours"="%d ч.";
 /*  */
-"1Hour1Minute"="1 час, 1 минута";
+"1Hour1Minute"="1 час 1 минута";
 /*  */
-"1HourxMinutes"="1 ч., %d мин.";
+"1HourxMinutes"="1 ч. %d мин.";
 /*  */
-"xHours1Minute"="%d ч., 1 мин.";
+"xHours1Minute"="%d ч. 1 мин.";
 /*  */
 "xHoursxMinutes"="%1$d ч., %2$d мин.";
 /* Alert title shown when users try to stream an unsupported audio/video file */
@@ -1721,7 +1721,7 @@
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
 "To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Чтобы отправлять голосовые сообщения, совершать зашифрованные голосовые и видеозвонки, откройте MEGA доступ к камере и микрофону";
 /* Title label that explains that the user is going to be asked for the notifications permission */
-"Enable Notifications"="Включить Уведомления";
+"Enable Notifications"="Включить уведомления";
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Мы хотели бы отправлять вам уведомления, чтобы вы немедленно получали новые сообщения на своем устройстве.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
@@ -1837,7 +1837,7 @@
 /* There are no notifications to display. */
 "No notifications"="Нет оповещений";
 /* The header of a notification related to payments */
-"Payment info"="Платежная информация";
+"Payment info"="Платёжная информация";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Pro-подписка скоро истекает";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
@@ -1853,7 +1853,7 @@
 /* A reminder notification to remind the user to respond to the contact request. */
 "Reminder: You have a contact request"="Напоминание: У вас запрос на контакт";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
-"Deleted you as a contact"="Удалил Вас как контакт";
+"Deleted you as a contact"="Удалил вас из контактов";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Отношения с контактом установлены";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
