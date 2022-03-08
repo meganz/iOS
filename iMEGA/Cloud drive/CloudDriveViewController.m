@@ -100,7 +100,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.view.backgroundColor = self.containerView.backgroundColor = UIColor.mnz_background;
     
     self.definesPresentationContext = YES;
@@ -190,9 +190,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-
+    
     [self encourageToUpgrade];
-
+    
     [AudioPlayerManager.shared addDelegate:self];
 }
 
@@ -363,7 +363,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         if (self.parentNode == nil) {
             return nil;
         }
-
+        
         if (self.searchController.isActive) {
             text = NSLocalizedString(@"noResults", nil);
         } else {
@@ -376,7 +376,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                     }
                     break;
                 }
-
+                    
                 case DisplayModeRubbishBin:
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
                         text = NSLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
@@ -384,7 +384,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                         text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
                     break;
-
+                    
                 default:
                     break;
             }
@@ -392,7 +392,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     } else {
         text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
-
+    
     return text;
 }
 
@@ -401,7 +401,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
-
+    
     return text;
 }
 
@@ -411,7 +411,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         if (self.parentNode == nil) {
             return nil;
         }
-
+        
         if (self.searchController.isActive) {
             image = [UIImage imageNamed:@"searchEmptyState"];
         } else {
@@ -424,7 +424,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                     }
                     break;
                 }
-
+                    
                 case DisplayModeRubbishBin: {
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
                         image = [UIImage imageNamed:@"rubbishEmptyState"];
@@ -433,7 +433,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                     }
                     break;
                 }
-
+                    
                 default:
                     break;
             }
@@ -441,7 +441,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     } else {
         image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
-
+    
     return image;
 }
 
@@ -450,13 +450,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (parentShareType == MEGAShareTypeAccessRead) {
         return nil;
     }
-
+    
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
-
+        
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if (!self.searchController.isActive) {
@@ -464,7 +464,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 }
                 break;
             }
-
+                
             default:
                 text = @"";
                 break;
@@ -474,7 +474,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
-
+    
     return text;
 }
 
@@ -544,7 +544,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
-
+            
             break;
         }
             
@@ -1150,7 +1150,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self showSetupBackupAlert];
         return;
     }
-
+    
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
         if ([weakSelf.parentNode isBackupNode]) {
@@ -1161,7 +1161,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [weakSelf presentUploadAlertController];
         }
     }]];
-
+    
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
         if ([weakSelf.parentNode isBackupNode]) {
             [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
@@ -1181,6 +1181,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [weakSelf createNewFolderAction];
         }
     }]];
+    
+    if ([self shouldShowMediaDiscovery]) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"cloudDrive.menu.mediaDiscovery.title", @"Menu option from the `Add` section that displays all media files under current folder") detail:nil image:[UIImage imageNamed:@"mediaDiscovery"] style:UIAlertActionStyleDefault actionHandler:^{
+            MEGALogDebug(@"Show Photo Library here!");
+        }]];
+    }
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
         if ([weakSelf.parentNode isBackupNode]) {
@@ -1210,6 +1216,17 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
     [self presentViewController:moreActionSheet animated:YES completion:nil];
+}
+
+- (BOOL)shouldShowMediaDiscovery {
+    if (!FeatureFlag.isMediaDiscoveryEnabled) {
+        return NO;
+    }
+    
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+    
+    return self.parentNode.type != MEGANodeTypeRoot && [mediaNodesArray count] > 0;
 }
 
 - (IBAction)moreMinimizedAction:(UIBarButtonItem *)sender {
@@ -1585,7 +1602,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [node mnz_editTextFileInViewController:self];
             break;
         }
-
+            
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             if ([node mnz_downloadNode]) {
