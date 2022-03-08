@@ -35,7 +35,7 @@ enum HomeRoutingSource {
     case copy(MEGANode)
     case move(MEGANode)
     case delete(MEGANode)
-    case share(MEGANode, Any?)
+    case exportFile(MEGANode, Any)
     case shareFolder(MEGANode)
     case manageShare(MEGANode)
     case setLabel(MEGANode)
@@ -77,7 +77,7 @@ final class HomeRouter: HomeRouterProtocol {
         self.nodeInfoRouter = NodeInfoRouter(navigationController: navigationController)
         self.nodeLinkManagementRouter = NodeLinkRouter(navigationController: navigationController)
         self.nodeManageRouter = NodeManagementRouter(navigationController: navigationController)
-        self.nodeShareRouter = NodeShareRouter(navigationController: navigationController)
+        self.nodeShareRouter = NodeShareRouter(viewController: navigationController)
     }
 
     func didTap(on source: HomeRoutingSource, with object: Any? = nil) {
@@ -128,8 +128,8 @@ final class HomeRouter: HomeRouterProtocol {
             nodeManageRouter.showEditTextFile(for: node)
 
         // MARK: - Share
-        case .share(let node, let sender):
-            nodeShareRouter.showSharing(for: node, sender: sender)
+        case .exportFile(let node, let sender):
+            nodeShareRouter.exportFile(from: node, sender: sender)
         case .shareFolder(let node):
             nodeShareRouter.showSharingFolder(for: node)
         case .manageShare(let node):

@@ -11,7 +11,7 @@ struct PhotoCell: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            PhotoCellImage(container: viewModel.thumbnailContainer)
+            PhotoCellImage(container: viewModel.thumbnailContainer, aspectRatio: viewModel.currentZoomScaleFactor == 1 ? nil : 1)
             
             if editMode?.wrappedValue.isEditing == true {
                 CheckMarkView(markedSelected: viewModel.isSelected)
@@ -20,7 +20,7 @@ struct PhotoCell: View {
         }
         .gesture(editMode?.wrappedValue.isEditing == true ? tap : nil)
         .onAppear {
-            viewModel.loadThumbnail()
+            viewModel.loadThumbnailIfNeeded()
         }
     }
 }

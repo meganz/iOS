@@ -7,7 +7,7 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
     let title: String
     
     var badgeTitle: String? {
-        return photoByDay.photoNodeList.count > 1 ? "+\(photoByDay.photoNodeList.count - 1)": nil
+        return photoByDay.contentList.count > 1 ? "+\(photoByDay.contentList.count - 1)": nil
     }
     
     @available(iOS 15.0, *)
@@ -23,12 +23,7 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
     init(photoByDay: PhotoByDay,
          thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.photoByDay = photoByDay
-        
-        if #available(iOS 15.0, *) {
-            title = photoByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day())
-        } else {
-            title = DateFormatter.dateLong().localisedString(from: photoByDay.categoryDate)
-        }
+        title = DateFormatter.dateLong().localisedString(from: photoByDay.categoryDate)
         
         super.init(coverPhoto: photoByDay.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }

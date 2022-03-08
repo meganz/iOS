@@ -48,7 +48,7 @@ class ExplorerBaseViewController: UIViewController {
         if explorerToolbarConfigurator == nil {
             explorerToolbarConfigurator = ExplorerToolbarConfigurator(
                 downloadAction: downloadBarButtonPressed,
-                shareAction: shareBarButtonPressed,
+                shareLinkAction: shareLinkBarButtonPressed,
                 moveAction: moveBarButtonPressed,
                 copyAction: copyBarButtonPressed,
                 deleteAction: deleteButtonPressed
@@ -76,20 +76,17 @@ class ExplorerBaseViewController: UIViewController {
         endEditingMode()
     }
     
-    fileprivate func shareBarButtonPressed(_ button: UIBarButtonItem) {
+    fileprivate func shareLinkBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
                   return
               }
         
-        let activityVC = UIActivityViewController(forNodes: selectedNodes, sender: button)
-        activityVC.completionWithItemsHandler = { [weak self] activityType, _, _, _ in
-            self?.endEditingMode()
-        }
-        
-        present(activityVC, animated: true)
-        
-        if #available(iOS 14.0, *) {
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            CopyrightWarningViewController.presentGetLinkViewController(
+                for: selectedNodes,
+                in: UIApplication.mnz_presentingViewController()
+            )
             endEditingMode()
         }
     }

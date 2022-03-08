@@ -38,7 +38,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         }
         
         guard node.hasThumbnail() else {
-            completion(.failure(.noThumbnail))
+            completion(.failure(.noThumbnail(.thumbnail)))
             return
         }
         
@@ -47,7 +47,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
             case .failure(let error):
                 switch error.type {
                 case .apiENoent:
-                    completion(.failure(.noThumbnail))
+                    completion(.failure(.noThumbnail(.thumbnail)))
                 default:
                     completion(.failure(.generic))
                 }
@@ -86,7 +86,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         }
         
         guard node.hasPreview() else {
-            completion(.failure(.noPreview))
+            completion(.failure(.noThumbnail(.preview)))
             return
         }
         
@@ -95,7 +95,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
             case .failure(let error):
                 switch error.type {
                 case .apiENoent:
-                    completion(.failure(.noPreview))
+                    completion(.failure(.noThumbnail(.preview)))
                 default:
                     completion(.failure(.generic))
                 }

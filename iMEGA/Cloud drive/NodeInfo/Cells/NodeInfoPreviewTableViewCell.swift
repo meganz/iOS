@@ -25,7 +25,7 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
             previewImage.mnz_image(for: node)
             let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
             shareStackView.isHidden = isNodeInRubbish || (nodeAccess != .accessOwner)
-            shareButton.setTitle(Strings.Localizable.share.localizedUppercase, for: .normal)
+            shareButton.setTitle(Strings.Localizable.CloudDrive.NodeOptions.shareLink.localizedUppercase, for: .normal)
             let folderSize = folderInfo?.currentSize ?? 0
             let versionSize = folderInfo?.versionsSize ?? 0
             let totalSize = folderSize + versionSize

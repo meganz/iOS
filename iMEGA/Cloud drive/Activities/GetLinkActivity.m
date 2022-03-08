@@ -36,9 +36,9 @@
     
     NSString *activityTitle;
     if (self.nodes.count > 1) {
-        activityTitle = areExportedNodes ? NSLocalizedString(@"manageLinks", @"A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : NSLocalizedString(@"getLinks", @"Title shown under the action that allows you to get several links to files and/or folders");
+        activityTitle = areExportedNodes ? NSLocalizedString(@"cloudDrive.nodeOptions.manageLinks", @"A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : NSLocalizedString(@"cloudDrive.nodeOptions.shareLinks", @"Title shown under the action that allows you to get several links to files and/or folders");
     } else {
-        activityTitle = areExportedNodes ? NSLocalizedString(@"manageLink", @"Item menu option upon right click on one or multiple files.") : NSLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
+        activityTitle = areExportedNodes ? NSLocalizedString(@"cloudDrive.nodeOptions.manageLink", @"Item menu option upon right click on one or multiple files.") : NSLocalizedString(@"cloudDrive.nodeOptions.shareLink", @"Title shown under the action that allows you to get a link to file or folder");
     }
     
     return activityTitle;

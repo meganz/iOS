@@ -76,6 +76,9 @@ extension TextEditorViewController: ViewType {
             viewModel.dispatch(.downloadToOffline)
         case .showDiscardChangeAlert:
             showDiscardChangeAlert()
+        case .exportFile:
+            guard let exportFileBarButtonItem = toolbarItems?.last else { return }
+            exportFileTapped(button: exportFileBarButtonItem)
         }
     }
     
@@ -305,14 +308,14 @@ extension TextEditorViewController: ViewType {
         toolbarItems.append(flexibleItem)
         
         if accessLevel == .owner {
-            let shareBarButtonItem =
+            let exportFileBarButtonItem =
                 UIBarButtonItem(
-                    image: Asset.Images.NodeActions.share.image,
+                    image: Asset.Images.NodeActions.export.image,
                     style: .plain,
                     target: self,
-                    action: #selector(shareTapped(button:))
+                    action: #selector(exportFileTapped(button:))
                 )
-            toolbarItems.append(shareBarButtonItem)
+            toolbarItems.append(exportFileBarButtonItem)
         } else {
             let importBarButtonItem =
                 UIBarButtonItem(
@@ -334,8 +337,8 @@ extension TextEditorViewController: ViewType {
         viewModel.dispatch(.editFile)
     }
     
-    @objc private func shareTapped(button: UIBarButtonItem) {
-        viewModel.dispatch(.share(sender: button))
+    @objc private func exportFileTapped(button: UIBarButtonItem) {
+        viewModel.dispatch(.exportFile(sender: button))
     }
     
     @objc private func importTapped() {

@@ -16,7 +16,6 @@
 #import "MEGAShareRequestDelegate.h"
 #import "NSArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIActivityViewController+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -44,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leaveShareBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
@@ -244,7 +243,7 @@
     [_carbonCopyBarButtonItem setEnabled:boolValue];
     [_leaveShareBarButtonItem setEnabled:boolValue];
     
-    [self.shareBarButtonItem setEnabled:((self.selectedNodesMutableArray.count < 100) ? boolValue : NO)];
+    [self.shareLinkBarButtonItem setEnabled:((self.selectedNodesMutableArray.count < 100) ? boolValue : NO)];
     [_shareFolderBarButtonItem setEnabled:boolValue];
     [_removeShareBarButtonItem setEnabled:boolValue];
     self.removeLinkBarButtonItem.enabled = boolValue;
@@ -336,9 +335,9 @@
     if (self.incomingButton.selected) {
         [toolbarItemsMutableArray addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.leaveShareBarButtonItem]];
     } else if (self.outgoingButton.selected) {
-        [toolbarItemsMutableArray addObjectsFromArray:@[self.shareBarButtonItem, flexibleItem, self.shareFolderBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.removeShareBarButtonItem]];
+        [toolbarItemsMutableArray addObjectsFromArray:@[self.shareLinkBarButtonItem, flexibleItem, self.shareFolderBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.removeShareBarButtonItem]];
     } else if (self.linksButton.selected) {
-        [toolbarItemsMutableArray addObjectsFromArray:@[self.shareBarButtonItem, flexibleItem, self.downloadBarButtonItem, flexibleItem, self.removeLinkBarButtonItem]];
+        [toolbarItemsMutableArray addObjectsFromArray:@[self.shareLinkBarButtonItem, flexibleItem, self.downloadBarButtonItem, flexibleItem, self.removeLinkBarButtonItem]];
     }
     
     [_toolbar setItems:toolbarItemsMutableArray];
@@ -559,6 +558,12 @@
 - (void)audioPlayerHidden:(BOOL)hidden {
     if ([AudioPlayerManager.shared isPlayerAlive]) {
         [AudioPlayerManager.shared playerHidden:hidden presenter:self];
+    }
+}
+
+- (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes {
+    if (MEGAReachabilityManager.isReachableHUDIfNot) {
+        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:nodes inViewController:UIApplication.mnz_presentingViewController];
     }
 }
 
@@ -811,15 +816,10 @@
     }
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selectedNodesMutableArray sender:self.shareBarButtonItem];
-    __weak __typeof__(self) weakSelf = self;
-    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-        if (completed && !activityError) {
-            [weakSelf setEditing:NO animated:YES];
-        }
-    };
-    [self presentViewController:activityVC animated:YES completion:nil];
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
+    [self presentGetLinkVCForNodes:self.selectedNodesMutableArray];
+    
+    [self setEditing:NO animated:YES];
 }
 
 - (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
@@ -1297,7 +1297,7 @@
 
 #pragma mark - NodeActionViewControllerDelegate
 
-- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(UIButton *)sender {
     switch (action) {
         case MegaNodeActionTypeEditTextFile: {
             [node mnz_editTextFileInViewController:self];
@@ -1313,10 +1313,8 @@
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeShare:{
-            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-            [self presentViewController:activityVC animated:YES completion:nil];
-        }
+        case MegaNodeActionTypeExportFile:
+            [self exportFileFrom:node sender:sender];
             break;
             
         case MegaNodeActionTypeManageShare: {
@@ -1360,11 +1358,9 @@
             [node mnz_removeSharing];
             break;
             
-        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeShareLink:
         case MegaNodeActionTypeManageLink: {
-            if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
-            }
+            [self presentGetLinkVCForNodes:@[node]];
             break;
         }
             

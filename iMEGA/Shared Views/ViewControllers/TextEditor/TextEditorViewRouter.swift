@@ -1,14 +1,14 @@
 @objc protocol TextFileEditable { }
 
 final class TextEditorViewRouter: NSObject {
-    
+    private weak var navigationController: UINavigationController?
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     
     private var textFile: TextFile
     private let textEditorMode: TextEditorMode
     private var parentHandle: MEGAHandle?
-    private var nodeHandle: MEGAHandle?
+    private var nodeEntity: NodeEntity?
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     
     @objc convenience init(
@@ -31,7 +31,7 @@ final class TextEditorViewRouter: NSObject {
     ) {
         self.textFile = textFile
         self.textEditorMode = textEditorMode
-        self.nodeHandle = nodeEntity?.handle
+        self.nodeEntity = nodeEntity
         self.parentHandle = nodeEntity?.parentHandle
         self.presenter = presenter
     }
@@ -53,8 +53,9 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     @objc func build() -> UIViewController {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let uploadUC = UploadFileUseCase(repo: UploadFileRepository(sdk: sdk))
-        let downloadUC = DownloadFileUseCase(repo: DownloadFileRepository(sdk: sdk))
-        let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk, nodeHandle: nodeHandle))
+        let downloadFileRepository = DownloadFileRepository(sdk: sdk)
+        let downloadUC = DownloadFileUseCase(repo: downloadFileRepository)
+        let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk, nodeHandle: nodeEntity?.handle))
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,
@@ -63,13 +64,15 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             downloadFileUseCase: downloadUC,
             nodeActionUseCase: nodeActionUC,
             parentHandle: parentHandle,
-            nodeHandle: nodeHandle
+            nodeEntity: nodeEntity
         )
         let vc = TextEditorViewController(viewModel: vm)
         baseViewController = vc
         
         let nav = MEGANavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
+        navigationController = nav
+        
         return nav
     }
     
@@ -109,7 +112,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func showActions(sender button: Any) {
-        guard let nodeHandle = nodeHandle,
+        guard let nodeHandle = nodeEntity?.handle,
               let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
                   return
               }
@@ -127,7 +130,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let previewVC = nc?.viewControllers.first as? PreviewDocumentViewController
         previewVC?.filePath = path
         previewVC?.showUnknownEncodeHud = showUneditableError
-        if let nodeHandle = nodeHandle {
+        if let nodeHandle = nodeEntity?.handle {
             previewVC?.nodeHandle = nodeHandle
         }
         nc?.modalPresentationStyle = .fullScreen
@@ -177,18 +180,19 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         node.mnz_sendToChat(in: vc)
     }
     
-    func share(nodeHandle: MEGAHandle?, sender button: Any) {
-        guard let nodeHandle = nodeHandle,
-              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
-            return
-        }
-        
-        baseViewController?.present(UIActivityViewController(forNodes: [node], sender: button), animated: true, completion: nil)
+    private func exportFile() {
+        guard let vc = baseViewController as? TextEditorViewController else { return }
+        vc.executeCommand(.exportFile)
     }
     
     func restoreTextFile(node: MEGANode) {
         dismissTextEditorVC()
         node.mnz_restore()
+    }
+
+    func exportFile(from node: NodeEntity, sender button: Any) {
+        guard let vc = baseViewController as? TextEditorViewController else { return }
+        ExportFileRouter(presenter: vc, sender: button).export(node: node)
     }
 
     func viewInfo(node: MEGANode) {
@@ -213,7 +217,7 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         case .download: downloadToOffline()
         case .import: importNode(nodeHandle: nodeHandle)
         case .sendToChat: sendToChat(nodeHandle: nodeHandle)
-        case .share: share(nodeHandle: nodeHandle, sender: sender)
+        case .exportFile: exportFile()
         case .restore: restoreTextFile(node: node)
         case .info: viewInfo(node: node)
         case .viewVersions: viewVersions(node: node)

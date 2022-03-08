@@ -370,6 +370,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     [self hideKeyboard];
     
+    if (MEGALinkManager.linkURL &&
+        MEGALinkManager.urlType == URLTypePublicChatLink) {
+        [MEGALinkManager resetLinkAndURLType];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

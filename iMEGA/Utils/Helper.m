@@ -681,6 +681,7 @@
     return [NSString mnz_stringByFiles:files andFolders:folders];
 }
 
+//TODO: Review when a chat node has been already imported. 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion {
     if (node.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
         completion(node);

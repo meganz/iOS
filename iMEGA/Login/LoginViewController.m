@@ -154,6 +154,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
+    if (MEGALinkManager.linkURL &&
+        MEGALinkManager.urlType == URLTypePublicChatLink) {
+        [MEGALinkManager resetLinkAndURLType];
+    }
+    
     [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

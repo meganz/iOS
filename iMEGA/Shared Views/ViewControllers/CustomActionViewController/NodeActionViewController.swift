@@ -2,11 +2,12 @@ import UIKit
 
 @objc protocol NodeActionViewControllerDelegate {
     @objc optional func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) ->  ()
+    @objc optional func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) ->  ()
 }
 
 class NodeActionViewController: ActionSheetViewController {
     
-    private var node: MEGANode
+    private var nodes: [MEGANode]
     private var displayMode: DisplayMode
     var delegate: NodeActionViewControllerDelegate
     var sender: Any
@@ -37,7 +38,7 @@ class NodeActionViewController: ActionSheetViewController {
         sender: Any) {
         
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
-        self.node = node
+        self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
@@ -53,7 +54,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
-        self.node = node
+        self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
@@ -67,8 +68,31 @@ class NodeActionViewController: ActionSheetViewController {
                           isIncoming: isIncoming)
     }
     
+    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
+        self.nodes = nodes
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        var selectionType: NodeSelectionType = .filesAndFolders
+        let fileNodes = nodes.filter { $0.isFile() }
+        if fileNodes.count == 0 {
+            selectionType = .folders
+        } else if fileNodes.count == nodes.count {
+            selectionType = .files
+        }
+        
+        self.actions = NodeActionBuilder()
+            .setNodeSelectionType(selectionType)
+            .multiselectBuild()
+    }
+    
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, sender: Any) {
-        self.node = node
+        self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
@@ -108,7 +132,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference, sender: Any) {
-        self.node = node
+        self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
         self.viewMode = viewMode
@@ -125,7 +149,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, displayMode: DisplayMode = .previewDocument, isInVersionsView: Bool = false, sender: Any) {
-        self.node = node
+        self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
@@ -181,6 +205,10 @@ class NodeActionViewController: ActionSheetViewController {
     
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let node = nodes[safe: indexPath.row] else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
         if node.isBackupRootNode() || node.isBackupNode(),
            let action = actions[indexPath.row] as? NodeAction,
            (action.type == .move || action.type == .moveToRubbishBin) {
@@ -198,13 +226,20 @@ class NodeActionViewController: ActionSheetViewController {
             return
         }
         dismiss(animated: true, completion: {
-            self.delegate.nodeAction?(self, didSelect: action.type, for: self.node, from: self.sender)
+            if self.nodes.count == 1, let node = self.nodes.first {
+                self.delegate.nodeAction?(self, didSelect: action.type, for: node, from: self.sender)
+            } else {
+                self.delegate.nodeAction?(self, didSelect: action.type, forNodes: self.nodes, from: self.sender)
+            }
         })
     }
     
     // MARK: - Private
 
     private func configureNodeHeaderView() {
+        guard nodes.count == 1, let node = nodes.first else {
+            return
+        }
         
         headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 80)
 

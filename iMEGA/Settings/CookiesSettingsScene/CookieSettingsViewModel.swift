@@ -71,7 +71,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             
         case .performanceAndAnalyticsSwitchValueChanged(let bool):
             cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue] = bool
-            
+            cookieSettingsUseCase.setAnalyticsEnabled(bool)
         case .save:
             save()
         }

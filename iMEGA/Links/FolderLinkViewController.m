@@ -41,7 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic, strong) MEGANode *parentNode;
@@ -305,7 +305,7 @@
 }
 
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue {
-    [self.shareBarButtonItem setEnabled:boolValue];
+    [self.shareLinkBarButtonItem setEnabled:boolValue];
     [self.importBarButtonItem setEnabled:boolValue];
     self.downloadBarButtonItem.enabled = boolValue;
 }
@@ -635,7 +635,7 @@
     [self reloadData];
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
     NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
     if (link != nil) {
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
@@ -1060,8 +1060,8 @@
             break;
         }
             
-        case MegaNodeActionTypeShare:
-            [self shareAction:self.moreBarButtonItem];
+        case MegaNodeActionTypeShareLink:
+            [self shareLinkAction:self.moreBarButtonItem];
             break;
             
         case MegaNodeActionTypeSaveToPhotos:

@@ -13,15 +13,15 @@ extension ChatViewController {
         let flexibleItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         switch type {
         case .text:
-            setToolbarItems([shareBarButtonItem, flexibleItem, copyBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
+            setToolbarItems([exportBarButtonItem, flexibleItem, copyBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
         case .image:
-            setToolbarItems([shareBarButtonItem, flexibleItem, importButtonItem, flexibleItem, saveToPhotosButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
+            setToolbarItems([exportBarButtonItem, flexibleItem, importButtonItem, flexibleItem, saveToPhotosButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
         case .attachment:
-            setToolbarItems([shareBarButtonItem, flexibleItem, importButtonItem, flexibleItem, offlineBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
+            setToolbarItems([exportBarButtonItem, flexibleItem, importButtonItem, flexibleItem, offlineBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
         case .contact:
             setToolbarItems([flexibleItem, forwardBarButtonItem], animated: true)
         case .mixed:
-            setToolbarItems([shareBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
+            setToolbarItems([exportBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
         }
     }
     
@@ -168,9 +168,7 @@ extension ChatViewController {
     }
     
     
-    @objc func shareSelectedMessages(sender: UIBarButtonItem) {
-
-        SVProgressHUD.show()
+    @objc func exportSelectedMessages(sender: UIBarButtonItem) {
         var megaMessages = [MEGAChatMessage]()
         for chatMessage in selectedMessages {
             megaMessages.append(chatMessage.message)
@@ -178,24 +176,8 @@ extension ChatViewController {
         megaMessages = megaMessages.sorted(by: { (obj1, obj2) -> Bool in
             obj1.messageIndex < obj2.messageIndex
         })
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            guard let activityViewController = UIActivityViewController(for: megaMessages, sender: sender) else {
-                SVProgressHUD.showError(withStatus: NSLocalizedString("linkUnavailable", comment: ""))
-                return
-            }
-            activityViewController.completionWithItemsHandler = {[weak self] activity, success, items, error in
-                if success {
-                    self?.setEditing(false, animated: false)
-                }
-            }
-            
-            DispatchQueue.main.async(execute: {
-                SVProgressHUD.dismiss()
-                
-                self.present(viewController: activityViewController)
-            })
-        }
+        setEditing(false, animated: false)
+        ExportFileRouter(presenter: self, sender: sender).export(messages: megaMessages)
     }
     
     func updateToolbarState() {
@@ -234,7 +216,7 @@ extension ChatViewController {
         }
         
         forwardBarButtonItem.isEnabled = isEnabled
-        shareBarButtonItem.isEnabled = isEnabled && !hasGiphy
+        exportBarButtonItem.isEnabled = isEnabled && !hasGiphy
         deleteBarButtonItem.isEnabled = isEnabled
         copyBarButtonItem.isEnabled = isEnabled
         offlineBarButtonItem.isEnabled = isEnabled

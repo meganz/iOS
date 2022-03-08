@@ -19,7 +19,7 @@ final class AudioPlayerFileToolbarConfigurator {
     )
     
     lazy var sendToContactItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.sendMessage.image,
+        image: Asset.Images.NodeActions.sendToContact.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
