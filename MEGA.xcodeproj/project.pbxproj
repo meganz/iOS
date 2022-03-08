@@ -1604,6 +1604,7 @@
 		B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */; };
 		B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */; };
 		B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */; };
+		B6BD983527D6F343006E4333 /* NSData+CameraUploads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD983427D6F343006E4333 /* NSData+CameraUploads.swift */; };
 		B6C444CB274A27DE00268D9A /* PhotoLibraryMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444CA274A27DE00268D9A /* PhotoLibraryMonthView.swift */; };
 		B6C444D1274A280800268D9A /* PhotoLibraryDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D0274A280800268D9A /* PhotoLibraryDayView.swift */; };
 		B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D2274A281700268D9A /* PhotoLibraryDayViewModel.swift */; };
@@ -3800,6 +3801,7 @@
 		B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadRecordsCollator.m; sourceTree = "<group>"; };
 		B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+CameraUpload.h"; sourceTree = "<group>"; };
 		B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+CameraUpload.m"; sourceTree = "<group>"; };
+		B6BD983427D6F343006E4333 /* NSData+CameraUploads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSData+CameraUploads.swift"; sourceTree = "<group>"; };
 		B6C444CA274A27DE00268D9A /* PhotoLibraryMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryMonthView.swift; sourceTree = "<group>"; };
 		B6C444D0274A280800268D9A /* PhotoLibraryDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryDayView.swift; sourceTree = "<group>"; };
 		B6C444D2274A281700268D9A /* PhotoLibraryDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryDayViewModel.swift; sourceTree = "<group>"; };
@@ -8393,6 +8395,7 @@
 				B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */,
 				B6B3C364222628C200918D44 /* TransferResponseValidator.h */,
 				B6B3C365222628C200918D44 /* TransferResponseValidator.m */,
+				B6BD983427D6F343006E4333 /* NSData+CameraUploads.swift */,
 			);
 			path = TransferSession;
 			sourceTree = "<group>";
@@ -12113,6 +12116,7 @@
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */,
 				12466800275DB82000C94335 /* CustomModalAlertViewController+BackupActions.swift in Sources */,
+				B6BD983527D6F343006E4333 /* NSData+CameraUploads.swift in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
 				BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */,
 				BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */,
