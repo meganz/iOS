@@ -2005,7 +2005,7 @@
 /* Plural of items which contains a folder. 2 items */
 "%1$d items"="%1$d éléments";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat Link Unavailable"="Le lien de conversation est inaccessible";
+"Chat Link Unavailable"="Le lien de conversation n’est pas disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Ce lien de conversation n’est plus accessible";
 /* Text explaining users how the chat links work. */
