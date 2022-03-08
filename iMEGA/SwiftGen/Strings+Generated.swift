@@ -3026,6 +3026,12 @@ public enum Strings {
           public static let location = Strings.tr("Localizable", "cloudDrive.info.node.location")
         }
       }
+      public enum Menu {
+        public enum MediaDiscovery {
+          /// Media Discovery
+          public static let title = Strings.tr("Localizable", "cloudDrive.menu.mediaDiscovery.title")
+        }
+      }
       public enum NodeInfo {
         /// %@ (Owner)
         public static func owner(_ p1: Any) -> String {
