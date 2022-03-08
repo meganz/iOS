@@ -27,7 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sendToBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -214,7 +214,7 @@
 }
 
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
-    self.moreBarButtonItem.enabled = self.shareBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
+    self.moreBarButtonItem.enabled = self.shareLinkBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
     self.navigationBarLabel = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"fileLink", nil) subtitle:NSLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
     self.navigationItem.titleView = self.navigationBarLabel;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
@@ -322,7 +322,7 @@
 - (void)shareFileLink {
     NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-    activityVC.popoverPresentationController.barButtonItem = self.shareBarButtonItem;
+    activityVC.popoverPresentationController.barButtonItem = self.shareLinkBarButtonItem;
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -361,7 +361,7 @@
     [self open];
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
     [self shareFileLink];
 }
 
@@ -392,7 +392,7 @@
             [self sendFileLinkToChat];
             break;
             
-        case MegaNodeActionTypeShare:
+        case MegaNodeActionTypeShareLink:
             [self shareFileLink];
             break;
             

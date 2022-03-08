@@ -4,6 +4,8 @@ class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     
     private let store: MEGAStore
     
+    let offlinePath: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    
     init(store: MEGAStore) {
         self.store = store
     }

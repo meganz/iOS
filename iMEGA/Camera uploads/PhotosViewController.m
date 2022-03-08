@@ -24,7 +24,6 @@
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"
-#import "UIActivityViewController+MNZCategory.h"
 
 @import StoreKit;
 @import Photos;
@@ -54,7 +53,7 @@
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
@@ -467,7 +466,7 @@
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = boolValue;
-    self.shareBarButtonItem.enabled = ((self.selection.count < 100) ? boolValue : NO);
+    self.shareLinkBarButtonItem.enabled = ((self.selection.count < 100) ? boolValue : NO);
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
@@ -636,9 +635,10 @@
     [self setEditing:NO animated:YES];
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selection.nodes sender:self.shareBarButtonItem];
-    [self presentViewController:activityVC animated:YES completion:nil];
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
+    if (MEGAReachabilityManager.isReachableHUDIfNot) {
+        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:self.selection.nodes inViewController:UIApplication.mnz_presentingViewController];
+    }
     
     [self setEditing:NO animated:YES];
 }

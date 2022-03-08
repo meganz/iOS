@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -559,7 +559,7 @@
                                 <rect key="frame" x="0.0" y="110" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QVk-oY-4By" id="pzQ-xH-Bz0">
-                                    <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="8EL-pl-aRG">
@@ -591,7 +591,7 @@
                                 <rect key="frame" x="0.0" y="153.5" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HMC-jo-xr4" id="0Sz-on-kLB">
-                                    <rect key="frame" x="0.0" y="0.0" width="349.5" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="XhX-t2-Ze6">
@@ -602,7 +602,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="HQ5-NT-6W2">
-                                            <rect key="frame" x="306.5" y="15" width="35" height="16"/>
+                                            <rect key="frame" x="307.5" y="15" width="35" height="16"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
@@ -680,6 +680,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="sVp-1V-opM"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionsBarButtonItem" destination="cH7-iH-c9P" id="nZM-7E-XQf"/>
                         <outlet property="carbonCopyBarButtonItem" destination="vGK-lg-Cye" id="AWV-kg-ow1"/>
                         <outlet property="containerView" destination="xAf-QH-eJE" id="5Qa-dm-LTN"/>
                         <outlet property="deleteBarButtonItem" destination="T78-eD-QmZ" id="CFD-Ds-54c"/>
@@ -690,7 +691,7 @@
                         <outlet property="moveBarButtonItem" destination="M5b-JU-elC" id="1N4-Wk-Qkq"/>
                         <outlet property="restoreBarButtonItem" destination="J5v-Rg-QUN" id="CFK-E4-oqv"/>
                         <outlet property="selectAllBarButtonItem" destination="i2g-E4-PNq" id="eKA-Xr-jla"/>
-                        <outlet property="shareBarButtonItem" destination="ZLw-VN-spf" id="9Sa-ye-tR2"/>
+                        <outlet property="shareLinkBarButtonItem" destination="ZLw-VN-spf" id="9Sa-ye-tR2"/>
                         <outlet property="toolbar" destination="fEo-QQ-FwW" id="y3P-bl-i38"/>
                     </connections>
                 </viewController>
@@ -705,9 +706,9 @@
                         <action selector="moreMinimizedAction:" destination="MwH-YC-3hO" id="4Dd-LR-xOs"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="share" width="32" style="plain" id="ZLw-VN-spf" userLabel="Share Bar Button Item">
+                <barButtonItem enabled="NO" image="link" width="32" style="plain" id="ZLw-VN-spf" userLabel="Share Link Bar Button Item">
                     <connections>
-                        <action selector="shareAction:" destination="MwH-YC-3hO" id="FF8-kZ-90c"/>
+                        <action selector="shareLinkAction:" destination="MwH-YC-3hO" id="FF8-kZ-90c"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem image="selectAll" width="22" style="plain" id="i2g-E4-PNq" userLabel="Select All Bar Button Item">
@@ -723,6 +724,11 @@
                 <barButtonItem enabled="NO" image="rubbishBin" width="32" style="plain" id="T78-eD-QmZ" userLabel="Rubbish Bin Delete Bar Button Item">
                     <connections>
                         <action selector="deleteActionWithSender:" destination="MwH-YC-3hO" id="2Ei-Ih-U7n"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="moreNavigationBar" width="32" style="plain" id="cH7-iH-c9P" userLabel="Actions Bar Button Item">
+                    <connections>
+                        <action selector="actionsTouchUpInside:" destination="MwH-YC-3hO" id="niA-19-tJP"/>
                     </connections>
                 </barButtonItem>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="fEo-QQ-FwW">
@@ -974,6 +980,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="copy" width="28" height="28"/>
         <image name="downloaded" width="12" height="12"/>
         <image name="favouriteSmall" width="12.5" height="12"/>
+        <image name="link" width="28" height="28"/>
         <image name="linked" width="12" height="12"/>
         <image name="moreList" width="28" height="28"/>
         <image name="moreNavigationBar" width="28" height="28"/>
@@ -983,7 +990,6 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="restore" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="selectAll" width="28" height="28"/>
-        <image name="share" width="28" height="28"/>
         <image name="upload" width="28" height="28"/>
         <image name="versioned" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>

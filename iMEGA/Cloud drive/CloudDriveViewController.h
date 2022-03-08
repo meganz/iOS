@@ -5,12 +5,14 @@
 @class MEGANode;
 @class MEGAUser;
 @class MyAvatarManager;
+@protocol BrowserViewControllerDelegate;
+@protocol ContatctsViewControllerDelegate;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CloudDriveViewController : UIViewController
+@interface CloudDriveViewController : UIViewController <BrowserViewControllerDelegate, ContatctsViewControllerDelegate>
 
 @property (nonatomic, strong, nullable) MEGANode *parentNode;
 @property (nonatomic, strong, nullable) MEGAUser *user;
@@ -43,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
 - (void)setEditMode:(BOOL)editMode;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
+- (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes;
 
 @end
 

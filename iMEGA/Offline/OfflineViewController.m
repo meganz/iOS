@@ -13,7 +13,6 @@
 #import "PreviewDocumentViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-#import "OpenInActivity.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "MEGAAVViewController.h"
@@ -663,12 +662,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (IBAction)activityTapped:(UIBarButtonItem *)sender {
-    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-    if (self.selectedItems.count == 1) {
-        OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:sender];
-        [activitiesMutableArray addObject:openInActivity];
-    }
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:self.selectedItems applicationActivities:activitiesMutableArray];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:self.selectedItems applicationActivities:nil];
     if (self.selectedItems.count > 5) {
         activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll];
     }
@@ -1026,29 +1020,30 @@ static NSString *kisDirectory = @"kisDirectory";
             [self removeOfflineNodeCell:itemPath];
         } andCancelAction:nil];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ") detail:nil image:[UIImage imageNamed:@"share"] style:UIAlertActionStyleDefault actionHandler:^{
-        NSMutableArray *activitiesMutableArray = NSMutableArray.alloc.init;
-        
-        OpenInActivity *openInActivity = [OpenInActivity.alloc initOnView:self.view];
-        [activitiesMutableArray addObject:openInActivity];
-        
-        NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
-        
-        NSMutableArray *selectedItems = [NSMutableArray arrayWithCapacity:1];
-        [selectedItems addObject:itemPathURL];
-        
-        UIActivityViewController *activityViewController = [UIActivityViewController.alloc initWithActivityItems:selectedItems applicationActivities:activitiesMutableArray];
-        
-        [activityViewController setCompletionWithItemsHandler:nil];
-        
-        if (UIDevice.currentDevice.iPadDevice) {
-            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-            activityViewController.popoverPresentationController.sourceView = sender;
-            activityViewController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-        }
-        
-        [weakSelf presentViewController:activityViewController animated:YES completion:nil];
-    }]];
+    
+    BOOL isDirectory;
+    BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
+    if (fileExistsAtPath && !isDirectory) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"general.exportFile", @"Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu") detail:nil image:[UIImage imageNamed:@"export"] style:UIAlertActionStyleDefault actionHandler:^{
+            
+            NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
+            
+            NSMutableArray *selectedItems = [NSMutableArray arrayWithCapacity:1];
+            [selectedItems addObject:itemPathURL];
+            
+            UIActivityViewController *activityViewController = [UIActivityViewController.alloc initWithActivityItems:selectedItems applicationActivities:nil];
+            
+            [activityViewController setCompletionWithItemsHandler:nil];
+            
+            if (UIDevice.currentDevice.iPadDevice) {
+                activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+                activityViewController.popoverPresentationController.sourceView = sender;
+                activityViewController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+            }
+            
+            [weakSelf presentViewController:activityViewController animated:YES completion:nil];
+        }]];
+    }
     
     ActionSheetViewController *fileInfoActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
     [self presentViewController:fileInfoActionSheet animated:YES completion:nil];

@@ -46,7 +46,7 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         case .download: download(node: node)
         case .import: importNode(node)
         case .sendToChat: sendToChat()
-        case .share: shareLink()
+        case .shareLink: shareLink()
         case .saveToPhotos: saveToPhotos(node: node)
         default:
             break

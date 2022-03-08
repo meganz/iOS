@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -104,9 +104,9 @@
                                 <action selector="doneTapped:" destination="zUo-yM-mbH" id="hdo-Vw-jfA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="share" id="vj5-kf-txr">
+                        <barButtonItem key="rightBarButtonItem" image="export" id="vj5-kf-txr">
                             <connections>
-                                <action selector="shareAction:" destination="zUo-yM-mbH" id="dZX-DX-gKG"/>
+                                <action selector="exportFileAction:" destination="zUo-yM-mbH" id="dZX-DX-gKG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -115,10 +115,10 @@
                         <outlet property="closeBarButtonItem" destination="uL1-bJ-jlX" id="rFw-EA-UYI"/>
                         <outlet property="collectionView" destination="xcl-UM-x0L" id="syf-l2-XOd"/>
                         <outlet property="downloadBarButtonItem" destination="r08-LH-yXr" id="vnS-8m-Jzk"/>
+                        <outlet property="exportFileBarButtonItem" destination="zhj-Kc-zZm" id="6SY-XO-WHe"/>
                         <outlet property="imageView" destination="VJh-z4-8vz" id="LRL-gj-Q4P"/>
                         <outlet property="importBarButtonItem" destination="vTK-Lp-W8C" id="Cfb-Zr-1Ra"/>
                         <outlet property="moreBarButtonItem" destination="R1j-r6-Sll" id="Fif-Wa-O5U"/>
-                        <outlet property="openInBarButtonItem" destination="zhj-Kc-zZm" id="6SY-XO-WHe"/>
                         <outlet property="pdfView" destination="IHv-aq-hY6" id="bor-lu-UNg"/>
                         <outlet property="progressView" destination="VYB-69-jRQ" id="PbI-03-tZe"/>
                         <outlet property="searchBarButtonItem" destination="XMA-eg-oSl" id="2nw-U8-GfN"/>
@@ -136,14 +136,9 @@
                         <action selector="searchTapped:" destination="zUo-yM-mbH" id="6GC-Dr-7YH"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="share" style="plain" id="zhj-Kc-zZm">
+                <barButtonItem image="export" style="plain" id="zhj-Kc-zZm">
                     <connections>
-                        <action selector="shareAction:" destination="zUo-yM-mbH" id="b1e-qb-pHG"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem image="moreNavigationBar" style="plain" id="R1j-r6-Sll" userLabel="More Bar Button Item">
-                    <connections>
-                        <action selector="actionsTapped:" destination="zUo-yM-mbH" id="M4Z-Io-Yhl"/>
+                        <action selector="exportFileAction:" destination="zUo-yM-mbH" id="b1e-qb-pHG"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Item" image="import" style="plain" id="vTK-Lp-W8C" userLabel="Import">
@@ -154,6 +149,11 @@
                 <barButtonItem image="offline" style="plain" id="r08-LH-yXr" userLabel="download">
                     <connections>
                         <action selector="downloadAction:" destination="zUo-yM-mbH" id="phJ-iB-YwS"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="moreNavigationBar" style="plain" id="R1j-r6-Sll" userLabel="More Bar Button Item">
+                    <connections>
+                        <action selector="actionsTapped:" destination="zUo-yM-mbH" id="M4Z-Io-Yhl"/>
                     </connections>
                 </barButtonItem>
             </objects>
@@ -172,7 +172,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchItemCell" rowHeight="170" id="9Sh-2k-8S9">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="170"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="170"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Sh-2k-8S9" id="Qp7-0r-KCn">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="170"/>
@@ -273,11 +273,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="export" width="28" height="28"/>
         <image name="import" width="28" height="28"/>
         <image name="moreNavigationBar" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
-        <image name="share" width="28" height="28"/>
         <image name="thumbnailsThin" width="28" height="28"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

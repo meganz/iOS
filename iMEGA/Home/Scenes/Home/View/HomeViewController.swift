@@ -31,7 +31,7 @@ final class HomeViewController: UIViewController {
     var bannerViewModel: HomeBannerViewModelType!
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel!
-
+    
     // MARK: - Router
 
     var router: HomeRouter!
@@ -566,7 +566,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
                 router?.didTap(on: .fileInfo(node))
 
             // MARK: Links
-            case .manageLink, .getLink:
+            case .manageLink, .shareLink:
                 router?.didTap(on: .linkManagement(node))
             case .removeLink:
                 router?.didTap(on: .removeLink(node))
@@ -595,9 +595,9 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             case .rename:
                 node.mnz_renameNode(in: self)
 
-            // MARK: Share
-            case .share:
-                router?.didTap(on: .share(node, sender))
+            // MARK: Export File
+            case .exportFile:
+                router?.didTap(on: .exportFile(node, sender))
             case .shareFolder:
                 router?.didTap(on: .shareFolder(node))
             case .manageShare:

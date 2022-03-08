@@ -20,6 +20,7 @@ final class NodeActionBuilder {
     private var isBackupFolder: Bool = false
     private var isInVersionsView: Bool = false
     private var viewMode: ViewModePreference = .list
+    private var nodeSelectionType: NodeSelectionType = .single
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -116,6 +117,11 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setNodeSelectionType(_ selectionType: NodeSelectionType?) -> NodeActionBuilder {
+        self.nodeSelectionType = selectionType ?? .single
+        return self
+    }
+    
     func build() -> [NodeAction] {
         
         var nodeActions = [NodeAction]()
@@ -129,7 +135,21 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
-    // MARK:- Private methods
+    func multiselectBuild() -> [NodeAction] {
+        switch nodeSelectionType {
+        case .single:
+            return []
+        case .files:
+            return multiselectFilesActions()
+        case .folders:
+            return multiselectFoldersActions()
+        case .filesAndFolders:
+            return multiselectFoldersAndFilesActions()
+        }
+    }
+    
+    // MARK: - Private methods
+    
     private func shouldAddRestoreAction() -> Bool {
         guard isRestorable else {
             return false
@@ -142,9 +162,9 @@ final class NodeActionBuilder {
         var nodeActions: [NodeAction] = [
             .importAction(),
             .downloadAction(),
-            .sendToChatAction(),
             .selectAction(),
-            .shareAction(),
+            .shareLinkAction(),
+            .sendToChatAction(),
             .sortAction()
         ]
         
@@ -158,13 +178,12 @@ final class NodeActionBuilder {
     }
     
     private func fileLinkNodeActions() -> [NodeAction] {
-        var nodeActions: [NodeAction] = [.importAction(), .downloadAction(), .sendToChatAction()]
+        var nodeActions: [NodeAction] = [.importAction(), .downloadAction(), .shareLinkAction(), .sendToChatAction()]
         
         if isMediaFile {
             nodeActions.append(NodeAction.saveToPhotosAction())
         }
         
-        nodeActions.append(NodeAction.shareAction())
         return nodeActions
     }
     
@@ -188,10 +207,11 @@ final class NodeActionBuilder {
         if accessLevel != .accessOwner {
             nodeActions.append(NodeAction.importAction())
         }
-        nodeActions.append(NodeAction.sendToChatAction())
         if accessLevel == .accessOwner {
-            nodeActions.append(NodeAction.shareAction())
+            nodeActions.append(NodeAction.shareLinkAction())
+            nodeActions.append(NodeAction.exportFileAction())
         }
+        nodeActions.append(NodeAction.sendToChatAction())
 
         return nodeActions
     }
@@ -203,10 +223,13 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.importAction())
         }
         nodeActions.append(NodeAction.downloadAction())
-        nodeActions.append(NodeAction.sendToChatAction())
         if accessLevel == .accessOwner || isLink {
-            nodeActions.append(NodeAction.shareAction())
+            nodeActions.append(NodeAction.shareLinkAction())
         }
+        if accessLevel == .accessOwner {
+            nodeActions.append(NodeAction.exportFileAction())
+        }
+        nodeActions.append(NodeAction.sendToChatAction())
         if isPdf {
             nodeActions.append(NodeAction.searchAction())
             if isPageView {
@@ -232,7 +255,7 @@ final class NodeActionBuilder {
     }
     
     private func transfersNodeActions() -> [NodeAction] {
-        [.viewInFolderAction(), .getLinkAction(), .clearAction()]
+        [.viewInFolderAction(), .shareLinkAction(), .clearAction()]
     }
     
     private func transfersFailedNodeActions() -> [NodeAction] {
@@ -250,7 +273,7 @@ final class NodeActionBuilder {
     
     private func readAndWriteAccessLevelNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
-        
+
         if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
             nodeActions.append(NodeAction.textEditorAction())
         }
@@ -318,99 +341,24 @@ final class NodeActionBuilder {
     private func ownerAccessLevelNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
-        if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
-            if isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
-                nodeActions.append(NodeAction.textEditorAction())
-            }
-            if displayMode != .nodeInfo {
-                nodeActions.append(NodeAction.infoAction())
-                if versionCount > 0 {
-                    nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
-                }
-                nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
-                nodeActions.append(NodeAction.labelAction(label: label))
-            }
-
-            if isMediaFile {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            nodeActions.append(NodeAction.downloadAction())
-            if isExported {
-                nodeActions.append(NodeAction.manageLinkAction())
-                nodeActions.append(NodeAction.removeLinkAction())
-            } else {
-                nodeActions.append(NodeAction.getLinkAction())
-            }
-            if !isFile {
-                if isOutShare {
-                    nodeActions.append(NodeAction.manageFolderAction())
-                } else {
-                    nodeActions.append(NodeAction.shareFolderAction())
-                }
-            }
-            nodeActions.append(NodeAction.shareAction())
-            if isFile {
-                nodeActions.append(NodeAction.sendToChatAction())
-            }
-            if !isBackupFolder {
-                nodeActions.append(NodeAction.renameAction())
-            }
-            nodeActions.append(NodeAction.moveAction())
-            nodeActions.append(NodeAction.copyAction())
-            if isIncomingShareChildView {
-                nodeActions.append(NodeAction.leaveSharingAction())
-            }
-            if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
-                nodeActions.append(NodeAction.moveToRubbishBinAction())
-            } else {
-                nodeActions.append(NodeAction.removeAction())
-            }
-        } else if displayMode == .nodeVersions {
-            if isMediaFile {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            nodeActions.append(NodeAction.downloadAction())
-            if isChildVersion {
-                nodeActions.append(NodeAction.revertVersionAction())
-            }
-            nodeActions.append(NodeAction.removeVersionAction())
-        } else if displayMode == .chatAttachment {
-            nodeActions.append(NodeAction.infoAction())
-            if versionCount > 0 {
-                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
-            }
-            if isMediaFile {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            nodeActions.append(NodeAction.downloadAction())
-            nodeActions.append(NodeAction.shareAction())
-        } else if displayMode == .rubbishBin {
-            nodeActions.append(NodeAction.infoAction())
-
-            if !isInVersionsView {
-                if versionCount > 0 {
-                    nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
-                }
-                nodeActions.append(NodeAction.removeAction())
-            }
-        } else {
-            nodeActions.append(NodeAction.infoAction())
-            if versionCount > 0 {
-                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
-            }
-            nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
-            nodeActions.append(NodeAction.labelAction(label: label))
-            if isMediaFile {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            nodeActions.append(NodeAction.downloadAction())
-            nodeActions.append(NodeAction.manageFolderAction())
-            nodeActions.append(NodeAction.shareAction())
-            if !isBackupFolder {
-                nodeActions.append(NodeAction.renameAction())
-            }
-            nodeActions.append(NodeAction.copyAction())
-            nodeActions.append(NodeAction.removeSharingAction())
+        switch displayMode {
+        case .unknown: break
+            
+        case .cloudDrive, .sharedItem, .nodeInfo, .recents:
+            nodeActions = ownerAccessLevelNodeActionsForCloudLikeViews()
+            
+        case .rubbishBin:
+            nodeActions = nodeActionsForRubbishBin()
+            
+        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor: break
+            
+        case .nodeVersions:
+            nodeActions = ownerAccessLevelNodeActionsForNodeVersions()
+            
+        case .chatAttachment:
+            nodeActions = ownerAccessLevelNodeActionsForChatAttachment()
+            
+        @unknown default: break
         }
         
         return nodeActions
@@ -436,7 +384,7 @@ final class NodeActionBuilder {
             return previewDocumentNodeActions()
         case .textEditor:
             return textEditorActions()
-        default:
+        default: //.unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents, .chatAttachment
             switch accessLevel {
             case .accessUnknown:
                 return unknownAccessLevelNodeActions()
@@ -450,5 +398,143 @@ final class NodeActionBuilder {
                 return []
             }
         }
+    }
+    
+    private func ownerAccessLevelNodeActionsForCloudLikeViews() -> [NodeAction] {
+        var nodeActions: [NodeAction] = []
+        
+        if isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
+            nodeActions.append(NodeAction.textEditorAction())
+        }
+        
+        if displayMode != .nodeInfo {
+            nodeActions.append(NodeAction.infoAction())
+            if versionCount > 0 {
+                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            }
+            nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+            nodeActions.append(NodeAction.labelAction(label: label))
+        }
+        
+        if isMediaFile {
+            nodeActions.append(NodeAction.saveToPhotosAction())
+        }
+        
+        nodeActions.append(NodeAction.downloadAction())
+        
+        if isExported {
+            nodeActions.append(NodeAction.manageLinkAction())
+            nodeActions.append(NodeAction.removeLinkAction())
+        } else {
+            nodeActions.append(NodeAction.shareLinkAction())
+        }
+        
+        if !isFile {
+            if isOutShare {
+                nodeActions.append(NodeAction.manageFolderAction())
+            } else {
+                nodeActions.append(NodeAction.shareFolderAction())
+            }
+        } else {
+            nodeActions.append(NodeAction.exportFileAction())
+        }
+        
+        if isFile {
+            nodeActions.append(NodeAction.sendToChatAction())
+        }
+        
+        if !isBackupFolder {
+            nodeActions.append(NodeAction.renameAction())
+        }
+        
+        if displayMode != .sharedItem {
+            nodeActions.append(NodeAction.moveAction())
+        }
+        
+        nodeActions.append(NodeAction.copyAction())
+        
+        if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
+            nodeActions.append(NodeAction.moveToRubbishBinAction())
+        } else if displayMode == .sharedItem {
+            nodeActions.append(NodeAction.removeSharingAction())
+        }
+        
+        return nodeActions
+    }
+    
+    private func nodeActionsForRubbishBin() -> [NodeAction] {
+        var nodeActions: [NodeAction] = []
+        
+        nodeActions.append(NodeAction.infoAction())
+
+        if !isInVersionsView {
+            if versionCount > 0 {
+                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            }
+            nodeActions.append(NodeAction.removeAction())
+        }
+        
+        return nodeActions
+    }
+    
+    private func ownerAccessLevelNodeActionsForNodeVersions() -> [NodeAction] {
+        var nodeActions: [NodeAction] = []
+        
+        if isMediaFile {
+            nodeActions.append(NodeAction.saveToPhotosAction())
+        }
+        nodeActions.append(NodeAction.downloadAction())
+        nodeActions.append(NodeAction.exportFileAction())
+        if isChildVersion {
+            nodeActions.append(NodeAction.revertVersionAction())
+        }
+        nodeActions.append(NodeAction.removeVersionAction())
+        
+        return nodeActions
+    }
+    
+    private func ownerAccessLevelNodeActionsForChatAttachment() -> [NodeAction] {
+        var nodeActions: [NodeAction] = []
+        
+        nodeActions.append(NodeAction.infoAction())
+        if versionCount > 0 {
+            nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+        }
+        if isMediaFile {
+            nodeActions.append(NodeAction.saveToPhotosAction())
+        }
+        nodeActions.append(NodeAction.downloadAction())
+        nodeActions.append(NodeAction.shareLinkAction())
+        nodeActions.append(NodeAction.exportFileAction())
+        nodeActions.append(NodeAction.sendToChatAction())
+        
+        return nodeActions
+    }
+    
+    private func multiselectFoldersActions() -> [NodeAction] {
+        [NodeAction.downloadAction(),
+         NodeAction.shareLinksAction(),
+         NodeAction.shareFoldersAction(),
+         NodeAction.moveAction(),
+         NodeAction.copyAction(),
+         NodeAction.moveToRubbishBinAction()]
+    }
+    
+    private func multiselectFilesActions() -> [NodeAction] {
+        [NodeAction.downloadAction(),
+         NodeAction.shareLinksAction(),
+         NodeAction.exportFilesAction(),
+         NodeAction.sendToChatAction(),
+         NodeAction.moveAction(),
+         NodeAction.copyAction(),
+         NodeAction.moveToRubbishBinAction()]
+    }
+    
+    private func multiselectFoldersAndFilesActions() -> [NodeAction] {
+        [NodeAction.downloadAction(),
+         NodeAction.shareLinksAction(),
+         NodeAction.moveAction(),
+         NodeAction.copyAction(),
+         NodeAction.moveToRubbishBinAction()]
     }
 }

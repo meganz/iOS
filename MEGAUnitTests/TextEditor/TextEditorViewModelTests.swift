@@ -11,9 +11,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
-        
-        let mockNodeHandle: MEGAHandle = 123
-        
+                
         var textEditorModel: TextEditorModel
         var navbarItemsModel: TextEditorNavbarItemsModel
         
@@ -53,8 +51,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 textEditorMode: textEditorMode,
                 uploadFileUseCase: mockUploadFileUC,
                 downloadFileUseCase: mockDownloadFileUC,
-                nodeActionUseCase: mockNodeActionUC,
-                nodeHandle: mockNodeHandle
+                nodeActionUseCase: mockNodeActionUC
             )
             test(viewModel: viewModel,
                  action: .setUpView,
@@ -107,8 +104,8 @@ final class TextEditorViewModelTests: XCTestCase {
             textEditorMode: .view
         )
         
-        let mockNodeHandle: MEGAHandle = 123
-        
+        let mockNode = NodeEntity(handle: 123, isFile: true)
+
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -116,7 +113,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadFileUseCase: mockDownloadFileUC,
             nodeActionUseCase: mockNodeActionUC,
-            nodeHandle: mockNodeHandle
+            nodeEntity: mockNode
         )
 
         let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
@@ -172,8 +169,8 @@ final class TextEditorViewModelTests: XCTestCase {
             textEditorMode: textEditorMode
         )
         
-        let mockNodeHandle: MEGAHandle = 123
-        
+        let mockNode = NodeEntity(handle: 123, isFile: true)
+
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -181,7 +178,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadFileUseCase: mockDownloadFileUC,
             nodeActionUseCase: mockNodeActionUC,
-            nodeHandle: mockNodeHandle
+            nodeEntity: mockNode
         )
 
         let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
@@ -226,8 +223,8 @@ final class TextEditorViewModelTests: XCTestCase {
             textEditorMode: textEditorMode
         )
         
-        let mockNodeHandle: MEGAHandle = 123
-        
+        let mockNode = NodeEntity(handle: 123, isFile: true)
+
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -235,7 +232,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadFileUseCase: mockDownloadFileUC,
             nodeActionUseCase: mockNodeActionUC,
-            nodeHandle: mockNodeHandle
+            nodeEntity: mockNode
         )
 
         let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
@@ -268,7 +265,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
         let mockParentHandle: MEGAHandle = 123
-        let mockNodeHandle: MEGAHandle = 123
+        let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -278,7 +275,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadFileUseCase: mockDownloadFileUC,
             nodeActionUseCase: mockNodeActionUC,
             parentHandle: mockParentHandle,
-            nodeHandle: mockNodeHandle
+            nodeEntity: mockNode
         )
 
         let editContent = "edit content"
@@ -874,7 +871,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
-        let mockNodeHandle: MEGAHandle = 123
+        
+        let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -883,7 +881,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadFileUseCase: mockDownloadFileUC,
             nodeActionUseCase: mockNodeActionUC,
-            nodeHandle: mockNodeHandle
+            nodeEntity: mockNode
         )
 
         let textEditorViewModel = TextEditorModel(
@@ -913,6 +911,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadFileUC = MockDownloadFileUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
+
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -952,12 +951,13 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.importNode_calledTimes, 1)
     }
     
-    func testAction_share_view() {
-        let textFile = TextFile(fileName: "testAction_share_view")
+    func testAction_exportFile() {
+        let textFile = TextFile(fileName: "testAction_exportFile")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadFileUC = MockDownloadFileUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
+        let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -965,16 +965,15 @@ final class TextEditorViewModelTests: XCTestCase {
             textEditorMode: .view,
             uploadFileUseCase: mockUploadFileUC,
             downloadFileUseCase: mockDownloadFileUC,
-            nodeActionUseCase: mockNodeActionUC
+            nodeActionUseCase: mockNodeActionUC,
+            nodeEntity: mockNode
         )
-
+        
         test(viewModel: viewModel,
-             action: .share(sender: UIButton()),
-             expectedCommands: []
-        )
-        XCTAssertEqual(mockRouter.share_calledTimes, 1)
+             action: .exportFile(sender: UIButton()),
+             expectedCommands: [])
+        XCTAssertEqual(mockRouter.exportFile_calledTimes, 1)
     }
-    
     
     private func mockTransferEntity(transferTypeEntity: TransferTypeEntity, path: String? = nil) -> TransferEntity {
         return TransferEntity(
@@ -1018,7 +1017,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     var reloadData_calledTimes = 0
     var presentPreviewDocVC_calledTimes = 0
     var importNode_calledTimes = 0
-    var share_calledTimes = 0
+    var exportFile_calledTimes = 0
     
     func chooseParentNode(completion: @escaping (MEGAHandle) -> Void) {
         chooseDestination_calledTimes += 1
@@ -1045,7 +1044,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
         importNode_calledTimes += 1
     }
     
-    func share(nodeHandle: MEGAHandle?, sender button: Any) {
-        share_calledTimes += 1
+    func exportFile(from node: NodeEntity, sender button: Any) {
+        exportFile_calledTimes += 1
     }
 }

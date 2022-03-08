@@ -61,7 +61,7 @@ final class HomeScreenFactory: NSObject {
         )
 
         homeViewController.quickAccessWidgetViewModel = QuickAccessWidgetViewModel(offlineFilesUseCase: OfflineFilesUseCase(repo: OfflineFilesRepository(store: MEGAStore.shareInstance())))
-        
+                
         navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
 
         homeViewController.searchResultViewController = createSearchResultViewController(with: navigationController)

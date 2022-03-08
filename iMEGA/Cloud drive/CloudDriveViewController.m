@@ -12,7 +12,6 @@
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIActivityViewController+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -58,7 +57,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, TextFileEditable> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -72,11 +71,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *restoreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionsBarButtonItem;
 
 @property (nonatomic, strong) NSArray *nodesArray;
 
@@ -630,7 +630,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case MEGAShareTypeAccessOwner: {
             if (self.displayMode == DisplayModeCloudDrive) {
-                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareLinkBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem, flexibleItem, self.actionsBarButtonItem]];
             } else { //Rubbish Bin
                 [self.toolbar setItems:@[self.restoreBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             }
@@ -645,11 +645,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = boolValue;
-    [self.shareBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? boolValue : NO)];
+    [self.shareLinkBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? boolValue : NO)];
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
     self.restoreBarButtonItem.enabled = boolValue;
+    self.actionsBarButtonItem.enabled = boolValue;
     
     if ((self.displayMode == DisplayModeRubbishBin) && boolValue) {
         for (MEGANode *n in self.selectedNodesArray) {
@@ -1077,6 +1078,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:removeAlertController animated:YES completion:nil];
 }
 
+- (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes {
+    if (MEGAReachabilityManager.isReachableHUDIfNot) {
+        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:nodes inViewController:UIApplication.mnz_presentingViewController];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1351,35 +1358,18 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self reloadData];
 }
 
-- (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
-    __weak __typeof__(self) weakSelf = self;
-    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-        if (completed && !activityError) {
-            [weakSelf setEditMode:NO];
-        }
-    };
-    [self presentViewController:activityVC animated:YES completion:nil];
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
+    [self presentGetLinkVCForNodes:self.selectedNodesArray];
+    
+    [self setEditMode:NO];
 }
 
 - (IBAction)moveAction:(UIBarButtonItem *)sender {
-    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-    [self presentViewController:navigationController animated:YES completion:nil];
-    
-    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.browserViewControllerDelegate = self;
-    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
-    browserVC.browserAction = BrowserActionMove;
+    [self showBrowserNavigationFor:self.selectedNodesArray action:BrowserActionMove];
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
-    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-    [self presentViewController:navigationController animated:YES completion:nil];
-    
-    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.browserViewControllerDelegate = self;
-    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
-    browserVC.browserAction = BrowserActionCopy;
+    [self showBrowserNavigationFor:self.selectedNodesArray action:BrowserActionCopy];
 }
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
@@ -1596,7 +1586,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - NodeActionViewControllerDelegate
 
-- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(UIButton *)sender {
+    [self setEditMode:NO];
     switch (action) {
         case MegaNodeActionTypeEditTextFile: {
             [node mnz_editTextFileInViewController:self];
@@ -1611,18 +1602,17 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeCopy:
-            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self copyAction:nil];
+            [self showBrowserNavigationFor:@[node] action:BrowserActionCopy];
             break;
             
         case MegaNodeActionTypeMove:
             if ([node isBackupRootNode] || [node isBackupNode]) {
                 __weak __typeof__(self) weakSelf = self;
                 [self moveBackupNode:node completion:^{
-                    [weakSelf moveNode:node];
+                    [weakSelf showBrowserNavigationFor:@[node] action:BrowserActionMove];
                 }];
             } else {
-                [self moveNode:node];
+                [self showBrowserNavigationFor:@[node] action:BrowserActionMove];
             }
             break;
             
@@ -1630,20 +1620,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [UIActivityViewController activityViewControllerForNodes:@[node] sender:sender];
-            [self presentViewController:activityVC animated:YES completion:nil];
-        }
+        case MegaNodeActionTypeExportFile:
+            [self exportFileFrom:node sender:sender];
             break;
             
-        case MegaNodeActionTypeShareFolder: {
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-            contactsVC.nodesArray = @[node];
-            contactsVC.contactsMode = ContactsModeShareFoldersWith;
-            [self presentViewController:navigationController animated:YES completion:nil];
+        case MegaNodeActionTypeShareFolder:
+            [self showShareFolderForNodes:@[node]];
             break;
-        }
             
         case MegaNodeActionTypeManageShare: {
             ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
@@ -1683,11 +1666,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [node mnz_leaveSharingInViewController:self];
             break;
             
-        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeShareLink:
         case MegaNodeActionTypeManageLink: {
-            if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
-            }
+            [self presentGetLinkVCForNodes:@[node]];
             break;
         }
             
@@ -1740,7 +1721,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeSendToChat:
-            [node mnz_sendToChatInViewController:self];
+            [self showSendToChat:@[node]];
             break;
             
         case MegaNodeActionTypeViewVersions:
@@ -1792,7 +1773,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-#pragma mark - BrowserViewControllerDelegate
+#pragma mark - BrowserViewControllerDelegate & ContatctsViewControllerDelegate
 
 - (void)nodeEditCompleted:(BOOL)complete {
     [self setEditMode:!complete];

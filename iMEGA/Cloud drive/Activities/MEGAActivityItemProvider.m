@@ -15,8 +15,7 @@
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
 
-@interface MEGAActivityItemProvider () <UIActivityItemSource, MEGARequestDelegate> {
-}
+@interface MEGAActivityItemProvider () <UIActivityItemSource, MEGARequestDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) MEGATransfer *transfer;

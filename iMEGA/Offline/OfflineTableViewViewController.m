@@ -12,7 +12,6 @@
 
 #import "OfflineTableViewCell.h"
 #import "OfflineViewController.h"
-#import "OpenInActivity.h"
 #import "MEGA-Swift.h"
 
 static NSString *kFileName = @"kFileName";

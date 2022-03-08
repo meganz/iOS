@@ -941,7 +941,7 @@ static TransfersWidgetViewController* instance = nil;
     
     switch (action) {
 
-        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeShareLink:
         case MegaNodeActionTypeManageLink: {
             if (MEGAReachabilityManager.isReachableHUDIfNot && node != nil) {
                 MEGANavigationController *getLinkNC = [GetLinkViewController instantiateWithNodes:@[node]];

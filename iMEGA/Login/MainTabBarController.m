@@ -16,28 +16,19 @@
 
 #import "NSObject+Debounce.h"
 
-static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLocationLeft";
-
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate>
 
 @property (nonatomic, assign) NSInteger unreadMessages;
-@property (nonatomic, strong) UIView *progressView;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
 
 @property (nonatomic, strong) PSAViewModel *psaViewModel;
-
-
-@property (nonatomic) NSLayoutConstraint *progressViewWidthConstraint;
-@property (nonatomic) NSLayoutConstraint *progressViewHeightConstraint;
-@property (nonatomic) NSLayoutConstraint *progressViewBottomConstraint;
-@property (nonatomic) NSLayoutConstraint *progressViewLeadingConstraint;
-@property (nonatomic) NSLayoutConstraint *progressViewTraillingConstraint;
 
 @end
 
 @implementation MainTabBarController
 
 #pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -65,8 +56,7 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     
-    [self defineProgressView];
-    [self.progressView addGestureRecognizer:[UIPanGestureRecognizer.alloc initWithTarget:self action:@selector(dragTransferWidget:)]];
+    [self configProgressView];
     
     [self setBadgeValueForChats];
     [self configurePhoneImageBadge];
@@ -75,13 +65,6 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     [self showPSAViewIfNeeded];
     
     [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
-}
-
-- (void)tapProgressView {
-    TransfersWidgetViewController *transferVC = [TransfersWidgetViewController sharedTransferViewController];
-    MEGANavigationController *nav = [[MEGANavigationController alloc] initWithRootViewController:transferVC];
-    [nav addLeftDismissButtonWithText:NSLocalizedString(@"close", @"A button label.")];
-    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -243,50 +226,18 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     [self presentViewController:navigation animated:YES completion:nil];
 }
 
-- (void)defineProgressView {
-    self.progressView = ({
-        ProgressIndicatorView *view = [ProgressIndicatorView.alloc initWithFrame:CGRectMake(0, 0, 70, 70)];
-        view.userInteractionEnabled = YES;
-        
-        [self.progressView removeFromSuperview];
-        
-        [self.view addSubview:view];
-        
-        self.progressViewWidthConstraint = [view.widthAnchor constraintEqualToConstant:70.0];
-        self.progressViewHeightConstraint = [view.heightAnchor constraintEqualToConstant:70.0];
-        self.progressViewBottomConstraint = [view.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-60.0];
-        self.progressViewLeadingConstraint = [view.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:4.0];
-        self.progressViewTraillingConstraint = [view.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-4.0];
-        
-        BOOL transferWidgetLeft = [NSUserDefaults.standardUserDefaults boolForKey:TrasnferWidgetViewLocationLeft];
-        
-        [NSLayoutConstraint activateConstraints:@[
-            self.progressViewWidthConstraint,
-            self.progressViewHeightConstraint,
-            self.progressViewBottomConstraint,
-            transferWidgetLeft ? self.progressViewLeadingConstraint : self.progressViewTraillingConstraint,
-        ]];
-        
-        [view addGestureRecognizer:({
-            [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapProgressView)];
-        })];
-        
-        [TransfersWidgetViewController sharedTransferViewController].progressView = view;
-        view.hidden = YES;
-        view;
-    });
+- (void)configProgressView {
+    [TransfersWidgetViewController.sharedTransferViewController configProgressIndicator];
+    [TransfersWidgetViewController.sharedTransferViewController showProgressWithView:self.view];
 }
 
 - (void)shouldUpdateProgressViewLocation {
     dispatch_async(dispatch_get_main_queue(), ^{
         for (UIView *subview in self.view.subviews) {
             if ([subview isKindOfClass:[ProgressIndicatorView class]]) {
-            
-                if ([AudioPlayerManager.shared isPlayerAlive]) {
-                    self.progressViewBottomConstraint.constant = -120.0;
-                } else {
-                    self.progressViewBottomConstraint.constant = -60.0;
-                }
+                CGFloat bottomConstant = [AudioPlayerManager.shared isPlayerAlive] ? -120.0 : -60.0;
+                [TransfersWidgetViewController.sharedTransferViewController updateProgressViewWithBottomConstant:bottomConstant];
+                
                 [UIView animateWithDuration:0.3 animations:^{
                     [subview layoutIfNeeded];
                 }];
@@ -386,42 +337,6 @@ static NSString * const TrasnferWidgetViewLocationLeft = @"TrasnferWidgetViewLoc
     }
     
     [self showPSAViewIfNeeded:self.psaViewModel];
-}
-
-- (void)dragTransferWidget:(UIPanGestureRecognizer *)panGestureRecognizer {
-    UIView *panView = panGestureRecognizer.view;
-    switch (panGestureRecognizer.state) {
-        case UIGestureRecognizerStateBegan:
-        case UIGestureRecognizerStateChanged: {
-            CGPoint translation = [panGestureRecognizer translationInView:panView];
-            [panGestureRecognizer setTranslation:CGPointZero inView:panView];
-            panView.center = CGPointMake(panView.center.x + translation.x, panView.center.y + translation.y);
-        }
-            break;
-        case UIGestureRecognizerStateEnded:
-        case UIGestureRecognizerStateCancelled:
-        {
-            CGPoint location = panView.center;
-            if (location.x > CGRectGetWidth(UIScreen.mainScreen.bounds)/2.f) {
-                self.progressViewLeadingConstraint.active = NO;
-                self.progressViewTraillingConstraint.active = YES;
-                [NSUserDefaults.standardUserDefaults setBool:NO forKey:TrasnferWidgetViewLocationLeft];
-            }
-            else {
-                self.progressViewTraillingConstraint.active = NO;
-                self.progressViewLeadingConstraint.active = YES;
-                [NSUserDefaults.standardUserDefaults setBool:YES forKey:TrasnferWidgetViewLocationLeft];
-            }
-            
-            [self.view setNeedsLayout];
-            [UIView animateWithDuration:0.3 animations:^{
-                [self.view layoutIfNeeded];
-            }];
-        }
-            
-        default:
-            break;
-    }
 }
 
 - (void)updatePhoneImageBadgeFrame {

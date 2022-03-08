@@ -11,7 +11,7 @@ enum TextEditorViewAction: ActionType {
     case cancel
     case downloadToOffline
     case importNode
-    case share(sender: Any)
+    case exportFile(sender: Any)
     case editAfterOpen
 }
 
@@ -29,7 +29,7 @@ protocol TextEditorViewRouting: Routing {
     func showActions(sender button: Any)
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool)
     func importNode(nodeHandle: MEGAHandle?)
-    func share(nodeHandle: MEGAHandle?, sender button: Any)
+    func exportFile(from node: NodeEntity, sender button: Any)
 }
 
 final class TextEditorViewModel: ViewModelType {
@@ -47,6 +47,7 @@ final class TextEditorViewModel: ViewModelType {
         case downloadToOffline
         case startDownload(status: String)
         case showDiscardChangeAlert
+        case exportFile
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -54,7 +55,7 @@ final class TextEditorViewModel: ViewModelType {
     private var textFile: TextFile
     private var textEditorMode: TextEditorMode
     private var parentHandle: MEGAHandle?
-    private var nodeHandle: MEGAHandle?
+    private var nodeEntity: NodeEntity?
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadFileUseCase: DownloadFileUseCaseProtocol
     private var nodeActionUseCase: NodeActionUseCaseProtocol
@@ -69,7 +70,7 @@ final class TextEditorViewModel: ViewModelType {
         downloadFileUseCase: DownloadFileUseCaseProtocol,
         nodeActionUseCase: NodeActionUseCaseProtocol,
         parentHandle: MEGAHandle? = nil,
-        nodeHandle: MEGAHandle? = nil
+        nodeEntity: NodeEntity? = nil
     ) {
         self.router = router
         self.textFile = textFile
@@ -78,7 +79,7 @@ final class TextEditorViewModel: ViewModelType {
         self.downloadFileUseCase = downloadFileUseCase
         self.nodeActionUseCase = nodeActionUseCase
         self.parentHandle = parentHandle
-        self.nodeHandle = nodeHandle
+        self.nodeEntity = nodeEntity
     }
     
     func dispatch(_ action: TextEditorViewAction) {
@@ -108,9 +109,9 @@ final class TextEditorViewModel: ViewModelType {
         case .downloadToOffline:
             downloadToOffline()
         case .importNode:
-            router.importNode(nodeHandle: nodeHandle)
-        case .share(sender: let button):
-            router.share(nodeHandle: nodeHandle, sender: button)
+            router.importNode(nodeHandle: nodeEntity?.handle)
+        case .exportFile(sender: let button):
+            exportFile(sender: button)
         }
     }
     
@@ -239,8 +240,8 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func downloadToTempFolder() {
-        guard let nodeHandle = nodeHandle else { return }
-        downloadFileUseCase.downloadToTempFolder(nodeHandle: nodeHandle) { (transferEntity) in
+        guard let nodeHandle = nodeEntity?.handle else { return }
+        downloadFileUseCase.downloadToTempFolder(nodeHandle: nodeHandle, appData: nil) { (transferEntity) in
             let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
             self.invokeCommand?(.updateProgressView(progress: percentage))
         } completion: { (result) in
@@ -330,5 +331,13 @@ final class TextEditorViewModel: ViewModelType {
             uploadFile()
             router.dismissBrowserVC()
         }
+    }
+    
+    private func exportFile(sender: Any) {
+        guard let nodeEntity = nodeEntity else {
+            return
+        }
+        
+        router.exportFile(from: nodeEntity, sender: sender)
     }
 }
