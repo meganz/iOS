@@ -103,12 +103,12 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             let resumePlaying = isPlaying
             
             if resumePlaying {
-                queuePlayer.pause()
+                pause()
             }
             queuePlayer.secureInsert(lastItem, after: nil)
             
             if resumePlaying {
-                queuePlayer.play()
+                play()
             }
             
         } else {
@@ -182,6 +182,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             let previousItem = tracks[currentIndex - 1]
             play(item: previousItem, completion: completion)
         } else {
+            storedRate = rate
             queuePlayer.currentItem?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
                 self.isPlaying ? self.play() : self.pause()
                 completion()
@@ -202,7 +203,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             
             if resumePlaying {
                 // pause the audio player to avoid playback issues
-                queuePlayer.pause()
+                pause()
             }
             
             // remove item before insert it to avoid duplicates
@@ -220,7 +221,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             }
             
             if resumePlaying {
-                queuePlayer.play()
+                play()
             }
         } else if currentIndex == index {
             queuePlayer.currentItem?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) {_ in
@@ -453,18 +454,18 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
     
     func resetCurrentItem() {
-        guard let player = queuePlayer, let currentItem = currentItem() else { return }
+        guard let currentItem = currentItem() else { return }
         
         let resumePlaying = isPlaying
         
         if resumePlaying {
-            player.pause()
+            pause()
         }
         
         reset(item: currentItem)
         
         if resumePlaying {
-            player.play()
+            play()
         }
     }
 }
