@@ -1510,16 +1510,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - MEGATransferDelegate
 
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.isStreamingTransfer) {
-        return;
-    }
-    
-    if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
-        [self.cdTableView.tableView reloadData];
-    }
-}
-
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (transfer.isStreamingTransfer) {
         return;
@@ -1543,7 +1533,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
     }
     
-    if (transfer.type == MEGATransferTypeDownload) {
+    if (transfer.type == MEGATransferTypeDownload && [transfer.path hasPrefix:Helper.relativePathForOffline]) {
         switch (self.viewModePreference) {
             case ViewModePreferenceList:
                 [self.cdTableView.tableView reloadData];
