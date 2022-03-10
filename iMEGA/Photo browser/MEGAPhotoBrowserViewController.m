@@ -140,7 +140,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeChatAttachment:
         {
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            [self.toolbar setItems:@[self.exportFileToolbarItem, flexibleItem, self.importToolbarItem, flexibleItem, self.saveToolbarItem, flexibleItem, self.forwardToolbarItem]];
+            [self.toolbar setItems:@[self.exportFileToolbarItem, flexibleItem, self.importToolbarItem, flexibleItem,  self.forwardToolbarItem, flexibleItem, self.customActionsButton]];
             self.allMediaToolBarItem.title = NSLocalizedString(@"All Media", @"");
             
             self.navigationItem.rightBarButtonItem = self.allMediaToolBarItem;

@@ -603,60 +603,37 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .build()
 
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .import]))
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import, .copy]))
     }
     
     func testChatSharedFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.chatSharedFiles)
             .setIsFile(true)
-            .setIsMediaFile(true)
+            .setIsMediaFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .import]))
-    }
-    
-    func testChatAttachmentFile() {
-        actions = NodeActionBuilder()
-            .setDisplayMode(.chatAttachment)
-            .setAccessLevel(.accessOwner)
-            .setIsFile(true)
-            .build()
-        
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .shareLink, .exportFile, .sendToChat]))
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import, .copy]))
     }
     
     func testChatAttachmentMediaFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.chatAttachment)
-            .setAccessLevel(.accessOwner)
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-        
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .saveToPhotos, .download, .shareLink, .exportFile, .sendToChat]))
+
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import, .copy]))
     }
     
-    func testChatAttachmentNodeNoVersion() {
+    func testChatAttachmentFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.chatAttachment)
-            .setAccessLevel(.accessOwner)
             .setIsFile(true)
-            .setVersionCount(0)
+            .setIsMediaFile(false)
             .build()
         
-        XCTAssertFalse(contains(nodeActionType: .viewVersions))
-    }
-    
-    func testChatAttachmentNodeWithMultiVersion() {
-        actions = NodeActionBuilder()
-            .setDisplayMode(.chatAttachment)
-            .setAccessLevel(.accessOwner)
-            .setIsFile(true)
-            .setVersionCount(2)
-            .build()
-        
-        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import, .copy]))
     }
     
     // MARK: - Versions tests
