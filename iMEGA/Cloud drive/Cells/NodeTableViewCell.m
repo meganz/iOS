@@ -77,7 +77,7 @@
     if (self.downloadedView != nil) {
         self.downloadedView.hidden = self.downloadedImageView.isHidden;
     }
-    self.linkView.hidden = !node.isExported;
+    self.linkView.hidden = !node.isExported || node.mnz_isInRubbishBin;
     
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
