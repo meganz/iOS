@@ -109,7 +109,7 @@ class GetLinkViewController: UIViewController {
         
         processNodes()
         
-        shareBarButton.title = Strings.Localizable.CloudDrive.NodeOptions.shareLink
+        shareBarButton.title = getLinkVM.multilink ? Strings.Localizable.CloudDrive.NodeOptions.shareLinks : Strings.Localizable.CloudDrive.NodeOptions.shareLink
         copyLinkBarButton.title = getLinkVM.multilink ? Strings.Localizable.copyAll : Strings.Localizable.copyLink
         copyKeyBarButton.title = Strings.Localizable.copyKey
         
