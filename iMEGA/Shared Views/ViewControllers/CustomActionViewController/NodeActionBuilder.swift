@@ -242,15 +242,15 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
-    private func chatSharedFilesNodeActions() -> [NodeAction] {
+    private func chatNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = [.forwardAction()]
-
+        nodeActions.append(.downloadAction())
+        nodeActions.append(.exportFileAction())
         if isMediaFile {
-            nodeActions.append(NodeAction.saveToPhotosAction())
+            nodeActions.append(.saveToPhotosAction())
         }
-        nodeActions.append(NodeAction.downloadAction())
-        nodeActions.append(NodeAction.importAction())
-        
+        nodeActions.append(.importAction())
+        nodeActions.append(.copyAction())
         return nodeActions
     }
     
@@ -378,13 +378,13 @@ final class NodeActionBuilder {
             return transfersNodeActions()
         case .transfersFailed:
             return transfersFailedNodeActions()
-        case .chatSharedFiles:
-            return chatSharedFilesNodeActions()
+        case .chatSharedFiles, .chatAttachment:
+            return chatNodeActions()
         case .previewDocument:
             return previewDocumentNodeActions()
         case .textEditor:
             return textEditorActions()
-        default: //.unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents, .chatAttachment
+        default: //.unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents
             switch accessLevel {
             case .accessUnknown:
                 return unknownAccessLevelNodeActions()
