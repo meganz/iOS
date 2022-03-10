@@ -111,7 +111,7 @@ static NSString *kDuration = @"kDuration";
     self.favouriteView.hidden = favouriteIsHidden;
     BOOL versionedIsHidden = ![MEGASdkManager.sharedMEGASdk hasVersionsForNode:node];
     self.versionedView.hidden = versionedIsHidden;
-    BOOL linkIsHidden = !node.isExported;
+    BOOL linkIsHidden = !node.isExported || node.mnz_isInRubbishBin;
     self.linkView.hidden = linkIsHidden;
     self.topNodeIconsView.hidden = favouriteIsHidden && versionedIsHidden && linkIsHidden;
     
