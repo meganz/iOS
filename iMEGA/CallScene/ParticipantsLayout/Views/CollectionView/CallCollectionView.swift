@@ -132,7 +132,7 @@ extension CallCollectionView: UICollectionViewDelegateFlowLayout {
             let width: CGFloat = collectionView.frame.size.width
             let height: CGFloat = collectionView.frame.size.height
             
-            if UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat {
+            if height > width {
                 switch callParticipants.count {
                 case 1:
                     return collectionView.frame.size
