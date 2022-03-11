@@ -1250,6 +1250,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [node mnz_showNodeVersionsInViewController:self];
             break;
             
+        case MegaNodeActionTypeForward:
+            [self didPressForwardbarButton:self.customActionsButton];
+            break;
+            
         default:
             break;
     }
