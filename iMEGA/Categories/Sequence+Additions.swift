@@ -13,4 +13,8 @@ extension Sequence where Element: MEGANode {
     func hasModifiedAttributes() -> Bool {
         !filter({ $0.hasChangedType(.attributes)}).isEmpty
     }
+    
+    func hasModifiedParent() -> Bool {
+        !filter({ $0.hasChangedType(.parent)}).isEmpty
+    }
 }
