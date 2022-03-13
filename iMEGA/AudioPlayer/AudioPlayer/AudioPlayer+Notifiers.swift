@@ -89,4 +89,8 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
         
         observer.audio?(player: player, loopMode: isRepeatAllMode(), shuffleMode: isShuffleMode(), repeatOneMode: isRepeatOneMode())
     }
+    
+    func aboutAudioPlayerDidFinishBuffering(_ observer: AudioPlayerObserversProtocol) {
+        observer.audioPlayerDidFinishBuffering?()
+    }
 }

@@ -196,6 +196,7 @@ final class AudioPlayerViewController: UIViewController {
             shuffleButton.isEnabled = enabled
             repeatButton.isEnabled = enabled
             gotoplaylistButton.isEnabled = enabled
+            playbackSpeedButton.isEnabled = enabled
         }
     }
     

@@ -85,6 +85,7 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audioPlayerDidFinishBlockingAction()
     @objc optional func audioPlayerDidPausePlayback()
     @objc optional func audioPlayerDidResumePlayback()
+    @objc optional func audioPlayerDidFinishBuffering()
 }
 
 //MARK: - Audio Player Notify Observers Functions
@@ -104,6 +105,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func aboutAudioPlayerDidPausePlayback(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerDidResumePlayback(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerConfiguration(_ observer: AudioPlayerObserversProtocol)
+    func aboutAudioPlayerDidFinishBuffering(_ observer: AudioPlayerObserversProtocol)
 }
 
 //MARK: - Audio Player Handler
