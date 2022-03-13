@@ -447,4 +447,10 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
         repeatItemsState = loopMode ? .loop : repeatOneMode ? .repeatOne : .none
         invokeCommand?(.updateShuffle(status: shuffleMode))
     }
+    
+    func audioPlayerDidFinishBuffering() {
+        if playerHandler.currentSpeedMode() != speedModeState {
+            playerHandler.changePlayer(speed: speedModeState)
+        }
+    }
 }

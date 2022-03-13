@@ -116,7 +116,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     
     // listening for event that buffer is almost full
     func audio(playerItem: AVPlayerItem, isPlaybackLikelyToKeepUp value: NSKeyValueObservedChange<Bool>) {
-        // Audio Player buffering ends...
+        notify(aboutAudioPlayerDidFinishBuffering)
     }
     
     // listening for event that buffer is full
