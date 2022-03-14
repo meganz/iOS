@@ -4,7 +4,22 @@ final class ___VARIABLE_sceneName:identifier___ViewController: UIViewController,
     // MARK: - Private properties
 
     // MARK: - Internal properties
+    
+    // Storyboard
     var viewModel : ___VARIABLE_sceneName:identifier___ViewModel!
+    
+    // Xib
+//    var viewModel: ___VARIABLE_sceneName:identifier___ViewModel
+//
+//    init(viewModel: ___VARIABLE_sceneName:identifier___ViewModel) {
+//        self.viewModel = viewModel
+//
+//        super.init(nibName: String(describing: ___VARIABLE_sceneName:identifier___ViewModel.self), bundle: nil)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) is not supported")
+//    }
     
     // MARK: - View lifecycle
     override func viewDidLoad() {

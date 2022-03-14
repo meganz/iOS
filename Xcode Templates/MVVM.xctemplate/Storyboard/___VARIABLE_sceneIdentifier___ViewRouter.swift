@@ -1,13 +1,12 @@
-import Foundation
+import UIKit
 
 final class ___VARIABLE_sceneName:identifier___ViewRouter: ___VARIABLE_sceneName:identifier___ViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
-    private weak var navigationController: UINavigationController?
+//    private weak var navigationController: UINavigationController?
     
     init(presenter: UIViewController) {
         self.presenter = presenter
-        super.init()
     }
 
 //    init(navigationController: UINavigationController?) {
@@ -16,8 +15,7 @@ final class ___VARIABLE_sceneName:identifier___ViewRouter: ___VARIABLE_sceneName
 //
     func build() -> UIViewController {
         let vm = ___VARIABLE_sceneName:identifier___ViewModel(router: self)
-        
-        let vc = UIStoryboard(name: "", bundle: nil).instantiateViewController(withIdentifier: "") as! ___VARIABLE_sceneName:identifier___ViewController
+        let vc = UIStoryboard(name: "", bundle: nil).instantiateViewController(withIdentifier: String(describing: ___VARIABLE_sceneName:identifier___ViewController.self)) as! ___VARIABLE_sceneName:identifier___ViewController
         vc.viewModel = vm
 
         baseViewController = vc
