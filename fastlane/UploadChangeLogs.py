@@ -131,6 +131,11 @@ def updateChangeLogs(searchText, languageURL, languageFolders):
 
 searchText = sys.argv[2]
 
+# Below logic considers only the major and minor version in the version string
+periodCount = searchText.count(".")
+if periodCount > 1:
+    searchText = searchText.rsplit(".", periodCount - 1)[0]
+
 languagesInformation = [
     { "name": "English", "transifixCode": "l:en", "fastlaneMetadataFolders": ["en-US"] },
     { "name": "Spanish", "transifixCode": "l:es", "fastlaneMetadataFolders": ["es-ES", "es-MX"] },
