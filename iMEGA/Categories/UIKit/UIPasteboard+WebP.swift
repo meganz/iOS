@@ -3,7 +3,7 @@ import SDWebImage
 extension UIPasteboard {
     func loadImage() -> UIImage? {
         if #available(iOS 14.0, *) {
-            return decodeWebPImageIfNeeded()
+            return decodeWebPImageIfNeeded() ?? UIPasteboard.general.image
         }
         return UIPasteboard.general.image
     }
