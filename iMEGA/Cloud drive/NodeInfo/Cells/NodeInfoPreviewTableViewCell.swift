@@ -18,14 +18,14 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
         if (node.type == .file) {
             previewImage.mnz_setThumbnail(by: node)
             sizeLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
-            shareStackView.isHidden = isNodeInRubbish
+            shareStackView.isHidden = true
             versionedView.isHidden = !MEGASdkManager.sharedMEGASdk().hasVersions(for: node)
             playIconImage.isHidden = node.name?.mnz_isVideoPathExtension != true
         } else if (node.type == .folder) {
             previewImage.mnz_image(for: node)
             let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
             shareStackView.isHidden = isNodeInRubbish || (nodeAccess != .accessOwner)
-            shareButton.setTitle(Strings.Localizable.CloudDrive.NodeOptions.shareLink.localizedUppercase, for: .normal)
+            shareButton.setTitle(Strings.Localizable.General.share.localizedUppercase, for: .normal)
             let folderSize = folderInfo?.currentSize ?? 0
             let versionSize = folderInfo?.versionsSize ?? 0
             let totalSize = folderSize + versionSize
