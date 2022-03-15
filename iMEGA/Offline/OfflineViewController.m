@@ -1022,9 +1022,15 @@ static NSString *kisDirectory = @"kisDirectory";
     }]];
     
     BOOL isDirectory;
+    NSString *title;
     BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
-    if (fileExistsAtPath && !isDirectory) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"general.exportFile", @"Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu") detail:nil image:[UIImage imageNamed:@"export"] style:UIAlertActionStyleDefault actionHandler:^{
+    if (isDirectory) {
+        title = NSLocalizedString(@"general.export", @"Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app");
+    } else {
+        title = NSLocalizedString(@"general.exportFile", @"Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu");
+    }
+    if (fileExistsAtPath) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:[UIImage imageNamed:@"export"] style:UIAlertActionStyleDefault actionHandler:^{
             
             NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
             
