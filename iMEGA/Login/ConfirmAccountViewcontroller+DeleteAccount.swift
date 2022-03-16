@@ -7,16 +7,16 @@ extension ConfirmAccountViewController {
         
         switch accountDetails.subscriptionMethodId {
         case .itunes:
-            if #available(iOS 15.0, *) {
-                showSubscriptionDialog(
-                    message: Strings.Localizable.Account.Delete.Subscription.Itunes.withoutManage,
-                    additionalOptionTitle: Strings.Localizable.manage) {
+            showSubscriptionDialog(
+                message: Strings.Localizable.Account.Delete.Subscription.itunes,
+                additionalOptionTitle: Strings.Localizable.Account.Delete.Subscription.Itunes.manage) {
+                    if #available(iOS 15.0, *) {
+                        UIApplication.showManageSubscriptions()
+                    } else {
                         UIApplication.openAppleIDSubscriptionsPage()
                     }
-            } else {
-                showSubscriptionDialog(message: Strings.Localizable.Account.Delete.Subscription.Itunes.withoutManage)
-            }
-            
+                }
+
         case .googleWallet:
             showSubscriptionDialog(
                 message: Strings.Localizable.Account.Delete.Subscription.googlePlay,
@@ -34,9 +34,6 @@ extension ConfirmAccountViewController {
                         url.mnz_presentSafariViewController()
                     }
                 }
-            
-        case .stripe2, .ECP:
-            showSubscriptionDialog(message: Strings.Localizable.Account.Delete.Subscription.stripeOrEcp)
             
         default:
             return

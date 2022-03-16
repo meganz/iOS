@@ -2928,10 +2928,12 @@ public enum Strings {
           public static let googlePlay = Strings.tr("Localizable", "account.delete.subscription.googlePlay")
           /// You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
           public static let huaweiAppGallery = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery")
-          /// You have an active MEGA subscription. It will be canceled automatically after the account has be deleted. Visit our Help Centre for more information.
-          public static let stripeOrEcp = Strings.tr("Localizable", "account.delete.subscription.stripeOrEcp")
+          /// You have an active MEGA subscription with Apple. You must cancel it separately at Apple Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
+          public static let itunes = Strings.tr("Localizable", "account.delete.subscription.itunes")
           /// Active Subscription
           public static let title = Strings.tr("Localizable", "account.delete.subscription.title")
+          /// This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.
+          public static let webClient = Strings.tr("Localizable", "account.delete.subscription.webClient")
           public enum GooglePlay {
             /// Visit Google Play
             public static let visit = Strings.tr("Localizable", "account.delete.subscription.googlePlay.visit")
@@ -2941,10 +2943,8 @@ public enum Strings {
             public static let visit = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery.visit")
           }
           public enum Itunes {
-            /// You have an active MEGA subscription with Apple. Please manage your subscription before continuing as MEGA is not able to cancel it for you
-            public static let withManage = Strings.tr("Localizable", "account.delete.subscription.itunes.withManage")
-            /// You have an active MEGA subscription with Apple. You must cancel it separately from your iTunes account, as MEGA is not able to cancel it for you. Visit our help Centre for more information.
-            public static let withoutManage = Strings.tr("Localizable", "account.delete.subscription.itunes.withoutManage")
+            /// Manage Subscriptions
+            public static let manage = Strings.tr("Localizable", "account.delete.subscription.itunes.manage")
           }
         }
       }
