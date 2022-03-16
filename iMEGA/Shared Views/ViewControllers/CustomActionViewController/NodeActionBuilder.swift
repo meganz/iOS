@@ -107,11 +107,6 @@ final class NodeActionBuilder {
         return self
     }
 
-    func setIsBackupFolder(_ isBackupFolder: Bool) -> NodeActionBuilder {
-        self.isBackupFolder = isBackupFolder
-        return self
-    }
-    
     func setViewMode(_ viewMode: ViewModePreference?) -> NodeActionBuilder {
         self.viewMode = viewMode ?? .list
         return self

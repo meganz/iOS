@@ -97,7 +97,7 @@ static NSString *kDuration = @"kDuration";
         if (node.isFile) {
             self.infoLabel.text = [Helper sizeForNode:node api:sdk];
         } else if (node.isFolder) {
-            self.infoLabel.text = node.isBackupRootNode ? [node numberOfDevicesWithSdk:sdk] : [Helper filesAndFoldersInFolderNode:node api:sdk];
+            self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:sdk];
         }
     }
     

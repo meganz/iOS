@@ -126,7 +126,6 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsExported(node.isExported())
             .setIsOutshare(node.isOutShare())
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
-            .setIsBackupFolder(node.isBackupNode() || node.isBackupRootNode())
             .setIsInVersionsView(isInVersionsView)
             .build()
     }
@@ -204,23 +203,6 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     // MARK: - UITableViewDelegate
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let node = nodes[safe: indexPath.row] else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        if node.isBackupRootNode() || node.isBackupNode(),
-           let action = actions[indexPath.row] as? NodeAction,
-           (action.type == .move || action.type == .moveToRubbishBin) {
-            let cell: WarningActionSheetCell = tableView.dequeueReusableCell(withIdentifier:"ActionSheetCell") as? WarningActionSheetCell ?? WarningActionSheetCell(style: .value1, reuseIdentifier: "WarningActionSheetCell")
-            cell.configureCell(action: action)
-
-            return cell
-        } else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let action = actions[indexPath.row] as? NodeAction else {
             return
@@ -279,7 +261,7 @@ class NodeActionViewController: ActionSheetViewController {
         if node.isFile() {
             subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {
-            subtitleLabel.text = node.isBackupRootNode() ? node.numberOfDevices(sdk: sharedMEGASdk) : Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
+            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
         }
     
         headerView?.addSubview(separatorLineView)

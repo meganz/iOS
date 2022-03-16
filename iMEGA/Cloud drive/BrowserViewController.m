@@ -24,7 +24,6 @@
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 #import "NodeTableViewCell.h"
-#import "MEGANode+MNZCategory.h"
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -534,7 +533,9 @@
     self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
-- (void)moveNode {
+#pragma mark - IBActions
+
+- (IBAction)moveNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
@@ -550,7 +551,7 @@
     }
 }
 
-- (void)copyNode {
+- (IBAction)copyNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         [SVProgressHUD show];
@@ -563,7 +564,7 @@
     }
 }
 
-- (void)createNewFolder {
+- (IBAction)newFolder:(UIBarButtonItem *)sender {
     UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     __weak __typeof__(self) weakSelf = self;
@@ -607,41 +608,6 @@
     [newFolderAlertController addAction:createFolderAlertAction];
     
     [self presentViewController:newFolderAlertController animated:YES completion:nil];
-}
-
-#pragma mark - IBActions
-
-- (IBAction)moveNode:(UIBarButtonItem *)sender {
-    if ([self.parentNode isBackupNode]) {
-        __weak __typeof__(self) weakSelf = self;
-        [self moveBackupNode:self.parentNode completion:^{
-            [weakSelf moveNode];
-        }];
-    } else {
-        [self moveNode];
-    }
-}
-
-- (IBAction)copyNode:(UIBarButtonItem *)sender {
-    if ([self.parentNode isBackupNode]) {
-        __weak __typeof__(self) weakSelf = self;
-        [self addItemToBackupNode:self.parentNode completion:^{
-            [weakSelf copyNode];
-        }];
-    } else {
-        [self copyNode];
-    }
-}
-
-- (IBAction)newFolder:(UIBarButtonItem *)sender {
-    if ([self.parentNode isBackupNode]) {
-        __weak __typeof__(self) weakSelf = self;
-        [self addItemToBackupNode:self.parentNode completion:^{
-            [weakSelf createNewFolder];
-        }];
-    } else {
-        [self createNewFolder];
-    }
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {

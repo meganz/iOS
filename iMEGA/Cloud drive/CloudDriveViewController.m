@@ -1153,40 +1153,17 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
     __weak __typeof__(self) weakSelf = self;
     
-    if ([weakSelf.parentNode isBackupRootNode]) {
-        [self showSetupBackupAlert];
-        return;
-    }
-    
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
-        if ([weakSelf.parentNode isBackupNode]) {
-            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
-                [weakSelf presentUploadAlertController];
-            }];
-        } else {
-            [weakSelf presentUploadAlertController];
-        }
+        [weakSelf presentUploadAlertController];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-        if ([weakSelf.parentNode isBackupNode]) {
-            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
-                [weakSelf presentScanDocument];
-            }];
-        } else {
-            [weakSelf presentScanDocument];
-        }
+        [weakSelf presentScanDocument];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
-        if ([weakSelf.parentNode isBackupNode]) {
-            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
-                [weakSelf createNewFolderAction];
-            }];
-        } else {
-            [weakSelf createNewFolderAction];
-        }
+        [weakSelf createNewFolderAction];
     }]];
     
     if ([self shouldShowMediaDiscovery]) {
@@ -1196,13 +1173,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
-        if ([weakSelf.parentNode isBackupNode]) {
-            [weakSelf addItemToBackupNode:weakSelf.parentNode completion:^{
-                [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
-            }];
-        } else {
-            [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
-        }
+        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
     }]];
     
     if ([self numberOfRows] && !self.onlyUploadOptions) {
@@ -1596,14 +1567,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeMove:
-            if ([node isBackupRootNode] || [node isBackupNode]) {
-                __weak __typeof__(self) weakSelf = self;
-                [self moveBackupNode:node completion:^{
-                    [weakSelf showBrowserNavigationFor:@[node] action:BrowserActionMove];
-                }];
-            } else {
-                [self showBrowserNavigationFor:@[node] action:BrowserActionMove];
-            }
+            [self showBrowserNavigationFor:@[node] action:BrowserActionMove];
             break;
             
         case MegaNodeActionTypeRename:
@@ -1668,14 +1632,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case MegaNodeActionTypeMoveToRubbishBin:
-            if ([node isBackupRootNode] || [node isBackupNode]) {
-                __weak __typeof__(self) weakSelf = self;
-                [self moveToRubbishBinBackupNode:node completion:^{
-                    [weakSelf moveToRubbishBinFor:node];
-                }];
-            } else {
-                [self moveToRubbishBinFor:node];
-            }
+            [self moveToRubbishBinFor:node];
             break;
             
         case MegaNodeActionTypeRemove: {

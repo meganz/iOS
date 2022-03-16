@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomModalAlertViewController">
             <connections>
-                <outlet property="detailErrorLabel" destination="cdp-wE-LPj" id="cST-6o-plQ"/>
                 <outlet property="detailLabel" destination="KXA-VS-o9F" id="Eng-gX-Ta8"/>
-                <outlet property="detailTextField" destination="2ny-Zh-anb" id="N6U-h0-68T"/>
                 <outlet property="dismissButton" destination="9dp-dd-BzY" id="xT4-l8-g4A"/>
                 <outlet property="firstButton" destination="RVu-6u-5sa" id="dGe-te-H8c"/>
                 <outlet property="imageView" destination="2PZ-4l-cdv" id="IxH-vE-oOH"/>
@@ -30,10 +28,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sy9-8p-mxu" userLabel="MainView" customClass="ALView">
-                    <rect key="frame" x="20.5" y="165" width="373" height="566"/>
+                    <rect key="frame" x="20.5" y="218" width="373" height="460"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4Ln-Ti-cts">
-                            <rect key="frame" x="12" y="35" width="349" height="502"/>
+                            <rect key="frame" x="12" y="35" width="349" height="396"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="2PZ-4l-cdv">
                                     <rect key="frame" x="110.5" y="0.0" width="128" height="50"/>
@@ -93,24 +91,8 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Rz7-bH-j8k">
-                                    <rect key="frame" x="56" y="230" width="237" height="86"/>
-                                    <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2ny-Zh-anb">
-                                            <rect key="frame" x="0.0" y="0.0" width="237" height="34"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdp-wE-LPj">
-                                            <rect key="frame" x="0.0" y="36" width="237" height="50"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="woc-LH-3yv">
-                                    <rect key="frame" x="35" y="336" width="279" height="166"/>
+                                    <rect key="frame" x="35" y="230" width="279" height="166"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVu-6u-5sa" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="279" height="50"/>
@@ -170,7 +152,6 @@
                                 <constraint firstItem="woc-LH-3yv" firstAttribute="width" secondItem="4Ln-Ti-cts" secondAttribute="width" id="2KT-R8-IOS"/>
                                 <constraint firstAttribute="bottom" secondItem="woc-LH-3yv" secondAttribute="bottom" id="MTY-Xl-mLA"/>
                                 <constraint firstItem="m1j-av-tR3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4Ln-Ti-cts" secondAttribute="leading" constant="11" id="OB7-Ei-wv0"/>
-                                <constraint firstItem="Rz7-bH-j8k" firstAttribute="width" secondItem="9dp-dd-BzY" secondAttribute="width" multiplier="0.85" id="zFg-bI-k1d"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
