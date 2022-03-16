@@ -2752,10 +2752,10 @@
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Active Subscription";
-/* Dialog message shown before deleting an account with active iTunes subscription (iOS 15 and above) */
-"account.delete.subscription.itunes.withManage"="You have an active MEGA subscription with Apple. Please manage your subscription before continuing as MEGA is not able to cancel it for you";
-/* Dialog message shown before deleting an account with active iTunes subscription (under iOS 15) */
-"account.delete.subscription.itunes.withoutManage"="You have an active MEGA subscription with Apple. You must cancel it separately from your iTunes account, as MEGA is not able to cancel it for you. Visit our help Centre for more information.";
+/* Dialog message shown before deleting an account with active iTunes subscription */
+"account.delete.subscription.itunes"="You have an active MEGA subscription with Apple. You must cancel it separately at Apple Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit AppStore Subscriptions */
+"account.delete.subscription.itunes.manage"="Manage Subscriptions";
 /* Dialog message shown before deleting an account with active Google play subscription */
 "account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately at Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
 /* Dialog button title which triggers the action to visit Google play */
@@ -2764,8 +2764,8 @@
 "account.delete.subscription.huaweiAppGallery"="You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Visit AppGallery";
-/* Dialog message shown before deleting an account with active Stripe or ECP subscription */
-"account.delete.subscription.stripeOrEcp"="You have an active MEGA subscription. It will be canceled automatically after the account has be deleted. Visit our Help Centre for more information.";
+/* Dialog message shown before deleting an account with active webclient subscription */
+"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */

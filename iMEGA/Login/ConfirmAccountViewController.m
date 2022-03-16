@@ -49,13 +49,24 @@
             
             break;
         
-        case URLTypeCancelAccountLink:
-            self.confirmTextLabel.text = NSLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
+        case URLTypeCancelAccountLink: {
+            NSString* message = NSLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
+
+            MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+            if (accountDetails &&
+                 accountDetails.type != MEGAAccountTypeFree &&
+                 (accountDetails.subscriptionMethodId == MEGAPaymentMethodECP ||
+                  accountDetails.subscriptionMethodId == MEGAPaymentMethodStripe2)) {
+                message = NSLocalizedString(@"account.delete.subscription.webClient", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
+            }
+            
+            self.confirmTextLabel.text = message;
             [self.confirmAccountButton setTitle:NSLocalizedString(@"cancelYourAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
             
             [self showSubscriptionDialogIfNeeded];
             break;
-            
+        }
+
         default:
             break;
     }
