@@ -1,4 +1,3 @@
-
 extension MEGANode {
     private func isBackupChildNode() -> Bool {
         var currentNode: MEGANode? = self
@@ -17,17 +16,5 @@ extension MEGANode {
     
     @objc func isBackupRootNode() -> Bool {
         BackupRootNodeAccess.shared.isTargetNode(for: self)
-    }
-    
-    @objc func numberOfDevices(sdk: MEGASdk) -> String? {
-        guard isBackupRootNode() else { return nil }
-        let devices = sdk.children(forParent: self).toNodeArray().filter{$0.isBackupNode()}.count
-        
-        if devices > 1 {
-            return Strings.Localizable.CloudDrive.Root.Backup.Folder.Devices.subtitle(devices)
-        } else if devices > 0 {
-            return Strings.Localizable.CloudDrive.Root.Backup.Folder.Device.subtitle(devices)
-        }
-        return Strings.Localizable.emptyFolder
     }
 }

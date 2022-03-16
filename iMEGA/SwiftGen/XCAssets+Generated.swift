@@ -67,8 +67,6 @@ internal enum Asset {
     internal enum Activities {
       internal static let activityGetLink = ImageAsset(name: "activity_getLink")
       internal static let activityOpenIn = ImageAsset(name: "activity_openIn")
-      internal static let activityRemoveLink = ImageAsset(name: "activity_removeLink")
-      internal static let activityRemoveSharing = ImageAsset(name: "activity_removeSharing")
       internal static let activitySaveImage = ImageAsset(name: "activity_saveImage")
       internal static let activitySendToContact = ImageAsset(name: "activity_sendToContact")
       internal static let activityShareFolder = ImageAsset(name: "activity_shareFolder")

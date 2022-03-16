@@ -47,11 +47,6 @@ extension CloudDriveViewController {
     }
     
     @objc func prepareToMoveNodes(_ nodes: [MEGANode]) {
-        guard nodes.filter({ $0.isBackupNode() || $0.isBackupRootNode() }).count == 0 else {
-            //TODO: show an alert to the user informing that moving backup nodes should be done one by one?
-            return
-        }
-        
         showBrowserNavigation(for: nodes, action: .move)
     }
 }

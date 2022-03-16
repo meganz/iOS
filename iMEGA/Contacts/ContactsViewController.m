@@ -594,10 +594,10 @@
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf isAnyBackupNodeBeingManaged] ? [weakSelf shareBackupAndNonBackupNodesWithLevel:MEGAShareTypeAccessFull] : [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf isAnyBackupNodeBeingManaged] ? [weakSelf shareBackupAndNonBackupNodesWithLevel:MEGAShareTypeAccessReadWrite] : [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
@@ -1303,21 +1303,7 @@
         self.searchController.active = NO;
     }
     
-    if ([self isAnyBackupNodeBeingManaged]) {
-        __weak __typeof__(self) weakSelf = self;
-        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            [weakSelf prepareSharedBackupFolderAlertWithCompletion:^{
-                if ([weakSelf areAllShareNodesBackupNodes]) {
-                    [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
-                } else {
-                    [weakSelf selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
-                }
-            }];
-        }
-    } else {
-        [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
-    }
-
+    [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
@@ -1719,10 +1705,8 @@
                         return;
                     }
                     
-                    if (![self isAnyBackupNodeBeingManaged]) {
-                        self.userTapped = user;
-                        [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
-                    }
+                    self.userTapped = user;
+                    [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
                 }
             } else {
                 if (!tableView.isEditing) {

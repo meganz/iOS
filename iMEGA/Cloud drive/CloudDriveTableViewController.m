@@ -299,16 +299,8 @@
         shareLinkAction.backgroundColor = UIColor.systemOrangeColor;
         
         UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            if ([node isBackupNode] || [node isBackupRootNode]) {
-                __weak typeof(self) weakself = self;
-                [self.cloudDrive moveToRubbishBinBackupNode:node completion:^{
-                    [weakself.cloudDrive moveToRubbishBinFor:node];
-                    [weakself setTableViewEditing:NO animated:YES];
-                }];
-            } else {
-                [self.cloudDrive moveToRubbishBinFor:node];
-                [self setTableViewEditing:NO animated:YES];
-            }
+            [self.cloudDrive moveToRubbishBinFor:node];
+            [self setTableViewEditing:NO animated:YES];
         }];
         
         rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
