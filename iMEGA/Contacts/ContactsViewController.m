@@ -275,7 +275,7 @@
             [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
             
-            self.shareFolderWithBarButtonItem.title = NSLocalizedString(@"general.share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
+            self.shareFolderWithBarButtonItem.title = NSLocalizedString(@"next", @"Button title which, if tapped, will show the share access level selection to proceed to sharing");
             [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.shareFolderWithBarButtonItem];
             self.shareFolderWithBarButtonItem.enabled = NO;
