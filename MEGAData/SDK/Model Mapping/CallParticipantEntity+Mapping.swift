@@ -1,14 +1,19 @@
 
 extension CallParticipantEntity {
-    convenience init(session: ChatSessionEntity, chatId: MEGAHandle) {
+    convenience init(
+        session: ChatSessionEntity,
+        chatId: MEGAHandle,
+        sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
+        chatSDK: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()
+    ) {
         var isModerator = false
         var isInContactList = false
         
-        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) {
+        if let chatRoom = chatSDK.chatRoom(forChatId: chatId) {
             isModerator = chatRoom.peerPrivilege(byHandle: session.peerId) == MEGAChatRoomPrivilege.moderator.rawValue
         }
         
-        let contact = MEGASdkManager.sharedMEGASdk().visibleContacts().first(where: { $0.handle == session.peerId })
+        let contact = sdk.visibleContacts().first(where: { $0.handle == session.peerId })
         isInContactList = (contact != nil)
         
         self.init(chatId: chatId,
@@ -26,10 +31,14 @@ extension CallParticipantEntity {
                   canReceiveVideoLowRes: session.canReceiveVideoLowRes)
     }
     
-    static func myself(chatId: MEGAHandle) -> CallParticipantEntity? {
-        guard let user = MEGASdkManager.sharedMEGASdk().myUser,
-              let email = MEGASdkManager.sharedMEGASdk().myEmail,
-              let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
+    static func myself(
+        chatId: MEGAHandle,
+        sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
+        chatSDK: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()
+    ) -> CallParticipantEntity? {
+        guard let user = sdk.myUser,
+              let email = sdk.myEmail,
+              let chatRoom = chatSDK.chatRoom(forChatId: chatId) else {
             return nil
         }
         
@@ -44,7 +53,7 @@ extension CallParticipantEntity {
                                                 isVideoLowRes: false,
                                                 canReceiveVideoHiRes: true,
                                                 canReceiveVideoLowRes: false,
-                                                name: MEGASdkManager.sharedMEGAChatSdk().myFullname)
+                                                name: chatSDK.myFullname)
         
         return participant
     }
