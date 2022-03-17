@@ -93,8 +93,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
     }
 
     if ([token isChunkUploadToken]) {
-        MEGALogDebug(@"[Camera Upload] Session %@ task %@ completed with empty token", session.configuration.identifier, localIdentifier);
-        [CameraUploadCompletionManager.shared handleChunkUploadTask:task];
+        MEGALogDebug(@"[Camera Upload] Session %@ chunk task %@ completed", session.configuration.identifier, localIdentifier);
     } else if (token.length == MEGATransferTokenLength) {
         [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:localIdentifier token:token];
     } else {

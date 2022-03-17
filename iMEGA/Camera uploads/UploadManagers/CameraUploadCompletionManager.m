@@ -41,19 +41,6 @@
 
 #pragma mark - handle transfer completion data
 
-- (void)handleChunkUploadTask:(NSURLSessionTask *)task {
-    NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:task.taskDescription];
-    NSError *error;
-    AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchivedObjectOfClass:AssetUploadInfo.class fromData:[NSData dataWithContentsOfURL:archivedURL] error:&error];
-    if (error) {
-        MEGALogError(@"[Camera Upload] failed to unarchive data with error: %@", error);
-        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
-    } else if (uploadInfo.encryptedChunksCount == 1) {
-        MEGALogError(@"[Camera Upload] chunk task for single file %@, fileSize: %llu, response %@", task.taskDescription, uploadInfo.fileSize, task.response);
-        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
-    }
-}
-
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
     if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
@@ -169,20 +156,14 @@
 #pragma mark - update status
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status {
-    if (!CameraUploadManager.isCameraUploadEnabled) {
+    if (localIdentifier.length == 0 || !CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
+    [NSFileManager.defaultManager mnz_removeItemAtPath:[NSURL mnz_assetURLForLocalIdentifier:localIdentifier].path];
+    
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
         MEGALogDebug(@"[Camera Upload] background Upload finishes with session task %@ and status: %@", localIdentifier, [AssetUploadStatus stringForStatus:status]);
-        if (localIdentifier.length == 0) {
-            return;
-        }
-        
-        if (!CameraUploadManager.isCameraUploadEnabled) {
-            return;
-        }
-        
         MOAssetUploadRecord *record = [[CameraUploadRecordManager.shared fetchUploadRecordsByIdentifier:localIdentifier shouldPrefetchErrorRecords:YES error:nil] firstObject];
         if (record.status.integerValue != CameraAssetUploadStatusUploading || record == nil) {
             MEGALogDebug(@"[Camera Upload] %@ record status: %@ is not uploading", localIdentifier, [AssetUploadStatus stringForStatus:record.status.integerValue]);
@@ -190,8 +171,6 @@
         }
         
         [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:status error:nil];
-        
-        [NSFileManager.defaultManager mnz_removeItemAtPath:[NSURL mnz_assetURLForLocalIdentifier:localIdentifier].path];
         
         [CameraUploadRecordManager.shared refaultObject:record];
         
