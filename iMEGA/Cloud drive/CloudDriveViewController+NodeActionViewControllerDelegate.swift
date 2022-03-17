@@ -12,7 +12,6 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .moveToRubbishBin:
             guard let deleteBarButton = sender as? UIBarButtonItem else { return }
             deleteAction(sender: deleteBarButton)
-            setEditMode(false)
         case .exportFile:
             let entityNodes = nodes.map { NodeEntity(node: $0) }
             ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
