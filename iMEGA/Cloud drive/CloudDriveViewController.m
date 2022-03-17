@@ -1023,6 +1023,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)openFolderNode:(MEGANode *)node {
     CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveVC.parentNode = node;
+    cloudDriveVC.isFromSharedItem = self.isFromSharedItem;
     
     if (self.displayMode == DisplayModeRubbishBin) {
         cloudDriveVC.displayMode = self.displayMode;
@@ -1166,15 +1167,17 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [weakSelf createNewFolderAction];
     }]];
     
-    if ([self shouldShowMediaDiscovery]) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"cloudDrive.menu.mediaDiscovery.title", @"Menu option from the `Add` section that displays all media files under current folder") detail:nil image:[UIImage imageNamed:@"mediaDiscovery"] style:UIAlertActionStyleDefault actionHandler:^{
-            MEGALogDebug(@"Show Photo Library here!");
-        }]];
-    }
-    
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
-        [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
-    }]];
+         [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
+     }]];
+    
+    if (@available(iOS 14.0, *)) {
+        ActionSheetAction *action = [self mediaDiscoveryAction];
+        
+        if (action) {
+            [actions addObject: action];
+        }
+    }
     
     if ([self numberOfRows] && !self.onlyUploadOptions) {
         NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
@@ -1194,17 +1197,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
     [self presentViewController:moreActionSheet animated:YES completion:nil];
-}
-
-- (BOOL)shouldShowMediaDiscovery {
-    if (!FeatureFlag.isMediaDiscoveryEnabled) {
-        return NO;
-    }
-    
-    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
-    
-    return self.parentNode.type != MEGANodeTypeRoot && [mediaNodesArray count] > 0;
 }
 
 - (IBAction)moreMinimizedAction:(UIBarButtonItem *)sender {

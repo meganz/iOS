@@ -38,10 +38,13 @@
 		0DE3037826B25AA100E4A66B /* FileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE3035F26B11E7800E4A66B /* FileProviderItem.swift */; };
 		120B4A7927430F3E00312B35 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		122977DE27DA976F0048F381 /* MediaDiscoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */; };
 		123AEFF627BEE20400E6A0A7 /* PhotoDateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123AEFF527BEE20400E6A0A7 /* PhotoDateSection.swift */; };
 		123AEFF827BEE22300E6A0A7 /* PhotoDaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123AEFF727BEE22300E6A0A7 /* PhotoDaySection.swift */; };
 		123E3019275B2EC400EEDAAA /* NumberBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E3018275B2EC400EEDAAA /* NumberBadge.swift */; };
 		123E301D275B31A400EEDAAA /* PhotoCardNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E301C275B31A400EEDAAA /* PhotoCardNumber.swift */; };
+		1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240A4A227DD548600627262 /* MediaDiscoveryViewModelTests.swift */; };
+		124306D727E16048003286C8 /* MediaDiscoveryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124306D627E16048003286C8 /* MediaDiscoveryRouter.swift */; };
 		1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1243A31C276AB8F100067A8F /* CheckMarkView.swift */; };
 		124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */; };
 		124667FA275DB82000C94335 /* CustomModalAlertViewController+CookieDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EC275DB81F00C94335 /* CustomModalAlertViewController+CookieDialog.swift */; };
@@ -62,6 +65,8 @@
 		12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682A275DBE0500C94335 /* TextEditorViewModel.swift */; };
 		12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */; };
 		12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */; };
+		12647CD427D7F7C3002033AF /* MediaDiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12647CD327D7F7C2002033AF /* MediaDiscoveryViewController.swift */; };
+		12647CD627D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */; };
 		12696B0E27A8B122008628EA /* PhotoLibraryZoomControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0A27A8B121008628EA /* PhotoLibraryZoomControl.swift */; };
 		12696B1027A8B122008628EA /* PhotoLibraryZoomState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0C27A8B121008628EA /* PhotoLibraryZoomState.swift */; };
 		12696B1527A8B58A008628EA /* Binding+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B1427A8B58A008628EA /* Binding+Additions.swift */; };
@@ -69,6 +74,7 @@
 		12BC3E7127B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7027B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift */; };
 		12BC3E7D27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BC3E7C27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift */; };
 		12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */; };
+		12F041CC27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
@@ -2349,10 +2355,13 @@
 		11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		120B4A7827430F3E00312B35 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
+		122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryViewModel.swift; sourceTree = "<group>"; };
 		123AEFF527BEE20400E6A0A7 /* PhotoDateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDateSection.swift; sourceTree = "<group>"; };
 		123AEFF727BEE22300E6A0A7 /* PhotoDaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDaySection.swift; sourceTree = "<group>"; };
 		123E3018275B2EC400EEDAAA /* NumberBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberBadge.swift; sourceTree = "<group>"; };
 		123E301C275B31A400EEDAAA /* PhotoCardNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardNumber.swift; sourceTree = "<group>"; };
+		1240A4A227DD548600627262 /* MediaDiscoveryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryViewModelTests.swift; sourceTree = "<group>"; };
+		124306D627E16048003286C8 /* MediaDiscoveryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryRouter.swift; sourceTree = "<group>"; };
 		1243A31C276AB8F100067A8F /* CheckMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkView.swift; sourceTree = "<group>"; };
 		124667E9275DB81300C94335 /* CustomModalAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomModalAlertViewController.h; sourceTree = "<group>"; };
 		124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Business.swift"; sourceTree = "<group>"; };
@@ -2374,6 +2383,8 @@
 		1246682A275DBE0500C94335 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorViewRouter.swift; sourceTree = "<group>"; };
 		1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewModel.swift; sourceTree = "<group>"; };
+		12647CD327D7F7C2002033AF /* MediaDiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryViewController.swift; sourceTree = "<group>"; };
+		12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaDiscovery+PhotoLibrary.swift"; sourceTree = "<group>"; };
 		12696B0A27A8B121008628EA /* PhotoLibraryZoomControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomControl.swift; sourceTree = "<group>"; };
 		12696B0C27A8B121008628EA /* PhotoLibraryZoomState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomState.swift; sourceTree = "<group>"; };
 		12696B1427A8B58A008628EA /* Binding+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Additions.swift"; sourceTree = "<group>"; };
@@ -2381,6 +2392,7 @@
 		12BC3E7027B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoExplorerViewController+PhotoLibrary.swift"; sourceTree = "<group>"; };
 		12BC3E7C27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomViewModifier.swift; sourceTree = "<group>"; };
 		12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelection.swift; sourceTree = "<group>"; };
+		12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+MedisDiscovery.swift"; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -4771,6 +4783,14 @@
 			path = SwiftGen;
 			sourceTree = "<group>";
 		};
+		122977DA27DA97610048F381 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		123AEFF227BEE1BF00E6A0A7 /* Section */ = {
 			isa = PBXGroup;
 			children = (
@@ -4780,6 +4800,39 @@
 				B677DC1C2787D60700EC30AC /* PhotoSectionHeader.swift */,
 			);
 			path = Section;
+			sourceTree = "<group>";
+		};
+		1240A49E27DD544B00627262 /* CloudDrive */ = {
+			isa = PBXGroup;
+			children = (
+				1240A4A127DD545F00627262 /* MediaDiscovery */,
+			);
+			path = CloudDrive;
+			sourceTree = "<group>";
+		};
+		1240A4A127DD545F00627262 /* MediaDiscovery */ = {
+			isa = PBXGroup;
+			children = (
+				1240A4A227DD548600627262 /* MediaDiscoveryViewModelTests.swift */,
+			);
+			path = MediaDiscovery;
+			sourceTree = "<group>";
+		};
+		124306D227E1601E003286C8 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				124306D627E16048003286C8 /* MediaDiscoveryRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		124306D527E16024003286C8 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				12647CD327D7F7C2002033AF /* MediaDiscoveryViewController.swift */,
+				12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		124667EA275DB81F00C94335 /* Extensions */ = {
@@ -4820,6 +4873,16 @@
 				1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */,
 			);
 			path = TextEditor;
+			sourceTree = "<group>";
+		};
+		12647CD027D7F7AA002033AF /* MediaDiscovery */ = {
+			isa = PBXGroup;
+			children = (
+				124306D527E16024003286C8 /* ViewController */,
+				124306D227E1601E003286C8 /* Router */,
+				122977DA27DA97610048F381 /* ViewModel */,
+			);
+			path = MediaDiscovery;
 			sourceTree = "<group>";
 		};
 		12696B0727A8B0FB008628EA /* Zoom */ = {
@@ -5130,6 +5193,7 @@
 		415226681A692ECC00EC7BB6 /* Cloud drive */ = {
 			isa = PBXGroup;
 			children = (
+				12647CD027D7F7AA002033AF /* MediaDiscovery */,
 				837EE1F3253DB7E50083D927 /* GetLink */,
 				834EFDBC24D9AB9C004BFECA /* NodeInfo */,
 				A811CE2922EAFB1700B24E76 /* Operations */,
@@ -5138,6 +5202,7 @@
 				415226691A692ECC00EC7BB6 /* Cloud.storyboard */,
 				837A88BD20B42290007B55D1 /* CloudDriveViewController.h */,
 				837A88BE20B42290007B55D1 /* CloudDriveViewController.m */,
+				12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */,
 				B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */,
 				C45F97F2264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift */,
 				2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */,
@@ -8967,6 +9032,7 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				1240A49E27DD544B00627262 /* CloudDrive */,
 				A81971E226FDBE4E007DC7B1 /* File Versioning */,
 				5B9FBDE9264925900014B7FD /* Settings */,
 				0D2E4AFC2623B2CC00F4804A /* TextEditor */,
@@ -11161,6 +11227,7 @@
 				BF66DF162612C20200066F35 /* ChatRoomRepository.swift in Sources */,
 				BF782D69269BA4BB0001D169 /* RegionEntity.swift in Sources */,
 				B6AADEAF25188F8D009A874C /* SMSRepositoryProtocol.swift in Sources */,
+				124306D727E16048003286C8 /* MediaDiscoveryRouter.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
 				12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */,
 				C4EACA912772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
@@ -11430,6 +11497,7 @@
 				A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */,
 				5DC0FD4D24D903A4004DB649 /* ButtonStyleFactory.swift in Sources */,
 				7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */,
+				122977DE27DA976F0048F381 /* MediaDiscoveryViewModel.swift in Sources */,
 				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
 				B6E19B3D2180126500882F74 /* CameraUploadCompletionManager.m in Sources */,
 				836651532649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift in Sources */,
@@ -11646,6 +11714,7 @@
 				BF782D71269BA4BB0001D169 /* InviteErrorEntity.swift in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
+				12647CD627D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift in Sources */,
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
@@ -11828,6 +11897,7 @@
 				BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */,
 				949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */,
 				BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
+				12647CD427D7F7C3002033AF /* MediaDiscoveryViewController.swift in Sources */,
 				BFAFB178252ACEF0003ADFE3 /* SDKFilesSearchRepository.swift in Sources */,
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				BF782D65269BA4BB0001D169 /* NodeAccessTypeEntity.swift in Sources */,
@@ -12048,6 +12118,7 @@
 				5DA9759924B6CD6C00FBD045 /* UIControl.State+Hashable.swift in Sources */,
 				123E301D275B31A400EEDAAA /* PhotoCardNumber.swift in Sources */,
 				5D03C99B248893E600BE5EEB /* UINavigationBar+Customisation.swift in Sources */,
+				12F041CC27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift in Sources */,
 				5D0B42B8250654080057D49B /* NodeManagementRouter.swift in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
 				C45F97FD264A9FA60004DCA5 /* MyAvatarManager.swift in Sources */,
@@ -12867,6 +12938,7 @@
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				A8AAE6B926C2AA38002243C0 /* ReinstallationUseCaseTests.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */,
+				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				5D52C74C250C4FA700286A43 /* ContactRequest.swift in Sources */,
 				5BBC13DE26CE62D10010115B /* FavouritesViewModelTests.swift in Sources */,
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,

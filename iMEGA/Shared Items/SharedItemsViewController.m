@@ -1046,6 +1046,7 @@
     switch ([node type]) {
         case MEGANodeTypeFolder: {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.isFromSharedItem = YES;
             [cloudDriveVC setParentNode:node];
             [cloudDriveVC setDisplayMode:DisplayModeCloudDrive];            
             

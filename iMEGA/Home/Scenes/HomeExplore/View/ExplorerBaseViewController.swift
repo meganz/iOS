@@ -1,7 +1,7 @@
 
 
 class ExplorerBaseViewController: UIViewController {
-    private lazy var toolbar = UIToolbar()
+    lazy var toolbar = UIToolbar()
     private var explorerToolbarConfigurator: ExplorerToolbarConfigurator?
     
     var isToolbarShown: Bool {
@@ -67,6 +67,7 @@ class ExplorerBaseViewController: UIViewController {
         
         SVProgressHUD.show(Asset.Images.Hud.hudDownload.image,
                            status: Strings.Localizable.downloadStarted)
+        
         selectedNodes.forEach { node in
             if node.mnz_downloadNode() {
                 downloadStarted(forNode: node)
