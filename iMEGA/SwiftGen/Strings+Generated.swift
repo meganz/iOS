@@ -3016,6 +3016,10 @@ public enum Strings {
           public static let location = Strings.tr("Localizable", "cloudDrive.info.node.location")
         }
       }
+      public enum MediaDiscovery {
+        /// Exit
+        public static let exit = Strings.tr("Localizable", "cloudDrive.mediaDiscovery.exit")
+      }
       public enum Menu {
         public enum MediaDiscovery {
           /// Media Discovery

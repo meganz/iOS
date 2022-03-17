@@ -320,6 +320,8 @@
 "newFolder"="New Folder";
 /* Menu option from the `Add` section that displays all media files under current folder */
 "cloudDrive.menu.mediaDiscovery.title"="Media Discovery";
+/* Exit Text on Media Discovery Navigation Bar */
+"cloudDrive.mediaDiscovery.exit"="Exit";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Name for the new folder";
 /* Title button for the create folder alert. */
