@@ -58,7 +58,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
     }
     
     func testFilePath_withNoParentFolderInlcudingRootFolderNameAndIncludingFileName() {
-        let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
+        let node = MockNode(name: "Test1", handle: 1, parentHandle: 0)
         let sdk = MockSDK(withNodes: [node])
         
         let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: false)
@@ -66,7 +66,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
     }
     
     func testFilePath_withNoParentFolderExcludingRootFolderNameAndExcludingFileName() {
-        let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
+        let node = MockNode(name: "Test1", handle: 1, parentHandle: 0)
         let sdk = MockSDK(withNodes: [node])
         
         let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: false, excludeFileName: true)
@@ -74,7 +74,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
     }
     
     func testFilePath_withNoParentFolderIncludingRootFolderNameAndExcludingFileName() {
-        let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
+        let node = MockNode(name: "Test1", handle: 1, parentHandle: 0)
         let sdk = MockSDK(withNodes: [node])
         
         let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
@@ -82,7 +82,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
     }
     
     func testFilePath_withNoParentFolderExcludingRootFolderNameAndIncludingFileName() {
-        let node = MockNode(name: "Test1", handle: 1, parentHandle: -1)
+        let node = MockNode(name: "Test1", handle: 1, parentHandle: 0)
         let sdk = MockSDK(withNodes: [node])
         
         let path = node.filePath(delimeter: " > ", sdk: sdk, includeRootFolderName: true, excludeFileName: true)
@@ -90,7 +90,7 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
     }
     
     private func sampleNodes() -> [MockNode] {
-        let node1 = MockNode(name: "Test1", handle: 1, parentHandle: -1)
+        let node1 = MockNode(name: "Test1", handle: 1, parentHandle: 0)
         let node2 = MockNode(name: "Test2", handle: 2, parentHandle: 1)
         let node3 = MockNode(name: "Test3", handle: 3, parentHandle: 2)
         let node4 = MockNode(name: "Test4", handle: 4, parentHandle: 3)
@@ -100,8 +100,8 @@ final class MEGANode_FilePaths_Tests: XCTestCase {
 }
 
 
-final private class MockSDK: MEGASdk {
-    let nodes: [MockNode]
+final fileprivate class MockSDK: MEGASdk {
+    private let nodes: [MockNode]
     
     init(withNodes nodes: [MockNode]) {
         self.nodes = nodes
@@ -117,16 +117,16 @@ final private class MockSDK: MEGASdk {
     }
 }
 
-final private class MockNode: MEGANode {
-    let _name: String
-    let _handle: Int
-    let _parentHandle: Int
+final fileprivate class MockNode: MEGANode {
+    private let _name: String
+    let _handle: MEGAHandle
+    let _parentHandle: MEGAHandle
     
     override var name: String! {
-        return  _name
+        _name
     }
     
-    init(name: String, handle: Int, parentHandle: Int) {
+    init(name: String, handle: MEGAHandle, parentHandle: MEGAHandle) {
         _name = name
         _handle = handle
         _parentHandle = parentHandle

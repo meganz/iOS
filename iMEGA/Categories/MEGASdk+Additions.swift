@@ -1,7 +1,7 @@
 
 extension MEGASdk {
     @objc var isGuestAccount: Bool {
-        guard let email = MEGASdkManager.sharedMEGASdk().myUser?.email else {
+        guard let email = myUser?.email else {
             return true
         }
         
@@ -9,7 +9,7 @@ extension MEGASdk {
     }
     
     @objc func visibleContacts() -> [MEGAUser] {
-        let contactsArray = MEGASdkManager.sharedMEGASdk().contacts()
+        let contactsArray = contacts()
         let contactsArraySize = contactsArray.size.intValue
         var visibleContactsArray: [MEGAUser] = []
         var i = 0
