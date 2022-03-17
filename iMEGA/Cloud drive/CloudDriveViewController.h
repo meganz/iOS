@@ -1,12 +1,12 @@
 #import <UIKit/UIKit.h>
 
 #import "DisplayMode.h"
+#import "BrowserViewController.h"
+#import "ContactsViewController.h"
 
 @class MEGANode;
 @class MEGAUser;
 @class MyAvatarManager;
-@protocol BrowserViewControllerDelegate;
-@protocol ContatctsViewControllerDelegate;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
