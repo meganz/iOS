@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sendFeedbackLabel;
 @property (weak, nonatomic) IBOutlet UILabel *joinBetaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rateUsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reportIssueLabel;
 
 @end
 
@@ -35,6 +36,9 @@
     self.rateUsLabel.text = NSLocalizedString(@"rateUsLabel", @"Title to rate the app");
     
     [self updateAppearance];
+    if (@available(iOS 14.0, *)) {
+        self.reportIssueLabel.text = NSLocalizedString(@"help.reportIssue.title", nil);
+    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -51,6 +55,15 @@
     return [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 4 : 3;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 1) {
+        if (@available(iOS 14.0, *)) {
+            return 2;
+        }
+    }
+    return 1;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,7 +78,11 @@
                 break;
                 
             case 1:
-                [self sendFeedback];
+                if (indexPath.row == 0) {
+                    [self sendFeedback];
+                } else {
+                    [self reportIssue];
+                }
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 break;
                 
@@ -128,25 +145,32 @@
             
             [mailComposeVC setMessageBody:messageBody isHTML:NO];
             
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"help.reportIssue.attachLogFiles.title", nil) message:NSLocalizedString(@"help.reportIssue.attachLogFiles.message", nil) preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    NSURL *sourceURL = Logger.shared.logsDirectoryUrl;
-                    NSData *compressedData = [LogFileCompressor.alloc zippedDataFrom:sourceURL];
-                    
-                    if (compressedData) {
-                        [mailComposeVC addAttachmentData:compressedData mimeType:@"text/plain" fileName:@"MEGAiOSLogs.zip"];
-                    }
-                    
-                    [self presentViewController:mailComposeVC animated:YES completion:nil];
-                }]];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [self presentViewController:mailComposeVC animated:YES completion:nil];
-                }]];
-                
-                [self presentViewController:alertController animated:YES completion:nil];
-            } else {
+            if (@available(iOS 14.0, *)) {
                 [self presentViewController:mailComposeVC animated:YES completion:nil];
+            } else {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    formatter.dateFormat = @"YYMMdd_hhmmss";
+                    NSString *filename = [NSString stringWithFormat:@"%@_iOS_%@.zip", [formatter stringFromDate:NSDate.date], MEGASdkManager.sharedMEGASdk.myEmail];
+                    NSURL *sourceURL = [LogFileCompressor.alloc compressWithSourceURL:Logger.shared.logsDirectoryUrl toNewFilename:filename];
+                    NSData *data = [NSData dataWithContentsOfURL:sourceURL];
+                    
+                    if (data) {
+                        [mailComposeVC addAttachmentData:data mimeType:@"text/plain" fileName:filename];
+                    }
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"help.reportIssue.attachLogFiles.title", nil) message:NSLocalizedString(@"help.reportIssue.attachLogFiles.message", nil) preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        [self presentViewController:mailComposeVC animated:YES completion:nil];
+                    }]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [self presentViewController:mailComposeVC animated:YES completion:nil];
+                    }]];
+                    
+                    [self presentViewController:alertController animated:YES completion:nil];
+                } else {
+                    [self presentViewController:mailComposeVC animated:YES completion:nil];
+                }
             }
         } else {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:NSLocalizedString(@"noEmailAccountConfigured", nil)];
@@ -156,6 +180,13 @@
 
 - (void)openHelpCentre {
     [[NSURL URLWithString:@"https://help.mega.io"] mnz_presentSafariViewController];
+}
+
+- (void)reportIssue {
+    if (@available(iOS 14.0, *)) {
+        ReportIssueViewRouter *reportIssueViewRouter = [ReportIssueViewRouter.alloc initWithPresenter:self];
+        [reportIssueViewRouter start];
+    }
 }
 
 - (void)rateApp {

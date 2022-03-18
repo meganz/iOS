@@ -245,12 +245,30 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="7e4-4j-N1c" style="IBUITableViewCellStyleDefault" id="z7l-q5-e8K">
+                                        <rect key="frame" x="0.0" y="140.66666984558105" width="414" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z7l-q5-e8K" id="zbC-oT-LWK">
+                                            <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Report Issue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="7e4-4j-N1c" userLabel="Report Issue Label">
+                                                    <rect key="frame" x="20" y="0.0" width="357.33333333333331" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="7R5-eE-zyV">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="zdh-C9-sfy" style="IBUITableViewCellStyleDefault" id="uKA-pK-nNn">
-                                        <rect key="frame" x="0.0" y="176.00000381469727" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="219.66667175292969" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uKA-pK-nNn" id="cA9-mp-Xhf">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="43.666667938232422"/>
@@ -269,10 +287,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="" id="5GF-gq-9A5">
+                            <tableViewSection footerTitle="" id="KLO-ld-Rtr">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="eQN-RX-plq" style="IBUITableViewCellStyleDefault" id="e7M-6L-pKB">
-                                        <rect key="frame" x="0.0" y="255.0000057220459" width="414" height="43.666667938232422"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="6iN-gZ-ixc" style="IBUITableViewCellStyleDefault" id="tC7-2t-0gF">
+                                        <rect key="frame" x="0.0" y="298.66667366027832" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e7M-6L-pKB" id="mE5-t4-Ago">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="43.666667938232422"/>
@@ -300,7 +318,8 @@
                     <connections>
                         <outlet property="helpCentreLabel" destination="qbo-JM-TcB" id="awE-mX-HqU"/>
                         <outlet property="joinBetaLabel" destination="zdh-C9-sfy" id="mWQ-aD-oZr"/>
-                        <outlet property="rateUsLabel" destination="eQN-RX-plq" id="00f-JH-uRB"/>
+                        <outlet property="rateUsLabel" destination="6iN-gZ-ixc" id="9tH-nl-ARn"/>
+                        <outlet property="reportIssueLabel" destination="7e4-4j-N1c" id="T3v-eM-viC"/>
                         <outlet property="sendFeedbackLabel" destination="NOH-7P-7q2" id="pjW-vI-8ZC"/>
                     </connections>
                 </tableViewController>

@@ -18,4 +18,24 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
         }
         sdk.startUploadTopPriority(withLocalPath: path, parent: parentNode, appData: nil, isSourceTemporary: true, delegate: TransferDelegate(completion: completion))
     }
+    
+    func uploadSupportFile(atPath path: String, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+        sdk.startUploadForSupport(withLocalPath: path, isSourceTemporary: false, delegate: TransferDelegate(start: start, progress: progress, completion: completion))
+    }
+    
+    func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void) {
+        guard let t = transfer.toMEGATransfer(in: sdk) else {
+            completion(.failure(.generic))
+            return
+        }
+        
+        sdk.cancelTransfer(t, delegate: RequestDelegate { result in
+            switch result {
+            case .failure:
+                completion(.failure(.generic))
+            case .success:
+                completion(.success(()))
+            }
+        })
+    }
 }

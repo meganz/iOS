@@ -3304,6 +3304,8 @@ public enum Strings {
       public static let exportFiles = Strings.tr("Localizable", "general.exportFiles")
       /// Join Meeting as Guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
+      /// Unable to connect to the internet. Please check your connection and try again.
+      public static let noIntenerConnection = Strings.tr("Localizable", "general.NoIntenerConnection")
       /// Share
       public static let share = Strings.tr("Localizable", "general.share")
       public enum Button {
@@ -3519,11 +3521,43 @@ public enum Strings {
     }
     public enum Help {
       public enum ReportIssue {
+        /// Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.
+        public static let describe = Strings.tr("Localizable", "help.reportIssue.describe")
+        /// Discard Report
+        public static let discardReport = Strings.tr("Localizable", "help.reportIssue.discardReport")
+        /// Send Log File
+        public static let sendLogFile = Strings.tr("Localizable", "help.reportIssue.sendLogFile")
+        /// Report Issue
+        public static let title = Strings.tr("Localizable", "help.reportIssue.title")
+        /// Uploading Log File
+        public static let uploadingLogFile = Strings.tr("Localizable", "help.reportIssue.uploadingLogFile")
         public enum AttachLogFiles {
           /// Do you want to attach diagnostic log files to assist with debug?
           public static let message = Strings.tr("Localizable", "help.reportIssue.attachLogFiles.message")
           /// Attach log files
           public static let title = Strings.tr("Localizable", "help.reportIssue.attachLogFiles.title")
+        }
+        public enum Creating {
+          public enum Cancel {
+            /// This issue will not be reported if you cancel uploading it.
+            public static let message = Strings.tr("Localizable", "help.reportIssue.creating.cancel.message")
+            /// Are your sure you want to cancel uploading your reported issue?
+            public static let title = Strings.tr("Localizable", "help.reportIssue.creating.cancel.title")
+          }
+        }
+        public enum DescribeIssue {
+          /// Describe the issue
+          public static let placeholder = Strings.tr("Localizable", "help.reportIssue.describeIssue.placeholder")
+        }
+        public enum Fail {
+          /// Unable to submit your report. Please try again.
+          public static let message = Strings.tr("Localizable", "help.reportIssue.fail.message")
+        }
+        public enum Success {
+          /// Thanks. We'll look into this issue and a member of our team will get back to you.
+          public static let message = Strings.tr("Localizable", "help.reportIssue.success.message")
+          /// Thanks For Your Feedback
+          public static let title = Strings.tr("Localizable", "help.reportIssue.success.title")
         }
       }
     }
