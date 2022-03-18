@@ -2,12 +2,13 @@ import Foundation
 
 @objc final class LogFileCompressor: NSObject {
     
-    /// Get data compressing source URL
-    /// - Note: Compress sourceURL into a zip file in sandbox's temp directory and the get the data of zipped file. Ex: tmp/NSIRD\_MEGA\_UjbW10/MEGAiOSLogs.zip
+    /// Compress sourceURL into a zip file in sandbox's temp directory
+    /// - Note:. Ex: tmp/NSIRD\_MEGA\_UjbW10/filename.zip
     /// - Parameters:
-    ///   - sourceURL: The source URL  you want to compress.
-    /// - Returns: The data of the compressed file
-    @objc func zippedData(from sourceURL: URL) -> NSData? {
+    ///   - sourceURL: The source URL  you want to zip.
+    ///   - filename: The filename of the compressed file.
+    /// - Returns: The URL of the compressed file
+    @objc func compress(sourceURL: URL, toNewFilename filename: String = "MEGAiOSLogs.zip") -> URL? {
         var archiveUrl: URL?
         var error: NSError?
         
@@ -18,16 +19,11 @@ import Foundation
                    in: .userDomainMask,
                    appropriateFor: zipUrl,
                    create: true
-            ).appendingPathComponent("MEGAiOSLogs.zip") else { return }
+            ).appendingPathComponent(filename) else { return }
             try? FileManager.default.moveItem(at: zipUrl, to: tmpUrl)
             archiveUrl = tmpUrl
         }
         
-        if let archiveUrl = archiveUrl {
-            return NSData(contentsOfFile: archiveUrl.path)
-        } else {
-            MEGALogError(error?.localizedDescription ?? "")
-            return nil
-        }
+        return archiveUrl
     }
 }

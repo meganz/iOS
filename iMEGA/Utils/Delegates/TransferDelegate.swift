@@ -1,12 +1,14 @@
 final class TransferDelegate: NSObject, MEGATransferDelegate {
-    var totalBytes: ((TransferEntity) -> Void)?
+    var start: ((TransferEntity) -> Void)?
     var progress: ((TransferEntity) -> Void)?
     var completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     
     init(
+        start: ((TransferEntity) -> Void)? = nil,
         progress: @escaping (TransferEntity) -> Void,
         completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void
     ) {
+        self.start = start
         self.progress = progress
         self.completion = completion
     }
@@ -17,8 +19,8 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
 
 
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        if let totalBytes = totalBytes {
-            totalBytes(TransferEntity(transfer: transfer))
+        if let start = start {
+            start(TransferEntity(transfer: transfer))
         }
     }
 

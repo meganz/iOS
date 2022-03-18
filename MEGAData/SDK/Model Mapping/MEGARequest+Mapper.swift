@@ -1,4 +1,3 @@
-import SwiftUI
 
 extension MEGARequest {
     func toPSAEntity() -> PSAEntity {
