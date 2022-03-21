@@ -23,14 +23,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 @property (nonatomic, copy) PHAsset *asset;
 @property (nonatomic, copy) void (^filePath)(NSString *filePath);
 @property (nonatomic, copy) void (^error)(NSError *error);
-@property (nonatomic, strong) MEGANode *parentNode;
 
 @property (nonatomic, strong) NSMutableArray <PHAsset *> *assets;
 @property (nonatomic, copy) void (^filePaths)(NSArray <NSString *> *filePaths);
-@property (nonatomic, copy) void (^nodes)(NSArray <MEGANode *> *nodes);
 @property (nonatomic, copy) void (^errors)(NSArray <NSError *> *errors);
 @property (nonatomic, strong) NSMutableArray <NSString *> *filePathsArray;
-@property (nonatomic, strong) NSMutableArray <MEGANode *> *nodesArray;
 @property (nonatomic, strong) NSMutableArray <NSError *> *errorsArray;
 @property (nonatomic) double totalDuration;
 @property (nonatomic) double currentProgress;   // Duration of all videos processed
@@ -39,7 +36,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @property (nonatomic, assign) NSUInteger retries;
 @property (nonatomic, getter=toShareThroughChat) BOOL shareThroughChat;
-@property (nonatomic, getter=isCameraUploads) BOOL cameraUploads;
 
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic) UIAlertController *alertController;
@@ -51,7 +47,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @implementation MEGAProcessAsset
 
-- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode cameraUploads:(BOOL)cameraUploads filePath:(void (^)(NSString *filePath))filePath error:(void (^)(NSError *error))error {
+- (instancetype)initWithAsset:(PHAsset *)asset filePath:(void (^)(NSString *filePath))filePath error:(void (^)(NSError *error))error {
     self = [super init];
     
     if (self) {
@@ -59,14 +55,12 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _filePath = filePath;
         _error = error;
         _retries = 0;
-        _parentNode = parentNode;
-        _cameraUploads = cameraUploads;
     }
     
     return self;
 }
 
-- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets parentNode:(MEGANode *)parentNode filePaths:(void (^)(NSArray<NSString *> *))filePaths errors:(void (^)(NSArray<NSError *> *))errors {
+- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets filePaths:(void (^)(NSArray<NSString *> *))filePaths errors:(void (^)(NSArray<NSError *> *))errors {
     self = [super init];
     
     if (self) {
@@ -76,11 +70,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _errors = errors;
         _retries = 0;
         _filePathsArray = [[NSMutableArray alloc] init];
-        _nodesArray = [[NSMutableArray alloc] init];
         _errorsArray = [[NSMutableArray alloc] init];
         _shareThroughChat = YES;
-        _parentNode = parentNode;
-        _cameraUploads = NO;
         for (PHAsset *asset in assets) {
             if (asset.mediaType == PHAssetMediaTypeVideo) {
                 _totalDuration += asset.duration;
@@ -92,7 +83,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
 }
 
-- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *))filePath error:(void (^)(NSError *))error {
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *))filePath error:(void (^)(NSError *))error {
     self = [super init];
     
     if (self) {
@@ -101,8 +92,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _error = error;
         _retries = 0;
         _shareThroughChat = YES;
-        _parentNode = parentNode;
-        _cameraUploads = NO;
         _totalDuration = CMTimeGetSeconds(self.avAsset.duration);
     }
     
@@ -146,9 +135,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         if (self.filePaths && self.filePathsArray.count) {
             self.filePaths(self.filePathsArray);
         }
-        if (self.nodes && self.nodesArray.count) {
-            self.nodes(self.nodesArray);
-        }
         if (self.errors && self.errorsArray.count) {
             self.errors(self.errorsArray);
         }
@@ -167,6 +153,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         }
     }
 }
+
+#pragma mark - Private
 
 - (void)requestImageAsset:(PHAsset *)asset {
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -445,8 +433,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
 }
 
-#pragma mark - Private
-
 - (BOOL)hasFreeSpaceOnDiskForWriteFile:(long long)fileSize {
     uint64_t freeSpace = NSFileManager.defaultManager.mnz_fileSystemFreeSize;
      
@@ -637,7 +623,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     }
     [self.filePathsArray removeAllObjects];
-    [self.nodesArray removeAllObjects];
     [self.errorsArray removeAllObjects];
     [self.assets removeAllObjects];
     dispatch_semaphore_signal(self.semaphore);
