@@ -4,14 +4,14 @@ import XCTest
 final class GetSMSUseCaseTests: XCTestCase {
     func testVerifiedPhoneNumber_nil() {
         let repo = MockSMSRepository(verifiedNumber: nil)
-        let sut = GetSMSUseCase(repo: repo)
+        let sut = GetSMSUseCase(repo: repo, l10n: L10nRepository())
         XCTAssertNil(sut.verifiedPhoneNumber())
     }
     
     func testVerifiedPhoneNumber_notNil() {
         let number = "0101010101"
         let repo = MockSMSRepository(verifiedNumber: number)
-        let sut = GetSMSUseCase(repo: repo)
+        let sut = GetSMSUseCase(repo: repo, l10n: L10nRepository())
         XCTAssertEqual(sut.verifiedPhoneNumber(), number)
     }
     

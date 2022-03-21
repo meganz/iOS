@@ -5,9 +5,9 @@ protocol ShareUseCaseProtocol {
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity]
 }
 
-struct ShareUseCase: ShareUseCaseProtocol {
-    private let repo: ShareRepositoryProtocol
-    init(repo: ShareRepositoryProtocol) {
+struct ShareUseCase<T: ShareRepositoryProtocol>: ShareUseCaseProtocol {
+    private let repo: T
+    init(repo: T) {
         self.repo = repo
     }
     

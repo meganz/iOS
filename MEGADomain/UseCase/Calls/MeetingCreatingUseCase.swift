@@ -10,11 +10,11 @@ protocol MeetingCreatingUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct MeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
+struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol>: MeetingCreatingUseCaseProtocol {
 
-    private let repository: MeetingCreatingRepositoryProtocol
+    private let repository: T
     
-    init(repository: MeetingCreatingRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     

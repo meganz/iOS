@@ -18,7 +18,7 @@ protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
     func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data)
 }
 
-final class CallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
+final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRemoteVideoUseCaseProtocol {
     enum VideoRequestType {
         case enableVideo(CallParticipantEntity)
         case disableVideo(CallParticipantEntity)
@@ -28,14 +28,14 @@ final class CallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
         case stopLowResolutionVideo(chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
     }
     
-    private let repository: CallRemoteVideoRepositoryProtocol
+    private let repository: T
     private weak var remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol?
     
     private let videoRequestSubject = PassthroughSubject<VideoRequestType, Never>()
     private let videoReqeustSerialQueue = DispatchQueue(label: "RemoteVideoOperationQueue", qos: .userInitiated)
     private var subscriptions = Set<AnyCancellable>()
 
-    init(repository: CallRemoteVideoRepository) {
+    init(repository: T) {
         self.repository = repository
         
         videoRequestSubject

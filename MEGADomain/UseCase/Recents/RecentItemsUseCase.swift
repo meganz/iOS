@@ -11,10 +11,10 @@ protocol RecentItemsUseCaseProtocol {
     func fetchRecentItems() -> [RecentItemEntity]
 }
 
-struct RecentItemsUseCase: RecentItemsUseCaseProtocol {
-    private let repo: RecentItemsRepositoryProtocol
+struct RecentItemsUseCase<T: RecentItemsRepositoryProtocol>: RecentItemsUseCaseProtocol {
+    private let repo: T
 
-    init(repo: RecentItemsRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

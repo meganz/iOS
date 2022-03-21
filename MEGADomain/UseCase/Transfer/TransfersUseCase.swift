@@ -7,11 +7,11 @@ protocol TransfersUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct TransfersUseCase: TransfersUseCaseProtocol {
+struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtocol {
     
-    private let repo: TransfersRepositoryProtocol
+    private let repo: T
     
-    init(repo: TransfersRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

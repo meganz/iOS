@@ -9,10 +9,10 @@ protocol CheckSMSUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct CheckSMSUseCase: CheckSMSUseCaseProtocol {
-    private let repo: SMSRepositoryProtocol
+struct CheckSMSUseCase<T: SMSRepositoryProtocol>: CheckSMSUseCaseProtocol {
+    private let repo: T
     
-    init(repo: SMSRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

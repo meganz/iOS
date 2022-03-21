@@ -18,15 +18,15 @@ protocol ThumbnailUseCaseProtocol {
     func thumbnailPlaceholderFileType(forNodeName name: String) -> MEGAFileType
 }
 
-extension ThumbnailUseCase {
-    static let `default` = ThumbnailUseCase(repository: ThumbnailRepository.default)
+extension ThumbnailUseCase where T == ThumbnailRepository {
+    static let `default` = ThumbnailUseCase(repository: T.default) 
 }
 
-struct ThumbnailUseCase: ThumbnailUseCaseProtocol {
-    private let repository: ThumbnailRepositoryProtocol
+struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtocol {
+    private let repository: T
     private let fileTypes = FileTypes()
     
-    init(repository: ThumbnailRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     

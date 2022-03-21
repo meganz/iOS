@@ -15,14 +15,14 @@ protocol ExportFileChatMessageUseCaseProtocol {
 typealias ExportFileUseCaseProtocol = ExportFileNodeUseCaseProtocol & ExportFileChatMessageUseCaseProtocol
 
 // MARK: - Use case implementation -
-struct ExportFileUseCase {
-    private let downloadFileRepository: DownloadFileRepositoryProtocol
-    private let offlineFilesRepository: OfflineFilesRepositoryProtocol
-    private let fileSystemRepository: FileRepositoryProtocol
-    private let exportChatMessagesRepository: ExportChatMessagesRepositoryProtocol
-    private let importNodeRepository: ImportNodeRepositoryProtocol
+struct ExportFileUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileRepositoryProtocol, W: ExportChatMessagesRepositoryProtocol, X: ImportNodeRepositoryProtocol> {
+    private let downloadFileRepository: T
+    private let offlineFilesRepository: U
+    private let fileSystemRepository: V
+    private let exportChatMessagesRepository: W
+    private let importNodeRepository: X
 
-    init(downloadFileRepository: DownloadFileRepositoryProtocol, offlineFilesRepository: OfflineFilesRepositoryProtocol, fileSystemRepository: FileRepositoryProtocol, exportChatMessagesRepository: ExportChatMessagesRepositoryProtocol, importNodeRepository: ImportNodeRepositoryProtocol) {
+    init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, exportChatMessagesRepository: W, importNodeRepository: X) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileSystemRepository = fileSystemRepository

@@ -9,8 +9,8 @@ protocol AudioSessionUseCaseProtocol {
     func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?)
 }
 
-final class AudioSessionUseCase : AudioSessionUseCaseProtocol {
-    private var audioSessionRepository: AudioSessionRepositoryProtocol
+final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: AudioSessionUseCaseProtocol {
+    private var audioSessionRepository: T
     
     var isBluetoothAudioRouteAvailable: Bool {
         audioSessionRepository.isBluetoothAudioRouteAvailable
@@ -20,7 +20,7 @@ final class AudioSessionUseCase : AudioSessionUseCaseProtocol {
         audioSessionRepository.currentSelectedAudioPort
     }
     
-    init(audioSessionRepository: AudioSessionRepositoryProtocol) {
+    init(audioSessionRepository: T) {
         self.audioSessionRepository = audioSessionRepository
     }
     

@@ -6,10 +6,10 @@ protocol AnalyticsUseCaseProtocol {
     func logEvent(_ name: AnalyticsEventEntity.Name, parameters: [AnalyticsEventEntity.Name : Any]?)
 }
 
-struct AnalyticsUseCase: AnalyticsUseCaseProtocol {
-    private let repository: AnalyticsRepositoryProtocol
+struct AnalyticsUseCase<T: AnalyticsRepositoryProtocol>: AnalyticsUseCaseProtocol {
+    private let repository: T
     
-    init(repository: AnalyticsRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     

@@ -17,7 +17,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
         self.call = call
     }
 
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksUseCaseProtocol) {
+    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: MEGAHandle, callbacksDelegate: T) {
         startListeningForCall_CalledTimes += 1
     }
     

@@ -7,11 +7,11 @@ protocol OfflineFilesUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct OfflineFilesUseCase: OfflineFilesUseCaseProtocol {
+struct OfflineFilesUseCase<T: OfflineFilesRepositoryProtocol>: OfflineFilesUseCaseProtocol {
 
-    private let repo: OfflineFilesRepositoryProtocol
+    private let repo: T
 
-    init(repo: OfflineFilesRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

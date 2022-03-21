@@ -5,10 +5,10 @@ protocol PreferenceUseCaseProtocol {
     subscript<T>(key: PreferenceKeyEntity) -> T? { get set }
 }
 
-struct PreferenceUseCase: PreferenceUseCaseProtocol {
-    private var repo: PreferenceRepositoryProtocol
+struct PreferenceUseCase<T: PreferenceRepositoryProtocol>: PreferenceUseCaseProtocol {
+    private var repo: T
     
-    init(repository: PreferenceRepositoryProtocol) {
+    init(repository: T) {
         repo = repository
     }
     
@@ -22,7 +22,7 @@ struct PreferenceUseCase: PreferenceUseCaseProtocol {
     }
 }
 
-extension PreferenceUseCase {
+extension PreferenceUseCase where T == PreferenceRepository {
     static var `default`: PreferenceUseCase {
         PreferenceUseCase(repository: PreferenceRepository(userDefaults: UserDefaults.standard))
     }

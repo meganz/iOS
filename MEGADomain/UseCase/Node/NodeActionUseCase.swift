@@ -10,10 +10,10 @@ protocol NodeActionUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct NodeActionUseCase: NodeActionUseCaseProtocol {
-    private let repo: NodeActionRepositoryProtocol
+struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseCaseProtocol {
+    private let repo: T
     
-    init(repo: NodeActionRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

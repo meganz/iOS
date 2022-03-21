@@ -5,7 +5,7 @@ struct FavouritesTimelineProvider: TimelineProvider {
     typealias Entry = QuickAccessWidgetEntry
 
     var viewModel = FavouritesQuickAccessWidgetViewModel(
-        authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk())),
+        authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()), credentialRepo: CredentialRepository()),
         copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository(fileManager: FileManager.default)),
         favouriteItemsUseCase: FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
     )

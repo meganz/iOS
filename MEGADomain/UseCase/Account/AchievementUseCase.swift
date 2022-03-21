@@ -5,10 +5,10 @@ protocol AchievementUseCaseProtocol {
     func getAchievementStorage(by type: AchievementTypeEntity, completion: @escaping (Result<Measurement<UnitDataStorage>, AchievementErrorEntity>) -> Void)
 }
 
-struct AchievementUseCase: AchievementUseCaseProtocol {
-    private let repo: AchievementRepositoryProtocol
+struct AchievementUseCase<T: AchievementRepositoryProtocol>: AchievementUseCaseProtocol {
+    private let repo: T
     
-    init(repo: AchievementRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

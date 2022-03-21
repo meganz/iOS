@@ -17,7 +17,7 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let vm = VerificationCodeViewModel(router: self,
                                            checkSMSUseCase: CheckSMSUseCase(repo: SMSRepository(sdk: sdk)),
-                                           authUseCase: AuthUseCase(repo: AuthRepository(sdk: sdk)),
+                                           authUseCase: AuthUseCase(repo: AuthRepository(sdk: sdk), credentialRepo: CredentialRepository()),
                                            verificationType: verificationType,
                                            phoneNumber: phoneNumber)
         

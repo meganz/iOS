@@ -6,10 +6,10 @@ protocol DownloadFileUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct DownloadFileUseCase: DownloadFileUseCaseProtocol {
-    private let repo: DownloadFileRepositoryProtocol
+struct DownloadFileUseCase<T: DownloadFileRepositoryProtocol>: DownloadFileUseCaseProtocol {
+    private let repo: T
     
-    init(repo: DownloadFileRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

@@ -9,16 +9,11 @@ protocol AuthUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct AuthUseCase: AuthUseCaseProtocol {
-    private enum Constants {
-        static let keychainServiceName = "MEGA"
-        static let keychainAccountName = "sessionV3"
-    }
+struct AuthUseCase<T: AuthRepositoryProtocol, U: CredentialRepositoryProtocol>: AuthUseCaseProtocol {
+    private let repo: T
+    private let credentialRepo: U
     
-    private let repo: AuthRepositoryProtocol
-    private let credentialRepo: CredentialRepositoryProtocol
-    
-    init(repo: AuthRepositoryProtocol, credentialRepo: CredentialRepositoryProtocol = CredentialRepository()) {
+    init(repo: T, credentialRepo: U) {
         self.repo = repo
         self.credentialRepo = credentialRepo
     }
@@ -38,4 +33,9 @@ struct AuthUseCase: AuthUseCaseProtocol {
     func isLoggedIn() -> Bool {
         repo.isLoggedIn()
     }
+}
+
+fileprivate enum Constants {
+    static let keychainServiceName = "MEGA"
+    static let keychainAccountName = "sessionV3"
 }

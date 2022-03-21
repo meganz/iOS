@@ -8,10 +8,10 @@ protocol HistoryRetentionUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct HistoryRetentionUseCase: HistoryRetentionUseCaseProtocol {
-    private let repository: ManageChatHistoryRepositoryProtocol
+struct HistoryRetentionUseCase<T: ManageChatHistoryRepositoryProtocol>: HistoryRetentionUseCaseProtocol {
+    private let repository: T
     
-    init(repository: ManageChatHistoryRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     

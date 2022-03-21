@@ -7,10 +7,10 @@ protocol FileVersionsUseCaseProtocol {
     func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
 }
 
-struct FileVersionsUseCase: FileVersionsUseCaseProtocol {
-    private let repo: FileVersionsRepositoryProtocol
+struct FileVersionsUseCase<T: FileVersionsRepositoryProtocol>: FileVersionsUseCaseProtocol {
+    private let repo: T
     
-    init(repo: FileVersionsRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     
