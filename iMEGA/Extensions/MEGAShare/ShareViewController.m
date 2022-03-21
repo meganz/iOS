@@ -7,6 +7,7 @@
 #import "SVProgressHUD.h"
 #import "MEGASdk+MNZCategory.h"
 
+#import "ChatVideoUploadQuality.h"
 #import "Helper.h"
 #import "LaunchViewController.h"
 #import "LoginRequiredViewController.h"
@@ -24,6 +25,7 @@
 #import "ShareAttachment.h"
 #import "ShareDestinationTableViewController.h"
 #import "MEGASdkManager+CleanUp.h"
+#import "MEGAProcessAsset.h"
 @import Firebase;
 
 #define MNZ_ANIMATION_TIME 0.35
@@ -594,7 +596,37 @@
                 
             case ShareAttachmentTypeFile: {
                 NSURL *url = attachment.content;
-                [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                if (self.isChatDestination && url.path.mnz_isVideoPathExtension) {
+                    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+                    ChatVideoUploadQuality videoQuality = [[sharedUserDefaults objectForKey:@"ChatVideoQuality"] unsignedIntegerValue];
+                    if (videoQuality < ChatVideoUploadQualityOriginal) {
+                        NSError *error;
+                        NSURL *toUrl = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:url.lastPathComponent]];
+                        [NSFileManager.defaultManager copyItemAtURL:url toURL:toUrl error:&error];
+                        if (error) {
+                            MEGALogError(@"Copy item at URL fails with error %@", error.localizedDescription);
+                            // If the file exists in the TMP directory then continue with the process
+                            if (error.code != 516) {
+                                return;
+                            }
+                        }
+                        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithVideoURL:toUrl filePath:^(NSString *filePath) {
+                            NSURL *downscaledVideoUrl = [NSURL fileURLWithPath:filePath];
+                            if (![attachment.name.pathExtension isEqualToString:@"mp4"]) {
+                                attachment.name = [attachment.name stringByDeletingPathExtension];
+                                attachment.name = [attachment.name stringByAppendingPathExtension:@"mp4"];
+                            }
+                            [self uploadData:downscaledVideoUrl withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                        } error:^(NSError *error) {
+                            [SVProgressHUD dismiss];
+                        } presenter:self];
+                        [processAsset prepare];
+                    } else {
+                        [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                    }
+                } else {
+                    [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                }
                 
                 break;
             }

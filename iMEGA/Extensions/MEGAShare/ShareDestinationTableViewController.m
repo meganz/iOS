@@ -207,6 +207,7 @@
             BrowserViewController *browserVC = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
             browserVC.browserAction = BrowserActionShareExtension;
             browserVC.browserViewControllerDelegate = self.shareViewController;
+            self.shareViewController.chatDestination = NO;
             [self.navigationController setToolbarHidden:NO animated:YES];
             [self.navigationController pushViewController:browserVC animated:YES];
         } else if (indexPath.row == 1) {
@@ -214,6 +215,7 @@
             SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
             sendToViewController.sendMode = SendModeShareExtension;
             sendToViewController.sendToViewControllerDelegate = self.shareViewController;
+            self.shareViewController.chatDestination = YES;
             [self.navigationController pushViewController:sendToViewController animated:YES];
         }
     }
