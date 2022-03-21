@@ -167,24 +167,22 @@ class PhotoExplorerViewModel: NSObject {
             debouncer.start { [weak self] in
                 self?.loadAllPhotos()
             }
-        } else {
-            if #available(iOS 14.0, *) { } else {
-                var resultNodes = [MEGANode]()
-                var resultIndexPaths = [IndexPath]()
-                
-                updatedNodes.forEach { node in
-                    if let index = nodes.firstIndex(of: node) {
-                        nodes[index] = node
-                        if let indexPath = indexPath(forNode: node) {
-                            resultNodes.append(node)
-                            resultIndexPaths.append(indexPath)
-                        }
+        } else if #unavailable(iOS 14.0) {
+            var resultNodes = [MEGANode]()
+            var resultIndexPaths = [IndexPath]()
+            
+            updatedNodes.forEach { node in
+                if let index = nodes.firstIndex(of: node) {
+                    nodes[index] = node
+                    if let indexPath = indexPath(forNode: node) {
+                        resultNodes.append(node)
+                        resultIndexPaths.append(indexPath)
                     }
                 }
-                
-                if resultNodes.count > 0 {
-                    invokeCommand?(.modified(nodes: resultNodes, indexPaths: resultIndexPaths))
-                }
+            }
+            
+            if resultNodes.count > 0 {
+                invokeCommand?(.modified(nodes: resultNodes, indexPaths: resultIndexPaths))
             }
         }
     }
