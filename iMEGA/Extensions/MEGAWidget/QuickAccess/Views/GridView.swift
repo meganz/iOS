@@ -9,7 +9,7 @@ struct GridView: View {
     var body: some View {
         GeometryReader { proxy in
             LazyVGrid(columns: columns, spacing: 0) {
-                ForEach(0..<items.count) { index in
+                ForEach(0..<items.count, id: \.self) { index in
                     cell(for: items[index], maxHeight: proxy.size.height * CGFloat(0.25))
                 }
             }
