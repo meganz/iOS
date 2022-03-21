@@ -6,11 +6,11 @@ protocol CopyDataBasesUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct CopyDataBasesUseCase: CopyDataBasesUseCaseProtocol {
+struct CopyDataBasesUseCase<T: CopyDataBasesRepositoryProtocol>: CopyDataBasesUseCaseProtocol {
     
-    private let repo: CopyDataBasesRepositoryProtocol
+    private let repo: T
 
-    init(repo: CopyDataBasesRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

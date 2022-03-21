@@ -12,11 +12,11 @@ protocol FavouriteItemsUseCaseProtocol {
     func fetchFavouriteItems(upTo count: Int) -> [FavouriteItemEntity]
 }
 
-struct FavouriteItemsUseCase: FavouriteItemsUseCaseProtocol {
+struct FavouriteItemsUseCase<T: FavouriteItemsRepositoryProtocol>: FavouriteItemsUseCaseProtocol {
     
-    private let repo: FavouriteItemsRepositoryProtocol
+    private let repo: T
 
-    init(repo: FavouriteItemsRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
 

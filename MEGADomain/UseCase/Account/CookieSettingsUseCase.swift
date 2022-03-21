@@ -15,11 +15,11 @@ protocol CookieSettingsUseCaseProtocol {
 }
 
 // MARK: - Use case implementation
-struct CookieSettingsUseCase: CookieSettingsUseCaseProtocol {
-    private let repository: CookieSettingsRepositoryProtocol
-    private let analyticsUseCase: AnalyticsUseCaseProtocol
+struct CookieSettingsUseCase<T: CookieSettingsRepositoryProtocol, U: AnalyticsUseCaseProtocol>: CookieSettingsUseCaseProtocol {
+    private let repository: T
+    private let analyticsUseCase: U
     
-    init(repository: CookieSettingsRepositoryProtocol, analyticsUseCase: AnalyticsUseCaseProtocol) {
+    init(repository: T, analyticsUseCase: U) {
         self.repository = repository
         self.analyticsUseCase = analyticsUseCase
     }

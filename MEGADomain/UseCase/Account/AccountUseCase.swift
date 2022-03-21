@@ -7,11 +7,11 @@ protocol AccountUseCaseProtocol {
 }
 
 // MARK: - Use case implementation
-struct AccountUseCase: AccountUseCaseProtocol {
+struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtocol {
     
-    private let repository: AccountRepositoryProtocol
+    private let repository: T
     
-    init(repository: AccountRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     

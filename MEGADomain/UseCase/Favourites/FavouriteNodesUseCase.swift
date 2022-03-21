@@ -8,11 +8,11 @@ protocol FavouriteNodesUseCaseProtocol {
     func unregisterOnNodesUpdate() -> Void
 }
 
-struct FavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
+struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol>: FavouriteNodesUseCaseProtocol {
     
-    private let repo: FavouriteNodesRepositoryProtocol
+    private let repo: T
 
-    init(repo: FavouriteNodesRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

@@ -8,11 +8,11 @@ protocol ChatRoomUseCaseProtocol {
     func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
 }
 
-struct ChatRoomUseCase: ChatRoomUseCaseProtocol {
-    private let chatRoomRepo: ChatRoomRepositoryProtocol
-    private let userStoreRepo: UserStoreRepositoryProtocol
+struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProtocol>: ChatRoomUseCaseProtocol {
+    private let chatRoomRepo: T
+    private let userStoreRepo: U
     
-    init(chatRoomRepo: ChatRoomRepositoryProtocol, userStoreRepo: UserStoreRepositoryProtocol) {
+    init(chatRoomRepo: T, userStoreRepo: U) {
         self.chatRoomRepo = chatRoomRepo
         self.userStoreRepo = userStoreRepo
     }

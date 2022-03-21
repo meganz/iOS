@@ -5,10 +5,10 @@ protocol RecentNodesUseCaseProtocol {
     func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[RecentActionBucketEntity], QuickAccessWidgetErrorEntity>) -> Void)
 }
 
-struct RecentNodesUseCase: RecentNodesUseCaseProtocol {
-    private let repo: RecentNodesRepositoryProtocol
+struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol>: RecentNodesUseCaseProtocol {
+    private let repo: T
 
-    init(repo: RecentNodesRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

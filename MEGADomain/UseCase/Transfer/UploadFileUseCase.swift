@@ -7,10 +7,10 @@ protocol UploadFileUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct UploadFileUseCase: UploadFileUseCaseProtocol {
-    private let repo: UploadFileRepositoryProtocol
+struct UploadFileUseCase<T: UploadFileRepositoryProtocol>: UploadFileUseCaseProtocol {
+    private let repo: T
     
-    init(repo: UploadFileRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

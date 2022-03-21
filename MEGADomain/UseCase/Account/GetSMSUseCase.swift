@@ -7,11 +7,11 @@ protocol GetSMSUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct GetSMSUseCase: GetSMSUseCaseProtocol {
-    private let repo: SMSRepositoryProtocol
-    private let l10n: L10nRepositoryProtocol
+struct GetSMSUseCase<T: SMSRepositoryProtocol, U: L10nRepositoryProtocol>: GetSMSUseCaseProtocol {
+    private let repo: T
+    private let l10n: U
     
-    init(repo: SMSRepositoryProtocol, l10n: L10nRepositoryProtocol = L10nRepository()) {
+    init(repo: T, l10n: U) {
         self.repo = repo
         self.l10n = l10n
     }

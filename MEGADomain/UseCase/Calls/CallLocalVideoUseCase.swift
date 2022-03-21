@@ -15,12 +15,12 @@ protocol CallLocalVideoCallbacksUseCaseProtocol {
     func localVideoChangedCameraPosition()
 }
 
-final class CallLocalVideoUseCase: NSObject, CallLocalVideoUseCaseProtocol {
+final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: NSObject, CallLocalVideoUseCaseProtocol {
     
-    private let repository: CallLocalVideoRepositoryProtocol
+    private let repository: T
     private var localVideoCallbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol?
     
-    init(repository: CallLocalVideoRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     

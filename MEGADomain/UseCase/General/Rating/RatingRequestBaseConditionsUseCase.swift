@@ -5,15 +5,15 @@ protocol RatingRequestBaseConditionsUseCaseProtocol {
     func saveLastRequestedAppVersion(_ appVersion: String)
 }
 
-struct RatingRequestBaseConditionsUseCase: RatingRequestBaseConditionsUseCaseProtocol {
+struct RatingRequestBaseConditionsUseCase<T: PreferenceUseCaseProtocol, U: AccountRepositoryProtocol>: RatingRequestBaseConditionsUseCaseProtocol {
     @PreferenceWrapper(key: .lastRequestedVersionForRating, defaultValue: "")
     private var lastRequestedVersion: String
     
-    private let accountRepo: AccountRepositoryProtocol
+    private let accountRepo: U
     private let currentAppVersion: String
 
-    init(preferenceUserCase: PreferenceUseCaseProtocol,
-         accountRepo: AccountRepositoryProtocol,
+    init(preferenceUserCase: T,
+         accountRepo: U,
          currentAppVersion: String) {
         self.accountRepo = accountRepo
         self.currentAppVersion = currentAppVersion

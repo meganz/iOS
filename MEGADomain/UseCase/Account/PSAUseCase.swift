@@ -1,9 +1,13 @@
 
+protocol PSAUseCaseProtocol {
+    func getPSA(completion: @escaping (Result<PSAEntity, PSAErrorEntity>) -> Void)
+    func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier)
+}
 
-struct PSAUseCase {
-    private let repo: PSARepositoryProtocol
+struct PSAUseCase<T: PSARepositoryProtocol>: PSAUseCaseProtocol {
+    private let repo: T
     
-    init(repo: PSARepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

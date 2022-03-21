@@ -3,10 +3,10 @@ protocol CaptureDeviceUseCaseProtocol {
     func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String?
 }
 
-struct CaptureDeviceUseCase: CaptureDeviceUseCaseProtocol {
-    private let repo: CaptureDeviceRepositoryProtocol
+struct CaptureDeviceUseCase<T: CaptureDeviceRepositoryProtocol>: CaptureDeviceUseCaseProtocol {
+    private let repo: T
     
-    init(repo: CaptureDeviceRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     

@@ -5,18 +5,15 @@ protocol UserImageUseCaseProtocol {
                          completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)
 }
 
-struct UserImageUseCase: UserImageUseCaseProtocol {
-    private struct Constants {
-        static let avatarDefaultSize = CGSize(width: 100.0, height: 100.0)
-    }
+struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryProtocol, V: FileRepositoryProtocol>: UserImageUseCaseProtocol {
     
-    private let userImageRepo: UserImageRepositoryProtocol
-    private let userStoreRepo: UserStoreRepositoryProtocol
-    private let fileRepo: FileRepositoryProtocol
+    private let userImageRepo: T
+    private let userStoreRepo: U
+    private let fileRepo: V
     
-    init(userImageRepo: UserImageRepositoryProtocol,
-         userStoreRepo: UserStoreRepositoryProtocol,
-         fileRepo: FileRepositoryProtocol) {
+    init(userImageRepo: T,
+         userStoreRepo: U,
+         fileRepo: V) {
         self.userImageRepo = userImageRepo
         self.userStoreRepo = userStoreRepo
         self.fileRepo = fileRepo
@@ -50,7 +47,7 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
                                     completion: completion)
     }
     
-    private func getAvatarImage(withUserHandle handle: UInt64, name: String) -> UIImage? {
+    private func getAvatarImage(withUserHandle handle: UInt64, name: String, size: CGSize = CGSize(width: 100.0, height: 100.0)) -> UIImage? {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
               let avatarBackgroundColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return nil
@@ -69,10 +66,10 @@ struct UserImageUseCase: UserImageUseCaseProtocol {
         }
         
         let image = UIImage(forName: initials,
-                            size: Constants.avatarDefaultSize,
+                            size: size,
                             backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundColor),
                             textColor: .white,
-                            font: UIFont.systemFont(ofSize: Constants.avatarDefaultSize.width/2.0))
+                            font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0))
         
         if let imageData = image?.jpegData(compressionQuality: 1.0) {
             try? imageData.write(to: destinationURL, options: .atomic)

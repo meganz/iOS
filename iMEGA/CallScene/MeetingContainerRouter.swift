@@ -23,7 +23,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
     private var appBecomeActiveObserver: NSObjectProtocol?
     private weak var containerViewModel: MeetingContainerViewModel?
-    private var chatRoomUseCase: ChatRoomUseCase {
+    private var chatRoomUseCase: ChatRoomUseCase<ChatRoomRepository, UserStoreRepository> {
         let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
         return ChatRoomUseCase(chatRoomRepo: chatRoomRepository,
                                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
@@ -73,7 +73,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),
-                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk())))
+                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()), credentialRepo: CredentialRepository()))
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         containerViewModel = viewModel

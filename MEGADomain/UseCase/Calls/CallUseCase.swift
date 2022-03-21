@@ -1,6 +1,6 @@
 
 protocol CallUseCaseProtocol {
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksUseCaseProtocol)
+    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: MEGAHandle, callbacksDelegate: T)
     func stopListeningForCall()
     func call(for chatId: MEGAHandle) -> CallEntity?
     func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
@@ -50,16 +50,16 @@ extension CallCallbacksUseCaseProtocol {
     func networkQuality() { }
 }
 
-final class CallUseCase: NSObject, CallUseCaseProtocol {
+final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtocol {
     
-    private let repository: CallRepositoryProtocol
+    private let repository: T
     private weak var callbacksDelegate: CallCallbacksUseCaseProtocol?
 
-    init(repository: CallRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksUseCaseProtocol) {
+    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: MEGAHandle, callbacksDelegate: T) {
         repository.startListeningForCallInChat(chatId, callbacksDelegate: self)
         self.callbacksDelegate = callbacksDelegate
     }

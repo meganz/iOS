@@ -6,14 +6,14 @@ protocol ReinstallationUseCaseProcotol {
     func markAppAsFirstRun()
 }
 
-struct ReinstallationUseCase: ReinstallationUseCaseProcotol {
+struct ReinstallationUseCase<T: PreferenceUseCaseProtocol, U: CredentialRepositoryProtocol>: ReinstallationUseCaseProcotol {
     @PreferenceWrapper(key: .firstRun, defaultValue: "", useCase: PreferenceUseCase.group)
     private var firstRun: String
     
-    private let credentialRepo: CredentialRepositoryProtocol
+    private let credentialRepo:U
     
-    init(preferenceUserCase: PreferenceUseCaseProtocol,
-         credentialRepo: CredentialRepositoryProtocol) {
+    init(preferenceUserCase: T,
+         credentialRepo: U) {
         self.credentialRepo = credentialRepo
         $firstRun.useCase = preferenceUserCase
     }

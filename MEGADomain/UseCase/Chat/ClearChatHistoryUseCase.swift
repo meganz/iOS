@@ -7,10 +7,10 @@ protocol ClearChatHistoryUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct ClearChatHistoryUseCase: ClearChatHistoryUseCaseProtocol {
-    private let repository: ManageChatHistoryRepositoryProtocol
+struct ClearChatHistoryUseCase<T: ManageChatHistoryRepositoryProtocol>: ClearChatHistoryUseCaseProtocol {
+    private let repository: T
     
-    init(repository: ManageChatHistoryRepositoryProtocol) {
+    init(repository: T) {
         self.repository = repository
     }
     

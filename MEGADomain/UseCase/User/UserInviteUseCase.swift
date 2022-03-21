@@ -5,10 +5,10 @@ protocol UserInviteUseCaseProtocol {
                     completion: @escaping (Result<Void, InviteErrorEntity>) -> Void)
 }
 
-struct UserInviteUseCase: UserInviteUseCaseProtocol {
-    private let repo: UserInviteRepositoryProtocol
+struct UserInviteUseCase<T: UserInviteRepositoryProtocol>: UserInviteUseCaseProtocol {
+    private let repo: T
     
-    init(repo: UserInviteRepositoryProtocol) {
+    init(repo: T) {
         self.repo = repo
     }
     
