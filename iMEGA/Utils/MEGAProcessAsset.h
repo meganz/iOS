@@ -12,6 +12,7 @@ static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
 - (instancetype)initWithAsset:(PHAsset *)asset filePath:(void (^)(NSString *filePath))filePath error:(void (^)(NSError *error))error;
 - (instancetype)initToShareThroughChatWithAssets:(NSArray <PHAsset *> *)assets filePaths:(void (^)(NSArray <NSString *> *filePaths))filePaths errors:(void (^)(NSArray <NSError *> *errors))errors;
 - (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *filePath))filePath error:(void (^)(NSError *error))error;
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *filePath))filePath error:(void (^)(NSError *error))error presenter:(UIViewController *)presenter;
 - (void)prepare;
 
 @end

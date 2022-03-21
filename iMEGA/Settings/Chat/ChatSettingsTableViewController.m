@@ -218,13 +218,11 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 }
 
 - (void)videoQualityString {
-    NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
-    ChatVideoUploadQuality videoQuality;
     NSString *videoQualityString;
-    if (videoQualityNumber) {
-        videoQuality = videoQualityNumber.unsignedIntegerValue;
-    } else {
-        [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+    ChatVideoUploadQuality videoQuality = [[sharedUserDefaults objectForKey:@"ChatVideoQuality"] unsignedIntegerValue];
+    if (!videoQuality) {
+        [sharedUserDefaults setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
         videoQuality = ChatVideoUploadQualityMedium;
     }
     

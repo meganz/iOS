@@ -36,7 +36,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    ChatVideoUploadQuality videoQuality = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"] unsignedIntegerValue];
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+    ChatVideoUploadQuality videoQuality = [[sharedUserDefaults objectForKey:@"ChatVideoQuality"] unsignedIntegerValue];
     
     switch (videoQuality) {
         case ChatVideoUploadQualityLow:
@@ -97,21 +98,22 @@
         self.currentChatVideoQualityIndexPath = indexPath;
     }
     
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     switch (indexPath.row) {
         case 0:
-            [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityLow) forKey:@"ChatVideoQuality"];
+            [sharedUserDefaults setObject:@(ChatVideoUploadQualityLow) forKey:@"ChatVideoQuality"];
             break;
             
         case 1:
-            [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
+            [sharedUserDefaults setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
             break;
             
         case 2:
-            [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityHigh) forKey:@"ChatVideoQuality"];
+            [sharedUserDefaults setObject:@(ChatVideoUploadQualityHigh) forKey:@"ChatVideoQuality"];
             break;
             
         case 3:
-            [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityOriginal) forKey:@"ChatVideoQuality"];
+            [sharedUserDefaults setObject:@(ChatVideoUploadQualityOriginal) forKey:@"ChatVideoQuality"];
             break;
             
         default:

@@ -42,6 +42,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 @property (nonatomic) dispatch_semaphore_t semaphore;
 
 @property (nonatomic, copy) AVAsset *avAsset;
+@property (nonatomic) UIViewController *presenter;
 
 @end
 
@@ -93,6 +94,23 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _retries = 0;
         _shareThroughChat = YES;
         _totalDuration = CMTimeGetSeconds(self.avAsset.duration);
+    }
+    
+    return self;
+    
+}
+
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *))filePath error:(void (^)(NSError *))error presenter:(UIViewController *)presenter {
+    self = [super init];
+    
+    if (self) {
+        _avAsset = [AVAsset assetWithURL:videoURL];
+        _filePath = filePath;
+        _error = error;
+        _retries = 0;
+        _shareThroughChat = YES;
+        _totalDuration = CMTimeGetSeconds(self.avAsset.duration);
+        _presenter = presenter;
     }
     
     return self;
@@ -266,14 +284,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
                  
                  if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
-                     NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
-                     ChatVideoUploadQuality videoQuality;
-                     if (videoQualityNumber != nil) {
-                         videoQuality = videoQualityNumber.unsignedIntegerValue;
-                     } else {
-                         [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-                         videoQuality = ChatVideoUploadQualityMedium;
-                     }
+                     ChatVideoUploadQuality videoQuality = [self chatVideoUploadQuality];
                      
                      AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
                      
@@ -318,14 +329,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  self.totalDuration = self.totalDuration - asset.duration + realDuration;
                  NSString *filePath = [self filePathWithInfo:info asset:asset];
                  [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
-                 NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
-                 ChatVideoUploadQuality videoQuality;
-                 if (videoQualityNumber != nil) {
-                     videoQuality = videoQualityNumber.unsignedIntegerValue;
-                 } else {
-                     [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-                     videoQuality = ChatVideoUploadQualityMedium;
-                 }
+                 ChatVideoUploadQuality videoQuality = [self chatVideoUploadQuality];
                  
                  SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:avAsset videoQuality:videoQuality filePath:filePath];
                  [self downscaleVideoAsset:asset encoder:encoder];
@@ -372,14 +376,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
     
     if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
-        NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
-        ChatVideoUploadQuality videoQuality;
-        if (videoQualityNumber != nil) {
-            videoQuality = videoQualityNumber.unsignedIntegerValue;
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-            videoQuality = ChatVideoUploadQualityMedium;
-        }
+        ChatVideoUploadQuality videoQuality = [self chatVideoUploadQuality];
         
         AVAssetTrack *videoTrack = [self.avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
         
@@ -394,6 +391,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 [self.alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                     MEGALogDebug(@"[PA] User cancelled the export session");
                     [encoder cancelExport];
+                    NSDictionary *dict = @{NSLocalizedDescriptionKey:@"User cancels export"};
+                    NSError *error = [NSError errorWithDomain:MEGAProcessAssetErrorDomain code:-3 userInfo:dict];
+                    if (self.error) {
+                        self.error(error);
+                    }
                 }]];
             }
             
@@ -403,8 +405,12 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
                     if (self.filePath) {
-                        filePath = encoder.outputURL.path.mnz_relativeLocalPath;
-                        self.filePath(filePath);
+                        if (self.presenter) {                            
+                            self.filePath(filePath);
+                        } else {
+                            filePath = encoder.outputURL.path.mnz_relativeLocalPath;
+                            self.filePath(filePath);
+                        }
                     }
                 }
                 else if (encoder.status == AVAssetExportSessionStatusCancelled) {
@@ -419,9 +425,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 });
             }];
             if (UIApplication.mnz_presentingViewController != self.alertController) {
-                [UIApplication.mnz_presentingViewController.presentingViewController presentViewController:self.alertController animated:YES completion:^{
-                    [self addProgressViewToAlertController];
-                }];
+                if (self.presenter) {
+                    [self.presenter presentViewController:self.alertController animated:YES completion:^{
+                        [self addProgressViewToAlertController];
+                    }];
+                } else {
+                    [UIApplication.mnz_presentingViewController.presentingViewController presentViewController:self.alertController animated:YES completion:^{
+                        [self addProgressViewToAlertController];
+                    }];
+                }
             }
         } else {
             self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
@@ -741,6 +753,16 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     float start = CMTimeGetSeconds(segment.timeMapping.target.start);
     float duration = CMTimeGetSeconds(segment.timeMapping.target.duration);
     return start + duration;
+}
+
+- (ChatVideoUploadQuality)chatVideoUploadQuality {
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+    ChatVideoUploadQuality videoQuality = [[sharedUserDefaults objectForKey:@"ChatVideoQuality"] unsignedIntegerValue];
+    if (!videoQuality) {
+        [sharedUserDefaults setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
+        videoQuality = ChatVideoUploadQualityMedium;
+    }
+    return videoQuality;
 }
 
 @end
