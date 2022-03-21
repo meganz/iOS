@@ -394,7 +394,7 @@
     
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transferRecordDTO.parentNodeHandle.unsignedLongLongValue];
     
-    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent.mnz_fileNameWithLowercaseExtension;
         NSString *newName = [name mnz_sequentialFileNameInParentNode:parentNode];
         

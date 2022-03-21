@@ -315,7 +315,6 @@ extension ChatViewController {
         let videoURL = URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: path))
         
         let processAsset = MEGAProcessAsset(toShareThroughChatWithVideoURL: videoURL,
-                                            parentNode: parentNode,
                                             filePath: { [weak self] path in
             guard let filePath = path,
                 let `self` = self else {
@@ -353,7 +352,6 @@ extension ChatViewController {
             }
             
             let processAsset = MEGAProcessAsset(toShareThroughChatWith: assets,
-                                                parentNode: myChatFilesFolderNode,
                                                 filePaths: { [weak self] filePaths in
                 
                 guard let `self` = self,
