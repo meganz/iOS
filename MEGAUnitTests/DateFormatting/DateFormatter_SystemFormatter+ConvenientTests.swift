@@ -3,47 +3,61 @@ import XCTest
 
 class DateFormatter_System_ConvenientTests: XCTestCase {
 
-    //FIXME: Fix the test case.
-//    func testShortTemplateDateFormatter_FormatDates_InDifferentLanguage() {
-//        let languageIdentifiers = [
-//            "en", "es", "en", "it", "nl", "ru", "zh-TW", "pt-BR", "fr", "ja", "de", "ko", "pl", "id", "ro", "vi", "zh-CN", "ar", "th"
-//        ]
-//
-//        // Given 1 Jan 1970
-//        let date = Date(timeIntervalSince1970: 0)
-//        let locales = languageIdentifiers.map(Locale.init)
-//
-//        let formattedDates = locales.map { (locale) -> String in
-//            let formatter = DateFormatter.dateShort(locale: locale)
-//            let result = formatter.localisedString(from: date)
-//            return result
-//        }
-//
-//        // Then
-//        XCTAssertEqual(formattedDates, ["1/1/70", "1/1/70", "1/1/70", "01/01/70", "01-01-1970", "01.01.1970", "1970/1/1", "01/01/1970", "01/01/1970", "1970/01/01", "01.01.70", "1970. 1. 1.", "01.01.1970", "01/01/70", "01.01.1970", "01/01/1970", "1970/1/1", "١‏/١‏/١٩٧٠", "1/1/13"])
-//
-//    }
+    func testShortTemplateDateFormatter_FormatDates_InDifferentLanguage() {
+        let languageIdentifiers = [
+            "en", "es", "en", "it", "nl", "ru", "zh-TW", "pt-BR", "fr", "ja", "de", "ko", "pl", "id", "ro", "vi", "zh-CN", "ar", "th"
+        ]
 
-    //FIXME: Fix the test case.
-//    func testShortTemplateDateFormatter_FormatDates_InDifferentLanguage_CalendarGregorian() {
-//        let languageIdentifiers = [
-//            "en", "es", "en", "it", "nl", "ru", "zh-TW", "pt-BR", "fr", "ja", "de", "ko", "pl", "id", "ro", "vi", "zh-CN", "ar", "th"
-//        ]
-//
-//        // Given 1 Jan 1970
-//        let date = Date(timeIntervalSince1970: 0)
-//        let locales = languageIdentifiers.map(Locale.init)
-//        let calendar = Calendar(identifier: .gregorian)
-//
-//        let formattedDates = locales.map { (locale) -> String in
-//            let formatter = DateFormatter.dateShort(calendar: calendar, locale: locale)
-//            let result = formatter.localisedString(from: date)
-//            return result
-//        }
-//
-//        // Then
-//        XCTAssertEqual(formattedDates, ["1/1/70", "1/1/70", "1/1/70", "01/01/70", "01-01-1970", "01.01.1970", "1970/1/1", "01/01/1970", "01/01/1970", "1970/01/01", "01.01.70", "1970. 1. 1.", "01.01.1970", "01/01/70", "01.01.1970", "01/01/1970", "1970/1/1", "١‏/١‏/١٩٧٠", "1/1/70"])
-//    }
+        // Given 1 Jan 1970
+        let date = Date(timeIntervalSince1970: 0)
+        let locales = languageIdentifiers.map(Locale.init)
+
+        let formattedDates = locales.map { (locale) -> String in
+            let formatter = DateFormatter.dateShort(locale: locale)
+            let result = formatter.localisedString(from: date)
+            return result
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+
+        let resultDates = locales.map { locale -> String in
+            formatter.locale = locale
+            return formatter.string(from: date)
+        }
+
+        // Then
+        XCTAssertEqual(formattedDates, resultDates)
+    }
+
+    func testShortTemplateDateFormatter_FormatDates_InDifferentLanguage_CalendarGregorian() {
+        let languageIdentifiers = [
+            "en", "es", "en", "it", "nl", "ru", "zh-TW", "pt-BR", "fr", "ja", "de", "ko", "pl", "id", "ro", "vi", "zh-CN", "ar", "th"
+        ]
+
+        // Given 1 Jan 1970
+        let date = Date(timeIntervalSince1970: 0)
+        let locales = languageIdentifiers.map(Locale.init)
+        let calendar = Calendar(identifier: .gregorian)
+
+        let formattedDates = locales.map { (locale) -> String in
+            let formatter = DateFormatter.dateShort(calendar: calendar, locale: locale)
+            let result = formatter.localisedString(from: date)
+            return result
+        }
+        
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.dateStyle = .short
+
+        let resultDates = locales.map { locale -> String in
+            formatter.locale = locale
+            return formatter.string(from: date)
+        }
+
+        // Then
+        XCTAssertEqual(formattedDates, resultDates)
+    }
 
     // MARK: - Medium Formatter
 
