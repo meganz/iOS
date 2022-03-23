@@ -65,6 +65,8 @@ class ExplorerBaseViewController: UIViewController {
                   return
               }
         
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+        
         SVProgressHUD.show(Asset.Images.Hud.hudDownload.image,
                            status: Strings.Localizable.downloadStarted)
         

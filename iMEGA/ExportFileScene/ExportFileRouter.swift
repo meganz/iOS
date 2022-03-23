@@ -56,6 +56,6 @@ final class ExportFileRouter: ExportFileViewRouting {
     
     func hideProgressView() {
         TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
-        TransfersWidgetViewController.sharedTransfer().resetToMainTabBar()
+        TransfersWidgetViewController.sharedTransfer().resetToKeyWindow()
     }
 }

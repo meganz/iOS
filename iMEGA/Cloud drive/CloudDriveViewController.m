@@ -1156,6 +1156,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
+        [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
         [weakSelf presentUploadAlertController];
     }]];
     
@@ -1551,6 +1552,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
             if ([node mnz_downloadNode]) {
                 [self.cdTableView.tableView reloadData];
             }

@@ -16,8 +16,21 @@ extension TransfersWidgetViewController {
     }
     
     @objc
-    func showProgress(view: UIView) {
-        showProgress(view: view, bottomAnchor: -60)
+    func setProgressViewInKeyWindow() {
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+        showProgress(view: window, bottomAnchor: -60)
+    }
+
+    @objc
+    func bringProgressToFrontKeyWindowIfNeeded() {
+        guard let progressIndicatorView = TransfersWidgetViewController.sharedTransfer().progressView,
+              let window = UIApplication.shared.keyWindow,
+              progressIndicatorView.isDescendant(of: window) else {
+                  return
+              }
+        window.bringSubviewToFront(progressIndicatorView)
     }
     
     @objc
@@ -44,15 +57,9 @@ extension TransfersWidgetViewController {
     }
     
     @objc
-    func resetToMainTabBar() {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
-            return
-        }
-        if (rootViewController.isKind(of: MainTabBarController.self) == true) {
-            let mainTBC: MainTabBarController = UIApplication.mnz_keyWindow()?.rootViewController as! MainTabBarController
-            
-            showProgress(view: mainTBC.view)
-        }
+    func resetToKeyWindow() {
+        setProgressViewInKeyWindow()
+        bringProgressToFrontKeyWindowIfNeeded()
     }
     
     @objc

@@ -294,7 +294,7 @@
 }
 
 - (IBAction)doneTapped:(id)sender {
-    [TransfersWidgetViewController.sharedTransferViewController resetToMainTabBar];
+    [TransfersWidgetViewController.sharedTransferViewController resetToKeyWindow];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
