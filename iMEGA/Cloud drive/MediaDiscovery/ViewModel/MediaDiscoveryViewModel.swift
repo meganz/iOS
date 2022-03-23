@@ -75,7 +75,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType {
     }
     
     private func loadNodes() {
-        let nodelist = MEGASdkManager.sharedMEGASdk().children(forParent: parentNode)
+        let nodelist = MEGASdkManager.sharedMEGASdk().children(forParent: parentNode, order: MEGASortOrderType.modificationDesc.rawValue)
         nodes = (nodelist.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
     }
 }

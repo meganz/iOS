@@ -62,7 +62,6 @@ struct PhotoLibraryContentView: View {
                 viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
                 router: router
             )
-                .equatable()
                 .opacity(viewModel.selectedMode == .all ? 1.0 : 0.0)
                 .zIndex(viewModel.selectedMode == .all ? 1.0 : -1.0)
         }
