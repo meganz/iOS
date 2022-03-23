@@ -239,9 +239,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         bestAttemptContent?.categoryIdentifier = "nz.mega.chat.message"
         
-        if let moMessage = MEGAStore.shareInstance().fetchMessage(withChatId: chatId, messageId: msgId) {
-            MEGAStore.shareInstance().delete(moMessage)
-            postNotification(withError: "Already notified")
+        if let childContext = MEGAStore.shareInstance().stack.newBackgroundContext() {
+            if let moMessage = MEGAStore.shareInstance().fetchMessage(msgId: msgId, chatId: chatId, context: childContext) {
+                MEGAStore.shareInstance().delete(message: moMessage, context: childContext)
+                postNotification(withError: "Already notified")
+            }
         }
         
         if let message = MEGASdkManager.sharedMEGAChatSdk().message(forChat: chatId, messageId: msgId) {
