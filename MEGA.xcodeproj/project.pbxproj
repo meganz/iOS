@@ -1213,6 +1213,7 @@
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
+		A81BD5B227EB312400234902 /* MEGAStore+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */; };
 		A81C6588254B2D3000105BF4 /* GiphySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C6584254B2D3000105BF4 /* GiphySelectionViewController.swift */; };
 		A81C6589254B2D3000105BF4 /* GiphySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C6585254B2D3000105BF4 /* GiphySelectionView.swift */; };
 		A81C658B254B2D3000105BF4 /* GiphyCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81C6587254B2D3000105BF4 /* GiphyCategoryView.swift */; };
@@ -3538,6 +3539,7 @@
 		A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTimeDurationTableViewController.swift; sourceTree = "<group>"; };
 		A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeDurationInfo.swift; sourceTree = "<group>"; };
+		A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+Message.swift"; sourceTree = "<group>"; };
 		A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileCompressor.swift; sourceTree = "<group>"; };
 		A882F4FE27E0FF7F0032DC07 /* TextWithToogleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithToogleView.swift; sourceTree = "<group>"; };
 		A882F50C27E1DB6B0032DC07 /* SubheadlineTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubheadlineTextView.swift; sourceTree = "<group>"; };
@@ -5232,6 +5234,7 @@
 				B6F8CDCA262821820074CBBF /* CoreDataErrorHandler.m */,
 				BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */,
 				B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */,
+				A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -12608,6 +12611,7 @@
 				B699016F262F91D200176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5B205D1B2449AD3200EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */,
+				A81BD5B227EB312400234902 /* MEGAStore+Message.swift in Sources */,
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
 				7794AF1F2320F52F0039C1D2 /* MEGAGenericRequestDelegate.m in Sources */,
 				77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */,
