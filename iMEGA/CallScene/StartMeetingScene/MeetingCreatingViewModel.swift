@@ -276,7 +276,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 if granted {
                     completionBlock()
                 } else {
-                    router.showVideoPermissionError()
+                    self.router.showVideoPermissionError()
                 }
             }
         }
@@ -288,7 +288,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 if granted {
                     completionBlock()
                 } else {
-                    router.showAudioPermissionError()
+                    self.router.showAudioPermissionError()
                 }
             }
         }
