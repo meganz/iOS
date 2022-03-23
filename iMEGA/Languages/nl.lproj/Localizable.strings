@@ -318,6 +318,10 @@
 "file_name"="Bestandsnaam";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nieuwe Map";
+/* Menu option from the `Add` section that displays all media files under current folder */
+"cloudDrive.menu.mediaDiscovery.title"="Media Discovery";
+/* Exit Text on Media Discovery Navigation Bar */
+"cloudDrive.mediaDiscovery.exit"="Sluiten";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Naam voor de nieuwe map";
 /* Title button for the create folder alert. */
@@ -347,13 +351,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Afbeelding opslaan";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Link Ophalen";
+"cloudDrive.nodeOptions.shareLink"="Link Delen";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Links Ophalen";
+"cloudDrive.nodeOptions.shareLinks"="Links Delen";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Link Beheren";
+"cloudDrive.nodeOptions.manageLink"="Link Beheren";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Links Beheren";
+"cloudDrive.nodeOptions.manageLinks"="Links Beheren";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link Genereren";
 /* Message shown when some links to files and/or folders are being generated */
@@ -617,7 +621,13 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Weet u zeker dat u deze delingen wilt verlaten?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="Delen";
+"general.share"="Delen";
+/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
+"general.exportFile"="Bestand Exporteren";
+/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
+"general.exportFiles"="Exporteer Bestanden";
+/* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
+"general.export"="Exporteren";
 /* Select all items/elements on the list */
 "selectAll"="Selecteer Alles";
 /*  */
@@ -671,7 +681,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Algemene Voorwaarden";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="Verordening Gegevensbescherming";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Uit";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -963,7 +973,7 @@
 /*  */
 "howItWorks"="Hoe het werkt";
 /*  */
-"howItWorksMain"="Uw vriend moet zich registreren voor een gratis account op MEGA en [S]installeer ten minste één MEGA programma applicatie[/S] (ofwel sync programma of één van onze mobiele applicaties)";
+"howItWorksMain"="Uw vriend moet zich registreren voor een gratis account op MEGA en [S]installeer ten minste één MEGA programma applicatie[/S] (ofwel MEGA Desktop Applicatie of één van onze Mobiele Applicaties)";
 /*  */
 "howItWorksSecondary"="U kunt uw vriend via elke methode notificeren. U kan het tegoed verdienen als u uw vriend's email hier hebt ingevoerd voordat ze zelf hebben geregistreerd met dat adres.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1087,7 +1097,7 @@
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "inAppPurchase.upgrade.label.currentPlan"="Huidig Abonnement:";
 /* A label which shows the user's current PRO plan. */
-"inAppPurchase.productDetail.navigation.currentPlan"="Huidige abonnement";
+"inAppPurchase.productDetail.navigation.currentPlan"="Huidig abonnement";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Upgrade naar een aangepast abonnement";
 /* Mail subject to upgrade to a custom plan */
@@ -1115,7 +1125,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Jaarlijks";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Deze in-App Aankoop is niet beschikbaar in de Applicatie Winkel op dit moment. Verifieer de betalingsinstellingen voor uw Apple ID.";
+"inAppPurchase.error.alert.title.notAvailable"="Deze in-App Aankoop is niet beschikbaar in de Applicatie Winkel op dit moment. Verifieer de betalingsinstellingen voor uw Apple-ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Applicatie Winkel Instellingen";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1137,7 +1147,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Upgraden naar Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Krijg toegang tot exclusieve Pro-account functies zoals het instellen van wachtwoord bescherming en een verloopdatum voor openbare bestanden.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Krijg toegang tot exclusieve Pro functies zoals het instellen van wachtwoord bescherming en een verloopdatum voor openbare bestanden.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG modus ingeschakeld";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1375,7 +1385,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ONGELEZEN BERICHTEN";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, tikt u op de Applicatie Winkel-pictogram op uw mobiele apparaat, logt u in met uw Apple ID onderaan de pagina (als u dat nog niet hebt gedaan) en tikt u vervolgens op ID bekijken. U wordt naar uw accountpagina geleid waar u naar beneden kunt scrollen naar Applicatie-abonnementen beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
+"autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, tikt u op de Applicatie Winkel-pictogram op uw mobiele apparaat, logt u in met uw Apple-ID onderaan de pagina (als u dat nog niet hebt gedaan) en tikt u vervolgens op ID bekijken. U wordt naar uw accountpagina geleid waar u naar beneden kunt scrollen naar Applicatie-abonnementen Beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA en login om door te gaan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1485,7 +1495,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Automatisch-Accepteren";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="MEGA gebruikers die uw QR code scannen, worden automatisch toegevoegd aan uw lijst met contactpersonen.";
+"autoAcceptFooter"="MEGA gebruikers die uw QR-code scannen, worden automatisch toegevoegd aan uw lijst met contactpersonen.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QR Code Resetten";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1495,7 +1505,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Code Scannen";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Zet de QR code klaar om het te scannen met de camera van uw apparaat.";
+"lineCodeWithCamera"="Zet de QR-code klaar om het te scannen met de camera van uw apparaat.";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Ongeldige code";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1657,7 +1667,7 @@
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "Authenticator app required"="Authenticatie applicatie vereist";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Het spijt ons, maar tweefactorauthenticatie kan niet worden ingeschakeld op uw apparaat. Open de Applicatie Store om een ​​Authenticator-applicatie te installeren.";
+"youNeedATwoFactorAuthenticationApp"="Het spijt ons, maar twee-staps-authenticatie kan niet worden ingeschakeld op uw apparaat. Open de Applicatie Store om een ​​Authenticator-applicatie te installeren.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="U heeft een authenticatie applicatie nodig om 2FA in te schakelen op MEGA. U kunt de applicatie Google Authenticator, Duo Mobile, Authy of Microsoft Authenticator downloaden en installeren voor uw telefoon of tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1839,7 +1849,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Betalingsinformatie";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Pro-lidmaatschap verloopt binnenkort";
+"PRO membership plan expiring soon"="Pro-lidmaatschap abonnement verloopt binnenkort";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Takedown melding";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1897,15 +1907,15 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Uw betaling voor het %1 abonnement is ontvangen.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Uw betaling voor het %1 abonnement is mislukt.";
+"Your payment for the %1 plan was unsuccessful."="Uw betaling voor het %1 abonnement is onsuccesvol.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Uw Pro lidmaatschap abonnement verloopt morgen.";
+"Your PRO membership plan will expire in 1 day."="Uw Pro-lidmaatschap abonnement verloopt morgen.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Uw Pro-lidmaatschapsplan verloopt over %1 dagen.";
+"Your PRO membership plan will expire in %1 days."="Uw Pro-lidmaatschap abonnement verloopt over %1 dagen.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Uw PRO abonnement is 1 dag geleden verlopen";
+"Your PRO membership plan expired 1 day ago"="Uw Pro-abonnement is 1 dag geleden verlopen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Uw PRO abonnement is %1 dagen geleden verlopen";
+"Your PRO membership plan expired %1 days ago"="Uw Pro-abonnement is %1 dagen geleden verlopen";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Uw publiekelijk gedeelde %1 (%2) is weggehaald.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -2069,7 +2079,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Overdracht";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="U kunt %1$s niet verwijderen als contact omdat deze deel uitmaakt van uw Zakelijke account.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="U kunt %1$s niet verwijderen als contact omdat deze deel uitmaakt van uw Zakelijke-account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="Toegangscode Vereist";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2549,7 +2559,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="U hebt niet de vereiste machtigingen om dit bestand terug te zetten. Om door te gaan, kunnen we een nieuw bestand maken met de teruggekeerde gegevens. Wilt u doorgaan?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro-Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Mijn Account";
 /* Text for title for favourite nodes */
@@ -2609,7 +2619,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Gelieve te upgraden";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Uw Cloud Drive is bijna vol. Upgrade nu naar een Pro-account en krijg tot%@ TB (%@GB) aan cloudopslagruimte.";
+"dialog.storage.almostFull.detail"="Uw Cloud Drive is bijna vol. Upgrade nu naar een Pro-account en krijg tot %@ TB (%@GB) aan cloudopslagruimte.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Uw cloud opslag is vol. Upgrade naar een MEGA Pro-abonnement om uw opslagruimte te vergroten en van extra voordelen te genieten. Als u uw opslaglimiet overschrijdt en bepaalde gegevens niet opwaardeert of verwijdert, kan uw account worden vergrendeld. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie.";
 /* Over Disk Quota paywall not final title. */
@@ -2619,7 +2629,7 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Helaas heeft u geen actie ondernomen in de <b>%@</b>sinds onze e-mails zijn verzonden naar<b>%@</b>, op<b>%@</b>. U gebruikt nog steeds<b>%@</b> opslagruimte, wat uw gratis limiet overschrijdt. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie over wat u moet doen.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Helaas heeft u uw account nog niet geüpgraded. Als u nu niet upgraded, worden uw gegevens morgen verwijderd. Zie u e-mail voor meer informatie over wat u moet doen.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Helaas heeft u uw account nog niet geüpgradet. Als u nu niet upgradet, worden uw gegevens morgen verwijderd. Zie u e-mail voor meer informatie over wat u moet doen.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
 "dialog.storage.paywall.notFinal.warning"="<body>Voer een upgrade uit binnen <warn>%@</warn> om te voorkomen dat uw gegevens worden verwijderd.</body>";
 /* Over Disk Quota paywall, final warning label. */
@@ -2742,6 +2752,22 @@
 "account.upgrade.alreadyHaveASubscription.message"="U heeft zich eerder geabonneerd op een Pro-abonnement met Google Play of Applicatie Gallerij. Annuleer uw abonnement handmatig bij hen in Google Play of de Huawei Applicatie Gallerij op uw apparaat en probeer het opnieuw.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Wilt u uw huidige abonnement opzeggen en doorgaan met de aankoop?";
+/* Dialog title shown before deleting an account with active subscription */
+"account.delete.subscription.title"="Actief Abonnement";
+/* Dialog message shown before deleting an account with active iTunes subscription */
+"account.delete.subscription.itunes"="You have an active MEGA subscription with Apple. You must cancel it separately at Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit AppStore Subscriptions */
+"account.delete.subscription.itunes.manage"="Manage Subscriptions";
+/* Dialog message shown before deleting an account with active Google play subscription */
+"account.delete.subscription.googlePlay"="U heeft een actief MEGA-abonnement bij Google. U moet het apart annuleren in Google Play, omdat MEGA het niet voor u kan annuleren. Bezoek ons ​​Helpcentrum voor meer informatie.";
+/* Dialog button title which triggers the action to visit Google play */
+"account.delete.subscription.googlePlay.visit"="Bezoek Google Play";
+/* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
+"account.delete.subscription.huaweiAppGallery"="U heeft een actief MEGA abonnement bij Huawei. U moet het apart annuleren bij de Huawei App Gallerij, omdat MEGA het niet voor u kan annuleren. Bezoek ons ​​Helpcentrum voor meer informatie.";
+/* Dialog button title which triggers the action to visit Huawei app gallery */
+"account.delete.subscription.huaweiAppGallery.visit"="Bezoek App Gallerij";
+/* Dialog message shown before deleting an account with active webclient subscription */
+"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Een andere oproep is in behandeling. Beëindig uw huidige oproep voordat u een andere maakt.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2940,3 +2966,27 @@
 "help.reportIssue.attachLogFiles.title"="Log bestanden toevoegen";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Wilt u diagnostische logbestanden toevoegen om te helpen bij het opsporen van fouten?";
+/* Title of the dialog used to send bug reports to support team. */
+"help.reportIssue.title"="Report Issue";
+/* Title of the dialog button to discard a report. */
+"help.reportIssue.discardReport"="Discard Report";
+/* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describe"="Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.";
+/* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
+"help.reportIssue.sendLogFile"="Send Log File";
+/* Title to indicate that the bug report is being uploaded to our support team. */
+"help.reportIssue.uploadingLogFile"="Uploading Log File";
+/* Confirmation title shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.title"="Thanks For Your Feedback";
+/* Confirmation message shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.message"="Thanks. We'll look into this issue and a member of our team will get back to you.";
+/* Error message shown when some error occurs during uploading a bug report. */
+"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+/* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+/* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+/* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describeIssue.placeholder"="Describe the issue";
+/* Label shown when users lost the internet connection */
+"general.NoIntenerConnection"="Unable to connect to the internet. Please check your connection and try again.";

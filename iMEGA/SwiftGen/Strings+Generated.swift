@@ -2924,11 +2924,11 @@ public enum Strings {
       }
       public enum Delete {
         public enum Subscription {
-          /// You have an active MEGA subscription with Google. You must cancel it separately at Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
+          /// You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
           public static let googlePlay = Strings.tr("Localizable", "account.delete.subscription.googlePlay")
           /// You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
           public static let huaweiAppGallery = Strings.tr("Localizable", "account.delete.subscription.huaweiAppGallery")
-          /// You have an active MEGA subscription with Apple. You must cancel it separately at Apple Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
+          /// You have an active MEGA subscription with Apple. You must cancel it separately at Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.
           public static let itunes = Strings.tr("Localizable", "account.delete.subscription.itunes")
           /// Active Subscription
           public static let title = Strings.tr("Localizable", "account.delete.subscription.title")
@@ -3541,7 +3541,7 @@ public enum Strings {
           public enum Cancel {
             /// This issue will not be reported if you cancel uploading it.
             public static let message = Strings.tr("Localizable", "help.reportIssue.creating.cancel.message")
-            /// Are your sure you want to cancel uploading your reported issue?
+            /// Are you sure you want to cancel uploading your reported issue?
             public static let title = Strings.tr("Localizable", "help.reportIssue.creating.cancel.title")
           }
         }
