@@ -310,7 +310,18 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     }
     
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
-        updateProgress()
+        var isExportFile = false
+        if let appData = transfer.appData {
+            isExportFile = appData.contains(NSString.mnz_appDataToExportFile())
+        }
+        
+        guard transfer.path.hasPrefix(Helper.relativePathForOffline()) ||
+                transfer.type == .upload ||
+                isExportFile else {
+                    return
+                }
+        
+        self.updateProgress()
     }
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {

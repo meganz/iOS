@@ -56,6 +56,12 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         viewModel.dispatch(.onViewReady)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+    }
+
     // MARK: - Private
     
     private func buildNavigationBar() {

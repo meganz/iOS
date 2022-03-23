@@ -162,6 +162,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -366,7 +367,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
-    [TransfersWidgetViewController.sharedTransferViewController resetToMainTabBar];
     
     [super dismissViewControllerAnimated:flag completion:^{
         if ([self.delegate respondsToSelector:@selector(didDismissPhotoBrowser:)]) {
@@ -760,7 +760,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     pickerVC.delegate = self;
     pickerVC.api = self.api;
     pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:pickerVC animated:YES completion:nil];
+    [self presentViewController:pickerVC animated:YES completion:^{
+        [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
+    }];
 }
 
 - (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {
@@ -817,7 +819,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         return;
     }
     
-    [TransfersWidgetViewController.sharedTransferViewController showProgressWithView:self.view];
+    [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
     
     if (self.displayMode == DisplayModeChatAttachment) {
         [self exportMessageFileFrom:node sender:sender];
@@ -1123,6 +1125,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
             
         case MegaNodeActionTypeDownload:
+            [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
             switch (self.displayMode) {
                 case DisplayModeFileLink:
                     [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
