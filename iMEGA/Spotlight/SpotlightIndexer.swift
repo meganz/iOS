@@ -55,7 +55,7 @@ final class SpotlightIndexer: NSObject {
                                 }
                             }
                         }
-                        .store(in: &subscriptions)
+                        .store(in: &self.subscriptions)
                     
                     self.favouritesIndexed = true
                     self.deindexPreviousNodesIndexedInOldAppVersions_toBeDeleted()
