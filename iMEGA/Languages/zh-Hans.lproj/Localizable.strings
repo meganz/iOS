@@ -318,6 +318,10 @@
 "file_name"="文件名";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新建文件夹";
+/* Menu option from the `Add` section that displays all media files under current folder */
+"cloudDrive.menu.mediaDiscovery.title"="媒体发现";
+/* Exit Text on Media Discovery Navigation Bar */
+"cloudDrive.mediaDiscovery.exit"="离开";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="新文件夹的名字";
 /* Title button for the create folder alert. */
@@ -347,13 +351,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="保存照片";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="获取链接";
+"cloudDrive.nodeOptions.shareLink"="分享链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="获取链接";
+"cloudDrive.nodeOptions.shareLinks"="分享链接";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="管理链接";
+"cloudDrive.nodeOptions.manageLink"="管理链接";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="管理链接";
+"cloudDrive.nodeOptions.manageLinks"="管理链接";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="正在生成链接…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -617,7 +621,13 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="您确定要离开这些分享吗？";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="共享";
+"general.share"="共享";
+/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
+"general.exportFile"="导出文件";
+/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
+"general.exportFiles"="导出文件";
+/* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
+"general.export"="导出";
 /* Select all items/elements on the list */
 "selectAll"="全选";
 /*  */
@@ -2737,11 +2747,27 @@
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="预览时使用移动数据加载高分辨率图片。若关闭此选项，则只有在放大时才会加载高分辨率图片。";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.title"="您已经有一个现有订阅";
+"account.upgrade.alreadyHaveASubscription.title"="您当前已经有一个订阅";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.message"="您之前已通过Google Play或华为AppGallery订阅了Pro会员方案。请在您设备上的Google Play或华为AppGallery中手动取消您的订阅后进行重试。";
+"account.upgrade.alreadyHaveASubscription.message"="您之前已通过Google Play或华为应用商店订阅了Pro会员方案。请在您设备上的Google Play或华为应用商店中手动取消您的订阅后进行重试。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="您想要取消当前订阅并继续购买吗？";
+/* Dialog title shown before deleting an account with active subscription */
+"account.delete.subscription.title"="当前的订阅";
+/* Dialog message shown before deleting an account with active iTunes subscription */
+"account.delete.subscription.itunes"="您当前在Apple有一个MEGA订阅。您必须从“订阅”中单独取消它，因为MEGA无法为您取消订阅。访问我们的帮助中心了解更多信息。";
+/* Dialog button title which triggers the action to visit AppStore Subscriptions */
+"account.delete.subscription.itunes.manage"="管理订阅";
+/* Dialog message shown before deleting an account with active Google play subscription */
+"account.delete.subscription.googlePlay"="您当前在Google有一个MEGA订阅。您必须从Google Play中单独取消它，因为MEGA无法为您取消订阅。访问我们的帮助中心了解更多信息。";
+/* Dialog button title which triggers the action to visit Google play */
+"account.delete.subscription.googlePlay.visit"="访问Google Play";
+/* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
+"account.delete.subscription.huaweiAppGallery"="您当前在华为有一个MEGA订阅。您必须在华为应用商店中单独取消它，因为MEGA无法为您取消订阅。访问我们的帮助中心了解更多信息。";
+/* Dialog button title which triggers the action to visit Huawei app gallery */
+"account.delete.subscription.huaweiAppGallery.visit"="访问华为应用商店";
+/* Dialog message shown before deleting an account with active webclient subscription */
+"account.delete.subscription.webClient"="这是删除帐户的最后一步。您的帐户和订阅都将被删除，您将永久丢失存储在云盘中的所有数据。请在下方输入您的密码。";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一个通话正在进行中。请先结束您的当前通话后才能加入另一个。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2940,3 +2966,27 @@
 "help.reportIssue.attachLogFiles.title"="附加日志文件";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="是否要附加诊断日志文件以帮助调试？";
+/* Title of the dialog used to send bug reports to support team. */
+"help.reportIssue.title"="Report Issue";
+/* Title of the dialog button to discard a report. */
+"help.reportIssue.discardReport"="Discard Report";
+/* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describe"="Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.";
+/* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
+"help.reportIssue.sendLogFile"="Send Log File";
+/* Title to indicate that the bug report is being uploaded to our support team. */
+"help.reportIssue.uploadingLogFile"="Uploading Log File";
+/* Confirmation title shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.title"="Thanks For Your Feedback";
+/* Confirmation message shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.message"="Thanks. We'll look into this issue and a member of our team will get back to you.";
+/* Error message shown when some error occurs during uploading a bug report. */
+"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+/* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+/* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+/* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describeIssue.placeholder"="Describe the issue";
+/* Label shown when users lost the internet connection */
+"general.NoIntenerConnection"="Unable to connect to the internet. Please check your connection and try again.";

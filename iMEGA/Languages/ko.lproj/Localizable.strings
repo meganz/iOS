@@ -318,6 +318,10 @@
 "file_name"="파일 이름";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="새 폴더";
+/* Menu option from the `Add` section that displays all media files under current folder */
+"cloudDrive.menu.mediaDiscovery.title"="미디어 발견";
+/* Exit Text on Media Discovery Navigation Bar */
+"cloudDrive.mediaDiscovery.exit"="종료";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="새 폴더의 이름";
 /* Title button for the create folder alert. */
@@ -347,13 +351,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="이미지 저장";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="링크 얻기";
+"cloudDrive.nodeOptions.shareLink"="링크 공유";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="링크 얻기";
+"cloudDrive.nodeOptions.shareLinks"="링크 공유";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="링크 관리";
+"cloudDrive.nodeOptions.manageLink"="링크 관리";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="링크 관리";
+"cloudDrive.nodeOptions.manageLinks"="링크 관리";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="링크 생성 중…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -617,7 +621,13 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="이 공유들에서 떠나시겠습니까?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="공유";
+"general.share"="공유";
+/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
+"general.exportFile"="파일 내보내기";
+/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
+"general.exportFiles"="파일 내보내기";
+/* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
+"general.export"="내보내기";
 /* Select all items/elements on the list */
 "selectAll"="모두 선택";
 /*  */
@@ -2742,6 +2752,22 @@
 "account.upgrade.alreadyHaveASubscription.message"="이전에 Google Play 또는 AppGallery를 통하여 구독을 하였습니다. 기기에서 Google Play 또는 Huawei AppGallery 안에서 구독을 수동으로 취소한 후 다시 시도하세요.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="현재 구독을 취소하고 결제를 진행하시겠습니까?";
+/* Dialog title shown before deleting an account with active subscription */
+"account.delete.subscription.title"="활성 구독";
+/* Dialog message shown before deleting an account with active iTunes subscription */
+"account.delete.subscription.itunes"="You have an active MEGA subscription with Apple. You must cancel it separately at Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit AppStore Subscriptions */
+"account.delete.subscription.itunes.manage"="구독 관리";
+/* Dialog message shown before deleting an account with active Google play subscription */
+"account.delete.subscription.googlePlay"="당신은 Google에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, Google Play에서 별도로 취소하여야 합니다. 더 많은 정보는 우리의 도움 센터를 방문하세요.";
+/* Dialog button title which triggers the action to visit Google play */
+"account.delete.subscription.googlePlay.visit"="Google Play 방문";
+/* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
+"account.delete.subscription.huaweiAppGallery"="당신은 Huawei에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, Huawei AppGallery에서 별도로 취소하여야 합니다. 더 많은 정보는 우리의 도움 센터를 방문하세요.";
+/* Dialog button title which triggers the action to visit Huawei app gallery */
+"account.delete.subscription.huaweiAppGallery.visit"="AppGallery 방문";
+/* Dialog message shown before deleting an account with active webclient subscription */
+"account.delete.subscription.webClient"="계정을 삭제하는 마지막 단계입니다. 당신의 계정과 구독 모두 삭제되며 클라우드에 저장된 모든 데이터를 영구적으로 잃게 됩니다. 아래에 암호를 입력하세요.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="다른 통화가 진행 중입니다. 다른 통화를 하기 전에 현재 통화를 종료하세요.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2940,3 +2966,27 @@
 "help.reportIssue.attachLogFiles.title"="로그 파일 첨부";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="디버그를 돕기 위해 진단 로그 파일을 첨부하시겠습니까?";
+/* Title of the dialog used to send bug reports to support team. */
+"help.reportIssue.title"="Report Issue";
+/* Title of the dialog button to discard a report. */
+"help.reportIssue.discardReport"="Discard Report";
+/* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describe"="Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.";
+/* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
+"help.reportIssue.sendLogFile"="Send Log File";
+/* Title to indicate that the bug report is being uploaded to our support team. */
+"help.reportIssue.uploadingLogFile"="Uploading Log File";
+/* Confirmation title shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.title"="Thanks For Your Feedback";
+/* Confirmation message shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.message"="Thanks. We'll look into this issue and a member of our team will get back to you.";
+/* Error message shown when some error occurs during uploading a bug report. */
+"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+/* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+/* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+/* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describeIssue.placeholder"="Describe the issue";
+/* Label shown when users lost the internet connection */
+"general.NoIntenerConnection"="Unable to connect to the internet. Please check your connection and try again.";

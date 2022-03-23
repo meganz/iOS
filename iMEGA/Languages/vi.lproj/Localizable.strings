@@ -318,6 +318,10 @@
 "file_name"="Tên tệp";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Thư Mục Mới";
+/* Menu option from the `Add` section that displays all media files under current folder */
+"cloudDrive.menu.mediaDiscovery.title"="Kho Phương Tiện Số";
+/* Exit Text on Media Discovery Navigation Bar */
+"cloudDrive.mediaDiscovery.exit"="Thoát";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Đặt tên cho thư mục mới";
 /* Title button for the create folder alert. */
@@ -347,13 +351,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Lưu Hình Ảnh";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Lấy Liên Kết";
+"cloudDrive.nodeOptions.shareLink"="Chia Sẻ Đường Liên Kết";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Lấy Liên Kết";
+"cloudDrive.nodeOptions.shareLinks"="Chia Sẻ Liên Kết";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Quản Lý Liên Kết";
+"cloudDrive.nodeOptions.manageLink"="Quản Lý Đường Liên Kết";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Quản Lý Liên Kết";
+"cloudDrive.nodeOptions.manageLinks"="Quản Lý Liên Kết";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Đang tạo đường liên kết…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -617,7 +621,13 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các mục chia sẻ này không?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="Chia sẻ";
+"general.share"="Chia sẻ";
+/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
+"general.exportFile"="Xuất Tệp Tin";
+/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
+"general.exportFiles"="Xuất Tệp Tin";
+/* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
+"general.export"="Xuất ra";
 /* Select all items/elements on the list */
 "selectAll"="Chọn Tất Cả";
 /*  */
@@ -1081,9 +1091,9 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Chọn dạng tài khoản:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Thuê bao thường niên rẻ hơn 16% so với chi trả 12 tháng riêng rẽ";
+"twoMonthsFree"="Gói đăng ký dịch vụ thường niên rẻ hơn 16% so với chi trả 12 tháng riêng rẽ";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói thuê bao hiện tại, xin liên hệ với đội hỗ trợ để có một [A]gói theo nhu cầu[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói đăng ký dịch vụ hiện tại, xin liên hệ với đội hỗ trợ để có một [A]gói theo nhu cầu[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "inAppPurchase.upgrade.label.currentPlan"="Gói Hiện Tại:";
 /* A label which shows the user's current PRO plan. */
@@ -2737,11 +2747,27 @@
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="Sử dụng mạng di động để tải độ phân giải cao khi xem qua hình ảnh. Nếu tắt đi, độ phân giải cao sẽ chỉ được tải khi bạn phóng vào kích thước của hình ảnh để xem.";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.title"="Quý khách hiện đã có hạng tài khoản trả phí";
+"account.upgrade.alreadyHaveASubscription.title"="Quý khách hiện đã có gói đăng ký dịch vụ đang hoạt động";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.message"="Quý khách đã mua hạng Pro thông qua CH Google Play hoặc AppGallery từ trước. Xin vui lòng hủy thủ công dịch vụ với bên Google Play hoặc Huawei AppGallery trên thiết bị của mình rồi quay lại đây để tiếp tục việc mua.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
-"account.upgrade.alreadyHaveACancellableSubscription.message"="Quý khách có muốn hủy gói trả phí hiện tại để mua hạng tài khoản mới không?";
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Quý khách có muốn hủy gói đăng ký dịch vụ hiện tại để mua gói mới không?";
+/* Dialog title shown before deleting an account with active subscription */
+"account.delete.subscription.title"="Gói Đăng Ký Dịch Vụ Còn Hoạt Động";
+/* Dialog message shown before deleting an account with active iTunes subscription */
+"account.delete.subscription.itunes"="Quý khách hiện đang có một gói đăng ký dịch vụ MEGA được mua với Apple. Quý khách cần phải tự tiến hành hủy bỏ trong iTunes Store, vì MEGA không thể thực hiện cho quý khách được. Truy cập Thư Viện Hướng Dẫn để có thêm thông tin.";
+/* Dialog button title which triggers the action to visit AppStore Subscriptions */
+"account.delete.subscription.itunes.manage"="Quản Lý Gói Đăng Ký Dịch Vụ";
+/* Dialog message shown before deleting an account with active Google play subscription */
+"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit Google play */
+"account.delete.subscription.googlePlay.visit"="Truy cập trang Google Play";
+/* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
+"account.delete.subscription.huaweiAppGallery"="Quý khách hiện đang có một gói đăng ký dịch vụ MEGA được mua với Huawei. Quý khách cần phải tự tiến hành hủy bỏ trong Huawei AppGallery, vì MEGA không thể thực hiện cho quý khách được. Truy cập Thư Viện Hướng Dẫn để có thêm thông tin.";
+/* Dialog button title which triggers the action to visit Huawei app gallery */
+"account.delete.subscription.huaweiAppGallery.visit"="Truy cập trang AppGallery";
+/* Dialog message shown before deleting an account with active webclient subscription */
+"account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản.  Tất cả dữ liệu bạn đã lưu trên ổ mây MEGA sẽ bị xóa và gói đăng ký dịch vụ mà quý khách đã mua sẽ bị hủy bỏ hoàn toàn. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Đang có một cuộc gọi đang giang dở. Xin chấm dứt cuộc gọi đó trước khi tham gia vào cuộc khác.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2940,3 +2966,27 @@
 "help.reportIssue.attachLogFiles.title"="Kèm theo tệp tin ghi nhật ký log";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Bạn có muốn đính kèm tệp tin ghi nhật ký log để chẩn đoán việc gỡ lỗi không?";
+/* Title of the dialog used to send bug reports to support team. */
+"help.reportIssue.title"="Report Issue";
+/* Title of the dialog button to discard a report. */
+"help.reportIssue.discardReport"="Discard Report";
+/* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describe"="Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.";
+/* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
+"help.reportIssue.sendLogFile"="Send Log File";
+/* Title to indicate that the bug report is being uploaded to our support team. */
+"help.reportIssue.uploadingLogFile"="Uploading Log File";
+/* Confirmation title shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.title"="Thanks For Your Feedback";
+/* Confirmation message shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.message"="Thanks. We'll look into this issue and a member of our team will get back to you.";
+/* Error message shown when some error occurs during uploading a bug report. */
+"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+/* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+/* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+/* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describeIssue.placeholder"="Describe the issue";
+/* Label shown when users lost the internet connection */
+"general.NoIntenerConnection"="Unable to connect to the internet. Please check your connection and try again.";

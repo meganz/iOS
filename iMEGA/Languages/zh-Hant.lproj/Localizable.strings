@@ -318,6 +318,10 @@
 "file_name"="檔案名稱";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新的資料夾";
+/* Menu option from the `Add` section that displays all media files under current folder */
+"cloudDrive.menu.mediaDiscovery.title"="媒體探索";
+/* Exit Text on Media Discovery Navigation Bar */
+"cloudDrive.mediaDiscovery.exit"="離開";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="新資料夾名稱";
 /* Title button for the create folder alert. */
@@ -347,13 +351,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="儲存圖片";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="取得連結";
+"cloudDrive.nodeOptions.shareLink"="共享連結";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="取得共享連結";
+"cloudDrive.nodeOptions.shareLinks"="共享連結";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="管理連結";
+"cloudDrive.nodeOptions.manageLink"="管理連結";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="管理連結";
+"cloudDrive.nodeOptions.manageLinks"="管理連結";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="產生連結中…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -617,7 +621,13 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="您確定要離開這些共享嗎？";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="共享";
+"general.share"="共享";
+/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
+"general.exportFile"="匯出檔案";
+/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
+"general.exportFiles"="匯出檔案";
+/* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
+"general.export"="匯出";
 /* Select all items/elements on the list */
 "selectAll"="全選";
 /*  */
@@ -2409,7 +2419,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="密碼已複製到剪貼簿";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我們的點對點加密系統需要有為此檔案自動生成的唯一金鑰才能開啟。預設情況下會自動產生帶有此金鑰的連結，但為了多一層安全的考量，您可以將解密金鑰單獨匯出。";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我們的點對點加密系統需要有為此檔案自動生成的唯一金鑰才能開啟。預設情況下會自動產生帶有此金鑰的連結，但為了多一層安全的考量，您可以將解密金鑰個別匯出。";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="移除密碼";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2739,9 +2749,25 @@
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.title"="您已經有一個現行的訂閱";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.message"="您之前已透過Google Play或華為的應用程式商店訂閱Pro方案。請在您裝置上的Google Play或華為的應用程式商店中手動取消您的訂閱，然後重試一遍。";
+"account.upgrade.alreadyHaveASubscription.message"="您之前已透過Google Play或華為的應用程式商店訂閱Pro方案。請在您裝置上的Google Play或華為應用程式商店中手動取消您的訂閱，然後重試一遍。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="您要取消目前的訂閱並繼續購買嗎？";
+/* Dialog title shown before deleting an account with active subscription */
+"account.delete.subscription.title"="現行的訂閱";
+/* Dialog message shown before deleting an account with active iTunes subscription */
+"account.delete.subscription.itunes"="您目前在Apple有一個現行的MEGA訂閱。您必須在訂閱裡個別取消它，因為MEGA無法為您取消訂閱。訪問我們的幫助中心了解更多訊息。";
+/* Dialog button title which triggers the action to visit AppStore Subscriptions */
+"account.delete.subscription.itunes.manage"="管理訂閱";
+/* Dialog message shown before deleting an account with active Google play subscription */
+"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit Google play */
+"account.delete.subscription.googlePlay.visit"="訪問Google Play";
+/* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
+"account.delete.subscription.huaweiAppGallery"="您目前在華為有一個現行的MEGA訂閱。您必須在華為應用程式商店中單獨取消它，因為MEGA無法為您取消訂閱。訪問我們的幫助中心了解更多訊息。";
+/* Dialog button title which triggers the action to visit Huawei app gallery */
+"account.delete.subscription.huaweiAppGallery.visit"="訪問華為應用程式商店";
+/* Dialog message shown before deleting an account with active webclient subscription */
+"account.delete.subscription.webClient"="這是刪除帳戶最後一個步驟。您的帳戶和訂閱都將被刪除，而且您將永久遺失所有儲存在雲端空間的資料。請在下方輸入您的密碼。";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一個通話正在進行中。請先結束目前通話才能撥打另一通。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2940,3 +2966,27 @@
 "help.reportIssue.attachLogFiles.title"="附上日誌檔案";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="是否要附上診斷日誌檔案以協助除錯？";
+/* Title of the dialog used to send bug reports to support team. */
+"help.reportIssue.title"="Report Issue";
+/* Title of the dialog button to discard a report. */
+"help.reportIssue.discardReport"="Discard Report";
+/* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describe"="Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.";
+/* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
+"help.reportIssue.sendLogFile"="Send Log File";
+/* Title to indicate that the bug report is being uploaded to our support team. */
+"help.reportIssue.uploadingLogFile"="Uploading Log File";
+/* Confirmation title shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.title"="Thanks For Your Feedback";
+/* Confirmation message shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.message"="Thanks. We'll look into this issue and a member of our team will get back to you.";
+/* Error message shown when some error occurs during uploading a bug report. */
+"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+/* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+/* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+/* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describeIssue.placeholder"="Describe the issue";
+/* Label shown when users lost the internet connection */
+"general.NoIntenerConnection"="Unable to connect to the internet. Please check your connection and try again.";

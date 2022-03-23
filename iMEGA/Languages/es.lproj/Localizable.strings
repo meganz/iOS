@@ -318,6 +318,10 @@
 "file_name"="Nombre del archivo";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nueva carpeta";
+/* Menu option from the `Add` section that displays all media files under current folder */
+"cloudDrive.menu.mediaDiscovery.title"="Galería multimedia";
+/* Exit Text on Media Discovery Navigation Bar */
+"cloudDrive.mediaDiscovery.exit"="Salir";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nombre para la carpeta";
 /* Title button for the create folder alert. */
@@ -347,13 +351,13 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Guardar imagen";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Obtener enlace";
+"cloudDrive.nodeOptions.shareLink"="Compartir enlace";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Obtener enlaces";
+"cloudDrive.nodeOptions.shareLinks"="Compartir enlaces";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="Gestionar enlace";
+"cloudDrive.nodeOptions.manageLink"="Gestionar enlace";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Gestionar enlaces";
+"cloudDrive.nodeOptions.manageLinks"="Gestionar enlaces";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generando enlace…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -617,7 +621,13 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="¿Seguro que quieres abandonar estas comparticiones?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="Compartir";
+"general.share"="Compartir";
+/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
+"general.exportFile"="Exportar archivo";
+/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
+"general.exportFiles"="Exportar archivos";
+/* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
+"general.export"="Exportar";
 /* Select all items/elements on the list */
 "selectAll"="Seleccionar todo";
 /*  */
@@ -2019,7 +2029,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ve a la sección Privacidad en los Ajustes de tu dispositivo. Activa la Localización y configura MEGA en \"Cuando se use la app\" o \"Siempre\".";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA accede a tu ubicación cuando la compartes con tus contactos en el chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Los datos móviles están desactivados";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2742,6 +2752,22 @@
 "account.upgrade.alreadyHaveASubscription.message"="Estás subscrito a un plan Pro en Google Play o AppGallery. Cancela manualmente esa subscripción desde tu dispositivo a través de Google Play o de la AppGallery de Huawei y vuelve a intentarlo.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="¿Quieres cancelar tu suscripción actual y continuar con la compra?";
+/* Dialog title shown before deleting an account with active subscription */
+"account.delete.subscription.title"="Suscripción activa";
+/* Dialog message shown before deleting an account with active iTunes subscription */
+"account.delete.subscription.itunes"="Tienes una suscripción a MEGA activa con Apple. Debes cancelarla desde la opción Suscripciones en los ajustes del dispositivo, ya que MEGA no puede cancelarla por ti. Visita nuestro Centro de ayuda para más información.";
+/* Dialog button title which triggers the action to visit AppStore Subscriptions */
+"account.delete.subscription.itunes.manage"="Gestionar suscripciones";
+/* Dialog message shown before deleting an account with active Google play subscription */
+"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+/* Dialog button title which triggers the action to visit Google play */
+"account.delete.subscription.googlePlay.visit"="Ir a Google Play";
+/* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
+"account.delete.subscription.huaweiAppGallery"="Tienes una suscripción a MEGA activa con Huawei. Debes cancelarla desde los Ajustes de la AppGallery de Huawei, ya que MEGA no puede cancelarla por ti. Visita nuestro Centro de ayuda para obtener más información.";
+/* Dialog button title which triggers the action to visit Huawei app gallery */
+"account.delete.subscription.huaweiAppGallery.visit"="Ir a AppGallery";
+/* Dialog message shown before deleting an account with active webclient subscription */
+"account.delete.subscription.webClient"="Este es el último paso para eliminar tu cuenta. Tu suscripción se eliminará junto con tu cuenta y perderás de forma permanente todos los datos almacenados en la nube. Por favor, introduce tu contraseña a continuación.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Hay otra llamada en curso. Termina esa llamada para hacer otra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2940,3 +2966,27 @@
 "help.reportIssue.attachLogFiles.title"="Incluir logs";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="¿Quieres incluir los logs para ayudar a depurar el problema?";
+/* Title of the dialog used to send bug reports to support team. */
+"help.reportIssue.title"="Report Issue";
+/* Title of the dialog button to discard a report. */
+"help.reportIssue.discardReport"="Discard Report";
+/* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describe"="Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.";
+/* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
+"help.reportIssue.sendLogFile"="Send Log File";
+/* Title to indicate that the bug report is being uploaded to our support team. */
+"help.reportIssue.uploadingLogFile"="Uploading Log File";
+/* Confirmation title shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.title"="Thanks For Your Feedback";
+/* Confirmation message shown when a bug report is successfully uploaded. */
+"help.reportIssue.success.message"="Thanks. We'll look into this issue and a member of our team will get back to you.";
+/* Error message shown when some error occurs during uploading a bug report. */
+"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+/* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+/* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
+"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+/* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
+"help.reportIssue.describeIssue.placeholder"="Describe the issue";
+/* Label shown when users lost the internet connection */
+"general.NoIntenerConnection"="Unable to connect to the internet. Please check your connection and try again.";
