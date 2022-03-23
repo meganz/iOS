@@ -1,7 +1,7 @@
 
 import Foundation
 
-protocol CookieSettingsRouterProtocol: Routing {
+protocol CookieSettingsRouting: Routing {
     func didTap(on source: CookieSettingsSource)
 }
 
@@ -10,8 +10,7 @@ enum CookieSettingsSource {
     case showPrivacyPolicy
 }
 
-final class CookieSettingsRouter: NSObject, CookieSettingsRouterProtocol {
-    private weak var baseViewController: UIViewController?
+final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
     private weak var navigationController: UINavigationController?
     private weak var presenter: UIViewController?
     
@@ -34,8 +33,6 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouterProtocol {
         cookieSettingsTVC.router = self
         cookieSettingsTVC.viewModel = viewModel
         
-        baseViewController = cookieSettingsTVC
-        
         return cookieSettingsTVC
     }
     
@@ -55,10 +52,6 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouterProtocol {
         case .showPrivacyPolicy:
             NSURL.init(string: "https://mega.nz/privacy")?.mnz_presentSafariViewController()
         }
-    }
-    
-    func presentAlert(_ alert: UIAlertController) {
-        navigationController?.present(alert, animated: true, completion: nil)
     }
     
     func dismiss() {
