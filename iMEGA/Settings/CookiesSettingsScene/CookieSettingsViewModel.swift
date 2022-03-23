@@ -30,7 +30,7 @@ enum CookieSettingsAction: ActionType {
 }
 
 final class CookieSettingsViewModel: NSObject, ViewModelType {
-    enum Command: CommandType {
+    enum Command: CommandType, Equatable {
         case configCookieSettings(CookiesBitmap)
         
         case updateFooters(Array<String>)
@@ -45,7 +45,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     private let cookieSettingsUseCase: CookieSettingsUseCaseProtocol
-    private let router: CookieSettingsRouter
+    private let router: CookieSettingsRouting
     
     var invokeCommand: ((Command) -> Void)?
     
@@ -55,7 +55,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     // MARK: - Init
     
-    init(cookieSettingsUseCase: CookieSettingsUseCaseProtocol, router: CookieSettingsRouter) {
+    init(cookieSettingsUseCase: CookieSettingsUseCaseProtocol, router: CookieSettingsRouting) {
         self.cookieSettingsUseCase = cookieSettingsUseCase
         self.router = router
     }
