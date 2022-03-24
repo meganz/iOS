@@ -1,7 +1,7 @@
 import Foundation
 
 extension PhotoChronologicalCategory {
-    static func ↻ (lhs: Self, rhs: Self) -> Bool {
+    static func ↻↻ (lhs: Self, rhs: Self) -> Bool {
         lhs.categoryDate != rhs.categoryDate ||
         lhs.coverPhoto != rhs.coverPhoto ||
         lhs.coverPhoto?.hasThumbnail != rhs.coverPhoto?.hasThumbnail ||
@@ -10,7 +10,7 @@ extension PhotoChronologicalCategory {
 }
 
 extension NodeEntity {
-    static func ↻ (lhs: Self, rhs: Self) -> Bool {
+    static func ↻↻ (lhs: Self, rhs: Self) -> Bool {
         lhs.categoryDate != rhs.categoryDate ||
         lhs.coverPhoto != rhs.coverPhoto ||
         lhs.coverPhoto?.hasThumbnail != rhs.coverPhoto?.hasThumbnail
@@ -29,7 +29,7 @@ extension Array where Element: PhotoChronologicalCategory {
                 continue // ignore invisible positions
             }
             
-            if zip.0 ↻ zip.1 {
+            if zip.0 ↻↻ zip.1 {
                 MEGALogDebug("[Photos] refresh categories \(Self.self) due to refreshable is true")
                 return true // we should refresh if refreshable is true
             }
