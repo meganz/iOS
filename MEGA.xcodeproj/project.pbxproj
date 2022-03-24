@@ -152,7 +152,6 @@
 		2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */; };
 		2FBBE77E25E4544900B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
 		2FBBE78925E4544C00B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
-		2FBBE87325E5D54200B760BC /* ImportTextActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBE87225E5D54100B760BC /* ImportTextActivity.swift */; };
 		2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */; };
 		2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF393424BEACA600ED0931 /* ReactionPickerViewController.swift */; };
 		2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */; };
@@ -2266,7 +2265,6 @@
 		E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */; };
 		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
-		E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
 		E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791771BC5754A00C58676 /* MEGAActivityItemProvider.m */; };
 		E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
 /* End PBXBuildFile section */
@@ -2509,7 +2507,6 @@
 		2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewController.swift; sourceTree = "<group>"; };
-		2FBBE87225E5D54100B760BC /* ImportTextActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTextActivity.swift; sourceTree = "<group>"; };
 		2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		2FBF393424BEACA600ED0931 /* ReactionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPickerViewController.swift; sourceTree = "<group>"; };
 		2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionContainerView.swift; sourceTree = "<group>"; };
@@ -4489,8 +4486,6 @@
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
-		E8F791741BC5754A00C58676 /* GetLinkActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetLinkActivity.h; sourceTree = "<group>"; };
-		E8F791751BC5754A00C58676 /* GetLinkActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetLinkActivity.m; sourceTree = "<group>"; };
 		E8F791761BC5754A00C58676 /* MEGAActivityItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAActivityItemProvider.h; sourceTree = "<group>"; };
 		E8F791771BC5754A00C58676 /* MEGAActivityItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAActivityItemProvider.m; sourceTree = "<group>"; };
 		E8F7917C1BC5754A00C58676 /* ShareFolderActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFolderActivity.h; sourceTree = "<group>"; };
@@ -10451,8 +10446,6 @@
 		E8F791731BC5754A00C58676 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
-				E8F791741BC5754A00C58676 /* GetLinkActivity.h */,
-				E8F791751BC5754A00C58676 /* GetLinkActivity.m */,
 				E8F791761BC5754A00C58676 /* MEGAActivityItemProvider.h */,
 				E8F791771BC5754A00C58676 /* MEGAActivityItemProvider.m */,
 				E8F7917C1BC5754A00C58676 /* ShareFolderActivity.h */,
@@ -10461,7 +10454,6 @@
 				411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */,
 				5B367575204FFBF60087362D /* SendToChatActivity.h */,
 				5B367574204FFBF60087362D /* SendToChatActivity.m */,
-				2FBBE87225E5D54100B760BC /* ImportTextActivity.swift */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -11627,7 +11619,6 @@
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
 				C4E78E9B272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
 				2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */,
-				2FBBE87325E5D54200B760BC /* ImportTextActivity.swift in Sources */,
 				B699D585275853F2006132EF /* PhotoCardTitle.swift in Sources */,
 				B6FD6502268B391900988A17 /* AccountRepositoryProtocol.swift in Sources */,
 				5D92DD1624BFE2B200D7D13B /* DateFormatter+TemplateFormatter.swift in Sources */,
@@ -12311,7 +12302,6 @@
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
 				BFB463EB2433FD6A00FB90B9 /* MegaDataFormatter.swift in Sources */,
-				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				5D4C5519251987650095E26B /* UploadFromLocalFilePath.swift in Sources */,
 				5DC4DE1124DBE20F00D9AD16 /* ExploreViewStyleFactory.swift in Sources */,
 				BFAB114C23CEA5C300BCE72D /* Album.swift in Sources */,
