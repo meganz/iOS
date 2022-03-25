@@ -315,7 +315,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             isExportFile = appData.contains(NSString.mnz_appDataToExportFile())
         }
         
-        guard transfer.path.hasPrefix(Helper.relativePathForOffline()) ||
+        
+        guard transfer.path?.hasPrefix(Helper.relativePathForOffline()) ?? false ||
                 transfer.type == .upload ||
                 isExportFile else {
                     return
