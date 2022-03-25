@@ -127,9 +127,9 @@
             cell.accessoryView = nil;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 1) {
-            imageView.image = [UIImage imageNamed:@"sendToContact"];
+            imageView.image = [UIImage imageNamed:@"sendToChat"];
             imageView.tintColor = UIColor.grayColor;
-            label.text = NSLocalizedString(@"sendToContact", nil);
+            label.text = NSLocalizedString(@"general.sendToChat", nil);
             label.enabled = cell.userInteractionEnabled = self.isChatReady;
             
             if (self.isChatReady) {

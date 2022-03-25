@@ -102,7 +102,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .share, expectedCommands: [])
         XCTAssertEqual(router.share_calledTimes, 1)
         
-        test(viewModel: viewModel, action: .sendToContact, expectedCommands: [])
+        test(viewModel: viewModel, action: .sendToChat, expectedCommands: [])
         XCTAssertEqual(router.sendToContact_calledTimes, 1)
         
         test(viewModel: viewModel, action: .showActionsforCurrentNode(sender: UIButton()), expectedCommands: [])

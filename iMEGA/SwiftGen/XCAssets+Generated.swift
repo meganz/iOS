@@ -68,7 +68,7 @@ internal enum Asset {
       internal static let activityGetLink = ImageAsset(name: "activity_getLink")
       internal static let activityOpenIn = ImageAsset(name: "activity_openIn")
       internal static let activitySaveImage = ImageAsset(name: "activity_saveImage")
-      internal static let activitySendToContact = ImageAsset(name: "activity_sendToContact")
+      internal static let activitySendToChat = ImageAsset(name: "activity_sendToChat")
       internal static let activityShareFolder = ImageAsset(name: "activity_shareFolder")
     }
     internal enum AppIcons {
@@ -570,7 +570,7 @@ internal enum Asset {
       internal static let restore = ImageAsset(name: "restore")
       internal static let rubbishBin = ImageAsset(name: "rubbishBin")
       internal static let saveToPhotos = ImageAsset(name: "saveToPhotos")
-      internal static let sendToContact = ImageAsset(name: "sendToContact")
+      internal static let sendToChat = ImageAsset(name: "sendToChat")
       internal static let share = ImageAsset(name: "share")
       internal static let shareFolder = ImageAsset(name: "shareFolder")
       internal static let textfile = ImageAsset(name: "textfile")

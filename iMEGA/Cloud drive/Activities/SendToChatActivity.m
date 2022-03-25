@@ -36,11 +36,11 @@
 }
 
 - (NSString *)activityTitle {
-    return NSLocalizedString(@"sendToContact", @"");
+    return NSLocalizedString(@"general.sendToChat", @"");
 }
 
 - (UIImage *)activityImage {
-    return [UIImage imageNamed:@"activity_sendToContact"];
+    return [UIImage imageNamed:@"activity_sendToChat"];
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {

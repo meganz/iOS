@@ -206,7 +206,7 @@ extension NodeAction {
     }
     
     class func sendToChatAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.sendToContact, detail: nil, image: Asset.Images.NodeActions.sendToContact.image, type: .sendToChat)
+        return NodeAction(title: Strings.Localizable.General.sendToChat, detail: nil, image: Asset.Images.NodeActions.sendToChat.image, type: .sendToChat)
     }
     
     class func pdfPageViewAction() -> NodeAction {
