@@ -404,8 +404,8 @@
 "uploadToMega"="Upload to MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Tap file to rename";
-/*  */
-"sendToContact"="Send to Contact";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Send to Chat";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="My chats";
 /* Toast text upon sending a single file to chat */
