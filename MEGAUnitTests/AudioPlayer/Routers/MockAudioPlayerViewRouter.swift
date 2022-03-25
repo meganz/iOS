@@ -34,7 +34,7 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
         share_calledTimes += 1
     }
     
-    func sendToContact() {
+    func sendToChat() {
         sendToContact_calledTimes += 1
     }
     

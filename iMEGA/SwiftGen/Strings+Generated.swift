@@ -1975,8 +1975,6 @@ public enum Strings {
     public static let sendFeedbackLabel = Strings.tr("Localizable", "sendFeedbackLabel")
     /// Send Message
     public static let sendMessage = Strings.tr("Localizable", "sendMessage")
-    /// Send to Contact
-    public static let sendToContact = Strings.tr("Localizable", "sendToContact")
     /// Sent
     public static let sent = Strings.tr("Localizable", "sent")
     /// Sent you a contact request
@@ -3310,6 +3308,8 @@ public enum Strings {
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
       /// Unable to connect to the internet. Please check your connection and try again.
       public static let noIntenerConnection = Strings.tr("Localizable", "general.NoIntenerConnection")
+      /// Send to Chat
+      public static let sendToChat = Strings.tr("Localizable", "general.sendToChat")
       /// Share
       public static let share = Strings.tr("Localizable", "general.share")
       public enum Button {
