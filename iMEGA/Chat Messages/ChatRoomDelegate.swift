@@ -615,6 +615,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 typingIndicatorAttributedString.addAttribute(NSAttributedString.Key.font,
                                                              value: UIFont.preferredFont(style: .caption2, weight: .medium),
                                                              range: NSMakeRange(0, username.utf16.count))
+                typingIndicatorAttributedString.addAttributes([NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium),
+                                                               NSAttributedString.Key.foregroundColor: UIColor.mnz_label()], range: NSMakeRange(0, username.utf16.count))
                 chatViewController?.updateTypingIndicatorView(withAttributedString: typingIndicatorAttributedString)
             } else {
                 MEGALogInfo("Either the handle or the username is not found")
@@ -635,7 +637,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
         if let firstUsername = username(forHandle: firstUserHandle),
             let secondUsername = username(forHandle: secondUserHandle) {
-            let combinedUsername = "\(firstUsername) , \(secondUsername)"
+            let combinedUsername = "\(firstUsername), \(secondUsername)"
 
             let localizedString: String?
             if keys.count > 2 {
@@ -648,9 +650,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)]
                 let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
                                                                                 attributes: attributes)
-                typingIndicatorAttributedString.addAttribute(NSAttributedString.Key.font,
-                                                             value: UIFont.preferredFont(style: .caption2, weight: .medium),
-                                                             range: NSMakeRange(0, typingIndicatorString.utf16.count))
+                typingIndicatorAttributedString.addAttributes([NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium),
+                                                               NSAttributedString.Key.foregroundColor: UIColor.mnz_label()], range: NSMakeRange(0, combinedUsername.utf16.count))
                 chatViewController?.updateTypingIndicatorView(withAttributedString: typingIndicatorAttributedString)
             }
         }
