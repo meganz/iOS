@@ -20,7 +20,7 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
     }
     
     func uploadSupportFile(atPath path: String, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        sdk.startUploadForSupport(withLocalPath: path, isSourceTemporary: false, delegate: TransferDelegate(start: start, progress: progress, completion: completion))
+        sdk.startUploadForSupport(withLocalPath: path, isSourceTemporary: true, delegate: TransferDelegate(start: start, progress: progress, completion: completion))
     }
     
     func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void) {

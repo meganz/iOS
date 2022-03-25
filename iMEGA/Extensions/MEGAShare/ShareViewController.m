@@ -810,7 +810,7 @@
 
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode {
     NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:NO delegate:self];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES delegate:self];
 }
 
 - (void)onePendingLess {
