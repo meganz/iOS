@@ -27,11 +27,11 @@
 /*  */
 "folder"="Thư mục";
 /* Error message shown when there's no camera available on the device */
-"noCamera"="Máy không có camera";
+"noCamera"="Thiết bị không có camêra";
 /* Alert title to attract attention */
 "attention"="Chú Ý";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Xin cho MEGA quyền truy cập vào Camera trong phần Cài đặt của thiết bị";
+"cameraPermissions"="Xin cho MEGA quyền truy cập vào Camêra trong phần Cài đặt của thiết bị";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Xin cho phép app MEGA quyền sử dụng micrô trong phần Cài đặt của thiết bị";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -515,11 +515,11 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Bật tính năng Camera Uploads";
+"enableCameraUploadsButton"="Bật tính năng Đăng Tải Camêra";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Camera Uploads đang được bật";
+"cameraUploadsEnabled"="Đăng Tải Camêra đang được bật";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Camera uploads đã đăng tải xong";
+"cameraUploadsComplete"="Đăng tải camêra đã hoàn tất";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="Việc tải lên đang được thực hiện, 1 tệp tin đang chờ";
 /* Message shown while uploading files. Plural. */
@@ -651,7 +651,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Thiết Đặt";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Camera Uploads";
+"cameraUploadsLabel"="Đăng Tải Camêra";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Năm";
 /* Navigation title for Photo Controller */
@@ -705,15 +705,15 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Khi được bật, hình ảnh sẽ được cho phép tải lên.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh sẽ được tải lên vào thư mục Camera Uploads.";
+"Photos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh sẽ được tải lên vào thư mục Đăng Tải Camêra.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh và videos sẽ được tải lên vào thư mục Camera Uploads.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh và videos sẽ được tải lên vào thư mục Đăng Tải Camêra.";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Tất cả các videos sẽ được tải lên vào thư mục Camera Uploads.";
+"Videos will be uploaded to the Camera Uploads folder."="Tất cả các videos sẽ được tải lên vào thư mục Đăng Tải Camêra.";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Khi được bật, videos sẽ được cho phép tải lên.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Có các tùy chọn MỚI cho Camera Uploads!";
+"New Camera Upload!"="Có các tùy chọn MỚI cho Đăng Tải Camêra!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Chọn lựa giữa việc chuyển định dạng số phim ảnh HEIC/HEVC sang các định dạng số tương tích với JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -725,7 +725,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Dung Lượng Của Thiết Bị Sắp Hết";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Thiết bị không còn đủ dung lượng cho việc tải camera uploads. Xin xóa bớt các ứng dụng ít sử dụng, videos hay nhạc. Hoặc vào %@ để quản lý không gian.";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Thiết bị không còn đủ dung lượng cho việc đăng tải camêra. Xin xóa bớt các ứng dụng ít sử dụng, videos hay nhạc. Hoặc vào %@ để quản lý không gian.";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Cài đặt > Cài đặt chung > Dung lượng %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -1505,7 +1505,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Quét Mã";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="So thẳng hàng camera với mã QR để tiến hành quét.";
+"lineCodeWithCamera"="So thẳng hàng camêra với mã QR để tiến hành quét";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Mã không phù hợp";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1691,7 +1691,7 @@
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh và videos tải về sẽ được lưu thẳng vào thư viện phương tiện số của máy thay vì được đưa vào mục Ngoại Tuyến.";
 /* Setting associated with the 'Camera' of the device */
-"Camera"="Camera";
+"Camera"="Camêra";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Lưu vào Ảnh";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
@@ -1713,7 +1713,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Hình Ảnh được gửi lên Ổ Mây";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp. Tạo tài khoản ngay.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng Tải Camêra là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp cho mọi người dùng. Tạo tài khoản ngay.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Thiếp Lập MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1727,9 +1727,9 @@
 /* Detailed explanation of why the user should give permission to access to the photos */
 "Please give the MEGA App permission to access Photos to share photos and videos."="Xin cho phép app MEGA quyền truy cập vào kho Ảnh để chia sẻ hình và videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Bật Micrô và Camera";
+"Enable Microphone and Camera"="Bật Micrô và Camêra";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Để có thể thực hiện cuộc gọi thoại hay gọi video, xin cho phép MEGA truy cập vào Camera và Micrô";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Để có thể thực hiện cuộc gọi thoại hay gọi video, xin cho phép MEGA truy cập vào Camêra và Micrô";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Bật Thông Báo";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -2101,7 +2101,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tài khoản của bạn hiện đang bị [B]đình chỉ[/B]. Bạn chỉ có khả năng xem duyệt dữ liệu của mình.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA không thể truy cập vào dữ liệu của bạn. Tuy nhiên, chủ điều hành tài khoản doanh nghiệp sẽ có quyền truy cập vào nội dung Camera Uploads của bạn.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA không thể truy cập vào dữ liệu của bạn. Tuy nhiên, chủ điều hành tài khoản doanh nghiệp sẽ có quyền truy cập vào nội dung Đăng Tải Camêra của bạn.";
 /*  */
 "Something went wrong"="Có vấn đề xảy ra";
 /* Title of the "Links" Shared Items. */
@@ -2491,13 +2491,13 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Tìm Tệp Tin";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC CAMERA UPLOADS MEGA";
+"MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC ĐĂNG TẢI CAMÊRA MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Chọn Thư Mục";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Đang phát";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn dời thư mục Camera Uploads vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn dời thư mục Đăng Tải Camêra vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Đăng Tải Camêra.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Tải Lên Tệp Tin";
 /* Text title for shortcuts, ie in the widget */
@@ -2967,26 +2967,26 @@
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Bạn có muốn đính kèm tệp tin ghi nhật ký log để chẩn đoán việc gỡ lỗi không?";
 /* Title of the dialog used to send bug reports to support team. */
-"help.reportIssue.title"="Report Issue";
+"help.reportIssue.title"="Báo Cáo Lỗi";
 /* Title of the dialog button to discard a report. */
-"help.reportIssue.discardReport"="Discard Report";
+"help.reportIssue.discardReport"="Hủy Báo Cáo";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.";
+"help.reportIssue.describe"="Hãy mô tả rõ ràng vấn đề bạn gặp phải. Càng cung cấp nhiều chi tiết càng chúng tôi càng dễ dàng giải quyết. Báo cáo của bạn sẽ được nhóm lập trình viên xem xét.";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
-"help.reportIssue.sendLogFile"="Send Log File";
+"help.reportIssue.sendLogFile"="Gửi Tệp Nhật Ký";
 /* Title to indicate that the bug report is being uploaded to our support team. */
-"help.reportIssue.uploadingLogFile"="Uploading Log File";
+"help.reportIssue.uploadingLogFile"="Đang Gửi Tệp Nhật Ký";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Thanks For Your Feedback";
+"help.reportIssue.success.title"="Cảm Ơn Bạn Đã Gửi Phản Hồi";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Thanks. We'll look into this issue and a member of our team will get back to you.";
+"help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
 /* Error message shown when some error occurs during uploading a bug report. */
-"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+"help.reportIssue.fail.message"="Không gửi được báo cáo. Xin thử lại.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+"help.reportIssue.creating.cancel.message"="Vấn đề lỗi này sẽ không được gửi đi nếu bạn hủy bỏ.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Describe the issue";
+"help.reportIssue.describeIssue.placeholder"="Mô tả vấn đề";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Unable to connect to the internet. Please check your connection and try again.";
+"general.NoIntenerConnection"="Không thể kết nối tới internet. Xin kiểm tra đường truyền kết nối mạng và thử lại.";
