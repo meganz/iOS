@@ -56,11 +56,9 @@
                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
                 NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 NSString *previewsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"previewsV3"];
-                NSString *originalPath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
 
-                [[NSFileManager defaultManager] copyItemAtPath:thumbnailPath toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                [[NSFileManager defaultManager] copyItemAtPath:previewPath toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                [[NSFileManager defaultManager] copyItemAtPath:transferAbsolutePath toPath:originalPath error:nil];
+                [NSFileManager.defaultManager mnz_moveItemAtPath:thumbnailPath toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle]];
+                [NSFileManager.defaultManager mnz_moveItemAtPath:previewPath toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle]];
 
                 break;
             }
