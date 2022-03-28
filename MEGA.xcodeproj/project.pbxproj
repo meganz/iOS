@@ -1750,6 +1750,8 @@
 		BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */; };
 		BF1053DE2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */; };
 		BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */; };
+		BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = BF1163BA27F12ED000E5C5A4 /* MessageKit */; };
+		BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = BF1163C127F1305400E5C5A4 /* PanModal */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		BF15891F2435EF85007AF9EC /* ChatViewCallCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */; };
 		BF1589222435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1589212435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift */; };
@@ -4496,9 +4498,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
 				A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */,
 				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
+				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */,
 				2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */,
 				2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */,
@@ -10476,6 +10480,8 @@
 			);
 			name = MEGA;
 			packageProductDependencies = (
+				BF1163BA27F12ED000E5C5A4 /* MessageKit */,
+				BF1163C127F1305400E5C5A4 /* PanModal */,
 				BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */,
 			);
 			productName = iMEGA;
@@ -10746,6 +10752,8 @@
 			);
 			mainGroup = 137361811A6664C300B740E8;
 			packageReferences = (
+				BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */,
+				BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */,
 				BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
@@ -14457,17 +14465,43 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */ = {
+		BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/meganz/SDAVAssetExportSession.git";
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 3.0.0;
 			};
 		};
+		BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ilia3546/PanModal.git";
+			requirement = {
+				kind = revision;
+				revision = ba721e891b4f32fa015460ad5003d80054171f07;
+            };
+		};
+        BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */ = {
+            isa = XCRemoteSwiftPackageReference;
+            repositoryURL = "https://github.com/meganz/SDAVAssetExportSession.git";
+            requirement = {
+                kind = upToNextMajorVersion;
+                minimumVersion = 1.0.0;
+            };
+        };
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BF1163BA27F12ED000E5C5A4 /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
+		};
+		BF1163C127F1305400E5C5A4 /* PanModal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */;
+			productName = PanModal;
+        };
 		BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
