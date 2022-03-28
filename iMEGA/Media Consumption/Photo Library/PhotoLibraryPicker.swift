@@ -6,11 +6,7 @@ struct PhotoLibraryPicker: View {
     @Binding var selectedMode: PhotoLibraryViewMode
     
     var body: some View {
-        if editMode?.wrappedValue.isEditing == true {
-            EmptyView()
-        } else {
-            pickerView()
-        }
+        pickerView().opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
     }
     
     private func pickerView() -> some View {
