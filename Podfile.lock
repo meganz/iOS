@@ -124,9 +124,6 @@ PODS:
   - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
   - Haptica (3.0.3)
-  - InputBarAccessoryView (5.4.0):
-    - InputBarAccessoryView/Core (= 5.4.0)
-  - InputBarAccessoryView/Core (5.4.0)
   - ISEmojiView (0.2.6)
   - JustPieChart (0.1.0)
   - "Keyboard+LayoutGuide (1.6.0)"
@@ -139,14 +136,11 @@ PODS:
   - libwebp/mux (1.2.1):
     - libwebp/demux
   - libwebp/webp (1.2.1)
-  - MessageKit (3.7.0):
-    - InputBarAccessoryView (~> 5.4.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - PanModal (1.2.7)
   - PhoneNumberKit (3.3.3):
     - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
     - PhoneNumberKit/UIKit (= 3.3.3)
@@ -182,8 +176,6 @@ DEPENDENCIES:
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
   - JustPieChart
   - "Keyboard+LayoutGuide"
-  - MessageKit
-  - PanModal (from `https://github.com/ilia3546/PanModal.git`, commit `ba721e8`)
   - PhoneNumberKit (~> 3.3)
   - PinLayout
   - PureLayout (from `https://github.com/PureLayout/PureLayout.git`)
@@ -213,11 +205,9 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - Haptica
-    - InputBarAccessoryView
     - JustPieChart
     - "Keyboard+LayoutGuide"
     - libwebp
-    - MessageKit
     - nanopb
     - PhoneNumberKit
     - PinLayout
@@ -238,9 +228,6 @@ EXTERNAL SOURCES:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
-  PanModal:
-    :commit: ba721e8
-    :git: https://github.com/ilia3546/PanModal.git
   PureLayout:
     :git: https://github.com/PureLayout/PureLayout.git
 
@@ -254,9 +241,6 @@ CHECKOUT OPTIONS:
   ISEmojiView:
     :git: https://github.com/isaced/ISEmojiView.git
     :tag: 0.2.6
-  PanModal:
-    :commit: ba721e8
-    :git: https://github.com/ilia3546/PanModal.git
   PureLayout:
     :commit: cc3078c0d33de27e22304c9b90c7f5e1f795d3f6
     :git: https://github.com/PureLayout/PureLayout.git
@@ -282,14 +266,11 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   Haptica: 23497230b2d7476621f7860263ae0667279a0a89
-  InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
   "Keyboard+LayoutGuide": db44b1764e2bb5d9824cc9cea9d9006cd4442045
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
-  MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
   PinLayout: e50e9a748b632905fca6e67043ea4b05d6c92186
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
@@ -301,6 +282,6 @@ SPEC CHECKSUMS:
   WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 987a33a4e695726ce686f66f1ba6184a2cd6ac8d
+PODFILE CHECKSUM: 0f3ac7734c64a8e9dcb5037403692157971d2fa9
 
 COCOAPODS: 1.11.2
