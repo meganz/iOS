@@ -26,6 +26,7 @@ import UIKit
         }
         
         let nav = MEGANavigationController(rootViewController: build())
+        nav.modalPresentationStyle = .fullScreen
         presenter.present(nav, animated: true, completion: nil)
     }
 }
