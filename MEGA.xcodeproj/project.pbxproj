@@ -2630,7 +2630,6 @@
 		41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		41DC6F701D54E7080081832C /* NSFileManager+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+MNZCategory.h"; sourceTree = "<group>"; };
 		41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+MNZCategory.m"; sourceTree = "<group>"; };
-		41DFFB091B9A3C9E0003FB72 /* pt-br */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-br"; path = "pt-br.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41E150021DB7CB1400383645 /* UIImageView+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MNZCategory.h"; sourceTree = "<group>"; };
 		41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIImageView+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41FC83AF1AA853CC008FA551 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
@@ -3218,7 +3217,6 @@
 		8334526C258CA3D60052DB3C /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		8334526E258CA3E30052DB3C /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		83345278258CA3F50052DB3C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
-		83345282258CA3FB0052DB3C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/ShortcutIntents.strings"; sourceTree = "<group>"; };
 		83345284258CA3FF0052DB3C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		8334528E258CA4080052DB3C /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		83345298258CA4250052DB3C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
@@ -3486,6 +3484,9 @@
 		A81BD5D127EB6CEB00234902 /* HistoryRetentionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRetentionUseCaseTests.swift; sourceTree = "<group>"; };
 		A81BD5D327EB702200234902 /* MockClearChatHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockClearChatHistoryUseCase.swift; sourceTree = "<group>"; };
 		A81BD5D527EB708000234902 /* MockHistoryRetentionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHistoryRetentionUseCase.swift; sourceTree = "<group>"; };
+		A81BD63227EDC4C100234902 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		A81BD63327EDC4C100234902 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A81BD63427EDC4C200234902 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A81C6584254B2D3000105BF4 /* GiphySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySelectionViewController.swift; sourceTree = "<group>"; };
 		A81C6585254B2D3000105BF4 /* GiphySelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySelectionView.swift; sourceTree = "<group>"; };
 		A81C6587254B2D3000105BF4 /* GiphyCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyCategoryView.swift; sourceTree = "<group>"; };
@@ -4458,7 +4459,6 @@
 		E8BB73761D773A450067D89C /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73771D773A4C0067D89C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB737C1D773A750067D89C /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E8BB73801D773AA80067D89C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E8BB73811D773AC30067D89C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterKeyViewController.h; sourceTree = "<group>"; };
 		E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterKeyViewController.m; sourceTree = "<group>"; };
@@ -10726,18 +10726,11 @@
 				Base,
 				es,
 				de,
-				"es-ES",
 				fr,
 				ja,
-				pt,
 				"zh-Hans",
 				"zh-Hant",
 				ar,
-				bg,
-				cs,
-				fa,
-				fi,
-				he,
 				id,
 				it,
 				ko,
@@ -10745,16 +10738,11 @@
 				pl,
 				ro,
 				ru,
-				sk,
-				sl,
-				sr,
-				sv,
 				th,
 				tl,
 				"pt-br",
 				vi,
-				fil,
-				"pt-BR",
+				pt,
 			);
 			mainGroup = 137361811A6664C300B740E8;
 			packageReferences = (
@@ -13258,7 +13246,6 @@
 				410333EB1B9994F400380FF3 /* nl */,
 				410333EF1B99951900380FF3 /* ru */,
 				410333FA1B9995DC00380FF3 /* zh-Hant */,
-				41DFFB091B9A3C9E0003FB72 /* pt-br */,
 				E84F86FD1BB99DE200436A0D /* fr */,
 				E84F86FE1BB99E1700436A0D /* ja */,
 				E84F86FF1BB99E6A00436A0D /* de */,
@@ -13270,6 +13257,7 @@
 				E8B64EFB1BC6E48C005C726E /* zh-Hans */,
 				E8860CCF1C7724A00026ABBC /* ar */,
 				E894271F1CCF8411008D470D /* th */,
+				A81BD63327EDC4C100234902 /* pt */,
 			);
 			name = Localizable.strings;
 			path = ../Languages;
@@ -13289,7 +13277,6 @@
 				8334526C258CA3D60052DB3C /* ko */,
 				8334526E258CA3E30052DB3C /* ro */,
 				83345278258CA3F50052DB3C /* nl */,
-				83345282258CA3FB0052DB3C /* pt-BR */,
 				83345284258CA3FF0052DB3C /* ar */,
 				8334528E258CA4080052DB3C /* th */,
 				83345298258CA4250052DB3C /* it */,
@@ -13297,6 +13284,7 @@
 				833452AC258CA4350052DB3C /* fr */,
 				833452AE258CA4530052DB3C /* es */,
 				833452B0258CA45B0052DB3C /* en */,
+				A81BD63227EDC4C100234902 /* pt */,
 			);
 			name = ShortcutIntents.intentdefinition;
 			sourceTree = "<group>";
@@ -13327,10 +13315,10 @@
 				E8BB73761D773A450067D89C /* ro */,
 				E8BB73771D773A4C0067D89C /* ru */,
 				E8BB737C1D773A750067D89C /* th */,
-				E8BB73801D773AA80067D89C /* pt-BR */,
 				E8BB73811D773AC30067D89C /* vi */,
 				9458AEE11FB9D3B800BABD58 /* en */,
 				9458AEE21FB9D40500BABD58 /* ja */,
+				A81BD63427EDC4C200234902 /* pt */,
 			);
 			name = InfoPlist.strings;
 			path = ../Languages;
