@@ -4,7 +4,10 @@
     
     @objc func completedTransfers() -> [MEGATransfer] {
         if let list = MEGASdkManager.sharedMEGASdk().completedTransfers as? [MEGATransfer] {
-            return list.filter { $0.type == .upload || $0.path?.hasPrefix(Helper.relativePathForOffline()) ?? false }
+            return list.filter {
+                let node: MEGANode? = MEGASdkManager.sharedMEGASdk().node(forHandle: $0.nodeHandle) ?? $0.publicNode
+                return $0.type == .upload || $0.path?.hasPrefix(Helper.relativePathForOffline()) ?? false && node?.isFile() ?? false 
+            }
         }
         return []
     }
