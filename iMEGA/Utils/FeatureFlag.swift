@@ -6,3 +6,4 @@ final class FeatureFlag: NSObject {
     
     @objc static let isMediaDiscoveryEnabled = false
 }
+
