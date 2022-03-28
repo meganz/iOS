@@ -485,6 +485,7 @@
         MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:nil];
         moveRequestDelegate.restore = YES;
         [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
+        [MEGASdkManager.sharedMEGASdk disableExportNode:self];
     }
 }
 
