@@ -528,6 +528,7 @@ internal enum Asset {
       internal static let hangCallMeetingAction = ImageAsset(name: "hangCallMeetingAction")
       internal static let moderatorMeetings = ImageAsset(name: "moderatorMeetings")
       internal static let muteMeetingAction = ImageAsset(name: "muteMeetingAction")
+      internal static let removeModerator = ImageAsset(name: "removeModerator")
       internal static let sendMessageMeetings = ImageAsset(name: "sendMessageMeetings")
       internal static let speakerMeetingAction = ImageAsset(name: "speakerMeetingAction")
       internal static let userMicOn = ImageAsset(name: "userMicOn")
