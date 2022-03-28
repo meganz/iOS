@@ -23,7 +23,6 @@ const APPLICATION_JSON_HEADER = ["Content-Type: application/vnd.api+json", "Auth
 
 const REMAPPED_LANG_CODES = [
     'zh_CN' => 'zh-Hans',
-    'pt' => 'pt-br',
     'zh_TW' => 'zh-Hant'
 ];
 
@@ -37,7 +36,6 @@ const REMAPPED_RESOURCE_NAMES = [
 
 const REVERSE_REMAPPED_LANG_CODES = [
     'zh-Hans' => 'zh_CN',
-    'pt-br' => 'pt',
     'zh-Hant' => 'zh_TW'
 ];
 
