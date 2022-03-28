@@ -7,9 +7,6 @@
 [submodule "iMEGA/Vendor/Karere"]
 	path = iMEGA/Vendor/Karere
 	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
-[submodule "iMEGA/Vendor/SDAVAssetExportSession"]
-	path = iMEGA/Vendor/SDAVAssetExportSession
-	url = https://github.com/meganz/SDAVAssetExportSession.git
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
 	url = https://github.com/SVProgressHUD/SVProgressHUD.git
