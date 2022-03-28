@@ -286,7 +286,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     private func removeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
-                          image: Asset.Images.Meetings.moderatorMeetings.image,
+                          image: Asset.Images.Meetings.removeModerator.image,
                           style: .default) {}
     }
     
