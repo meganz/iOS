@@ -129,6 +129,7 @@
             
         case MEGAChatCallTermCodeCallReject:
         case MEGAChatCallTermCodeUserHangup:
+        case MEGAChatCallTermCodeNoParticipate:
             callEndedReason = CXCallEndedReasonRemoteEnded;
             break;
     }
