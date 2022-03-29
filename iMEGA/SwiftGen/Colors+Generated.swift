@@ -19,6 +19,10 @@ internal typealias AssetColorTypeAlias = ColorAsset.Color
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Colors {
+  internal enum Banner {
+    internal static let warningBannerBackground = ColorAsset(name: "warningBannerBackground")
+    internal static let warningTextColor = ColorAsset(name: "warningTextColor")
+  }
   internal enum CallScene {
     internal static let avatarBackground = ColorAsset(name: "avatarBackground")
     internal static let avatarBackgroundGradient = ColorAsset(name: "avatarBackgroundGradient")
