@@ -18,7 +18,6 @@ abstract_target 'iMEGA' do
   target 'MEGA' do
     # Pods for MEGA
     pod 'FlexLayout'
-    pod 'PinLayout'
     pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
     pod 'Haptica'
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
