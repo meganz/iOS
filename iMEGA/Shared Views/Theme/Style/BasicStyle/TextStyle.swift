@@ -1,7 +1,7 @@
 import Foundation
 
 struct TextStyle: Codable {
-    let font: Font
+    let font: FontStyle
 }
 
 // MARK: - UI Applier

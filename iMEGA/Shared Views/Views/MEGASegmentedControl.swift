@@ -40,23 +40,23 @@ final class MEGASegmentedControl: UISegmentedControl, DynamicTypeComponentProtoc
     }
 
     func applyFontSizes() {
-        if let textStyle = Font.TextStyle(rawValue: textStyle ?? ""),
-           let weight = Font.Weight(rawValue: weight ?? "") {
+        if let textStyle = FontStyle.TextStyle(rawValue: textStyle ?? ""),
+           let weight = FontStyle.Weight(rawValue: weight ?? "") {
             if let color = color {
-                setTitleTextAttributes([.font: Font(style: textStyle, weight: weight).value,
+                setTitleTextAttributes([.font: FontStyle(style: textStyle, weight: weight).value,
                                         .foregroundColor: color], for: .normal)
             } else {
-                setTitleTextAttributes([.font: Font(style: textStyle, weight: weight).value], for: .normal)
+                setTitleTextAttributes([.font: FontStyle(style: textStyle, weight: weight).value], for: .normal)
             }
         }
         
-        if let selectedTextStyle = Font.TextStyle(rawValue: selectedTextStyle ?? ""),
-           let selectedWeight = Font.Weight(rawValue: selectedWeight ?? "") {
+        if let selectedTextStyle = FontStyle.TextStyle(rawValue: selectedTextStyle ?? ""),
+           let selectedWeight = FontStyle.Weight(rawValue: selectedWeight ?? "") {
             if let selectedColor = selectedColor {
-                setTitleTextAttributes([.font: Font(style: selectedTextStyle, weight: selectedWeight).value,
+                setTitleTextAttributes([.font: FontStyle(style: selectedTextStyle, weight: selectedWeight).value,
                                         .foregroundColor: selectedColor], for: .selected)
             } else {
-                setTitleTextAttributes([.font: Font(style: selectedTextStyle, weight: selectedWeight).value], for: .selected)
+                setTitleTextAttributes([.font: FontStyle(style: selectedTextStyle, weight: selectedWeight).value], for: .selected)
             }
         }
     }

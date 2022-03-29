@@ -109,6 +109,9 @@ internal enum Asset {
       internal static let pc = ImageAsset(name: "pc")
       internal static let warningModals = ImageAsset(name: "warningModals")
     }
+    internal enum Banner {
+      internal static let closeCircle = ImageAsset(name: "closeCircle")
+    }
     internal enum Business {
       internal static let accountExpiredAdmin = ImageAsset(name: "accountExpiredAdmin")
       internal static let accountExpiredUser = ImageAsset(name: "accountExpiredUser")
@@ -575,9 +578,6 @@ internal enum Asset {
       internal static let share = ImageAsset(name: "share")
       internal static let shareFolder = ImageAsset(name: "shareFolder")
       internal static let textfile = ImageAsset(name: "textfile")
-    }
-    internal enum Offline {
-      internal static let closeCircle = ImageAsset(name: "closeCircle")
     }
     internal enum Onboarding {
       internal static let accessContact = ImageAsset(name: "access contact")
