@@ -59,10 +59,3 @@ struct PhotoLibraryAllView: View {
         }
     }
 }
-
-@available(iOS 14.0, *)
-extension PhotoLibraryAllView: Equatable {
-    static func == (lhs: PhotoLibraryAllView, rhs: PhotoLibraryAllView) -> Bool {
-        true // we are taking over the update of the view
-    }
-}

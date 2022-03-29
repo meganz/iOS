@@ -17,12 +17,8 @@ abstract_target 'iMEGA' do
 
   target 'MEGA' do
     # Pods for MEGA
-    pod 'MessageKit'
-    pod 'PanModal', :git => 'https://github.com/ilia3546/PanModal.git', :commit => 'ba721e8'
     pod 'FlexLayout'
-    pod 'PinLayout'
     pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
-    pod 'Haptica'
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'CHTCollectionViewWaterfallLayout'
     pod 'Keyboard+LayoutGuide'
@@ -30,7 +26,6 @@ abstract_target 'iMEGA' do
     pod 'SAMKeychain'
     pod 'DateTools'
     pod 'PhoneNumberKit', '~> 3.3'
-    pod 'WSTagsField'
     pod 'JustPieChart'
     pod 'SwiftGen'
     pod 'CocoaLumberjack/Swift'

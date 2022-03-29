@@ -121,7 +121,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                                                    appData: appData,
                                                    chatRoomId: chatRoom.chatId,
                                                    parentNode: myChatFilesFolderNode,
-                                                   isSourceTemporary: false,
+                                                   isSourceTemporary: true,
                                                    delegate: MEGAStartUploadTransferDelegate(completion: nil))
             }
         }

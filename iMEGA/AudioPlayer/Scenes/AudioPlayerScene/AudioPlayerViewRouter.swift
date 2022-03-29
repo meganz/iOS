@@ -98,7 +98,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         fileLinkActionViewControllerDelegate?.shareLink()
     }
     
-    func sendToContact() {
+    func sendToChat() {
         fileLinkActionViewControllerDelegate?.sendToChat()
     }
     
