@@ -1359,6 +1359,7 @@
 		A8AAE6B926C2AA38002243C0 /* ReinstallationUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AAE6B826C2AA38002243C0 /* ReinstallationUseCaseTests.swift */; };
 		A8AAE6BB26C2AC20002243C0 /* MockCredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AAE6BA26C2AC20002243C0 /* MockCredentialRepository.swift */; };
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
+		A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51ADB27F3534F0030F1EA /* Haptica */; };
 		A8B8E02A273A689400C64E0A /* TransferUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */; };
 		A8B8E02E273A697200C64E0A /* MockTransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */; };
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
@@ -4512,6 +4513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
+				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */,
 				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
@@ -10520,6 +10522,7 @@
 				BF1163C127F1305400E5C5A4 /* PanModal */,
 				BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */,
 				A8ECD8CA27F34BB0008D75B8 /* PinLayout */,
+				A8B51ADB27F3534F0030F1EA /* Haptica */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -10793,6 +10796,7 @@
 				BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */,
 				BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */,
 				A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */,
+				A8B51ADA27F3534F0030F1EA /* XCRemoteSwiftPackageReference "Haptica" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14509,6 +14513,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A8B51ADA27F3534F0030F1EA /* XCRemoteSwiftPackageReference "Haptica" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/efremidze/Haptica";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/layoutBox/PinLayout";
@@ -14544,6 +14556,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A8B51ADB27F3534F0030F1EA /* Haptica */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8B51ADA27F3534F0030F1EA /* XCRemoteSwiftPackageReference "Haptica" */;
+			productName = Haptica;
+		};
 		A8ECD8CA27F34BB0008D75B8 /* PinLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */;
