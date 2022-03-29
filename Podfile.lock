@@ -123,7 +123,6 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
-  - Haptica (3.0.3)
   - ISEmojiView (0.2.6)
   - JustPieChart (0.1.0)
   - "Keyboard+LayoutGuide (1.6.0)"
@@ -171,7 +170,6 @@ DEPENDENCIES:
   - FLEX
   - FlexLayout
   - GKContactImage (from `https://github.com/meganz/GKContactImage.git`)
-  - Haptica
   - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
   - JustPieChart
   - "Keyboard+LayoutGuide"
@@ -202,7 +200,6 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
-    - Haptica
     - JustPieChart
     - "Keyboard+LayoutGuide"
     - libwebp
@@ -262,7 +259,6 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: a3311dbcf3ea651e5a070fe8559b57c174ada081
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  Haptica: 23497230b2d7476621f7860263ae0667279a0a89
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
   "Keyboard+LayoutGuide": db44b1764e2bb5d9824cc9cea9d9006cd4442045
@@ -278,6 +274,6 @@ SPEC CHECKSUMS:
   WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: f4f74c11ae25edf6a6972c06869b498d62494d7a
+PODFILE CHECKSUM: e83a3a652881ec8203c0b1248608147fe1363739
 
 COCOAPODS: 1.11.2
