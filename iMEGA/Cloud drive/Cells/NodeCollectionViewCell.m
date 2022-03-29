@@ -179,23 +179,22 @@ static NSString *kDuration = @"kDuration";
         NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
         
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
-            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            if (thumbnailImage) {
-                self.thumbnailImageView.image = thumbnailImage;
-            }
-            self.thumbnailIconView.hidden = YES;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+            [self configureWithThumbnailFilePath:thumbnailFilePath];
         } else {
-            if (nameString.mnz_isImagePathExtension) {
-                if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                    [sdk createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+                if ([sdk createThumbnail:pathForItem destinatioPath:thumbnailFilePath]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self configureWithThumbnailFilePath:thumbnailFilePath];
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.thumbnailIconView.hidden = NO;
+                        [self.thumbnailIconView mnz_setImageForExtension:extension];
+                        self.thumbnailImageView.image = nil;
+                    });
                 }
-                self.thumbnailIconView.hidden = YES;
-            } else {
-                self.thumbnailIconView.hidden = NO;
-                [self.thumbnailIconView mnz_setImageForExtension:extension];
-                self.thumbnailImageView.image = nil;
-            }
+            });
         }
         
     }
@@ -248,6 +247,16 @@ static NSString *kDuration = @"kDuration";
 }
 - (IBAction)optionButtonAction:(id)sender {
     [self.delegate infoTouchUpInside:sender];
+}
+
+#pragma mark: - Private
+
+- (void)configureWithThumbnailFilePath:(NSString *)thumbnailFilePath {
+    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+    if (thumbnailImage) {
+        self.thumbnailImageView.image = thumbnailImage;
+    }
+    self.thumbnailIconView.hidden = YES;
 }
 
 @end
