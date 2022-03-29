@@ -1390,6 +1390,7 @@
 		A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D8EA277F316E009093C5 /* Logger.swift */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC8D7627A0258900A9ED13 /* ReportIssueViewModel.swift */; };
+		A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECD8CA27F34BB0008D75B8 /* PinLayout */; };
 		A8EE475E27DF561300D37685 /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE475D27DF561300D37685 /* TextEditorView.swift */; };
 		A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */; };
 		A8EE47AD27DFB13D00D37685 /* MockSupportUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE47AC27DFB13D00D37685 /* MockSupportUseCase.swift */; };
@@ -4530,6 +4531,7 @@
 				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
 				A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */,
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
+				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
 				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
 				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */,
@@ -10517,6 +10519,7 @@
 				BF1163BA27F12ED000E5C5A4 /* MessageKit */,
 				BF1163C127F1305400E5C5A4 /* PanModal */,
 				BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */,
+				A8ECD8CA27F34BB0008D75B8 /* PinLayout */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -10789,6 +10792,7 @@
 				BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */,
 				BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */,
 				BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */,
+				A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14505,6 +14509,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MessageKit/MessageKit";
@@ -14519,19 +14531,24 @@
 			requirement = {
 				kind = revision;
 				revision = ba721e891b4f32fa015460ad5003d80054171f07;
-            };
+			};
 		};
-        BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */ = {
-            isa = XCRemoteSwiftPackageReference;
-            repositoryURL = "https://github.com/meganz/SDAVAssetExportSession.git";
-            requirement = {
-                kind = upToNextMajorVersion;
-                minimumVersion = 1.0.0;
-            };
-        };
+		BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/meganz/SDAVAssetExportSession.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A8ECD8CA27F34BB0008D75B8 /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
+		};
 		BF1163BA27F12ED000E5C5A4 /* MessageKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */;
@@ -14541,7 +14558,7 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */;
 			productName = PanModal;
-        };
+		};
 		BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
