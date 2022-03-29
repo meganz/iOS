@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -30,6 +30,10 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vXN-Gp-R34" userLabel="CollapsedTextCoverView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="245"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zfg-BG-ODb">
+                    <rect key="frame" x="0.0" y="27" width="414" height="268"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpz-gS-Gkz" customClass="MessageInputTextBackgroundView" customModule="MEGA" customModuleProvider="target">
@@ -187,7 +191,9 @@
                 <constraint firstItem="ul9-iZ-5KV" firstAttribute="top" secondItem="af9-4d-CYz" secondAttribute="bottom" id="By0-ri-mp7"/>
                 <constraint firstItem="APV-vT-gYp" firstAttribute="leading" secondItem="af9-4d-CYz" secondAttribute="trailing" constant="-49.5" id="CF8-bS-Qlp"/>
                 <constraint firstItem="vXN-Gp-R34" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="EA7-CE-8BL"/>
+                <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="zfg-BG-ODb" secondAttribute="top" constant="2" id="Hu2-Dy-Aiv"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="leading" secondItem="ul9-iZ-5KV" secondAttribute="trailing" constant="13" id="JjR-d1-KwI"/>
+                <constraint firstItem="zfg-BG-ODb" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="50" id="LDV-Sr-Bsw"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="8mz-bo-tiI" secondAttribute="bottom" constant="9.5" id="LNR-C0-ATf"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="trailing" secondItem="zpz-gS-Gkz" secondAttribute="trailing" id="OxB-4H-ddg"/>
                 <constraint firstItem="gyg-48-psi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Q33-kC-Y9H"/>
@@ -198,6 +204,7 @@
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="af9-4d-CYz" secondAttribute="top" constant="-9" id="fPC-Vq-M1z"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="50" id="fXP-Pm-6Nn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="15" id="fij-A4-njj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zfg-BG-ODb" secondAttribute="trailing" id="gLN-YP-vQz"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gmO-P0-T9e"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="9" id="iCm-C8-wxV"/>
                 <constraint firstItem="Emu-CZ-PtI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="jZ3-JP-Z6O"/>
@@ -209,6 +216,7 @@
                 <constraint firstItem="gyg-48-psi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qdN-uB-Vyz"/>
                 <constraint firstAttribute="bottom" secondItem="vXN-Gp-R34" secondAttribute="bottom" id="tc4-65-U4o"/>
                 <constraint firstAttribute="trailing" secondItem="8mz-bo-tiI" secondAttribute="trailing" constant="17" id="v5C-GR-y1d"/>
+                <constraint firstItem="zfg-BG-ODb" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="v5D-bC-uBl"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="x17-cC-M4D"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

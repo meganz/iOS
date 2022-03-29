@@ -9,10 +9,10 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
-#import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
 #import "PHAsset+CameraUpload.h"
 #import "NSString+MNZCategory.h"
+@import SDAVAssetExportSession;
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
 

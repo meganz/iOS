@@ -1,6 +1,5 @@
 import UIKit
 import FlexLayout
-import PinLayout
 
 class ChatBottomNewMessageIndicatorView: UIView {
     

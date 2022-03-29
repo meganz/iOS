@@ -119,7 +119,7 @@
 - (void)actionForImagePath:(NSString *)imagePath {
     if (self.toUploadSomething) {
         self.filePath = imagePath.mnz_relativeLocalPath;
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:NO];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toChangeAvatar) {
         NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
@@ -142,7 +142,7 @@
 
 - (void)actionForVideo {
     if (self.toUploadSomething) {
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:NO];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toShareThroughChat) {
         __weak __typeof__(self) weakSelf = self;

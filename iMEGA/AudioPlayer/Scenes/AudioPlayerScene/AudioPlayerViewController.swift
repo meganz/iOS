@@ -337,7 +337,7 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func sendToContactBarButtonPressed(_ button: UIBarButtonItem) {
-        viewModel.dispatch(.sendToContact)
+        viewModel.dispatch(.sendToChat)
     }
     
     private func shareBarButtonPressed(_ button: UIBarButtonItem) {

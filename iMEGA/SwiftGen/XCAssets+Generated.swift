@@ -68,7 +68,7 @@ internal enum Asset {
       internal static let activityGetLink = ImageAsset(name: "activity_getLink")
       internal static let activityOpenIn = ImageAsset(name: "activity_openIn")
       internal static let activitySaveImage = ImageAsset(name: "activity_saveImage")
-      internal static let activitySendToContact = ImageAsset(name: "activity_sendToContact")
+      internal static let activitySendToChat = ImageAsset(name: "activity_sendToChat")
       internal static let activityShareFolder = ImageAsset(name: "activity_shareFolder")
     }
     internal enum AppIcons {
@@ -108,6 +108,9 @@ internal enum Asset {
       internal static let folderSync = ImageAsset(name: "folder_sync")
       internal static let pc = ImageAsset(name: "pc")
       internal static let warningModals = ImageAsset(name: "warningModals")
+    }
+    internal enum Banner {
+      internal static let closeCircle = ImageAsset(name: "closeCircle")
     }
     internal enum Business {
       internal static let accountExpiredAdmin = ImageAsset(name: "accountExpiredAdmin")
@@ -528,6 +531,7 @@ internal enum Asset {
       internal static let hangCallMeetingAction = ImageAsset(name: "hangCallMeetingAction")
       internal static let moderatorMeetings = ImageAsset(name: "moderatorMeetings")
       internal static let muteMeetingAction = ImageAsset(name: "muteMeetingAction")
+      internal static let removeModerator = ImageAsset(name: "removeModerator")
       internal static let sendMessageMeetings = ImageAsset(name: "sendMessageMeetings")
       internal static let speakerMeetingAction = ImageAsset(name: "speakerMeetingAction")
       internal static let userMicOn = ImageAsset(name: "userMicOn")
@@ -570,13 +574,10 @@ internal enum Asset {
       internal static let restore = ImageAsset(name: "restore")
       internal static let rubbishBin = ImageAsset(name: "rubbishBin")
       internal static let saveToPhotos = ImageAsset(name: "saveToPhotos")
-      internal static let sendToContact = ImageAsset(name: "sendToContact")
+      internal static let sendToChat = ImageAsset(name: "sendToChat")
       internal static let share = ImageAsset(name: "share")
       internal static let shareFolder = ImageAsset(name: "shareFolder")
       internal static let textfile = ImageAsset(name: "textfile")
-    }
-    internal enum Offline {
-      internal static let closeCircle = ImageAsset(name: "closeCircle")
     }
     internal enum Onboarding {
       internal static let accessContact = ImageAsset(name: "access contact")
