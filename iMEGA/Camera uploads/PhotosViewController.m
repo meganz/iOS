@@ -73,11 +73,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     
     if (@available(iOS 14.0, *)) {
         self.cachedEditBarButtonItem = self.navigationItem.rightBarButtonItem;
+        [self objcWrapper_configPhotosBannerView];
     }
     
     self.currentState = MEGACameraUploadsStateLoading;
@@ -104,6 +104,10 @@
     
     [self loadTargetFolder];
     [self refreshMyAvatar];
+    
+    if (@available(iOS 14.0, *)) {
+        [self updateLimitedAccessBannerVisibility];
+    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -156,6 +160,8 @@
         
         [self updateAppearance];
     }
+    
+    [self updateBannerViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
 }
 
 #pragma mark - config views
@@ -199,6 +205,14 @@
     }
     
     return _selection;
+}
+
+- (PhotosBannerViewModel *)photosBannerViewModel {
+    if (_photosBannerViewModel == nil) {
+        _photosBannerViewModel = [self createPhotosBannerViewModel];
+    }
+    
+    return _photosBannerViewModel;
 }
 
 #pragma mark - load Camera Uploads target folder

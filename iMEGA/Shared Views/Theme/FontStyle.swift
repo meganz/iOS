@@ -1,11 +1,11 @@
 import Foundation
 
-struct Font: Codable {
+struct FontStyle: Codable {
     let style: TextStyle
     var weight: Weight? = nil
 }
 
-extension Font {
+extension FontStyle {
     var value: UIFont {
         guard let weight = weight else {
             return UIFont.preferredFont(forTextStyle: style.value)

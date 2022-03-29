@@ -65,20 +65,20 @@ final class MEGAThemeButton: UIButton, ButtonBackgroundStateAware, DynamicTypeCo
     
     func applyFontSizes() {
         if isSelected {
-            guard let textStyle = Font.TextStyle(rawValue: selectedTextStyle ?? ""),
-                  let weight = Font.Weight(rawValue: selectedWeight ?? "") else {
+            guard let textStyle = FontStyle.TextStyle(rawValue: selectedTextStyle ?? ""),
+                  let weight = FontStyle.Weight(rawValue: selectedWeight ?? "") else {
                 defaultSetup()
                 return
             }
-            titleLabel?.font = Font(style: textStyle, weight: weight).value
+            titleLabel?.font = FontStyle(style: textStyle, weight: weight).value
         } else {
             defaultSetup()
         }
     }
     
     private func defaultSetup() {
-        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""),
-              let weight = Font.Weight(rawValue: weight ?? "") else { return }
-        titleLabel?.font = Font(style: textStyle, weight: weight).value
+        guard let textStyle = FontStyle.TextStyle(rawValue: textStyle ?? ""),
+              let weight = FontStyle.Weight(rawValue: weight ?? "") else { return }
+        titleLabel?.font = FontStyle(style: textStyle, weight: weight).value
     }
 }
