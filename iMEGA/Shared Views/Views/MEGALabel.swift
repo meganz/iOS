@@ -28,13 +28,13 @@ final class MEGALabel: UILabel, DynamicTypeComponentProtocol {
     }
     
     func applyFontSizes() {
-        guard let textStyle = Font.TextStyle(rawValue: textStyle ?? ""), let weight = Font.Weight(rawValue: weight ?? "") else { return }
-        font = Font(style: textStyle, weight: weight).value
+        guard let textStyle = FontStyle.TextStyle(rawValue: textStyle ?? ""), let weight = FontStyle.Weight(rawValue: weight ?? "") else { return }
+        font = FontStyle(style: textStyle, weight: weight).value
     }
     
-    func apply(style: Font.TextStyle, weight: Font.Weight = .regular) {
+    func apply(style: FontStyle.TextStyle, weight: FontStyle.Weight = .regular) {
         self.textStyle = style.rawValue
         self.weight = weight.rawValue
-        font = Font(style: style, weight: weight).value
+        font = FontStyle(style: style, weight: weight).value
     }
 }
