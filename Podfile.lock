@@ -154,7 +154,6 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - SwiftGen (6.5.1)
-  - WSTagsField (5.4.0)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
   - YYCategories/no-arc (1.0.4)
@@ -178,7 +177,6 @@ DEPENDENCIES:
   - SAMKeychain
   - SDWebImageWebPCoder
   - SwiftGen
-  - WSTagsField
   - YYCategories
 
 SPEC REPOS:
@@ -210,7 +208,6 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - SwiftGen
-    - WSTagsField
     - YYCategories
 
 EXTERNAL SOURCES:
@@ -271,9 +268,8 @@ SPEC CHECKSUMS:
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
-  WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: e83a3a652881ec8203c0b1248608147fe1363739
+PODFILE CHECKSUM: 29c468baf0f21a8b8cb205046faa0f285fe26501
 
 COCOAPODS: 1.11.2
