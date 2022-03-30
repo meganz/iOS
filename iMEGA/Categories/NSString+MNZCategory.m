@@ -210,8 +210,8 @@ static NSString* const B = @"[B]";
     return (path ? [self stringByAppendingString:[NSString stringWithFormat:@">path=%@", path]] : self);
 }
 
-+ (NSString *)mnz_appDataToExportFile {
-    return @">exportFile";
+- (NSString *)mnz_appDataToExportFile {
+    return [self stringByAppendingString:@">exportFile"];
 }
 
 #pragma mark - Utils

@@ -311,14 +311,16 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
         var isExportFile = false
+        var isSaveToPhotos = false
         if let appData = transfer.appData {
-            isExportFile = appData.contains(NSString.mnz_appDataToExportFile())
+            isExportFile = appData.contains(NSString().mnz_appDataToExportFile())
+            isSaveToPhotos = appData.contains(NSString().mnz_appDataToSaveInPhotosApp())
         }
         
         
         guard transfer.path?.hasPrefix(Helper.relativePathForOffline()) ?? false ||
                 transfer.type == .upload ||
-                isExportFile else {
+                isExportFile || isSaveToPhotos else {
                     return
                 }
         
