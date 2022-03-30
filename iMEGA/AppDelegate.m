@@ -1798,6 +1798,10 @@
     }
 }
 
+- (void)onDbError:(MEGAChatSdk *)api error:(MEGAChatDBError)error message:(NSString *)message {
+    [self handleChatDBErrorWithError:error message:message];
+}
+
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
