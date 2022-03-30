@@ -44,6 +44,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
+    self.tableView.estimatedSectionHeaderHeight = 36.0f;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"RecentsTableViewHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"RecentsHeaderFooterView"];
     
@@ -60,6 +61,10 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     
     RecentsPreferenceManager.delegate = self;
     [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
+    
+    if (@available(iOS 15.0, *)) {
+        self.tableView.sectionHeaderTopPadding = 0.0f;
+    }
 }
 
 - (void)removeFromParentViewController {
