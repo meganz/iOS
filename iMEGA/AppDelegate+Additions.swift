@@ -277,3 +277,18 @@ extension AppDelegate {
         }
     }
 }
+
+//MARK: - MEGAChatSdk onDBError
+extension AppDelegate {
+    @objc func handleChatDBError(error: MEGAChatDBError, message: String) {
+        switch error {
+        case .full:
+            NotificationCenter.default.post(name: NSNotification.Name.MEGASQLiteDiskFull, object: nil, userInfo: nil)
+            
+        default:
+            CrashlyticsLogger.log("MEGAChatSDK onDBError occurred. Error \(error) with message \(message)")
+            MEGASdkManager.deleteSharedSdks()
+            exit(0)
+        }
+    }
+}
