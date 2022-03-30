@@ -659,13 +659,14 @@ extension ProfileViewController: MEGARequestDelegate {
                     SVProgressHUD.showError(withStatus: request.requestString + " " + NSLocalizedString(error.name, comment: ""))
                     return
                 }
+                
+                let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: myUser.handle) ?? "")
+                if request.file == nil {
+                    FileManager.default.mnz_removeItem(atPath: avatarFilePath)
+                }
+                avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
             }
-            
-            let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: myUser.handle) ?? "")
-            if request.file == nil {
-                FileManager.default.mnz_removeItem(atPath: avatarFilePath)
-            }
-            avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+        
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             
         case .MEGARequestTypeAccountDetails:
