@@ -1172,13 +1172,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
          [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
      }]];
     
-    if (FeatureFlag.isMediaDiscoveryEnabled) {
-        if (@available(iOS 14.0, *)) {
-            ActionSheetAction *action = [self mediaDiscoveryAction];
-            
-            if (action) {
-                [actions addObject: action];
-            }
+    if (@available(iOS 14.0, *)) {
+        ActionSheetAction *action = [self mediaDiscoveryAction];
+        
+        if (action) {
+            [actions addObject: action];
         }
     }
     
