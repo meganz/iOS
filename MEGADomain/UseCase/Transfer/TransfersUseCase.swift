@@ -53,7 +53,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
     
     private func filterUserTransfers(_ transfers: [TransferEntity]) -> [TransferEntity] {
         transfers.filter {
-            $0.type == .upload || isOfflineTransfer($0) || isExportFileTransfer($0)
+            $0.type == .upload || isOfflineTransfer($0) || isExportFileTransfer($0) || isSaveToPhotosAppTransfer($0)
         }
     }
     
@@ -62,6 +62,10 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
     }
     
     private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.appData?.contains(NSString.mnz_appDataToExportFile()) ?? false
+        transfer.appData?.contains(NSString().mnz_appDataToExportFile()) ?? false
+    }
+    
+    private func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
+        transfer.appData?.contains(NSString().mnz_appDataToSaveInPhotosApp()) ?? false
     }
 }
