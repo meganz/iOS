@@ -318,6 +318,7 @@
                 downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                 NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
                 NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
                 [MEGASdkManager.sharedMEGASdk startDownloadNode:self localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
             }
         } else {

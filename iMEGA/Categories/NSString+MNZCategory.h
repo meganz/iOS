@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
 - (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier;
 - (NSString *)mnz_appDataToPath:(NSString *)path;
-+ (NSString *)mnz_appDataToExportFile;
+- (NSString *)mnz_appDataToExportFile;
 
 #pragma mark - Utils
 

@@ -3306,7 +3306,7 @@ public enum Strings {
       public static let exportFiles = Strings.tr("Localizable", "general.exportFiles")
       /// Join Meeting as Guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
-      /// Unable to connect to the internet. Please check your connection and try again.
+      /// Unable to connect to the Internet. Please check your connection and try again.
       public static let noIntenerConnection = Strings.tr("Localizable", "general.NoIntenerConnection")
       /// Send to Chat
       public static let sendToChat = Strings.tr("Localizable", "general.sendToChat")
@@ -3558,9 +3558,9 @@ public enum Strings {
           public static let message = Strings.tr("Localizable", "help.reportIssue.fail.message")
         }
         public enum Success {
-          /// Thanks. We'll look into this issue and a member of our team will get back to you.
+          /// Thanks. We’ll look into this issue and a member of our team will get back to you.
           public static let message = Strings.tr("Localizable", "help.reportIssue.success.message")
-          /// Thanks For Your Feedback
+          /// Thanks for Your Feedback
           public static let title = Strings.tr("Localizable", "help.reportIssue.success.title")
         }
       }
