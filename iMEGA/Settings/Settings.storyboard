@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -289,10 +289,10 @@
                             </tableViewSection>
                             <tableViewSection footerTitle="" id="KLO-ld-Rtr">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="6iN-gZ-ixc" style="IBUITableViewCellStyleDefault" id="tC7-2t-0gF">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" style="IBUITableViewCellStyleDefault" id="tC7-2t-0gF">
                                         <rect key="frame" x="0.0" y="298.66667366027832" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e7M-6L-pKB" id="mE5-t4-Ago">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mE5-t4-Ago">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -318,7 +318,7 @@
                     <connections>
                         <outlet property="helpCentreLabel" destination="qbo-JM-TcB" id="awE-mX-HqU"/>
                         <outlet property="joinBetaLabel" destination="zdh-C9-sfy" id="mWQ-aD-oZr"/>
-                        <outlet property="rateUsLabel" destination="6iN-gZ-ixc" id="9tH-nl-ARn"/>
+                        <outlet property="rateUsLabel" destination="eQN-RX-plq" id="hQ4-YF-qOm"/>
                         <outlet property="reportIssueLabel" destination="7e4-4j-N1c" id="T3v-eM-viC"/>
                         <outlet property="sendFeedbackLabel" destination="NOH-7P-7q2" id="pjW-vI-8ZC"/>
                     </connections>
