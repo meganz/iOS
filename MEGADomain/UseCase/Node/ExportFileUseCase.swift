@@ -92,7 +92,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepos
             completion(.failure(.notEnoughSpace))
             return
         }
-        let appDataToExportFile = NSString.mnz_appDataToExportFile()
+        let appDataToExportFile = NSString().mnz_appDataToExportFile()
         let path = node.name.mnz_isImagePathExtension ? fileSystemRepository.cachedOriginalURL(for: node.base64Handle, name: node.name).path : fileSystemRepository.cachedFileURL(for: node.base64Handle, name: node.name).path
         downloadFileRepository.download(nodeHandle: node.handle, to: path, appData: appDataToExportFile) { result in
             processDownloadThenShareResult(result: result, completion: completion)
