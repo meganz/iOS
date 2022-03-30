@@ -105,6 +105,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private func startEditingMode() {
         setEditing(true, animated: true)
         enablePhotoLibraryEditMode(isEditing)
+        updateNavigationTitle(withSelectedPhotoCount: 0)
         
         configureBarButtons()
         configureToolbarButtons()
@@ -141,9 +142,12 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     
     override func endEditingMode() {
         setEditing(false, animated: true)
-        enablePhotoLibraryEditMode(isEditing)
         
+        enablePhotoLibraryEditMode(isEditing)
         configureBarButtons()
+        
+        navigationItem.title = folderName
+        
         hideToolbar()
     }
     
