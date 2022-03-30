@@ -151,9 +151,8 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func updateShuffleButtonAppearance(status: Bool) {
-        shuffleButton.setTitleColor(UIColor.mnz_green00A382(), for: .selected)
+        shuffleButton.tintColor = status ? Colors.General.Green._00A382.color : traitCollection.userInterfaceStyle == .dark ? .white : .black
         shuffleButton.setImage(Asset.Images.AudioPlayer.shuffleAudio.image, for: .normal)
-        shuffleButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
     }
     
     private func refreshStateOfLoadingView(_ enabled: Bool) {
