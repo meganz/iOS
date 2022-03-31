@@ -31,6 +31,8 @@ pipeline {
                     slackMessage = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded \nbranch: ${GIT_BRANCH}"
                 } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.GIT_BRANCH == 'origin/develop') {
                     slackMessage = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Firebase \nbranch: ${GIT_BRANCH}"
+                } else if (env.gitlabTriggerPhrase == 'verify_translations') {
+                    slackMessage = ":white_check_mark: No missing translation keys. \nbranch: ${GIT_BRANCH}"
                 }
                 
                 slackSend color: "good", message: slackMessage
@@ -44,6 +46,8 @@ pipeline {
                     slackMessage = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed \nbranch: ${GIT_BRANCH}"
                 } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.GIT_BRANCH == 'origin/develop') {
                     slackMessage = ":x: Firebase Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed \nbranch: ${GIT_BRANCH}"
+                } else if (env.gitlabTriggerPhrase == 'verify_translations') {
+                    slackMessage = ":x: Missing translation keys. \nbranch: ${GIT_BRANCH}"
                 }
 
                 withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
@@ -60,6 +64,11 @@ pipeline {
         stage('Prepare') {
             parallel {
                 stage('Set build number and fetch version') {
+                    when {
+                        not {
+                            environment name: 'gitlabTriggerPhrase', value: 'verify_translations' 
+                        }
+                    }
                     steps {
                         gitlabCommitStatus(name: 'Set build number') {
                             injectEnvironments({
@@ -68,6 +77,24 @@ pipeline {
                                 script {
                                     env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
                                     env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
+                                }
+                            })
+                        }
+                    }
+                }
+
+                stage('Check translation') {
+                    when {
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                            environment name: 'gitlabTriggerPhrase', value: 'verify_translations' 
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Check translations') {
+                            injectEnvironments({
+                                dir("scripts/") {
+                                    sh 'python3 check_translations.py'
                                 }
                             })
                         }
@@ -283,8 +310,8 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'Update what\'s new to appstore connect') {
                             injectEnvironments({
-                                dir("fastlane/") {
-                                    sh 'python3 UploadChangeLogs.py \"$TRANSIFIX_AUTHORIZATION_TOKEN\" $MEGA_VERSION_NUMBER'
+                                dir("scripts/") {
+                                    sh 'python3 download_change_logs_from_transifex.py \"$TRANSIFIX_AUTHORIZATION_TOKEN\" $MEGA_VERSION_NUMBER'
                                 }
                                 sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                             })

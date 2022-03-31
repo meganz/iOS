@@ -109,7 +109,7 @@ def getChangeLog(changeLogsText, searchText):
 
 
 def releaseNotesPath(locale):
-    relativePath = "metadata/" + locale + "/release_notes.txt"
+    relativePath = "./../fastlane/metadata/" + locale + "/release_notes.txt"
     dirname = os.path.dirname(__file__)
     filePath = os.path.join(dirname, relativePath)
     return filePath
