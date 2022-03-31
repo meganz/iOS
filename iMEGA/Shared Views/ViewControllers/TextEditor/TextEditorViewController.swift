@@ -268,6 +268,7 @@ extension TextEditorViewController: ViewType {
     private func startDownload(status: String) {
         SVProgressHUD.setDefaultMaskType(.none)
         SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: status)
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
     }
     
     private func showDiscardChangeAlert() {
