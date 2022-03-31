@@ -2983,7 +2983,7 @@
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="報告を送信できません。もう一度やり直してください。";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+"help.reportIssue.creating.cancel.title"="ご報告された問題のアップロードをキャンセルしてもよろしいですか？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="そのアップロードをキャンセルした場合、問題は報告されません。";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */

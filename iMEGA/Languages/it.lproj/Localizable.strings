@@ -2979,11 +2979,11 @@
 /* Confirmation title shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.title"="Grazie per il tuo feedback";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
+"help.reportIssue.success.message"="Grazie. Controlleremo il problema e un membro del nostro team ti risponderà.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Impossibile inviare il report. Per favore, riprova.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+"help.reportIssue.creating.cancel.title"="Sei sicuro di voler annullare il caricamento della tua segnalazione?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Questo problema non verrà segnalato se annulli il suo upload.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */

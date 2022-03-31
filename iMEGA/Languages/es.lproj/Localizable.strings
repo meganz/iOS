@@ -2977,7 +2977,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Subiendo logs ";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Gracias por tu valoración.";
+"help.reportIssue.success.title"="Gracias por tu valoración";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Gracias. Analizaremos el problema y un miembro de nuestro equipo se pondrá en contacto contigo.";
 /* Error message shown when some error occurs during uploading a bug report. */
