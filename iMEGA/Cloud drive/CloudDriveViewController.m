@@ -1308,6 +1308,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
+    [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
     
     for (MEGANode *node in self.selectedNodesArray) {
         if ([node mnz_downloadNode]) {
