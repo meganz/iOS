@@ -2977,13 +2977,13 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Téléversement du fichier journal";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Nous vous remercions de votre rétroaction.";
+"help.reportIssue.success.title"="Nous vous remercions de votre rétroaction";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
+"help.reportIssue.success.message"="Merci. Nous allons examiner le problème et un membre de notre équipe vous contactera.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Impossible d’envoyer votre signalement. Veuillez réessayer.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+"help.reportIssue.creating.cancel.title"="Voulez-vous vraiment annuler le téléversement du problème signalé ?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Ce problème ne sera pas signalé si vous en annulez le téléversement.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
