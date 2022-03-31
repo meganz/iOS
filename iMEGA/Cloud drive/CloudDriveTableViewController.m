@@ -307,6 +307,7 @@
 
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
         UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
             if ([node mnz_downloadNode]) {
                 [self.tableView reloadData];
             }
