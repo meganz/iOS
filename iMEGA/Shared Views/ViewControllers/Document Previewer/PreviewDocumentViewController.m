@@ -247,6 +247,7 @@
 
 - (void)download {
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+    [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
     if (self.isLink && self.fileLink) {
         [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
     } else {
