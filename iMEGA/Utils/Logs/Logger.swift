@@ -1,4 +1,4 @@
-import CocoaLumberjack
+import CocoaLumberjackSwift
 import Foundation
 
 import AppleArchive
