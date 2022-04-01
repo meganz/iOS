@@ -12,17 +12,11 @@ abstract_target 'iMEGA' do
 
   target 'MEGA' do
     # Pods for MEGA
-    pod 'FlexLayout'
-    pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
-    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'YYCategories'
     pod 'SAMKeychain'
     pod 'DateTools'
     pod 'JustPieChart'
     pod 'SwiftGen'
-    
-    # Pods for Debug only
-    pod 'FLEX', :configurations => ['Debug']
 
     target 'MEGAUnitTests' do
       inherit! :search_paths
@@ -40,7 +34,6 @@ abstract_target 'iMEGA' do
 
   target 'MEGAPicker' do
     # Pods for MEGAPicker
-    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'YYCategories'
     pod 'SAMKeychain'
     pod 'DateTools'
@@ -55,7 +48,6 @@ abstract_target 'iMEGA' do
 
   target 'MEGAShare' do
     # Pods for MEGAShare
-    pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
     pod 'YYCategories'
     pod 'SAMKeychain'
     pod 'DateTools'
