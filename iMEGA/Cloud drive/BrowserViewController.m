@@ -1,7 +1,6 @@
 #import "BrowserViewController.h"
 
 #import "SVProgressHUD.h"
-#import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
 #import "EmptyStateView.h"
@@ -24,6 +23,7 @@
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 #import "NodeTableViewCell.h"
+@import DZNEmptyDataSet;
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
