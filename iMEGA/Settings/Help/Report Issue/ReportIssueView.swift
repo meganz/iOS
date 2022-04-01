@@ -10,7 +10,7 @@ struct ReportIssueView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     if !viewModel.isConnected {
-                        NetworkIsNotConnectedView()
+                        WarningView(viewModel: WarningViewModel(warningType: .noInternetConnection))
                     }
                     
                     SubheadlineTextView(text: Strings.Localizable.Help.ReportIssue.describe)
