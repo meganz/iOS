@@ -1,6 +1,5 @@
 
 #import "DocumentPickerViewController.h"
-#import <PureLayout/PureLayout.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -20,6 +19,7 @@
 #import "MEGAPicker-Swift.h"
 
 @import Firebase;
+@import PureLayout;
 
 @interface DocumentPickerViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
 

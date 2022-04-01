@@ -10,10 +10,10 @@
 #import "SVProgressHUD.h"
 #import "UIApplication+MNZCategory.h"
 #import "YYCategories.h"
-#import <PureLayout/PureLayout.h>
 
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
+@import PureLayout;
 
 @interface MEGAActivityItemProvider () <UIActivityItemSource, MEGARequestDelegate>
 

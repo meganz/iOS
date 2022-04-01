@@ -24,6 +24,7 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
+@import PureLayout;
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
     MEGATransfer *previewDocumentTransfer;
