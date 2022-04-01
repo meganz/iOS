@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 protocol PhotosBannerViewProvider: UIViewController {
-    var photosBannerViewModel: PhotosBannerViewModel { get }
+    var warningViewModel: WarningViewModel { get }
     
     func configPhotosBannerView(in container: UIView)
     func updatePhotoBannerViewSize()
@@ -10,10 +10,7 @@ protocol PhotosBannerViewProvider: UIViewController {
 
 extension PhotosBannerViewProvider {
     func configPhotosBannerView(in container: UIView) {
-        let content = PhotosBannerView(
-            viewModel: photosBannerViewModel,
-            router: PhotosBannerViewRouter()
-        )
+        let content = WarningView(viewModel: warningViewModel)
         
         let host = UIHostingController(rootView: content)
         addChild(host)
@@ -23,7 +20,7 @@ extension PhotosBannerViewProvider {
     }
     
     func updatePhotoBannerViewSize() {
-        guard let host = children.first(where: { $0 is UIHostingController<PhotosBannerView> }) else {
+        guard let host = children.first(where: { $0 is UIHostingController<WarningView> }) else {
             return
         }
         host.view.invalidateIntrinsicContentSize()
