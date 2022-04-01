@@ -1,8 +1,7 @@
 import SwiftUI
 
-struct PhotosBannerView: View {
-    @ObservedObject var viewModel: PhotosBannerViewModel
-    var router: PhotosBannerViewRouter
+struct WarningView: View {
+    @ObservedObject var viewModel: WarningViewModel
     
     private var textFont: Font {
         guard #available(iOS 14.0, *) else {
@@ -12,7 +11,7 @@ struct PhotosBannerView: View {
     }
     
     var body: some View {
-        Text(viewModel.message)
+        Text(viewModel.warningType.description)
             .font(textFont)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundColor(Color(Colors.Banner.warningTextColor.name))
@@ -21,7 +20,7 @@ struct PhotosBannerView: View {
             .padding(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
             .background(Color(Colors.Banner.warningBannerBackground.name))
             .onTapGesture {
-                router.goToSettings()
+                viewModel.tapAction()
             }
     }
 }

@@ -207,12 +207,12 @@
     return _selection;
 }
 
-- (PhotosBannerViewModel *)photosBannerViewModel {
-    if (_photosBannerViewModel == nil) {
-        _photosBannerViewModel = [self createPhotosBannerViewModel];
+- (WarningViewModel *)warningViewModel {
+    if (_warningViewModel == nil) {
+        _warningViewModel = [self createWarningViewModel];
     }
     
-    return _photosBannerViewModel;
+    return _warningViewModel;
 }
 
 #pragma mark - load Camera Uploads target folder
