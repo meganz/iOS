@@ -7,7 +7,6 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGenericRequestDelegate.h"
-#import <SDWebImage/SDWebImage.h>
 #import <objc/runtime.h>
 #import "MEGASdk+MNZCategory.h"
 
@@ -18,6 +17,8 @@
 #else
 #import "MEGA-Swift.h"
 #endif
+
+@import SDWebImage;
 
 static const void *base64HandleKey = &base64HandleKey;
 

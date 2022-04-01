@@ -10,11 +10,11 @@
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
-#import <PureLayout/PureLayout.h>
 #import "TransfersWidgetViewController.h"
 #import "MEGA-Swift.h"
 
 #import "NSObject+Debounce.h"
+@import PureLayout;
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAChatCallDelegate, MEGANavigationControllerDelegate>
 

@@ -8,11 +8,6 @@ use_frameworks!
 workspace 'iMEGA'
 
 abstract_target 'iMEGA' do
-  pod 'SDWebImageWebPCoder'
-  pod 'Firebase/Crashlytics'
-  pod 'Firebase/Performance'
-  pod 'Firebase/Analytics'
-  pod 'PureLayout', :git => 'https://github.com/PureLayout/PureLayout.git'
   pod 'GKContactImage', :git => 'https://github.com/meganz/GKContactImage.git'
 
   target 'MEGA' do
@@ -20,15 +15,11 @@ abstract_target 'iMEGA' do
     pod 'FlexLayout'
     pod 'ISEmojiView', :git => 'https://github.com/isaced/ISEmojiView.git', :tag => '0.2.6'
     pod 'DZNEmptyDataSet', :git => 'https://github.com/meganz/DZNEmptyDataSet.git', :commit => '3db6295'
-    pod 'CHTCollectionViewWaterfallLayout'
-    pod 'Keyboard+LayoutGuide'
     pod 'YYCategories'
     pod 'SAMKeychain'
     pod 'DateTools'
-    pod 'PhoneNumberKit', '~> 3.3'
     pod 'JustPieChart'
     pod 'SwiftGen'
-    pod 'CocoaLumberjack/Swift'
     
     # Pods for Debug only
     pod 'FLEX', :configurations => ['Debug']
