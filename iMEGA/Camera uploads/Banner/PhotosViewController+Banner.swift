@@ -3,8 +3,8 @@ import UIKit
 import Photos
 
 extension PhotosViewController: PhotosBannerViewProvider {
-    @objc func createPhotosBannerViewModel() -> PhotosBannerViewModel {
-        PhotosBannerViewModel(message: Strings.Localizable.CameraUploads.Warning.limitedAccessToPhotoMessage)
+    @objc func createWarningViewModel() -> WarningViewModel {
+        WarningViewModel(warningType: .limitedPhotoAccess, router: WarningViewRouter())
     }
     
     @objc func objcWrapper_configPhotosBannerView() {
