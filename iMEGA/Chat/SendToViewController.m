@@ -1,7 +1,6 @@
 #import "SendToViewController.h"
 
 #import "UIImage+GKContact.h"
-#import "UIScrollView+EmptyDataSet.h"
 #import "SVProgressHUD.h"
 
 #import "UIImageView+MNZCategory.h"
@@ -26,6 +25,7 @@
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
 #import "NSString+MNZCategory.h"
+@import DZNEmptyDataSet;
 
 @interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate, UIAdaptivePresentationControllerDelegate>
 

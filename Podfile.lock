@@ -1,10 +1,6 @@
 PODS:
   - DateTools (2.0.0)
-  - DZNEmptyDataSet (1.8.1)
-  - FLEX (4.6.1)
-  - FlexLayout (1.3.23)
   - GKContactImage (0.0.4)
-  - ISEmojiView (0.2.6)
   - JustPieChart (0.1.0)
   - SAMKeychain (1.5.3)
   - SwiftGen (6.5.1)
@@ -14,11 +10,7 @@ PODS:
 
 DEPENDENCIES:
   - DateTools
-  - DZNEmptyDataSet (from `https://github.com/meganz/DZNEmptyDataSet.git`, commit `3db6295`)
-  - FLEX
-  - FlexLayout
   - GKContactImage (from `https://github.com/meganz/GKContactImage.git`)
-  - ISEmojiView (from `https://github.com/isaced/ISEmojiView.git`, tag `0.2.6`)
   - JustPieChart
   - SAMKeychain
   - SwiftGen
@@ -27,46 +19,28 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - DateTools
-    - FLEX
-    - FlexLayout
     - JustPieChart
     - SAMKeychain
     - SwiftGen
     - YYCategories
 
 EXTERNAL SOURCES:
-  DZNEmptyDataSet:
-    :commit: 3db6295
-    :git: https://github.com/meganz/DZNEmptyDataSet.git
   GKContactImage:
     :git: https://github.com/meganz/GKContactImage.git
-  ISEmojiView:
-    :git: https://github.com/isaced/ISEmojiView.git
-    :tag: 0.2.6
 
 CHECKOUT OPTIONS:
-  DZNEmptyDataSet:
-    :commit: 3db6295
-    :git: https://github.com/meganz/DZNEmptyDataSet.git
   GKContactImage:
     :commit: d5a05ae1cc6b49d0673d13f4b1981d1fe5be718a
     :git: https://github.com/meganz/GKContactImage.git
-  ISEmojiView:
-    :git: https://github.com/isaced/ISEmojiView.git
-    :tag: 0.2.6
 
 SPEC CHECKSUMS:
   DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
-  DZNEmptyDataSet: b94434220f87d9dda46660eb4f07a424778e93b4
-  FLEX: bbc55d197f87d7cde2454c3981aa47069b694144
-  FlexLayout: 5b44c0538e7eaa2110e3160dfdfb74611676fb91
   GKContactImage: fee93c0311deb91f1aca8f1c337dbb0b6f68a119
-  ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: b0593ac84d0a16fcb07444ddc44f21849796eb8e
+PODFILE CHECKSUM: 059f7a8b9920bda7dbc1d13c6284b3bf5ed271ad
 
 COCOAPODS: 1.11.3
