@@ -50,10 +50,10 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
-#import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
 #import <SDWebImage/SDWebImage.h>
 #import "MEGASdkManager+CleanUp.h"
 @import Firebase;
+@import SDWebImageWebPCoder;
 
 #import "MEGA-Swift.h"
 
