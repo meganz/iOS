@@ -50,9 +50,6 @@ final class GenericNodeTableViewCell: UITableViewCell {
             let iconImage = UIImage(named: iconName)!
             thumbnailImageView.image = iconImage
             
-        case .setSecondaryLabel(let numberOfFilesAndFolders):
-            secondaryLabel.text = numberOfFilesAndFolders
-            
         case .setVersions(let hasVersions):
             versionedImageView.isHidden = !hasVersions
             
@@ -95,7 +92,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
             secondaryLabel.text = sizeAndModicationDate(nodeModel)
             viewModel.dispatch(.hasVersions)
         } else if nodeModel.isFolder {
-            viewModel.dispatch(.getFilesAndFolders)
+            secondaryLabel.text = viewModel.getFilesAndFolders()
             versionedImageView.isHidden = true
         }
         

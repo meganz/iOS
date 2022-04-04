@@ -2,7 +2,6 @@ enum NodeCellAction: ActionType {
     case initForReuse
     case manageLabel
     case manageThumbnail
-    case getFilesAndFolders
     case hasVersions
     case isDownloaded
     case moreTouchUpInside(Any)
@@ -19,7 +18,6 @@ final class NodeCellViewModel: ViewModelType {
         case setLabel(String)
         case setThumbnail(String)
         case setIcon(String)
-        case setSecondaryLabel(String)
         case setVersions(Bool)
         case setDownloaded(Bool)
     }
@@ -50,9 +48,6 @@ final class NodeCellViewModel: ViewModelType {
             
         case .manageThumbnail:
             manageThumbnail()
-            
-        case .getFilesAndFolders:
-            getFilesAndFolders()
             
         case .hasVersions:
             hasVersions()
@@ -86,13 +81,12 @@ final class NodeCellViewModel: ViewModelType {
         }
     }
     
-    private func getFilesAndFolders() {
+    func getFilesAndFolders() -> String {
         let numberOfFilesAndFolders = nodeActionUseCase.getFilesAndFolders()
         let numberOfFiles = numberOfFilesAndFolders.0
         let numberOfFolders = numberOfFilesAndFolders.1
         let numberOfFilesAndFoldersString = NSString.mnz_string(byFiles: numberOfFiles, andFolders: numberOfFolders)
-        
-        invokeCommand?(.setSecondaryLabel(numberOfFilesAndFoldersString))
+        return numberOfFilesAndFoldersString
     }
     
     private func hasVersions() {
