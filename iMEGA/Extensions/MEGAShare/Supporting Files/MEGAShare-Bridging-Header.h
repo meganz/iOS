@@ -34,5 +34,6 @@
 #import "BrowserViewController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAOperation.h"
+#import "ShareViewController.h"
 
 #endif /* MEGAShare_Bridging_Header_h */
