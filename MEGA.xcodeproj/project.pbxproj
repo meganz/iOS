@@ -1415,6 +1415,7 @@
 		A8F5158527F6FF4F00AEE4D6 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5158427F6FF4F00AEE4D6 /* FlexLayout */; };
 		A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5158627F6FF4F00AEE4D6 /* FlexLayoutYoga */; };
 		A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5158827F6FF4F00AEE4D6 /* FlexLayoutYogaKit */; };
+		A8F515B127F7548A00AEE4D6 /* ShareViewController+LoginRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F515B027F7548A00AEE4D6 /* ShareViewController+LoginRequiredView.swift */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */; };
 		A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -3675,6 +3676,7 @@
 		A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call.mp3; sourceTree = "<group>"; };
 		A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hang_out.mp3; sourceTree = "<group>"; };
 		A8F5154C27F5FD4100AEE4D6 /* WarningViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningViewRouter.swift; sourceTree = "<group>"; };
+		A8F515B027F7548A00AEE4D6 /* ShareViewController+LoginRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+LoginRequiredView.swift"; sourceTree = "<group>"; };
 		A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailAndFollowTheLinkViewController.h; sourceTree = "<group>"; };
 		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
 		A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGASendSignupLinkRequestDelegate.h; path = API/Requests/MEGASendSignupLinkRequestDelegate.h; sourceTree = "<group>"; };
@@ -8044,6 +8046,7 @@
 				77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */,
 				77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */,
 				942FD0791EF3EE8800E99FB1 /* Supporting Files */,
+				A8F515B027F7548A00AEE4D6 /* ShareViewController+LoginRequiredView.swift */,
 			);
 			path = MEGAShare;
 			sourceTree = "<group>";
@@ -13121,6 +13124,7 @@
 				0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
 				5B79E88F26E6973A0070D782 /* EmptyStateType.swift in Sources */,
+				A8F515B127F7548A00AEE4D6 /* ShareViewController+LoginRequiredView.swift in Sources */,
 				831D61A8218738EC0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */,
 				C46517A8272C9E32004F27A0 /* NodeEntity.swift in Sources */,
