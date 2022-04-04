@@ -51,7 +51,8 @@ class ExplorerBaseViewController: UIViewController {
                 shareLinkAction: shareLinkBarButtonPressed,
                 moveAction: moveBarButtonPressed,
                 copyAction: copyBarButtonPressed,
-                deleteAction: deleteButtonPressed
+                deleteAction: deleteButtonPressed,
+                moreAction: didPressedMoreBarButton
             )
         }
         
@@ -102,7 +103,7 @@ class ExplorerBaseViewController: UIViewController {
               }
         
         let moveRequestDelegate = MEGAMoveRequestDelegate(
-            files: UInt(selectedNodes.count),
+            toMoveToTheRubbishBinWithFiles: UInt(selectedNodes.count),
             folders: 0) { [weak self] in
                 self?.endEditingMode()
             }
@@ -137,6 +138,43 @@ class ExplorerBaseViewController: UIViewController {
         present(navigationController, animated: true)
     }
     
+    fileprivate func didPressedMoreBarButton(_ button: UIBarButtonItem) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, sender: button)
+        present(nodeActionsViewController, animated: true, completion: nil)
+    }
+    
+    fileprivate func didPressedExportFile(_ button: UIBarButtonItem) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        
+        let entityNodes = selectedNodes.map { NodeEntity(node: $0) }
+        ExportFileRouter(presenter: self, sender: button).export(nodes: entityNodes)
+        endEditingMode()
+    }
+    
+    fileprivate func didPressedSendToChat(_ button: UIBarButtonItem) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        guard let navigationController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
+              let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
+            return
+        }
+        
+        sendToViewController.nodes = selectedNodes
+        sendToViewController.sendMode = .cloud
+        present(navigationController, animated: true)
+        endEditingMode()
+    }
+    
     //MARK:- Methods needs to be overriden by the subclass
     
     func selectedNodes() -> [MEGANode]? {
@@ -164,5 +202,38 @@ extension ExplorerBaseViewController: TraitEnviromentAware {
 extension ExplorerBaseViewController: BrowserViewControllerDelegate {
     func nodeEditCompleted(_ complete: Bool) {
         endEditingMode()
+    }
+}
+
+//MARK: - NodeActionViewControllerDelegate
+extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
+    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
+        handleNodesAction(action: action, nodes: nodes, sender: sender)
+    }
+    
+    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
+        handleNodesAction(action: action, nodes: [node], sender: sender)
+    }
+
+    private func handleNodesAction(action: MegaNodeActionType, nodes: [MEGANode], sender: Any) {
+        guard let sender = sender as? UIBarButtonItem else { return }
+        switch action {
+        case .download:
+            downloadBarButtonPressed(sender)
+        case .copy:
+            copyBarButtonPressed(sender)
+        case .move:
+            moveBarButtonPressed(sender)
+        case .shareLink:
+            shareLinkBarButtonPressed(sender)
+        case .moveToRubbishBin:
+            deleteButtonPressed(sender)
+        case .exportFile:
+            didPressedExportFile(sender)
+        case .sendToChat:
+            didPressedSendToChat(sender)
+        default:
+            break
+        }
     }
 }
