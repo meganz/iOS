@@ -5,7 +5,6 @@
 #import "MEGASdkManager.h"
 
 #import "SVProgressHUD.h"
-#import "UIImage+GKContact.h"
 
 #import "NSDate+DateTools.h"
 

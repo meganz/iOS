@@ -1,5 +1,6 @@
 
 import UIKit
+import GKContactImage
 
 @objc enum MegaAvatarViewMode: Int {
     case single
