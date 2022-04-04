@@ -39,7 +39,6 @@
 @property (nonatomic) float progress;
 @property (nonatomic) NSDate *lastProgressChange;
 
-@property (nonatomic, strong) UINavigationController *loginRequiredNC;
 @property (nonatomic, strong) LaunchViewController *launchVC;
 @property (nonatomic, strong) UINavigationController *shareDestinationNavigatinVC;
 
@@ -74,6 +73,7 @@
 
 - (void)dealloc {
     [self removeShareDestinationView];
+    [self removeLoginRequiredView];
 }
 
 - (void)viewDidLoad {
@@ -226,6 +226,7 @@
             [self fetchAttachments];
         }
         if (!self.fetchNodesDone) {
+            [self removeLoginRequiredView];
             [self loginToMEGA];
         }
     } else {
@@ -291,7 +292,7 @@
             }];
         };
         
-        [self presentViewController:self.loginRequiredNC animated:YES completion:nil];
+        [self addLoginRequiredView];
     }
 }
 
