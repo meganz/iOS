@@ -989,7 +989,13 @@ static TransfersWidgetViewController* instance = nil;
 
 
 - (void)switchEdit {
-    BOOL isEditing = self.completedTransfers.count > 0 ? !self.tableView.editing : false;
+    BOOL isEditing = false;
+    if (self.inProgressButton.selected) {
+        isEditing = self.transfers.count > 0 ? !self.tableView.editing : false;
+    } else {
+        isEditing = self.completedTransfers.count > 0 ? !self.tableView.editing : false;
+    }
+    
     [self.tableView setEditing:isEditing animated:YES];
     [self.editBarButtonItem setTitle:self.tableView.isEditing ? NSLocalizedString(@"done", @"") : NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected")];
     self.navigationItem.rightBarButtonItems = self.tableView.isEditing ? @[self.editBarButtonItem, self.cancelBarButtonItem] : @[self.editBarButtonItem];
