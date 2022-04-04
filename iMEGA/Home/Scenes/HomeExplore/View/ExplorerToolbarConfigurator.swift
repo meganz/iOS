@@ -6,6 +6,7 @@ class ExplorerToolbarConfigurator {
     let moveAction: ButtonAction
     let copyAction: ButtonAction
     let deleteAction: ButtonAction
+    let moreAction: ButtonAction
     
     lazy var flexibleItem = UIBarButtonItem(
         barButtonSystemItem: .flexibleSpace,
@@ -47,17 +48,26 @@ class ExplorerToolbarConfigurator {
         target: self,
         action: #selector(buttonPressed(_:))
     )
+    
+    lazy var moreItem = UIBarButtonItem(
+        image: Asset.Images.NavigationBar.moreNavigationBar.image,
+        style: .plain,
+        target: self,
+        action: #selector(buttonPressed(_:))
+    )
 
     init(downloadAction: @escaping ButtonAction,
          shareLinkAction: @escaping ButtonAction,
          moveAction: @escaping ButtonAction,
          copyAction: @escaping ButtonAction,
-         deleteAction: @escaping ButtonAction) {
+         deleteAction: @escaping ButtonAction,
+         moreAction: @escaping ButtonAction) {
         self.downloadAction = downloadAction
         self.shareLinkAction = shareLinkAction
         self.moveAction = moveAction
         self.copyAction = copyAction
         self.deleteAction = deleteAction
+        self.moreAction = moreAction
     }
     
     @objc func buttonPressed(_ barButtonItem: UIBarButtonItem) {
@@ -72,6 +82,8 @@ class ExplorerToolbarConfigurator {
             copyAction(barButtonItem)
         case deleteItem:
             deleteAction(barButtonItem)
+        case moreItem:
+            moreAction(barButtonItem)
         default:
             break
         }
@@ -86,9 +98,9 @@ class ExplorerToolbarConfigurator {
                 flexibleItem,
                 moveItem,
                 flexibleItem,
-                copyItem,
+                deleteItem,
                 flexibleItem,
-                deleteItem
+                moreItem
             ]
             
             return enable(false, barButtonItems: barButtonItems)
@@ -121,9 +133,9 @@ class ExplorerToolbarConfigurator {
                     flexibleItem,
                     moveItem,
                     flexibleItem,
-                    copyItem,
+                    deleteItem,
                     flexibleItem,
-                    deleteItem
+                    moreItem
                 ],
                 excludeBarButtonItems: [shareLinkItem]
             )
