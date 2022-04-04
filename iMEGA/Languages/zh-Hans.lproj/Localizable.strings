@@ -2983,7 +2983,7 @@
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="无法提交您的问题。请再试一次。";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+"help.reportIssue.creating.cancel.title"="您确定要取消上传您报告的问题吗？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="如果您取消上传，问题将不会被提交。";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */

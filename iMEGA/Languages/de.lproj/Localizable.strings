@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwörter stimmen nicht überein";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Bitte stimmen Sie den Allgemeinen Geschäftsbedingungen zu, um ein MEGA-Konto zu erstellen.";
+"termsCheckboxUnselected"="Bitte stimmen Sie den Allgemeinen Geschäftsbedingungen zu, um ein MEGA-Account zu erstellen.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Bitte bestätigen Sie, dass Ihnen die Konsequenzen eines Passwortverlusts bewusst sind.";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -373,7 +373,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Hinweis zur Wahrung von Urheberrechten";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respektiert die Urheberrechte Dritter und erwartet von Nutzern der MEGA Cloud die Einhaltung aller relevanten Copyright-Gesetze.";
+"copyrightMessagePart1"="MEGA respektiert die Urheberrechte Dritter und erwartet von Nutzern der MEGA Cloud die Einhaltung aller relevanten Urheberrechtsgesetze.";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="Es ist Ihnen strikt untersagt, den Dienst MEGA Cloud zur Verletzung von Urheberrechten zu missbrauchen. Sie dürfen Dateien, Daten oder Inhalte, die die Urheber- oder andere Eigentumsrechte Dritte verletzen, nicht uploaden, speichern, teilen, anzeigen, streamen, verteilen, emailen, verlinken, übertragen oder in irgendeiner anderen Form zugänglich machen.";
 /* button caption text that the user clicks when he agrees */
@@ -759,7 +759,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK Version";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK-Version";
+"megachatSdkVersion"="MEGAchat-SDK-Version";
 /* Link to the public code of the app */
 "View Source Code"="Quellcode anzeigen";
 /* Title for the section "Acknowledgements" of the app */
@@ -775,7 +775,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Rettungsschlüssel exportiert";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Der Rettungsschlüssel wurde als MEGA-RECOVERYKEY.txt in den Offlinebereich exportiert. Hinweis: Wenn Sie sich abmelden, wird die Datei gelöscht. Bitte speichern Sie sie daher an einem sicheren Ort.";
+"masterKeyExported_alertMessage"="Der Rettungsschlüssel wurde als MEGA-RETTUNGSSCHLUESSEL.txt in den Offlinebereich exportiert. Hinweis: Wenn Sie sich abmelden, wird die Datei gelöscht. Bitte speichern Sie sie daher an einem sicheren Ort.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -999,17 +999,17 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Nutzer werben";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="MEGA Desktop-App installieren";
+"account.achievement.desktopApp.title"="MEGA-Desktop-App installieren";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA Desktop-App erhalten.";
+"account.achievement.desktopApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Desktop-App erhalten.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="Bei Installation der MEGA Desktop-App erhalten Sie %@ kostenlosen Extraspeicherplatz, gültig für 365 Tage. Die MEGA Desktop-App ist für Windows, macOS und die meisten Linux-Distributionen verfügbar.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Bei Installation der MEGA-Desktop-App erhalten Sie %@ kostenlosen Extraspeicherplatz, gültig für 365 Tage. Die MEGA-Desktop-App ist für Windows, macOS und die meisten Linux-Distributionen verfügbar.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA Mobil-App erhalten.";
+"account.achievement.mobileApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Mobil-App erhalten.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Bei Installation der MEGA Mobil-App erhalten Sie %@ kostenlosen Extraspeicherplatz, gültig für 365 Tage. Die MEGA Mobil-App ist für iOS und Android verfügbar. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="Bei Installation der MEGA-Mobil-App erhalten Sie %@ kostenlosen Extraspeicherplatz, gültig für 365 Tage. Die MEGA-Mobil-App ist für iOS und Android verfügbar. ";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ Speicherplatz, gültig für 365 Tage.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1385,7 +1385,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu ungelesene Nachrichten";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonnements werden automatisch für den ursprünglich gewählten Abonnementzeitraum und zum gleichen Preis verlängert. Sie können die automatische Verlängerung Ihres MEGA Pro-Abonnements bis spätestens 24 Stunden vor Fälligkeit Ihrer nächsten Abonnementzahlung in Ihren iTunes-Accounteinstellungen deaktivieren. Um Ihre Abonnements zu verwalten, tippen Sie einfach auf das App-Store-Symbol auf Ihrem Mobilgerät und melden Sie sich unten auf der Seite mit Ihrer Apple-ID an (falls noch nicht geschehen). Tippen Sie anschließend auf „ID anzeigen“. Sie werden zu Ihrer Accountseite weitergeleitet, auf der Sie nach unten scrollen können, um Ihre App-Abonnements zu finden. Dort können Sie Ihr MEGA Pro-Abonnement auswählen, den nächsten Verlängerungsdatum einsehen, ein anderes Abonnementpaket auswählen oder den Ein/Aus-Schalter auf Aus stellen, um die automatische Verlängerung Ihres Abonnements zu deaktivieren.";
+"autorenewableDescription"="Abonnements werden automatisch für den ursprünglich gewählten Abonnementzeitraum und zum gleichen Preis verlängert. Sie können die automatische Verlängerung Ihres MEGA-Pro-Abonnements bis spätestens 24 Stunden vor Fälligkeit Ihrer nächsten Abonnementzahlung in Ihren iTunes-Accounteinstellungen deaktivieren. Um Ihre Abonnements zu verwalten, tippen Sie einfach auf das App-Store-Symbol auf Ihrem Mobilgerät und melden Sie sich unten auf der Seite mit Ihrer Apple-ID an (falls noch nicht geschehen). Tippen Sie anschließend auf „ID anzeigen“. Sie werden zu Ihrer Accountseite weitergeleitet, auf der Sie nach unten scrollen können, um Ihre App-Abonnements zu finden. Dort können Sie Ihr MEGA-Pro-Abonnement auswählen, den nächsten Verlängerungsdatum einsehen, ein anderes Abonnementpaket auswählen oder den Ein/Aus-Schalter auf Aus stellen, um die automatische Verlängerung Ihres Abonnements zu deaktivieren.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Zum Fortfahren öffnen Sie MEGA und melden Sie sich an";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2621,7 +2621,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Ihr Cloud Drive ist fast voll. Bitte wechseln Sie jetzt zu einem Pro-Account, um bis zu %@ TB (%@ GB) Speicherplatz in der Cloud zu erhalten.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Ihr Cloudspeicher ist voll. Bitte wechseln Sie jetzt zu einem MEGA Pro-Account, um mehr Speicherplatz und weitere Vorteile zu erhalten. Wenn Sie weiterhin Ihr Speicherlimit überschreiten, ohne ein Upgrade durchzuführen oder einige Daten in Ihrem Account zu löschen, wird Ihr Konto möglicherweise gesperrt. Weitere Informationen finden Sie in den E-Mails, die wir Ihnen gesendet haben.";
+"dialog.storage.odq.detail"="Ihr Cloudspeicher ist voll. Bitte wechseln Sie jetzt zu einem MEGA-Pro-Account, um mehr Speicherplatz und weitere Vorteile zu erhalten. Wenn Sie weiterhin Ihr Speicherlimit überschreiten, ohne ein Upgrade durchzuführen oder einige Daten in Ihrem Account zu löschen, wird Ihr Konto möglicherweise gesperrt. Weitere Informationen finden Sie in den E-Mails, die wir Ihnen gesendet haben.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Account gesperrt";
 /* Over Disk Quota paywall final title. */
@@ -2645,7 +2645,7 @@
 /* Change the default backup location warning message */
 "dialog.root.backup.folder.location.warning.message"="Sie sind dabei, den Speicherort eines Standard-Backup-Ordners zu ändern. Dies kann es Ihnen erschweren, Ihren Backup-Ordner später zu finden. Bitte merken Sie sich den Speicherort, damit Sie den Ordner in Zukunft wiederfinden.";
 /* Change the default backup location warning message */
-"dialog.backup.folder.location.warning.message"="Durch Verschieben dieses Ordners wird das Backup-Ziel geändert. Das Backup wird zur Sicherheit deaktiviert. Möchten Sie fortfahren? Backups können in der MEGA Desktop-App erneut aktiviert werden.";
+"dialog.backup.folder.location.warning.message"="Durch Verschieben dieses Ordners wird das Backup-Ziel geändert. Das Backup wird zur Sicherheit deaktiviert. Möchten Sie fortfahren? Backups können in der MEGA-Desktop-App erneut aktiviert werden.";
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="„%@“ in den Papierkorb verschieben";
 /* Delete the default backup folder warning message */
@@ -2655,7 +2655,7 @@
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Element zu „%@“ hinzufügen";
 /* Add new items to a backup folder warning message */
-"dialog.add.items.backup.folder.warning.message"="Durch Hinzufügen von Elementen zu diesem Ordner wird das Backup-Ziel geändert. Das Backup wird zur Sicherheit deaktiviert. Möchten Sie fortfahren? Backups können in der MEGA Desktop-App erneut aktiviert werden.";
+"dialog.add.items.backup.folder.warning.message"="Durch Hinzufügen von Elementen zu diesem Ordner wird das Backup-Ziel geändert. Das Backup wird zur Sicherheit deaktiviert. Möchten Sie fortfahren? Backups können in der MEGA-Desktop-App erneut aktiviert werden.";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
 "dialog.backup.warning.confirm.message"="Bitte geben Sie „%@“ ein, um diese Aktion zu bestätigen.";
 /* Change the location of a backup folder placeholder for a textfield */
@@ -2979,7 +2979,7 @@
 /* Confirmation title shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.title"="Vielen Dank für Ihr Feedback";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
+"help.reportIssue.success.message"="Vielen Dank! Wir sehen uns dieses Problem an und ein Mitglied unseres Teams wird sich mit Ihnen in Verbindung setzen.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Ihr Bericht konnte nicht übermittelt werden. Bitte versuchen Sie es noch einmal.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
