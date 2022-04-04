@@ -1001,11 +1001,6 @@ static TransfersWidgetViewController* instance = nil;
     self.navigationItem.rightBarButtonItems = self.tableView.isEditing ? @[self.editBarButtonItem, self.cancelBarButtonItem] : @[self.editBarButtonItem];
 
     [self reloadView];
-    if (self.tableView.isEditing) {
-        [self pauseTransfersAction:nil];
-    } else {
-        [self resumeTransfersAction:nil];
-    }
 }
 
 - (void)openFolderNode:(MEGANode *)node {
