@@ -857,15 +857,15 @@
 /* An option to reset the password. */
 "forgotPassword"="Lupa password?";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="Recovery link ini telah kadaluarsa, harap coba kembali.";
+"recoveryLinkHasExpired"="Link pemulihan ini telah kadaluarsa, harap coba kembali.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Reset password";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
-"pleaseEnterYourRecoveryKey"="Harap masukan Recovery Key anda";
+"pleaseEnterYourRecoveryKey"="Harap masukan Kunci Pemulihan anda";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Recovery Key";
+"recoveryKey"="Kunci Pemulihan";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="Recovery Key Salah";
+"invalidRecoveryKey"="Kunci Pemulihan Salah";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Kunci Pemulihan anda akan dipakai untuk me-reset password anda. Harap, masukan password baru anda.";
 /*  */
@@ -875,7 +875,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Parkir akun";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Saya mengetahui bahwa saya memulai dari awal, akun kosong dan saya akan kehilangan seluruh data di akun terkini saya kecuali saya mengingat password saya atau  menemukan Recovery Key yang telah terekspor.";
+"startingFreshAccount"="Saya mengetahui bahwa saya memulai dari awal, akun kosong dan saya akan kehilangan seluruh data di akun terkini saya kecuali saya mengingat password saya atau  menemukan Kunci Pemulihan yang telah terekspor.";
 /* Caption of the button to proceed */
 "startNewAccount"="Mulai akun baru";
 /*  */
@@ -893,19 +893,19 @@
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Email tidak cocok";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="Anda telah me-request link konfirmasi untuk alamat email tersebut.";
+"emailAddressChangeAlreadyRequested"="Anda telah meminta link konfirmasi untuk alamat email tersebut.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Silakan masuk ke kotak masuk Anda dan klik tautan untuk mengonfirmasi alamat email baru Anda.";
+"emailIsChanging_description"="Silakan masuk ke kotak masuk anda dan klik tautan untuk mengonfirmasi alamat email baru anda.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Harap masukan password anda untuk mem-verifikasi alamat email anda";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Selamat, alamat e-mail baru anda untuk akun MEGA ini adalah: [X]";
+"congratulationsNewEmailAddress"="Selamat, alamat email baru anda untuk akun MEGA ini adalah: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Tutup sesi lain";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesi berakhir";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Ganti Paskode";
+"changePasscodeLabel"="Ganti Passcode";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Passcode Sederhana";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -927,37 +927,37 @@
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Bergabunglah dengan Beta";
 /* Title to rate the app */
-"rateUsLabel"="Rate kami";
+"rateUsLabel"="Nilai kami";
 /* Title of the Transfers section */
 "transfers"="Pemindahan";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Semua";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
-"In Progress"="Sedang berlangsung";
+"In Progress"="Sedang Berlangsung";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Selesai";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Download";
+"downloads"="Unduhan";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Upload";
+"uploads"="Unggahan";
 /* Success message shown when one transfer has been cancelled */
-"transferCancelled"="Transfer dibatalkan";
+"transferCancelled"="Pemindahan dibatalkan";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCancelled"="Transfer dibatalkan";
+"transfersCancelled"="Pemindahan dibatalkan";
 /* Title of the alert shown when you try to cancel transfers */
-"cancelTransfersTitle"="Batalkan transfer";
+"cancelTransfersTitle"="Batalkan pemindahan";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Apakah anda ingin membatalkan semua pemindahan?";
+"cancelTransfersText"="Apakah anda ingin membatalkan SEMUA pemindahan?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="SEMUA transfer";
+"allInUppercaseTransfers"="SEMUA pemindahan";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="UPLOAD transfer";
+"uploadInUppercaseTransfers"="UNGGAH pemindahan";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="DOWNLOAD transfer";
+"downloadInUppercaseTransfers"="UNDUH pemindahan";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Upgrade";
+"upgrade"="Tingkatkan";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Melihat dan mengedit profil";
+"viewAndEditProfile"="Lihat dan ubah profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
@@ -973,31 +973,31 @@
 /*  */
 "howItWorks"="Cara kerja";
 /*  */
-"howItWorksMain"="Teman anda harus mendaftar akun gratis MEGA dan  [S]install setidaknya satu MEGA client application[/S] (antara sync client atau salah satu mobile apps kami)";
+"howItWorksMain"="Teman anda harus mendaftar akun gratis MEGA dan [S]install setidaknya satu aplikasi klien MEGA [/S] (antara Aplikasi Desktop MEGA atau salah satu Aplikasi Mobile MEGA kami)";
 /*  */
-"howItWorksSecondary"="Anda dapat mengabarkan teman anda melalui metoda apapun. Anda akan menerima quota jika anda telah memasukan email teman anda disini sebelum mereka mendaftar dengan email tersebut.";
+"howItWorksSecondary"="Anda dapat mengabarkan teman anda melalui metoda apapun. Anda akan menerima kuota jika anda telah memasukan email teman anda disini sebelum mereka mendaftar dengan email tersebut.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Anda tidak akan menerima kredit untuk mengundang seseorang yang telah menggunakan MEGA sebelumnya dan anda tidak akan dikabari tentang penolakkan tersebut.";
 /* Header of block with achievements bonuses. */
-"unlockedBonuses"="Bonus unlocked:";
+"unlockedBonuses"="Bonus terbuka:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
-"storageQuota"="Quota Storage";
+"storageQuota"="Kuota Penyimpanan";
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ Penyimpanan";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
 "account.storage.freePlan"="[B]20 GB+[/B] Penyimpanan";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Kuota Transfer";
+"Transfer Quota"="Kuota Pemindahan";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ Transfer";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="Transfer [B]Terbatas[/B] ";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Bonus pendaftaran";
+"account.achievement.registration.title"="Bonus Pendaftaran";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Anda telah menerima %@ ruang penyimpanan sebagai bonus pendaftaran gratis anda. ";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Bonus referral";
+"account.achievement.referralBonus.title"="Bonus Referral";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Instal aplikasi desktop MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -1005,7 +1005,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Saat anda menginstal aplikasi desktop MEGA, anda mendapatkan %@ ruang penyimpanan gratis, berlaku selama 365 hari. Aplikasi desktop MEGA tersedia untuk Windows, macOS, dan sebagian besar distro Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
+"account.achievement.mobileApp.title"="Install Aplikasi Mobile MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Anda telah menerima %@ruang penyimpanan untuk menginstal aplikasi seluler MEGA. ";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1025,11 +1025,11 @@
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Dapatkan %@ gratis saat anda menambahkan nomor telepon anda. Ini memudahkan kontak anda untuk menemukan anda di MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
-"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Tambahkan nomor telepon Anda ke MEGA. Ini memudahkan kontak Anda untuk menemukan Anda di MEGA.";
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Tambahkan nomor telepon anda ke MEGA. Ini memudahkan kontak anda untuk menemukan anda di MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Akun Anda telah ditangguhkan sementara karena kemungkinan penyalahgunaan. Harap verifikasi nomor telepon Anda untuk membuka kunci akun Anda.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Akun anda telah ditangguhkan sementara karena kemungkinan penyalahgunaan. Harap verifikasi nomor telepon anda untuk membuka kunci akun anda.";
 /* Verify your account title */
-"Verify Your Account"="Verifikasi akun anda";
+"Verify Your Account"="Verifikasi Akun Anda";
 /* Add your phone number title */
 "Add Your Phone Number"="Tambahkan Nomor Telepon Anda";
 /* Choose Your Country title */
@@ -1065,21 +1065,21 @@
 /* Label to indicate that the current user has a Free account. */
 "Free"="Gratis";
 /* Text that shows the expiry date of the account PRO level */
-"expiresOn"="expire pada %@";
+"expiresOn"="habis pada %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Pembaruan pada tanggal";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Berbagi Masuk";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Upgrade akun";
+"upgradeAccount"="Tingkatkan Akun";
 /* account management button title in business account’s landing page */
 "Manage Account"="Kelola Akun";
 /*  */
 "chooseYourAccountType"="Pilih tipe akun anda";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Drive Cloud Anda hampir penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
+"cloudDriveIsAlmostFull"="[S]Drive Cloud anda hampir penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
+"cloudDriveIsFull"="[S]Cloud Drive anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun Pro dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Gudang";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -2969,24 +2969,24 @@
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Laporkan Masalah";
 /* Title of the dialog button to discard a report. */
-"help.reportIssue.discardReport"="Discard Report";
+"help.reportIssue.discardReport"="Buang Laporan";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describe"="Harap jelaskan masalah yang anda temui. Semakin banyak detail yang anda berikan, semakin mudah bagi kami untuk menyelesaikannya. Kiriman anda akan ditinjau oleh tim pengembangan kami.";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
-"help.reportIssue.sendLogFile"="Send Log File";
+"help.reportIssue.sendLogFile"="Kirim Log File";
 /* Title to indicate that the bug report is being uploaded to our support team. */
-"help.reportIssue.uploadingLogFile"="Uploading Log File";
+"help.reportIssue.uploadingLogFile"="Mengunggah Log File";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Thanks for Your Feedback";
+"help.reportIssue.success.title"="Terima kasih atas tanggapan anda";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
+"help.reportIssue.success.message"="Terima kasih. Kami akan menyelidiki masalah ini dan anggota tim kami akan menghubungi anda kembali.";
 /* Error message shown when some error occurs during uploading a bug report. */
-"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+"help.reportIssue.fail.message"="Tidak dapat mengirimkan laporan anda. Silakan coba lagi.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+"help.reportIssue.creating.cancel.title"="Apakah anda yakin ingin membatalkan mengunggah masalah yang anda laporkan?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+"help.reportIssue.creating.cancel.message"="Masalah ini tidak akan dilaporkan jika anda membatalkan pengunggahan.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Jelaskan masalahnya";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Unable to connect to the Internet. Please check your connection and try again.";
+"general.NoIntenerConnection"="Tidak dapat terhubung ke internet. Harap periksa koneksi anda dan coba lagi.";
