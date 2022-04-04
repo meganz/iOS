@@ -1793,6 +1793,9 @@
 		BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1589232436A27A007AF9EC /* MessageInputBar.swift */; };
 		BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1589252436A296007AF9EC /* MessageInputBar.xib */; };
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
+		BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3327FA737200C1A2E5 /* GKContactImage */; };
+		BF1CEA3A27FA755C00C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3927FA755C00C1A2E5 /* GKContactImage */; };
+		BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3D27FA757800C1A2E5 /* GKContactImage */; };
 		BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
 		BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFB6268ACFAD00460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
@@ -4549,6 +4552,7 @@
 				2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */,
 				2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
+				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
 				2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */,
 				2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */,
 				77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
@@ -4692,6 +4696,7 @@
 				7714901520F7592100769BD4 /* Contacts.framework in Frameworks */,
 				5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */,
 				A811DCC42476C557002FCD98 /* Photos.framework in Frameworks */,
+				BF1CEA3A27FA755C00C1A2E5 /* GKContactImage in Frameworks */,
 				A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */,
 				A82A38D1200D32CA00883533 /* libzen.a in Frameworks */,
 				BF1164C627F6A81600E5C5A4 /* PureLayout in Frameworks */,
@@ -4801,6 +4806,7 @@
 				943F8B311EF286AC00AFD89F /* Security.framework in Frameworks */,
 				943F8B3B1EF286EE00AFD89F /* SystemConfiguration.framework in Frameworks */,
 				943F8B321EF286B100AFD89F /* UIKit.framework in Frameworks */,
+				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
 				943F8B2C1EF2865600AFD89F /* libresolv.tbd in Frameworks */,
 				943F8B2D1EF2865F00AFD89F /* libsqlite3.tbd in Frameworks */,
 				943F8B2E1EF2866A00AFD89F /* libstdc++.tbd in Frameworks */,
@@ -10600,6 +10606,7 @@
 				A8F5158427F6FF4F00AEE4D6 /* FlexLayout */,
 				A8F5158627F6FF4F00AEE4D6 /* FlexLayoutYoga */,
 				A8F5158827F6FF4F00AEE4D6 /* FlexLayoutYogaKit */,
+				BF1CEA3327FA737200C1A2E5 /* GKContactImage */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -10688,6 +10695,7 @@
 				BF1164B327F6906A00E5C5A4 /* SDWebImageWebPCoder */,
 				BF1164C527F6A81600E5C5A4 /* PureLayout */,
 				A8F5157B27F6F95800AEE4D6 /* DZNEmptyDataSet */,
+				BF1CEA3927FA755C00C1A2E5 /* GKContactImage */,
 			);
 			productName = MEGAPicker;
 			productReference = 942254DC1EDC03130074C51A /* MEGAPicker.appex */;
@@ -10734,6 +10742,7 @@
 				BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */,
 				BF1164C927F6A81F00E5C5A4 /* PureLayout */,
 				A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */,
+				BF1CEA3D27FA757800C1A2E5 /* GKContactImage */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -10906,6 +10915,7 @@
 				A8F5156927F6F58200AEE4D6 /* XCRemoteSwiftPackageReference "FLEX" */,
 				A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */,
 				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */,
+				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14767,6 +14777,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/meganz/GKContactImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 		BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/SDAVAssetExportSession.git";
@@ -14937,6 +14955,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */;
 			productName = PureLayout;
+		};
+		BF1CEA3327FA737200C1A2E5 /* GKContactImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
+			productName = GKContactImage;
+		};
+		BF1CEA3927FA755C00C1A2E5 /* GKContactImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
+			productName = GKContactImage;
+		};
+		BF1CEA3D27FA757800C1A2E5 /* GKContactImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
+			productName = GKContactImage;
 		};
 		BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */ = {
 			isa = XCSwiftPackageProductDependency;

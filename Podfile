@@ -8,7 +8,6 @@ use_frameworks!
 workspace 'iMEGA'
 
 abstract_target 'iMEGA' do
-  pod 'GKContactImage', :git => 'https://github.com/meganz/GKContactImage.git'
 
   target 'MEGA' do
     # Pods for MEGA
