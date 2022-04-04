@@ -3,6 +3,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) ->  () {
         switch action {
         case .download:
+            TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
             nodes.forEach { $0.mnz_downloadNode() }
             setEditMode(false)
         case .copy:

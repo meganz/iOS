@@ -28,7 +28,7 @@
 @import StoreKit;
 @import Photos;
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate, BrowserViewControllerDelegate> {
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -55,8 +55,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -482,7 +482,7 @@
     self.downloadBarButtonItem.enabled = boolValue;
     self.shareLinkBarButtonItem.enabled = ((self.selection.count < 100) ? boolValue : NO);
     self.moveBarButtonItem.enabled = boolValue;
-    self.carbonCopyBarButtonItem.enabled = boolValue;
+    self.actionBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
 }
 
@@ -637,60 +637,19 @@
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    for (MEGANode *n in self.selection.nodes) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
-            [self setEditing:NO animated:YES];
-            return;
-        }
-        
-        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
-    }
-    
-    [self setEditing:NO animated:YES];
+    [self handleDownloadActionFor:self.selection.nodes];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    if (MEGAReachabilityManager.isReachableHUDIfNot) {
-        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:self.selection.nodes inViewController:UIApplication.mnz_presentingViewController];
-    }
-    
-    [self setEditing:NO animated:YES];
+    [self handleShareLinkFor:self.selection.nodes];
 }
 
 - (IBAction)moveAction:(UIBarButtonItem *)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-    MEGANavigationController *mcnc = [storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-    [self presentViewController:mcnc animated:YES completion:nil];
-    
-    BrowserViewController *browserVC = mcnc.viewControllers.firstObject;
-    browserVC.browserViewControllerDelegate = self;
-    browserVC.selectedNodesArray = self.selection.nodes;
-    browserVC.browserAction = BrowserActionMove;
-}
-
-- (IBAction)copyAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.selectedNodesArray = self.selection.nodes;
-        [browserVC setBrowserAction:BrowserActionCopy];
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-        [self setEditing:NO animated:YES];
-    }
+    [self showBrowserNavigationFor:self.selection.nodes action:BrowserActionMove];
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-    MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:self.selection.count folders:0 completion:^{
-        [self setEditing:NO animated:NO];
-    }];
-    
-    for (MEGANode *node in self.selection.nodes) {
-        [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:rubbishBinNode delegate:moveRequestDelegate];
-    }
-    
-    [self setEditing:NO animated:YES];
+    [self handleDeleteActionFor:self.selection.nodes];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -1034,12 +993,6 @@
             [self.photoUpdatePublisher updatePhotoLibrary];
         }
     });
-}
-
-#pragma mark - BrowserViewControllerDelegate
-
-- (void)nodeEditCompleted:(BOOL)complete {
-    [self setEditing:!complete animated:NO];
 }
 
 @end
