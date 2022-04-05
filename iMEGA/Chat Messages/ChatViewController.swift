@@ -439,8 +439,8 @@ class ChatViewController: MessagesViewController {
         } else if chatMessage.message.type == .attachment
             || chatMessage.message.type == .contact {
             if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
-                let node = chatMessage.message.nodeList.node(at: 0)!
-                if (node.name!.mnz_isVisualMediaPathExtension) {
+                if let node = chatMessage.message.nodeList?.node(at: 0),
+                   node.name?.mnz_isVisualMediaPathExtension ?? false {
                     let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
                     cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                     return cell
@@ -469,15 +469,15 @@ class ChatViewController: MessagesViewController {
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
         } else if chatMessage.message.type == .containsMeta {
-            if chatMessage.message.containsMeta.type == .geolocation {
+            if chatMessage.message.containsMeta?.type == .geolocation {
                   let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
                           cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                           return cell
-            } else if chatMessage.message.containsMeta.type == .richPreview {
+            } else if chatMessage.message.containsMeta?.type == .richPreview {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
-            } else if chatMessage.message.containsMeta.type == .giphy {
+            } else if chatMessage.message.containsMeta?.type == .giphy {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatGiphyCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatGiphyCollectionViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell

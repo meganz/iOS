@@ -183,7 +183,7 @@ extension ChatViewController {
     func updateToolbarState() {
         let isEnabled = selectedMessages.count > 0
         var hasGiphy = selectedMessages.contains {
-            $0.message.type == .containsMeta && $0.message.containsMeta.type == .giphy
+            $0.message.type == .containsMeta && $0.message.containsMeta?.type == .giphy
         }
         var hasPhoto = false
         var hasText = false
@@ -191,19 +191,19 @@ extension ChatViewController {
         var hasContact = false
         
         for chatMessage in selectedMessages {
-            if chatMessage.message.type == .containsMeta && chatMessage.message.containsMeta.type == .giphy {
+            if chatMessage.message.type == .containsMeta && chatMessage.message.containsMeta?.type == .giphy {
                hasGiphy = true
             }
             if chatMessage.message.type == .normal {
                 hasText = true
             }
             if chatMessage.message.type == .containsMeta,
-               (chatMessage.message.containsMeta.type == .geolocation || chatMessage.message.containsMeta.type == .richPreview) {
+               (chatMessage.message.containsMeta?.type == .geolocation || chatMessage.message.containsMeta?.type == .richPreview) {
                 hasText = true
             }
             if chatMessage.message.type == .attachment || chatMessage.message.type == .voiceClip {
                 if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1,
-                   let name = chatMessage.message.nodeList.node(at: 0)?.name, name.mnz_isVisualMediaPathExtension {
+                   let name = chatMessage.message.nodeList?.node(at: 0)?.name, name.mnz_isVisualMediaPathExtension {
                     hasPhoto = true
                 } else {
                     hasAttachments = true

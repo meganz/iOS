@@ -55,35 +55,34 @@ class ChatViewAttachmentCellViewModel {
     //MARK: - Private methods.
     
     private func titleForAttachment() -> String {
-        if message.nodeList.size.uintValue == 1 {
-            return message.nodeList.node(at: 0)?.name ?? ""
+        if message.nodeList?.size.uintValue == 1 {
+            return message.nodeList?.node(at: 0)?.name ?? ""
         } else {
-            return Strings.Localizable.files(message.nodeList.size.intValue)
+            return Strings.Localizable.files(message.nodeList?.size.intValue ?? 0)
         }
     }
     
     private func subtitleForAttachment() -> String {
-        if message.nodeList.size.uintValue == 1 {
-            let size = message.nodeList.node(at: 0)?.size ?? 0
+        if message.nodeList?.size.uintValue == 1 {
+            let size = message.nodeList?.node(at: 0)?.size ?? 0
             return Helper.memoryStyleString(fromByteCount: size.int64Value)
         } else {
-            let totalSize = (0..<message.nodeList.size.intValue)
-                .compactMap({ message.nodeList.node(at: $0)?.size?.int64Value })
+            let totalSize = (0..<(message.nodeList?.size.intValue ?? 0))
+                .compactMap({ message.nodeList?.node(at: $0)?.size?.int64Value })
                 .reduce(0, +)
             return Helper.memoryStyleString(fromByteCount: totalSize)
         }
     }
     
     private func setImageForAttachment(imageView: UIImageView) {
-        if message.nodeList.size.uintValue == 1 {
-            let node = message.nodeList.node(at: 0)!
+        if message.nodeList?.size.uintValue == 1, let node = message.nodeList?.node(at: 0) {
             imageView.mnz_setThumbnail(by: node)
         }
     }
     
     private func titleForContact() -> String {
         if message.usersCount == 1 {
-            return message.contactName(at: 0) ?? message.userName(at: 0)
+            return message.contactName(at: 0) ?? message.userName(at: 0) ?? ""
         } else {
             return Strings.Localizable.xContactsSelected.replacingOccurrences(of: "[X]", with: "\(message.usersCount)", options: .literal, range: nil)
         }
@@ -91,7 +90,7 @@ class ChatViewAttachmentCellViewModel {
     
     private func subtitleForContact() -> String {
         guard message.usersCount != 1 else {
-            return message.userEmail(at: 0)
+            return message.userEmail(at: 0) ?? ""
         }
         
         let userEmailArray = (0..<message.usersCount).map({ (message.usersCount - 1 == $0) ? message.userEmail(at: $0)! : "\(message.userEmail(at: $0)!) " })
@@ -100,6 +99,6 @@ class ChatViewAttachmentCellViewModel {
     
     private func setImageForContact(imageView: UIImageView) {
         imageView.mnz_setImage(forUserHandle: message.userHandle(at: 0),
-                               name: message.userName(at: 0))
+                               name: message.userName(at: 0) ?? "")
     }
 }

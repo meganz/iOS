@@ -327,8 +327,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     ///    - message: chat message retrieved from Karere.
     private func checkDelaysWithMessage(_ message: MEGAChatMessage?) {
         if message != nil,
-            let megatime = megatime,
-            let msgTime = message?.timestamp.timeIntervalSince1970 {
+           let megatime = megatime,
+           let msgTime = message?.timestamp?.timeIntervalSince1970 {
             if (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
                 #if !DEBUG
                 MEGASdkManager.sharedMEGASdk().sendEvent(99300, message: "Delay between chatd and api")

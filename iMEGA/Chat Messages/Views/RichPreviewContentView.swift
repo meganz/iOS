@@ -34,7 +34,7 @@ class RichPreviewContentView: UIView {
 
     func configureView() {
         if message?.containsMeta?.type == .richPreview {
-            guard let richPreview = message?.containsMeta.richPreview else {
+            guard let richPreview = message?.containsMeta?.richPreview else {
                 return
             }
             titleLabel.text = richPreview.title

@@ -158,7 +158,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
             }
             
         case .attachment, .voiceClip:
-            guard let node = message.nodeList.mnz_nodesArrayFromNodeList().first else {
+            guard let node = message.nodeList?.mnz_nodesArrayFromNodeList().first else {
                 completion(.failure(.nonExportableMessage))
                 return
             }

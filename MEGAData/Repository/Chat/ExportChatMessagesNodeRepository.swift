@@ -18,9 +18,9 @@ class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
     
     func exportText(message: MEGAChatMessage) -> URL? {
         let userName = chatSdk.userFullnameFromCache(byUserHandle: message.userHandle) ?? ""
-        let messageTimestamp = message.timestamp.string(withDateFormat: "dd/MM/yyyy HH:mm")
+        let messageTimestamp = message.timestamp?.string(withDateFormat: "dd/MM/yyyy HH:mm")
         let messageContent = message.content ?? ""
-        let content = "[\(messageTimestamp)]#\(userName): \(messageContent)\n"
+        let content = "[\(messageTimestamp ?? "")]#\(userName): \(messageContent)\n"
         
         let messageFilePath = NSTemporaryDirectory() + "Message \(message.messageId).txt"
         if (FileManager.default.createFile(atPath: messageFilePath, contents: content.data(using: .utf8), attributes: nil)) {
@@ -41,10 +41,10 @@ class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
             cnMutableContact.givenName = firstname
             cnMutableContact.familyName = lastname
         } else {
-            cnMutableContact.givenName = message.userName(at: 0)
+            cnMutableContact.givenName = message.userName(at: 0) ?? ""
         }
         
-        let userEmail1 = message.userEmail(at: 0) as NSString
+        let userEmail1 = (message.userEmail(at: 0) ?? "")as NSString
         cnMutableContact.emailAddresses = [CNLabeledValue.init(label: CNLabelHome, value: userEmail1)]
         
         if let avatarFilePath = contactAvatarImage, let avatarImage = UIImage(contentsOfFile: avatarFilePath) {
