@@ -94,14 +94,14 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
 }
 
 enum NodeLabelColor: Int, CaseIterable {
-    case unknown = 0
-    case red
+    case red = 1
     case orange
     case yellow
     case green
     case blue
     case purple
     case grey
+    case unknown = 0
 }
 
 private extension NodeLabelColor {
