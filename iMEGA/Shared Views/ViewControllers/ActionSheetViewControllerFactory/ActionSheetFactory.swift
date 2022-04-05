@@ -37,7 +37,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
                 completion?(.failure(error))
             case .success(let nodeCurrentColor):
                 let allLabelColors = nodeLabelActionUseCase.labelColors
-                let actionSheetActions = allLabelColors.map { (color) -> BaseAction in
+                let actionSheetActions = allLabelColors.compactMap { (color) -> BaseAction? in
                     nodeLabelActions(
                         forNode: nodeHandle,
                         ofColor: color,
@@ -53,27 +53,31 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
         forNode nodeHandle: MEGAHandle,
         ofColor labelColor: NodeLabelColor,
         currentLabelColor: NodeLabelColor
-    ) -> BaseAction {
+    ) -> BaseAction? {
         switch labelColor == currentLabelColor {
         case true:
-            let checkMarkImageView = Asset.Images.Generic.turquoiseCheckmark.image
-            return ActionSheetAction(
-                title: labelColor.localizedTitle,
-                detail: nil,
-                accessoryView: nil,
-                image: checkMarkImageView,
-                style: .default,
-                actionHandler: { [nodeLabelActionUseCase] in
-                    nodeLabelActionUseCase.resetNodeLabelColor(forNode: nodeHandle, completion: nil)
-                }
-            )
+            if currentLabelColor == .unknown {
+                return nil
+            } else {
+                let checkMarkImageView = UIImageView.init(image: Asset.Images.Generic.turquoiseCheckmark.image)
+                return ActionSheetAction(
+                    title: labelColor.localizedTitle,
+                    detail: nil,
+                    accessoryView: checkMarkImageView,
+                    image: labelColor.iconImage,
+                    style: .default,
+                    actionHandler: { [nodeLabelActionUseCase] in
+                        nodeLabelActionUseCase.resetNodeLabelColor(forNode: nodeHandle, completion: nil)
+                    }
+                )
+            }
         case false:
             return ActionSheetAction(
                 title: labelColor.localizedTitle,
                 detail: nil,
                 accessoryView: nil,
                 image: labelColor.iconImage,
-                style: .default,
+                style: (labelColor != .unknown) ? .default : .destructive,
                 actionHandler: { [nodeLabelActionUseCase] in
                     nodeLabelActionUseCase.setNodeLabelColor(labelColor, forNode: nodeHandle, completion: nil)
                 }
