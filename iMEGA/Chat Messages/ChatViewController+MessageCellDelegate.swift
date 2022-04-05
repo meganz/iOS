@@ -161,8 +161,8 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
             didTapPlayButton(in: cell)
             
         case .attachment:
-            if megaMessage.nodeList.size.uintValue == 1 {
-                var node = megaMessage.nodeList.node(at: 0)
+            if megaMessage.nodeList?.size.uintValue == 1 {
+                var node = megaMessage.nodeList?.node(at: 0)
                 if chatRoom.isPreview {
                     node = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
                     
@@ -175,8 +175,8 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                     let mediaNodesArray = messages.compactMap { message -> MEGANode? in
                         guard let localChatMessage = message as? ChatMessage,
                               localChatMessage.message.type == .attachment,
-                              localChatMessage.message.nodeList.size.intValue > 0,
-                              let node = localChatMessage.message.nodeList.node(at: 0),
+                              localChatMessage.message.nodeList?.size.intValue ?? 0 > 0,
+                              let node = localChatMessage.message.nodeList?.node(at: 0),
                               name.mnz_isVisualMediaPathExtension else {
                                   return nil
                               }
@@ -234,13 +234,14 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                 navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
             }
         case .containsMeta:
-            if megaMessage.containsMeta.type == .richPreview {
-                let url = URL(string: megaMessage.containsMeta.richPreview.url)
+            guard let containsMeta = megaMessage.containsMeta else { return }
+            if megaMessage.containsMeta?.type == .richPreview {
+                let url = URL(string: containsMeta.richPreview.url)
                 MEGALinkManager.linkURL = url
                 MEGALinkManager.processLinkURL(url)
-            } else if megaMessage.containsMeta.type == .geolocation {
+            } else if megaMessage.containsMeta?.type == .geolocation {
                 let geocoder = CLGeocoder()
-                let location = CLLocation(latitude: CLLocationDegrees(megaMessage.containsMeta.geolocation.latitude), longitude: CLLocationDegrees(megaMessage.containsMeta.geolocation.longitude))
+                let location = CLLocation(latitude: CLLocationDegrees(containsMeta.geolocation.latitude), longitude: CLLocationDegrees(containsMeta.geolocation.longitude))
                 geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
                     let placemark = MKPlacemark(coordinate: location.coordinate)
                     let mapItem = MKMapItem(placemark: placemark)

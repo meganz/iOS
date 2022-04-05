@@ -121,11 +121,10 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             
             switch chatMessage.message.type {
             case .attachment, .contact:
-                if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
-                    let node = chatMessage.message.nodeList.node(at: 0)!
-                    if (node.name!.mnz_isVisualMediaPathExtension) {
-                        return chatMediaCollectionViewSizeCalculator
-                    }
+                if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1),
+                   let node = chatMessage.message.nodeList?.node(at: 0),
+                   node.name?.mnz_isVisualMediaPathExtension ?? false {
+                    return chatMediaCollectionViewSizeCalculator
                 }
                 return chatViewAttachmentCellCalculator
             case .callEnded, .callStarted:
@@ -140,9 +139,9 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             case .voiceClip:
                 return chatVoiceClipCollectionViewSizeCalculator
             case .containsMeta:
-                if chatMessage.message.containsMeta.type == .geolocation {
+                if chatMessage.message.containsMeta?.type == .geolocation {
                     return chatLocationCollectionViewSizeCalculator
-                } else if chatMessage.message.containsMeta.type == .giphy {
+                } else if chatMessage.message.containsMeta?.type == .giphy {
                    return chatGiphyCollectionViewSizeCalculator
                 } else {
                     return chatRichPreviewMediaCollectionViewSizeCalculator

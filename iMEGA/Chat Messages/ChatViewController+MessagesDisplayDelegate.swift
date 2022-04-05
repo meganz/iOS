@@ -22,7 +22,7 @@ extension ChatViewController: MessagesDisplayDelegate {
         case .contact, .attachment:
             return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
         case .normal:
-            if (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
+            if ((chatMessage.message.content ?? "") as NSString).mnz_isPureEmojiString() {
                 return .clear
             }
             return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
@@ -64,7 +64,7 @@ extension ChatViewController: MessagesDisplayDelegate {
                 return
             }
             
-            if chatMessage.message.type == .normal && (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
+            if chatMessage.message.type == .normal && ((chatMessage.message.content ?? "") as NSString).mnz_isPureEmojiString() {
                 containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
             }
             
@@ -73,16 +73,13 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             
             if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
-                
-                if let node = chatMessage.message.nodeList.node(at: 0), node.name!.mnz_isVisualMediaPathExtension {
-                    
+                if let node = chatMessage.message.nodeList?.node(at: 0), (node.name?.mnz_isVisualMediaPathExtension ?? false) {
                     containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
                 }
-                
             }
             
             if chatMessage.message.type == .containsMeta,
-                chatMessage.message.containsMeta.type == .giphy {
+                chatMessage.message.containsMeta?.type == .giphy {
                 containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
             }
             

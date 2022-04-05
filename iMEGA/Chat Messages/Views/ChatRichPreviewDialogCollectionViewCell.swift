@@ -17,7 +17,7 @@ class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
         
         self.indexPath = indexPath
         self.megaMessage = megaMessage
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
+        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
         super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
         
         if megaMessage.type == .containsMeta {
@@ -74,7 +74,7 @@ open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCal
         }
         
         let megaMessage = chatMessage.message
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
+        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
         
         let maxWidth = messageContainerMaxWidth(for: dummyMssage)
         

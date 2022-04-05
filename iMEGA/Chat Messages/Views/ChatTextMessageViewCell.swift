@@ -14,7 +14,7 @@ class ChatTextMessageViewCell: TextMessageCell {
         let megaMessage = chatMessage.message
         
         guard let attributedText = megaMessage.attributedText else {
-            let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(chatMessage.message.content))
+            let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(chatMessage.message.content ?? ""))
             super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
             return
         }

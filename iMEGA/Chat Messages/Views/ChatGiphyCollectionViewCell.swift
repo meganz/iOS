@@ -41,7 +41,7 @@ class ChatGiphyCollectionViewCell: MessageContentCell {
         }
 
         let megaMessage = chatMessage.message
-        guard let giphy = megaMessage.containsMeta.giphy, let webpSrc = giphy.webpSrc else {
+        guard let giphy = megaMessage.containsMeta?.giphy, let webpSrc = giphy.webpSrc else {
             return
         }
         loadingIndicator.startAnimating()
@@ -74,7 +74,7 @@ open class ChatGiphyCollectionViewSizeCalculator: MessageSizeCalculator {
         
         guard let chatMessage = message as? ChatMessage,
                 case let megaMessage = chatMessage.message,
-                let giphy = megaMessage.containsMeta.giphy else {
+                let giphy = megaMessage.containsMeta?.giphy else {
             return .zero
         }
         

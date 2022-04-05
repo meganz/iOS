@@ -453,7 +453,7 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func checkDialogs(_ message: MEGAChatMessage) {
-        if MEGAChatSdk.hasUrl(message.content) {
+        if let content = message.content, MEGAChatSdk.hasUrl(content) {
             MEGASdkManager.sharedMEGASdk().shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
                 if let request = request, request.flag {
                     message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)

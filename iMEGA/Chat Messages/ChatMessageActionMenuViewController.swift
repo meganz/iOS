@@ -171,11 +171,11 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         case .containsMeta:
             //All messages
             actions = [forwardAction, selectAction]
-            if chatMessage.message.containsMeta.type != .geolocation && chatMessage.message.containsMeta.type != .giphy {
+            if chatMessage.message.containsMeta?.type != .geolocation && chatMessage.message.containsMeta?.type != .giphy {
                 actions.append(contentsOf: [copyAction])
             }
             
-            if chatMessage.message.containsMeta.type != .giphy {
+            if chatMessage.message.containsMeta?.type != .giphy {
                 actions.append(contentsOf: [exportMessagesAction])
             }
             
@@ -183,11 +183,11 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             if isFromCurrentSender(message: chatMessage) {
                
                 if chatMessage.message.isEditable {
-                    if chatMessage.message.containsMeta.type != .giphy {
+                    if chatMessage.message.containsMeta?.type != .giphy {
                         actions.append(contentsOf: [editAction])
                     }
                     
-                    if chatMessage.message.containsMeta.type != .geolocation, chatMessage.message.containsMeta.type != .giphy {
+                    if chatMessage.message.containsMeta?.type != .geolocation, chatMessage.message.containsMeta?.type != .giphy {
                         actions.append(contentsOf: [removeRichLinkAction])
                     }
                 }
@@ -204,8 +204,8 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         case .attachment:
             actions = [saveForOfflineAction, forwardAction, exportMessagesAction, selectAction]
             
-            if chatMessage.message.nodeList.size.uintValue == 1,
-               let name = chatMessage.message.nodeList.node(at: 0)?.name, name.mnz_isVisualMediaPathExtension {
+            if chatMessage.message.nodeList?.size.uintValue == 1,
+               let name = chatMessage.message.nodeList?.node(at: 0)?.name, name.mnz_isVisualMediaPathExtension {
                 actions.append(saveToPhotosAction)
                 if name.mnz_isImagePathExtension {
                     actions.append(copyAction)

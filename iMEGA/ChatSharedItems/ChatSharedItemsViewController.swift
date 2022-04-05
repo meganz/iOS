@@ -74,7 +74,7 @@ class ChatSharedItemsViewController: UIViewController {
     
     @IBAction func actionsTapped(_ sender: UIButton) {
         let position = sender.convert(CGPoint.zero, to: tableView)
-        guard let indexPath = tableView.indexPathForRow(at: position), let node = messagesArray[indexPath.row].nodeList.node(at: 0) else {
+        guard let indexPath = tableView.indexPathForRow(at: position), let node = messagesArray[indexPath.row].nodeList?.node(at: 0) else {
             return
         }
         
@@ -132,10 +132,7 @@ class ChatSharedItemsViewController: UIViewController {
             return
         }
         
-        var nodes = [MEGANode]()
-        selectedMessages.forEach( { nodes.append($0.nodeList.node(at: 0)) } )
-        
-        downloadNodes(nodes)
+        downloadNodes(selectedMessages.compactMap {$0.nodeList?.node(at: 0)})
     }
     
     @objc private func importTapped() {
@@ -143,10 +140,7 @@ class ChatSharedItemsViewController: UIViewController {
             return
         }
         
-        var nodes = [MEGANode]()
-        selectedMessages.forEach( { nodes.append($0.nodeList.node(at: 0)) } )
-        
-        importNodes(nodes)
+        importNodes(selectedMessages.compactMap {$0.nodeList?.node(at: 0)})
     }
     
     // MARK: - Private methods
@@ -270,7 +264,7 @@ class ChatSharedItemsViewController: UIViewController {
 extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
     
     func onAttachmentLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
-        MEGALogDebug("[ChatSharedFiles] onAttachmentLoaded messageId: \(String(describing: message?.messageId)), node handle: \(String(describing: message?.nodeList.node(at: 0)?.handle)), node name: \(String(describing: message?.nodeList.node(at: 0)?.name))")
+        MEGALogDebug("[ChatSharedFiles] onAttachmentLoaded messageId: \(String(describing: message?.messageId)), node handle: \(String(describing: message?.nodeList?.node(at: 0)?.handle)), node name: \(String(describing: message?.nodeList?.node(at: 0)?.name))")
         
         guard let message = message else {
             attachmentsLoading = false
@@ -292,7 +286,7 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
     }
     
     func onAttachmentReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
-        MEGALogDebug("[ChatSharedFiles] onAttachmentReceived messageId: \(String(describing: message.messageId)), node handle: \(String(describing: message.nodeList.node(at: 0)?.handle)), node name: \(String(describing: message.nodeList.node(at: 0)?.name))")
+        MEGALogDebug("[ChatSharedFiles] onAttachmentReceived messageId: \(String(describing: message.messageId)), node handle: \(String(describing: message.nodeList?.node(at: 0)?.handle)), node name: \(String(describing: message.nodeList?.node(at: 0)?.name))")
         
         if messagesArray.count == 0 {
             navigationItem.rightBarButtonItem = selectBarButton
@@ -350,10 +344,11 @@ extension ChatSharedItemsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let node = self.messagesArray[indexPath.row].nodeList?.node(at: 0) else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "sharedItemCell", for: indexPath) as! ChatSharedItemTableViewCell
         
         let message = self.messagesArray[indexPath.row]
-        cell.configure(for: message.nodeList.node(at: 0), ownerHandle: message.userHandle, chatRoom: chatRoom)
+        cell.configure(for: node, ownerHandle: message.userHandle, chatRoom: chatRoom)
         if cell.ownerNameLabel.text == nil {
             debounce(#selector(loadVisibleParticipants), delay: 0.3)
         }
@@ -389,14 +384,14 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
             updateSelectCountTitle()
             updateToolbarButtonsState()
         } else {
-            guard let selectedNode = messagesArray[indexPath.row].nodeList.node(at: 0) else {
+            guard let selectedNode = messagesArray[indexPath.row].nodeList?.node(at: 0) else {
                 return
             }
             
             if let selectedNodeName = selectedNode.name, selectedNodeName.mnz_isVisualMediaPathExtension {
                 let nodes = NSMutableArray()
                 messagesArray.forEach { message in
-                    guard let node = message.nodeList.node(at: 0),
+                    guard let node = message.nodeList?.node(at: 0),
                           let name = node.name else {
                               return
                           }
@@ -474,7 +469,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         switch action {
         case .forward:
-            guard let message = messagesArray.first(where: { $0.nodeList.node(at: 0)?.handle == node.handle } ) else {
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
                 return
             }
             forwardMessages([message])
