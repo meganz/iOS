@@ -127,13 +127,21 @@ Uploads metadata to app store connect
 
 Archive using Adhoc
 
-### ios upload_build_to_crashlytics
+### ios upload_build_to_firebase
 
 ```sh
-[bundle exec] fastlane ios upload_build_to_crashlytics
+[bundle exec] fastlane ios upload_build_to_firebase
 ```
 
-Upload build to Crashlytics
+Upload build to Firebase
+
+### ios zip_Archive
+
+```sh
+[bundle exec] fastlane ios zip_Archive
+```
+
+zip archive to path
 
 ----
 
