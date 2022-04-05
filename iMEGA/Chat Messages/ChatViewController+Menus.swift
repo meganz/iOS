@@ -10,8 +10,8 @@ extension ChatViewController {
                 UIPasteboard.general.string = content
             }
         } else if megaMessage.type == .attachment {
-            if megaMessage.nodeList.size.uintValue == 1,
-               let node = megaMessage.nodeList.node(at: 0),
+            if megaMessage.nodeList?.size.uintValue == 1,
+               let node = megaMessage.nodeList?.node(at: 0),
                let name = node.name,
                name.mnz_isImagePathExtension {
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
@@ -104,10 +104,12 @@ extension ChatViewController {
         for message in messages {
             let megaMessage =  message.message
             
-            for index in 0..<megaMessage.nodeList.size.intValue {
-                var node = megaMessage.nodeList.node(at: index)
+            guard let nodelist = megaMessage.nodeList else { return }
+            
+            for index in 0..<nodelist.size.intValue {
+                var node = nodelist.node(at: index)
                 if chatRoom.isPreview {
-                    node = sdk.authorizeNode(megaMessage.nodeList.node(at: index))
+                    node = sdk.authorizeNode(nodelist.node(at: index))
                 }
                 
                 if let node = node {
@@ -128,10 +130,13 @@ extension ChatViewController {
         
         for message in messages {
             let megaMessage = message.message
-            for index in 0..<megaMessage.nodeList.size.intValue {
-                var node = megaMessage.nodeList.node(at: index)
+            
+            guard let nodelist = megaMessage.nodeList else { return }
+            
+            for index in 0..<nodelist.size.intValue {
+                var node = nodelist.node(at: index)
                 if chatRoom.isPreview {
-                    node = sdk.authorizeNode(megaMessage.nodeList.node(at: index))
+                    node = sdk.authorizeNode(nodelist.node(at: index))
                 }
                 if let node = node {
                     nodes.append(node)
@@ -164,8 +169,9 @@ extension ChatViewController {
     
     func saveToPhotos(_ messages: [ChatMessage]) {
         for chatMessage in messages {
-            if chatMessage.message.nodeList.size.uintValue == 1,
-               var node = chatMessage.message.nodeList.node(at: 0),
+            guard let nodelist = chatMessage.message.nodeList else { return }
+            if nodelist.size.uintValue == 1,
+               var node = nodelist.node(at: 0),
                let name = node.name,
                (name.mnz_isVisualMediaPathExtension) {
                 if chatRoom.isPreview,
