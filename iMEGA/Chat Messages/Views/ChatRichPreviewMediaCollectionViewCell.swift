@@ -1,4 +1,5 @@
 import MessageKit
+import Foundation
 
 struct ConcreteMessageType: MessageType {
     let sender: SenderType
@@ -13,7 +14,7 @@ extension ConcreteMessageType {
         self.messageId = chatMessage.messageId
         self.sentDate = chatMessage.sentDate
         chatMessage.message.generateAttributedString()
-        self.kind = .attributedText(chatMessage.message.attributedText)
+        self.kind = .attributedText(chatMessage.message.attributedText ?? NSAttributedString(string: ""))
     }
 }
 
@@ -43,7 +44,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         richPreviewContentView.isHidden = true
         richPreviewContentView.message = megaMessage
 
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
+        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
         super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
 
         if megaMessage.type == .containsMeta {
@@ -51,7 +52,8 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             return
         }
         
-        let megaLink = megaMessage.megaLink as NSURL
+        guard let megaLinkURL = megaMessage.megaLink else { return }
+        let megaLink = megaLinkURL as NSURL
         switch megaLink.mnz_type() {
         case .fileLink:
             if megaMessage.richNumber == nil {
@@ -104,7 +106,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         case .publicChatLink:
             if megaMessage.richNumber == nil {
                 
-                MEGASdkManager.sharedMEGAChatSdk().checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                MEGASdkManager.sharedMEGAChatSdk().checkChatLink(megaLinkURL, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
                     guard visibleIndexPaths.contains(indexPath), (error.type == .MEGAChatErrorTypeOk || error.type == .MegaChatErrorTypeExist) else {
                         return
@@ -182,7 +184,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         }
         
         let megaMessage = chatMessage.message
-        let messageKind: MessageKind = .text(megaMessage.content)
+        let messageKind: MessageKind = .text(megaMessage.content ?? "")
         let dummyMssage = ConcreteMessageType(sender: message.sender,
                                               messageId: message.messageId,
                                               sentDate: message.sentDate,
@@ -249,7 +251,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
     
     private func messageInfo(for chatMessage: ChatMessage) -> (String, String, String) {
         if chatMessage.message.containsMeta?.type == .richPreview {
-            guard let richPreview = chatMessage.message.containsMeta.richPreview else {
+            guard let richPreview = chatMessage.message.containsMeta?.richPreview else {
                 return  ("", "", "")
             }
             return (richPreview.title, richPreview.previewDescription, URL(string: richPreview.url)?.host ?? "")
@@ -265,12 +267,12 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
                         "mega.nz")
                 
             case .folderLink:
-                return (chatMessage.message.richTitle,
+                return (chatMessage.message.richTitle ?? "",
                         String(format: "%@\n%@", chatMessage.message.richString ?? "", Helper.memoryStyleString(fromByteCount: max(chatMessage.message.richNumber?.int64Value ?? 0, 0))),
                         "mega.nz")
                 
             case .publicChatLink:
-                return (chatMessage.message.richString,
+                return (chatMessage.message.richString ?? "",
                         "\(chatMessage.message.richNumber?.int64Value ?? 0) \(Strings.Localizable.participants)",
                         "mega.nz")
                 

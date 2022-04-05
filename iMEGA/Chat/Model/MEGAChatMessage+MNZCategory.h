@@ -11,16 +11,18 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
     MEGAChatMessageWarningDialogConfirmation
 };
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MEGAChatMessage (MNZCategory)
 
 @property (nonatomic) uint64_t chatId;
-@property (copy, nonatomic) NSAttributedString *attributedText;
+@property (copy, nonatomic, nullable) NSAttributedString *attributedText;
 @property (nonatomic) MEGAChatMessageWarningDialog warningDialog;
-@property (copy, nonatomic) NSURL *MEGALink;
-@property (copy, nonatomic) MEGANode *node;
-@property (copy, nonatomic) NSString *richString;
-@property (copy, nonatomic) NSNumber *richNumber;
-@property (copy, nonatomic) NSString *richTitle;
+@property (copy, nonatomic, nullable) NSURL *MEGALink;
+@property (copy, nonatomic, nullable) MEGANode *node;
+@property (copy, nonatomic, nullable) NSString *richString;
+@property (copy, nonatomic, nullable) NSNumber *richNumber;
+@property (copy, nonatomic, nullable) NSString *richTitle;
 @property (readonly) NSString *senderId;
 
 - (BOOL)containsMEGALink;
@@ -28,3 +30,5 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
 - (NSString *)generateAttributedString;
 
 @end
+
+NS_ASSUME_NONNULL_END

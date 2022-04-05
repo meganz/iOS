@@ -279,7 +279,7 @@ class MessageInputBar: UIView {
         calculateEditViewHeight()
         editMessageLabel.text = editMessage.message.content
         sendButton.setImage(Asset.Images.Chat.confirmEdit.image, for: .normal)
-        sendButton.isEnabled = !editMessage.message.content.isEmpty
+        sendButton.isEnabled = !(editMessage.message.content?.isEmpty ?? true)
     }
     
     override var keyCommands: [UIKeyCommand]? {
