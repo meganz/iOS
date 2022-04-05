@@ -51,6 +51,7 @@ platform :ios do
       upload_symbols_to_crashlytics(
         dsym_path: options[:dsym_path],
         gsp_path: path,
+        binary_path: "./SwiftPackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols",
         step_name: "Uploading dsym #{index + 1} of #{paths.keys.count} - target is #{target}"
       )
     end
@@ -121,6 +122,7 @@ platform :ios do
       output_name: "MEGA",
       output_directory: BUILD_DIR,
       configuration: 'Release',
+      cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       export_options: {
         iCloudContainerEnvironment: "Production",
@@ -188,9 +190,10 @@ platform :ios do
 
   desc "MEGA unit tests"
   lane :tests do
-    run_tests(
+    scan(
       scheme: "MEGA",
-      devices: ["iPhone 8"]
+      devices: ["iPhone 13 Pro Max"],
+      cloned_source_packages_path: "SwiftPackages"
     )
   end
 
@@ -242,6 +245,7 @@ platform :ios do
       output_name: "MEGA",
       output_directory: BUILD_DIR,
       configuration: 'Release',
+      cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       export_options: {
         iCloudContainerEnvironment: "Production"
