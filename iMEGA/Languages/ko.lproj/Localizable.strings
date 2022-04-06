@@ -404,8 +404,8 @@
 "uploadToMega"="MEGA에 업로드";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="이름을 변경하려면 파일을 탭하세요";
-/*  */
-"sendToContact"="지인에게 보내기";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="대화에 보내기";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="내 대화";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="카메라 업로드";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="년";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA가 당신의 사진 라이브러리에 제한된 접근 권한을 가지고 있으며 모든 사진을 백업할 수 없습니다. 권한을 변경하려면 탭 하세요.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="사진";
 /* Photo view is empty */

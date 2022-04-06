@@ -404,8 +404,8 @@
 "uploadToMega"="Auf MEGA hochladen";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Zum Umbenennen antippen";
-/*  */
-"sendToContact"="An Kontakt senden";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="An Chat senden";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Meine Chats";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Kamera Uploads";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Jahre";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotos";
 /* Photo view is empty */
@@ -1923,7 +1925,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Sprachnachricht";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
+"This action can not be completed as it would take you over your current storage limit"="Diese Aktion ist nicht möglich, da Sie dadurch Ihr aktuelles Speicherlimit überschreiten würden";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Sie haben Ihr Speicherplatzlimit erreicht. Ihr Upload wurde daher angehalten.";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */

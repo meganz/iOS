@@ -404,8 +404,8 @@
 "uploadToMega"="Tải lên MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Chạm vào tệp để đổi tên";
-/*  */
-"sendToContact"="Gửi đến Tên Liên Lạc";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Gửi đến Chát";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Các cuộc chát";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Đăng Tải Camêra";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Năm";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA bị giới hạn quyền truy cập vào thư viện ảnh và không thể sao lưu dự phòng tất cả hình ảnh của bạn. Chạm để thay đổi quyền hạn.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Ảnh Chụp";
 /* Photo view is empty */
@@ -2983,7 +2985,7 @@
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Không gửi được báo cáo. Xin thử lại.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Chắc chắn muốn hủy bỏ việc gửi báo cáo?";
+"help.reportIssue.creating.cancel.title"="Bạn có chắc chắn muốn hủy bỏ việc gửi đăng tải lên báo cáo?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Vấn đề lỗi này sẽ không được gửi đi nếu bạn hủy bỏ.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
