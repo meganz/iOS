@@ -404,8 +404,8 @@
 "uploadToMega"="Subir a MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Tocar el archivo para renombrar";
-/*  */
-"sendToContact"="Enviar a contacto";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Enviar al chat";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Mis chats";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Subidas de la cámara";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Años";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotos";
 /* Photo view is empty */
@@ -1117,7 +1119,7 @@
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Permitir compras";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="Debes activar las compras en la App Store en Ajustes antes de restaurar una compra.";
+"allowPurchase_message"="Debes activar las compras en la App Store en los Ajustes de iOS antes de restaurar una compra.";
 /* Button title to restore failed purchases */
 "restore"="Restaurar";
 /* "Monthly" subscriptions */
@@ -1923,7 +1925,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mensaje de voz";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
+"This action can not be completed as it would take you over your current storage limit"="Esta acción no se puede completar ya que te llevaría por encima de tu límite de almacenamiento actual";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="La subida no puede continuar porque tu cuenta está llena";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */

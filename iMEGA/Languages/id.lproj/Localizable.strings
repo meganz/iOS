@@ -404,8 +404,8 @@
 "uploadToMega"="Unggah ke MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Ketuk file untuk mengganti nama";
-/*  */
-"sendToContact"="Kirim ke Kontak";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Kirim ke obrolan";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Obrolan saya";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Unggahan Kamera";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Tahun";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto";
 /* Photo view is empty */

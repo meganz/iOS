@@ -404,8 +404,8 @@
 "uploadToMega"="Încarcă pe MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Atinge fișierul pentru redenumire";
-/*  */
-"sendToContact"="Trimite unui contact";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Trimite în chat";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Chaturile mele";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Încărcări cameră";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Ani";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotografii";
 /* Photo view is empty */
@@ -1923,7 +1925,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mesaj vocal";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
+"This action can not be completed as it would take you over your current storage limit"="Această acțiune nu poate fi finalizată, deoarece îți va depăși limita actuală de stocare";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Încărcarea(ările) nu poate(pot) continua deoarece contul tău este plin";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -2984,6 +2986,7 @@
 "help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+"help.reportIssue.creating.cancel.title"="";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */

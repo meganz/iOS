@@ -404,8 +404,8 @@
 "uploadToMega"="MEGAにアップロード";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="名前を変更するにはファイルをタップ";
-/*  */
-"sendToContact"="連絡先に送信";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="チャットに送信";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="私のチャット";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="カメラアップロード";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="年";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGAはフォトライブラリへのアクセスに制限があり、すべての写真をバックアップすることはできません。タップすると、権限が変更されます。";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="写真";
 /* Photo view is empty */
