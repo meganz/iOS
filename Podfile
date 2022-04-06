@@ -13,7 +13,6 @@ abstract_target 'iMEGA' do
     # Pods for MEGA
     pod 'YYCategories'
     pod 'SAMKeychain'
-    pod 'DateTools'
     pod 'JustPieChart'
     pod 'SwiftGen'
 
@@ -27,7 +26,6 @@ abstract_target 'iMEGA' do
   target 'MEGANotifications' do
     # Pods for MEGANotifications
     pod 'SAMKeychain'
-    pod 'DateTools'
     
   end
 
@@ -35,7 +33,6 @@ abstract_target 'iMEGA' do
     # Pods for MEGAPicker
     pod 'YYCategories'
     pod 'SAMKeychain'
-    pod 'DateTools'
 
   end
 
@@ -49,7 +46,6 @@ abstract_target 'iMEGA' do
     # Pods for MEGAShare
     pod 'YYCategories'
     pod 'SAMKeychain'
-    pod 'DateTools'
 
   end
   
@@ -62,7 +58,6 @@ abstract_target 'iMEGA' do
     # Pods for MEGAWidgetExtension
     pod 'YYCategories'
     pod 'SAMKeychain'
-    pod 'DateTools'
 
   end
 end
