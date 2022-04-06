@@ -404,8 +404,8 @@
 "uploadToMega"="อัปโหลดไปยัง MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="แตะไฟล์เพื่อเปลี่ยนชื่อ";
-/*  */
-"sendToContact"="ส่งไปที่ผู้ติดต่อ";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="ส่งไปยังแชท";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="การแชทของฉัน";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="อัปโหลดจากกล้อง";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="ปี";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA ถูกจำกัดการเข้าถึงไลบรารีรูปภาพของคุณและไม่สามารถสำรองรูปภาพทั้งหมดของคุณได้ แตะเพื่อเปลี่ยนการอนุญาต";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="รูปถ่าย";
 /* Photo view is empty */

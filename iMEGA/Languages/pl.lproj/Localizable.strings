@@ -404,8 +404,8 @@
 "uploadToMega"="Wgraj na MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Dotknij pliku, aby zmienić nazwę";
-/*  */
-"sendToContact"="Wyślij do Kontaktu";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Wyślij na czat";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Moje czaty";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Wgrywanie zdjęć";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Lata";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA ma ograniczony dostęp do biblioteki zdjęć i nie może wykonać kopii zapasowej wszystkich zdjęć. Stuknij , aby zmienić uprawnienia.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Zdjęcia";
 /* Photo view is empty */
@@ -1469,7 +1471,7 @@
 /* SDK error returned when there is a balance error */
 "Balance error"="Błąd rozliczenia";
 /* SDK error returned upon a HTTP error */
-"HTTP error"="HTTP Error";
+"HTTP error"="Błąd HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Nieznany błąd";
 /* Label shown when you call someone (outgoing call), before the call starts. */
@@ -1645,7 +1647,7 @@
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Czy na pewno chcesz cofnąć archiwizację tej rozmowy?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Unarchive Chat";
+"unarchiveChat"="Odarchiwizuj czat";
 /* Title of button to archive chats. */
 "archiveChat"="Archiwum czatu";
 /* Title of flag of archived chats. */

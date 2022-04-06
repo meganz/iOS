@@ -404,8 +404,8 @@
 "uploadToMega"="上传至MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="点击文件进行重命名";
-/*  */
-"sendToContact"="发送至联系人";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="发送至聊天";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="当前聊天";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="相机上传";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="年";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */

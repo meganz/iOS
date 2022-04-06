@@ -1,9 +1,9 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSMicrophoneUsageDescription"="MEGA cần truy cập khả năng sử dụng micrô để giúp người sử dụng thực hiện cuộc gọi, và viết tin nhắn bằng giọng nói.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSCameraUsageDescription"="MEGA cần truy cập khả năng sử dụng camera để giúp thực hiện việc chụp ảnh và quay video khi được yêu cầu.";
+"NSCameraUsageDescription"="MEGA cần truy cập khả năng sử dụng camêra để giúp thực hiện việc chụp ảnh và quay video khi được yêu cầu.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA cần truy cập vào kho hình ảnh/video để thực hiện đăng tải, chia sẻ qua chát khi được yêu cầu, và để chức năng Camera Uploads được hoạt động.";
+"NSPhotoLibraryUsageDescription"="MEGA cần truy cập vào kho hình ảnh/video để thực hiện đăng tải, chia sẻ qua chát khi được yêu cầu, và để chức năng Đăng Tải Camêra được hoạt động.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="Cho phép MEGA truy cập vào sổ danh bạ của điện thoại để thực hiện việc tra cứu khi người sử dụng yêu cầu và để kết nối tới bạn bè trên MEGA.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
