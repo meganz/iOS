@@ -63,7 +63,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
+"loggedOutFromAnotherLocation"="Sei stato disconnesso su questo dispositivo da un’altra posizione";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA non riesce a connettersi in sicurezza tramite SSL. Potresti essere collegato ad un WiFi pubblico che richiede requisiti addizionali.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
@@ -404,8 +404,8 @@
 "uploadToMega"="Upload";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Clicca file per rinominare";
-/*  */
-"sendToContact"="Invia ai contatti";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Invia alla chat";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Le mie chat";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Anni";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto";
 /* Photo view is empty */
@@ -1923,7 +1925,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Messaggio vocale";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="This action cannot be completed as it would take you over your current storage limit";
+"This action can not be completed as it would take you over your current storage limit"="Questa azione non può essere completata in quanto ti farebbe superare il limite del tuo spazio di archiviazione";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Il tuo o i tuoi upload non possono procedere poiché il tuo account è pieno.";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */

@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Attention";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre appareil photo dans vos Réglages";
+"cameraPermissions"="Veuillez donner à l’appli MEGA l’autorisation d’accéder à votre appareil photo dans vos Réglages";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre microphone dans vos réglages";
+"microphonePermissions"="Veuillez donner à l’appli MEGA l’autorisation d’accéder à votre microphone dans vos réglages";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre photothèque dans Réglages";
+"photoLibraryPermissions"="Veuillez donner à l’appli MEGA l’autorisation d’accéder à votre photothèque dans Réglages";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Votre compte a été activé. Veuillez vous connecter.";
 /*  */
@@ -404,8 +404,8 @@
 "uploadToMega"="Téléverser vers MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Toucher le fichier pour le renommer";
-/*  */
-"sendToContact"="Envoyer à un contact";
+/* Title for a button to send a file to a chat */
+"general.sendToChat"="Envoyer vers une conversation";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Mes conversations";
 /* Toast text upon sending a single file to chat */
@@ -654,6 +654,8 @@
 "cameraUploadsLabel"="Téléversements de l’appareil photo";
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Années";
+/* Banner message on Camera Uploads that warns user that they have limited access to photos */
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA a un accès limité à votre photothèque et ne peut pas sauvegarder toutes vos photos. Toucher pour changer les autorisations.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Photos";
 /* Photo view is empty */
