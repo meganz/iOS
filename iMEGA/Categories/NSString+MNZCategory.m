@@ -1,17 +1,15 @@
 
 #import "NSString+MNZCategory.h"
-
 #import <AVKit/AVKit.h>
 #import <CommonCrypto/CommonDigest.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
-
-#import "NSDate+DateTools.h"
-
 #import "Helper.h"
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
+
+@import DateToolsObjc;
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";

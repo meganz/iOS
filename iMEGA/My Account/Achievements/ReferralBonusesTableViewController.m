@@ -1,8 +1,5 @@
 
 #import "ReferralBonusesTableViewController.h"
-
-#import "NSDate+DateTools.h"
-
 #import "Helper.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -11,6 +8,8 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "AchievementsTableViewCell.h"
+
+@import DateToolsObjc;
 
 @interface ReferralBonusesTableViewController () <UITableViewDataSource>
 

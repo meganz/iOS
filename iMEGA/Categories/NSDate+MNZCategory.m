@@ -1,7 +1,7 @@
 
 #import "NSDate+MNZCategory.h"
 
-#import "NSDate+DateTools.h"
+@import DateToolsObjc;
 
 const NSInteger secondsInAMinute = 60;
 const NSInteger secondsInAHour = 60 * 60;

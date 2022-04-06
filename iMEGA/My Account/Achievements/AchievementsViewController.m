@@ -1,8 +1,5 @@
 
 #import "AchievementsViewController.h"
-
-#import "NSDate+DateTools.h"
-
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
@@ -12,6 +9,8 @@
 #import "AchievementsTableViewCell.h"
 #import "InviteFriendsViewController.h"
 #import "ReferralBonusesTableViewController.h"
+
+@import DateToolsObjc;
 
 @interface AchievementsViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 

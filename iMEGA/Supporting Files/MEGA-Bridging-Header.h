@@ -19,7 +19,6 @@
 #import "MEGATransferList+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGATransfer+MNZCategory.h"
-#import "NSDate+DateTools.h"
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSObject+Debounce.h"
