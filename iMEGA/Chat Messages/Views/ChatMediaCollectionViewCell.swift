@@ -111,10 +111,11 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
-        guard let chatMessage = message as? ChatMessage, let nodeList = chatMessage.message.nodeList else {
+        guard let chatMessage = message as? ChatMessage else {
             return
         }
 
+        let megaMessage = chatMessage.message
         currentTransfer = chatMessage.transfer
         progressView.progress = 0
         if let transfer = chatMessage.transfer {
@@ -132,7 +133,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         progressView.isHidden = true
         loadingIndicator.stopAnimating()
 
-        guard let node = nodeList.node(at: 0) else { return }
+        guard let node = megaMessage.nodeList?.node(at: 0) else { return }
         currentNode = node
         let name = (node.name ?? "") as NSString
         let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
