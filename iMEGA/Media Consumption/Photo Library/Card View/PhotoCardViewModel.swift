@@ -26,7 +26,7 @@ class PhotoCardViewModel: ObservableObject {
         }
         
         if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .preview) {
-            thumbnailContainer = ImageContainer(image: image)
+            thumbnailContainer = ImageContainer(image: image, overlay: photo.overlay)
         } else {
             loadThumbnailFromRemote(for: photo)
         }
@@ -37,7 +37,7 @@ class PhotoCardViewModel: ObservableObject {
             .loadPreview(for: photo)
             .receive(on: DispatchQueue.global(qos: .utility))
             .map { [weak self] in
-                ImageContainer(image: Image(contentsOfFile: $0.path))
+                ImageContainer(image: Image(contentsOfFile: $0.path), overlay: self?.coverPhoto?.overlay)
             }
             .replaceError(with: nil)
             .compactMap { $0 }
