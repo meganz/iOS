@@ -8,7 +8,12 @@ struct CardImage: View {
         if container.isPlaceholder {
             container.image
         } else {
-            thumbnail()
+            if let overlay = container.overlay {
+                thumbnail()
+                    .overlay(overlay)
+            } else {
+                thumbnail()
+            }
         }
     }
     
