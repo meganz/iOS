@@ -58,6 +58,7 @@
     [self initializeStorageInfo];
     self.numberFormatter = NSNumberFormatter.alloc.init;
     self.numberFormatter.numberStyle = NSNumberFormatterNoStyle;
+    self.numberFormatter.roundingMode = NSNumberFormatterRoundFloor;
     self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     
     self.pieChartView.delegate = self;
