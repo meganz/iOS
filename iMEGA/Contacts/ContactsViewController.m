@@ -1,7 +1,6 @@
 
 #import "ContactsViewController.h"
 
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -29,6 +28,8 @@
 #import "EmptyStateView.h"
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
+
+@import DateToolsObjc;
 
 @interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 

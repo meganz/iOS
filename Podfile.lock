@@ -1,5 +1,4 @@
 PODS:
-  - DateTools (2.0.0)
   - JustPieChart (0.1.0)
   - SAMKeychain (1.5.3)
   - SwiftGen (6.5.1)
@@ -8,7 +7,6 @@ PODS:
   - YYCategories/no-arc (1.0.4)
 
 DEPENDENCIES:
-  - DateTools
   - JustPieChart
   - SAMKeychain
   - SwiftGen
@@ -16,19 +14,17 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - DateTools
     - JustPieChart
     - SAMKeychain
     - SwiftGen
     - YYCategories
 
 SPEC CHECKSUMS:
-  DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
   JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 2020e1718a19a073f85b93299e7b052ac7a14cfd
+PODFILE CHECKSUM: 1aa58efa6876867beff43af58212a8d652dbb266
 
 COCOAPODS: 1.11.3

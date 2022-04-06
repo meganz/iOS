@@ -1,11 +1,10 @@
 
 #import "AchievementsDetailsViewController.h"
-
-#import "NSDate+DateTools.h"
-
 #import "Helper.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
+
+@import DateToolsObjc;
 
 @interface AchievementsDetailsViewController ()
 

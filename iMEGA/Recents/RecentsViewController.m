@@ -1,7 +1,6 @@
 
 #import "RecentsViewController.h"
 
-#import "NSDate+DateTools.h"
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
@@ -19,6 +18,8 @@
 #import "ThumbnailViewerTableViewCell.h"
 #import "MEGARecentActionBucket+MNZCategory.h"
 #import "MEGA-Swift.h"
+
+@import DateToolsObjc;
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
