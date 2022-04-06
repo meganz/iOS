@@ -1,4 +1,5 @@
 import UIKit
+import DateToolsSwift
 
 class StorageFullModalAlertViewController: CustomModalAlertViewController {
     
@@ -60,10 +61,10 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
     }
     
     @objc func showStorageAlertIfNeeded() {
-        let storageDate = Date(timeIntervalSince1970: TimeInterval(UserDefaults.standard.double(forKey: "MEGAStorageFullNotification"))) as NSDate
+        let storageDate = Date(timeIntervalSince1970: TimeInterval(UserDefaults.standard.double(forKey: "MEGAStorageFullNotification")))
         
         guard FileManager.default.mnz_fileSystemFreeSize < limitedSpace,
-            storageDate.daysEarlierThan(Date()) < duration else {
+              storageDate.daysEarlier(than: Date()) < duration else {
             return
         }
         

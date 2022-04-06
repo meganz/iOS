@@ -1765,6 +1765,16 @@
 		BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */; };
 		BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
+		BF0CC97F27FD388700244AEB /* DateToolsObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC97E27FD388700244AEB /* DateToolsObjc */; };
+		BF0CC98127FD388700244AEB /* DateToolsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98027FD388700244AEB /* DateToolsSwift */; };
+		BF0CC98327FD38A000244AEB /* DateToolsObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98227FD38A000244AEB /* DateToolsObjc */; };
+		BF0CC98527FD38A000244AEB /* DateToolsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98427FD38A000244AEB /* DateToolsSwift */; };
+		BF0CC98727FD38B000244AEB /* DateToolsObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98627FD38B000244AEB /* DateToolsObjc */; };
+		BF0CC98927FD38B000244AEB /* DateToolsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98827FD38B000244AEB /* DateToolsSwift */; };
+		BF0CC98B27FD38B800244AEB /* DateToolsObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98A27FD38B800244AEB /* DateToolsObjc */; };
+		BF0CC98D27FD38B800244AEB /* DateToolsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98C27FD38B800244AEB /* DateToolsSwift */; };
+		BF0CC98F27FD38C100244AEB /* DateToolsObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98E27FD38C100244AEB /* DateToolsObjc */; };
+		BF0CC99127FD38C100244AEB /* DateToolsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC99027FD38C100244AEB /* DateToolsSwift */; };
 		BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */; };
 		BF1053DE2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */; };
 		BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */; };
@@ -4567,6 +4577,7 @@
 				77FD20052359A5A7004FB892 /* libnative_video.a in Frameworks */,
 				77FD1FFD2359A59C004FB892 /* libwebrtc.a in Frameworks */,
 				A811DCC02476C4F7002FCD98 /* CoreServices.framework in Frameworks */,
+				BF0CC98127FD388700244AEB /* DateToolsSwift in Frameworks */,
 				A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */,
 				A82A38D0200D32BD00883533 /* libzen.a in Frameworks */,
 				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
@@ -4579,6 +4590,7 @@
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
 				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
+				BF0CC97F27FD388700244AEB /* DateToolsObjc in Frameworks */,
 				A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */,
 				A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */,
 				BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */,
@@ -4620,8 +4632,10 @@
 				7794AF10231E7D4E0039C1D2 /* Metal.framework in Frameworks */,
 				7794AF15231E7EF00039C1D2 /* QuartzCore.framework in Frameworks */,
 				7794AF21232100F30039C1D2 /* Security.framework in Frameworks */,
+				BF0CC98B27FD38B800244AEB /* DateToolsObjc in Frameworks */,
 				77AEB94423CDBC550047CEBF /* libnative_video.a in Frameworks */,
 				7794AEEC231E6C610039C1D2 /* UIKit.framework in Frameworks */,
+				BF0CC98D27FD38B800244AEB /* DateToolsSwift in Frameworks */,
 				77AEB94723CDBC560047CEBF /* libwebrtc.a in Frameworks */,
 				7794AF11231E7D7B0039C1D2 /* VideoToolbox.framework in Frameworks */,
 				7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */,
@@ -4648,6 +4662,7 @@
 				835EE4392582562C00D8E3B8 /* ImageIO.framework in Frameworks */,
 				835EE401258249D900D8E3B8 /* libc++.tbd in Frameworks */,
 				835EE41C2582515F00D8E3B8 /* Security.framework in Frameworks */,
+				BF0CC98F27FD38C100244AEB /* DateToolsObjc in Frameworks */,
 				835EE425258251A600D8E3B8 /* QuartzCore.framework in Frameworks */,
 				835EE43B2582564300D8E3B8 /* Metal.framework in Frameworks */,
 				835EE43C2582565300D8E3B8 /* CoreVideo.framework in Frameworks */,
@@ -4665,6 +4680,7 @@
 				835EE3DA2582483D00D8E3B8 /* libwebsockets.a in Frameworks */,
 				835EE3D12582479D00D8E3B8 /* libzen.a in Frameworks */,
 				835EE3C82582450E00D8E3B8 /* libsodium.a in Frameworks */,
+				BF0CC99127FD38C100244AEB /* DateToolsSwift in Frameworks */,
 				835EE3C7258244D100D8E3B8 /* libmediainfo.a in Frameworks */,
 				835EE3BC2582445D00D8E3B8 /* libcurl.a in Frameworks */,
 				BF1164A927F68A0300E5C5A4 /* FirebaseCrashlytics in Frameworks */,
@@ -4711,6 +4727,7 @@
 				A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */,
 				A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */,
 				A811DCC32476C53A002FCD98 /* MetalKit.framework in Frameworks */,
+				BF0CC98527FD38A000244AEB /* DateToolsSwift in Frameworks */,
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
 				943229251EDD8479007DB542 /* CoreData.framework in Frameworks */,
 				9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */,
@@ -4723,6 +4740,7 @@
 				9432290B1EDD8271007DB542 /* QuartzCore.framework in Frameworks */,
 				BF1164B427F6906A00E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				A8F5157C27F6F95800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
+				BF0CC98327FD38A000244AEB /* DateToolsObjc in Frameworks */,
 				9432290F1EDD82CF007DB542 /* Security.framework in Frameworks */,
 				943229331EDD86C3007DB542 /* SystemConfiguration.framework in Frameworks */,
 				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
@@ -4807,6 +4825,7 @@
 				943F8B3C1EF286F600AFD89F /* MediaPlayer.framework in Frameworks */,
 				943F8B2F1EF2869700AFD89F /* QuartzCore.framework in Frameworks */,
 				BF1164CA27F6A81F00E5C5A4 /* PureLayout in Frameworks */,
+				BF0CC98727FD38B000244AEB /* DateToolsObjc in Frameworks */,
 				943F8B311EF286AC00AFD89F /* Security.framework in Frameworks */,
 				943F8B3B1EF286EE00AFD89F /* SystemConfiguration.framework in Frameworks */,
 				943F8B321EF286B100AFD89F /* UIKit.framework in Frameworks */,
@@ -4818,6 +4837,7 @@
 				A811DCBE2476C4E0002FCD98 /* CoreServices.framework in Frameworks */,
 				BF1164A527F689D400E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				943F8B2B1EF2864D00AFD89F /* libz.tbd in Frameworks */,
+				BF0CC98927FD38B000244AEB /* DateToolsSwift in Frameworks */,
 				1E4FEE43BA4A9B2FBBB75D86 /* Pods_iMEGA_MEGAShare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10613,6 +10633,8 @@
 				A8F5158627F6FF4F00AEE4D6 /* FlexLayoutYoga */,
 				A8F5158827F6FF4F00AEE4D6 /* FlexLayoutYogaKit */,
 				BF1CEA3327FA737200C1A2E5 /* GKContactImage */,
+				BF0CC97E27FD388700244AEB /* DateToolsObjc */,
+				BF0CC98027FD388700244AEB /* DateToolsSwift */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -10634,6 +10656,8 @@
 			name = MEGANotifications;
 			packageProductDependencies = (
 				BF1164A627F689ED00E5C5A4 /* FirebaseCrashlytics */,
+				BF0CC98A27FD38B800244AEB /* DateToolsObjc */,
+				BF0CC98C27FD38B800244AEB /* DateToolsSwift */,
 			);
 			productName = MEGANotifications;
 			productReference = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */;
@@ -10655,6 +10679,8 @@
 			name = MEGAWidgetExtension;
 			packageProductDependencies = (
 				BF1164A827F68A0300E5C5A4 /* FirebaseCrashlytics */,
+				BF0CC98E27FD38C100244AEB /* DateToolsObjc */,
+				BF0CC99027FD38C100244AEB /* DateToolsSwift */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -10702,6 +10728,8 @@
 				BF1164C527F6A81600E5C5A4 /* PureLayout */,
 				A8F5157B27F6F95800AEE4D6 /* DZNEmptyDataSet */,
 				BF1CEA3927FA755C00C1A2E5 /* GKContactImage */,
+				BF0CC98227FD38A000244AEB /* DateToolsObjc */,
+				BF0CC98427FD38A000244AEB /* DateToolsSwift */,
 			);
 			productName = MEGAPicker;
 			productReference = 942254DC1EDC03130074C51A /* MEGAPicker.appex */;
@@ -10749,6 +10777,8 @@
 				BF1164C927F6A81F00E5C5A4 /* PureLayout */,
 				A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */,
 				BF1CEA3D27FA757800C1A2E5 /* GKContactImage */,
+				BF0CC98627FD38B000244AEB /* DateToolsObjc */,
+				BF0CC98827FD38B000244AEB /* DateToolsSwift */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -10922,6 +10952,7 @@
 				A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */,
 				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */,
+				BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14713,6 +14744,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/meganz/DateTools.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.1.0;
+			};
+		};
 		BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MessageKit/MessageKit";
@@ -14858,6 +14897,56 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayoutYogaKit;
+		};
+		BF0CC97E27FD388700244AEB /* DateToolsObjc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsObjc;
+		};
+		BF0CC98027FD388700244AEB /* DateToolsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsSwift;
+		};
+		BF0CC98227FD38A000244AEB /* DateToolsObjc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsObjc;
+		};
+		BF0CC98427FD38A000244AEB /* DateToolsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsSwift;
+		};
+		BF0CC98627FD38B000244AEB /* DateToolsObjc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsObjc;
+		};
+		BF0CC98827FD38B000244AEB /* DateToolsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsSwift;
+		};
+		BF0CC98A27FD38B800244AEB /* DateToolsObjc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsObjc;
+		};
+		BF0CC98C27FD38B800244AEB /* DateToolsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsSwift;
+		};
+		BF0CC98E27FD38C100244AEB /* DateToolsObjc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsObjc;
+		};
+		BF0CC99027FD38C100244AEB /* DateToolsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */;
+			productName = DateToolsSwift;
 		};
 		BF1163BA27F12ED000E5C5A4 /* MessageKit */ = {
 			isa = XCSwiftPackageProductDependency;

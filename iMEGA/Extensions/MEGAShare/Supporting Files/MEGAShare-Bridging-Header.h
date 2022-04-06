@@ -6,8 +6,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "NSDate+DateTools.h"
-
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
