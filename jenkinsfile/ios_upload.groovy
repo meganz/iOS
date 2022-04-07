@@ -29,7 +29,7 @@ pipeline {
                 
                 if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
                     slackMessage = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded \nbranch: ${GIT_BRANCH}"
-                } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.GIT_BRANCH == 'origin/develop') {
+                } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices' || env.GIT_BRANCH == 'origin/develop') {
                     slackMessage = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Firebase \nbranch: ${GIT_BRANCH}"
                 } else if (env.gitlabTriggerPhrase == 'verify_translations') {
                     slackMessage = ":white_check_mark: No missing translation keys. \nbranch: ${GIT_BRANCH}"
@@ -44,7 +44,7 @@ pipeline {
 
                 if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
                     slackMessage = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed \nbranch: ${GIT_BRANCH}"
-                } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.GIT_BRANCH == 'origin/develop') {
+                } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices' || env.GIT_BRANCH == 'origin/develop') {
                     slackMessage = ":x: Firebase Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed \nbranch: ${GIT_BRANCH}"
                 } else if (env.gitlabTriggerPhrase == 'verify_translations') {
                     slackMessage = ":x: Missing translation keys. \nbranch: ${GIT_BRANCH}"
@@ -124,6 +124,7 @@ pipeline {
                 anyOf {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
                     environment name: 'GIT_BRANCH', value: 'origin/develop'
                 }
@@ -177,8 +178,14 @@ pipeline {
                             injectEnvironments({
                                 sh "bundle exec fastlane create_temporary_keychain"
                                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore' readonly:true"                                   
-                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'adhoc' readonly:false"
+                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore' readonly:true"
+                                    script {
+                                        def readonly = "true"
+                                        if (env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices') {
+                                            readonly = "false"
+                                        }
+                                        sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'adhoc' readonly:${readonly}"
+                                    }                                   
                                 }
                             })
                         }
@@ -210,6 +217,7 @@ pipeline {
             when { 
                 anyOf {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                     environment name: 'GIT_BRANCH', value: 'origin/develop'
                 }
             }
@@ -247,6 +255,7 @@ pipeline {
                         anyOf {
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
                             environment name: 'GIT_BRANCH', value: 'origin/develop'
                         }
@@ -264,6 +273,7 @@ pipeline {
                     when { 
                         anyOf {
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                             environment name: 'GIT_BRANCH', value: 'origin/develop'
                         }
                     }
@@ -326,6 +336,7 @@ pipeline {
                 anyOf {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
                     environment name: 'GIT_BRANCH', value: 'origin/develop'
                 }
