@@ -27,6 +27,7 @@ fastlane/report.xml
 ## Translation
 transifex/transifexConfig.json
 transifex/Translations*
+transifex/download/*
 
 # CocoaPods
 #
