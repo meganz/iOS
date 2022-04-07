@@ -16,7 +16,6 @@
 #import "MEGAPhotoBrowserPickerViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartDownloadTransferDelegate.h"
-#import "SaveToCameraRollActivity.h"
 #import "SendToViewController.h"
 
 #import "MEGANode+MNZCategory.h"
