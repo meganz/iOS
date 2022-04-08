@@ -1231,6 +1231,9 @@ def replace_characters(string, upload):
         string = string.replace("\r\n", "[Br]")
         string = string.replace("\r", "[Br]")
         string = string.replace("\n", "[Br]")
+        string = string.replace(r"\r\n", "[Br]")
+        string = string.replace(r"\r", "[Br]")
+        string = string.replace(r"\n", "[Br]")
         string = string.replace("\\", "")
         for i in range(len(replace)):
             string = re.sub(replace[i], replace_to[i], string)
