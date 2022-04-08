@@ -160,3 +160,4 @@
 #import "CompressingLogFileManager.h"
 #import "CameraUploadsTableViewController.h"
 #import "ConfirmAccountViewcontroller.h"
+#import "HelpTableViewController.h"
