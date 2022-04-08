@@ -68,6 +68,7 @@
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
