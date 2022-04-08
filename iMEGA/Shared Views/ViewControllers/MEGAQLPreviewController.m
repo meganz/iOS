@@ -69,7 +69,7 @@
 }
 
 - (QLPreviewItemEditingMode)previewController:(QLPreviewController *)controller editingModeForPreviewItem:(id<QLPreviewItem>)previewItem {
-    return QLPreviewItemEditingModeCreateCopy;
+    return QLPreviewItemEditingModeDisabled;
 }
 
 
