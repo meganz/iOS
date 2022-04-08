@@ -8,7 +8,7 @@ import Foundation
     ///   - sourceURL: The source URL  you want to zip.
     ///   - filename: The filename of the compressed file.
     /// - Returns: The URL of the compressed file
-    @objc func compress(sourceURL: URL, toNewFilename filename: String = "MEGAiOSLogs.zip") -> URL? {
+    @objc func compressedFileURL(sourceURL: URL, toNewFilename filename: String = "MEGAiOSLogs.zip") -> URL? {
         var archiveUrl: URL?
         var error: NSError?
         
@@ -25,5 +25,13 @@ import Foundation
         }
         
         return archiveUrl
+    }
+    
+    /// Get the Data of the compressed file located at the given URL
+    /// - Parameters:
+    ///   - url: The url of a compressed file
+    /// - Returns: The Data of the compressed file located in the URL
+    @objc func compressedData(url: URL) -> Data? {
+        try? Data(contentsOf: url)
     }
 }

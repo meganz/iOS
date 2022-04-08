@@ -28,7 +28,7 @@ protocol ReportIssueViewRouting: Routing {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYMMdd_hhmmss"
         let filename = "\(dateFormatter.string(from: date))_iOS_\(sdk.myEmail ?? "").zip"
-        let zippedLogsUrl = areLogsEnabled ? compressor.compress(sourceURL:Logger.shared().logsDirectoryUrl, toNewFilename: filename) : nil
+        let zippedLogsUrl = areLogsEnabled ? compressor.compressedFileURL(sourceURL:Logger.shared().logsDirectoryUrl, toNewFilename: filename) : nil
         
         let uploadRepo = UploadFileRepository(sdk: sdk)
         let uploadUseCase = UploadFileUseCase(repo: uploadRepo)
