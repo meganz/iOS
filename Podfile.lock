@@ -1,6 +1,5 @@
 PODS:
   - JustPieChart (0.1.0)
-  - SAMKeychain (1.5.3)
   - SwiftGen (6.5.1)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
@@ -8,23 +7,20 @@ PODS:
 
 DEPENDENCIES:
   - JustPieChart
-  - SAMKeychain
   - SwiftGen
   - YYCategories
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - JustPieChart
-    - SAMKeychain
     - SwiftGen
     - YYCategories
 
 SPEC CHECKSUMS:
   JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
-  SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 1aa58efa6876867beff43af58212a8d652dbb266
+PODFILE CHECKSUM: 73c8ce73aebe27cee956cb2b1eacb6f723c198f4
 
 COCOAPODS: 1.11.3

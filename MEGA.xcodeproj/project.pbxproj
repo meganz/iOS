@@ -1773,6 +1773,12 @@
 		BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */; };
 		BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
+		BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB9352803AEAE00C21F11 /* SAMKeychain */; };
+		BF0CB93A2803AF2400C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB9392803AF2400C21F11 /* SAMKeychain */; };
+		BF0CB93C2803AF3500C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB93B2803AF3500C21F11 /* SAMKeychain */; };
+		BF0CB93E2803AF4A00C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB93D2803AF4A00C21F11 /* SAMKeychain */; };
+		BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB93F2803AF5500C21F11 /* SAMKeychain */; };
+		BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB9412803AF6000C21F11 /* SAMKeychain */; };
 		BF0CC97F27FD388700244AEB /* DateToolsObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC97E27FD388700244AEB /* DateToolsObjc */; };
 		BF0CC98127FD388700244AEB /* DateToolsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98027FD388700244AEB /* DateToolsSwift */; };
 		BF0CC98327FD38A000244AEB /* DateToolsObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CC98227FD38A000244AEB /* DateToolsObjc */; };
@@ -4598,6 +4604,7 @@
 				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
 				A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */,
+				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */,
 				BF11649F27F6891500E5C5A4 /* FirebasePerformance in Frameworks */,
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
@@ -4656,6 +4663,7 @@
 				7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */,
 				7794AEFB231E76740039C1D2 /* libresolv.tbd in Frameworks */,
 				77AEB94323CDBC550047CEBF /* libnative_api.a in Frameworks */,
+				BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */,
 				7794AEF8231E757E0039C1D2 /* libsqlite3.tbd in Frameworks */,
 				77AEB94623CDBC560047CEBF /* libvideoframebuffer_objc.a in Frameworks */,
 				7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */,
@@ -4689,6 +4697,7 @@
 				835EE42E2582524800D8E3B8 /* libuv.a in Frameworks */,
 				835EE42F2582524900D8E3B8 /* libwebrtc.a in Frameworks */,
 				835EE3E3258248F400D8E3B8 /* libvideoframebuffer_objc.a in Frameworks */,
+				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
 				835EE3E4258248F400D8E3B8 /* libvideocapture_objc.a in Frameworks */,
 				835EE3E5258248F400D8E3B8 /* libnative_video.a in Frameworks */,
 				835EE3E6258248F400D8E3B8 /* libnative_api.a in Frameworks */,
@@ -4748,6 +4757,7 @@
 				9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */,
 				777E9229203EB0E200266229 /* CoreImage.framework in Frameworks */,
 				943229291EDD84D9007DB542 /* CoreMedia.framework in Frameworks */,
+				BF0CB93A2803AF2400C21F11 /* SAMKeychain in Frameworks */,
 				9419B6C61F20DC5700FEBE31 /* CoreSpotlight.framework in Frameworks */,
 				9432291C1EDD83E9007DB542 /* ImageIO.framework in Frameworks */,
 				943229301EDD862F007DB542 /* LocalAuthentication.framework in Frameworks */,
@@ -4778,6 +4788,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF0CB93C2803AF3500C21F11 /* SAMKeychain in Frameworks */,
 				77FD20192359E42E004FB892 /* libnative_video.a in Frameworks */,
 				77FD20162359E3FE004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
 				77FD20132359E3CE004FB892 /* libvideocapture_objc.a in Frameworks */,
@@ -4835,6 +4846,7 @@
 				943F8B301EF286A800AFD89F /* CoreGraphics.framework in Frameworks */,
 				943F8B371EF286D600AFD89F /* CoreMedia.framework in Frameworks */,
 				943F8B341EF286C700AFD89F /* ImageIO.framework in Frameworks */,
+				BF0CB93E2803AF4A00C21F11 /* SAMKeychain in Frameworks */,
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				943F8B3A1EF286EA00AFD89F /* LocalAuthentication.framework in Frameworks */,
 				943F8B3C1EF286F600AFD89F /* MediaPlayer.framework in Frameworks */,
@@ -10698,6 +10710,7 @@
 				BF1CEA3327FA737200C1A2E5 /* GKContactImage */,
 				BF0CC97E27FD388700244AEB /* DateToolsObjc */,
 				BF0CC98027FD388700244AEB /* DateToolsSwift */,
+				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -10721,6 +10734,7 @@
 				BF1164A627F689ED00E5C5A4 /* FirebaseCrashlytics */,
 				BF0CC98A27FD38B800244AEB /* DateToolsObjc */,
 				BF0CC98C27FD38B800244AEB /* DateToolsSwift */,
+				BF0CB93F2803AF5500C21F11 /* SAMKeychain */,
 			);
 			productName = MEGANotifications;
 			productReference = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */;
@@ -10744,6 +10758,7 @@
 				BF1164A827F68A0300E5C5A4 /* FirebaseCrashlytics */,
 				BF0CC98E27FD38C100244AEB /* DateToolsObjc */,
 				BF0CC99027FD38C100244AEB /* DateToolsSwift */,
+				BF0CB9412803AF6000C21F11 /* SAMKeychain */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -10793,6 +10808,7 @@
 				BF1CEA3927FA755C00C1A2E5 /* GKContactImage */,
 				BF0CC98227FD38A000244AEB /* DateToolsObjc */,
 				BF0CC98427FD38A000244AEB /* DateToolsSwift */,
+				BF0CB9392803AF2400C21F11 /* SAMKeychain */,
 			);
 			productName = MEGAPicker;
 			productReference = 942254DC1EDC03130074C51A /* MEGAPicker.appex */;
@@ -10814,6 +10830,7 @@
 			name = MEGAPickerFileProvider;
 			packageProductDependencies = (
 				BF1164AC27F68CE700E5C5A4 /* FirebaseCrashlytics */,
+				BF0CB93B2803AF3500C21F11 /* SAMKeychain */,
 			);
 			productName = MEGAPickerFileProvider;
 			productReference = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */;
@@ -10842,6 +10859,7 @@
 				BF1CEA3D27FA757800C1A2E5 /* GKContactImage */,
 				BF0CC98627FD38B000244AEB /* DateToolsObjc */,
 				BF0CC98827FD38B000244AEB /* DateToolsSwift */,
+				BF0CB93D2803AF4A00C21F11 /* SAMKeychain */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -11016,6 +11034,7 @@
 				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */,
 				BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */,
+				BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14814,6 +14833,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/meganz/SAMKeychain.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/DateTools.git";
@@ -14967,6 +14994,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayoutYogaKit;
+		};
+		BF0CB9352803AEAE00C21F11 /* SAMKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
+			productName = SAMKeychain;
+		};
+		BF0CB9392803AF2400C21F11 /* SAMKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
+			productName = SAMKeychain;
+		};
+		BF0CB93B2803AF3500C21F11 /* SAMKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
+			productName = SAMKeychain;
+		};
+		BF0CB93D2803AF4A00C21F11 /* SAMKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
+			productName = SAMKeychain;
+		};
+		BF0CB93F2803AF5500C21F11 /* SAMKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
+			productName = SAMKeychain;
+		};
+		BF0CB9412803AF6000C21F11 /* SAMKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
+			productName = SAMKeychain;
 		};
 		BF0CC97E27FD388700244AEB /* DateToolsObjc */ = {
 			isa = XCSwiftPackageProductDependency;

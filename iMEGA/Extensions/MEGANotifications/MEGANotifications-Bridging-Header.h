@@ -2,8 +2,6 @@
 #ifndef MEGANotifications_Bridging_Header_h
 #define MEGANotifications_Bridging_Header_h
 
-#import "SAMKeychain.h"
-
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAError.h"

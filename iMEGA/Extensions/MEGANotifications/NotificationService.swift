@@ -1,5 +1,6 @@
 import UserNotifications
 import Firebase
+import SAMKeychain
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?

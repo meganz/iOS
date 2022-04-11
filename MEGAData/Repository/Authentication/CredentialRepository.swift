@@ -1,4 +1,5 @@
 import Foundation
+import SAMKeychain
 
 struct CredentialRepository: CredentialRepositoryProtocol {
     private enum Constants {

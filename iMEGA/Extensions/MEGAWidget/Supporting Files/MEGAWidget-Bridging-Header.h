@@ -4,8 +4,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SAMKeychain.h"
-
 #import "MEGAConstants.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGASdkManager.h"
