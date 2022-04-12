@@ -10,14 +10,16 @@ struct PhotoCell: View {
     }}
     
     var body: some View {
-        ZStack(alignment: .topTrailing) {
+        ZStack(alignment: .bottomTrailing) {
             PhotoCellImage(container: viewModel.thumbnailContainer, aspectRatio: viewModel.currentZoomScaleFactor == 1 ? nil : 1)
             
             if editMode?.wrappedValue.isEditing == true {
                 CheckMarkView(markedSelected: viewModel.isSelected)
-                    .offset(x: -5, y: 5)
+                    .offset(x: -5, y: -5)
             }
         }
+        .favorite(viewModel.isFavorite)
+        .videoDuration(viewModel.isVideo, duration: viewModel.duration, with: viewModel.currentZoomScaleFactor)
         .gesture(editMode?.wrappedValue.isEditing == true ? tap : nil)
         .onAppear {
             viewModel.loadThumbnailIfNeeded()

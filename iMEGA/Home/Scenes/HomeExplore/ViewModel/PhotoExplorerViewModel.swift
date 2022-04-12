@@ -1,7 +1,7 @@
 
 
 enum PhotoExplorerAction {
-    case onViewReady
+    case loadPhotos
     case didSelectNode(node: MEGANode)
     case updateTitle(nodeCount: Int)
     case updateTitleToDefault
@@ -62,7 +62,7 @@ class PhotoExplorerViewModel: NSObject {
     // MARK: - Dispatch action
     func dispatch(_ action: PhotoExplorerAction) {
         switch action {
-        case .onViewReady:
+        case .loadPhotos:
             loadAllPhotos()
             invokeCommand?(.setTitle(title))
         case .didSelectNode(let node):

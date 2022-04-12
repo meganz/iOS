@@ -13,7 +13,8 @@ extension NodeEntity {
     static func ↻↻ (lhs: Self, rhs: Self) -> Bool {
         lhs.categoryDate != rhs.categoryDate ||
         lhs.coverPhoto != rhs.coverPhoto ||
-        lhs.coverPhoto?.hasThumbnail != rhs.coverPhoto?.hasThumbnail
+        lhs.coverPhoto?.hasThumbnail != rhs.coverPhoto?.hasThumbnail ||
+        lhs.isFavourite != rhs.isFavourite
     }
 }
 
