@@ -54,8 +54,12 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
         viewModel.invokeCommand = { [weak self] command in
             self?.excuteCommand(command)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        viewModel.dispatch(.onViewReady)
+        viewModel.dispatch(.loadPhotos)
     }
     
     override func viewDidAppear(_ animated: Bool) {

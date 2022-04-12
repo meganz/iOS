@@ -12,12 +12,7 @@ struct PhotoCellImage: View {
                     container.image
                 )
         } else {
-            if let overlay = container.overlay {
-                thumbnail()
-                    .overlay(overlay)
-            } else {
-                thumbnail()
-            }
+            thumbnail()
         }
     }
     
