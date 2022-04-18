@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1012,12 +1013,12 @@
                                                     <constraint firstAttribute="width" constant="160" id="Rv6-qk-NFn"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="az8-Aw-mS9" userLabel="Save Button">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="az8-Aw-mS9" userLabel="Save Button" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="199.66666666666663" y="281" width="135" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="TeO-59-4cy"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <state key="normal" title="Save">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
@@ -1035,13 +1036,13 @@
                                                     <action selector="saveMasterKeyTouchUpInside:" destination="mZP-69-mDb" eventType="touchUpInside" id="QRM-NE-O3l"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODS-fW-K0n" userLabel="Copy Button">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODS-fW-K0n" userLabel="Copy Button" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="39.666666666666657" y="281" width="135" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="135" id="EzD-Ju-Drj"/>
                                                     <constraint firstAttribute="height" constant="50" id="fqu-mv-kUW"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <state key="normal" title="Copy">
                                                     <color key="titleColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
@@ -1087,68 +1088,32 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jaA-3A-VfQ">
-                                        <rect key="frame" x="20" y="370" width="366" height="24"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MVm-ad-Jg6">
-                                                <rect key="frame" x="0.0" y="0.0" width="366" height="0.66666666666666663"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="0.5" id="QfY-tN-0Nj"/>
-                                                </constraints>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Why do I need a Recovery Key?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbZ-sd-Eec" userLabel="Why Do I Need a Recovery Key Label And Button" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                <rect key="frame" x="73.666666666666671" y="20" width="218.66666666666663" height="36"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="36" id="v5q-V7-KNg"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTL-gV-SRV" userLabel="Why Do I Need a Recovery Key? Button">
-                                                <rect key="frame" x="73.666666666666671" y="20" width="218.66666666666663" height="36"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="68" id="plH-QP-ycX"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="plH-QP-ycX"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="whyDoINeedARecoveryKeyTouchUpInside:" destination="mZP-69-mDb" eventType="touchUpInside" id="5zq-10-mDz"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTL-gV-SRV" userLabel="Why Do I Need a Recovery Key? Button" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                        <rect key="frame" x="102.66666666666669" y="400" width="209" height="29"/>
                                         <constraints>
-                                            <constraint firstItem="MVm-ad-Jg6" firstAttribute="top" secondItem="jaA-3A-VfQ" secondAttribute="top" id="238-R9-rth"/>
-                                            <constraint firstItem="MVm-ad-Jg6" firstAttribute="leading" secondItem="jaA-3A-VfQ" secondAttribute="leading" id="IMJ-nf-vJt"/>
-                                            <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="jaA-3A-VfQ" secondAttribute="top" constant="20" id="JB6-7t-xEA"/>
-                                            <constraint firstItem="jTL-gV-SRV" firstAttribute="centerX" secondItem="jaA-3A-VfQ" secondAttribute="centerX" id="Kja-VG-OBy"/>
-                                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="jTL-gV-SRV" secondAttribute="centerX" id="M0v-nv-qx5"/>
-                                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jaA-3A-VfQ" secondAttribute="leadingMargin" constant="15" id="hAp-26-RBa"/>
-                                            <constraint firstAttribute="height" constant="24" id="oub-Jn-Dvx"/>
-                                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="MbZ-sd-Eec" secondAttribute="trailing" constant="15" id="rBp-E9-gyG"/>
-                                            <constraint firstAttribute="trailing" secondItem="MVm-ad-Jg6" secondAttribute="trailing" id="tRC-t6-1OH"/>
-                                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="width" secondItem="jTL-gV-SRV" secondAttribute="width" id="u5L-zE-GjN"/>
-                                            <constraint firstItem="jTL-gV-SRV" firstAttribute="height" secondItem="MbZ-sd-Eec" secondAttribute="height" id="uwb-JA-dPk"/>
-                                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerY" secondItem="jTL-gV-SRV" secondAttribute="centerY" id="vb4-1D-hl9"/>
+                                            <constraint firstAttribute="height" constant="68" id="plH-QP-ycX"/>
                                         </constraints>
-                                    </view>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <state key="normal" title="Why do I need a Recovery Key?">
+                                            <color key="titleColor" name="00A886"/>
+                                        </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="plH-QP-ycX"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="whyDoINeedARecoveryKeyTouchUpInside:" destination="mZP-69-mDb" eventType="touchUpInside" id="uQX-wq-XYz"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="iif-ej-krY" secondAttribute="trailing" constant="20" id="1EV-Ac-bEm"/>
-                                    <constraint firstItem="iif-ej-krY" firstAttribute="top" secondItem="F87-ds-YBG" secondAttribute="top" constant="20" id="Nse-ya-VJn"/>
-                                    <constraint firstAttribute="trailing" secondItem="jaA-3A-VfQ" secondAttribute="trailing" constant="28" id="Oy1-ok-5jl"/>
-                                    <constraint firstItem="iif-ej-krY" firstAttribute="leading" secondItem="jaA-3A-VfQ" secondAttribute="leading" id="dxY-UC-AK5"/>
-                                    <constraint firstItem="jaA-3A-VfQ" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" id="rRv-BA-Ozs"/>
+                                    <constraint firstItem="iif-ej-krY" firstAttribute="top" secondItem="F87-ds-YBG" secondAttribute="top" constant="20" id="PCV-8f-cBQ"/>
+                                    <constraint firstItem="iif-ej-krY" firstAttribute="centerX" secondItem="jTL-gV-SRV" secondAttribute="centerX" id="T36-WB-Gag"/>
+                                    <constraint firstAttribute="bottom" secondItem="jTL-gV-SRV" secondAttribute="bottom" constant="306" id="Tgv-Hv-X7r"/>
+                                    <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" constant="30" id="rwl-bY-U4Q"/>
                                     <constraint firstItem="iif-ej-krY" firstAttribute="centerX" secondItem="F87-ds-YBG" secondAttribute="centerX" id="v6V-SW-ht6"/>
-                                    <constraint firstAttribute="bottom" secondItem="jaA-3A-VfQ" secondAttribute="bottom" constant="50" id="yBI-XI-la6"/>
                                     <constraint firstItem="iif-ej-krY" firstAttribute="leading" secondItem="F87-ds-YBG" secondAttribute="leading" constant="20" id="zF1-9I-dn5"/>
                                 </constraints>
                             </scrollView>
@@ -1168,9 +1133,7 @@
                         <outlet property="carbonCopyMasterKeyButton" destination="ODS-fW-K0n" id="1Dp-cm-VSa"/>
                         <outlet property="illustrationView" destination="iif-ej-krY" id="TIm-7r-9Bq"/>
                         <outlet property="saveMasterKey" destination="az8-Aw-mS9" id="ESL-jx-EVz"/>
-                        <outlet property="whyDoINeedARecoveryKeyLabel" destination="MbZ-sd-Eec" id="s6e-EC-AVm"/>
-                        <outlet property="whyDoINeedARecoveryKeyTopSeparatorView" destination="MVm-ad-Jg6" id="s06-Q4-sYz"/>
-                        <outlet property="whyDoINeedARecoveryKeyView" destination="jaA-3A-VfQ" id="Izj-Dc-ctX"/>
+                        <outlet property="whyDoINeedARecoveryKeyButton" destination="jTL-gV-SRV" id="AtX-zP-bma"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mbo-8B-J3H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1951,11 +1914,6 @@
             <point key="canvasLocation" x="-1332" y="1696"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="MbZ-sd-Eec">
-            <size key="intrinsicContentSize" width="218.66666666666666" height="18"/>
-        </designable>
-    </designables>
     <resources>
         <image name="aboutSettings" width="44" height="44"/>
         <image name="advancedSettings" width="44" height="44"/>
@@ -1968,6 +1926,9 @@
         <image name="securitySettings" width="44" height="44"/>
         <image name="termsAndPoliciesSettings" width="44" height="44"/>
         <image name="userInterfaceSettings" width="44" height="44"/>
+        <namedColor name="00A886">
+            <color red="0.0" green="0.6589999794960022" blue="0.52499997615814209" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
