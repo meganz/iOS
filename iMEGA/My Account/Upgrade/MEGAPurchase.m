@@ -129,7 +129,11 @@
     MEGALogDebug(@"[StoreKit] Receipt URL: %@", receiptURL);
     
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
-    if (!receiptData) {
+    NSString *receipt;
+    if (receiptData) {
+        receipt = [receiptData base64EncodedStringWithOptions:0];
+        MEGALogDebug(@"[StoreKit] Vpay receipt: %@", receipt);
+    } else {
         MEGALogWarning(@"[StoreKit] No receipt data");
     }
     
@@ -137,20 +141,23 @@
     
     for(SKPaymentTransaction *transaction in transactions) {
         switch (transaction.transactionState) {
+            case SKPaymentTransactionStatePurchasing:
+                MEGALogDebug(@"[StoreKit] Transaction purchasing");
+                break;
+                
             case SKPaymentTransactionStatePurchased: {
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 
                 NSTimeInterval lastPublicTimestampAccessed = [NSUserDefaults.standardUserDefaults doubleForKey:MEGALastPublicTimestampAccessed];
                 uint64_t lastPublicHandleAccessed = [[NSUserDefaults.standardUserDefaults objectForKey:MEGALastPublicHandleAccessed] unsignedLongLongValue];
                 NSInteger lastPublicTypeAccessed = [NSUserDefaults.standardUserDefaults integerForKey:MEGALastPublicTypeAccessed];
-                NSString *receipt = [receiptData base64EncodedStringWithOptions:0];
                 if (lastPublicTimestampAccessed && lastPublicHandleAccessed && lastPublicTypeAccessed) {
                     [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:receipt lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:self];
                 } else {
                     [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
                 }
                 
-                MEGALogDebug(@"[StoreKit] Transaction purchased, vpay receipt: %@", receipt);
+                MEGALogDebug(@"[StoreKit] Transaction purchased");
                 
                 for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
                     [delegate successfulPurchase:self];
@@ -165,9 +172,8 @@
             case SKPaymentTransactionStateRestored:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 if (shouldSubmitReceiptOnRestore) {
-                    NSString *receipt = [receiptData base64EncodedStringWithOptions:0];
                     [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
-                    MEGALogDebug(@"[StoreKit] Transaction restored, vpay receipt: %@", receipt);
+                    MEGALogDebug(@"[StoreKit] Transaction restored");
                     for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
                         [restoreDelegate successfulRestore:self];
                     }
@@ -180,6 +186,7 @@
                 break;
                 
             case SKPaymentTransactionStateFailed:
+                MEGALogError(@"[StoreKit] Transaction failed");
                 MEGALogError(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@, failed error: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier, transaction.error);
                 
                 if (transaction.error.code != SKErrorPaymentCancelled) {
@@ -192,6 +199,10 @@
                 
                 [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                break;
+                
+            case SKPaymentTransactionStateDeferred:
+                MEGALogDebug(@"[StoreKit] Transaction deferred");
                 break;
                 
             default:
