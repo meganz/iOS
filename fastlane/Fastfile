@@ -25,6 +25,9 @@ SCHEME                  = 'MEGA'
 TEMP_KEYCHAIN_NAME      = "fastlane_appstore"
 TEMP_KEYCHAIN_PASSWORD  = "TEMP_KEYCHAIN_PASSWORD"
 
+ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "600"
+ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "600"
+
 default_platform(:ios)
 
 platform :ios do
