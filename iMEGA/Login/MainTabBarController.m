@@ -106,6 +106,8 @@
     [self showCameraUploadV2MigrationScreenIfNeeded];
     
     [self shouldShowMiniPlayer];
+    
+    [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
