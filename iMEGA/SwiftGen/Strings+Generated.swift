@@ -1317,7 +1317,7 @@ public enum Strings {
     }
     /// Move to the Rubbish Bin
     public static let moveToTheRubbishBin = Strings.tr("Localizable", "moveToTheRubbishBin")
-    /// Multi-factor authentication required
+    /// Two-factor authentication required
     public static let multiFactorAuthenticationRequired = Strings.tr("Localizable", "Multi-factor authentication required")
     /// Mute
     public static let mute = Strings.tr("Localizable", "mute")
@@ -2255,11 +2255,11 @@ public enum Strings {
     public static let transfersSectionFooter = Strings.tr("Localizable", "transfersSectionFooter")
     /// Turn Mobile Data on
     public static let turnMobileDataOn = Strings.tr("Localizable", "Turn Mobile Data on")
-    /// Two-Factor Authentication
+    /// Two-factor authentication
     public static let twoFactorAuthentication = Strings.tr("Localizable", "twoFactorAuthentication")
-    /// Two-Factor Authentication Disabled
+    /// Two-factor authentication disabled
     public static let twoFactorAuthenticationDisabled = Strings.tr("Localizable", "twoFactorAuthenticationDisabled")
-    /// Two-Factor Authentication Enabled
+    /// Two-factor authentication enabled
     public static let twoFactorAuthenticationEnabled = Strings.tr("Localizable", "twoFactorAuthenticationEnabled")
     /// Next time you log in to your account you will be asked to enter a 6-digit code provided by your Authenticator App.
     public static let twoFactorAuthenticationEnabledDescription = Strings.tr("Localizable", "twoFactorAuthenticationEnabledDescription")
@@ -2425,7 +2425,7 @@ public enum Strings {
     public static let week = Strings.tr("Localizable", "week")
     /// weeks
     public static let weeks = Strings.tr("Localizable", "weeks")
-    /// Two-Factor Authentication is a second layer of security for your account.
+    /// Two-factor authentication is a second layer of security for your account.
     public static let whatIsTwoFactorAuthentication = Strings.tr("Localizable", "whatIsTwoFactorAuthentication")
     /// When enabled, photos will be uploaded.
     public static let whenEnabledPhotosWillBeUploaded = Strings.tr("Localizable", "When enabled, photos will be uploaded.")
@@ -2443,9 +2443,9 @@ public enum Strings {
     public static let whyAmISeeingThis = Strings.tr("Localizable", "Why am I seeing this?")
     /// Why do I need a Recovery Key?
     public static let whyDoINeedARecoveryKey = Strings.tr("Localizable", "whyDoINeedARecoveryKey")
-    /// Why do you need Two-Factor Authentication?
+    /// Why do you need two-factor authentication?
     public static let whyYouDoNeedTwoFactorAuthentication = Strings.tr("Localizable", "whyYouDoNeedTwoFactorAuthentication")
-    /// Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.
+    /// Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.
     public static let whyYouDoNeedTwoFactorAuthenticationDescription = Strings.tr("Localizable", "whyYouDoNeedTwoFactorAuthenticationDescription")
     /// Write error
     public static let writeError = Strings.tr("Localizable", "Write error")
