@@ -96,9 +96,9 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromImports() {
-        let selectionHandler: (URL, MEGANode) -> Void = { [weak self] url, targetNode in
+        let selectionHandler: ([URL], MEGANode) -> Void = { [weak self] urls, targetNode in
             guard let self = self else { return }
-            self.uploadFile(fromURL: url, to: targetNode)
+            urls.forEach { self.uploadFile(fromURL: $0, to: targetNode) }
         }
         router.upload(from: .imports(selectionHandler))
     }
