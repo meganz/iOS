@@ -214,13 +214,16 @@ def run_upload(file_content, resource, branch):
         return False
     if branch:
         resource_key = does_resource_exist(resource + "-" + branch)
+        if resource_key == False:
+            if run_branch(resource) == False:
+                print("Error: Cannot upload as the branch does not exist")
+                return False
+            else:
+                resource_key = does_resource_exist(resource + "-" + branch, True)
     else:
         resource_key = does_resource_exist(resource)
     if resource_key:
         if branch:
-            if run_branch(resource) == False:
-                print("Error: Cannot upload as the branch does not exist")
-                return False
             gitlab_resource_file = gitlab_download(resource)
             if gitlab_resource_file:
                 resource = resource + "-" + branch
@@ -522,8 +525,10 @@ def get_resources():
     return resources
 
 # Call this function to check if resource_name exists in Transifex
-def does_resource_exist(resource_name):
+def does_resource_exist(resource_name, refresh = False):
     global resources
+    if refresh:
+        resources = {}
     if len(resources) == 0:
         resources = get_resources()
     for key in resources:
