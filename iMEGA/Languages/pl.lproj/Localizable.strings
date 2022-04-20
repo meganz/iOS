@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Za mało miejsca";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Wymagane uwierzytelnianie wieloskładnikowe";
+"Multi-factor authentication required"="Wymagane jest uwierzytelnianie dwuskładnikowe";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Odmowa dostępu dla użytkowników niebędących administratorami";
 /* SDK error returned when a business account has expired */

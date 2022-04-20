@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="لا يوجد حجم متاح كافي";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="مطلوب المصادقة متعددة العوامل";
+"Multi-factor authentication required"="المصادقة المزدوجة Two-Factor مطلوبة";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="الولوج ممنوع لغيرمستخدمي مدير النظام";
 /* SDK error returned when a business account has expired */

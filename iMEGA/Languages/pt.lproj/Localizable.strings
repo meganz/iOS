@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Cota insuficiente";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Autenticação multifatorial necessária";
+"Multi-factor authentication required"="Autenticação de dois fatores necessária";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Acesso negado para usuários sem permissão de administrador";
 /* SDK error returned when a business account has expired */

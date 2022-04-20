@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="충분하지 않은 할당량";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="다단계 인증이 요구됨";
+"Multi-factor authentication required"="2단계 인증이 필요합니다";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="관리자가 아닌 이용자의 접근이 금지됨";
 /* SDK error returned when a business account has expired */
@@ -2105,7 +2105,7 @@
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA는 당신의 데이터에 접근할 수 없습니다. 그러나 당신의 비즈니스 계정 관리자는 당신의 카메라 업로드에 접근할 수 있습니다.";
 /*  */
-"Something went wrong"="뭔가 잘못 됐습니다";
+"Something went wrong"="뭔가 잘못됐습니다";
 /* Title of the "Links" Shared Items. */
 "Links"="링크";
 /* Title for empty state view of "Links" in Shared Items. */
