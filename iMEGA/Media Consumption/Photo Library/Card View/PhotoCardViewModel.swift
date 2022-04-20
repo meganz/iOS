@@ -36,8 +36,8 @@ class PhotoCardViewModel: ObservableObject {
         thumbnailUseCase
             .loadPreview(for: photo)
             .receive(on: DispatchQueue.global(qos: .utility))
-            .map { [weak self] in
-                ImageContainer(image: Image(contentsOfFile: $0.path))
+            .map { photo in
+                ImageContainer(image: Image(contentsOfFile: photo.path))
             }
             .replaceError(with: nil)
             .compactMap { $0 }
