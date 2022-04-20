@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="容量が足りません";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="多要素認証が必要です";
+"Multi-factor authentication required"="二要素認証が必要です";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="管理者以外のユーザーはアクセスを拒否されています";
 /* SDK error returned when a business account has expired */

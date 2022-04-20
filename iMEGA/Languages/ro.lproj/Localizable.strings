@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Cotă insuficientă";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Este necesară autentificarea cu mai mulți factori";
+"Multi-factor authentication required"="Este necesară autentificarea cu doi factori";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Acces interzis pentru utilizatorii non-admin";
 /* SDK error returned when a business account has expired */
@@ -2986,7 +2986,6 @@
 "help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
-"help.reportIssue.creating.cancel.title"="";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */

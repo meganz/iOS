@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="โควต้าไม่เพียงพอ";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="ต้องการการรับรองความถูกต้องด้วยหลายปัจจัย";
+"Multi-factor authentication required"="ต้องการการรับรองความถูกต้องด้วยสองปัจจัย";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="ปฏิเสธการเข้าถึงสำหรับผู้ใช้ที่ไม่ใช่ผู้ดูแลระบบ";
 /* SDK error returned when a business account has expired */

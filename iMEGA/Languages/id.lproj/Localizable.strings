@@ -319,7 +319,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder Baru";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Media Discovery";
+"cloudDrive.menu.mediaDiscovery.title"="Penemuan Media";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Keluar";
 /* Hint text shown on the create folder alert. */
@@ -353,7 +353,7 @@
 /* Title shown under the action that allows you to get a link to file or folder */
 "cloudDrive.nodeOptions.shareLink"="Bagikan Tautan";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Share Links";
+"cloudDrive.nodeOptions.shareLinks"="Bagikan Tautan";
 /* Item menu option upon right click on one or multiple files. */
 "cloudDrive.nodeOptions.manageLink"="Kelola Link";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
@@ -625,7 +625,7 @@
 /* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
 "general.exportFile"="Ekspor File";
 /* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Export Files";
+"general.exportFiles"="Ekspor File";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Ekspor";
 /* Select all items/elements on the list */
@@ -655,7 +655,7 @@
 /* Title of Photo Years tab */
 "cameraUploads.years.title"="Tahun";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA memiliki akses terbatas ke perpustakaan foto anda dan tidak dapat mencadangkan semua foto anda. Ketuk untuk mengubah izin.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto";
 /* Photo view is empty */
@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Kuota tidak cukup";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Diperlukan otentikasi multi-faktor";
+"Multi-factor authentication required"="Diperlukan otentikasi dua faktor";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Akses ditolak untuk pengguna non-admin";
 /* SDK error returned when a business account has expired */
@@ -1655,17 +1655,17 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Tidak ada Obrolan yang Diarsipkan";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Autentikasi Dua Faktor";
+"twoFactorAuthentication"="Otentikasi dua faktor";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Mulai Setup";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
 "pleaseEnterTheSixDigitCode"="Masukkan kode 6-digit yang dihasilkan oleh aplikasi Otentikasi Anda.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthentication"="Mengapa Anda membutuhkan Otentikasi Dua Faktor?";
+"whyYouDoNeedTwoFactorAuthentication"="Mengapa anda membutuhkan otentikasi dua faktor?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
-"whatIsTwoFactorAuthentication"="Autentikasi Dua Faktor adalah lapisan keamanan kedua untuk akun Anda.";
+"whatIsTwoFactorAuthentication"="Otentikasi dua faktor adalah lapisan keamanan kedua untuk akun Anda.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="Autentikasi Dua Faktor adalah lapisan keamanan kedua untuk akun Anda. Yang berarti bahwa bahkan jika seseorang mengetahui kata sandi Anda, mereka tidak dapat mengaksesnya, tanpa juga memiliki akses ke kode enam digit yang hanya Anda miliki aksesnya.";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Otentikasi dua faktor adalah lapisan keamanan kedua untuk akun Anda. Yang berarti bahwa bahkan jika seseorang mengetahui kata sandi Anda, mereka tidak dapat mengaksesnya, tanpa juga memiliki akses ke kode enam digit yang hanya Anda miliki aksesnya.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "Authenticator app required"="Aplikasi Authenticator diperlukan";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
@@ -1673,7 +1673,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Anda memerlukan aplikasi authenticator untuk mengaktifkan 2FA di MEGA. Anda dapat mengunduh dan memasang aplikasi Google Authenticator, Duo Mobile, Authy, atau Microsoft Authenticator untuk ponsel atau tablet Anda.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="Otentikasi Dua Faktor Diaktifkan";
+"twoFactorAuthenticationEnabled"="Otentikasi dua faktor diaktifkan";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="Lain kali Anda login ke akun Anda, Anda akan diminta memasukkan kode 6-digit yang disediakan oleh aplikasi Otentikasi Anda.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
@@ -1681,7 +1681,7 @@
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="Jika Anda kehilangan akses ke akun Anda setelah mengaktifkan 2FA dan Anda belum mencadangkan Kunci Pemulihan Anda, MEGA tidak dapat membantu Anda mendapatkan akses ke itu lagi.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
-"twoFactorAuthenticationDisabled"="Autentikasi Dua Faktor Dinonaktifkan";
+"twoFactorAuthenticationDisabled"="Otentikasi dua faktor Dinonaktifkan";
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="Pindai atau salin benih ke Aplikasi Authenticator Anda. Pastikan untuk mencadangkan benih ini ke tempat yang aman jika Anda kehilangan ponsel Anda.";
 /* A button to help them restore their account if they have lost their 2FA device. */
@@ -1941,7 +1941,7 @@
 /*  */
 "Yesterday"="Kemarin";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send this location";
+"Send This Location"="Kirim lokasi ini";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Pengaturan peta";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -2031,7 +2031,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Silakan buka bagian Privasi di Pengaturan perangkat Anda. Aktifkan Layanan Lokasi dan atur MEGA ke Saat Menggunakan Aplikasi atau Selalu.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA mengakses lokasi anda saat anda membagikannya dengan kontak anda dalam obrolan.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Data Seluler dimatikan";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2755,21 +2755,21 @@
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Apakah anda ingin membatalkan langganan anda saat ini dan melanjutkan pembelian?";
 /* Dialog title shown before deleting an account with active subscription */
-"account.delete.subscription.title"="Active Subscription";
+"account.delete.subscription.title"="Berlangganan Aktif";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="You have an active MEGA subscription with Apple. You must cancel it separately at Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.itunes"="Anda memiliki langganan MEGA aktif dengan Apple. Anda harus membatalkannya secara terpisah di Langganan, karena MEGA tidak dapat membatalkannya untuk anda. Kunjungi Pusat Bantuan kami untuk informasi lebih lanjut.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
-"account.delete.subscription.itunes.manage"="Manage Subscriptions";
+"account.delete.subscription.itunes.manage"="Kelola Langganan";
 /* Dialog message shown before deleting an account with active Google play subscription */
 "account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
 /* Dialog button title which triggers the action to visit Google play */
-"account.delete.subscription.googlePlay.visit"="Visit Google Play";
+"account.delete.subscription.googlePlay.visit"="Kunjungi Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.huaweiAppGallery"="Anda memiliki langganan MEGA aktif dengan Huawei. Anda harus membatalkannya secara terpisah di Huawei AppGallery, karena MEGA tidak dapat membatalkannya untuk anda. Kunjungi Pusat Bantuan kami untuk informasi lebih lanjut.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
-"account.delete.subscription.huaweiAppGallery.visit"="Visit AppGallery";
+"account.delete.subscription.huaweiAppGallery.visit"="Kunjungi AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.";
+"account.delete.subscription.webClient"="Ini adalah langkah terakhir untuk menghapus akun anda. Akun dan langganan anda akan dihapus dan anda akan kehilangan semua data yang tersimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Panggilan lain sedang berlangsung. Harap akhiri panggilan anda saat ini sebelum melakukan panggilan lain.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */

@@ -1127,7 +1127,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Jaarlijks";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Deze in-App Aankoop is niet beschikbaar in de Applicatie Winkel op dit moment. Verifieer de betalingsinstellingen voor uw Apple-ID.";
+"inAppPurchase.error.alert.title.notAvailable"="Dit in-App Aankoop item is niet beschikbaar in de Applicatie Winkel op dit moment. Verifieer de betalingsinstellingen voor uw Apple-ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Applicatie Winkel Instellingen";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Niet genoeg tegoed";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Multi-factor authenticatie vereist";
+"Multi-factor authentication required"="Twee-staps authenticatie vereist";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Toegang geweigerd voor niet-admin-gebruikers";
 /* SDK error returned when a business account has expired */
@@ -1655,17 +1655,17 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Geen Gearchiveerde Gesprekken";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Twee-Stap Authenticatie";
+"twoFactorAuthentication"="Twee-staps authenticatie";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Begin de Instelling";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
 "pleaseEnterTheSixDigitCode"="Voer de 6-cijferige code gegenereerd door uw Authenticatie Applicatie in.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthentication"="Waarom heeft u Twee-Stap Authenticatie nodig?";
+"whyYouDoNeedTwoFactorAuthentication"="Waarom heeft u twee-staps authenticatie nodig?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
-"whatIsTwoFactorAuthentication"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account";
+"whatIsTwoFactorAuthentication"="Twee-staps authenticatie is een tweede laag aan beveiliging voor uw account";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="Twee-Stap Authenticatie is een tweede laag aan beveiliging voor uw account. Wat betekend dat zelfs als iemand uw wachtwoord weet ze geen toegang hebben zonder dat, zonder ook toegang te hebben tot de zes cijferige code waar alleen u toegang tot heeft.";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Twee-staps authenticatie is een tweede laag aan beveiliging voor uw account. Wat betekend dat zelfs als iemand uw wachtwoord weet ze geen toegang hebben zonder dat, zonder ook toegang te hebben tot de zes cijferige code waar alleen u toegang tot heeft.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "Authenticator app required"="Authenticatie applicatie vereist";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
@@ -1673,7 +1673,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="U heeft een authenticatie applicatie nodig om 2FA in te schakelen op MEGA. U kunt de applicatie Google Authenticator, Duo Mobile, Authy of Microsoft Authenticator downloaden en installeren voor uw telefoon of tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="Twee-Stap Authenticatie Ingeschakeld";
+"twoFactorAuthenticationEnabled"="Twee-staps authenticatie ingeschakeld";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="De volgende keer dat u inlogt in uw account wordt u gevraagd een 6-cijferige code in te voeren die gegeven is door uw Authenticatie Applicatie.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
@@ -1681,7 +1681,7 @@
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="Als u toegang verliest tot uw account nadat u 2FA heeft ingeschakeld en u uw Herstelsleutel niet heeft opgeslagen, dan kan MEGA u niet helpen de toegang terug te krijgen.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
-"twoFactorAuthenticationDisabled"="Twee-Stap Authenticatie Uitgeschakeld";
+"twoFactorAuthenticationDisabled"="Twee-staps authenticatie uitgeschakeld";
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="Scan of kopieer de seed naar uw Authenticator Applicatie. Zorg ervoor dat u een backup maakt op een veilige plek voor het geval u uw apparaat verliest.";
 /* A button to help them restore their account if they have lost their 2FA device. */
@@ -2655,7 +2655,7 @@
 /* Delete the default backup folder warning message */
 "dialog.delete.backup.folder.warning.message"="Weet u zeker dat u uw back-up map wilt verwijderen en de door u ingestelde back-up wilt uitschakelen?";
 /* Add new items to a backup folder warning title. %@ is a folder */
-"dialog.add.items.backup.folder.warning.title"="Artikel toevoegen naar “%@”";
+"dialog.add.items.backup.folder.warning.title"="Item toevoegen naar “%@”";
 /* Add new items to a backup folder warning message */
 "dialog.add.items.backup.folder.warning.message"="Als u items aan deze map toevoegt, wordt de back-upbestemming gewijzigd. De back-up wordt voor de veiligheid uitgeschakeld. Is dit wat u wilt doen? Back-ups kunnen opnieuw worden ingeschakeld met de MEGA Desktop-Applicatie.";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */

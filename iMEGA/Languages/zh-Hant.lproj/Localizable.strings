@@ -1455,7 +1455,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="配額不足";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="需要多重驗證";
+"Multi-factor authentication required"="需要雙重驗證";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="非管理員所以拒絕存取";
 /* SDK error returned when a business account has expired */
