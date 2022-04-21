@@ -2341,8 +2341,6 @@ public enum Strings {
     public static let uploadSharedAlbums = Strings.tr("Localizable", "Upload Shared Albums")
     /// Upload Videos for Live Photos
     public static let uploadVideosForLivePhotos = Strings.tr("Localizable", "Upload Videos for Live Photos")
-    /// Import From…
-    public static let uploadFrom = Strings.tr("Localizable", "uploadFrom")
     /// UPLOAD transfers
     public static let uploadInUppercaseTransfers = Strings.tr("Localizable", "uploadInUppercaseTransfers")
     /// Uploads
@@ -3071,6 +3069,10 @@ public enum Strings {
       public enum Sort {
         /// Label
         public static let label = Strings.tr("Localizable", "cloudDrive.sort.label")
+      }
+      public enum Upload {
+        /// Import from Files
+        public static let importFromFiles = Strings.tr("Localizable", "cloudDrive.upload.importFromFiles")
       }
     }
     public enum Contact {
