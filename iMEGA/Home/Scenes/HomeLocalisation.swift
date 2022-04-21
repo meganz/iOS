@@ -27,7 +27,7 @@ enum HomeLocalisation: String {
         case .capture:
             return Strings.Localizable.capturePhotoVideo
         case .imports:
-            return Strings.Localizable.uploadFrom
+            return Strings.Localizable.CloudDrive.Upload.importFromFiles
         case .documentScan:
             return Strings.Localizable.scanDocument
         case .upload:
