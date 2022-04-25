@@ -107,6 +107,7 @@ final class HomeViewController: UIViewController {
             activateSearch()
         }
         AudioPlayerManager.shared.addDelegate(self);
+        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
     }
 
     private func setupViewModelEventListening() {

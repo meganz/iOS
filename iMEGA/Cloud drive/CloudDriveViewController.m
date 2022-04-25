@@ -833,9 +833,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
         }];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"cloudDrive.upload.importFromFiles", nil) detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
         UIDocumentPickerViewController *documentPicker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentPicker.delegate = self;
+        documentPicker.allowsMultipleSelection = YES;
         documentPicker.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
         [self presentViewController:documentPicker animated:YES completion:nil];
     }]];
