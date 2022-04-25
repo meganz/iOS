@@ -279,7 +279,12 @@
                 errorString = NSLocalizedString(@"transfer.cell.shareOwnerStorageQuota.infoLabel", @"A message shown when uploading to an incoming share and the owner’s account is over its storage quota.");
             } else {
                 MEGAError *error = self.transfer.lastErrorExtended;
-                errorString = [MEGAError errorStringWithErrorCode:error.type context:(self.transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
+                
+                if (error.type == MEGAErrorTypeApiEBlocked && self.transfer.type != MEGATransferTypeUpload) {
+                    errorString = NSLocalizedString(@"transfer.error.termsOfServiceViolation", @"Error shown when downloading a file that has violated Terms of Service.");
+                } else {
+                    errorString = [MEGAError errorStringWithErrorCode:error.type context:(self.transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
+                }
             }
             
             NSAttributedString *status = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ %@", transferFailed, NSLocalizedString(errorString, nil)] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
