@@ -1425,8 +1425,6 @@ public enum Strings {
     public static let noRequestPending = Strings.tr("Localizable", "noRequestPending")
     /// No Results
     public static let noResults = Strings.tr("Localizable", "noResults")
-    /// Not accessible due to a ToS or AUP violation
-    public static let notAccessibleDueToToSAUPViolation = Strings.tr("Localizable", "Not accessible due to ToS/AUP violation")
     /// Not enough quota
     public static let notEnoughQuota = Strings.tr("Localizable", "Not enough quota")
     /// Not found
@@ -3817,6 +3815,10 @@ public enum Strings {
           /// Share owner is over storage quota.
           public static let infoLabel = Strings.tr("Localizable", "transfer.cell.shareOwnerStorageQuota.infoLabel")
         }
+      }
+      public enum Error {
+        /// File removed as it violated our Terms of Service
+        public static let termsOfServiceViolation = Strings.tr("Localizable", "transfer.error.termsOfServiceViolation")
       }
     }
   }
