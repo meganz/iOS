@@ -73,6 +73,38 @@ final class MeetingContainerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 0)
     }
+    
+    func testAction_displayParticipantInMainView() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callManagerUserCase = MockCallManagerUseCase()
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
+        test(viewModel: viewModel, action: .displayParticipantInMainView(particpant), expectedCommands: [])
+        XCTAssert(router.displayParticipantInMainView_calledTimes == 1)
+    }
+    
+    func testAction_didDisplayParticipantInMainView() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callManagerUserCase = MockCallManagerUseCase()
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
+        test(viewModel: viewModel, action: .didDisplayParticipantInMainView(particpant), expectedCommands: [])
+        XCTAssert(router.didDisplayParticipantInMainView_calledTimes == 1)
+    }
+    
+    func testAction_didSwitchToGridView() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callManagerUserCase = MockCallManagerUseCase()
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, call: CallEntity(), callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        test(viewModel: viewModel, action: .didSwitchToGridView, expectedCommands: [])
+        XCTAssert(router.didSwitchToGridView_calledTimes == 1)
+    }
 }
 
 final class MockMeetingContainerRouter: MeetingContainerRouting {
@@ -85,7 +117,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var renameChat_calledTimes = 0
     var showMeetingError_calledTimes = 0
     var enableSpeaker_calledTimes = 0
-    var didAddFirstParticipant_calledTimes = 0
+    var displayParticipantInMainView_calledTimes = 0
+    var didDisplayParticipantInMainView_calledTimes = 0
+    var didSwitchToGridView_calledTimes = 0
 
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
@@ -124,7 +158,15 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
         enableSpeaker_calledTimes += 1
     }
     
-    func didAddFirstParticipant() {
-        didAddFirstParticipant_calledTimes += 1
+    func displayParticipantInMainView(_ participant: CallParticipantEntity) {
+        displayParticipantInMainView_calledTimes += 1
+    }
+    
+    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity){
+        didDisplayParticipantInMainView_calledTimes += 1
+    }
+    
+    func didSwitchToGridView(){
+        didSwitchToGridView_calledTimes += 1
     }
 }

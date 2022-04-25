@@ -18,7 +18,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), removeModeratorAction(), removeContactAction()]),
+                .configView(email: "test@email.com", actions: [
+                    infoAction(), sendMessageAction(), removeModeratorAction(), displayInMainViewAction(), removeContactAction()
+                ]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -40,7 +42,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [removeModeratorAction(), removeContactAction()]),
+                .configView(email: "test@email.com", actions: [
+                    removeModeratorAction(), displayInMainViewAction(), removeContactAction()
+                ]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -62,7 +66,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction(), makeModeratorAction(), removeContactAction()]),
+                .configView(email: "test@email.com", actions: [
+                    infoAction(), sendMessageAction(), makeModeratorAction(), displayInMainViewAction(), removeContactAction()
+                ]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -84,7 +90,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [makeModeratorAction(), removeContactAction()]),
+                .configView(email: "test@email.com", actions: [
+                    makeModeratorAction(), displayInMainViewAction(), removeContactAction()
+                ]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -106,7 +114,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction()]),
+                .configView(email: "test@email.com", actions: [
+                    infoAction(), sendMessageAction(), displayInMainViewAction()
+                ]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -127,7 +137,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [infoAction(), sendMessageAction()]),
+                .configView(email: "test@email.com", actions: [
+                    displayInMainViewAction()
+                ]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -149,7 +161,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(email: "test@email.com", actions: [makeModeratorAction(), removeContactAction()]),
+                .configView(email: "test@email.com", actions: [
+                    makeModeratorAction(), displayInMainViewAction(), removeContactAction()
+                ]),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -260,6 +274,24 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         XCTAssert(router.removeParticipant_calledTimes == 1)
     }
     
+    func testAction_displayInMainView() {
+        let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100,  isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
+        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let router = MockMeetingParticpiantInfoViewRouter()
+        
+        
+        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+                                                        userImageUseCase: userImageUseCase,
+                                                        chatRoomUseCase: chatRoomUseCase,
+                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
+                                                        isMyselfModerator: true,
+                                                        router: router)
+        
+        viewModel.dispatch(.displayInMainView)
+        XCTAssert(router.displayInMainView_calledTimes == 1)
+    }
+    
     //MARK:- Private methods
     
     private func infoAction() -> ActionSheetAction {
@@ -303,6 +335,13 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                           image: Asset.Images.NodeActions.delete.image,
                           style: .destructive) {}
     }
+    
+    private func displayInMainViewAction() -> ActionSheetAction {
+        ActionSheetAction(title: Strings.Localizable.Meetings.DisplayInMainView.title,
+                          detail: nil,
+                          image: Asset.Images.Chat.speakerView.image,
+                          style: .default) {}
+    }
 }
 
 final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
@@ -313,6 +352,7 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     var makeParticipantAsModerator_calledTimes = 0
     var removeParticipantAsModerator_calledTimes = 0
     var removeParticipant_calledTimes = 0
+    var displayInMainView_calledTimes = 0
 
     func showInfo() {
         showInfo_calledTimes += 1
@@ -340,5 +380,9 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     
     func removeParticipant() {
         removeParticipant_calledTimes += 1
+    }
+    
+    func displayInMainView() {
+        displayInMainView_calledTimes += 1
     }
 }

@@ -20,6 +20,7 @@ enum CallViewAction: ActionType {
     case fetchSpeakerAvatar
     case particpantIsVisible(_ participant: CallParticipantEntity, index: Int)
     case indexVisibleParticipants([Int])
+    case pinParticipantAsSpeaker(CallParticipantEntity)
 }
 
 enum ParticipantsLayoutMode {
@@ -50,7 +51,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case insertParticipant([CallParticipantEntity])
         case deleteParticipantAt(Int, [CallParticipantEntity])
         case reloadParticipantAt(Int, [CallParticipantEntity])
-        case updateSpeakerViewFor(CallParticipantEntity?)
+        case updateSpeakerViewFor(CallParticipantEntity)
         case localVideoFrame(Int, Int, Data)
         case participantAdded(String)
         case participantRemoved(String)
@@ -81,12 +82,23 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var callParticipants = [CallParticipantEntity]()
     private var indexOfVisibleParticipants = [Int]()
     private var speakerParticipant: CallParticipantEntity? {
-        didSet(newValue) {
-            invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
+        didSet {
+            guard let speaker = speakerParticipant else { return }
+            invokeCommand?(.updateSpeakerViewFor(speaker))
+            containerViewModel?.dispatch(.didDisplayParticipantInMainView(speaker))
         }
     }
     private var isSpeakerParticipantPinned: Bool = false
-    internal var layoutMode: ParticipantsLayoutMode = .grid
+    internal var layoutMode: ParticipantsLayoutMode = .grid {
+        didSet {
+            if layoutMode == .grid {
+                containerViewModel?.dispatch(.didSwitchToGridView)
+                speakerParticipant = nil
+            } else if speakerParticipant == nil {
+                speakerParticipant = callParticipants.first
+            }
+        }
+    }
     private var localVideoEnabled: Bool = false
     private var reconnecting: Bool = false
     private var switchingCamera: Bool = false
@@ -161,9 +173,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             layoutMode = .speaker
         } else {
             layoutMode = .grid
-        }
-        if speakerParticipant == nil {
-            speakerParticipant = callParticipants.first
         }
         
         invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
@@ -363,6 +372,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             indexOfVisibleParticipants.append(index)
         case .indexVisibleParticipants(let visibleIndex):
             updateVisibeParticipants(for: visibleIndex)
+        case .pinParticipantAsSpeaker(let participant):
+            pinParticipantAsSpeaker(participant)
         }
     }
     
@@ -407,6 +418,20 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             isSpeakerParticipantPinned = false
             invokeCommand?(.selectPinnedCellAt(nil))
         }
+    }
+    
+    private func pinParticipantAsSpeaker(_ participant: CallParticipantEntity) {
+        if layoutMode == .grid {
+            switchLayout()
+        }
+        
+        guard let participantIndex = callParticipants.firstIndex(of: participant) else {
+            assert(true, "participant not found")
+            MEGALogDebug("Participant not found \(participant) in the list")
+            return
+        }
+                
+        tappedParticipant(participant, at: IndexPath(item: participantIndex, section: 0))
     }
     
     private func switchVideoResolutionHighToLow(for clientId: MEGAHandle, in chatId: MEGAHandle) {

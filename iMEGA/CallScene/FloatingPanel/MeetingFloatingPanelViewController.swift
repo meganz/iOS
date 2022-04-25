@@ -140,6 +140,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
             updateInTheMeetingLabel()
         case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
             selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
+        case .transitionToShortForm:
+            panModalSetNeedsLayoutUpdate()
+            panModalTransition(to: .shortForm)
         }
     }
     

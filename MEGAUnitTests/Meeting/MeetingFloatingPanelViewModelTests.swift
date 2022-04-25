@@ -645,7 +645,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var shareLink_calledTimes = 0
     var inviteParticpants_calledTimes = 0
     var showContextMenu_calledTimes = 0
-    
+
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
     }
@@ -680,6 +680,10 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     func showAudioPermissionError() {
         audioPermissionError_calledTimes += 1
     }
+    
+    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity) {}
+    
+    func didSwitchToGridView() {}
 }
 
 extension DevicePermissionCheckingProtocol {

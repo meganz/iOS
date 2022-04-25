@@ -8,6 +8,7 @@ enum MeetingParticpiantInfoAction: ActionType {
     case makeModerator
     case removeModerator
     case removeParticipant
+    case displayInMainView
 }
 
 struct MeetingParticpiantInfoViewModel: ViewModelType {
@@ -59,30 +60,37 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
             router.removeModeratorPrivilage()
         case .removeParticipant:
             router.removeParticipant()
+        case .displayInMainView:
+            router.displayInMainView()
         }
     }
     
     // MARK: - Private methods.
     
     private func actions() -> [ActionSheetAction] {
-        if isMyselfModerator {
-            var actions: [ActionSheetAction] = []
-            
-            if !participant.isModerator && participant.isInContactList {
-                actions.append(contentsOf: [infoAction(), sendMessageAction(), makeModeratorAction()])
-            } else if !participant.isModerator && !participant.isInContactList {
-                actions.append(contentsOf: [makeModeratorAction()])
-            } else if participant.isModerator && participant.isInContactList {
-                actions.append(contentsOf: [infoAction(), sendMessageAction(), removeModeratorAction()])
-            } else if participant.isModerator && !participant.isInContactList {
-                actions.append(contentsOf: [removeModeratorAction()])
-            }
-            
-            actions.append(removeContactAction())
-            return actions
-        } else {
-            return [infoAction(), sendMessageAction()]
+        var actions: [ActionSheetAction] = []
+        
+        if participant.isInContactList {
+            actions.append(contentsOf: [infoAction(), sendMessageAction()])
         }
+                
+        if isMyselfModerator {
+            if participant.isModerator {
+                actions.append(removeModeratorAction())
+            } else {
+                actions.append(makeModeratorAction())
+            }
+        }
+        
+        if !participant.isSpeakerPinned {
+            actions.append(displayInMainViewAction())
+        }
+        
+        if isMyselfModerator {
+            actions.append(removeContactAction())
+        }
+        
+        return actions
     }
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
@@ -200,6 +208,15 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
                           image: Asset.Images.NodeActions.delete.image,
                           style: .destructive) {
             dispatch(.removeParticipant)
+        }
+    }
+    
+    private func displayInMainViewAction() -> ActionSheetAction {
+        ActionSheetAction(title: Strings.Localizable.Meetings.DisplayInMainView.title,
+                          detail: nil,
+                          image: Asset.Images.Chat.speakerView.image,
+                          style: .default) {
+            dispatch(.displayInMainView)
         }
     }
 }

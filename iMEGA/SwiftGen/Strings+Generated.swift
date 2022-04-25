@@ -3636,6 +3636,10 @@ public enum Strings {
         /// Start meeting
         public static let startMeeting = Strings.tr("Localizable", "meetings.createMeeting.startMeeting")
       }
+      public enum DisplayInMainView {
+        /// Display in Main View
+        public static let title = Strings.tr("Localizable", "meetings.displayInMainView.title")
+      }
       public enum EnterMeetingLink {
         /// Enter Meeting Link
         public static let title = Strings.tr("Localizable", "meetings.enterMeetingLink.title")

@@ -131,9 +131,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         viewModel.layoutMode = .grid
         test(viewModel: viewModel,
              action: .tapOnLayoutModeButton,
-             expectedCommands: [.updateSpeakerViewFor(nil),
-                                .switchLayoutMode(layout: .speaker, participantsCount: 0)
-                                ])
+             expectedCommands: [
+                .switchLayoutMode(layout: .speaker, participantsCount: 0)
+             ])
     }
     
     func testAction_tapOnBackButton() {

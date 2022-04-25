@@ -13,6 +13,8 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel)
     func showVideoPermissionError()
     func showAudioPermissionError()
+    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
+    func didSwitchToGridView()
 }
 
 extension MeetingFloatingPanelRouting {
@@ -109,6 +111,14 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             meetingFloatingPanelModel: meetingFloatingPanelModel)
         
         participantInfoRouter.start()
+    }
+    
+    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity) {
+        viewModel?.dispatch(.didDisplayParticipantInMainView(participant))
+    }
+    
+    func didSwitchToGridView() {
+        viewModel?.dispatch(.didSwitchToGridView)
     }
     
     func showVideoPermissionError() {

@@ -235,15 +235,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         callCollectionView.changeLayoutMode(mode)
     }
     
-    private func updateSpeaker(_ participant: CallParticipantEntity?) {
-        guard let speaker = participant else {
-            return
-        }
-        speaker.speakerVideoDataDelegate = self
+    private func updateSpeaker(_ participant: CallParticipantEntity) {
+        participant.speakerVideoDataDelegate = self
         viewModel.dispatch(.fetchSpeakerAvatar)
-        speakerRemoteVideoImageView.isHidden = speaker.video != .on
-        speakerMutedImageView.isHidden = speaker.audio == .on
-        speakerNameLabel.text = speaker.name
+        speakerRemoteVideoImageView.isHidden = participant.video != .on
+        speakerMutedImageView.isHidden = participant.audio == .on
+        speakerNameLabel.text = participant.name
     }
     
     private func showNotification(message: String, color: UIColor) {

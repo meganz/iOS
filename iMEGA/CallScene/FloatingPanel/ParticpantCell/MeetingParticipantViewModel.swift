@@ -22,7 +22,7 @@ struct MeetingParticipantViewModel: ViewModelType {
             return true
         }
         
-        return isMe || (!isMyselfModerator && !participant.isInContactList) || isOneToOneChat
+        return isMe || isOneToOneChat
     }
     
     private var isMe: Bool {
@@ -31,14 +31,6 @@ struct MeetingParticipantViewModel: ViewModelType {
     
     private var isOneToOneChat: Bool {
         return chatRoomUseCase.chatRoom(forChatId: participant.chatId)?.chatType == .oneToOne
-    }
-    
-    private var isMyselfModerator: Bool {
-        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: participant.chatId) else {
-            return false
-        }
-        
-        return chatRoomEntity.ownPrivilege == .moderator
     }
     
     var invokeCommand: ((Command) -> Void)?
