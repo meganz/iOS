@@ -13,6 +13,9 @@ enum MeetingFloatingPanelAction: ActionType {
     case makeModerator(participant: CallParticipantEntity)
     case removeModeratorPrivilage(forParticipant: CallParticipantEntity)
     case removeParticipant(participant: CallParticipantEntity)
+    case displayParticipantInMainView(_ participant: CallParticipantEntity)
+    case didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
+    case didSwitchToGridView
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -27,6 +30,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case cameraTurnedOn(on: Bool)
         case reloadParticpantsList(participants: [CallParticipantEntity])
         case updatedAudioPortSelection(audioPort: AudioPort,bluetoothAudioRouteAvailable: Bool)
+        case transitionToShortForm
     }
     
     private let router: MeetingFloatingPanelRouting
@@ -185,6 +189,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let call = call, let index = callParticipants.firstIndex(of: participant) else { return }
             callParticipants.remove(at: index)
             callUseCase.removePeer(fromCall: call, peerId: participant.participantId)
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        case .displayParticipantInMainView(let participant):
+            containerViewModel?.dispatch(.displayParticipantInMainView(participant))
+            invokeCommand?(.transitionToShortForm)
+        case .didDisplayParticipantInMainView(let participant):
+            callParticipants.forEach { $0.isSpeakerPinned = $0 == participant }
+            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        case .didSwitchToGridView:
+            callParticipants.forEach { $0.isSpeakerPinned = false }
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         }
     }

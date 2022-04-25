@@ -8,6 +8,7 @@ protocol MeetingParticpiantInfoViewRouting: Routing {
     func makeParticipantAsModerator()
     func removeModeratorPrivilage()
     func removeParticipant()
+    func displayInMainView()
 }
 
 struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
@@ -108,4 +109,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         SVProgressHUD.showError(withStatus: message)
     }
 
+    func displayInMainView() {
+        meetingFloatingPanelModel?.dispatch(.displayParticipantInMainView(participant))
+    }
 }

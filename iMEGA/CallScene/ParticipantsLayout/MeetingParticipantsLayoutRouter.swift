@@ -54,4 +54,8 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     func showRenameChatAlert() {
         viewModel?.dispatch(.showRenameChatAlert)
     }
+    
+    func pinParticipantAsSpeaker(_ participant: CallParticipantEntity) {
+        viewModel?.dispatch(.pinParticipantAsSpeaker(participant))
+    }
 }

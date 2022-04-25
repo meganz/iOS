@@ -27,7 +27,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
+                .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -42,7 +42,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
+                .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -57,7 +57,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
+                .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -72,7 +72,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isModerator: true, isMicMuted: true, isVideoOn: false, shouldHideContextMenu: true),
+                .configView(isModerator: true, isMicMuted: true, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])
@@ -87,7 +87,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(isModerator: true, isMicMuted: false, isVideoOn: true, shouldHideContextMenu: true),
+                .configView(isModerator: true, isMicMuted: false, isVideoOn: true, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])

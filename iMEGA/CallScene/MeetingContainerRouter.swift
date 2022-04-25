@@ -11,6 +11,9 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func renameChat()
     func showShareMeetingError()
     func enableSpeaker(_ enable: Bool)
+    func displayParticipantInMainView(_ participant: CallParticipantEntity)
+    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
+    func didSwitchToGridView()
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -178,6 +181,18 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func renameChat() {
         meetingParticipantsRouter?.showRenameChatAlert()
+    }
+    
+    func displayParticipantInMainView(_ participant: CallParticipantEntity) {
+        meetingParticipantsRouter?.pinParticipantAsSpeaker(participant)
+    }
+    
+    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity) {
+        floatingPanelRouter?.didDisplayParticipantInMainView(participant)
+    }
+    
+    func didSwitchToGridView() {
+        floatingPanelRouter?.didSwitchToGridView()
     }
     
     func enableSpeaker(_ enable: Bool) {
