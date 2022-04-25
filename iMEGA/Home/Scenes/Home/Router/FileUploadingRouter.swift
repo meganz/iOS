@@ -47,7 +47,7 @@ final class FileUploadingRouter {
 
     // MARK: - Display Import Selection View Controller
 
-    private func presentImportSelection(withCompletion completion: @escaping (URL, MEGANode) -> Void) {
+    private func presentImportSelection(withCompletion completion: @escaping ([URL], MEGANode) -> Void) {
         let documentPickerViewController = UIDocumentPickerViewController(
             documentTypes: [
                 kUTTypeContent as String,
@@ -59,15 +59,16 @@ final class FileUploadingRouter {
             ],
             in: .import
         )
+        documentPickerViewController.allowsMultipleSelection = true
 
         var documentImportsDelegate: DocumentImportsDelegate? {
             let documentImportsDelegate = DocumentImportsDelegate()
             documentImportsDelegate.navigationController = navigationController
-            documentImportsDelegate.importsURLCompletion = { [documentImportsDelegate, weak self] url in
+            documentImportsDelegate.importsURLsCompletion = { [documentImportsDelegate, weak self] urls in
                 _ = documentImportsDelegate
                 asyncOnMain {
                     self?.presentDestinationFolderBrowser(with: { targetNode in
-                        completion(url, targetNode)
+                        completion(urls, targetNode)
                     })
                 }
             }
@@ -182,7 +183,7 @@ final class FileUploadingRouter {
         case camera(_ completion: (String, MEGANode) -> Void)
 
         // Upload from imports
-        case imports(_ completion: (URL, MEGANode) -> Void)
+        case imports(_ completion: ([URL], MEGANode) -> Void)
 
         // Upload from document scan
         case documentScan
@@ -193,14 +194,14 @@ fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentPickerDeleg
 
     weak var navigationController: UINavigationController?
 
-    var importsURLCompletion: ((URL) -> Void)?
+    var importsURLsCompletion: (([URL]) -> Void)?
 
     // MARK: - UIDocumentPickerDelegate
-
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard controller.documentPickerMode == .import else { return }
-        importsURLCompletion?(url)
-        importsURLCompletion = nil
+        importsURLsCompletion?(urls)
+        importsURLsCompletion = nil
     }
 }
 

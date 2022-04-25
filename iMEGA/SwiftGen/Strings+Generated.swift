@@ -1425,8 +1425,6 @@ public enum Strings {
     public static let noRequestPending = Strings.tr("Localizable", "noRequestPending")
     /// No Results
     public static let noResults = Strings.tr("Localizable", "noResults")
-    /// Not accessible due to a ToS or AUP violation
-    public static let notAccessibleDueToToSAUPViolation = Strings.tr("Localizable", "Not accessible due to ToS/AUP violation")
     /// Not enough quota
     public static let notEnoughQuota = Strings.tr("Localizable", "Not enough quota")
     /// Not found
@@ -2341,8 +2339,6 @@ public enum Strings {
     public static let uploadSharedAlbums = Strings.tr("Localizable", "Upload Shared Albums")
     /// Upload Videos for Live Photos
     public static let uploadVideosForLivePhotos = Strings.tr("Localizable", "Upload Videos for Live Photos")
-    /// Import From…
-    public static let uploadFrom = Strings.tr("Localizable", "uploadFrom")
     /// UPLOAD transfers
     public static let uploadInUppercaseTransfers = Strings.tr("Localizable", "uploadInUppercaseTransfers")
     /// Uploads
@@ -3071,6 +3067,10 @@ public enum Strings {
       public enum Sort {
         /// Label
         public static let label = Strings.tr("Localizable", "cloudDrive.sort.label")
+      }
+      public enum Upload {
+        /// Import from Files
+        public static let importFromFiles = Strings.tr("Localizable", "cloudDrive.upload.importFromFiles")
       }
     }
     public enum Contact {
@@ -3815,6 +3815,10 @@ public enum Strings {
           /// Share owner is over storage quota.
           public static let infoLabel = Strings.tr("Localizable", "transfer.cell.shareOwnerStorageQuota.infoLabel")
         }
+      }
+      public enum Error {
+        /// File removed as it violated our Terms of Service
+        public static let termsOfServiceViolation = Strings.tr("Localizable", "transfer.error.termsOfServiceViolation")
       }
     }
   }

@@ -332,8 +332,8 @@
 "Document scanning is not available"="Document scanning is not available";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="There is already a file with the same name";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Import From…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="Import from Files";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] already uploaded with the name [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="Terms of Service breached";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transfer failed due to a recursive directory structure";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Not accessible due to a ToS or AUP violation";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="File removed as it violated our Terms of Service";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL verification failed";
 /* Label shown when current account does not have enough quota to complete the operation */
