@@ -21,7 +21,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "GradientView.h"
-#import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGA-Swift.h"
@@ -44,7 +43,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactDetailsRowVerifyCredentials
 };
 
-@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate, PushNotificationControlProtocol, ContactTableViewCellDelegate>
+@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate, PushNotificationControlProtocol, ContactTableViewCellDelegate, SharedItemsTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -178,6 +177,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self.tableView sizeHeaderToFit];
     
     [self updateAppearance];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -286,17 +287,24 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     return cell;
 }
 
-- (ContactTableViewCell *)cellForSharedFoldersWithIndexPath:(NSIndexPath *)indexPath  {
-    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
+- (SharedItemsTableViewCell *)cellForSharedFoldersWithIndexPath:(NSIndexPath *)indexPath  {
+    SharedItemsTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"sharedItemsTableViewCell" forIndexPath:indexPath];
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
-    cell.avatarImageView.image = UIImage.mnz_incomingFolderImage;
+    cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     cell.nameLabel.text = node.name;
-    cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:MEGASdkManager.sharedMEGASdk];
+    cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:MEGASdkManager.sharedMEGASdk];
     MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
-    cell.permissionsImageView.image = [UIImage mnz_permissionsButtonImageForShareType:shareType];
+    [cell.permissionsButton setImage:[UIImage mnz_permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
     
     if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-        cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
+        cell.userInteractionEnabled = cell.thumbnailImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
+    }
+    
+    cell.favouriteView.hidden = !node.isFavourite;
+    cell.labelView.hidden = (node.label == MEGANodeLabelUnknown);
+    if (node.label != MEGANodeLabelUnknown) {
+        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
+        cell.labelImageView.image = [UIImage imageNamed:labelString];
     }
     
     return cell;
@@ -805,16 +813,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 #pragma mark - IBActions
 
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
-    
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeSharedItem isIncoming:YES sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
-}
-
 - (IBAction)backTouchUpInside:(id)sender {
     if (self.contactDetailsMode == ContactDetailsModeMeeting) {
         [self dismissViewControllerAnimated:true completion:nil];
@@ -905,9 +903,12 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             cell = [self cellForAddAndRemoveContactWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionSharedFolders:
-            cell = [self cellForSharedFoldersWithIndexPath:indexPath];
-            break;
+        case ContactDetailsSectionSharedFolders: {
+            SharedItemsTableViewCell *cell = [self cellForSharedFoldersWithIndexPath:indexPath];
+            cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+            cell.delegate = self;
+            return cell;
+        }
             
         case ContactDetailsSectionManageChatHistory:
             cell = [self cellForManageChatHistoryWithIndexPath:indexPath];
@@ -1056,9 +1057,43 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [node mnz_leaveSharingInViewController:self];
             break;
             
+        case MegaNodeActionTypeFavourite:
+            if (@available(iOS 14.0, *)) {
+                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    if (error.type == MEGAErrorTypeApiOk) {
+                        if (request.numDetails == 1) {
+                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
+                        } else {
+                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
+                        }
+                    }
+                }];
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
+            } else {
+                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
+            }
+            break;
+            
+        case MegaNodeActionTypeLabel:
+            [node mnz_labelActionSheetInViewController:self];
+            break;
+            
         default:
             break;
     }
+}
+
+
+#pragma mark - SharedItemsTableViewCellDelegate
+
+- (void)didTapInfoButtonWithSender:(UIButton *)sender {
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
+    
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeSharedItem isIncoming:YES sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 #pragma mark - MEGAChatDelegate
