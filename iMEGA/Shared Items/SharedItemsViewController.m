@@ -24,11 +24,10 @@
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
 #import "EmptyStateView.h"
-#import "SharedItemsTableViewCell.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate, SharedItemsTableViewCellDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -135,6 +134,8 @@
     }
     
     self.navigationController.delegate = self;
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -418,6 +419,8 @@
         cell = [SharedItemsTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sharedItemsTableViewCell"];
     }
     
+    cell.delegate = self;
+    
     MEGAShare *share = nil;
     for (NSUInteger i = 0; i < self.incomingShareList.size.unsignedIntegerValue; i++) {
         MEGAShare *s = [self.incomingShareList shareAtIndex:i];
@@ -459,6 +462,8 @@
     if (cell == nil) {
         cell = [SharedItemsTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sharedItemsTableViewCell"];
     }
+    
+    cell.delegate = self;
     
     NSUInteger outSharesCount = 1;
     MEGAShare *share = nil;
@@ -743,34 +748,6 @@
     [self updateNavigationBarTitle];
     
     [self.tableView reloadData];
-}
-
-- (IBAction)permissionsTouchUpInside:(UIButton *)sender {
-    if (self.tableView.isEditing) {
-        return;
-    }
-    
-    if ([MEGAReachabilityManager isReachableHUDIfNot] && self.outgoingButton.selected) {
-        ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-        contactsVC.contactsMode = ContactsModeFolderSharedWith;
-        
-        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-        contactsVC.node = [self nodeAtIndexPath:indexPath];
-        [self.navigationController pushViewController:contactsVC animated:YES];
-    }
-}
-
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
-    if (self.tableView.isEditing) {
-        return;
-    }
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeAtIndexPath:indexPath] delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -1393,6 +1370,20 @@
         default:
             break;
     }
+}
+
+#pragma mark - SharedItemsTableViewCellDelegate
+
+- (void)didTapInfoButtonWithSender:(UIButton *)sender {
+    if (self.tableView.isEditing) {
+        return;
+    }
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeAtIndexPath:indexPath] delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 #pragma mark - NodeInfoViewControllerDelegate

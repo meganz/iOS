@@ -1372,6 +1372,8 @@
 		A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51AE827F3565E0030F1EA /* WSTagsField */; };
 		A8B8E02A273A689400C64E0A /* TransferUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */; };
 		A8B8E02E273A697200C64E0A /* MockTransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */; };
+		A8BB95122813028F002449D7 /* SharedItemsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */; };
+		A8BB95202816A006002449D7 /* SharedItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */; };
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
 		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
@@ -2329,7 +2331,6 @@
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
 		E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D5BF651BF35A4B00955550 /* SharedItems.storyboard */; };
 		E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */; };
-		E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */; };
 		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
 		E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
@@ -3668,6 +3669,8 @@
 		A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatNotificationDelegate.m; sourceTree = "<group>"; };
 		A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferUseCaseTests.swift; sourceTree = "<group>"; };
 		A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferRepository.swift; sourceTree = "<group>"; };
+		A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharedItemsTableViewCell.xib; sourceTree = "<group>"; };
+		A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsTableViewCell.swift; sourceTree = "<group>"; };
 		A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineCollectionViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
@@ -4562,8 +4565,6 @@
 		E8D5BF651BF35A4B00955550 /* SharedItems.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SharedItems.storyboard; sourceTree = "<group>"; };
 		E8D5BF671BF35DC400955550 /* SharedItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedItemsViewController.h; sourceTree = "<group>"; };
 		E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SharedItemsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E8D5BF6A1BF3B28500955550 /* SharedItemsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedItemsTableViewCell.h; sourceTree = "<group>"; };
-		E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedItemsTableViewCell.m; sourceTree = "<group>"; };
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
@@ -10642,9 +10643,9 @@
 				E8D5BF671BF35DC400955550 /* SharedItemsViewController.h */,
 				E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */,
 				C45F982A264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift */,
-				E8D5BF6A1BF3B28500955550 /* SharedItemsTableViewCell.h */,
-				E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */,
 				A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */,
+				A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */,
+				A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */,
 			);
 			path = "Shared Items";
 			sourceTree = "<group>";
@@ -11223,6 +11224,7 @@
 				5B46D96924333D6100404ED4 /* Achievements.storyboard in Resources */,
 				5D79EDD5251C71B500C0307A /* SearchHintTableViewCell.xib in Resources */,
 				83C49BAF2652627500A7764B /* CallTitleView.xib in Resources */,
+				A8BB95122813028F002449D7 /* SharedItemsTableViewCell.xib in Resources */,
 				A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */,
 				5B727385240D1682005816AB /* Appearance.storyboard in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
@@ -12316,6 +12318,7 @@
 				BF782D7A269BA4BB0001D169 /* ShareEntity.swift in Sources */,
 				BF782D64269BA4BB0001D169 /* NodeChangeTypeEntity.swift in Sources */,
 				BF1053DE2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift in Sources */,
+				A8BB95202816A006002449D7 /* SharedItemsTableViewCell.swift in Sources */,
 				5D646602248909F8006030A5 /* FontStyle.swift in Sources */,
 				A84533DF25ECF028007E0751 /* MEGANodeList+Mapper.swift in Sources */,
 				B68BAEC3221DEA7600FF6FCD /* AssetIdentifierInfo.m in Sources */,
@@ -12584,7 +12587,6 @@
 				836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */,
 				BF08A9F525CA12A0009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
-				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
 				BFB463EB2433FD6A00FB90B9 /* MegaDataFormatter.swift in Sources */,
 				5D4C5519251987650095E26B /* UploadFromLocalFilePath.swift in Sources */,
 				5DC4DE1124DBE20F00D9AD16 /* ExploreViewStyleFactory.swift in Sources */,
