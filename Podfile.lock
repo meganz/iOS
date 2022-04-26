@@ -1,26 +1,22 @@
 PODS:
-  - JustPieChart (0.1.0)
   - SwiftGen (6.5.1)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
   - YYCategories/no-arc (1.0.4)
 
 DEPENDENCIES:
-  - JustPieChart
   - SwiftGen
   - YYCategories
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - JustPieChart
     - SwiftGen
     - YYCategories
 
 SPEC CHECKSUMS:
-  JustPieChart: 8f442c60abf743fce27137096fea113e6bd43ecc
   SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 73c8ce73aebe27cee956cb2b1eacb6f723c198f4
+PODFILE CHECKSUM: 8e41380125e618f3eb41014367ca804142d32247
 
 COCOAPODS: 1.11.3
