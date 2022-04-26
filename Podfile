@@ -12,7 +12,6 @@ abstract_target 'iMEGA' do
   target 'MEGA' do
     # Pods for MEGA
     pod 'YYCategories'
-    pod 'JustPieChart'
     pod 'SwiftGen'
 
     target 'MEGAUnitTests' do

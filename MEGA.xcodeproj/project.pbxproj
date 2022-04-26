@@ -2108,6 +2108,7 @@
 		BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */; };
 		BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
+		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
 		BFD6534B25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */; };
 		BFD6535525EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD6535425EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib */; };
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
@@ -4622,6 +4623,7 @@
 				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				BF11649D27F6891500E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
+				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
@@ -10711,6 +10713,7 @@
 				BF0CC97E27FD388700244AEB /* DateToolsObjc */,
 				BF0CC98027FD388700244AEB /* DateToolsSwift */,
 				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
+				BFD2ED4C281228B30018C05A /* PieChart */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -11035,6 +11038,7 @@
 				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */,
 				BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */,
 				BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */,
+				BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14937,6 +14941,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/meganz/PieChart.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -15209,6 +15221,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
 			productName = SDAVAssetExportSession;
+		};
+		BFD2ED4C281228B30018C05A /* PieChart */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */;
+			productName = PieChart;
 		};
 /* End XCSwiftPackageProductDependency section */
 
