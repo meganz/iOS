@@ -109,7 +109,7 @@
 }
 
 - (void)triggerPathCompletion:(MEGANode *)myChatFilesNode {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
     
     if (self.filePathCompletion) {
         self.filePathCompletion(self.filePath, self.sourceType, myChatFilesNode);
