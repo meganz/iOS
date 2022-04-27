@@ -17,4 +17,8 @@ extension Sequence where Element: MEGANode {
     func hasModifiedParent() -> Bool {
         !filter({ $0.hasChangedType(.parent)}).isEmpty
     }
+    
+    func modifiedFavourites() -> [MEGANode] {
+        filter({ $0.hasChangedType(.favourite) })
+    }
 }
