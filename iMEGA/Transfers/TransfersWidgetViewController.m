@@ -951,9 +951,15 @@ static TransfersWidgetViewController* instance = nil;
         }
         case MegaNodeActionTypeViewInFolder: {
 
-            MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-            if (parentNode.isFolder) {
-                [self openFolderNode:parentNode];
+            if (transfer.type == MEGATransferTypeUpload) {
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
+                if (parentNode.isFolder) {
+                    [self openFolderNode:parentNode];
+                }
+            }
+            
+            if (transfer.type == MEGATransferTypeDownload) {
+                [self openOfflineFolderWithPath:transfer.parentPath];
             }
 
             break;
