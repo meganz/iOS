@@ -1285,6 +1285,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         NSSet* oldNodeSet = [NSSet setWithArray:self.mediaNodes];
         [updatedNodeSet intersectSet:oldNodeSet];
 
+        [self reloadPhotoFavouritesIfNeededForNodes:updatedNodesArray];
+        
         for (MEGANode *node in updatedNodeSet) {
             if ([node hasChangedType:MEGANodeChangeTypeRemoved] ||
                 [node hasChangedType:MEGANodeChangeTypeParent]) {

@@ -1463,11 +1463,13 @@
 		B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
 		B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
 		B5925B8F279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B596A4082810F94E0097254B /* MEGANodeArray+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596A4062810F7810097254B /* MEGANodeArray+Additions.swift */; };
 		B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */; };
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B5F6CDBE280E6EF800CC8C8C /* MEGAPhotoBrowserViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6CDBD280E6EF800CC8C8C /* MEGAPhotoBrowserViewController+Additions.swift */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
@@ -3735,10 +3737,12 @@
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5925B78279115FA00170CD6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B5925B88279119E400170CD6 /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
+		B596A4062810F7810097254B /* MEGANodeArray+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeArray+Additions.swift"; sourceTree = "<group>"; };
 		B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewModelTests.swift; sourceTree = "<group>"; };
 		B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBannerViewProvider.swift; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
+		B5F6CDBD280E6EF800CC8C8C /* MEGAPhotoBrowserViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+Additions.swift"; sourceTree = "<group>"; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
@@ -7397,6 +7401,7 @@
 				77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */,
 				77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */,
 				77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */,
+				B5F6CDBD280E6EF800CC8C8C /* MEGAPhotoBrowserViewController+Additions.swift */,
 			);
 			path = "Photo browser";
 			sourceTree = "<group>";
@@ -8581,6 +8586,14 @@
 			path = Transfers;
 			sourceTree = "<group>";
 		};
+		B596A4032810F76D0097254B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				B596A4062810F7810097254B /* MEGANodeArray+Additions.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		B5B0E30427F1BC1100DB6146 /* Warning */ = {
 			isa = PBXGroup;
 			children = (
@@ -9356,6 +9369,7 @@
 				B6C444DA274A284F00268D9A /* Day View */,
 				B6C444DB274A285700268D9A /* All View */,
 				B6F853452794D22900028D51 /* Photo Selection */,
+				B596A4032810F76D0097254B /* Extension */,
 				B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */,
 			);
 			path = "Photo Library";
@@ -11580,6 +11594,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B596A4082810F94E0097254B /* MEGANodeArray+Additions.swift in Sources */,
 				B64F9A9F2238F4A4000A4EA7 /* AssetResourceUploadOperation.m in Sources */,
 				B6CE0D0F221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m in Sources */,
 				C4EDB73826655229006A114F /* RoundedView.swift in Sources */,
@@ -11789,6 +11804,7 @@
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
 				2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */,
+				B5F6CDBE280E6EF800CC8C8C /* MEGAPhotoBrowserViewController+Additions.swift in Sources */,
 				5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */,
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
 				5D92DD1424BFE2B200D7D13B /* Date+Comparion.swift in Sources */,

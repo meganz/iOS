@@ -163,7 +163,11 @@ class PhotoExplorerViewModel: NSObject {
         if isAnyNodeMovedToTrash(nodes: nodes, updatedNodes: updatedNodes) ||
             updatedNodes.containsNewNode() ||
             updatedNodes.hasModifiedAttributes() ||
-            updatedNodes.hasModifiedParent() {
+            updatedNodes.hasModifiedParent() ||
+            !updatedNodes.modifiedFavourites().isEmpty {
+            
+            updatedNodes.updatePhotoFavouritesIfNeeded()
+                
             debouncer.start { [weak self] in
                 self?.loadAllPhotos()
             }

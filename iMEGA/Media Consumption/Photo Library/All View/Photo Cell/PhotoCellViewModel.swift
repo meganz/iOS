@@ -53,6 +53,7 @@ final class PhotoCellViewModel: ObservableObject {
         configZoomState(with: viewModel)
         configSelection()
         subscribeLibraryChange(viewModel: viewModel)
+        subscribeToPhotoFavouritesChange()
     }
     
     // MARK: Internal
@@ -133,6 +134,21 @@ final class PhotoCellViewModel: ObservableObject {
                 if let self = self, let photo = $0.allPhotos.first(where: { $0 == self.photo }), self.isFavorite != photo.isFavourite {
                     self.isFavorite = photo.isFavourite
                 }
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func subscribeToPhotoFavouritesChange() {
+        NotificationCenter.default
+            .publisher(for: .didPhotoFavouritesChange)
+            .compactMap{$0.object as? [NodeEntity]}
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] updatedNodes in
+                guard let self = self,
+                      let updateNode = updatedNodes.filter({ $0.id == self.photo.id }).first else {
+                    return
+                }
+                self.isFavorite = updateNode.isFavourite
             }
             .store(in: &subscriptions)
     }
