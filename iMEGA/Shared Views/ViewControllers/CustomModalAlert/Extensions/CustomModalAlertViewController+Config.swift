@@ -1,8 +1,10 @@
 import Foundation
 
 extension CustomModalAlertViewController {
-    func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ imageName: String, hasBonusButton: Bool = true) {
-        image = UIImage(named: imageName)
+    func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ imageName: String?, hasBonusButton: Bool = true) {
+        if let imageName = imageName {
+            image = UIImage(named: imageName)
+        }
         viewTitle = titleText
         
         if monospaceText != nil {
