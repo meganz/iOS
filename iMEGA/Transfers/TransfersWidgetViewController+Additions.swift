@@ -111,4 +111,14 @@ extension TransfersWidgetViewController {
         default: break
         }
     }
+    
+    @objc
+    func openOfflineFolder(path: String) {
+        if let index = path.firstIndex(of: "/") {
+            let pathFromOffline = String(path.suffix(from: index).dropFirst())
+            let offlineVC: OfflineViewController = UIStoryboard(name: "Offline", bundle: nil).instantiateViewController(withIdentifier: "OfflineViewControllerID") as! OfflineViewController
+            offlineVC.folderPathFromOffline = pathFromOffline.isEmpty ? nil : pathFromOffline
+            navigationController?.pushViewController(offlineVC, animated: true)
+        }
+    }
 }

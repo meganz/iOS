@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) UISearchController *searchController;
 @property (nonatomic, assign) OfflineViewControllerFlavor flavor;
 @property (nonatomic, readonly) NSString *currentOfflinePath;
-@property (nonatomic, strong) NSString *folderPathFromOffline;
+@property (nonatomic, strong, nullable) NSString *folderPathFromOffline;
 
 - (nullable NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)updateNavigationBarTitle;
