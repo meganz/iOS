@@ -483,6 +483,9 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
         case .import:
             importNodes([node])
             
+        case .exportFile:
+            ExportFileRouter(presenter: self, sender: sender).exportMessage(node: node)
+            
         default: break
         }
     }

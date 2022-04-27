@@ -244,8 +244,10 @@ final class NodeActionBuilder {
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())
         }
-        nodeActions.append(.importAction())
-        nodeActions.append(.copyAction())
+        
+        if accessLevel != .accessOwner {
+            nodeActions.append(.importAction())
+        }
         return nodeActions
     }
     

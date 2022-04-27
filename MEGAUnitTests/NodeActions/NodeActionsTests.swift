@@ -603,7 +603,18 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .build()
 
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import, .copy]))
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import]))
+    }
+    
+    func testChatSharedMediaFile_accessOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.chatSharedFiles)
+            .setIsFile(true)
+            .setIsMediaFile(true)
+            .setAccessLevel(.accessOwner)
+            .build()
+
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile]))
     }
     
     func testChatSharedFile() {
@@ -613,7 +624,18 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import, .copy]))
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import]))
+    }
+    
+    func testChatSharedFile_accessOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.chatSharedFiles)
+            .setIsFile(true)
+            .setIsMediaFile(false)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile]))
     }
     
     func testChatAttachmentMediaFile() {
@@ -623,7 +645,18 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .build()
 
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import, .copy]))
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import]))
+    }
+    
+    func testChatAttachmentMediaFile_accessOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.chatAttachment)
+            .setIsFile(true)
+            .setIsMediaFile(true)
+            .setAccessLevel(.accessOwner)
+            .build()
+
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile]))
     }
     
     func testChatAttachmentFile() {
@@ -633,7 +666,18 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import, .copy]))
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import]))
+    }
+    
+    func testChatAttachmentFile_accessOwner() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.chatAttachment)
+            .setIsFile(true)
+            .setIsMediaFile(false)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile]))
     }
     
     // MARK: - Versions tests
