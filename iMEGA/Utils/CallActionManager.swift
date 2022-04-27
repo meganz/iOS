@@ -83,6 +83,7 @@
             } else {
                 self.disableRTCAudio()
                 self.enableRTCAudioExternally = true
+                self.enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
             }
             let requestDelegate = MEGAChatAnswerCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
@@ -128,12 +129,7 @@
             return
         }
         
-        self.callInProgressListener = CallInProgressListener(chatId: chatId, sdk: chatSdk) { [weak self] chatId, call in
-            guard let self = self else { return }
-            self.enableRTCAudio()
-            MEGALogDebug("CallActionManager: Enabled webrtc audio session")
-            self.callInProgressListener = nil
-        }
+        enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
     }
     
     private func disableRTCAudio() {
@@ -161,6 +157,22 @@
     private func isOneToOneChatRoom(forChatId chatId:UInt64) -> Bool {
         guard let megaChatRoom = chatSdk.chatRoom(forChatId: chatId) else { return false }
         return ChatRoomEntity(with: megaChatRoom).chatType == .oneToOne
+    }
+    
+    private func enableRTCAudioIfRequiredWhenCallInProgress(chatId: UInt64) {
+        self.callInProgressListener = CallInProgressListener(chatId: chatId, sdk: chatSdk) { [weak self] chatId, call in
+            // There is a race condition that sometimes microphone does not seem to work when on a call.
+            // Once the call state changes to inProgress, after one second delay we are checking if the microphone is disabled. Enable it in case it is disabled.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                if !RTCAudioSession.sharedInstance().isAudioEnabled {
+                    self?.enableRTCAudio()
+                    MEGALogDebug("CallActionManager: Enabled webrtc audio session (enableRTCAudioIfRequiredWhenCallInProgress)")
+                } else {
+                    MEGALogDebug("CallActionManager: RTCSession was already enabled")
+                }
+            }
+            self?.callInProgressListener = nil
+        }
     }
 }
 
