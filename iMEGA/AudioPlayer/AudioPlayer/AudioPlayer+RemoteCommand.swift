@@ -38,6 +38,8 @@ extension AudioPlayer {
                 artwork
             }
         }
+        
+        updateCommandsState(enabled: true)
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
