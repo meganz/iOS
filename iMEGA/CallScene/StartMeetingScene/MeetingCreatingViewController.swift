@@ -84,34 +84,40 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    @objc private func textFieldTextChanged(textField: UITextField) {
+        guard let text = textField.text else { return }
+        
+        switch textField {
+        case firstNameTextfield:
+            viewModel.dispatch(.updateFirstName(text))
+            updateJoinMeetingButton()
+            
+        case lastNameTextfield:
+            viewModel.dispatch(.updateLastName(text))
+            updateJoinMeetingButton()
+
+        case meetingNameInputTextfield:
+            viewModel.dispatch(.updateMeetingName(text))
+            
+        default:
+            break
+        }
+    }
+    
     private func configureUI() {
         view.backgroundColor = Constants.backgroundColor
         
         firstNameTextfield.font = Constants.bottomBarText
         firstNameTextfield.delegate = self
-        firstNameTextfield.setBlockFor(.editingChanged) { [weak self] textField in
-            if let textField = textField as? UITextField, let text = textField.text {
-                self?.viewModel.dispatch(.updateFirstName(text))
-            }
-            self?.updateJoinMeetingButton()
-        }
+        firstNameTextfield.addTarget(self, action: #selector(textFieldTextChanged(textField:)), for: .editingChanged)
         
         lastNameTextfield.font = Constants.bottomBarText
         lastNameTextfield.delegate = self
-        lastNameTextfield.setBlockFor(.editingChanged) { [weak self] textField in
-            if let textField = textField as? UITextField, let text = textField.text {
-                self?.viewModel.dispatch(.updateLastName(text))
-            }
-            self?.updateJoinMeetingButton()
-        }
+        lastNameTextfield.addTarget(self, action: #selector(textFieldTextChanged(textField:)), for: .editingChanged)
         
         meetingNameInputTextfield.font = Constants.bottomBarText
         meetingNameInputTextfield.delegate = self
-        meetingNameInputTextfield.setBlockFor(.editingChanged) { [weak self] textField in
-            if let textField = textField as? UITextField, let text = textField.text {
-                self?.viewModel.dispatch(.updateMeetingName(text))
-            }
-        }
+        meetingNameInputTextfield.addTarget(self, action: #selector(textFieldTextChanged(textField:)), for: .editingChanged)
         
         startMeetingButton.setTitle(Strings.Localizable.Meetings.CreateMeeting.startMeeting.localizedCapitalized, for: .normal)
         startMeetingButton.mnz_setupPrimary(traitCollection)

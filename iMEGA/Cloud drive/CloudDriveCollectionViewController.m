@@ -11,6 +11,7 @@
 #import "CloudDriveViewController.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "MEGA-Swift.h"
+#import "NSArray+MNZCategory.h"
 
 @interface CloudDriveCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout, NodeCollectionViewCellDelegate>
 

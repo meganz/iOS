@@ -28,6 +28,7 @@
 #import "EmptyStateView.h"
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
+#import "NSArray+MNZCategory.h"
 
 @import DateToolsObjc;
 

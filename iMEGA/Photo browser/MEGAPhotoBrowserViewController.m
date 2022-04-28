@@ -25,6 +25,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "MEGA-Swift.h"
+#import "NSArray+MNZCategory.h"
 
 static const CGFloat GapBetweenPages = 10.0;
 static const long long MaxSizeToDownloadOriginal = 50 * 1024 * 1024; // 50 MB. Download original as long it's smaller than 50MB
@@ -312,7 +313,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
         case DisplayModeChatAttachment: {
             MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
-            subtitle = [node.creationTime stringWithFormat:@"MMMM dd • HH:mm"];
+            subtitle = [self subtitleFromDate:node.creationTime];
         }
             break;
             

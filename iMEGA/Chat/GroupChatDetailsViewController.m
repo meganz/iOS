@@ -22,6 +22,7 @@
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
+#import "NSArray+MNZCategory.h"
 
 typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     GroupChatDetailsSectionChatNotifications = 0,

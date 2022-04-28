@@ -146,7 +146,7 @@ static NSString *kPath = @"kPath";
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
                 if ([[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath]) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                     });
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{

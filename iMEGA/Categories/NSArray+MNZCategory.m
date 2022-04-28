@@ -18,4 +18,8 @@
     return @[[NSNumber numberWithUnsignedInteger:numberOfFiles], [NSNumber numberWithUnsignedInteger:numberOfFolders]];
 }
 
+- (id)objectOrNilAtIndex:(NSUInteger)index {
+    return index < self.count ? self[index] : nil;
+}
+
 @end

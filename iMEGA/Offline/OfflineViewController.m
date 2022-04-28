@@ -22,6 +22,7 @@
 #import "NodeCollectionViewCell.h"
 #import "OfflineTableViewCell.h"
 #import "UIViewController+MNZCategory.h"
+#import "NSArray+MNZCategory.h"
 
 static NSString *kFileName = @"kFileName";
 static NSString *kIndex = @"kIndex";

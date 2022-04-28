@@ -1,5 +1,6 @@
 
 #import "SearchInPdfViewController.h"
+#import "NSArray+MNZCategory.h"
 
 #import <PDFKit/PDFKit.h>
 

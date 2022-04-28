@@ -7,6 +7,12 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 @interface UIImage (MNZCategory)
 
+/**
+ Returns a new image rotated clockwise by a quarter‑turn (90°). ⤼
+ The width and height will be exchanged.
+ */
+- (nullable UIImage *)imageByRotateRight90;
+
 + (UIImage *)mnz_convertToUIImage:(NSData *)data withWidth:(NSInteger)width withHeight:(NSInteger)height;
 + (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer withWidth:(NSInteger)width withHeight:(NSInteger)height;
 

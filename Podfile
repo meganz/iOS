@@ -11,7 +11,6 @@ abstract_target 'iMEGA' do
 
   target 'MEGA' do
     # Pods for MEGA
-    pod 'YYCategories'
     pod 'SwiftGen'
 
     target 'MEGAUnitTests' do
@@ -27,7 +26,6 @@ abstract_target 'iMEGA' do
 
   target 'MEGAPicker' do
     # Pods for MEGAPicker
-    pod 'YYCategories'
 
   end
 
@@ -38,7 +36,6 @@ abstract_target 'iMEGA' do
 
   target 'MEGAShare' do
     # Pods for MEGAShare
-    pod 'YYCategories'
 
   end
   
@@ -49,7 +46,6 @@ abstract_target 'iMEGA' do
 
   target 'MEGAWidgetExtension' do
     # Pods for MEGAWidgetExtension
-    pod 'YYCategories'
 
   end
 end
