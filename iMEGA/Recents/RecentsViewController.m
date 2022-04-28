@@ -18,6 +18,7 @@
 #import "ThumbnailViewerTableViewCell.h"
 #import "MEGARecentActionBucket+MNZCategory.h"
 #import "MEGA-Swift.h"
+#import "NSArray+MNZCategory.h"
 
 @import DateToolsObjc;
 
@@ -151,10 +152,9 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         cell = [ThumbnailViewerTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
     }
     [cell configureForRecentAction:recentActionBucket];
-    @weakify(self);
+    __weak typeof(self) weakSelf = self;
     cell.showNodeAction = ^(UIViewController *viewController) {
-        @strongify(self);
-        [self.delegate showSelectedNodeInViewController:viewController];
+        [weakSelf.delegate showSelectedNodeInViewController:viewController];
     };
     return cell;
 }
@@ -237,7 +237,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         if (recentActionBucket.isMedia) {
             recentActionBucket.mnz_isExpanded = !recentActionBucket.mnz_isExpanded;
             [UIView performWithoutAnimation:^{
-                [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }];
         } else {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];

@@ -21,4 +21,10 @@
     return numberOfRows;
 }
 
+- (void)scrollToLeftAnimated:(BOOL)animated {
+    CGPoint off = self.contentOffset;
+    off.x = 0 - self.contentInset.left;
+    [self setContentOffset:off animated:animated];
+}
+
 @end

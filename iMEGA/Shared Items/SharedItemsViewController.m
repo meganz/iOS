@@ -1085,7 +1085,7 @@
             [node mnz_leaveSharingInViewController:self];
             [self endEditingMode];
         }];
-        shareAction.image = [[UIImage imageNamed:@"leaveShare"] imageByTintColor:UIColor.whiteColor];
+        shareAction.image = [[UIImage imageNamed:@"leaveShare"] imageWithTintColor:UIColor.whiteColor];
         shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
@@ -1093,7 +1093,7 @@
             [node mnz_removeSharing];
             [self endEditingMode];
         }];
-        shareAction.image = [[UIImage imageNamed:@"removeShare"] imageByTintColor:UIColor.whiteColor];
+        shareAction.image = [[UIImage imageNamed:@"removeShare"] imageWithTintColor:UIColor.whiteColor];
         shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.linksButton.selected) {
@@ -1101,7 +1101,7 @@
             [node mnz_removeLink];
             [self endEditingMode];
         }];
-        removeLinkAction.image = [[UIImage imageNamed:@"removeLink"] imageByTintColor:UIColor.whiteColor];
+        removeLinkAction.image = [[UIImage imageNamed:@"removeLink"] imageWithTintColor:UIColor.whiteColor];
         removeLinkAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {

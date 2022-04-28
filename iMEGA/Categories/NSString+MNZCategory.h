@@ -1,5 +1,5 @@
 
-#import <Foundation/Foundation.h>
+@import UIKit;
 
 typedef NS_ENUM (NSInteger, MEGAChatStatus);
 typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
@@ -95,6 +95,22 @@ NS_ASSUME_NONNULL_BEGIN
  @return a new string without invalid characters
  */
 - (NSString *)mnz_stringByRemovingInvalidFileCharacters;
+
+/**
+ Returns the size of the string if it were rendered with the specified constraints.
+ 
+ @param font          The font to use for computing the string size.
+ 
+ @param size          The maximum acceptable size for the string. This value is
+ used to calculate where line breaks and wrapping would occur.
+ 
+ @param lineBreakMode The line break options for computing the size of the string.
+ For a list of possible values, see NSLineBreakMode.
+ 
+ @return              The width and height of the resulting string's bounding box.
+ These values may be rounded up to the nearest whole number.
+ */
+- (CGSize)sizeForFont:(UIFont *)font size:(CGSize)size mode:(NSLineBreakMode)lineBreakMode;
 
 @end
 

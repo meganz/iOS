@@ -1061,4 +1061,19 @@ static NSString* const B = @"[B]";
     return [[self componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
 }
 
+- (CGSize)sizeForFont:(UIFont *)font size:(CGSize)size mode:(NSLineBreakMode)lineBreakMode {
+    if (!font) font = [UIFont systemFontOfSize:12];
+    NSMutableDictionary *attr = [NSMutableDictionary new];
+    attr[NSFontAttributeName] = font;
+    if (lineBreakMode != NSLineBreakByWordWrapping) {
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = lineBreakMode;
+        attr[NSParagraphStyleAttributeName] = paragraphStyle;
+    }
+    CGRect rect = [self boundingRectWithSize:size
+                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                  attributes:attr context:nil];
+    return rect.size;
+}
+
 @end

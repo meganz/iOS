@@ -9,6 +9,7 @@
 #import "AchievementsTableViewCell.h"
 #import "InviteFriendsViewController.h"
 #import "ReferralBonusesTableViewController.h"
+#import "NSArray+MNZCategory.h"
 
 @import DateToolsObjc;
 

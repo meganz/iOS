@@ -13,6 +13,7 @@
 #import "OfflineViewController.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "MEGA-Swift.h"
+#import "NSArray+MNZCategory.h"
 
 static NSString *kFileName = @"kFileName";
 static NSString *kPath = @"kPath";

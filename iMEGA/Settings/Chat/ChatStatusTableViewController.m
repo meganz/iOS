@@ -8,6 +8,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
+#import "NSArray+MNZCategory.h"
 
 static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 
@@ -135,7 +136,9 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 }
 
 - (void)setLastActiveLabelAttributedText {
-    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightRegular].fontWithItalic}];
+    UIFont *font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightRegular].italic;
+    
+    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName: font}];
     NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", NSLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
     [showLastSeenAttributedString appendAttributedString:lastSeenString];
     

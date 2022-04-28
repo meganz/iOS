@@ -7,6 +7,7 @@
 #import "MEGASdk+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
+#import "NSArray+MNZCategory.h"
 
 #import "MEGAPurchase.h"
 #import "MEGASdkManager.h"

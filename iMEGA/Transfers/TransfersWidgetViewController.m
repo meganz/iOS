@@ -27,6 +27,7 @@
 #import "NodeTableViewCell.h"
 #import "MEGANavigationController.h"
 #import "MEGA-Swift.h"
+#import "NSArray+MNZCategory.h"
 
 @interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>
 
