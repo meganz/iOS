@@ -28,7 +28,6 @@ final class FavouritesViewModel: ViewModelType {
     
     func dispatch(_ action: FavouritesViewAction) {
         switch action {
-        
         case .viewWillAppear:
             getAllFavouritesNodes()
             registerOnNodesUpdate()

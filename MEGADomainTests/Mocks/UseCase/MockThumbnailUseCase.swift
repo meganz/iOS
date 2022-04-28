@@ -1,60 +1,38 @@
 @testable import MEGA
 import Combine
 
-struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
-    var loadThumbnailResult: (Result<URL, ThumbnailErrorEntity>) = .failure(.generic)
-    var loadPreviewResult: (Result<URL, ThumbnailErrorEntity>) = .failure(.generic)
-    var loadThumbnailAndPreviewResult: (Result<(URL?, URL?), ThumbnailErrorEntity>) = .failure(.generic)
-    var loadPrevieResult: (Result<URL, ThumbnailErrorEntity>) = .failure(.generic)
+struct MockThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtocol {
     var placeholderFileType: MEGAFileType = "generic"
-    var hasCachedThumbnail = false
-    var hasCachedPreview = false
-    var cachedThumbnail = URL(string: "https://MEGA.NZ")!
-    var cachedPreview = URL(string: "https://MEGA.NZ")!
+    var mockThumbnailRepo: T
+    
+    init(repo: T) {
+        mockThumbnailRepo = repo
+    }
     
     func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
         switch type {
         case .thumbnail:
-            return hasCachedThumbnail
+            return mockThumbnailRepo.hasCachedThumbnail(for: node)
         case .preview:
-            return hasCachedPreview
+            return mockThumbnailRepo.hasCachedPreview(for: node)
         }
     }
     
     func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
         switch type {
         case .thumbnail:
-            return cachedThumbnail
+            return mockThumbnailRepo.cachedThumbnail(for: node)
         case .preview:
-            return cachedPreview
-        }
-    }
-
-    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        switch type {
-        case .thumbnail:
-            completion(loadThumbnailResult)
-        case .preview:
-            completion(loadPreviewResult)
+            return mockThumbnailRepo.cachedPreview(for: node)
         }
     }
     
-    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<URL, ThumbnailErrorEntity> {
-        Future { promise in
-            loadThumbnail(for: node, type: type, completion: promise)
-        }
+    func loadThumbnail(for node: NodeEntity) async throws -> URL {
+        return try await mockThumbnailRepo.loadThumbnail(for: node)
     }
     
-    func loadThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity> {
-        loadThumbnailAndPreviewResult
-            .publisher
-            .eraseToAnyPublisher()
-    }
-    
-    func loadPreview(for node: NodeEntity) -> AnyPublisher<URL, ThumbnailErrorEntity> {
-        loadPrevieResult
-            .publisher
-            .eraseToAnyPublisher()
+    func loadPreview(for node: NodeEntity) -> PreviewLoading {
+        return PreviewLoading(types: [.thumbnail, .preview], node: node, repo: mockThumbnailRepo)
     }
     
     func thumbnailPlaceholderFileType(forNodeName: String) -> MEGAFileType {

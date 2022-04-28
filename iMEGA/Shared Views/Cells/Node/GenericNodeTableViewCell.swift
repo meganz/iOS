@@ -27,6 +27,12 @@ final class GenericNodeTableViewCell: UITableViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        viewModel.cancelLoading()
+    }
+    
     func executeCommand(_ command: NodeCellViewModel.Command) {
         switch command {
         case .config(let nodeModel):
