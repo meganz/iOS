@@ -252,6 +252,13 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
 }
 
+- (void)didReceiveMemoryWarning {
+    [CrashlyticsLogger log:@"[Photo Browser] Did receive memory warning"];
+    [self freeUpSpaceOnImageViewCache:self.imageViewsCache scrollView:self.scrollView];
+    [self reloadUI];
+    [super didReceiveMemoryWarning];
+}
+
 #pragma mark - Status bar
 
 - (BOOL)prefersStatusBarHidden {
