@@ -40,5 +40,8 @@ struct PhotoCard<Content: View>: View {
         .onAppear {
             viewModel.loadThumbnail()
         }
+        .onDisappear {
+            viewModel.cancel()
+        }
     }
 }

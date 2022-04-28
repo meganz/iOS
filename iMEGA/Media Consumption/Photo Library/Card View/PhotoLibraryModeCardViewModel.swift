@@ -2,6 +2,7 @@ import Foundation
 import Combine
 
 @available(iOS 14.0, *)
+@MainActor
 class PhotoLibraryModeCardViewModel<T: PhotoChronologicalCategory>: PhotoLibraryModeViewModel<T> {
     private let categoryDateTransformation: (Date) -> Date?
     private let categoryListTransformation: (PhotoLibrary) -> [T]
@@ -37,7 +38,6 @@ class PhotoLibraryModeCardViewModel<T: PhotoChronologicalCategory>: PhotoLibrary
                 let visiblePositions = self?.scrollTracker.visiblePositions ?? [:]
                 return self?.photoCategoryList.shouldRefreshTo($0, forVisiblePositions: visiblePositions) == true
             }
-            .receive(on: DispatchQueue.main)
             .assign(to: &$photoCategoryList)
     }
     

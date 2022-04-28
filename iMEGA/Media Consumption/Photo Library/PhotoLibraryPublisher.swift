@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class PhotoLibraryPublisher {
     private var subscriptions = Set<AnyCancellable>()
     

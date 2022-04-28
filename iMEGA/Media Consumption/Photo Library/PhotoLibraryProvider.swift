@@ -13,6 +13,7 @@ protocol PhotoLibraryProvider: UIViewController {
 }
 
 @available(iOS 14.0, *)
+@MainActor
 extension PhotoLibraryProvider {
     func configPhotoLibraryView(in container: UIView) {
         let content = PhotoLibraryContentView(
@@ -32,14 +33,11 @@ extension PhotoLibraryProvider {
             return
         }
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            MEGALogDebug("[Photos] update photo library")
-            let photoLibrary: PhotoLibrary = nodes.toPhotoLibrary()
+        Task {
+            let photoLibrary = await load(by: nodes)
             
-            DispatchQueue.main.async { [weak self] in
-                host.view.isHidden = photoLibrary.isEmpty
-                self?.photoLibraryContentViewModel.library = photoLibrary
-            }
+            host.view.isHidden = photoLibrary.isEmpty
+            photoLibraryContentViewModel.library = photoLibrary
         }
     }
     
@@ -49,7 +47,7 @@ extension PhotoLibraryProvider {
     
     func configPhotoLibrarySelectAll() {
         photoLibraryContentViewModel.selection.allSelected = photoLibraryContentViewModel.selection.photos.count ==
-                                                             photoLibraryContentViewModel.library.allPhotos.count
+        photoLibraryContentViewModel.library.allPhotos.count
         
         photoLibraryContentViewModel.selection.allSelected.toggle()
         
@@ -72,5 +70,14 @@ extension PhotoLibraryProvider {
         }
         
         navigationItem.title = message
+    }
+    
+    // MARK: - Private
+    
+    private func load(by nodes: [MEGANode]) async -> PhotoLibrary {
+        let trasferMapper = PhotoLibraryMapper()
+        let lib = await trasferMapper.buildPhotoLibrary(with: nodes)
+        
+        return lib
     }
 }

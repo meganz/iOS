@@ -10,7 +10,6 @@ enum NodeCellAction: ActionType {
 protocol NodeCellRouting: Routing {}
 
 final class NodeCellViewModel: ViewModelType {
-    
     enum Command: CommandType, Equatable {
         case config(NodeEntity)
         case hideVideoIndicator(Bool)
@@ -29,6 +28,7 @@ final class NodeCellViewModel: ViewModelType {
     private var nodeActionUseCase: NodeActionUseCaseProtocol
     private var nodeThumbnailUseCase: ThumbnailUseCaseProtocol
     private var accountUseCase: AccountUseCaseProtocol
+    private var loadingTask: Task<Void, Never>?
     
     init(nodeOpener: NodeOpener, nodeModel: NodeEntity, nodeActionUseCase: NodeActionUseCaseProtocol, nodeThumbnailUseCase: ThumbnailUseCaseProtocol, accountUseCase: AccountUseCaseProtocol) {
         self.nodeOpener = nodeOpener
@@ -60,9 +60,17 @@ final class NodeCellViewModel: ViewModelType {
         }
     }
     
+    func cancelLoading() {
+        loadingTask?.cancel()
+        loadingTask = nil
+    }
+    
+    // MARK: - Private
+    
     private func manageLabel() {
         let isLabelUnknown = (nodeModel.label == .unknown)
         invokeCommand?(.hideLabel(isLabelUnknown))
+        
         if !isLabelUnknown {
             let labelString = nodeActionUseCase.labelString(label: nodeModel.label)
             invokeCommand?(.setLabel(labelString))
@@ -71,11 +79,18 @@ final class NodeCellViewModel: ViewModelType {
     
     private func manageThumbnail() {
         invokeCommand?(.hideVideoIndicator(!(nodeModel.name as NSString).mnz_isVideoPathExtension))
-        nodeThumbnailUseCase.loadThumbnail(for: nodeModel, type: .thumbnail) { [weak self] result in
-            switch result {
-            case .success(let url):
-                self?.invokeCommand?(.setThumbnail(url.path))
-            case .failure:
+        
+        loadingTask = Task { [weak self] in
+            do {
+                guard let node = self?.nodeModel else { return }
+                
+                let url = try await self?.nodeThumbnailUseCase.loadThumbnail(for: node)
+                
+                if let url = url {
+                    self?.invokeCommand?(.setThumbnail(url.path))
+                }
+            } catch {
+                MEGALogDebug("[Node Cell:] \(error) happened when manageThumbnail.")
                 self?.iconForNode()
             }
         }
@@ -119,7 +134,7 @@ final class NodeCellViewModel: ViewModelType {
                             let folderImageName = self?.folderImageName(for: self!.nodeModel)
                             self?.invokeCommand?(.setIcon(folderImageName!))
                         }
-
+                        
                     case .failure(_):
                         let folderImageName = self?.folderImageName(for: self!.nodeModel)
                         self?.invokeCommand?(.setIcon(folderImageName!))

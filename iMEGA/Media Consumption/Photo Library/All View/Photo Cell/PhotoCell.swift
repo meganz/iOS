@@ -24,6 +24,9 @@ struct PhotoCell: View {
         .onAppear {
             viewModel.loadThumbnailIfNeeded()
         }
+        .onDisappear {
+            viewModel.cancelLoading()
+        }
     }
 }
 

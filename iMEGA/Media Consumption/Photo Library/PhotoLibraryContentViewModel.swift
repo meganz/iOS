@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import SwiftUI
 
+@MainActor
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published var library: PhotoLibrary
     @Published var selectedMode: PhotoLibraryViewMode = .all

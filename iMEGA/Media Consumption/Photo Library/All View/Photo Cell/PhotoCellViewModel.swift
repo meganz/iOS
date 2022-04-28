@@ -3,11 +3,14 @@ import SwiftUI
 import Combine
 
 @available(iOS 14.0, *)
+@MainActor
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private let placeholderThumbnail: ImageContainer
     private let selection: PhotoSelection
+    private var cancellable: AnyCancellable?
+    private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     
     var duration: String = ""
@@ -18,7 +21,9 @@ final class PhotoCellViewModel: ObservableObject {
             
             // 1 -> 3 or 3 -> 1 needs reload
             if currentZoomScaleFactor == 1 || oldValue == 1 {
-                loadThumbnail()
+                loadingTask = Task {
+                    await loadThumbnail()
+                }
             }
         }
     }
@@ -56,6 +61,7 @@ final class PhotoCellViewModel: ObservableObject {
         subscribeToPhotoFavouritesChange()
     }
     
+    
     // MARK: Internal
     
     func loadThumbnailIfNeeded() {
@@ -63,12 +69,18 @@ final class PhotoCellViewModel: ObservableObject {
             return
         }
         
-        loadThumbnail()
+        loadingTask = Task {
+            await loadThumbnail()
+        }
+    }
+    
+    func cancelLoading() {
+        loadingTask?.cancel()
     }
     
     // MARK: Private
     
-    private func loadThumbnail() {
+    private func loadThumbnail() async {
         let type: ThumbnailTypeEntity = currentZoomScaleFactor == 1 ? .preview : .thumbnail
         
         if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: type) {
@@ -78,33 +90,36 @@ final class PhotoCellViewModel: ObservableObject {
                 thumbnailContainer = ImageContainer(image: image)
             }
             
-            DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.3) { [weak self] in
-                self?.loadThumbnailFromRemote(type: type)
+            do {
+                try await loadThumbnailFromRemote(type: type)
+            } catch {
+                MEGALogDebug("[Photo Cell:] \(error) happened when loadThumbnail.")
             }
         }
     }
     
-    private func loadThumbnailFromRemote(type: ThumbnailTypeEntity) {
-        let publisher: AnyPublisher<URL, ThumbnailErrorEntity>
-        switch type {
-        case .thumbnail:
-            publisher = thumbnailUseCase.loadThumbnail(for: photo, type: type).eraseToAnyPublisher()
-        case .preview:
-            publisher = thumbnailUseCase.loadPreview(for: photo)
+    private func loadThumbnailFromRemote(type: ThumbnailTypeEntity) async throws {
+        if type == .preview {
+            do {
+                for try await url in thumbnailUseCase.loadPreview(for: photo) {
+                    if let image = Image(contentsOfFile: url.path)  {
+                        thumbnailContainer = ImageContainer(image: image)
+                    }
+                }
+            } catch {
+                MEGALogDebug("[Photo Cell:] \(error) happened when loading preview in loadThumbnailFromRemote.")
+            }
+        } else {
+            do {
+                let url = try await thumbnailUseCase.loadThumbnail(for: photo)
+                
+                if let image = Image(contentsOfFile: url.path) {
+                    thumbnailContainer = ImageContainer(image: image)
+                }
+            } catch {
+                MEGALogDebug("[Photo Cell:] \(error) happened when loading thumbnail in loadThumbnailFromRemote.")
+            }
         }
-        
-        publisher
-            .delay(for: .seconds(0.3), scheduler: DispatchQueue.global(qos: .userInitiated))
-            .map {
-                ImageContainer(image: Image(contentsOfFile: $0.path))
-            }
-            .replaceError(with: nil)
-            .compactMap { $0 }
-            .filter { [weak self] in
-                $0 != self?.thumbnailContainer
-            }
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$thumbnailContainer)
     }
     
     private func configSelection() {
