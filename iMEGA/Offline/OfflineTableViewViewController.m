@@ -133,27 +133,30 @@ static NSString *kPath = @"kPath";
         NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
         
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            if (thumbnailImage) {
-                [cell.thumbnailImageView setImage:thumbnailImage];
-                if (nameString.mnz_isVideoPathExtension) {
-                    cell.thumbnailPlayImageView.hidden = NO;
+        if (handleString) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+                UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+                if (thumbnailImage) {
+                    [cell.thumbnailImageView setImage:thumbnailImage];
+                    if (nameString.mnz_isVideoPathExtension) {
+                        cell.thumbnailPlayImageView.hidden = NO;
+                    }
                 }
+            } else {
+                dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+                    if ([[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath]) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                        });
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [cell.thumbnailImageView mnz_setImageForExtension:extension];
+                        });
+                    }
+                });
             }
-            
         } else {
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-                if ([[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath]) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [cell.thumbnailImageView mnz_setImageForExtension:extension];
-                    });
-                }
-            });
+            [cell.thumbnailImageView mnz_setImageForExtension:extension];
         }
         
         NSDate *modificationDate = [NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil][NSFileModificationDate];
