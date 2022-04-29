@@ -2994,3 +2994,5 @@
 "general.NoIntenerConnection"="Unable to connect to the Internet. Please check your connection and try again.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Display in Main View";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="Storage quota exceeded";

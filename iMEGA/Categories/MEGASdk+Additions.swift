@@ -54,4 +54,12 @@ extension MEGASdk {
             completion(self.transfers.size.intValue > 0 || self.transfers.size.intValue > 0)
         }
     }
+    
+    /// True if storage used greater than storage max, otherwise false
+    @objc var isStorageOverquota: Bool {
+        guard let accountDetails = mnz_accountDetails else {
+            return false
+        }
+        return accountDetails.storageUsed.int64Value > accountDetails.storageMax.int64Value
+    }
 }

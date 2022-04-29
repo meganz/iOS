@@ -3824,6 +3824,10 @@ public enum Strings {
         /// File removed as it violated our Terms of Service
         public static let termsOfServiceViolation = Strings.tr("Localizable", "transfer.error.termsOfServiceViolation")
       }
+      public enum Storage {
+        /// Storage quota exceeded
+        public static let quotaExceeded = Strings.tr("Localizable", "transfer.storage.quotaExceeded")
+      }
     }
   }
 }

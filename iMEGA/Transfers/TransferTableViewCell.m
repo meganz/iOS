@@ -5,6 +5,8 @@
 #import "Helper.h"
 #import "MEGAPauseTransferRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
+#import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
@@ -241,7 +243,13 @@
             
         case MEGATransferStateRetrying: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingTransferImage : UIImage.mnz_uploadingTransferImage;
-            NSAttributedString *status = [NSAttributedString.alloc initWithString:NSLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).") attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            NSAttributedString *status;
+            if (self.transfer.type == MEGATransferTypeUpload &&
+                MEGASdkManager.sharedMEGASdk.isStorageOverquota) {
+                status = [NSAttributedString.alloc initWithString:NSLocalizedString(@"transfer.storage.quotaExceeded", nil) attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            } else {
+                status = [NSAttributedString.alloc initWithString:NSLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).") attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+            }
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
