@@ -2,9 +2,6 @@
 #import "MEGASdk+MNZCategory.h"
 #import <objc/runtime.h>
 
-#import "MEGACreateFolderRequestDelegate.h"
-#import "MEGAGenericRequestDelegate.h"
-
 static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
 static const void *mnz_completedTransfersKey = &mnz_completedTransfersKey;
 
