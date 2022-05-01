@@ -127,6 +127,7 @@ platform :ios do
       configuration: 'Release',
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
+      disable_package_automatic_updates: true,
       export_options: {
         iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
@@ -196,7 +197,8 @@ platform :ios do
     scan(
       scheme: "MEGA",
       devices: ["iPhone 13 Pro Max"],
-      cloned_source_packages_path: "SwiftPackages"
+      cloned_source_packages_path: "SwiftPackages",
+      disable_package_automatic_updates: true
     )
   end
 
@@ -250,6 +252,7 @@ platform :ios do
       configuration: 'Release',
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
+      disable_package_automatic_updates: true,
       export_options: {
         iCloudContainerEnvironment: "Production"
       }
