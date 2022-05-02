@@ -1,7 +1,6 @@
 import Foundation
 import Combine
 
-@MainActor
 @objc final class PhotoUpdatePublisher: NSObject {
     private enum Constants {
         static let headerReloadInterval = 1.3

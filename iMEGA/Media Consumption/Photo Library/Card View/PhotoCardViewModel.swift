@@ -3,7 +3,6 @@ import Combine
 import SwiftUI
 
 @available(iOS 14.0, *)
-@MainActor
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
@@ -41,7 +40,7 @@ class PhotoCardViewModel: ObservableObject {
     }
     
     // MARK: - Private
-    
+    @MainActor
     private func loadThumbnailFromRemote(for photo: NodeEntity) async {
         do {
             for try await url in thumbnailUseCase.loadPreview(for: photo) {

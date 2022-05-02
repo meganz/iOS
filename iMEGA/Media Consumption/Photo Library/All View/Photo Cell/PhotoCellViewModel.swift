@@ -3,7 +3,6 @@ import SwiftUI
 import Combine
 
 @available(iOS 14.0, *)
-@MainActor
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
@@ -79,7 +78,7 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     // MARK: Private
-    
+    @MainActor
     private func loadThumbnail() async {
         let type: ThumbnailTypeEntity = currentZoomScaleFactor == 1 ? .preview : .thumbnail
         
@@ -98,6 +97,7 @@ final class PhotoCellViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     private func loadThumbnailFromRemote(type: ThumbnailTypeEntity) async throws {
         if type == .preview {
             do {
@@ -129,6 +129,7 @@ final class PhotoCellViewModel: ObservableObject {
             .filter { [weak self] in
                 self?.isSelected != $0
             }
+            .receive(on: DispatchQueue.main)
             .assign(to: &$isSelected)
         
         if selection.editMode.isEditing {
@@ -137,14 +138,20 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     private func configZoomState(with viewModel: PhotoLibraryAllViewModel) {
-        viewModel.$zoomState.sink { [weak self] in
-            self?.currentZoomScaleFactor = $0.scaleFactor
-        }
-        .store(in: &subscriptions)
+        viewModel
+            .$zoomState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.currentZoomScaleFactor = $0.scaleFactor
+            }
+            .store(in: &subscriptions)
     }
     
     private func subscribeLibraryChange(viewModel: PhotoLibraryAllViewModel) {
-        viewModel.libraryViewModel.$library
+        viewModel
+            .libraryViewModel
+            .$library
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 if let self = self, let photo = $0.allPhotos.first(where: { $0 == self.photo }), self.isFavorite != photo.isFavourite {
                     self.isFavorite = photo.isFavourite
