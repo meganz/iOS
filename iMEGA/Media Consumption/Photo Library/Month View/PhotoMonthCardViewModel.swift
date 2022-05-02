@@ -1,7 +1,6 @@
 import Foundation
 
 @available(iOS 14.0, *)
-@MainActor
 final class PhotoMonthCardViewModel: PhotoCardViewModel {
     private let photoByMonth: PhotoByMonth
     

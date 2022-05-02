@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 @available(iOS 14.0, *)
+@MainActor
 protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
     
@@ -14,7 +15,6 @@ protocol PhotoLibraryProvider: UIViewController {
 }
 
 @available(iOS 14.0, *)
-@MainActor
 extension PhotoLibraryProvider {
     func configPhotoLibraryView(in container: UIView) {
         let content = PhotoLibraryContentView(

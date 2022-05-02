@@ -2,7 +2,6 @@ import Foundation
 import Combine
 
 @available(iOS 14.0, *)
-@MainActor
 final class PhotoYearCardViewModel: PhotoCardViewModel {
     private let photoByYear: PhotoByYear
     
