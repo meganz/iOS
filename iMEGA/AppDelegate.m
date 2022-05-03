@@ -1885,8 +1885,10 @@
     
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database files saved in others applications
+        CheckLocalPathUseCaseOCWrapper *checkLocalPath = CheckLocalPathUseCaseOCWrapper.alloc.init;
+        BOOL isPreviewingOriginalImage = [checkLocalPath containsOriginalCacheDirectoryWithPath:transfer.path];
         if ([transfer.appData containsString:@"SaveInPhotosApp"] ||
-            (transfer.path.mnz_isImagePathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSavePhotoToGalleryEnabled"])
+            (transfer.path.mnz_isImagePathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSavePhotoToGalleryEnabled"] && !isPreviewingOriginalImage)
             || (transfer.path.mnz_isVideoPathExtension && [NSUserDefaults.standardUserDefaults boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
             [transfer mnz_saveInPhotosApp];
             return;

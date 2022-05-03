@@ -7,4 +7,5 @@ protocol FileRepositoryProtocol {
     func cachedPreviewURL(for base64Handle: MEGABase64Handle) -> URL
     func cachedOriginalURL(for base64Handle: MEGABase64Handle, name: String) -> URL
     func cachedFileURL(for base64Handle: MEGABase64Handle, name: String) -> URL
+    func containsOriginalCacheDirectory(path: String) -> Bool
 }
