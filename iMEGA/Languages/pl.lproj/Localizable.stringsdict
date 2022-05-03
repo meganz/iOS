@@ -13,9 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d year</string>
+        <string>%drok</string>
+        <key>few</key>
+        <string>%u lat</string>
+        <key>many</key>
+        <string>%u lat</string>
         <key>other</key>
-        <string>%u years</string>
+        <string>%u lat</string>
       </dict>
     </dict>
   </dict>

@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="ไฟล์ถูกลบออกเนื่องจากขัดต่อข้อกำหนดของการให้บริการและนโยบายการใช้งาน.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
 /*  */
-"folderLinkUnavailableText2"="ลิงก์โฟลเดอร์ถูกลบออกแล้วเนื่องจากขัดต่อข้อกำหนดของการให้บริการและนโยบายการใช้งาน";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
 /*  */
@@ -295,7 +295,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="เก่าสุด";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="เลือกจากรูปภาพ";
+"choosePhotoVideo"="เลือกจากแอปรูปภาพ";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="จับภาพ";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="สแกนเอกสารยังไม่พร้อมใช้งาน";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="มีไฟล์ชื่อเดียวกันอยู่แล้ว";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="นำเข้าจาก…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="นำเข้าจากไฟล์";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] ถูกอัปโหลดไปแล้วด้วยชื่อ [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -375,7 +375,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA เคารพลิขสิทธิ์ของผู้อื่นและต้องการให้ผู้ใช้บริการคลาวด์ MEGA ปฏิบัติตามกฎหมายลิขสิทธิ์";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="คุณไม่ได้รับอนุญาตให้ใช้บริการ MEGA คลาวด์ เพื่อการละเมิดลิขสิทธิ์โดยเด็ดขาด คุณไม่สามารถอัปโหลด ดาวน์โหลด จัดเก็บ แชร์ แสดง สตรีม แจกจ่าย ส่งอีเมล ส่งหรือเผยแพร่ไฟล์ข้อมูล หรือเนื้อหาที่ละเมิดลิขสิทธิ์หรือกรรมสิทธิ์อื่น ๆ ของบุคคลหรือนิติบุคคลใด ๆ";
+"copyrightMessagePart2"="ห้ามมิให้ใช้บริการ MEGA คลาวด์เพื่อละเมิดลิขสิทธิ์เป็นอันขาด คุณไม่สามารถอัปโหลด ดาวน์โหลด จัดเก็บ แชร์ นำไปแสดง สตรีม แจกจ่าย ส่งอีเมล เผยแพร่ไฟล์ข้อมูล หรือเนื้อหาใด ๆ ที่อาจละเมิดลิขสิทธิ์หรือสิทธิ์ที่ถูกต้องตามกฎหมายของบุคคลหรือนิติบุคคลอื่น ๆ ";
 /* button caption text that the user clicks when he agrees */
 "agree"="เห็นด้วย";
 /* button caption text that the user clicks when he disagrees */
@@ -1091,7 +1091,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="เลือกหนึ่งในแผนจากด้านล่าง:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="เลือกบัญชีหนึ่งประเภท:";
+"selectOneAccountType"="เลือกประเภทบัญชีหนึ่งรายการ:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="การสมัครสมาชิกรายปีคือ 16% ถูกกว่าการชำระเงินรายเดือน 12 ครั้ง";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="ละเมิดข้อกำหนดในการให้บริการ";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="การถ่ายโอนล้มเหลวเนื่องจากมีโครงสร้างของไดเรกทอรีที่ซ้ำกัน";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="ไม่สามารถเข้าถึงได้เนื่องจากการละเมิด ToS/AUP";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="ไฟล์ถูกลบเนื่องจากละเมิดเงื่อนไขการให้บริการของเรา";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="การตรวจสอบ SSL ล้มเหลว";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="อธิบายปัญหาที่พบ";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="ไม่สามารถที่จะเชื่อมต่อกับอินเทอร์เน็ตได้ กรุณาตรวจสอบการเชื่อมต่อของคุณและลองอีกครั้ง";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="แสดงในมุมมองหลัก";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="เกินโควต้าพื้นที่จัดเก็บ";

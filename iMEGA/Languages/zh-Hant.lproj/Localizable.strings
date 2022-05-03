@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="這可能因下列因素造成：";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="因為違反了ToS/ AUP，該檔案已被移除。";
+"fileLinkUnavailableText2"="檔案因違反我們的服務條款而被刪除。";
 /*  */
 "fileLinkUnavailableText3"="無效的連結－你嘗試存取的連結不存在";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="這可能因下列因素造成：";
 /*  */
-"folderLinkUnavailableText2"="該資料夾連結因違反ToS/AUP使用條款已被移除。";
+"folderLinkUnavailableText2"="資料夾連結因違反我們的服務條款而被刪除。";
 /*  */
 "folderLinkUnavailableText3"="無效的連結－你嘗試存取的連結不存在";
 /*  */
@@ -295,7 +295,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="由舊到新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="從相片中選擇";
+"choosePhotoVideo"="從照片中選擇";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍攝";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="無法進行文件掃描";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="已經有一個相同名稱的檔案";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="從…匯入";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="從檔案匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="已使用名稱[B]上傳[A]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -513,7 +513,7 @@
 /* Button title that skips the current action */
 "skipButton"="略過";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="自動備份相片與影片到您的MEGA雲端硬碟。";
+"Automatically backup your photos and videos to the Cloud Drive."="自動備份照片與影片到您的MEGA雲端硬碟。";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="啟用相機上傳";
 /* Success message shown when Camera Uploads has been enabled */
@@ -529,9 +529,9 @@
 /* Message shown when camera upload paused because of no WiFi. Plural. */
 "Upload paused because of no WiFi, %lu files pending"="由於沒有Wi-Fi連線，上傳暫停，%lu個檔案待處理";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="相片已上傳，影片上傳關閉；1個影片未上傳";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="照片已上傳，影片上傳關閉；1個影片未上傳";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="相片已上傳，影片上傳關閉；%lu個影片未上傳";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="照片已上傳，影片上傳關閉；%lu個影片未上傳";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%2$d之%1$d檔案";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -659,7 +659,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */
-"photo.empty.title"="找不到相片";
+"photo.empty.title"="找不到照片";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="垃圾筒";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -693,9 +693,9 @@
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="（推薦的）";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"SAVE HEIC PHOTOS AS"="將HEIC相片儲存為";
+"SAVE HEIC PHOTOS AS"="將HEIC照片儲存為";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="我們建議使用JPG，因為它是最相容的相片格式。";
+"We recommend JPG, as its the most compatible format for photos."="我們建議使用JPG，因為它是最相容的照片格式。";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="將HEVC影片儲存為";
 /* Footer for HEVC format section */
@@ -705,11 +705,11 @@
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="上傳影片";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
-"When enabled, photos will be uploaded."="啟用後將上傳相片。";
+"When enabled, photos will be uploaded."="啟用後將上傳照片。";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="相片將上傳到「相機上傳」資料夾。";
+"Photos will be uploaded to Camera Uploads folder."="照片將上傳到「相機上傳」資料夾。";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="相片與影片將上傳到「相機上傳」資料夾。";
+"Photos and videos will be uploaded to Camera Uploads folder."="照片與影片將上傳到相機上傳資料夾。";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="影片將上傳到「相機上傳」資料夾。";
 /* Footer for video uploads switch section when disabled */
@@ -717,7 +717,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="新的相機上傳選項！";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="現在您可以選擇將HEIC/HEVC相片和影片轉檔成相容性更好的JPEG/H.264格式。";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="現在您可以選擇將HEIC/HEVC照片和影片轉檔成相容性更好的JPEG/H.264格式。";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="使用最相容的格式";
 /* Title for custom settings */
@@ -737,25 +737,25 @@
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="上傳隱藏的相簿";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="將上傳每張原況照片的相片與影片版本。";
+"The video and the photo in each Live Photo will be uploaded."="將上傳每張原況照片的照片與影片版本。";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="只會上傳每張原況照片的相片版本。";
+"Only the photo in each Live Photo will be uploaded."="只會上傳每張原況照片的照片版本。";
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="將上傳您連拍照片序列的所有照片。";
 /* Footer description when upload all burst photos is disabled */
 "Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您連拍照片序列中收藏的照片。";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="隱藏相簿是在您裝置的相片應用程式中隱藏照片或影片的地方。";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="隱藏相簿是在您裝置的照片應用程式中隱藏照片或影片的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="上傳共享相簿";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="您裝置的相片程式的共享相簿將會被上傳。";
+"Shared Albums from your device's Photos app will be uploaded."="您裝置的照片程式裡的共享相簿將會被上傳。";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="您裝置的相片程式的共享相簿將不會被上傳。";
+"Shared Albums from your device's Photos app will not be uploaded."="您裝置的照片程式裡的共享相簿不會被上傳。";
 /* Title of the switch to config whether to upload synced albums */
 "Upload Albums Synced from iTunes"="上傳來自iTunes同步的專輯";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相簿是您將相片與影片從iTunes同步到您裝置相簿的地方。";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相簿是您照片與影片從iTunes同步到您裝置相簿的地方。";
 /* App means “Application” */
 "App Version"="應用程式版本";
 /* Title of the label where the SDK version is shown */
@@ -1045,11 +1045,11 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="移除相片";
+"Remove Photo"="移除照片";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="更改相片";
+"Change Photo"="更改照片";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="加入相片";
+"Add Photo"="加入照片";
 /* Button title that allows the user change his name */
 "changeName"="更改名稱";
 /* Success message when changing profile information. */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="已違反服務條款";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="由於遞迴目錄結構，所以傳輸失敗";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="由於ToS/AUP違規而無法存取";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="檔案因為違反我們的服務條款而被刪除";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL驗證失敗";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1697,7 +1697,7 @@
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="儲存於相簿";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將在MEGA應用程式中拍攝的相片和影片備份儲存至裝置的媒體庫中。";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將MEGA應用程式中拍攝的照片和影片備份儲存至裝置的媒體庫中。";
 /* Title of the Spotlight Search section */
 "Search"="搜尋";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
@@ -2499,7 +2499,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="播放中";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將相片上傳資料夾移至垃圾筒嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將照片上傳資料夾移至垃圾筒嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="上傳檔案";
 /* Text title for shortcuts, ie in the widget */
@@ -2761,7 +2761,7 @@
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="管理訂閱";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.googlePlay"="您在Google有一個現行的MEGA訂閱。您必須在Google Play個別將它取消，因為MEGA無法為您取消訂閱。訪問我們的幫助中心了解更多訊息。";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="訪問Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="描述問題";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="無法連接網路。請檢查您的連線然後重試一次。";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="在主視窗顯示";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="已超出空間配額";

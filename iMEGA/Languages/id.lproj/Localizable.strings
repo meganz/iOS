@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Ini bisa terjadi karena alasan berikut:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Berkas telah dihapus karena pelanggaran kebijakan.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="URL tidak benar - link yang anda coba akses tidak ada";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Ini bisa terjadi karena alasan berikut:";
 /*  */
-"folderLinkUnavailableText2"="Link folder telah dihapus karena pelanggaran ToS/AUP";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="URL tidak valid - link yang anda coba akses tidak ada";
 /*  */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="Pemindaian dokumen tidak tersedia";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Sudah ada file dengan nama yang sama";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Impor Dari…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="Impor dari File";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] telah diupload dengan nama [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -861,7 +861,7 @@
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Link pemulihan ini telah kadaluarsa, harap coba kembali.";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="Reset password";
+"passwordReset"="Ubah sandi";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Harap masukan Kunci Pemulihan anda";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
@@ -871,7 +871,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Kunci Pemulihan anda akan dipakai untuk me-reset password anda. Harap, masukan password baru anda.";
 /*  */
-"yourPasswordHasBeenReset"="Password telah sukses direset. Harap masuk ke akun anda sekarang.";
+"yourPasswordHasBeenReset"="Sandi telah sukses diubah. Harap masuk ke akun anda sekarang.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Kirim";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="Ketentuan Layanan dilanggar";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transfer gagal karena struktur direktori rekursif";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Tidak dapat diakses karena pelanggaran ToS / AUP";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="File removed as it violated our Terms of Service";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Verifikasi SSL gagal";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2425,7 +2425,7 @@
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Hapus Kata Sandi";
 /* Text to indicate the user to reset/change the password of a link */
-"Reset Password"="Atur Ulang Kata Sandi";
+"Reset Password"="Ubah Sandi";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Tautan ini tidak tersedia karena akun pengguna telah ditutup karena pelanggaran berat terhadap [A]Ketentuan Layanan[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="Jelaskan masalahnya";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Tidak dapat terhubung ke internet. Harap periksa koneksi anda dan coba lagi.";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="Display in Main View";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="Kuota penyimpanan terlewati";

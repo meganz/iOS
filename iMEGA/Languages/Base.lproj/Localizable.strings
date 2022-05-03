@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="This could be due to the following reasons:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="The file has been removed because of a ToS or AUP violation.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="This could be due to the following reasons:";
 /*  */
-"folderLinkUnavailableText2"="The folder link has been removed because of a ToS or AUP violation.";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */

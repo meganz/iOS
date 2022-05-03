@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="هذا يمكن أن يكون راجعاً إلى أسباب التالية:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="تمت إزالة الملف بسبب انتهاكات شروط الخدمة و سياسة الاستخدام المقبول ToS/AUP.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="عنوان الرابط الالكتروني URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="هذا يمكن أن يكون راجعاً إلى أسباب التالية:";
 /*  */
-"folderLinkUnavailableText2"="تمت إزالة الرابط المجلد بسبب انتهاك شروط الخدمة و سياسة الاستخدام المقبول ToS/AUP.";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="عنوان الرابط الالكتروني URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
 /*  */
@@ -295,7 +295,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="الأقدم";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="اختر من الصور";
+"choosePhotoVideo"="اختر من تطبيق الصور";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="التقاط";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="المسح الضوئي للمستند غير متوفر";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="هناك ملف بنفس الاسم";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="الاستيراد من…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="استيراد من تطبيق الملفات";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] تم رفعه بالفعل باسم [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1448,14 +1448,14 @@
 "Terms of Service breached"="تم خرق شروط الخدمة";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="فشل عملية التراسل بسبب وجود عودية في بنية المجلد";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="لا يمكن الوصول إليها بسبب انتهاك شروط استخدام الخدمة أو سياسة الاستخدام المقبول";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="تمت إزالة الملف لأنه ينتهك شروط الخدمة الخاصة بنا";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="فشل مصادقة شهادة التشفير SSL";
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="لا يوجد حجم متاح كافي";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="المصادقة المزدوجة Two-Factor مطلوبة";
+"Multi-factor authentication required"="المصادقة المزدوجة Two-Factor مطلوبة.";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="الولوج ممنوع لغيرمستخدمي مدير النظام";
 /* SDK error returned when a business account has expired */
@@ -2761,7 +2761,7 @@
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="إدارة الاشتراكات";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.googlePlay"="لديك اشتراك ميغا MEGA مفعل مع غوغل Google. يجب عليك إلغاؤه بشكل منفصل في غوغل بلاي Google Play ، حيث أن ميغا MEGA غير قادر على إلغائه من أجلك. قم بزيارة مركز المساعدة للحصول على مزيد من المعلومات.";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="قم بزيارة متجر غوغل Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="اشرح المشكلة";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="غير قادر على الاتصال بالإنترنت. يرجى التحقق من اتصالك وحاول مرة أخرى.";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="إظهار كعرض قائمة";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="تم تجاوز مساحة التخزين المتاحة";

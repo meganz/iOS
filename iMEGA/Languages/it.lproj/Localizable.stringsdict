@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d year</string>
+        <string>%d anno</string>
         <key>other</key>
-        <string>%u years</string>
+        <string>%u anni</string>
       </dict>
     </dict>
   </dict>
