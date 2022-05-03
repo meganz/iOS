@@ -69,4 +69,8 @@ struct FileSystemRepository: FileRepositoryProtocol {
         
         return URL(fileURLWithPath: directory).appendingPathComponent(name)
     }
+    
+    func containsOriginalCacheDirectory(path: String) -> Bool {
+        path.contains(appGroupSharedCacheURL.appendingPathComponent(Constants.originalCacheDirectory).path)
+    }
 }
