@@ -98,7 +98,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
             )
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
         } else {
-            rightBarButtonItem.isEnabled = false
+            rightBarButtonItem.isEnabled = !photoLibraryContentViewModel.library.isEmpty
             navigationItem.rightBarButtonItem = rightBarButtonItem
         }
     }
