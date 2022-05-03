@@ -7,6 +7,7 @@ protocol PhotoLibraryProvider: UIViewController {
     
     func configPhotoLibraryView(in container: UIView)
     func updatePhotoLibrary(by nodes: [MEGANode])
+    func enableNavigationEditBarButton()
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
     func updateNavigationTitle(withSelectedPhotoCount count: Int)
@@ -26,19 +27,6 @@ extension PhotoLibraryProvider {
         container.wrap(host.view)
         host.view.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
         host.didMove(toParent: self)
-    }
-    
-    func updatePhotoLibrary(by nodes: [MEGANode]) {
-        guard let host = children.first(where: { $0 is UIHostingController<PhotoLibraryContentView> }) else {
-            return
-        }
-        
-        Task {
-            let photoLibrary = await load(by: nodes)
-            
-            host.view.isHidden = photoLibrary.isEmpty
-            photoLibraryContentViewModel.library = photoLibrary
-        }
     }
     
     func enablePhotoLibraryEditMode(_ enable: Bool) {
@@ -70,6 +58,23 @@ extension PhotoLibraryProvider {
         }
         
         navigationItem.title = message
+    }
+    
+    func updatePhotoLibrary(by nodes: [MEGANode]) {
+        guard let host = children.first(where: { $0 is UIHostingController<PhotoLibraryContentView> }) else {
+            return
+        }
+        
+        Task {
+            let photoLibrary = await load(by: nodes)
+            
+            host.view.isHidden = photoLibrary.isEmpty
+            photoLibraryContentViewModel.library = photoLibrary
+        
+            if !photoLibrary.isEmpty {
+                enableNavigationEditBarButton()
+            }
+        }
     }
     
     // MARK: - Private

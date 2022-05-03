@@ -100,7 +100,6 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
         case .reloadImages(let nodes):
             if #available(iOS 14.0, *) {
                 updatePhotoLibrary(by: nodes)
-                editBarButtonItem.isEnabled = !nodes.isEmpty
             }
         case .reloadData(let nodesByDay):
             listSource = PhotoExplorerListSource(

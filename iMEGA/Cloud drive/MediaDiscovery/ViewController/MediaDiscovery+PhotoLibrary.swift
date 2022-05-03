@@ -21,4 +21,8 @@ extension MediaDiscoveryViewController: PhotoLibraryProvider {
             self?.didSelectedPhotoCountChange($0.count)
         }
     }
+    
+    func enableNavigationEditBarButton() {
+        rightBarButtonItem.isEnabled = true
+    }
 }

@@ -21,4 +21,8 @@ extension PhotosExplorerViewController: PhotoLibraryProvider {
             self?.didSelectedPhotoCountChange($0.count)
         }
     }
+    
+    func enableNavigationEditBarButton() {
+        editBarButtonItem.isEnabled = true
+    }
 }

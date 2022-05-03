@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
 
 @property (nonatomic) IBOutlet UIView *photosBannerView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 - (void)reloadHeader;
 - (void)reloadPhotos;
