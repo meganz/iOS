@@ -59,7 +59,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
@@ -454,7 +453,11 @@
         self.editBarButtonItem.title = @"";
     } else if (self.mediaNodesArray.count > 0 && !self.isEditing) {
         [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
-        self.editBarButtonItem.enabled = YES;
+        
+        if (@available(iOS 14.0, *)) {}
+        else {
+            self.editBarButtonItem.enabled = YES;
+        }
     } else {
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.editBarButtonItem.image = nil;

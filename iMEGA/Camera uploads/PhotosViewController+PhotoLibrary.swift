@@ -27,4 +27,8 @@ extension PhotosViewController: PhotoLibraryProvider {
     @objc func objcWrapper_enablePhotoLibraryEditMode(_ enable: Bool) {
         enablePhotoLibraryEditMode(enable)
     }
+    
+    func enableNavigationEditBarButton() {
+        self.editBarButtonItem?.isEnabled = true
+    }
 }
