@@ -17,6 +17,6 @@
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA mengakses lokasi anda saat anda membagikannya dengan kontak anda dalam obrolan.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
 "NSLocalNetworkUsageDescription"="Ini akan memungkinkan anda menggunakan MEGA untuk melakukan dan menerima panggilan melalui perangkat yang berada di Wi-Fi atau jaringan lokal yang sama.";

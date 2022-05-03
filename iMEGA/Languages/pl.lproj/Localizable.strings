@@ -81,7 +81,7 @@
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany a dokończyć zmianę adresu email. Zaloguj się używając dotychczasowego adresu email a następnie kliknij ponownie w link.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Login";
+"login"="Zaloguj się";
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Masz już konto?";
 /* Button title which triggers the action to create a MEGA account */
@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Z jednego z poniższych powodów:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Plik został usunięty z powodu naruszenia naszych Warunków Serwisu.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="Nieważny adres URL - link którego próbujesz użyć jest niedostępny";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Z jednego z poniższych powodów:";
 /*  */
-"folderLinkUnavailableText2"="Link został usunięty z powodu naruszenia zasad regulaminu lub praw autorskich.";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="Nieważny adres URL - link którego próbujesz użyć jest niedostępny";
 /*  */
@@ -295,7 +295,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="najstarsze";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Wybierz spośród zdjęć";
+"choosePhotoVideo"="Wybierz z aplikacji Zdjęcia";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Zrób zdjęcie";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="Skanowanie dokumentów nie jest dostępne";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Istnieje już plik o takiej nazwie";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Importuj z…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="Importuj z aplikacji Pliki";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] został już wgrany pod nazwą [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -977,7 +977,7 @@
 /*  */
 "howItWorksMain"="Twój znajomy musi zarejestrować darmowe konto na MEGA i [S]zainstalować conajmniej jedną aplikację MEGA[/S] (lub uruchomić synchornizację w jednej z naszych aplikacji mobilnych)";
 /*  */
-"howItWorksSecondary"="Możesz powiadomić znajomego dolownym sposobem. Zdobędziesz nowe limity tylko gdy wpiszesz emaile znajomych tutaj.";
+"howItWorksSecondary"="Możesz powiadomić znajomego dowolnym sposobem. Zdobędziesz nowe limity tylko gdy wpiszesz emaile znajomych tutaj.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Promocja darmowych limitów nie obejmuje sytuacji kiedy zapraszasz osoby, które już wcześniej posiadały konto na MEGA.";
 /* Header of block with achievements bonuses. */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="Naruszono warunki korzystania z usługi";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Przesyłanie nie powiodło się z powodu rekurencyjnej struktury katalogów";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Niedostępny z powodu naruszenia ToS / AUP";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="File removed as it violated our Terms of Service";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Niepowodzenie weryfikacji SSL";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="Opisz problem";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Nie można połączyć się z Internetem. Sprawdź połączenie i spróbuj ponownie.";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="Display in Main View";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="Dostępny limit został przekroczony";

@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Acest lucru ar putea fi din cauza următoarelor motive:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Fișierul a fost eliminat din cauza unei încălcări a ToS/AUP.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="URL nevalid - linkul pe care încerci să-l accesezi nu există";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Acest lucru ar putea fi din cauza următoarelor motive:";
 /*  */
-"folderLinkUnavailableText2"="Linkul folderului a fost eliminat din cauza unei încălcări a ToS/AUP.";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="URL nevalid - linkul pe care încerci să-l accesezi nu există";
 /*  */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="Scanarea de documente nu este disponibilă";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Există deja un fișier cu același nume";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Importă din…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="Importă de Fișiere";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] încărcat deja cu numele [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="Au fost încălcați Termenii de utilizare a serviciului";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transferul a eșuat din cauza unei structuri recursive a directoarelor";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Indisponibil din cauza încălcării ToS/AUP";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="File removed as it violated our Terms of Service";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Verificarea SSL a eșuat";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2155,7 +2155,7 @@
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias sau pseudonim";
 /* Business expired account Overdue payment page header. */
-"Payment overdue"="Plata este întârziată";
+"Payment overdue"="Plata este scadentă";
 /* Business account status */
 "Active"="Activă";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="Descrie problema";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Unable to connect to the Internet. Please check your connection and try again.";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="Display in Main View";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="Cotă de stocare depășită";

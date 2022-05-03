@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="これは以下の理由によるものであると考えられます：";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="そのファイルはTos（ご利用規約）/AUP（ご利用規定）違反のため削除されました。";
+"fileLinkUnavailableText2"="このファイルは当社のご利用規約に違反するため、削除されました";
 /*  */
 "fileLinkUnavailableText3"="無効なURL－アクセスしようとしているリンクは存在しません。";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="これは以下の理由によるものであると考えられます：";
 /*  */
-"folderLinkUnavailableText2"="そのリンクはTos（ご利用規約）/AUP（ご利用規定）違反のため削除されました。";
+"folderLinkUnavailableText2"="このフォルダリンクは当社のご利用規約に違反するため、削除されました";
 /*  */
 "folderLinkUnavailableText3"="無効なURL：アクセスしようとしているリンクは存在しません。";
 /*  */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="ドキュメントスキャンは利用できません";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="同じ名前のファイルがすでにあります";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="以下からインポート…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="ファイルからインポート";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A]はすでに[B]の名前でアップロードされています";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="ご利用規約違反";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="転送は再帰的なディレクトリ構造が原因で失敗しました";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="ToS（ご利用規約）/AUP（ご利用規定）違反のためアクセスできません";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="ご利用規約に違反するため、ファイルは削除されました";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL検証に失敗しました";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2761,7 +2761,7 @@
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="サブスクリプションの管理";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.googlePlay"="GoogleとのアクティブなMEGAサブスクリプションをお持ちです。MEGAではそれをキャンセルできないため、Google Playから別にキャンセルする必要があります。詳細については、当社のヘルプセンターをご覧ください。";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="Google Playにアクセス";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="問題を記述";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="インターネットに接続できません。接続を確認し、再度お試しください。";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="メインビューで表示";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="ストレージ容量が超過しました";

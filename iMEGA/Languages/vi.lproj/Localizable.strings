@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Điều này xảy ra có thể do:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Tệp tin đã bị xóa vì vi phạm Điều Khoản DV / Chính Sách SD.";
+"fileLinkUnavailableText2"="Tệp tin đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
 /*  */
 "fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Điều này xảy ra có thể do:";
 /*  */
-"folderLinkUnavailableText2"="Liên kết thư mục đã bị xóa bỏ bởi vì vi phạm Điều Khoản DV / Chính Sách SD.";
+"folderLinkUnavailableText2"="Đường liên kết thư mục đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA.";
 /*  */
 "folderLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="Quét Tài Liệu không khả dụng";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Đã có một tệp tin với cái tên này rồi";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Chuyển nhập từ…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="Chuyển nhập từ Tệp";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="Tệp [A] đã được tải lên từ trước với tên [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1448,14 +1448,14 @@
 "Terms of Service breached"="Phát hiện vi phạm Điều Khoản Dịch Vụ";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Truyền tải bị thất bại do cấu trúc đệ quy của thư mục";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Không truy cập được do vi phạm ĐKDV/CSSD";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="Tệp tin đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Xác thực SSL bị thất bại";
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="Không đủ băng thông";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="Cần sử dụng xác thực 2-bước";
+"Multi-factor authentication required"="Cần phải sử dụng xác thực 2-bước";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Truy cập bị từ chối cho tất cả thành viên dưới hạng admin";
 /* SDK error returned when a business account has expired */
@@ -2761,7 +2761,7 @@
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="Quản Lý Gói Đăng Ký Dịch Vụ";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.googlePlay"="Quý khách hiện đang có một gói đăng ký dịch vụ MEGA được mua với Google. Quý khách cần phải tự tiến hành hủy bỏ trong CH Google Play, vì MEGA không thể thực hiện cho quý khách được. Truy cập Thư Viện Hướng Dẫn để có thêm thông tin.";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="Truy cập trang Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="Mô tả vấn đề";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Không thể kết nối tới internet. Xin kiểm tra đường truyền kết nối mạng và thử lại.";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="Hiện trong Khung Xem Chính";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="Vượt mức giới hạn lưu trữ";

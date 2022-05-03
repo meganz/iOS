@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Poderia ser por uma das razões abaixo:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="O arquivo foi removido por infringir os nossos Termos de serviço.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Poderia ser por uma das razões abaixo:";
 /*  */
-"folderLinkUnavailableText2"="O link desta pasta foi eliminado por infringir os nossos Termos de serviço.";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /*  */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="A digitalização de documentos não está disponível";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Já existe um arquivo com o mesmo nome";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Importar de…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="Importar de Arquivos";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] já carregado com o nome [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="Infração dos termos de serviço";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Não foi possível fazer a transferência devido a uma estrutura de diretório recursiva";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Não acessível por infringir os termos de serviço";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="Arquivo removido porque violou nossos Termos de serviço";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Falha na verificação SSL";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="Descreva o problema";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Não foi possível conectar-se à Internet. Por favor, verifique sua conexão e tente novamente.";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="Mostrar na Vista Principal";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="Cota de armazenamento excedida";

@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Esto puede deberse a las siguientes razones:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Este archivo ha sido eliminado por infringir los Términos de servicio y/o condiciones de uso.";
+"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
 /*  */
 "fileLinkUnavailableText3"="Enlace inválido - el enlace al que está intentando acceder no existe";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Esto puede deberse a las siguientes razones:";
 /*  */
-"folderLinkUnavailableText2"="El enlace de la carpeta ha sido eliminado por infringir nuestros Términos de servicio y/o condiciones de uso.";
+"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
 /*  */
 "folderLinkUnavailableText3"="Enlace inválido - el enlace al que está intentando acceder no existe";
 /*  */
@@ -295,7 +295,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Más antiguo";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Elige desde Fotos";
+"choosePhotoVideo"="Elegir desde Fotos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -332,8 +332,8 @@
 "Document scanning is not available"="El escaneo de documentos no está disponible";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Ya existe un archivo con el mismo nombre";
-/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Subir desde…";
+/* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
+"cloudDrive.upload.importFromFiles"="Importar desde Archivos";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] ya subida con el nombre [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -1448,8 +1448,8 @@
 "Terms of Service breached"="Términos de uso incumplidos";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transferencia fallida debido a una estructura de carpetas recursiva";
-/* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="No accesible por infringir los Términos de servicio";
+/* Error shown when downloading a file that has violated Terms of Service. */
+"transfer.error.termsOfServiceViolation"="El archivo ha sido eliminado por infringir nuestros Términos de servicio";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Verificación SSL fallida";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2992,3 +2992,7 @@
 "help.reportIssue.describeIssue.placeholder"="Describe el problema";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="No es posible conectarse a Internet. Comprueba la conexión y vuelve a intentarlo.";
+/* Menu title in meetings that allows to switch to main view for a participant. */
+"meetings.displayInMainView.title"="Mostrar en la Vista principal";
+/* Label indicating storage over quota */
+"transfer.storage.quotaExceeded"="Cuota de almacenamiento agotada";
