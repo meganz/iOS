@@ -26,7 +26,7 @@ struct PhotoLibraryContentView: View {
                 }
             }
             .environment(\.editMode, $editMode)
-            .onReceive(viewModel.selection.$editMode.dropFirst()) {
+            .onReceive(viewModel.selection.$editMode) {
                 editMode = $0
             }
         }
