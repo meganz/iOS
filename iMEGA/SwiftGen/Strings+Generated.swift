@@ -859,7 +859,7 @@ public enum Strings {
     public static let fileLink = Strings.tr("Localizable", "fileLink")
     /// This could be due to the following reasons:
     public static let fileLinkUnavailableText1 = Strings.tr("Localizable", "fileLinkUnavailableText1")
-    /// The file has been removed because of a ToS or AUP violation.
+    /// The file has been removed as it violated our Terms of Service
     public static let fileLinkUnavailableText2 = Strings.tr("Localizable", "fileLinkUnavailableText2")
     /// Invalid URL - the link you are trying to access does not exist
     public static let fileLinkUnavailableText3 = Strings.tr("Localizable", "fileLinkUnavailableText3")
@@ -935,7 +935,7 @@ public enum Strings {
     public static let folderLink = Strings.tr("Localizable", "folderLink")
     /// This could be due to the following reasons:
     public static let folderLinkUnavailableText1 = Strings.tr("Localizable", "folderLinkUnavailableText1")
-    /// The folder link has been removed because of a ToS or AUP violation.
+    /// The folder link has been removed as it violated our Terms of Service.
     public static let folderLinkUnavailableText2 = Strings.tr("Localizable", "folderLinkUnavailableText2")
     /// Invalid URL - the link you are trying to access does not exist
     public static let folderLinkUnavailableText3 = Strings.tr("Localizable", "folderLinkUnavailableText3")
@@ -1601,6 +1601,10 @@ public enum Strings {
     public static let photosWillBeUploadedToCameraUploadsFolder = Strings.tr("Localizable", "Photos will be uploaded to Camera Uploads folder.")
     /// Pinned Location
     public static let pinnedLocation = Strings.tr("Localizable", "Pinned Location")
+    /// Plural format key: "%#@years@"
+    public static func placeholderString(_ p1: Int) -> String {
+      return Strings.tr("Localizable", "placeholder_string", p1)
+    }
     /// Plan
     public static let plan = Strings.tr("Localizable", "Plan")
     /// Playing
