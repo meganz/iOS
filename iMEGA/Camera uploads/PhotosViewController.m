@@ -451,6 +451,7 @@
     if (self.mediaNodesArray.count == 0) {
         self.editBarButtonItem.enabled = NO;
         self.editBarButtonItem.title = @"";
+        [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
     } else if (self.mediaNodesArray.count > 0 && !self.isEditing) {
         [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
         
