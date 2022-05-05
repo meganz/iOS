@@ -292,3 +292,10 @@ extension AppDelegate {
         }
     }
 }
+
+//MARK: - Register for background refresh
+extension AppDelegate {
+    @objc func registerCameraUploadBackgroundRefresh() {
+        CameraUploadBGRefreshManager.shared.register()
+    }
+}
