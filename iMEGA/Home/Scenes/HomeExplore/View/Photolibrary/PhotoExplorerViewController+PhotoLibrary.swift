@@ -22,7 +22,7 @@ extension PhotosExplorerViewController: PhotoLibraryProvider {
         }
     }
     
-    func enableNavigationEditBarButton() {
-        editBarButtonItem.isEnabled = true
+    func enableNavigationEditBarButton(_ enable: Bool) {
+        editBarButtonItem.isEnabled = enable
     }
 }
