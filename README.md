@@ -33,7 +33,7 @@ git submodule update --init --recursive
 ```
 
 #### Download 3rdparty packages
-1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/EYECGBDQ#2iFuoLVTqzXA2ARoNJr3tgM0eAlXoT_ce0skKycEF98
+1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/4Y0kDIII#QPqpBGSEJm6U5ZOR3HHRfD01SYLpQnF5EzjnwmQ6USM
 2. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
 
 #### Install Pods
