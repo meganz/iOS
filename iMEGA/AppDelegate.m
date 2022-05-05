@@ -49,7 +49,6 @@
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
-#import "BackgroundRefreshPerformer.h"
 #import <SDWebImage/SDWebImage.h>
 #import "MEGASdkManager+CleanUp.h"
 @import Firebase;
@@ -88,7 +87,6 @@
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 @property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 
-@property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
 @property (nonatomic) MEGAChatInit chatLastKnownInitState;
@@ -145,7 +143,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [FIRApp configure];
     [self migrateLocalCachesLocation];
-    
+    [self registerCameraUploadBackgroundRefresh];
+
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
         _megatype = (MEGANotificationType)[[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] integerValue];
     }
@@ -563,20 +562,7 @@
     [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    MEGALogDebug(@"[App Lifecycle] application perform background refresh");
-    [self.backgroundRefreshPerformer performBackgroundRefreshWithCompletionHandler:completionHandler];
-}
-
 #pragma mark - Properties
-
-- (BackgroundRefreshPerformer *)backgroundRefreshPerformer {
-    if (_backgroundRefreshPerformer == nil) {
-        _backgroundRefreshPerformer = [[BackgroundRefreshPerformer alloc] init];
-    }
-    
-    return _backgroundRefreshPerformer;
-}
 
 - (QuickAccessWidgetManager *)quickAccessWidgetManager {
     if (_quickAccessWidgetManager == nil) {

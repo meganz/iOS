@@ -40,11 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pauseCameraUploadIfNeeded;
 - (void)resumeCameraUpload;
 
-#pragma mark - background refresh
-
-+ (void)enableBackgroundRefreshIfNeeded;
-+ (void)disableBackgroundRefresh;
-
 #pragma mark - fetch upload stats
 
 - (void)loadCurrentUploadStatsWithCompletion:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;

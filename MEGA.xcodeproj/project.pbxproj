@@ -1626,7 +1626,7 @@
 		B6990178262F920800176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
 		B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
 		B6990193262F93AA00176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
-		B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */; };
+		B6998320228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = B699831F228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.m */; };
 		B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */; };
 		B699D585275853F2006132EF /* PhotoCardTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B699D584275853F2006132EF /* PhotoCardTitle.swift */; };
 		B699D58B2759724C006132EF /* PhotoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B699D58A2759724B006132EF /* PhotoCard.swift */; };
@@ -1860,6 +1860,8 @@
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
 		BF49DEE72818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */; };
+		BF49DF352820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DF342820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift */; };
+		BF49DF57282333BA00DE3742 /* CameraUploadManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */; };
 		BF4AC32927CC499800366C25 /* AnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32827CC499800366C25 /* AnalyticsUseCase.swift */; };
 		BF4AC32B27CC4A1300366C25 /* GoogleAnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32A27CC4A1300366C25 /* GoogleAnalyticsRepository.swift */; };
 		BF4AC32D27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */; };
@@ -3915,8 +3917,8 @@
 		B695B5FE264B43160050DF09 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
 		B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFunctions.swift; sourceTree = "<group>"; };
 		B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UncaughtExceptionHandler.swift; sourceTree = "<group>"; };
-		B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundRefreshPerformer.h; sourceTree = "<group>"; };
-		B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundRefreshPerformer.m; sourceTree = "<group>"; };
+		B699831E228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadBackgroundRefreshPerformer.h; sourceTree = "<group>"; };
+		B699831F228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadBackgroundRefreshPerformer.m; sourceTree = "<group>"; };
 		B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSNavigationViewController.swift; sourceTree = "<group>"; };
 		B699D584275853F2006132EF /* PhotoCardTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardTitle.swift; sourceTree = "<group>"; };
 		B699D58A2759724B006132EF /* PhotoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCard.swift; sourceTree = "<group>"; };
@@ -4135,6 +4137,8 @@
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
 		BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+Additions.swift"; sourceTree = "<group>"; };
+		BF49DF342820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBGRefreshManager.swift; sourceTree = "<group>"; };
+		BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadManager+Additions.swift"; sourceTree = "<group>"; };
 		BF4AC32827CC499800366C25 /* AnalyticsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsUseCase.swift; sourceTree = "<group>"; };
 		BF4AC32A27CC4A1300366C25 /* GoogleAnalyticsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsRepository.swift; sourceTree = "<group>"; };
 		BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -8925,6 +8929,7 @@
 			children = (
 				B658D3CA218FBC24004C0D64 /* CameraUploadManager.h */,
 				B658D3C9218FBC24004C0D64 /* CameraUploadManager.m */,
+				BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */,
 				B6BD011D21B62D8E00E97086 /* CameraUploadManager+Settings.h */,
 				B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */,
 				B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */,
@@ -9497,8 +9502,9 @@
 				B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */,
 				B6D176852236F16600098084 /* ImageExporter.h */,
 				B6D176862236F16600098084 /* ImageExporter.m */,
-				B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */,
-				B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */,
+				B699831E228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.h */,
+				B699831F228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.m */,
+				BF49DF342820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -12062,7 +12068,7 @@
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */,
-				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
+				B6998320228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.m in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */,
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
@@ -12544,6 +12550,7 @@
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,
 				A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */,
 				5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
+				BF49DF352820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift in Sources */,
 				5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */,
 				1246682E275DBE0500C94335 /* TextFile.swift in Sources */,
 				5BC25725220080FD0098E781 /* NSDate+MNZCategory.m in Sources */,
@@ -12834,6 +12841,7 @@
 				BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */,
 				B66E8076275A0C4200502601 /* PhotoCellViewModel.swift in Sources */,
 				A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */,
+				BF49DF57282333BA00DE3742 /* CameraUploadManager+Additions.swift in Sources */,
 				BF67C50B264B9A68003CE3C6 /* ChatRoomsViewController.swift in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
