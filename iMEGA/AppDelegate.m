@@ -1595,8 +1595,6 @@
             [self presentBusinessExpiredViewIfNeeded];
             
             [self configAppWithNewCookieSettings];
-            
-            [self migrateChatVideoUploadQualityPreferenceToSharedUserDefaultIfNeeded];
             break;
         }
             
