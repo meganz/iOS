@@ -58,7 +58,6 @@ final class SpotlightIndexer: NSObject {
                         .store(in: &self.subscriptions)
                     
                     self.favouritesIndexed = true
-                    self.deindexPreviousNodesIndexedInOldAppVersions_toBeDeleted()
                     
                 case .failure(_):
                     MEGALogError("[Spotlight] Error getting all favourites nodes")
@@ -117,16 +116,6 @@ final class SpotlightIndexer: NSObject {
         
         let item = CSSearchableItem(uniqueIdentifier: "\(node.base64Handle)", domainIdentifier: Constants.favouritesId, attributeSet: attributeSet)
         return item
-    }
-    
-    private func deindexPreviousNodesIndexedInOldAppVersions_toBeDeleted() {
-        CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["nodes"]) { error in
-            if let error = error {
-                MEGALogDebug("[Spotlight] Deindexing domain identifier nodes error: \(error.localizedDescription)")
-            } else {
-                MEGALogDebug("[Spotlight] Domain identifier nodes deindexed")
-            }
-        }
     }
     
     private func shouldIndexFavourites() -> Bool {
