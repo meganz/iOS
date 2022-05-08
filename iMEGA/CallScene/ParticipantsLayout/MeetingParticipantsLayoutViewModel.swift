@@ -82,8 +82,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var callParticipants = [CallParticipantEntity]()
     private var indexOfVisibleParticipants = [Int]()
     private var speakerParticipant: CallParticipantEntity? {
+        willSet {
+            speakerParticipant?.speakerVideoDataDelegate = nil
+            speakerParticipant?.isSpeakerPinned = false
+        }
         didSet {
             guard let speaker = speakerParticipant else { return }
+            speaker.isSpeakerPinned = true
             invokeCommand?(.updateSpeakerViewFor(speaker))
             containerViewModel?.dispatch(.didDisplayParticipantInMainView(speaker))
         }
@@ -92,6 +97,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     internal var layoutMode: ParticipantsLayoutMode = .grid {
         didSet {
             if layoutMode == .grid {
+                isSpeakerParticipantPinned = false
                 containerViewModel?.dispatch(.didSwitchToGridView)
                 speakerParticipant = nil
             } else if speakerParticipant == nil {
@@ -404,10 +410,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     switchVideoResolutionHighToLow(for: currentSpeaker.clientId, in: chatRoom.chatId)
                 }
             }
-            speakerParticipant?.speakerVideoDataDelegate = nil
-            speakerParticipant?.isSpeakerPinned = false
             isSpeakerParticipantPinned = true
-            participant.isSpeakerPinned = true
             speakerParticipant = participant
             if participant.video == .on && participant.isVideoLowRes && participant.canReceiveVideoLowRes {
                 switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
@@ -431,7 +434,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             return
         }
                 
-        tappedParticipant(participant, at: IndexPath(item: participantIndex, section: 0))
+        tappedParticipant(callParticipants[participantIndex], at: IndexPath(item: participantIndex, section: 0))
     }
     
     private func switchVideoResolutionHighToLow(for clientId: MEGAHandle, in chatId: MEGAHandle) {
