@@ -8,9 +8,7 @@
 #import "InputView.h"
 #import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
-#import "MEGASendSignupLinkRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 
 @interface CheckEmailAndFollowTheLinkViewController () <UITextFieldDelegate, MEGAGlobalDelegate>
@@ -131,11 +129,41 @@
         BOOL validEmail = [self.emailInputView.inputTextField.text mnz_isValidEmail];
         if (validEmail) {
             [self.emailInputView.inputTextField resignFirstResponder];
-            MEGASendSignupLinkRequestDelegate *sendSignupLinkRequestDelegate = [[MEGASendSignupLinkRequestDelegate alloc] init];
-            [MEGASdkManager.sharedMEGASdk sendSignupLinkWithEmail:self.emailInputView.inputTextField.text
+            MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                if (error.type) {
+                    NSString *title;
+                    NSString *message;
+                    switch (error.type) {
+                        case MEGAErrorTypeApiEExist:
+                            title = @"";
+                            message = NSLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
+                            break;
+                            
+                        case MEGAErrorTypeApiEFailed:
+                            title = @"";
+                            message = NSLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.");
+                            break;
+                            
+                        default:
+                            title = NSLocalizedString(@"error", nil);
+                            message = [NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)];
+                            break;
+                    }
+                    
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    
+                    [self presentViewController:alertController animated:YES completion:nil];
+                    
+                    return;
+                } else {
+                    [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
+                    [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email")];
+                }
+            }];
+            [MEGASdkManager.sharedMEGASdk resendSignupLinkWithEmail:self.emailInputView.inputTextField.text
                                                              name:self.name
-                                                         password:self.password
-                                                         delegate:sendSignupLinkRequestDelegate];
+                                                         delegate:delegate];
         }
         [self setErrorState:!validEmail];
     }
