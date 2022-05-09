@@ -34,15 +34,11 @@ extension PhotoLibraryProvider {
     }
     
     func configPhotoLibrarySelectAll() {
-        photoLibraryContentViewModel.selection.allSelected = photoLibraryContentViewModel.selection.photos.count ==
-        photoLibraryContentViewModel.library.allPhotos.count
-        
-        photoLibraryContentViewModel.selection.allSelected.toggle()
+        let allSelectedCurrently = photoLibraryContentViewModel.selection.photos.count == photoLibraryContentViewModel.library.allPhotos.count
+        photoLibraryContentViewModel.selection.allSelected = !allSelectedCurrently
         
         if photoLibraryContentViewModel.selection.allSelected {
-            photoLibraryContentViewModel.selection.selectAll(photos: photoLibraryContentViewModel.library.allPhotos)
-        } else {
-            photoLibraryContentViewModel.selection.unselectAll()
+            photoLibraryContentViewModel.selection.setSelectedPhotos(photoLibraryContentViewModel.library.allPhotos)
         }
     }
     

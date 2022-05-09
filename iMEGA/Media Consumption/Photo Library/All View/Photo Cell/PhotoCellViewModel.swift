@@ -129,7 +129,6 @@ final class PhotoCellViewModel: ObservableObject {
             .filter { [weak self] in
                 self?.isSelected != $0
             }
-            .receive(on: DispatchQueue.main)
             .assign(to: &$isSelected)
         
         if selection.editMode.isEditing {
