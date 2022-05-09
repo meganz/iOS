@@ -9,6 +9,11 @@ typedef NS_ENUM(NSUInteger, OfflineViewControllerFlavor) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString *documentProviderLog = @"MEGAiOS.docExt.log";
+static NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
+static NSString *shareExtensionLog = @"MEGAiOS.shareExt.log";
+static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
+
 @interface OfflineViewController : UIViewController
 
 @property (nonatomic, strong, nullable) NSIndexPath *peekIndexPath;
@@ -24,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) OfflineViewControllerFlavor flavor;
 @property (nonatomic, readonly) NSString *currentOfflinePath;
 @property (nonatomic, strong, nullable) NSString *folderPathFromOffline;
+
+@property (nonatomic, strong) NSString *logsPath;
 
 - (nullable NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)updateNavigationBarTitle;
