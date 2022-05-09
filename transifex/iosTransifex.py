@@ -469,6 +469,73 @@ def run_comment(resource):
     else:
         print("Error: Unable to find the resource")
 
+# Call this function to initiate pruning for the Localizable resource by the Transifex bot.
+def run_pruning():
+    url = os.getenv('TRANSIFEX_BOT_URL')
+    token = os.getenv('TRANSIFEX_BOT_TOKEN')
+    localizable = PROJECT_ID + ':r:localizable'
+    if url and token:
+        i = 30
+        while i > 0:
+            request = Request(url + '?o=prune&pid=193&token=' + token)
+            try:
+                response = urlopen(request)
+            except HTTPError as ex:
+                content = ex.read().decode('utf8')
+                print('Error: ' + content)
+                return False
+            content = response.read().decode('utf8')
+            if content == '':
+                print('Empty response from the Transifex bot')
+                return False
+            else:
+                try:
+                    content = json.loads(content)
+                    if 'ok' in content:
+                        if content['ok']:
+                            if 'status' in content and content['status'] == 'pending':
+                                if i % 5 == 0:
+                                    print('Processing.....')
+                                time.sleep(10)
+                            i = i - 1
+                        elif 'error' in content:
+                            print('Error: ' + content['error'])
+                            return False
+                        else:
+                            print('Unknown error')
+                            return False
+                    elif localizable in content and 'ok' in content[localizable]:
+                        if content[localizable]['ok']:
+                            print("-------------------------------------------------------------------------")
+                            for string in content[localizable]["confirm"]:
+                                print(string)
+                            print("-------------------------------------------------------------------------")
+                            print("Confirm that the strings above are no longer in use.")
+                            print("If confirmed the file without these strings will be uploaded to Transifex (Y)")
+                            print("If not confirmed nothing will be uploaded and a manual update of Localizable can be made removing strings as needed (N)")
+                            confirmed = input("Confirm removal of the specified strings (Y/N):")
+                            if confirmed.lower()[0] == "y":
+                                print("Uploading file.")
+                                run_upload(content[localizable]["file"], "Localizable", False)
+                            else:
+                                print("Nothing removed.")
+                            return True
+                        elif 'error' in content[localizable]:
+                            print('Error: ' + content[localizable]['error'])
+                            return False
+                        else:
+                            print('Unknown error when pruning Localizable')
+                            return False
+                    else:
+                        print('Error: Unexpected result')
+                        return False
+                except:
+                    print('Error: ' + str(content))
+                    return False
+        print('Error: Pruning timed out')
+    else:
+        print('Invalid environment variables')
+
 # Call this function to perform a request to Transifex
 def do_request(url, json_payload = None, type = "GET"):
     is_git_request = "code.developers.mega.co.nz" in url
@@ -1481,6 +1548,8 @@ def main():
                 run_comment(args.resource[0])
             else:
                 print("Error: No resource specified")
+        elif mode == "clean":
+            run_pruning()
     elif args.download:
         resource = "Localizable"
         branch = get_branch_name()
