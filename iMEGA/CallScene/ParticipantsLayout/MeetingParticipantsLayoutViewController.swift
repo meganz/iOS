@@ -2,6 +2,11 @@
 import Foundation
 
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
+    private enum Constants {
+        static let notificatitionMessageWhiteBackgroundColor = UIColor(white: 1.0, alpha: 0.95)
+        static let notificatitionMessageWhiteTextColor = UIColor.white
+        static let notificatitionMessageBlackTextColor = UIColor.black
+    }
     
     @IBOutlet private weak var callCollectionView: CallCollectionView!
     @IBOutlet private weak var localUserView: LocalUserView!
@@ -158,14 +163,18 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .localVideoFrame(let width, let height, let buffer):
             localUserView.frameData(width: width, height: height, buffer: buffer)
         case .participantAdded(let name):
-            showNotification(message: Strings.Localizable.Meetings.Message.joinedCall(name), color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: Strings.Localizable.Meetings.Message.joinedCall(name),
+                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
+                             textColor: Constants.notificatitionMessageBlackTextColor)
         case .participantRemoved(let name):
-            showNotification(message: Strings.Localizable.Meetings.Message.leftCall(name), color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: Strings.Localizable.Meetings.Message.leftCall(name),
+                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
+                             textColor: Constants.notificatitionMessageBlackTextColor)
         case .reconnecting:
             showReconnectingNotification()
         case .reconnected:
             removeReconnectingNotification()
-            showNotification(message: Strings.Localizable.online, color: UIColor.systemGreen)
+            showNotification(message: Strings.Localizable.online, backgroundColor: UIColor.systemGreen, textColor: Constants.notificatitionMessageWhiteTextColor)
         case .updateCameraPositionTo(let position):
             localUserView.addBlurEffect()
             localUserView.transformLocalVideo(for: position)
@@ -191,9 +200,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .shouldHideSpeakerView(let hidden):
             speakerViews.forEach { $0.isHidden = hidden }
         case .ownPrivilegeChangedToModerator:
-            showNotification(message: Strings.Localizable.Meetings.Notifications.moderatorPrivilege, color: UIColor.mnz_turquoise(for: traitCollection))
+            showNotification(message: Strings.Localizable.Meetings.Notifications.moderatorPrivilege,
+                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
+                             textColor: Constants.notificatitionMessageBlackTextColor)
         case .lowNetworkQuality:
-            showNotification(message: Strings.Localizable.poorConnection, color: UIColor.systemOrange)
+            showNotification(message: Strings.Localizable.poorConnection, backgroundColor: UIColor.systemOrange, textColor: Constants.notificatitionMessageWhiteTextColor)
         case .updateAvatar(let image, let participant):
             callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
@@ -243,10 +254,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         speakerNameLabel.text = participant.name
     }
     
-    private func showNotification(message: String, color: UIColor) {
+    private func showNotification(message: String, backgroundColor: UIColor, textColor: UIColor) {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: message, backgroundColor: color, autoFadeOut: true)
+        notification.show(message: message, backgroundColor: backgroundColor, textColor: textColor, autoFadeOut: true)
     }
     
     private func updateNumberOfPageControl(for participantsCount: Int) {
@@ -309,7 +320,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func showReconnectingNotification() {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: Strings.Localizable.reconnecting, backgroundColor: UIColor.systemOrange, autoFadeOut: false)
+        notification.show(message: Strings.Localizable.reconnecting,
+                          backgroundColor: UIColor.systemOrange,
+                          textColor: Constants.notificatitionMessageWhiteTextColor,
+                          autoFadeOut: false)
         reconncectingNotificationView = notification
     }
     
