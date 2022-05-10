@@ -1441,6 +1441,7 @@
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
+		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
 		B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		B5300AF32754A098001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		B5300AF42754A09C001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
@@ -3745,6 +3746,7 @@
 		A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.release.xcconfig"; sourceTree = "<group>"; };
 		AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
+		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
 		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -6337,6 +6339,7 @@
 				5BB8A852243DF42D009FE957 /* Usage.storyboard */,
 				E889C9E71B566EC400ECEFDF /* UsageViewController.h */,
 				E889C9E81B566EC400ECEFDF /* UsageViewController.m */,
+				B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */,
 			);
 			path = Usage;
 			sourceTree = "<group>";
@@ -12176,6 +12179,7 @@
 				A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */,
 				BF782D68269BA4BB0001D169 /* AchievementTypeEntity.swift in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
+				B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */,
 				5D8303E7256270800082CA18 /* BannerEntity.swift in Sources */,
 				5D4244D22512005500EE544D /* NodeSearchRepository.swift in Sources */,
 				A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */,
