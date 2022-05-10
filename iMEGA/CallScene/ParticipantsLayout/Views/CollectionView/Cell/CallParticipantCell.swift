@@ -5,7 +5,12 @@ class CallParticipantCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var mutedImageView: UIImageView!
     
-    private(set) var participant: CallParticipantEntity?
+    private(set) var participant: CallParticipantEntity? {
+        willSet {
+            videoImageView?.image = nil
+            participant?.videoDataDelegate = nil
+        }
+    }
     
     func configure(for participant: CallParticipantEntity, in layoutMode: ParticipantsLayoutMode) {
         self.participant = participant
@@ -41,8 +46,6 @@ class CallParticipantCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        videoImageView.image = nil
-        participant?.videoDataDelegate = nil
         participant = nil
     }
 }
