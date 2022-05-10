@@ -106,14 +106,19 @@ static NSString *kisDirectory = @"kisDirectory";
         NSFileManager *fileManager = [NSFileManager defaultManager];
         self.logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if ([fileManager fileExistsAtPath:self.logsPath]) {
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog]];
-            [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog]];
-            [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog]];
-            [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog]];
-            [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:notificationServiceExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog] error:nil];
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:notificationServiceExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog] error:nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self reloadUI];
+                });
+            });
         }
     }
     
