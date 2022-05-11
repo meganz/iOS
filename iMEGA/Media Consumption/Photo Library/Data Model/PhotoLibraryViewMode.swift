@@ -11,13 +11,13 @@ enum PhotoLibraryViewMode: CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .year:
-            return Strings.Localizable.CameraUploads.Years.title
+            return Strings.Localizable.Media.PhotoLibrary.Category.Years.title
         case .month:
-            return Strings.Localizable.months.localizedCapitalized
+            return Strings.Localizable.Media.PhotoLibrary.Category.Months.title
         case .day:
-            return Strings.Localizable.days.localizedCapitalized
+            return Strings.Localizable.Media.PhotoLibrary.Category.Days.title
         case .all:
-            return Strings.Localizable.all
+            return Strings.Localizable.Media.PhotoLibrary.Category.All.title
         }
     }
 }

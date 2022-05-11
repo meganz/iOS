@@ -2980,10 +2980,6 @@ public enum Strings {
         /// ⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.
         public static let limitedAccessToPhotoMessage = Strings.tr("Localizable", "cameraUploads.warning.limitedAccessToPhotoMessage")
       }
-      public enum Years {
-        /// Years
-        public static let title = Strings.tr("Localizable", "cameraUploads.years.title")
-      }
     }
     public enum Chat {
       /// Join Call
@@ -3608,6 +3604,28 @@ public enum Strings {
         public enum Label {
           /// Current Plan:
           public static let currentPlan = Strings.tr("Localizable", "inAppPurchase.upgrade.label.currentPlan")
+        }
+      }
+    }
+    public enum Media {
+      public enum PhotoLibrary {
+        public enum Category {
+          public enum All {
+            /// All
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.all.title")
+          }
+          public enum Days {
+            /// Days
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.days.title")
+          }
+          public enum Months {
+            /// Months
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.months.title")
+          }
+          public enum Years {
+            /// Years
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.years.title")
+          }
         }
       }
     }
