@@ -7,8 +7,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -26,8 +25,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -47,8 +45,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(label: .red)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.labelString = Asset.Images.Labels.redSmall.name
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -69,8 +66,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(label: .orange)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.labelString = Asset.Images.Labels.orangeSmall.name
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -91,8 +87,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(label: .yellow)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.labelString = Asset.Images.Labels.yellowSmall.name
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -113,8 +108,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(label: .green)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.labelString = Asset.Images.Labels.greenSmall.name
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -135,8 +129,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(label: .blue)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.labelString = Asset.Images.Labels.blueSmall.name
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -157,8 +150,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(label: .purple)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.labelString = Asset.Images.Labels.purpleSmall.name
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -179,8 +171,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(label: .grey)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.labelString = Asset.Images.Labels.greySmall.name
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -200,8 +191,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(isFolder: true)
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: ThumbnailErrorEntity.generic)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -220,8 +210,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(isFile: true)
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: ThumbnailErrorEntity.generic)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -240,9 +229,8 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(isFile: true, hasThumbnail: true)
         let mockNodeActionUC = MockNodeActionUseCase()
-        let thumbnailPath = "file://thumbnail/abc"
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: URL(string: thumbnailPath)!, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let thumbnailURL = try XCTUnwrap(URL(string: "file://thumbnail/abc"))
+        let mockNodeThumbnailUC = MockThumbnailUseCase(loadThumbnailResult: .success(thumbnailURL))
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -260,8 +248,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -280,8 +267,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity()
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.versions = true
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -299,8 +285,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -319,8 +304,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(isFile: true)
         let mockNodeActionUC = MockNodeActionUseCase()
         mockNodeActionUC.downloaded = true
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
@@ -338,8 +322,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeActionUC = MockNodeActionUseCase()
-        let mockThumbnailRepo = MockThumbnailRepository(mockResult: nil, mockError: nil)
-        let mockNodeThumbnailUC = MockThumbnailUseCase(repo: mockThumbnailRepo)
+        let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
