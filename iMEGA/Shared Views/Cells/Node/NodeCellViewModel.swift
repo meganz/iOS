@@ -84,7 +84,7 @@ final class NodeCellViewModel: ViewModelType {
             do {
                 guard let node = self?.nodeModel else { return }
                 
-                let url = try await self?.nodeThumbnailUseCase.loadThumbnail(for: node)
+                let url = try await self?.nodeThumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
                 
                 if let url = url {
                     self?.invokeCommand?(.setThumbnail(url.path))
