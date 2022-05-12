@@ -1,5 +1,5 @@
 
-enum QuickAccessWidgetErrorEntity: Error {
+enum GetFavouriteNodesErrorEntity: Error {
     case generic
     case megaStore
     case sdk
