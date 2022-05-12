@@ -524,6 +524,12 @@
 "cameraUploadsPendingFile"="Upload in progress, 1 file pending";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="Timeline";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="Albums";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="Favourites";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
 /* Message shown when camera upload paused because of no WiFi. Plural. */

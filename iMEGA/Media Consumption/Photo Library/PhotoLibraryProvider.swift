@@ -7,7 +7,7 @@ protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
     
     func configPhotoLibraryView(in container: UIView)
-    func updatePhotoLibrary(by nodes: [MEGANode])
+    func updatePhotoLibrary<T: PhotoLibraryNodeProtocol>(by nodes: [T])
     func enableNavigationEditBarButton(_ enable: Bool)
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
@@ -56,7 +56,7 @@ extension PhotoLibraryProvider {
         navigationItem.title = message
     }
     
-    func updatePhotoLibrary(by nodes: [MEGANode]) {
+    func updatePhotoLibrary<T:PhotoLibraryNodeProtocol>(by nodes: [T]) {
         guard let host = children.first(where: { $0 is UIHostingController<PhotoLibraryContentView> }) else {
             return
         }
@@ -66,16 +66,16 @@ extension PhotoLibraryProvider {
             
             host.view.isHidden = photoLibrary.isEmpty
             photoLibraryContentViewModel.library = photoLibrary
-        
+            
             enableNavigationEditBarButton(!photoLibrary.isEmpty)
         }
     }
     
     // MARK: - Private
     
-    private func load(by nodes: [MEGANode]) async -> PhotoLibrary {
-        let trasferMapper = PhotoLibraryMapper()
-        let lib = await trasferMapper.buildPhotoLibrary(with: nodes)
+    private func load(by nodes: [PhotoLibraryNodeProtocol]) async -> PhotoLibrary {
+        let mapper = PhotoLibraryMapper()
+        let lib = await mapper.buildPhotoLibrary(with: nodes)
         
         return lib
     }

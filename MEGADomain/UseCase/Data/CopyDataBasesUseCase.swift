@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Use case protocol -
 protocol CopyDataBasesUseCaseProtocol {
-    func copyFromMainApp(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void)
+    func copyFromMainApp(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
 }
 
 // MARK: - Use case implementation -
@@ -14,7 +14,7 @@ struct CopyDataBasesUseCase<T: CopyDataBasesRepositoryProtocol>: CopyDataBasesUs
         self.repo = repo
     }
     
-    func copyFromMainApp(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func copyFromMainApp(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         MEGALogDebug("Copy databases from main app")
         
         repo.applicationSupportDirectoryURL { (result) in

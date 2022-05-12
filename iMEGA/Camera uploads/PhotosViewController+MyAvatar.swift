@@ -1,11 +1,10 @@
-
 extension PhotosViewController: MyAvatarPresenterProtocol {
     func setupMyAvatar(barButton: UIBarButtonItem) {
-        self.navigationItem.leftBarButtonItem = barButton
+        objcWrapper_parent.navigationItem.leftBarButtonItem = barButton
     }
     
     func configureMyAvatarManager() {
-        guard let navController = navigationController else { return }
+        guard let navController = objcWrapper_parent.navigationController else { return }
         myAvatarManager = MyAvatarManager(navigationController: navController, delegate: self)
         myAvatarManager?.setup()
     }
