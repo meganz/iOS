@@ -109,11 +109,15 @@ static NSString *kDuration = @"kDuration";
     
     BOOL favouriteIsHidden = !node.isFavourite;
     self.favouriteView.hidden = favouriteIsHidden;
-    BOOL versionedIsHidden = ![MEGASdkManager.sharedMEGASdk hasVersionsForNode:node];
-    self.versionedView.hidden = versionedIsHidden;
     BOOL linkIsHidden = !node.isExported || node.mnz_isInRubbishBin;
     self.linkView.hidden = linkIsHidden;
-    self.topNodeIconsView.hidden = favouriteIsHidden && versionedIsHidden && linkIsHidden;
+    [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
+        BOOL versionedIsHidden = !hasVersions;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.versionedView.hidden = versionedIsHidden;
+            self.topNodeIconsView.hidden = favouriteIsHidden && versionedIsHidden && linkIsHidden;
+        });
+    }];
     
     self.durationLabel.hidden = !node.name.mnz_isVideoPathExtension;
     if (!self.durationLabel.hidden) {
