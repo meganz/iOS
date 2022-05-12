@@ -3608,6 +3608,16 @@ public enum Strings {
       }
     }
     public enum Media {
+      public enum Audio {
+        public enum Playlist {
+          public enum Section {
+            public enum Next {
+              /// Next
+              public static let title = Strings.tr("Localizable", "media.audio.playlist.section.next.title")
+            }
+          }
+        }
+      }
       public enum PhotoLibrary {
         public enum Category {
           public enum All {
