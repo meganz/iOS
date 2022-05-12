@@ -3002,3 +3002,5 @@
 "meetings.displayInMainView.title"="Display in Main View";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Storage quota exceeded";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title" = "Next";
