@@ -769,6 +769,18 @@
     }
 }
 
+- (IBAction)infoTouchUpInside:(UIButton *)sender {
+    if (self.tableView.isEditing) {
+        return;
+    }
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeAtIndexPath:indexPath] delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
+}
+
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
