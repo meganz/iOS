@@ -7,7 +7,7 @@ extension PhotosViewController: PhotoLibraryProvider {
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {
         configPhotoLibraryView(in: container)
     }
-
+    
     @objc func objcWrapper_updatePhotoLibrary(by nodes: [MEGANode]) {
         updatePhotoLibrary(by: nodes)
     }
@@ -23,12 +23,29 @@ extension PhotosViewController: PhotoLibraryProvider {
     @objc func objcWrapper_configPhotoLibrarySelectAll() {
         configPhotoLibrarySelectAll()
     }
-
+    
     @objc func objcWrapper_enablePhotoLibraryEditMode(_ enable: Bool) {
+        parentPhotoAlbumsController?.isEditing = enable
         enablePhotoLibraryEditMode(enable)
     }
     
-    func enableNavigationEditBarButton() {
-        self.editBarButtonItem?.isEnabled = true
+    func enableNavigationEditBarButton(_ enable: Bool) {
+        self.editBarButtonItem?.isEnabled = enable
+    }
+    
+    // Mark: - override
+    
+    func updateNavigationTitle(withSelectedPhotoCount count: Int) {
+        var message = ""
+        
+        if count == 0 {
+            message = Strings.Localizable.selectTitle
+        } else if count == 1 {
+            message = Strings.Localizable.oneItemSelected(count)
+        } else {
+            message = Strings.Localizable.itemsSelected(count)
+        }
+        
+        objcWrapper_parent.navigationItem.title = message
     }
 }

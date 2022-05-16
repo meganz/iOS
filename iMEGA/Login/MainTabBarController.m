@@ -243,7 +243,6 @@
                 [UIView animateWithDuration:0.3 animations:^{
                     [subview layoutIfNeeded];
                 }];
-            
             }
         }
     });
@@ -266,7 +265,7 @@
     self.unreadMessages = unreadChats;
     
     NSString *badgeValue;
-
+    
     if (MEGAReachabilityManager.isReachable && numCalls > 0) {
         MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
         self.phoneBadgeImageView.hidden = !(chatRoomIDsWithCallInProgress.size > 0) || self.unreadMessages > 0;
@@ -276,7 +275,7 @@
         self.phoneBadgeImageView.hidden = YES;
         badgeValue = unreadChats ? @"⦁" : nil;
     }
-
+    
     [self setBadgeValue:badgeValue tabPosition:TabTypeChat];
 }
 
@@ -306,11 +305,11 @@
 }
 
 - (UIViewController *)photosViewController {
-    MEGANavigationController *photosNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController];
-    if ([[photosNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
-        [[photosNavigationController.viewControllers firstObject] configureMyAvatarManager];
+    if (@available(iOS 14.0, *)) {
+        return [self photoAlbumViewController];
+    } else {
+        return [self photoViewController];
     }
-    return photosNavigationController;
 }
 
 - (UIViewController *)homeViewController {

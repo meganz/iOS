@@ -3,11 +3,12 @@ import SwiftUI
 struct PhotoCellImage: View {
     let container: ImageContainer
     var aspectRatio: CGFloat?
+    var bgColor = Color.clear
     
     var body: some View {
         if container.isPlaceholder {
-            Color.clear
-                .aspectRatio(1, contentMode: .fill)
+            bgColor
+                .aspectRatio(contentMode: .fill)
                 .overlay(
                     container.image
                 )

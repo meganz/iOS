@@ -1,7 +1,6 @@
 import SwiftUI
 
 @available(iOS 14.0, *)
-@MainActor
 final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> {
     private var lastCardPosition: PhotoScrollPosition?
     private var lastPhotoPosition: PhotoScrollPosition?
@@ -44,6 +43,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
             .filter { [weak self] in
                 self?.shouldRefreshTo($0) == true
             }
+            .receive(on: DispatchQueue.main)
             .assign(to: &$photoCategoryList)
     }
     

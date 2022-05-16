@@ -22,7 +22,6 @@
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
 
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 
 static const NSUInteger PhotoUploadBatchCount = 7;
@@ -587,8 +586,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)initializeCameraUpload {
     [self setupCameraUploadQueues];
     [self registerNotificationsForUpload];
-    [CameraUploadManager enableBackgroundRefreshIfNeeded];
     [self.cameraScanner observePhotoLibraryChanges];
+    [self scheduleCameraUploadBackgroundRefresh];
 }
 
 - (void)enableVideoUpload {
@@ -614,7 +613,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     _storageState = StorageStateGreen;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
     [self.cameraScanner unobservePhotoLibraryChanges];
-    [CameraUploadManager disableBackgroundRefresh];
+    [self cancelCameraUploadBackgroundRefresh];
 }
 
 - (void)disableVideoUpload {
@@ -860,24 +859,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
         default:
             break;
     }
-}
-
-#pragma mark - background refresh
-
-+ (void)enableBackgroundRefreshIfNeeded {
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        MEGALogInfo(@"[Camera Upload] enable background refresh for background upload");
-        [NSOperationQueue.mainQueue addOperationWithBlock:^{
-            [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
-        }];
-    }
-}
-
-+ (void)disableBackgroundRefresh {
-    MEGALogInfo(@"[Camera Upload] disable background refresh for background upload");
-    [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
-    }];
 }
 
 @end

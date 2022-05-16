@@ -13,6 +13,10 @@ protocol SlidePanelDelegate: AnyObject {
     func shouldEnablePanGestureScrollingUp(inSlidePanel slidePanel: SlidePanelView) -> Bool
     
     func shouldEnablePanGestureScrollingDown(inSlidePanel slidePanel: SlidePanelView) -> Bool
+    
+    func loadFavourites()
+    
+    func loadOffline()
 }
 
 final class SlidePanelView: UIView, NibOwnerLoadable {
@@ -55,11 +59,17 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
                 recentsContainerView.isHidden = true
                 favouritesContainerView.isHidden = false
                 offlineContainerView.isHidden = true
+                if favouritesScrollView == nil {
+                    delegate?.loadFavourites()
+                }
                 
             case .offline:
                 recentsContainerView.isHidden = true
                 favouritesContainerView.isHidden = true
                 offlineContainerView.isHidden = false
+                if offlineScrollView == nil {
+                    delegate?.loadOffline()
+                }
             }
         }
     }

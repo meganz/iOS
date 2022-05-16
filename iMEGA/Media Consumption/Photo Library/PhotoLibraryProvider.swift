@@ -2,19 +2,19 @@ import Foundation
 import SwiftUI
 
 @available(iOS 14.0, *)
+@MainActor
 protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
     
     func configPhotoLibraryView(in container: UIView)
-    func updatePhotoLibrary(by nodes: [MEGANode])
-    func enableNavigationEditBarButton()
+    func updatePhotoLibrary<T: PhotoLibraryNodeProtocol>(by nodes: [T])
+    func enableNavigationEditBarButton(_ enable: Bool)
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
     func updateNavigationTitle(withSelectedPhotoCount count: Int)
 }
 
 @available(iOS 14.0, *)
-@MainActor
 extension PhotoLibraryProvider {
     func configPhotoLibraryView(in container: UIView) {
         let content = PhotoLibraryContentView(
@@ -34,15 +34,11 @@ extension PhotoLibraryProvider {
     }
     
     func configPhotoLibrarySelectAll() {
-        photoLibraryContentViewModel.selection.allSelected = photoLibraryContentViewModel.selection.photos.count ==
-        photoLibraryContentViewModel.library.allPhotos.count
-        
-        photoLibraryContentViewModel.selection.allSelected.toggle()
+        let allSelectedCurrently = photoLibraryContentViewModel.selection.photos.count == photoLibraryContentViewModel.library.allPhotos.count
+        photoLibraryContentViewModel.selection.allSelected = !allSelectedCurrently
         
         if photoLibraryContentViewModel.selection.allSelected {
-            photoLibraryContentViewModel.selection.selectAll(photos: photoLibraryContentViewModel.library.allPhotos)
-        } else {
-            photoLibraryContentViewModel.selection.unselectAll()
+            photoLibraryContentViewModel.selection.setSelectedPhotos(photoLibraryContentViewModel.library.allPhotos)
         }
     }
     
@@ -60,7 +56,7 @@ extension PhotoLibraryProvider {
         navigationItem.title = message
     }
     
-    func updatePhotoLibrary(by nodes: [MEGANode]) {
+    func updatePhotoLibrary<T:PhotoLibraryNodeProtocol>(by nodes: [T]) {
         guard let host = children.first(where: { $0 is UIHostingController<PhotoLibraryContentView> }) else {
             return
         }
@@ -70,18 +66,16 @@ extension PhotoLibraryProvider {
             
             host.view.isHidden = photoLibrary.isEmpty
             photoLibraryContentViewModel.library = photoLibrary
-        
-            if !photoLibrary.isEmpty {
-                enableNavigationEditBarButton()
-            }
+            
+            enableNavigationEditBarButton(!photoLibrary.isEmpty)
         }
     }
     
     // MARK: - Private
     
-    private func load(by nodes: [MEGANode]) async -> PhotoLibrary {
-        let trasferMapper = PhotoLibraryMapper()
-        let lib = await trasferMapper.buildPhotoLibrary(with: nodes)
+    private func load(by nodes: [PhotoLibraryNodeProtocol]) async -> PhotoLibrary {
+        let mapper = PhotoLibraryMapper()
+        let lib = await mapper.buildPhotoLibrary(with: nodes)
         
         return lib
     }

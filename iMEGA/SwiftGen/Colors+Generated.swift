@@ -77,6 +77,7 @@ internal enum Colors {
       internal static let e6E6E6 = ColorAsset(name: "E6E6E6")
       internal static let ebebf5 = ColorAsset(name: "EBEBF5")
       internal static let f4F4F4 = ColorAsset(name: "F4F4F4")
+      internal static let navigationBgColor = ColorAsset(name: "navigationBgColor")
     }
     internal enum Green {
       internal static let _007B62 = ColorAsset(name: "007B62")

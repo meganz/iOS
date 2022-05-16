@@ -22,7 +22,7 @@ extension MediaDiscoveryViewController: PhotoLibraryProvider {
         }
     }
     
-    func enableNavigationEditBarButton() {
-        rightBarButtonItem.isEnabled = true
+    func enableNavigationEditBarButton(_ enable: Bool) {
+        rightBarButtonItem.isEnabled = enable
     }
 }

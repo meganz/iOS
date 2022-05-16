@@ -250,19 +250,6 @@ extension AppDelegate {
             }
         }
     }
-    
-    @objc func migrateChatVideoUploadQualityPreferenceToSharedUserDefaultIfNeeded() {
-        let sharedUserDefault = UserDefaults(suiteName: MEGAGroupIdentifier)
-        let sharedChatVideoQuality = sharedUserDefault?.integer(forKey: "ChatVideoQuality")
-        if sharedChatVideoQuality == 0 {
-            let chatVideoQuality = UserDefaults.standard.integer(forKey: "ChatVideoQuality")
-            if chatVideoQuality == 0 {
-                sharedUserDefault?.set(2, forKey: "ChatVideoQuality")
-            } else {
-                sharedUserDefault?.set(chatVideoQuality, forKey: "ChatVideoQuality")
-            }
-        }
-    }
 }
 
 // MARK: SQLite disk full
@@ -290,5 +277,12 @@ extension AppDelegate {
             MEGASdkManager.deleteSharedSdks()
             exit(0)
         }
+    }
+}
+
+//MARK: - Register for background refresh
+extension AppDelegate {
+    @objc func registerCameraUploadBackgroundRefresh() {
+        CameraUploadBGRefreshManager.shared.register()
     }
 }

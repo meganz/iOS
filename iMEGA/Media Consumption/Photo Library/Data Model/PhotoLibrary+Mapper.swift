@@ -8,14 +8,15 @@ extension MEGANodeList {
 
 extension Array where Element == MEGANode {
     func toPhotoLibrary() -> PhotoLibrary {
-        var library = map { $0.toNodeEntity() }.toPhotoLibrary()
-        library.underlyingMEGANodes = self
+        let library = map { $0.toNodeEntity() }.toPhotoLibrary()
         return library
     }
 }
 
 extension Array where Element == NodeEntity {
     func toPhotoLibrary() -> PhotoLibrary {
+        let megaNodes = compactMap { $0.toMEGANode(in: MEGASdkManager.sharedMEGASdk()) }
+        
         var dayDict = [Date: PhotoByDay]()
         for node in self where NSString(string: node.name).mnz_isVisualMediaPathExtension {
             guard let day = node.categoryDate.removeTimestamp() else { continue }
@@ -40,6 +41,9 @@ extension Array where Element == NodeEntity {
             yearDict[year] = photoByYear
         }
         
-        return PhotoLibrary(photoByYearList: yearDict.values.sorted(by: { $0.categoryDate > $1.categoryDate }))
+        var library = PhotoLibrary(photoByYearList: yearDict.values.sorted(by: { $0.categoryDate > $1.categoryDate }))
+        library.underlyingMEGANodes = megaNodes
+        
+        return library
     }
 }

@@ -117,16 +117,26 @@
         switch (self.cellFlavor) {
             case NodeTableViewCellFlavorVersions:
             case NodeTableViewCellFlavorRecentAction:
-            case NodeTableViewCellFlavorCloudDrive:
+            case NodeTableViewCellFlavorCloudDrive: {
                 self.infoLabel.text =
                     self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
                     [Helper sizeAndModicationDateForNode:node api:megaSDK];
-                self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
+                [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.versionedImageView.hidden = !hasVersions;
+                    });
+                }];
                 break;
-            case NodeTableViewCellFlavorSharedLink:
+            }
+            case NodeTableViewCellFlavorSharedLink: {
                 self.infoLabel.text = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
-                self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
+                [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.versionedImageView.hidden = !hasVersions;
+                    });
+                }];
                 break;
+            }
             case NodeTableViewCellExplorerView:
                 [self updateInfo];
                 break;

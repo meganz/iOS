@@ -9,7 +9,7 @@ class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
         self.store = store
     }
     
-    func deleteAllFavouriteItems(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func deleteAllFavouriteItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         store.deleteQuickAccessFavouriteItems(completion: completion)
     }
     
@@ -18,7 +18,7 @@ class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
     }
     
     @available(iOS 14.0, *)
-    func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         store.batchInsertQuickAccessFavouriteItems(items, completion: completion)
     }
     

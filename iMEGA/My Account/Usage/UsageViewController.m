@@ -43,6 +43,7 @@
 
 @property (strong, nonatomic) NSNumber *usedStorage;
 @property (strong, nonatomic) NSNumber *maxStorage;
+@property (nonatomic, getter=isStorageFull) BOOL storageFull;
 
 @property (strong, nonatomic) NSNumber *transferOwnUsed;
 @property (strong, nonatomic) NSNumber *transferMax;
@@ -98,7 +99,9 @@
     self.view.backgroundColor = UIColor.mnz_background;
     
     self.pieChartView.backgroundColor = UIColor.mnz_background;
-    self.pieChartMainLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.pieChartMainLabel.textColor = [self storageColorWithTraitCollection:self.traitCollection
+                                                               isStorageFull:self.isStorageFull
+                                                                 currentPage:self.usagePageControl.currentPage];
     self.pieChartSecondaryLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     self.pieChartTertiaryLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
@@ -130,6 +133,7 @@
     
     self.usedStorage = accountDetails.storageUsed;
     self.maxStorage = accountDetails.storageMax;
+    self.storageFull = [self.usedStorage compare: self.maxStorage] != NSOrderedAscending;
     
     self.transferOwnUsed = accountDetails.transferOwnUsed;
     self.transferMax = accountDetails.transferMax;
@@ -138,6 +142,9 @@
 - (void)reloadPieChart:(NSInteger)currentPage {
     [_pieChartMainLabel setAttributedText:[self textForMainLabel:currentPage]];
     
+    self.pieChartMainLabel.textColor = [self storageColorWithTraitCollection:self.traitCollection
+                                                               isStorageFull:self.isStorageFull
+                                                                 currentPage:currentPage];
     [self textForSecondaryAndTertiaryLabels:currentPage];
     
     [self.pieChartView reloadData];
@@ -276,7 +283,9 @@
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index {
     switch (index) {
         case 0: //Storage / Transfer Quota
-            return [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+            return [self storageColorWithTraitCollection:self.traitCollection
+                                           isStorageFull:self.isStorageFull
+                                             currentPage:self.usagePageControl.currentPage];
             
         case 1: //Available storage/quota
             return [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];

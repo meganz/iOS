@@ -2976,13 +2976,21 @@ public enum Strings {
       }
     }
     public enum CameraUploads {
+      public enum Albums {
+        /// Albums
+        public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
+        public enum Favourites {
+          /// Favourites
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.favourites.title")
+        }
+      }
+      public enum Timeline {
+        /// Timeline
+        public static let title = Strings.tr("Localizable", "cameraUploads.timeline.title")
+      }
       public enum Warning {
         /// ⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.
         public static let limitedAccessToPhotoMessage = Strings.tr("Localizable", "cameraUploads.warning.limitedAccessToPhotoMessage")
-      }
-      public enum Years {
-        /// Years
-        public static let title = Strings.tr("Localizable", "cameraUploads.years.title")
       }
     }
     public enum Chat {
@@ -3608,6 +3616,38 @@ public enum Strings {
         public enum Label {
           /// Current Plan:
           public static let currentPlan = Strings.tr("Localizable", "inAppPurchase.upgrade.label.currentPlan")
+        }
+      }
+    }
+    public enum Media {
+      public enum Audio {
+        public enum Playlist {
+          public enum Section {
+            public enum Next {
+              /// Next
+              public static let title = Strings.tr("Localizable", "media.audio.playlist.section.next.title")
+            }
+          }
+        }
+      }
+      public enum PhotoLibrary {
+        public enum Category {
+          public enum All {
+            /// All
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.all.title")
+          }
+          public enum Days {
+            /// Days
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.days.title")
+          }
+          public enum Months {
+            /// Months
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.months.title")
+          }
+          public enum Years {
+            /// Years
+            public static let title = Strings.tr("Localizable", "media.photoLibrary.category.years.title")
+          }
         }
       }
     }

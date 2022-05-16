@@ -104,20 +104,21 @@ static NSString *kisDirectory = @"kisDirectory";
     BOOL isDocumentDirectory = [self.currentOfflinePath isEqualToString:Helper.pathForOffline];
     if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"] && isDocumentDirectory) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
-        if ([fileManager fileExistsAtPath:logsPath]) {
-            NSString *documentProviderLog = @"MEGAiOS.docExt.log";
-            NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
-            NSString *shareExtensionLog = @"MEGAiOS.shareExt.log";
-            NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog]];
-            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog]];
-            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog]];
-            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
-            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog]];
-            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:notificationServiceExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog] error:nil];
+        self.logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
+        if ([fileManager fileExistsAtPath:self.logsPath]) {
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
+                [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog]];
+                [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:notificationServiceExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog] error:nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self reloadUI];
+                });
+            });
         }
     }
     
@@ -924,6 +925,8 @@ static NSString *kisDirectory = @"kisDirectory";
     
     NSError *error = nil;
     BOOL success = [[NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
+    [self removeLogFromSharedSandboxIfNeededWithPath:itemPath];
+    
     offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
     if (!success || error) {
         [SVProgressHUD showErrorWithStatus:@""];

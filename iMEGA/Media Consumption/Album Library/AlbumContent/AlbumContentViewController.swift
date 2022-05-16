@@ -1,0 +1,131 @@
+import UIKit
+import SwiftUI
+
+@available(iOS 14.0, *)
+final class AlbumContentViewController: UIViewController, ViewType {
+    private let viewModel: AlbumContentViewModel
+    
+    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+    lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
+    lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
+    
+    lazy var rightBarButtonItem = UIBarButtonItem(
+        image: Asset.Images.NavigationBar.selectAll.image,
+        style: .plain,
+        target: self,
+        action: #selector(editButtonPressed(_:))
+    )
+    
+    lazy var leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
+                                                 style:.plain,
+                                                 target: self,
+                                                 action: #selector(exitButtonTapped(_:))
+    )
+    
+    // MARK: - Init
+    
+    init(viewModel: AlbumContentViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) is not supported")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        buildNavigationBar()
+        
+        configPhotoLibraryView(in: view)
+        
+        viewModel.invokeCommand = { [weak self] command in
+            self?.executeCommand(command)
+        }
+        
+        viewModel.dispatch(.onViewReady)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        viewModel.cancelLoading()
+    }
+    
+    // MARK: - ViewType protocol
+    
+    func executeCommand(_ command: AlbumContentViewModel.Command) {
+        switch command {
+        case .showAlbum(let nodes):
+            updatePhotoLibrary(by: nodes)
+            
+            if nodes.isEmpty {
+                showEmptyView()
+            }
+            
+            // Disable it for now
+            rightBarButtonItem.isEnabled = false
+        }
+    }
+    
+    
+    // MARK: - Private
+    
+    private func buildNavigationBar() {
+        self.title = viewModel.albumName
+        
+        configureBarButtons()
+    }
+    
+    private func configureBarButtons() {
+        configureLeftBarButton()
+        configureRightBarButton()
+    }
+    
+    private func configureLeftBarButton() {
+        if isEditing {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: Asset.Images.NavigationBar.selectAll.image,
+                style: .plain,
+                target: self,
+                action: #selector(exitButtonTapped(_:))
+            )
+        } else {
+            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
+            navigationItem.leftBarButtonItem = leftBarButtonItem
+        }
+    }
+    
+    private func configureRightBarButton() {
+        if isEditing {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .cancel,
+                target: self,
+                action: #selector(exitButtonTapped(_:))
+            )
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
+        } else {
+            rightBarButtonItem.isEnabled = false
+            navigationItem.rightBarButtonItem = rightBarButtonItem
+        }
+    }
+    
+    private func showEmptyView() {
+        let emptyView = EmptyStateView.create(for: .favourites)
+        view.addSubview(emptyView)
+        
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        emptyView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        emptyView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+    }
+    
+    // MARK: - Action
+    
+    @objc func editButtonPressed(_ barButtonItem: UIBarButtonItem) {}
+    
+    @objc func exitButtonTapped(_ barButtonItem: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
+}

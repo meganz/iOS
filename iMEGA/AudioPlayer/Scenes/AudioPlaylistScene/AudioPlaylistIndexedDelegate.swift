@@ -44,7 +44,7 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PlaylistHeaderFooterView") as? PlaylistHeaderFooterView else { return nil}
         header.backgroundView = UIView()
         header.backgroundView?.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
-        header.configure(title: section == 0 ? Strings.Localizable.playing : Strings.Localizable.next)
+        header.configure(title: section == 0 ? Strings.Localizable.playing : Strings.Localizable.Media.Audio.Playlist.Section.Next.title)
 
         return header
     }

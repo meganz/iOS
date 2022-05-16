@@ -71,6 +71,9 @@ internal enum Asset {
       internal static let activitySendToChat = ImageAsset(name: "activity_sendToChat")
       internal static let activityShareFolder = ImageAsset(name: "activity_shareFolder")
     }
+    internal enum Album {
+      internal static let placeholder = ImageAsset(name: "placeholder")
+    }
     internal enum AppIcons {
       internal static let altIconDay = ImageAsset(name: "altIconDay")
       internal static let altIconMinimal = ImageAsset(name: "altIconMinimal")

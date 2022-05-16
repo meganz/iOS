@@ -2,47 +2,45 @@ import Foundation
 @testable import MEGA
 
 struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
-    var mockResult: URL?
-    var mockError: ThumbnailErrorEntity?
+    var hasCachedThumbnail = false
+    var hasCachedPreview = false
+    var cachedThumbnailURL = URL(string: "https://MEGA.NZ")!
+    var cachedPreviewURL = URL(string: "https://MEGA.NZ")!
+    var loadThumbnailResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic)
+    var loadPreviewResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic)
     
-    
-    func hasCachedThumbnail(for node: NodeEntity) -> Bool {
-        return true
+    func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
+        switch type {
+        case .thumbnail:
+            return hasCachedThumbnail
+        case .preview:
+            return hasCachedPreview
+        }
     }
     
-    func hasCachedPreview(for node: NodeEntity) -> Bool {
-        return true
+    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+        switch type {
+        case .thumbnail:
+            return cachedThumbnailURL
+        case .preview:
+            return cachedPreviewURL
+        }
     }
-    
-    func cachedThumbnail(for node: NodeEntity) -> URL {
-        return URL(string: "https://MEGA.NZ")!
-    }
-    
-    func cachedPreview(for node: NodeEntity) -> URL {
-        return URL(string: "https://MEGA.NZ")!
-    }
-    
-    func loadThumbnail(for node: NodeEntity) async throws -> URL {
-        return try await withCheckedThrowingContinuation { continuation in
-            if let mockResult = mockResult {
-                return continuation.resume(returning: mockResult)
-            } else if let error = mockError {
-                return continuation.resume(throwing: error)
-            } else {
-                return continuation.resume(throwing: ThumbnailErrorEntity.generic)
+
+    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {
+        try await withCheckedThrowingContinuation { continuation in
+            loadThumbnail(for: node, type: type) {
+                continuation.resume(with: $0)
             }
         }
     }
     
-    func loadPreview(for node: NodeEntity) async throws -> URL {
-        return try await withCheckedThrowingContinuation { continuation in
-            if let mockResult = mockResult {
-                return continuation.resume(returning: mockResult)
-            } else if let error = mockError {
-                return continuation.resume(throwing: error)
-            } else {
-                return continuation.resume(throwing: ThumbnailErrorEntity.generic)
-            }
+    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
+        switch type {
+        case .thumbnail:
+            completion(loadThumbnailResult)
+        case .preview:
+            completion(loadPreviewResult)
         }
     }
 }

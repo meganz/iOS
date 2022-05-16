@@ -60,6 +60,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (assign, nonatomic) BOOL showToolBar;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
 
@@ -76,8 +77,12 @@
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     
     if (@available(iOS 14.0, *)) {
-        self.cachedEditBarButtonItem = self.navigationItem.rightBarButtonItem;
-        [self objcWrapper_configPhotosBannerView];
+        self.shouldShowRightBarButton = YES;
+        self.showToolBar = YES;
+        
+        self.objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem;
+        
+        self.cachedEditBarButtonItem = self.objcWrapper_parent.navigationItem.rightBarButtonItem;
     }
     
     self.currentState = MEGACameraUploadsStateLoading;
@@ -243,6 +248,16 @@
 }
 
 #pragma mark - uploads state
+
+- (void)hideRightBarButtonItem:(BOOL)shouldHide {
+    self.shouldShowRightBarButton = !shouldHide;
+    
+    if (self.shouldShowRightBarButton && self.showToolBar) {
+        self.objcWrapper_parent.navigationItem.rightBarButtonItem = self.cachedEditBarButtonItem;
+    } else {
+        self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
+    }
+}
 
 - (void)reloadHeader {
     MEGALogDebug(@"[Camera Upload] reload photos view header");
@@ -473,9 +488,9 @@
             });
         } else {
             if ([self.photosCollectionView allowsMultipleSelection]) {
-                self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
+                self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
             } else {
-                self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+                self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
             }
             
             [self updateEditBarButton];
@@ -589,7 +604,7 @@
     if (editing) {
         [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
-        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        self.objcWrapper_parent.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             [self.toolbar setAlpha:0.0];
@@ -610,11 +625,11 @@
         }
     } else {
         allNodesSelected = NO;
-        self.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+        self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selection removeAll];
         [self.photosCollectionView reloadData];
-        self.navigationItem.leftBarButtonItems = @[self.myAvatarManager.myAvatarBarButton];
+        self.objcWrapper_parent.navigationItem.leftBarButtonItems = @[self.myAvatarManager.myAvatarBarButton];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
@@ -631,8 +646,11 @@
 }
 
 - (void)showToolbar:(BOOL)showToolbar {
+    BOOL result = self.shouldShowRightBarButton && showToolbar;
+    self.showToolBar = showToolbar;
+    
     [UIView animateWithDuration:0.33f animations:^ {
-        self.navigationItem.rightBarButtonItem = showToolbar ? self.cachedEditBarButtonItem : nil;
+        self.objcWrapper_parent.navigationItem.rightBarButtonItem = result ? self.cachedEditBarButtonItem : nil;
     } completion: NULL];
 }
 
