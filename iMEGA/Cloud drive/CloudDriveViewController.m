@@ -1671,6 +1671,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [node mnz_showNodeVersionsInViewController:self];
             break;
             
+        case MegaNodeActionTypeDisputeTakedown:
+            [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
+            break;
+            
         default:
             break;
     }

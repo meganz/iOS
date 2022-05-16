@@ -564,6 +564,7 @@ internal enum Asset {
     internal enum NodeActions {
       internal static let copy = ImageAsset(name: "copy")
       internal static let delete = ImageAsset(name: "delete")
+      internal static let disputeTakedown = ImageAsset(name: "disputeTakedown")
       internal static let edittext = ImageAsset(name: "edittext")
       internal static let export = ImageAsset(name: "export")
       internal static let favourite = ImageAsset(name: "favourite")

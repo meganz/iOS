@@ -111,6 +111,7 @@ class NodeActionViewController: ActionSheetViewController {
         let isImageOrVideoFile = node.name?.mnz_isImagePathExtension == true || node.name?.mnz_isVideoPathExtension == true
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
+        let isTakedown = node.isTakenDown()
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
@@ -127,6 +128,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsOutshare(node.isOutShare())
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
+            .setIsTakedown(isTakedown)
             .build()
     }
     
@@ -197,7 +199,12 @@ class NodeActionViewController: ActionSheetViewController {
         super.updateAppearance()
         
         headerView?.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
-        titleLabel.textColor = UIColor.mnz_label()
+        if nodes.count == 1, let node = nodes.first, node.isTakenDown() {
+            titleLabel.attributedText = node.mnz_attributedTakenDownName(withHeight: titleLabel.font.capHeight)
+            titleLabel.textColor = UIColor.mnz_red(for: traitCollection)
+        } else {
+            titleLabel.textColor = UIColor.mnz_label()
+        }
         subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
         separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }

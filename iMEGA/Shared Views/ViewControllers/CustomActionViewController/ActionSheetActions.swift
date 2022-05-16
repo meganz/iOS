@@ -252,4 +252,8 @@ extension NodeAction {
     class func sortAction() -> NodeAction {
         return NodeAction(title: Strings.Localizable.sortTitle, detail: nil, image: UIImage(named: "sort"), type: .sort)
     }
+    
+    class func disputeTakedownAction() -> NodeAction {
+        return NodeAction(title: Strings.Localizable.disputeTakedown, detail: nil, image: Asset.Images.NodeActions.disputeTakedown.image, type: .disputeTakedown)
+    }
 }

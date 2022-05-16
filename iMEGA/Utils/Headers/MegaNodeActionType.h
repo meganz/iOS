@@ -35,4 +35,5 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeThumbnail,
     MegaNodeActionTypeSort,
     MegaNodeActionTypeEditTextFile,
+    MegaNodeActionTypeDisputeTakedown,
 };
