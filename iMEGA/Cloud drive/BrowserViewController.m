@@ -778,6 +778,20 @@
         cell.selectedBackgroundView = view;
     }
     
+    if (node.isTakenDown) {
+        cell.infoLabel.enabled = node.isFolder;
+        cell.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:cell.nameLabel.font.capHeight];
+        cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        cell.userInteractionEnabled = node.isFolder;
+        cell.thumbnailImageView.alpha = node.isFolder ? 1.0 : 0.5;
+    } else {
+        cell.infoLabel.enabled = YES;
+        cell.nameLabel.textColor = UIColor.mnz_label;
+        cell.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        cell.userInteractionEnabled = YES;
+        cell.thumbnailImageView.alpha = 1.0;
+    }
+    
     return cell;
 }
 
