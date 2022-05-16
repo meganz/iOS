@@ -21,6 +21,7 @@ final class NodeActionBuilder {
     private var isInVersionsView: Bool = false
     private var viewMode: ViewModePreference = .list
     private var nodeSelectionType: NodeSelectionType = .single
+    private var isTakedown = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -117,15 +118,24 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setIsTakedown(_ isTakedown: Bool) -> NodeActionBuilder {
+        self.isTakedown = isTakedown
+        return self
+    }
+    
     func build() -> [NodeAction] {
         
         var nodeActions = [NodeAction]()
         
-        if shouldAddRestoreAction() {
-            nodeActions.append(NodeAction.restoreAction())
+        if isTakedown {
+            nodeActions.append(contentsOf: takedownNodeActions())
+        } else {
+            if shouldAddRestoreAction() {
+                nodeActions.append(NodeAction.restoreAction())
+            }
+            
+            nodeActions.append(contentsOf: nodeActionsForDispalyModeOrAccessLevels())
         }
-        
-        nodeActions.append(contentsOf: nodeActionsForDispalyModeOrAccessLevels())
     
         return nodeActions
     }
@@ -533,5 +543,13 @@ final class NodeActionBuilder {
          NodeAction.moveAction(),
          NodeAction.copyAction(),
          NodeAction.moveToRubbishBinAction()]
+    }
+    
+    func takedownNodeActions() -> [NodeAction] {
+        [.infoAction(),
+         .disputeTakedownAction(),
+         .renameAction(),
+         displayMode == .rubbishBin ? .removeAction() :
+         .moveToRubbishBinAction()]
     }
 }

@@ -180,6 +180,14 @@ class NodeActionsTests: XCTestCase {
         XCTAssertFalse(contains(nodeActionType: .info))
     }
     
+    func testCloudDriveTakedownNode() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setIsTakedown(true)
+            .build()
+        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
+    }
+    
     //MARK: - Rubbish Bin
     func testRubbishBinNodeRestorableFolder() {
         actions = NodeActionBuilder()
@@ -236,6 +244,15 @@ class NodeActionsTests: XCTestCase {
             .build()
         
         XCTAssertTrue(containsExact(nodeActionTypes: [.info]))
+    }
+    
+    
+    func testRubbishBinTakedownNode() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.rubbishBin)
+            .setIsTakedown(true)
+            .build()
+        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .disputeTakedown, .rename, .remove]))
     }
 
     //MARK: - Recent Items tests
