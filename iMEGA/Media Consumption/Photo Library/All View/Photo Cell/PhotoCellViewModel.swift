@@ -3,7 +3,6 @@ import SwiftUI
 import Combine
 
 @available(iOS 14.0, *)
-@MainActor
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
@@ -79,7 +78,7 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     // MARK: Private
-    
+    @MainActor
     private func loadThumbnail() async {
         let type: ThumbnailTypeEntity = currentZoomScaleFactor == 1 ? .preview : .thumbnail
         
@@ -89,37 +88,34 @@ final class PhotoCellViewModel: ObservableObject {
             if type != .thumbnail, let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .thumbnail) {
                 thumbnailContainer = ImageContainer(image: image)
             }
-            
-            do {
-                try await loadThumbnailFromRemote(type: type)
-            } catch {
-                MEGALogDebug("[Photo Cell:] \(error) happened when loadThumbnail.")
+
+            switch type {
+            case .thumbnail:
+                guard let url = try? await thumbnailUseCase.loadThumbnail(for: photo, type: .thumbnail) else { return }
+                if let image = Image(contentsOfFile: url.path) {
+                    thumbnailContainer = ImageContainer(image: image)
+                }
+            case .preview:
+                requestPreview()
             }
         }
     }
     
-    private func loadThumbnailFromRemote(type: ThumbnailTypeEntity) async throws {
-        if type == .preview {
-            do {
-                for try await url in thumbnailUseCase.loadPreview(for: photo) {
-                    if let image = Image(contentsOfFile: url.path)  {
-                        thumbnailContainer = ImageContainer(image: image)
-                    }
-                }
-            } catch {
-                MEGALogDebug("[Photo Cell:] \(error) happened when loading preview in loadThumbnailFromRemote.")
+    private func requestPreview() {
+        thumbnailUseCase
+            .requestPreview(for: photo)
+            .delay(for: .seconds(0.3), scheduler: DispatchQueue.global(qos: .userInitiated))
+            .map {
+                MEGALogDebug("[Photos Debug] preview url comes back \(self.photo.id) and url \($0)")
+                return ImageContainer(image: Image(contentsOfFile: $0.path))
             }
-        } else {
-            do {
-                let url = try await thumbnailUseCase.loadThumbnail(for: photo)
-                
-                if let image = Image(contentsOfFile: url.path) {
-                    thumbnailContainer = ImageContainer(image: image)
-                }
-            } catch {
-                MEGALogDebug("[Photo Cell:] \(error) happened when loading thumbnail in loadThumbnailFromRemote.")
+            .replaceError(with: nil)
+            .compactMap { $0 }
+            .filter { [weak self] in
+                $0 != self?.thumbnailContainer
             }
-        }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$thumbnailContainer)
     }
     
     private func configSelection() {
@@ -137,14 +133,20 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     private func configZoomState(with viewModel: PhotoLibraryAllViewModel) {
-        viewModel.$zoomState.sink { [weak self] in
-            self?.currentZoomScaleFactor = $0.scaleFactor
-        }
-        .store(in: &subscriptions)
+        viewModel
+            .$zoomState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.currentZoomScaleFactor = $0.scaleFactor
+            }
+            .store(in: &subscriptions)
     }
     
     private func subscribeLibraryChange(viewModel: PhotoLibraryAllViewModel) {
-        viewModel.libraryViewModel.$library
+        viewModel
+            .libraryViewModel
+            .$library
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 if let self = self, let photo = $0.allPhotos.first(where: { $0 == self.photo }), self.isFavorite != photo.isFavourite {
                     self.isFavorite = photo.isFavourite

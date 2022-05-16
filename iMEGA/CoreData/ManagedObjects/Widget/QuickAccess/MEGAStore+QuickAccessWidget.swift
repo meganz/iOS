@@ -2,7 +2,7 @@ import CoreData
 
 extension MEGAStore {
     
-    func deleteQuickAccessRecentItems(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func deleteQuickAccessRecentItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         guard let context = stack.newBackgroundContext() else {
             completion(.failure(.megaStore))
             return
@@ -37,7 +37,7 @@ extension MEGAStore {
     }
     
     @available(iOS 14.0, *)
-    func batchInsertQuickAccessRecentItems(_ items: [RecentItemEntity], completion: ((Result<Void, QuickAccessWidgetErrorEntity>) -> Void)? = nil) {
+    func batchInsertQuickAccessRecentItems(_ items: [RecentItemEntity], completion: ((Result<Void, GetFavouriteNodesErrorEntity>) -> Void)? = nil) {
         guard !items.isEmpty else {
             completion?(.success(()))
             return
@@ -106,7 +106,7 @@ extension MEGAStore {
     }
     
     @available(iOS 14.0, *)
-    func batchInsertQuickAccessFavouriteItems(_ items: [FavouriteItemEntity], completion: ((Result<Void, QuickAccessWidgetErrorEntity>) -> Void)? = nil) {
+    func batchInsertQuickAccessFavouriteItems(_ items: [FavouriteItemEntity], completion: ((Result<Void, GetFavouriteNodesErrorEntity>) -> Void)? = nil) {
         guard !items.isEmpty else {
             completion?(.success(()))
             return
@@ -130,7 +130,7 @@ extension MEGAStore {
         performBatchInsertRequest(batchInsert, completion: completion)
     }
     
-    private func performBatchInsertRequest(_ request: NSBatchInsertRequest, completion: ((Result<Void, QuickAccessWidgetErrorEntity>) -> Void)? = nil) {
+    private func performBatchInsertRequest(_ request: NSBatchInsertRequest, completion: ((Result<Void, GetFavouriteNodesErrorEntity>) -> Void)? = nil) {
         stack.performBackgroundTask { context in
             do {
                 try context.execute(request)
@@ -207,7 +207,7 @@ extension MEGAStore {
         return items
     }
     
-    func deleteQuickAccessFavouriteItems(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func deleteQuickAccessFavouriteItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         stack.performBackgroundTask { context in
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetFavouriteItem")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

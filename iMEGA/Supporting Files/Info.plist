@@ -245,5 +245,9 @@
 	<true/>
 	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
 	<false/>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>mega.iOS.cameraUpload.backgroundFetch</string>
+	</array>
 </dict>
 </plist>

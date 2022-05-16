@@ -13,63 +13,60 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         self.fileRepo = fileRepo
     }
     
-    // MARK: - Thumbnail
-    
-    func hasCachedThumbnail(for node: NodeEntity) -> Bool {
-        fileRepo.fileExists(at: fileRepo.cachedThumbnailURL(for: node.base64Handle))
+    func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
+        switch type {
+        case .thumbnail:
+            return fileRepo.fileExists(at: fileRepo.cachedThumbnailURL(for: node.base64Handle))
+        case .preview:
+            return fileRepo.fileExists(at: fileRepo.cachedPreviewURL(for: node.base64Handle))
+        }
     }
     
-    func cachedThumbnail(for node: NodeEntity) -> URL {
-        fileRepo.cachedThumbnailURL(for: node.base64Handle)
+    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+        switch type {
+        case .thumbnail:
+            return fileRepo.cachedThumbnailURL(for: node.base64Handle)
+        case .preview:
+            return fileRepo.cachedPreviewURL(for: node.base64Handle)
+        }
     }
     
-    func loadThumbnail(for node: NodeEntity) async throws -> URL {
-        let url = cachedThumbnail(for: node)
-        
+    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
+        let url = cachedThumbnail(for: node, type: type)
         if fileRepo.fileExists(at: url) {
-            return url
+            completion(.success(url))
         } else {
-            return try await withCheckedThrowingContinuation { continuation in
-                downloadThumbnail(for: node, to: url) { result in
-                    continuation.resume(with: result)
-                }
+            downloadThumbnail(for: node, type: type, to: url, completion: completion)
+        }
+    }
+    
+    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {
+        try await withCheckedThrowingContinuation { continuation in
+            loadThumbnail(for: node, type: type) {
+                continuation.resume(with: $0)
             }
         }
     }
     
-    // MARK: - Preview
-    
-    func hasCachedPreview(for node: NodeEntity) -> Bool {
-        fileRepo.fileExists(at: fileRepo.cachedPreviewURL(for: node.base64Handle))
-    }
-    
-    func cachedPreview(for node: NodeEntity) -> URL {
-        fileRepo.cachedPreviewURL(for: node.base64Handle)
-    }
-    
-    func loadPreview(for node: NodeEntity) async throws -> URL {
-        let url = cachedPreview(for: node)
-        
-        if fileRepo.fileExists(at: url) {
-            return url
-        } else {
-            return try await withCheckedThrowingContinuation { continuation in
-                downloadPreview(for: node, to: url) { result in
-                    continuation.resume(with: result)
-                }
-            }
-        }
-    }
-    
-    
-    // MARK: - Private
-    
-    private func downloadThumbnail(for node: NodeEntity, to url: URL, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
+    // MARK: - download thumbnail from server
+    private func downloadThumbnail(for node: NodeEntity,
+                                   type: ThumbnailTypeEntity,
+                                   to url: URL,
+                                   completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
         guard let node = node.toMEGANode(in: sdk) else {
             completion(.failure(.nodeNotFound))
             return
         }
         
+        switch type {
+        case .thumbnail:
+            downloadThumbnail(for: node, to: url, completion: completion)
+        case .preview:
+            downloadPreview(for: node, to: url, completion: completion)
+        }
+    }
+    
+    private func downloadThumbnail(for node: MEGANode, to url: URL, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
         guard node.hasThumbnail() else {
             completion(.failure(.noThumbnail(.thumbnail)))
             return
@@ -94,12 +91,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         })
     }
     
-    private func downloadPreview(for node: NodeEntity, to url: URL, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        guard let node = node.toMEGANode(in: sdk) else {
-            completion(.failure(.nodeNotFound))
-            return
-        }
-        
+    private func downloadPreview(for node: MEGANode, to url: URL, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
         guard node.hasPreview() else {
             completion(.failure(.noThumbnail(.preview)))
             return

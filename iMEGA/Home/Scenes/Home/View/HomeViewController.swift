@@ -238,8 +238,6 @@ final class HomeViewController: UIViewController {
         exploreView.delegate = self
 
         addContentViewController()
-        addFavouritesViewController()
-        addOfflineViewController()
     }
 
 
@@ -468,6 +466,14 @@ extension HomeViewController: SlidePanelDelegate {
             return true
         }
         return false
+    }
+    
+    func loadFavourites() {
+        addFavouritesViewController()
+    }
+    
+    func loadOffline() {
+        addOfflineViewController()
     }
 }
 

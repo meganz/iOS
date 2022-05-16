@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,40 +10,40 @@
         <!--Photos View Controller-->
         <scene sceneID="Jel-ry-aXD">
             <objects>
-                <viewController id="3GS-cK-Hw6" customClass="PhotosViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qAU-co-j9W">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                <viewController storyboardIdentifier="photoViewController" id="3GS-cK-Hw6" customClass="PhotosViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="qAU-co-j9W">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qq-kN-G6C">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CHq-ed-0ka">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="691"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="735"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyf-uB-Tb3">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-Ea-Sdu">
-                                                        <rect key="frame" x="12" y="12" width="390" height="33"/>
+                                                        <rect key="frame" x="12" y="12" width="576" height="77"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="999" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
-                                                                <rect key="frame" x="0.0" y="8" width="329" height="17"/>
+                                                                <rect key="frame" x="0.0" y="30" width="515" height="17"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
-                                                                <rect key="frame" x="333" y="4.9999999999999982" width="0.0" height="23.333333333333329"/>
+                                                                <rect key="frame" x="519" y="27" width="0.0" height="23.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3z-Mc-fCp">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="14.333333333333334"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="14.5"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTG-PV-qaW">
-                                                                        <rect key="frame" x="0.0" y="19.333333333333329" width="0.0" height="4"/>
+                                                                        <rect key="frame" x="0.0" y="19.5" width="0.0" height="4"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="4" id="qvL-GF-eYX"/>
                                                                         </constraints>
@@ -60,7 +58,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhm-WP-YFw" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                                <rect key="frame" x="337" y="0.0" width="53" height="33"/>
+                                                                <rect key="frame" x="523" y="22" width="53" height="33"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                                 <state key="normal" title="Enable"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -82,14 +80,14 @@
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YK9-Bg-gst">
-                                                <rect key="frame" x="0.0" y="57" width="414" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="101" width="600" height="0.0"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ta-Ix-lgL">
-                                                <rect key="frame" x="0.0" y="57" width="414" height="634"/>
+                                                <rect key="frame" x="0.0" y="101" width="600" height="634"/>
                                                 <subviews>
                                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="548" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Isg-Gr-mnR">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="634"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="634"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bcX-sw-OPy" customClass="MEGACollectionViewFlowLayout">
                                                             <size key="itemSize" width="120" height="120"/>
@@ -112,7 +110,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZM1-Wr-5Hw">
-                                                                                    <rect key="frame" x="1.9999999999999982" y="104.66666666666667" width="31.333333333333329" height="13.333333333333329"/>
+                                                                                    <rect key="frame" x="2" y="104.5" width="31.5" height="13.5"/>
                                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <nil key="highlightedColor"/>
@@ -172,7 +170,7 @@
                                                             </collectionViewCell>
                                                         </cells>
                                                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="photosHeaderId" reuseIdentifier="photoHeaderId" id="rT5-lt-gbb" customClass="HeaderCollectionReusableView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5z-Zy-8op">
@@ -192,7 +190,7 @@
                                                             </connections>
                                                         </collectionReusableView>
                                                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoFooterId" id="dPX-DK-2Ol">
-                                                            <rect key="frame" x="0.0" y="152" width="414" height="20"/>
+                                                            <rect key="frame" x="0.0" y="152" width="600" height="20"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </collectionReusableView>
                                                         <connections>
@@ -304,7 +302,7 @@
                     </connections>
                 </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="1701.449275362319" y="450.81521739130437"/>
+            <point key="canvasLocation" x="1720" y="452"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ea3-eI-NjD">
@@ -318,19 +316,48 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="3GS-cK-Hw6" kind="relationship" relationship="rootViewController" id="hvo-cS-44d"/>
+                        <segue destination="3GS-cK-Hw6" kind="relationship" relationship="rootViewController" id="AUV-TR-Jwb"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2iI-PR-Aiy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="842" y="453.00000000000006"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bRK-aR-vOe">
+            <objects>
+                <navigationController storyboardIdentifier="photosAlbumNavigationController" id="7rW-6E-88z" customClass="MEGANavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="AVK-Bi-Ih2" userLabel="Tab Bar Item"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="V4d-NI-RtQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="SFf-k3-6iZ" kind="relationship" relationship="rootViewController" id="0WA-DU-cYE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OLA-B3-vUK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="864" y="1159"/>
+        </scene>
+        <!--Photo Album Container View Controller-->
+        <scene sceneID="rgE-81-XIT">
+            <objects>
+                <viewController id="SFf-k3-6iZ" customClass="PhotoAlbumContainerViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w4U-Zb-u4j">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="8H8-eN-Dzu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cOV-F7-rLR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bbn-pl-m6Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1738" y="1160"/>
+        </scene>
     </scenes>
-    <designables>
-        <designable name="zhm-WP-YFw">
-            <size key="intrinsicContentSize" width="53" height="33"/>
-        </designable>
-    </designables>
     <resources>
         <image name="cameraUploadsIcon" width="31" height="28"/>
         <image name="link" width="28" height="28"/>

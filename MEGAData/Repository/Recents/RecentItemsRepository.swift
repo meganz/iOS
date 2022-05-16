@@ -9,7 +9,7 @@ class RecentItemsRepository: RecentItemsRepositoryProtocol {
         self.store = store
     }
     
-    func deleteAllRecentItems(completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func deleteAllRecentItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         store.deleteQuickAccessRecentItems(completion: completion)
     }
     
@@ -18,7 +18,7 @@ class RecentItemsRepository: RecentItemsRepositoryProtocol {
     }
     
     @available(iOS 14.0, *)
-    func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         store.batchInsertQuickAccessRecentItems(items, completion: completion)
     }
     

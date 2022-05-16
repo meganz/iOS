@@ -7,7 +7,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         self.fileManager = fileManager
     }
     
-    func applicationSupportDirectoryURL(completion: @escaping (Result<URL, QuickAccessWidgetErrorEntity>) -> Void) {
+    func applicationSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void) {
         do {
             let applicationSupportDirectoryURL = try fileManager.url(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
             completion(.success(applicationSupportDirectoryURL))
@@ -17,7 +17,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         }
     }
     
-    func groupSupportDirectoryURL(completion: @escaping (Result<URL, QuickAccessWidgetErrorEntity>) -> Void) {
+    func groupSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void) {
         guard let groupSupportURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionGroupSupportFolder) else {
             MEGALogError("No groupSupportURL")
             completion(.failure(.fileManager))
@@ -27,7 +27,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         completion(.success(groupSupportURL))
     }
     
-    func newestModificationDateOfItemAt(url: URL, completion: @escaping (Result<Date, QuickAccessWidgetErrorEntity>) -> Void) {
+    func newestModificationDateOfItemAt(url: URL, completion: @escaping (Result<Date, GetFavouriteNodesErrorEntity>) -> Void) {
         var newestDate = Date(timeIntervalSince1970: 0)
 
         contentsOfItemAt(url: url) { (result) in
@@ -53,7 +53,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         }
     }
     
-    func contentsOfItemAt(url: URL, completion: @escaping (Result<[String], QuickAccessWidgetErrorEntity>) -> Void) {
+    func contentsOfItemAt(url: URL, completion: @escaping (Result<[String], GetFavouriteNodesErrorEntity>) -> Void) {
 
         do {
             let pathContent = try fileManager.contentsOfDirectory(atPath: url.path)
@@ -64,7 +64,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         }
     }
     
-    func removeContentsOfItemAt(url: URL, completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func removeContentsOfItemAt(url: URL, completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         contentsOfItemAt(url: url) { (result) in
             switch result {
             case .success(let pathContent):
@@ -80,7 +80,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         }
     }
     
-    func copyContentsOfItemAt(url: URL, to destination: URL, completion: @escaping (Result<Void, QuickAccessWidgetErrorEntity>) -> Void) {
+    func copyContentsOfItemAt(url: URL, to destination: URL, completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         contentsOfItemAt(url: url) { (result) in
             switch result {
             case .success(let pathContent):

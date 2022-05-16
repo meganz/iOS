@@ -29,6 +29,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) NSString *myEmail;
 
 @end
 
@@ -67,6 +68,8 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     if (@available(iOS 15.0, *)) {
         self.tableView.sectionHeaderTopPadding = 0.0f;
     }
+    
+    self.myEmail = MEGASdkManager.sharedMEGASdk.myEmail;
 }
 
 - (void)removeFromParentViewController {
@@ -135,7 +138,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (NodeTableViewCell *)nodeTableViewCellForIndexPath:(NSIndexPath *)indexPath recentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
-    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? @"RecentsNodeTVC" : @"RecentsSharedNodeTVC";
+    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:self.myEmail] ? @"RecentsNodeTVC" : @"RecentsSharedNodeTVC";
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [NodeTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];

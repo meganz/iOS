@@ -19,7 +19,7 @@ import UIKit
         return vc
     }
     
-    @objc func start() {
+    func start() {
         guard let presenter = presenter else {
             MEGALogDebug("Unable to start Media Discovery Screen as presented controller is nil")
             return

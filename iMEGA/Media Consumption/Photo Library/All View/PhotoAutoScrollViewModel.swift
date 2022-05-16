@@ -2,7 +2,6 @@ import Foundation
 import Combine
 
 @available(iOS 14.0, *)
-@MainActor
 final class PhotoAutoScrollViewModel: ObservableObject, PhotoScrollPositioning {
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel: PhotoLibraryAllViewModel

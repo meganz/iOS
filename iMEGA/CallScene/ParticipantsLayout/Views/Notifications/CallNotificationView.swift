@@ -13,6 +13,13 @@ class CallNotificationView: UIView {
     private let notificationHeight: CGFloat = 44
     private let defaultMargin: CGFloat = 32
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        layer.cornerRadius = notificationHeight / 2.0
+        notificationLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+    }
+    
     override var intrinsicContentSize: CGSize {
         let labelWidth = notificationLabel.intrinsicContentSize.width + defaultMargin
         if labelWidth < minWidth {
@@ -24,7 +31,7 @@ class CallNotificationView: UIView {
         }
     }
     
-    func show(message: String, backgroundColor: UIColor, autoFadeOut: Bool) {
+    func show(message: String, backgroundColor: UIColor, textColor: UIColor, autoFadeOut: Bool) {
         translatesAutoresizingMaskIntoConstraints = false
         
         guard let superview = superview else {
@@ -33,6 +40,7 @@ class CallNotificationView: UIView {
         
         self.notificationLabel.text = message
         self.backgroundColor = backgroundColor
+        self.notificationLabel.textColor = textColor
         let height: CGFloat = frame.size.height * -1
         let anchorX: NSLayoutXAxisAnchor = superview.centerXAnchor
         let anchorTop: NSLayoutYAxisAnchor = superview.topAnchor

@@ -178,7 +178,7 @@ static TransfersWidgetViewController* instance = nil;
             BOOL completedTransfers = self.completedTransfers.count > 0;
             self.editBarButtonItem.enabled = completedTransfers;
             self.toolbar.hidden = !completedTransfers;
-            self.clearAllButton.enabled = !self.tableView.isEditing || completedTransfers;
+            self.clearAllButton.enabled = !self.tableView.isEditing || (completedTransfers && self.selectedTransfers.count > 0);
             break;
         }
     }

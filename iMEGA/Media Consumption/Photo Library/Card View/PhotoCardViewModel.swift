@@ -3,12 +3,10 @@ import Combine
 import SwiftUI
 
 @available(iOS 14.0, *)
-@MainActor
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private var placeholderImageContainer = ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)
-    private var loadingTask: Task<Void, Never>?
     
     @Published var thumbnailContainer: ImageContainer
     
@@ -30,27 +28,24 @@ class PhotoCardViewModel: ObservableObject {
         if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .preview) {
             thumbnailContainer = ImageContainer(image: image)
         } else {
-            loadingTask = Task {
-                await loadThumbnailFromRemote(for: photo)
-            }
+            loadThumbnailFromRemote(for: photo)
         }
-    }
-    
-    func cancel() {
-        loadingTask?.cancel()
     }
     
     // MARK: - Private
-    
-    private func loadThumbnailFromRemote(for photo: NodeEntity) async {
-        do {
-            for try await url in thumbnailUseCase.loadPreview(for: photo) {
-                if let image = Image(contentsOfFile: url.path)  {
-                    thumbnailContainer = ImageContainer(image: image)
-                }
+    private func loadThumbnailFromRemote(for photo: NodeEntity) {
+        thumbnailUseCase
+            .requestPreview(for: photo)
+            .receive(on: DispatchQueue.global(qos: .utility))
+            .map { photo in
+                ImageContainer(image: Image(contentsOfFile: photo.path))
             }
-        } catch {
-            MEGALogDebug("[Photos Card:] \(error) happened when loadThumbnailFromRemote.")
-        }
+            .replaceError(with: nil)
+            .compactMap { $0 }
+            .filter { [weak self] in
+                $0 != self?.thumbnailContainer
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$thumbnailContainer)
     }
 }
