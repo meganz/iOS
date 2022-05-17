@@ -17,6 +17,8 @@
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
 
 static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
+static const float BPS_LOW = 1500000.0f;
+static const float BPS_MEDIUM = 3000000.0f;
 
 @interface MEGAProcessAsset ()
 
@@ -615,11 +617,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     float bpsByQuality;
     switch (videoQuality) {
         case ChatVideoUploadQualityLow:
-            bpsByQuality = 1500000.0f;
+            bpsByQuality = BPS_LOW;
             break;
             
         case ChatVideoUploadQualityMedium:
-            bpsByQuality = 3000000.0f;
+            bpsByQuality = BPS_MEDIUM;
             break;
             
         default:
@@ -627,7 +629,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             break;
     }
     
-    return (videoTrack.estimatedDataRate < bpsByQuality) ? videoTrack.estimatedDataRate : bpsByQuality;
+    if (videoTrack.estimatedDataRate < bpsByQuality) {
+        bpsByQuality = videoTrack.estimatedDataRate;
+    }
+    
+    return (bpsByQuality <= 0) ? BPS_MEDIUM : bpsByQuality;
 }
 
 - (void)exportSessionCancelledOrFailed {
