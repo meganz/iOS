@@ -43,12 +43,8 @@ public enum Strings {
     public static let _1ImagesAnd2Videos = Strings.tr("Localizable", "%1 Images and %2 Videos")
     /// %1 Images and 1 Video
     public static let _1ImagesAnd1Video = Strings.tr("Localizable", "%1 Images and 1 Video")
-    /// %1 months
-    public static let _1Months = Strings.tr("Localizable", "%1 months")
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
-    /// %1 weeks
-    public static let _1Weeks = Strings.tr("Localizable", "%1 weeks")
     /// %1$d items
     public static func _1DItems(_ p1: Int) -> String {
       return Strings.tr("Localizable", "%1$d items", p1)
@@ -99,20 +95,12 @@ public enum Strings {
     public static let recommended = Strings.tr("Localizable", "(Recommended)")
     /// 1 contact found on MEGA
     public static let _1ContactFoundOnMEGA = Strings.tr("Localizable", "1 contact found on MEGA")
-    /// 1 day
-    public static let _1Day = Strings.tr("Localizable", "1 day")
     /// 1 Image and %2 Videos
     public static let _1ImageAnd2Videos = Strings.tr("Localizable", "1 Image and %2 Videos")
     /// 1 Image and 1 Video
     public static let _1ImageAnd1Video = Strings.tr("Localizable", "1 Image and 1 Video")
-    /// 1 month
-    public static let _1Month = Strings.tr("Localizable", "1 month")
     /// 1 selected
     public static let _1Selected = Strings.tr("Localizable", "1 selected")
-    /// 1 week
-    public static let _1Week = Strings.tr("Localizable", "1 week")
-    /// 1 year
-    public static let _1Year = Strings.tr("Localizable", "1 year")
     /// 1 hour
     public static let _1Hour = Strings.tr("Localizable", "1Hour")
     /// 1 hour, 1 minute
@@ -319,8 +307,6 @@ public enum Strings {
     public static let automatic = Strings.tr("Localizable", "Automatic")
     /// Automatically back up your photos and videos to your Cloud Drive.
     public static let automaticallyBackupYourPhotosAndVideosToTheCloudDrive = Strings.tr("Localizable", "Automatically backup your photos and videos to the Cloud Drive.")
-    /// Automatically delete messages older than %1
-    public static let automaticallyDeleteMessagesOlderThan1 = Strings.tr("Localizable", "Automatically delete messages older than %1")
     /// Automatically delete messages older than a certain amount of time.
     public static let automaticallyDeleteMessagesOlderThanACertainAmountOfTime = Strings.tr("Localizable", "Automatically delete messages older than a certain amount of time")
     /// Automatically delete messages older than one day.
@@ -1009,10 +995,6 @@ public enum Strings {
     public static let historyClearing = Strings.tr("Localizable", "History Clearing")
     /// Home
     public static let home = Strings.tr("Localizable", "Home")
-    /// hour
-    public static let hour = Strings.tr("Localizable", "hour")
-    /// hours
-    public static let hours = Strings.tr("Localizable", "hours")
     /// How it works
     public static let howItWorks = Strings.tr("Localizable", "howItWorks")
     /// Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)
@@ -1277,8 +1259,6 @@ public enum Strings {
     public static let modified = Strings.tr("Localizable", "modified")
     /// Modify Phone Number
     public static let modifyPhoneNumber = Strings.tr("Localizable", "Modify Phone Number")
-    /// month
-    public static let month = Strings.tr("Localizable", "month")
     /// Monthly
     public static let monthly = Strings.tr("Localizable", "monthly")
     /// months
@@ -1601,10 +1581,6 @@ public enum Strings {
     public static let photosWillBeUploadedToCameraUploadsFolder = Strings.tr("Localizable", "Photos will be uploaded to Camera Uploads folder.")
     /// Pinned Location
     public static let pinnedLocation = Strings.tr("Localizable", "Pinned Location")
-    /// Plural format key: "%#@years@"
-    public static func placeholderString(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "placeholder_string", p1)
-    }
     /// Plan
     public static let plan = Strings.tr("Localizable", "Plan")
     /// Playing
@@ -2421,10 +2397,6 @@ public enum Strings {
     public static let weWouldLikeToSendYouNotificationsSoYouReceiveNewMessagesOnYourDeviceInstantly = Strings.tr("Localizable", "We would like to send you notifications so you receive new messages on your device instantly.")
     /// Weak
     public static let `weak` = Strings.tr("Localizable", "weak")
-    /// week
-    public static let week = Strings.tr("Localizable", "week")
-    /// weeks
-    public static let weeks = Strings.tr("Localizable", "weeks")
     /// Two-factor authentication is a second layer of security for your account.
     public static let whatIsTwoFactorAuthentication = Strings.tr("Localizable", "whatIsTwoFactorAuthentication")
     /// When enabled, photos will be uploaded.
@@ -2487,8 +2459,6 @@ public enum Strings {
     }
     /// [X] versions
     public static let xVersions = Strings.tr("Localizable", "xVersions")
-    /// year
-    public static let year = Strings.tr("Localizable", "year")
     /// Yearly
     public static let yearly = Strings.tr("Localizable", "yearly")
     /// Yellow
@@ -2996,6 +2966,40 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
+      public enum ManageHistory {
+        public enum Clearing {
+          public enum Custom {
+            public enum Option {
+              /// Plural format key: "%#@day@"
+              public static func day(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "chat.manageHistory.clearing.custom.option.day", p1)
+              }
+              /// Plural format key: "%#@hour@"
+              public static func hour(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "chat.manageHistory.clearing.custom.option.hour", p1)
+              }
+              /// Plural format key: "%#@month@"
+              public static func month(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "chat.manageHistory.clearing.custom.option.month", p1)
+              }
+              /// Plural format key: "%#@week@"
+              public static func week(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "chat.manageHistory.clearing.custom.option.week", p1)
+              }
+              /// Plural format key: "%#@year@"
+              public static func year(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "chat.manageHistory.clearing.custom.option.year", p1)
+              }
+            }
+          }
+        }
+        public enum Message {
+          /// Automatically delete messages older than %@
+          public static func deleteMessageOlderThanCustomValue(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "chat.manageHistory.message.deleteMessageOlderThanCustomValue", String(describing: p1))
+          }
+        }
+      }
       public enum Map {
         /// Location
         public static let location = Strings.tr("Localizable", "chat.map.location")
@@ -3521,6 +3525,30 @@ public enum Strings {
         public static let xml = Strings.tr("Localizable", "general.filetype.xml")
         /// ZIP Archive
         public static let zip = Strings.tr("Localizable", "general.filetype.zip")
+      }
+      public enum Format {
+        public enum RetentionPeriod {
+          /// Plural format key: "%#@day@"
+          public static func day(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.retentionPeriod.day", p1)
+          }
+          /// Plural format key: "%#@hour@"
+          public static func hour(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.retentionPeriod.hour", p1)
+          }
+          /// Plural format key: "%#@month@"
+          public static func month(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.retentionPeriod.month", p1)
+          }
+          /// Plural format key: "%#@week@"
+          public static func week(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.retentionPeriod.week", p1)
+          }
+          /// Plural format key: "%#@year@"
+          public static func year(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.retentionPeriod.year", p1)
+          }
+        }
       }
       public enum Security {
         /// MEGA-RECOVERYKEY

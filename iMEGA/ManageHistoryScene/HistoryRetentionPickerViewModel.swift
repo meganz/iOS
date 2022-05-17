@@ -8,9 +8,17 @@ struct UnitsComponentValues {
     let year = ["1"]
 }
 
-struct MeasuramentsComponentValues {
-    let singular = [Strings.Localizable.hour, Strings.Localizable.day, Strings.Localizable.week, Strings.Localizable.month, Strings.Localizable.year]
-    let plural = [Strings.Localizable.hours, Strings.Localizable.days, Strings.Localizable.weeks, Strings.Localizable.months, Strings.Localizable.year]
+enum MeasurementsComponent: Int {
+    case singular = 1
+    case plural = 2
+    
+    func values() -> [String] {
+        return [Strings.Localizable.Chat.ManageHistory.Clearing.Custom.Option.hour(self.rawValue),
+                 Strings.Localizable.Chat.ManageHistory.Clearing.Custom.Option.day(self.rawValue),
+                 Strings.Localizable.Chat.ManageHistory.Clearing.Custom.Option.week(self.rawValue),
+                 Strings.Localizable.Chat.ManageHistory.Clearing.Custom.Option.month(self.rawValue),
+                 Strings.Localizable.Chat.ManageHistory.Clearing.Custom.Option.year(MeasurementsComponent.singular.rawValue)]
+    }
 }
 
 enum AutomaticChanges: Int {
@@ -33,7 +41,7 @@ final class HistoryRetentionPickerViewModel: NSObject, ViewModelType {
     }
     
     var unitsValuesArray: Array<String> = UnitsComponentValues().hours //Default to values for hours, default measurament component
-    var measuramentsValuesArray: Array<String> = MeasuramentsComponentValues().singular //Default to singular, when the picker is shown the default position is '1 hour'
+    var measuramentsValuesArray: Array<String> = MeasurementsComponent.singular.values() //Default to singular, when the picker is shown the default position is '1 hour'
     
     var invokeCommand: ((Command) -> Void)?
         
@@ -42,7 +50,7 @@ final class HistoryRetentionPickerViewModel: NSObject, ViewModelType {
         case .configPicker(let historyRetentionValue):
             let pickerValue = historyRetentionToPickerValue(historyRetentionValue)
             unitsArrayWhenMeasurementChanges(pickerValue.measurement)
-            measuramentsValuesArray = pickerValue.unit >= 1 ? MeasuramentsComponentValues().plural : MeasuramentsComponentValues().singular
+            measuramentsValuesArray = pickerValue.unit >= 1 ? MeasurementsComponent.plural.values() : MeasurementsComponent.singular.values()
             
             self.invokeCommand?(Command.updateUnitPickerComponent)
             self.invokeCommand?(Command.updateMeasurementPickerComponent)
@@ -133,13 +141,13 @@ extension HistoryRetentionPickerViewModel: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == PickerComponent.units.rawValue {
             if !shouldChangePickerSelection(pickerView, row) {
-                measuramentsValuesArray = (row == 0) ? MeasuramentsComponentValues().singular : MeasuramentsComponentValues().plural
+                measuramentsValuesArray = (row == 0) ? MeasurementsComponent.singular.values() : MeasurementsComponent.plural.values()
                 pickerView.reloadComponent(PickerComponent.measurements.rawValue)
             }
         } else if component == PickerComponent.measurements.rawValue {
             //If the first unit component is selected we have to update the measuments values array to singular
             if pickerView.selectedRow(inComponent: PickerComponent.units.rawValue) == 0 {
-                measuramentsValuesArray = MeasuramentsComponentValues().singular
+                measuramentsValuesArray = MeasurementsComponent.singular.values()
                 pickerView.reloadComponent(PickerComponent.measurements.rawValue)
             }
             
@@ -195,7 +203,7 @@ extension HistoryRetentionPickerViewModel: UIPickerViewDelegate {
     
     private func updateComponentsDueAutomaticChange(_ units: Array<String>, _ pickerView: UIPickerView) {
         unitsValuesArray = units
-        measuramentsValuesArray = MeasuramentsComponentValues().singular
+        measuramentsValuesArray = MeasurementsComponent.singular.values()
         
         pickerView.reloadAllComponents()
     }

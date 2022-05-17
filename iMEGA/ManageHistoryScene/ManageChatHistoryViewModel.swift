@@ -172,8 +172,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
             footer = Strings.Localizable.automaticallyDeleteMessagesOlderThanOneMonth
             
         case .custom:
-            let string = Strings.Localizable.automaticallyDeleteMessagesOlderThan1
-            footer = string.replacingOccurrences(of: "%1", with: NSString.mnz_hoursDaysWeeksMonthsOrYear(from: historyRetentionValue))
+            footer = Strings.Localizable.Chat.ManageHistory.Message.deleteMessageOlderThanCustomValue(NSString.mnz_hoursDaysWeeksMonthsOrYear(from: historyRetentionValue))
         }
         
         self.invokeCommand?(.updateHistoryRetentionFooter(footer))
