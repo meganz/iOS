@@ -393,52 +393,32 @@ static NSString* const B = @"[B]";
     NSUInteger yearModulo = seconds % secondsInAYear;
     
     if (yearModulo == 0) {
-        return NSLocalizedString(@"1 year", @"");
+        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.year", @"The number of years e.g. 1 year, 5 years etc.");
+        return [NSString stringWithFormat:format, 1];
     }
     
     if (monthsModulo == 0) {
         NSUInteger months = seconds / secondsInAMonth_30;
-        if (months == 1) {
-            return NSLocalizedString(@"1 month", @"");
-        } else {
-            NSString *string = NSLocalizedString(@"%1 months", @"The number of months e.g. 2 months, 5 months etc.");
-            
-            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)months];
-            return [string stringByReplacingOccurrencesOfString:@"%1" withString:numberOf];
-        }
+        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.month", @"The number of months e.g. 1 month, 5 months etc.");
+        return [NSString stringWithFormat:format, months];
     }
     
     if (weeksModulo == 0) {
         NSUInteger weeks = seconds / secondsInAWeek;
-        if (weeks == 1) {
-            return NSLocalizedString(@"1 week", @"");
-        } else {
-            NSString *string = NSLocalizedString(@"%1 weeks", @"The number of weeks e.g. 2 weeks, 5 weeks etc.");
-            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)weeks];
-            return [string stringByReplacingOccurrencesOfString:@"%1" withString:numberOf];
-        }
+        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.week", @"The number of weeks e.g. 1 week, 5 weeks etc.");
+        return [NSString stringWithFormat:format, weeks];
     }
     
     if (daysModulo == 0) {
         NSUInteger days = seconds / secondsInADay;
-        if (days == 1) {
-            return NSLocalizedString(@"1 day", @"");
-        } else {
-            NSString *string = NSLocalizedString(@"%d days", @"");
-            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)days];
-            return [string stringByReplacingOccurrencesOfString:@"%d" withString:numberOf];
-        }
+        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.day", @"The number of days e.g. 1 day, 5 days etc.");
+        return [NSString stringWithFormat:format, days];
     }
     
     if (hoursModulo == 0) {
         NSUInteger hours = seconds / secondsInAHour;
-        if (hours == 1) {
-            return NSLocalizedString(@"1hour", @"");
-        } else {
-            NSString *string = NSLocalizedString(@"xHours", @"");
-            NSString *numberOf = [NSString stringWithFormat:@"%lu", (unsigned long)hours];
-            return [string stringByReplacingOccurrencesOfString:@"%d" withString:numberOf];
-        }
+        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.hour", @"The number of hours e.g. 1 hour, 5 hours etc.");
+        return [NSString stringWithFormat:format, hours];
     }
     
     return @"";

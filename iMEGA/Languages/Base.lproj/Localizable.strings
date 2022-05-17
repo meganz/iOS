@@ -2459,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Automatically delete messages older than one month.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Automatically delete messages older than %1";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation. This action is irreversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2477,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] disabled message clearing.[/B]";
 /*  */
-"hour"="hour";
-/*  */
-"hours"="hours";
-/*  */
 "day"="day";
-/*  */
-"1 day"="1 day";
-/*  */
-"week"="week";
-/*  */
-"weeks"="weeks";
-/*  */
-"1 week"="1 week";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weeks";
-/*  */
-"month"="month";
-/*  */
-"1 month"="1 month";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 months";
-/*  */
-"1 year"="1 year";
-/*  */
-"year"="year";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Search Your Files";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
