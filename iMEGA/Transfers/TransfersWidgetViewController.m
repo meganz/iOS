@@ -170,6 +170,7 @@ static TransfersWidgetViewController* instance = nil;
         case TransfersWidgetSelectedAll: {
             BOOL ongoingTransfers = self.transfers.count > 0;
             self.editBarButtonItem.enabled = ongoingTransfers;
+            self.cancelBarButtonItem.enabled = ongoingTransfers;
             self.toolbar.hidden = !ongoingTransfers;
             break;
         }
@@ -695,6 +696,7 @@ static TransfersWidgetViewController* instance = nil;
     }
     
     
+    [self updateRightBarButtonItems];
     [self reloadView];
 }
 
@@ -994,18 +996,25 @@ static TransfersWidgetViewController* instance = nil;
 
 #pragma mark - Private
 
-
-- (void)switchEdit {
+- (BOOL)isEditing {
     BOOL isEditing = false;
     if (self.inProgressButton.selected) {
         isEditing = self.transfers.count > 0 ? !self.tableView.editing : false;
     } else {
         isEditing = self.completedTransfers.count > 0 ? !self.tableView.editing : false;
     }
-    
+    return isEditing;
+}
+
+- (void)updateRightBarButtonItems {
+    self.navigationItem.rightBarButtonItems = (self.tableView.isEditing && self.inProgressButton.selected) ? @[self.editBarButtonItem, self.cancelBarButtonItem] : @[self.editBarButtonItem];
+}
+
+- (void)switchEdit {
+    BOOL isEditing = [self isEditing];
     [self.tableView setEditing:isEditing animated:YES];
     [self.editBarButtonItem setTitle:self.tableView.isEditing ? NSLocalizedString(@"done", @"") : NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected")];
-    self.navigationItem.rightBarButtonItems = self.tableView.isEditing ? @[self.editBarButtonItem, self.cancelBarButtonItem] : @[self.editBarButtonItem];
+    [self updateRightBarButtonItems];
 
     [self reloadView];
 }
