@@ -592,6 +592,8 @@
         
         [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
     } @catch (NSException *exception) {
+        NSString *message = [NSString stringWithFormat:@"Can't begin background task with name %@. Exception: %@", name, exception];
+        [CrashlyticsLogger log:message];
         MEGALogDebug(@"Can't begin background task with name %@ and with exception %@", name, exception);
     }
 }
