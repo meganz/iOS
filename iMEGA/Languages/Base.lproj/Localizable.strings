@@ -666,11 +666,11 @@
 "photo.empty.title"="No Photos Found";
 /* Title of Photo's Years tab */
 "media.photoLibrary.category.years.title"="Years";
-/* Title of Photo's Months tab*/
+/* Title of Photo's Months tab */
 "media.photoLibrary.category.months.title"="Months";
-/* Title of Photo's Days tab*/
+/* Title of Photo's Days tab */
 "media.photoLibrary.category.days.title"="Days";
-/* Title of Photo's All date tab*/
+/* Title of Photo's All date tab */
 "media.photoLibrary.category.all.title"="All";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Rubbish Bin";
@@ -983,7 +983,7 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
-"insertYourFriendsEmails"="Insert your friends' emails:";
+"insertYourFriendsEmails"="Insert your friends’ emails:";
 /*  */
 "howItWorks"="How it works";
 /*  */
@@ -1461,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transfer failed due to a recursive directory structure";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="File removed as it violated our Terms of Service";
+"transfer.error.termsOfServiceViolation"="Violated Terms of Service";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL verification failed";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2249,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatic";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimised";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
+"Send smaller size images optimised for lower data consumption"="Always send optimised images.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Send original size, increased quality images";
+"Send original size, increased quality images"="Always send original size images.";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2985,4 +2985,4 @@
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Storage quota exceeded";
 /* Title of section Next on Audio Playlist */
-"media.audio.playlist.section.next.title" = "Next";
+"media.audio.playlist.section.next.title"="Next";

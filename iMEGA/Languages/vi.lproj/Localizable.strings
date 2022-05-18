@@ -425,7 +425,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Các đường liên kết đã được xóa";
 /* Title show when a file is being downloaded */
-"downloading"="Đang tải về";
+"downloading"="Đang tải xuống";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Chọn vị trí đích";
 /* Text of the button for user to select files in MEGA. */
@@ -524,6 +524,12 @@
 "cameraUploadsPendingFile"="Việc tải lên đang được thực hiện, 1 tệp tin đang chờ";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Việc tải lên đang được thực hiện, %lu tệp tin đang chờ";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="Dòng thời gian";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="Albums";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="Ưa Thích";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Việc tải lên bị trì hoãn do mất kết nối tới mạng Wi-Fi, 1 tệp tin đang bị chờ";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -643,7 +649,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Cấp phép";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Chỉ được xem";
+"readOnly"="Chỉ-được-xem";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Xem và Sửa";
 /* Permissions given to the user you share your folder with */
@@ -652,14 +658,20 @@
 "settingsTitle"="Thiết Đặt";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Đăng Tải Camêra";
-/* Title of Photo Years tab */
-"cameraUploads.years.title"="Năm";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA bị giới hạn quyền truy cập vào thư viện ảnh và không thể sao lưu dự phòng tất cả hình ảnh của bạn. Chạm để thay đổi quyền hạn.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Ảnh Chụp";
 /* Photo view is empty */
 "photo.empty.title"="Không Có Ảnh Nào";
+/* Title of Photo's Years tab */
+"media.photoLibrary.category.years.title"="Năm";
+/* Title of Photo's Months tab */
+"media.photoLibrary.category.months.title"="Tháng";
+/* Title of Photo's Days tab */
+"media.photoLibrary.category.days.title"="Ngày";
+/* Title of Photo's All date tab */
+"media.photoLibrary.category.all.title"="Tất Cả";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Thùng Rác";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -797,7 +809,7 @@
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Chỉ nên bật tính năng này khi các phiên truyền tải lên/xuống không hoạt động. Trong các trường hợp bình thường, giao thức HTTP rất thích hợp để truyền tải các nội dung mã hóa.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
-"Download options"="Tuỳ chọn tải về";
+"Download options"="Tuỳ chọn tải xuống";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Hiện đang dùng %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -975,7 +987,7 @@
 /*  */
 "howItWorks"="Cách hoạt động";
 /*  */
-"howItWorksMain"="Bạn của bạn cần phải đăng ký một tài khoản MEGA miễn phí và  [S]cài đặt một trong những ứng dụng của MEGA[/S] (điện thoại hoặc máy tính, và đăng nhập vào)";
+"howItWorksMain"="Bạn của bạn cần phải đăng ký một tài khoản MEGA miễn phí và  [S]cài đặt một trong những ứng dụng của MEGA[/S] (App MEGA cho Máy Tính hoặc App MEGA cho Di Động)";
 /*  */
 "howItWorksSecondary"="Bạn có thể nhắc nhở bạn bè bằng nhiều các. Bạn sẽ nhận được băng thông nếu bạn điền địa chỉ email của bạn mình vào đây trước khi họ tạo tài khoản với địa chỉ email đó.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1036,7 +1048,7 @@
 "Add Your Phone Number"="Thêm Số Điện Thoại";
 /* Choose Your Country title */
 "Choose Your Country"="Chọn Quốc Gia";
-/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+/* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="tháng";
 /*  */
 "days"="ngày";
@@ -1449,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Truyền tải bị thất bại do cấu trúc đệ quy của thư mục";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Tệp tin đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
+"transfer.error.termsOfServiceViolation"="Vi phạm Điều Khoản Dịch Vụ";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Xác thực SSL bị thất bại";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1655,15 +1667,15 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Không có Cuộc Chát nào";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Xác Minh 2-Bước";
+"twoFactorAuthentication"="Xác thực 2-bước";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Bắt Đầu Thiết Lập";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
 "pleaseEnterTheSixDigitCode"="Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthentication"="Tại sao cần sử dụng chức năng Xác Minh 2-Bước?";
+"whyYouDoNeedTwoFactorAuthentication"="Tại sao cần sử dụng chức năng xác thực 2-bước?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
-"whatIsTwoFactorAuthentication"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản.";
+"whatIsTwoFactorAuthentication"="Chức năng Xác Thực 2-Bước sẽ thêm một lớp bảo mật thứ nhì cho tài khoản.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản. Nghĩa là trong trường hợp có người biết mật khẩu để lén vào tài khoản sẽ không thể vào được, và buộc phải nhập thêm đoạn mã 6 chữ số mà chỉ chủ sở hữu tài khoản mới có.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
@@ -1795,7 +1807,7 @@
 /* Text shown for switching from preview view to all media view. */
 "All Media"="Tất Cả Phương Tiện Số";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Đang tải về %@";
+"Downloading %@"="Đang tải xuống %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Đã lưu vào Ảnh";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2237,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Tự điều chỉnh";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Gửi đi với kích thước được giảm tải khi dùng mạng viễn thông và kích thước gốc khi dùng Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Gửi hình ảnh với chất lượng chỉnh tối ưu khi dùng mạng di động và gửi với kích thước gốc khi dùng Wi-Fi.";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Tối ưu";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Gửi đi với kích thước nhỏ phù hợp cho việc tích kiệm dung lượng";
+"Send smaller size images optimised for lower data consumption"="Luôn gửi hình ảnh với chất lượng chỉnh tối ưu.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Gửi đi kích thước gốc, chất lượng hình ảnh cao";
+"Send original size, increased quality images"="Luôn gửi hình ảnh với kích thước gốc.";
 /* Setting title for Doc scan view */
 "Save Settings"="Tùy Chọn Khi Lưu";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2447,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Tự động xóa các tin nhắn đã có lâu hơn một tháng.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Tự động xóa các tin nhắn đã có lâu hơn %1";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Xóa tất cả tin nhắn và tệp tin đã chia sẻ trong cuộc trò chuyện này. Việc này sẽ không thể hoàn tác.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2465,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] đã vô hiệu tính năng tự động xóa tin nhắn đã có lâu.[/B]";
 /*  */
-"hour"="giờ";
-/*  */
-"hours"="giờ";
-/*  */
 "day"="ngày";
-/*  */
-"1 day"="1 ngày";
-/*  */
-"week"="tuần";
-/*  */
-"weeks"="tuần";
-/*  */
-"1 week"="1 tuần";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 tuần";
-/*  */
-"month"="tháng";
-/*  */
-"1 month"="1 tháng";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 tháng";
-/*  */
-"1 year"="1 năm";
-/*  */
-"year"="năm";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Tìm Tệp Tin";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2996,3 +2984,5 @@
 "meetings.displayInMainView.title"="Hiện trong Khung Xem Chính";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Vượt mức giới hạn lưu trữ";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title"="Tiếp";

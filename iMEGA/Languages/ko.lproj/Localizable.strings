@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="이러한 사항은 다음과 같은 이유로 발생할 수 있습니다:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
+"fileLinkUnavailableText2"="파일이 이용 약관 위반으로 삭제되었습니다.";
 /*  */
 "fileLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다.";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="이러한 사항은 다음과 같은 이유로 발생할 수 있습니다:";
 /*  */
-"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
+"folderLinkUnavailableText2"="폴더 링크가 이용 약관 위반으로 삭제되었습니다.";
 /*  */
 "folderLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다.";
 /*  */
@@ -524,6 +524,12 @@
 "cameraUploadsPendingFile"="업로드 진행중, 파일 1개 대기중";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="업로드 진행중, 파일 %lu개 대기중";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="연표";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="앨범";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="즐겨찾기";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Wi-Fi 연결이 없어서 업로드가 일시정지되었습니다, 파일 1개 보류중";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -652,14 +658,20 @@
 "settingsTitle"="설정";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="카메라 업로드";
-/* Title of Photo Years tab */
-"cameraUploads.years.title"="년";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA가 당신의 사진 라이브러리에 제한된 접근 권한을 가지고 있으며 모든 사진을 백업할 수 없습니다. 권한을 변경하려면 탭 하세요.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="사진";
 /* Photo view is empty */
 "photo.empty.title"="검색된 사진 없음";
+/* Title of Photo's Years tab */
+"media.photoLibrary.category.years.title"="년";
+/* Title of Photo's Months tab */
+"media.photoLibrary.category.months.title"="월";
+/* Title of Photo's Days tab */
+"media.photoLibrary.category.days.title"="일";
+/* Title of Photo's All date tab */
+"media.photoLibrary.category.all.title"="전체";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="휴지통";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -975,7 +987,7 @@
 /*  */
 "howItWorks"="작동 원리";
 /*  */
-"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 어플리케이션 중 하나를 설치[/S]해야합니다 (동기화 클라이언트나 모바일 앱 중 하나)";
+"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 어플리케이션 중 하나를 설치[/S]해야합니다 (데스크톱 앱이나 모바일 앱 중 하나)";
 /*  */
 "howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구가 이메일을 사용하여 가입하기 전에 여기에 입력하면 할당량을 얻을 것입니다.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1036,7 +1048,7 @@
 "Add Your Phone Number"="전화번호 추가";
 /* Choose Your Country title */
 "Choose Your Country"="국가 선택";
-/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+/* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="개월";
 /*  */
 "days"="일";
@@ -1449,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="재귀적 경로 구조로 인하여 전송 실패";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="파일이 이용 약관 위반으로 삭제되었습니다";
+"transfer.error.termsOfServiceViolation"="이용 약관 위반";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL 인증 실패";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2237,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="자동";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="셀룰러 네트워크를 통해서는 작은 크기의 이미지를 보내고 Wi-Fi를 통해서는 원본 크기의 이미지를 보냅니다";
+"Send smaller size images through cellular networks and original size images through wifi"="모바일 데이터를 사용할 때는 최적화된 이미지를 보내지만 Wi-Fi에 연결되있을 때에는 원본 크기 이미지를 보냅니다.";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="최적화";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="작은 크기의 이미지는 적은 데이터 소비에 최적화되어 있습니다";
+"Send smaller size images optimised for lower data consumption"="항상 최적화된 이미지 전송";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="원래 크기 전송, 향상된 이미지 품질";
+"Send original size, increased quality images"="항상 원본 크기 이미지 전송";
 /* Setting title for Doc scan view */
 "Save Settings"="설정 저장";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2447,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="1개월 이상의 메시지는 자동으로 삭제합니다.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="1%1 이상의 메시지는 자동으로 삭제합니다.";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="%@ 이상 된 메시지를 자동으로 삭제";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="이 대화 내의 모든 메시지와 공유된 파일을 삭제합니다. 이 행동은 되돌릴 수 없습니다.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2465,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]님이 메시지 삭제를 해제하였습니다.[/B]";
 /*  */
-"hour"="시간";
-/*  */
-"hours"="시간";
-/*  */
 "day"="일";
-/*  */
-"1 day"="1일";
-/*  */
-"week"="주";
-/*  */
-"weeks"="주";
-/*  */
-"1 week"="1주";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1주";
-/*  */
-"month"="월";
-/*  */
-"1 month"="1개월";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1개월";
-/*  */
-"1 year"="1년";
-/*  */
-"year"="년";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="파일 찾기";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2996,3 +2984,5 @@
 "meetings.displayInMainView.title"="메인 보기에 표시";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="저장소 할당량 초과";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title"="다음";

@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Questo potrebbe essere dovuto alle seguenti cause:";
 /*  */
-"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
+"folderLinkUnavailableText2"="Il link della cartella è stato rimosso perché viola i nostri Termini di Servizio.";
 /*  */
 "folderLinkUnavailableText3"="URL non valido - il link che si sta provando ad accedere non esiste";
 /*  */
@@ -515,15 +515,21 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Fai un backup in automatico delle tue foto e dei tuoi video nel tuo Cloud Drive.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Attiva i caricamenti dalla fotocamera";
+"enableCameraUploadsButton"="Attiva i caricamenti da fotocamera";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Upload Camera attivati";
+"cameraUploadsEnabled"="Caricamenti da fotocamera attivati";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Caricamenti dalla fotocamera completi";
+"cameraUploadsComplete"="Caricamenti da fotocamera completi";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="Upload in corso, 1 file in attesa";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload in corso, %lu file in attesa";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="Cronologia";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="Album";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="Preferiti";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Caricamento messo in pausa a causa di nessuna connessione Wi-Fi disponibile, 1 file in attesa";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -651,15 +657,21 @@
 /* Title of the Settings section */
 "settingsTitle"="Impostazioni";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Camera Uploads";
-/* Title of Photo Years tab */
-"cameraUploads.years.title"="Anni";
+"cameraUploadsLabel"="Caricamenti da fotocamera";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA ha accesso limitato alla tua Galleria e non può effettuare il backup di tutte le tue foto. Tocca per cambiare i permessi.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto";
 /* Photo view is empty */
 "photo.empty.title"="Nessuna foto trovata";
+/* Title of Photo's Years tab */
+"media.photoLibrary.category.years.title"="Anni";
+/* Title of Photo's Months tab */
+"media.photoLibrary.category.months.title"="Mesi";
+/* Title of Photo's Days tab */
+"media.photoLibrary.category.days.title"="Giorni";
+/* Title of Photo's All date tab */
+"media.photoLibrary.category.all.title"="Tutti";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Cestino";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -707,15 +719,15 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Quando attivo, le foto vengono caricate.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Le foto vengono caricate nella cartella Caricamenti dalla fotocamera.";
+"Photos will be uploaded to Camera Uploads folder."="Le foto vengono caricate nella cartella Caricamenti da fotocamera.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Le foto e i video saranno caricati nella cartella Caricamenti dalla fotocamera.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Le foto e i video saranno caricati nella cartella Caricamenti da fotocamera.";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="I video verranno caricati nella cartella Caricamenti dalla fotocamera.";
+"Videos will be uploaded to the Camera Uploads folder."="I video verranno caricati nella cartella Caricamenti da fotocamera.";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Quando attiva, i video verranno caricati.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nuove opzioni per i caricamenti dalla fotocamera!";
+"New Camera Upload!"="Nuove opzioni per i Caricamenti da fotocamera!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Adesso puoi scegliere di convertire le foto HEIC e i video HEVC nei loro formati più compatibili (rispettivamente, JPG e H264).";
 /* Title for an action to use most compatible formats */
@@ -727,7 +739,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Spazio sul dispositivo quasi pieno";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Non hai abbastanza spazio per altri caricamenti dalla fotocamera. Libera un po' di spazio eliminando app non necessarie, video o musica. Puoi gestire il tuo spazio di archiviazione in %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Non hai abbastanza spazio per altri caricamenti da fotocamera. Libera un po' di spazio eliminando app non necessarie, video o musica. Puoi gestire il tuo spazio di archiviazione in %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Impostazioni > Generali > %@ Archiviazione";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -975,7 +987,7 @@
 /*  */
 "howItWorks"="Come funziona";
 /*  */
-"howItWorksMain"="Il tuo amico deve registrare un account free su MEGA e [S]installare almeno un'app di MEGA[/S] (il client per desktop o una delle nostre app mobile)";
+"howItWorksMain"="Il tuo amico deve registrare un account gratuito su MEGA ed [S]installare almeno un'app di MEGA[/S] (l'app per desktop o una delle nostre app per mobile)";
 /*  */
 "howItWorksSecondary"="Puoi notificare il tuo amico con qualsiasi metodo. Guadagnerai la quota se hai inserito la mail del tuo amico qui prima che si registrasse con quella email.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1036,7 +1048,7 @@
 "Add Your Phone Number"="Aggiungi il tuo numero di telefono";
 /* Choose Your Country title */
 "Choose Your Country"="Scegli il tuo Paese";
-/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+/* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="mesi";
 /*  */
 "days"="giorni";
@@ -1449,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Il trasferimento è fallito a causa di una struttura ricorsiva della directory";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="File removed as it violated our Terms of Service";
+"transfer.error.termsOfServiceViolation"="Violated Terms of Service";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Verifica SSL fallita";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1715,7 +1727,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Le tue foto nel Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="I caricamenti dalla fotocamera sono una feature essenziale per qualsiasi dispositivo mobile e possiamo farlo per te. Crea il tuo account adesso.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="I Caricamenti da fotocamera sono una feature essenziale per qualsiasi dispositivo mobile e possiamo farlo per te. Crea il tuo account adesso.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Imposta MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2237,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatico";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Invia immagini di dimensione minore tramite la connessione dati e immagini a dimensione originale tramite il Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Ottimizzata";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Invia immagini di dimensione minore per un utilizzo minore di dati";
+"Send smaller size images optimised for lower data consumption"="Always send optimised images.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Invia immagini con dimensione originale e qualità migliorata";
+"Send original size, increased quality images"="Always send original size images.";
 /* Setting title for Doc scan view */
 "Save Settings"="Salva impostazioni";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2447,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Elimina automaticamente i messaggi più vecchi di un mese.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Elimina automaticamente i messaggi più vecchi di %1";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Elimina tutti i messaggi e i file condivisi in questa conversazione. Questa azione è irreversibile.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2465,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] ha disabilitato la pulizia automatica dei messaggi.[/B]";
 /*  */
-"hour"="ora";
-/*  */
-"hours"="ore";
-/*  */
 "day"="giorno";
-/*  */
-"1 day"="1 giorno";
-/*  */
-"week"="settimana";
-/*  */
-"weeks"="settimane";
-/*  */
-"1 week"="1 settimana";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 settimane";
-/*  */
-"month"="mese";
-/*  */
-"1 month"="1 mese";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 mesi";
-/*  */
-"1 year"="1 anno";
-/*  */
-"year"="anno";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cerca i tuoi file";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2996,3 +2984,5 @@
 "meetings.displayInMainView.title"="Display in Main View";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Quota superata";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title"="Avanti";

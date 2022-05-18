@@ -524,6 +524,12 @@
 "cameraUploadsPendingFile"="Téléversement en cours, 1 fichier en attente";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Téléversement en cours, %lu fichiers en attente";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="Vue chronologique";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="Albums";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="Favoris";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Le téléversement est en pause, car il n’y a pas de connexion Wi-Fi, 1 fichier est en attente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -652,14 +658,20 @@
 "settingsTitle"="Paramètres";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Téléversements de l’appareil photo";
-/* Title of Photo Years tab */
-"cameraUploads.years.title"="Années";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA a un accès limité à votre photothèque et ne peut pas sauvegarder toutes vos photos. Toucher pour changer les autorisations.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Photos";
 /* Photo view is empty */
 "photo.empty.title"="Aucune photo n’a été trouvée";
+/* Title of Photo's Years tab */
+"media.photoLibrary.category.years.title"="Années";
+/* Title of Photo's Months tab */
+"media.photoLibrary.category.months.title"="Mois";
+/* Title of Photo's Days tab */
+"media.photoLibrary.category.days.title"="Jours";
+/* Title of Photo's All date tab */
+"media.photoLibrary.category.all.title"="Toutes";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Corbeille";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -1036,7 +1048,7 @@
 "Add Your Phone Number"="Ajouter votre numéro de téléphone";
 /* Choose Your Country title */
 "Choose Your Country"="Choisir votre pays";
-/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+/* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="mois";
 /*  */
 "days"="jours";
@@ -1449,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Le transfert a échoué en raison d’une structure de dossier récursive";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Le fichier a été supprimé pour non-respect des Conditions générales d’utilisation";
+"transfer.error.termsOfServiceViolation"="Non-respect des Conditions générales d’utilisation";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Échec de vérification SSL";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2237,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatique";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Envoyez les images de plus petite taille avec les données mobiles et les images de taille originale par le Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Envoyez des images optimisées si les données mobiles sont activées ou des images de taille originale si le Wi-Fi est activé.";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimisée";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Envoyez des images de plus petite taille, optimisées pour une consommation réduite de données";
+"Send smaller size images optimised for lower data consumption"="Envoyez toujours des images optimisées.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Envoyez des images de meilleure qualité, de taille originale";
+"Send original size, increased quality images"="Envoyez toujours des images de taille originale.";
 /* Setting title for Doc scan view */
 "Save Settings"="Paramètres d’enregistrement";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2447,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Supprimer automatiquement les messages de plus d’un mois.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Supprimer automatiquement les messages de plus de %1";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Supprimer automatiquement les messages de plus de %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Supprimer tous les messages et fichiers partagés dans cette conversation. Cette action est irréversible.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2465,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] a désactivé l’effacement des messages.[/B]";
 /*  */
-"hour"="heure";
-/*  */
-"hours"="heures";
-/*  */
 "day"="jour";
-/*  */
-"1 day"="1 jour";
-/*  */
-"week"="semaine";
-/*  */
-"weeks"="semaines";
-/*  */
-"1 week"="1 semaine";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 semaines";
-/*  */
-"month"="mois";
-/*  */
-"1 month"="1 mois";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 mois";
-/*  */
-"1 year"="1 an";
-/*  */
-"year"="an";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cherchez dans vos fichiers";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2996,3 +2984,5 @@
 "meetings.displayInMainView.title"="Afficher dans la vue principale";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Le quota d’espace de stockage a été dépassé";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title"="Suivant";

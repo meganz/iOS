@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
+"fileLinkUnavailableText2"="Het bestand is verwijderd omdat het onze Algemene Voorwaarden schendt";
 /*  */
 "fileLinkUnavailableText3"="Ongeldige URL - de link die u probeert te bereiken bestaat niet";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
 /*  */
-"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
+"folderLinkUnavailableText2"="De maplink is verwijderd omdat het onze Algemene Voorwaarden schendt.";
 /*  */
 "folderLinkUnavailableText3"="Ongeldige URL - de link die u probeert te bereiken bestaat niet";
 /*  */
@@ -524,6 +524,12 @@
 "cameraUploadsPendingFile"="Upload in behandeling, 1 bestand is wachtend";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload in behandeling, %lu bestanden zijn wachtend";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="Tijdlijn";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="Albums";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="Favorieten";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Upload gepauzeerd doordat er geen Wi-Fi connectie is, 1 bestand wachtend";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -652,14 +658,20 @@
 "settingsTitle"="Instellingen";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
-/* Title of Photo Years tab */
-"cameraUploads.years.title"="Jaren";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA heeft beperkte toegang tot uw fotobibliotheek en kan geen back-up van al uw foto's maken. Tik om machtigingen te wijzigen.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto’s";
 /* Photo view is empty */
 "photo.empty.title"="Geen Foto's Gevonden";
+/* Title of Photo's Years tab */
+"media.photoLibrary.category.years.title"="Jaren";
+/* Title of Photo's Months tab */
+"media.photoLibrary.category.months.title"="Maanden";
+/* Title of Photo's Days tab */
+"media.photoLibrary.category.days.title"="Dagen";
+/* Title of Photo's All date tab */
+"media.photoLibrary.category.all.title"="Alle";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Prullenbak";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -1036,7 +1048,7 @@
 "Add Your Phone Number"="Uw Telefoonnummer Toevoegen";
 /* Choose Your Country title */
 "Choose Your Country"="Kies Uw Land";
-/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+/* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="maanden";
 /*  */
 "days"="dagen";
@@ -1127,7 +1139,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Jaarlijks";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Dit in-App Aankoop item is niet beschikbaar in de Applicatie Winkel op dit moment. Verifieer de betalingsinstellingen voor uw Apple-ID.";
+"inAppPurchase.error.alert.title.notAvailable"="Dit item voor in-Applicatie-aankoop is momenteel niet beschikbaar in de Applicatie Store. Controleer de betalingsinstellingen voor uw Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Applicatie Winkel Instellingen";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1141,7 +1153,7 @@
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Herstel probleem";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="De vorige aankoop kon niet worden gevonden. Selecteer alstublieft het eerder aangeschafte product om te herstellen. Het zal NIET opnieuw worden berekend.";
+"incompleteRestore_message"="De vorige aankoop kon niet worden gevonden. Selecteer alstublieft het eerder aangeschafte product om te herstellen. Het zal NIET opnieuw in rekening worden gebracht.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Herstel gestopt";
 /* Alert message shown when the restoring process has stopped for some reason */
@@ -1191,7 +1203,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] heeft de groep verlaten.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] is toegevoegd aan het groepsgesprek op uitnodiging van [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] is toegevoegd aan de groepsoproep op uitnodiging van [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] heeft de gespreksgeschiedenis verwijderd.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
@@ -1449,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Overdracht is mislukt vanwege een recursieve mapstructuur";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Bestand verwijderd omdat het onze Algemene Voorwaarden schendt";
+"transfer.error.termsOfServiceViolation"="Algemene Voorwaarden geschonden";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL verificatie mislukt";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1613,7 +1625,7 @@
 /* When an active goup call is ended */
 "Group call ended"="Groep oproep beëindigd";
 /* When an active goup call is ended, shows the duration */
-"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Groepsgesprek beëindigd [/A][C]. Duur: [/C]";
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Groepsoproep beëindigd [/A][C]. Duur: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duur: %@";
 /*  */
@@ -1827,13 +1839,13 @@
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ heeft de chat link verwijderd";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ is aangesloten aan het groepsgesprek.";
+"%@ joined the group chat."="%@ is aangesloten aan de groepsoproep.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="U mag niet deelnemen aan deze oproep omdat deze het maximale aantal deelnemers heeft bereikt.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="U mag geen video inschakelen omdat deze oproep het maximale aantal deelnemers heeft bereikt dat video gebruikt.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Kan geen gesprek starten omdat de deelnemerslimiet is overschreden.";
+"Unable to start a call because the participants limit was exceeded."="Kan geen oproep starten omdat de deelnemerslimiet is overschreden.";
 /* Label shown while joining a public chat */
 "Joining..."="Deelnemen…";
 /* Label shown while leaving a public chat */
@@ -1969,7 +1981,7 @@
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
 "Recording..."="Opnemen…";
 /* Text to inform the user there is an active call and is not participating */
-"Ongoing Call"="Lopend Gesprek";
+"Ongoing Call"="Lopende Oproep";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
 "It is not possible to play content while there is a call in progress"="Het is niet mogelijk om media bestanden af te spelen terwijl een oproep wordt uitgevoerd.";
 /* Text to inform the user there is an active call and is participating */
@@ -2237,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Verzend afbeeldingen met een kleiner formaat via mobiele netwerken en afbeeldingen met een origineel formaat via Wi-Fi";
+"Send smaller size images through cellular networks and original size images through wifi"="Verstuur geoptimaliseerde afbeeldingen wanneer u mobiele data gebruikt, maar afbeeldingen op origineel formaat wanneer u wifi gebruikt.";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Geoptimaliseerd";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Verstuur kleinere formaat afbeeldingen geoptimaliseerd voor lagere data consumptie";
+"Send smaller size images optimised for lower data consumption"="Stuur altijd geoptimaliseerde afbeeldingen.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Verstuur originele grootte, afbeeldingen van hogere kwaliteit";
+"Send original size, increased quality images"="Stuur altijd afbeeldingen op origineel formaat mee.";
 /* Setting title for Doc scan view */
 "Save Settings"="Instellingen Opslaan";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2447,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Verwijder automatisch berichten ouder dan een maand.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="Verwijder automatisch berichten ouder dan %1";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Verwijder alle berichten en bestanden gedeeld in dit gesprek. Deze actie onomkeerbaar.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2465,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s [/A][B] heeft het wissen van berichten uitgeschakeld. [/B]";
 /*  */
-"hour"="uur";
-/*  */
-"hours"="uren";
-/*  */
 "day"="dag";
-/*  */
-"1 day"="1 dag";
-/*  */
-"week"="week";
-/*  */
-"weeks"="weken";
-/*  */
-"1 week"="1 week";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1 weken";
-/*  */
-"month"="maand";
-/*  */
-"1 month"="1 maand";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1 maanden";
-/*  */
-"1 year"="1 jaar";
-/*  */
-"year"="jaar";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Zoek Uw Bestanden";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2996,3 +2984,5 @@
 "meetings.displayInMainView.title"="Weergeven in Hoofdweergave";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Opslag tegoed overschreden";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title"="Volgende";
