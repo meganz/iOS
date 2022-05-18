@@ -524,6 +524,12 @@
 "cameraUploadsPendingFile"="アップロード中、1個のファイルを保留中";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="アップロード中、%lu個のファイルを保留中";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="タイムライン";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="アルバム";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="お気に入り";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="WiFi接続がないためアップロードが一時停止されました。1個のファイルが保留中";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -652,14 +658,20 @@
 "settingsTitle"="設定";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="カメラアップロード";
-/* Title of Photo Years tab */
-"cameraUploads.years.title"="年";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGAはフォトライブラリへのアクセスに制限があり、すべての写真をバックアップすることはできません。タップすると、権限が変更されます。";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="写真";
 /* Photo view is empty */
 "photo.empty.title"="写真が見つかりません";
+/* Title of Photo's Years tab */
+"media.photoLibrary.category.years.title"="年";
+/* Title of Photo's Months tab */
+"media.photoLibrary.category.months.title"="月";
+/* Title of Photo's Days tab */
+"media.photoLibrary.category.days.title"="日";
+/* Title of Photo's All date tab */
+"media.photoLibrary.category.all.title"="全部";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="ごみ箱";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -975,7 +987,7 @@
 /*  */
 "howItWorks"="仕組み";
 /*  */
-"howItWorksMain"="ご友人はMEGAの無料アカウントに登録し、[S]MEGAクライアントアプリケーションを少なくとも1つインストールする[/S]必要があります（同期クライアントまたは当社のモバイルアプリのいずれか）。";
+"howItWorksMain"="ご友人はMEGAの無料アカウントに登録し、[S]MEGAクライアントアプリケーションを少なくとも1つインストールする[/S]必要があります（MEGAデスクトップアプリまたはMEGAモバイルアプリのいずれか）。";
 /*  */
 "howItWorksSecondary"="何らかの方法でご友人にお知らせください。ご友人がご友人のメールアドレスでご登録される前に、そのメールアドレスをこちらでご入力いただいた場合　あなたは当該容量を獲得します。";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1036,7 +1048,7 @@
 "Add Your Phone Number"="あなたの電話番号を追加";
 /* Choose Your Country title */
 "Choose Your Country"="あなたの国を選択";
-/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+/* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="か月";
 /*  */
 "days"="日";
@@ -1449,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="転送は再帰的なディレクトリ構造が原因で失敗しました";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="ご利用規約に違反するため、ファイルは削除されました";
+"transfer.error.termsOfServiceViolation"="ご利用規約違反です";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL検証に失敗しました";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2237,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自動";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="セルラーネットワークを介してより小さいサイズの画像を送信したり、Wi-Fiを介して元のサイズの画像を送信します。";
+"Send smaller size images through cellular networks and original size images through wifi"="モバイルデータ通信時は最適化された画像を送信し、Wi-Fi時は元サイズの画像を送信します。";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="最適化";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="データ消費低減用に最適化された小さいサイズの画像を送信します";
+"Send smaller size images optimised for lower data consumption"="常に最適化された画像を送信してください。";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="元のサイズ、品質を上げた画像を送信します";
+"Send original size, increased quality images"="常に元のサイズの画像を送信してください。";
 /* Setting title for Doc scan view */
 "Save Settings"="設定を保存";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2447,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="1か月より古いメッセージを自動的に削除します。";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="%1より古いメッセージを自動的に削除します";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="%@より古いメッセージを自動的に削除します";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="この会話で共有されているすべてのメッセージとファイルを削除します。このアクションは元に戻せません。";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2465,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]さんがメッセージのクリアを無効にしました。[/B]";
 /*  */
-"hour"="時間";
-/*  */
-"hours"="時間";
-/*  */
 "day"="日";
-/*  */
-"1 day"="1日";
-/*  */
-"week"="週";
-/*  */
-"weeks"="月";
-/*  */
-"1 week"="1週";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1週";
-/*  */
-"month"="月";
-/*  */
-"1 month"="1か月";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1か月";
-/*  */
-"1 year"="1年";
-/*  */
-"year"="年";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="あなたのファイルを検索";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2996,3 +2984,5 @@
 "meetings.displayInMainView.title"="メインビューで表示";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="ストレージ容量が超過しました";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title"="次";

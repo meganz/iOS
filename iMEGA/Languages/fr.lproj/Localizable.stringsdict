@@ -2,20 +2,164 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>placeholder_string</key>
+    <key>chat.manageHistory.clearing.custom.option.hour</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@years@</string>
-      <key>years</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d an</string>
+        <string>heure</string>
         <key>other</key>
-        <string>%u ans</string>
+        <string>heures</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.day</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>jour</string>
+        <key>other</key>
+        <string>jours</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.week</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>semaine</string>
+        <key>other</key>
+        <string>semaines</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>mois</string>
+        <key>other</key>
+        <string>mois</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@year@</string>
+      <key>year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>an</string>
+        <key>other</key>
+        <string>ans</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 heure</string>
+        <key>other</key>
+        <string>%d heures</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.day</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 jour</string>
+        <key>other</key>
+        <string>%d jours</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.week</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 semaine</string>
+        <key>other</key>
+        <string>%d semaines</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 mois</string>
+        <key>other</key>
+        <string>%d mois</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@year@</string>
+      <key>year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 an</string>
+        <key>other</key>
+        <string>%d ans</string>
       </dict>
     </dict>
   </dict>

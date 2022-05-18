@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="这可能是由于以下原因：";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="该文件因违反我们的服务条款而被删除";
+"fileLinkUnavailableText2"="该文件因违反我们的服务条款而被移除";
 /*  */
 "fileLinkUnavailableText3"="链接无效 - 您尝试访问的链接不存在";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="这可能是由于以下原因：";
 /*  */
-"folderLinkUnavailableText2"="该文件夹链接因违反我们的服务条款而被删除。";
+"folderLinkUnavailableText2"="该文件夹链接因违反我们的服务条款而被移除。";
 /*  */
 "folderLinkUnavailableText3"="链接无效 - 您尝试访问的链接不存在";
 /*  */
@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="没有符合搜索的项目";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="空的垃圾桶";
+"cloudDriveEmptyState_titleRubbishBin"="回收站为空";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="无离线文件";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -421,9 +421,9 @@
 /* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="移除链接";
 /* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="链接已删除";
+"linkRemoved"="链接已移除";
 /* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="链接已删除";
+"linksRemoved"="链接已移除";
 /* Title show when a file is being downloaded */
 "downloading"="正在下载";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -477,23 +477,23 @@
 /* Title for the action that allows you to replace a file. */
 "replace"="替换";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="移至垃圾桶";
+"moveToTheRubbishBin"="移至回收站";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="已移动1个文件到垃圾桶";
+"fileMovedToRubbishBinMessage"="1个文件已移至回收站";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="已移动%d个文件到垃圾桶";
+"filesMovedToRubbishBinMessage"="%d个文件已移至回收站";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="已移动1个文件夹到垃圾桶";
+"folderMovedToRubbishBinMessage"="1个文件夹已移至回收站";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="已移动%d个文件夹到垃圾桶";
+"foldersMovedToRubbishBinMessage"="%d个文件夹已移至回收站";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="已移动1个文件与1个文件夹到垃圾桶";
+"fileFolderMovedToRubbishBinMessage"="1个文件和1个文件夹已移至回收站";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="已移动1个文件和%d个文件夹到垃圾桶";
+"fileFoldersMovedToRubbishBinMessage"="1个文件和%d个文件夹已移至回收站";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="已移动%d个文件和1个文件夹到垃圾桶";
+"filesFolderMovedToRubbishBinMessage"="%d个文件和1个文件夹已移至回收站";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="已移动[A]个文件和[B]个文件夹到垃圾桶";
+"filesFoldersMovedToRubbishBinMessage"="[A]个文件和[B]个文件夹已移至回收站";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="权限错误";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -524,6 +524,12 @@
 "cameraUploadsPendingFile"="正在上传中，1个文件待处理";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="正在上传中，%lu个文件待处理";
+/* Timeline title within CU tab */
+"cameraUploads.timeline.title"="时间线";
+/* Albums title within CU tab */
+"cameraUploads.albums.title"="相册";
+/* Favourites album title */
+"cameraUploads.albums.favourites.title"="收藏";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="由于无Wi-Fi连接，上传已暂停，1个文件待处理";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -581,11 +587,11 @@
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="移除共享";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="您确定要移除这个共享吗？（已与1 个联系人共享）";
+"removeOneShareOneContactMessage"="您确定要移除这个共享吗？（已与1位联系人共享）";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="您确定要移除这个共享吗？（已与%d个联系人共享）";
+"removeOneShareMultipleContactsMessage"="您确定要移除这个共享吗？（已与%d位联系人共享）";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="您确定要移除这些共享吗？（已与%d个联系人共享）";
+"removeMultipleSharesMultipleContactsMessage"="您确定要移除这些共享吗？（已与%d位联系人共享）";
 /* Message shown when a share have been removed */
 "shareRemoved"="共享已移除";
 /* Message shown when some shares have been removed */
@@ -607,11 +613,11 @@
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="用户已被邀请，对方接受邀请后将会出现在您的联系人列表中。";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="删除联系人";
+"removeUserTitle"="移除联系人";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="您确定要从联系人列表中删除%d个联系人吗？";
+"removeMultipleUsersMessage"="您确定要从联系人列表中移除%d位联系人吗？";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
-"removedContact"="联系人%@已被删除";
+"removedContact"="联系人%@已被移除";
 /* Label shown when a contact request is pending */
 "pending"="待处理";
 /* Button title of the action that allows to leave a shared folder */
@@ -652,16 +658,22 @@
 "settingsTitle"="设置";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相机上传";
-/* Title of Photo Years tab */
-"cameraUploads.years.title"="年";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA对您的照片的访问受限，无法备份您的所有照片。点击以更改权限。";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */
 "photo.empty.title"="无照片";
+/* Title of Photo's Years tab */
+"media.photoLibrary.category.years.title"="年";
+/* Title of Photo's Months tab */
+"media.photoLibrary.category.months.title"="月";
+/* Title of Photo's Days tab */
+"media.photoLibrary.category.days.title"="日";
+/* Title of Photo's All date tab */
+"media.photoLibrary.category.all.title"="全部";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="垃圾桶";
+"rubbishBinLabel"="回收站";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="高级";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -789,9 +801,9 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="在MEGA上";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="清空垃圾桶";
+"emptyRubbishBin"="清空回收站";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="垃圾桶中的所有项目都将被删除";
+"emptyRubbishBinAlertTitle"="回收站中的所有项目都将被删除";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -807,7 +819,7 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="如果您无法访问您的邮箱，请联系support@mega.nz。";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="删除链接已过期。";
+"cancellationLinkHasExpired"="取消链接已过期。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="这是删除帐户的最后一步。您将永久丢失存储在云盘中的所有数据。请在下方输入您的密码。";
 /* During account cancellation (deletion) */
@@ -815,41 +827,41 @@
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="关闭帐户";
 /* Title for the action that allows to remove a file or folder */
-"remove"="删除";
+"remove"="移除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="确认删除";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="1个文件将被永久删除。您想继续吗？（您无法撤消此操作。）";
+"removeFileToRubbishBinMessage"="1个文件将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="%d 个文件将被永久删除。您要继续吗？ （该操作无法撤销。）";
+"removeFilesToRubbishBinMessage"="%d个文件将被永久移除。您要继续吗？ （该操作无法撤销。）";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="1个文件夹将被永久删除。您想继续吗？（您无法撤消此操作。）";
+"removeFolderToRubbishBinMessage"="1个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="%d个文件夹将被永久删除。您想继续吗？（您无法撤消此操作。）";
+"removeFoldersToRubbishBinMessage"="%d个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="1个文件和1个文件夹将被永久删除。您想继续吗？（您无法撤消此操作。）";
+"removeFileFolderToRubbishBinMessage"="1个文件和1个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="1个文件和%d个文件夹将被永久删除。您想继续吗？（您无法撤消此操作。）";
+"removeFileFoldersToRubbishBinMessage"="1个文件和%d个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="%d个文件和1个文件夹将被永久删除。您想继续吗？（您无法撤消此操作。）";
+"removeFilesFolderToRubbishBinMessage"="%d个文件和1个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="[A]个文件和[B]个文件夹将被永久删除。您想继续吗？（您无法撤消此操作。）";
+"removeFilesFoldersToRubbishBinMessage"="[A]个文件和[B]个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="已从MEGA删除1个文件";
+"fileRemovedToRubbishBinMessage"="已从MEGA移除1个文件";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="已从MEGA删除%d个文件";
+"filesRemovedToRubbishBinMessage"="已从MEGA移除%d个文件";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="已从MEGA删除1个文件夹";
+"folderRemovedToRubbishBinMessage"="已从MEGA移除1个文件夹";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="已从MEGA删除%d个文件夹";
+"foldersRemovedToRubbishBinMessage"="已从MEGA移除%d个文件夹";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="已从MEGA删除1个文件和1个文件夹";
+"fileFolderRemovedToRubbishBinMessage"="已从MEGA移除1个文件和1个文件夹";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="已从MEGA删除1个文件和%d个文件夹";
+"fileFoldersRemovedToRubbishBinMessage"="已从MEGA移除1个文件和%d个文件夹";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="已从MEGA删除%d个文件和1个文件夹";
+"filesFolderRemovedToRubbishBinMessage"="已从MEGA移除%d个文件和1个文件夹";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="已从MEGA删除[A]个文件和[B]个文件夹";
+"filesFoldersRemovedToRubbishBinMessage"="已从MEGA移除[A]个文件和[B]个文件夹";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="新密码";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1036,8 +1048,8 @@
 "Add Your Phone Number"="添加您的手机号";
 /* Choose Your Country title */
 "Choose Your Country"="选择您的国家";
-/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
-"months"="个月";
+/* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
+"months"="月";
 /*  */
 "days"="天";
 /* Title of the button which logs out from your account. */
@@ -1045,7 +1057,7 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="删除照片";
+"Remove Photo"="移除照片";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
 "Change Photo"="更改照片";
 /* Button that allows the user the add a photo, e.g avatar photo */
@@ -1069,7 +1081,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@到期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
-"Renews on"="续订日期为";
+"Renews on"="续订日期";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="传入的共享";
 /* Button title which triggers the action to upgrade your MEGA account level */
@@ -1183,7 +1195,7 @@
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="邀请";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="已删除此消息";
+"thisMessageHasBeenDeleted"="此消息已被删除";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="我";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
@@ -1299,7 +1311,7 @@
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="普通成员";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="删除参与者";
+"removeParticipant"="移除参与者";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="正在聊天与";
 /* Explanation when loading voice message error */
@@ -1345,7 +1357,7 @@
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="您将永久禁用扩展网址预览。您可以在设置中重新启用它。您想继续吗？";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
-"removePreview"="删除预览";
+"removePreview"="移除预览";
 /*  */
 "warning"="注意";
 /* Title shown when you almost had used your available transfer quota. */
@@ -1371,7 +1383,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s已经是您的联系人。";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="发送联系人：%s";
+"sentContact"="已发送联系人：%s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="已发送%s位联系人。";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1449,7 +1461,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="传输失败，递归目录结构错误。";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="该文件因违反我们的服务条款而被删除";
+"transfer.error.termsOfServiceViolation"="已违反服务条款";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL验证失败";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1539,7 +1551,7 @@
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="您想要删除这个版本吗？";
 /* Message to notify user the file version will be permanently removed */
-"permanentlyRemoved"="它将被永久删除";
+"permanentlyRemoved"="它将被永久移除";
 /*  */
 "delete"="删除";
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
@@ -1583,7 +1595,7 @@
 /* state previous to import a file */
 "loading"="加载中";
 /*  */
-"next"="下一步";
+"next"="接下来";
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
@@ -1749,7 +1761,7 @@
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="为整个帐户启用或禁用文件历史版本。\n禁用文件历史版本功能不会阻止您的联系人在共享文件夹中创建新版本。";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="当文件历史版本被禁用时，一旦文件更新，当前版本将被新版本替换（并且您对文件的更改将不再被记录）。您确定要禁用文件历史版本吗？";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="当文件版本管理被禁用时，一旦文件更新，当前版本将被新版本替换（并且您对文件的更改将不再被记录）。您确定要禁用文件版本管理吗？";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="文件历史版本";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -1763,17 +1775,17 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="您将删除所有文件的历史版本。由您的联系人共享给您的任何文件版本都需要由他们自行删除。\n \n请注意，当前文件不会被删除。";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="垃圾桶定时清理";
+"Rubbish-Bin Cleaning Scheduler:"="回收站定时清理";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
-"Remove files older than"="删除垃圾桶中的文件，时间超过";
+"Remove files older than"="移除回收站中的文件，时间超过";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="若需延长保留期限，请[S]升级到Pro会员帐户[/S]";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾桶可执行自动清理。最短期限为7天，最长期限为30天。";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="回收站会自动为您清除。最短期限为7天，最长期限为30天。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾桶可执行自动清理。最短期限为7天。";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="回收站可自动为您清除。最短期限为7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="若要禁用垃圾桶定时清理或者设置延长保留期限，您需要订阅Pro会员方案。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="要禁用回收站定时清理或设置更长的保留期限，您需要订阅Pro会员方案。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="是否要关闭所有其他会话？这将使您退出除当前会话之外的所有其他进行中的会话。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1825,7 +1837,7 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@已创建了一个聊天链接";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@删除了聊天链接";
+"%@ removed a public link for the chat."="%@移除了聊天链接";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@已加入群聊。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1855,13 +1867,13 @@
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="侵权移除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
-"Takedown reinstated"="侵权移除已恢复";
+"Takedown reinstated"="移除已恢复";
 /* Label shown inside an unseen notification */
 "New"="新消息";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="向您发送了联系人请求";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
-"Cancelled their contact request"="已取消联系人请求";
+"Cancelled their contact request"="已取消其联系人请求";
 /* A reminder notification to remind the user to respond to the contact request. */
 "Reminder: You have a contact request"="提醒：您有一个联系人请求";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
@@ -1885,7 +1897,7 @@
 /* notification text */
 "A user has left the shared folder {0}"="一位用户已离开共享文件夹{0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
-"Access to folders was removed."="删除了对文件夹的访问权限。";
+"Access to folders was removed."="移除了对文件夹的访问权限。";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added 1 file"="已添加1个文件";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1903,13 +1915,13 @@
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="已添加[A]个文件和[B]个文件夹";
 /* Notification when on client side when owner of a shared folder removes folder/file from it. */
-"Removed item from shared folder"="已删除共享项目";
+"Removed item from shared folder"="已从共享文件夹中移除了项目";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
-"Removed [X] items from a share"="已删除[X]个共享项目";
+"Removed [X] items from a share"="已从共享中移除[X]个项目";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
-"Your payment for the %1 plan was received."="您的%1付款已经收到。";
+"Your payment for the %1 plan was received."="您的%1方案付款已收到。";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="您的%1付款失败。";
+"Your payment for the %1 plan was unsuccessful."="您的%1方案付款失败。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="您的Pro会员方案将于明天到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -1959,7 +1971,7 @@
 /* Plural of participant. 2 participants */
 "%d participants"="%d个参与者";
 /* Singular of participant. 1 participant */
-"%d participant"="%d个参与者";
+"%d participant"="%d位参与者";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 滑动以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2081,7 +2093,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="传输";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="您无法删除联系人%1$s，因为他们是您企业帐户的用户。";
+"You cannot remove %1$s as a contact because they are part of your Business account."="您无法移除联系人%1$s，因为他们是您企业帐户的用户。";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="密码请求";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2093,7 +2105,7 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="争议移除";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
-"User management is only available from a desktop web browser."="用户管理仅可通过桌面网页浏览器使用。";
+"User management is only available from a desktop web browser."="用户管理仅可通过桌面版网页浏览器使用。";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="您最近一次付款有问题。请使用桌面网页浏览器访问MEGA获取更多信息。";
 /* A dialog title shown to users when their business account is expired. */
@@ -2151,7 +2163,7 @@
 /* Contact details screen: Edit the alias(nickname) for a user */
 "Edit Nickname"="编辑昵称";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="删除昵称";
+"Remove Nickname"="移除昵称";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="别名或昵称";
 /* Business expired account Overdue payment page header. */
@@ -2237,13 +2249,13 @@
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自动";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="使用蜂窝网络时发送较小尺寸图片，使用Wi-Fi时发送原始图片";
+"Send smaller size images through cellular networks and original size images through wifi"="使用移动数据时发送优化的图像，而使用Wi-Fi时发送原始大小的图像。";
 /* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="已优化";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="发送较小尺寸的图片，优化以降低数据消耗";
+"Send smaller size images optimised for lower data consumption"="始终发送优化的图像。";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="发送原始尺寸，提高图像质量";
+"Send original size, increased quality images"="始终发送原始大小的图像。";
 /* Setting title for Doc scan view */
 "Save Settings"="保存设置";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2335,15 +2347,15 @@
 /* Title for action to modify the registered phone number. */
 "Modify Phone Number"="修改手机号码";
 /* Title for action to remove the registered phone number. */
-"Remove Phone Number"="解除绑定手机号码";
+"Remove Phone Number"="移除手机号码";
 /* Message for action to remove the registered phone number. */
-"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="这将从您的帐户中删除您当前所关联的手机号。如需再次添加手机号，则需要进行验证。";
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="这将从您的帐户中移除您所关联的手机号码。如需再次添加手机号码，则需要进行验证。";
 /* Message for action to modify the registered phone number. */
-"This operation will remove your current phone number and start the process of associating a new phone number with your account."="此操作将解除与您当前手机号的绑定状态，并将您的新手机号与您的帐户关联。";
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="此操作将移除您当前的手机号码并将您的新手机号码与您的帐户关联。";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="您的手机号已成功解除绑定。";
+"Your phone number has been removed successfully."="您的手机号码已成功移除。";
 /* A message shown to users when phone number removal fails. */
-"Failed to remove your phone number, please try again later."="手机号解除绑定失败，请稍后再试。";
+"Failed to remove your phone number, please try again later."="无法移除您的手机号码，请稍后再试。";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="放弃修改";
 /* Title of the Proxy section under Settings */
@@ -2447,7 +2459,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="自动删除超过一个月的聊天记录。";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"Automatically delete messages older than %1"="自动删除超过%1的聊天记录";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="自动删除超过%@的消息";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="删除此对话中的所有消息和文件。此操作无法撤回。";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2465,31 +2477,7 @@
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]已禁用消息清除。[/B]";
 /*  */
-"hour"="小时";
-/*  */
-"hours"="小时";
-/*  */
 "day"="日";
-/*  */
-"1 day"="1天";
-/*  */
-"week"="周";
-/*  */
-"weeks"="周";
-/*  */
-"1 week"="1周";
-/* The number of weeks e.g. 2 weeks, 5 weeks etc. */
-"%1 weeks"="%1周";
-/*  */
-"month"="月";
-/*  */
-"1 month"="一个月";
-/* The number of months e.g. 2 months, 5 months etc. */
-"%1 months"="%1个月";
-/*  */
-"1 year"="一年";
-/*  */
-"year"="年";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="搜索您的文件";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2499,7 +2487,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="正在播放";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您确定要将相机上传文件夹移动至垃圾桶吗？如果是，系统将为您自动生成一个新的相机上传文件夹。";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您确定要将相机上传文件夹移至回收站吗？如果是，系统将为您自动生成一个新的相机上传文件夹。";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="上传文件";
 /* Text title for shortcuts, ie in the widget */
@@ -2509,7 +2497,7 @@
 /* Title for document explorer view */
 "Documents"="文档";
 /* Title for audio explorer view */
-"Audio"="音乐";
+"Audio"="音频";
 /* Title for video explorer view */
 "Videos"="视频";
 /* Photo Explorer Screen: No documents in the account */
@@ -2649,9 +2637,9 @@
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="移动此文件夹将更改备份位置。出于安全考虑，备份将被停止。您确定要继续吗？使用MEGA桌面应用程序可重新开启备份。";
 /* Delete the default backup folder warning title. %@ is a folder */
-"dialog.delete.backup.folder.warning.title"="移动“%@”至垃圾桶";
+"dialog.delete.backup.folder.warning.title"="将“%@”移至回收站";
 /* Delete the default backup folder warning message */
-"dialog.delete.root.backup.folder.warning.message"="备份文件夹将会被删除。此操作将删除您设置的所有备份。您确定要继续吗？";
+"dialog.delete.root.backup.folder.warning.message"="备份文件夹将会被删除。此操作将移除您设置的所有备份。您确定要继续吗？";
 /* Delete the default backup folder warning message */
 "dialog.delete.backup.folder.warning.message"="您确定要删除备份文件夹并停用已设置的备份吗？";
 /* Add new items to a backup folder warning title. %@ is a folder */
@@ -2667,7 +2655,7 @@
 /* Add items to a backup folder placeholder for a textfield */
 "dialog.disable.backup.placeholder"="停用备份";
 /* Delete a backup folder action title */
-"dialog.delete.backup.action.title"="移至垃圾桶";
+"dialog.delete.backup.action.title"="移至回收站";
 /* Add items to a backup folder action title */
 "dialog.add.items.backup.action.title"="添加";
 /* Backup action confirmation error message */
@@ -2995,4 +2983,6 @@
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="在主视图中显示";
 /* Label indicating storage over quota */
-"transfer.storage.quotaExceeded"="超出存储空间上限";
+"transfer.storage.quotaExceeded"="已超出存储空间上限";
+/* Title of section Next on Audio Playlist */
+"media.audio.playlist.section.next.title"="接下来";

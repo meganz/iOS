@@ -2,24 +2,204 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>placeholder_string</key>
+    <key>chat.manageHistory.clearing.custom.option.hour</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@years@</string>
-      <key>years</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d год</string>
+        <string>час</string>
         <key>few</key>
-        <string>%u года</string>
+        <string>часа</string>
         <key>many</key>
-        <string>%u лет</string>
+        <string>часов</string>
         <key>other</key>
-        <string>%u года</string>
+        <string>часа</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.day</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>день</string>
+        <key>few</key>
+        <string>дня</string>
+        <key>many</key>
+        <string>дней</string>
+        <key>other</key>
+        <string>дня</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.week</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>неделя</string>
+        <key>few</key>
+        <string>недели</string>
+        <key>many</key>
+        <string>недель</string>
+        <key>other</key>
+        <string>недели</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>месяц</string>
+        <key>few</key>
+        <string>месяца</string>
+        <key>many</key>
+        <string>месяцев</string>
+        <key>other</key>
+        <string>месяца</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@year@</string>
+      <key>year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>год</string>
+        <key>few</key>
+        <string>года</string>
+        <key>many</key>
+        <string>лет</string>
+        <key>other</key>
+        <string>года</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 час</string>
+        <key>few</key>
+        <string>%d часа</string>
+        <key>many</key>
+        <string>%d часов</string>
+        <key>other</key>
+        <string>%d часа</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.day</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 день</string>
+        <key>few</key>
+        <string>%d дня</string>
+        <key>many</key>
+        <string>%d дней</string>
+        <key>other</key>
+        <string>%d дня</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.week</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 неделя</string>
+        <key>few</key>
+        <string>%d недели</string>
+        <key>many</key>
+        <string>%d недель</string>
+        <key>other</key>
+        <string>%d недели</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 месяц</string>
+        <key>few</key>
+        <string>%d месяца</string>
+        <key>many</key>
+        <string>%d месяцев</string>
+        <key>other</key>
+        <string>%d месяца</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@year@</string>
+      <key>year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 год</string>
+        <key>few</key>
+        <string>%d года</string>
+        <key>many</key>
+        <string>%d лет</string>
+        <key>other</key>
+        <string>%d года</string>
       </dict>
     </dict>
   </dict>
