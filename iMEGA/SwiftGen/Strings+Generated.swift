@@ -3774,6 +3774,32 @@ public enum Strings {
           public static let endAndJoin = Strings.tr("Localizable", "meetings.new.anotherAlreadyExistsError.endAndJoin")
         }
       }
+      public enum Notification {
+        /// %@ and %@ others joined
+        public static func moreThanTwoUsersJoined(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersJoined", String(describing: p1), String(describing: p2))
+        }
+        /// %@ and %@ others left
+        public static func moreThanTwoUsersLeft(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersLeft", String(describing: p1), String(describing: p2))
+        }
+        /// %@ joined
+        public static func singleUserJoined(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.singleUserJoined", String(describing: p1))
+        }
+        /// %@ left
+        public static func singleUserLeft(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.singleUserLeft", String(describing: p1))
+        }
+        /// %@ and %@ joined
+        public static func twoUsersJoined(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.twoUsersJoined", String(describing: p1), String(describing: p2))
+        }
+        /// %@ and %@ left
+        public static func twoUsersLeft(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.twoUsersLeft", String(describing: p1), String(describing: p2))
+        }
+      }
       public enum Notifications {
         /// You are the new call moderator
         public static let moderatorPrivilege = Strings.tr("Localizable", "meetings.notifications.moderatorPrivilege")

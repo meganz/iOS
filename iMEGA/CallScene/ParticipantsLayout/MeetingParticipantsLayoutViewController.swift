@@ -162,14 +162,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             updateSpeaker(participant)
         case .localVideoFrame(let width, let height, let buffer):
             localUserView.frameData(width: width, height: height, buffer: buffer)
-        case .participantAdded(let name):
-            showNotification(message: Strings.Localizable.Meetings.Message.joinedCall(name),
-                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
-                             textColor: Constants.notificatitionMessageBlackTextColor)
-        case .participantRemoved(let name):
-            showNotification(message: Strings.Localizable.Meetings.Message.leftCall(name),
-                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
-                             textColor: Constants.notificatitionMessageBlackTextColor)
+        case .participantsAdded(let names):
+            participantsStatusChanged(addedParticipantsNames: names, removedParticipantsNames: nil)
+        case .participantsRemoved(let names):
+            participantsStatusChanged(addedParticipantsNames: nil, removedParticipantsNames: names)
+        case .participantsStatusChanged(let addedParticipantNames, let removedParticipantNames):
+            participantsStatusChanged(addedParticipantsNames: addedParticipantNames, removedParticipantsNames: removedParticipantNames)
         case .reconnecting:
             showReconnectingNotification()
         case .reconnected:
@@ -352,6 +350,64 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func removeEmptyRoomMessageView() {
         emptyMeetingMessageView?.removeFromSuperview()
         emptyMeetingMessageView = nil
+    }
+    
+    private func participantsStatusChanged(addedParticipantsNames: [String]?, removedParticipantsNames: [String]?) {
+        let addedMessage = notificationMessage(forParticipantNames: addedParticipantsNames,
+                                              oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserJoined,
+                                              twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersJoined,
+                                              moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersJoined)
+        
+        let removedMessage = notificationMessage(forParticipantNames: removedParticipantsNames,
+                                              oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserLeft,
+                                              twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersLeft,
+                                              moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersLeft)
+        
+        var message: String?
+        if let addedMessage = addedMessage, let removedMessage = removedMessage {
+            message = addedMessage + " " + removedMessage
+        } else if let addedMessage = addedMessage {
+            message = addedMessage
+        } else if let removedMessage = removedMessage {
+            message = removedMessage
+        }
+        
+        if let message = message {
+            showNotification(message: message,
+                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
+                             textColor: Constants.notificatitionMessageBlackTextColor)
+        }
+    }
+    
+    private func notificationMessage(forParticipantNames participantNames: [String]?,
+                                     oneParticipantMessageClosure: (String) -> String,
+                                     twoParticpantsMessageClousre: (String, String) -> String,
+                                     moreThanTwoParticipantsMessageClousre: (String, String) -> String) -> String? {
+        var message: String?
+        
+        if let participantNames = participantNames {
+            let count = participantNames.count
+            switch count {
+            case 1:
+                message = oneParticipantMessageClosure(participantNames[0])
+            case 2:
+                message = twoParticpantsMessageClousre(participantNames[0], participantNames[1])
+            default:
+                if count > 2, let spelledOutNumber = spellOut(number: count-1)  {
+                    message = moreThanTwoParticipantsMessageClousre(participantNames[0], spelledOutNumber)
+                }
+            }
+        }
+        
+        return message
+    }
+    
+    private func spellOut(number: Int) -> String? {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .spellOut
+        numberFormatter.locale = .current
+        let number = NSNumber(value: number)
+        return numberFormatter.string(from: number)
     }
 }
 

@@ -231,6 +231,215 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              expectedCommands: [.switchLayoutMode(layout: .grid, participantsCount: 0),
                                 .enableLayoutButton(false)])
     }
+    
+    func testAction_singleParticipantsAdded() async throws {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let addedParticipantsNamesArray = ["User1"]
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedParticipantsNamesArray))
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                                           containerViewModel: containerViewModel,
+                                                           callUseCase: callUseCase,
+                                                           captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                           localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                           remoteVideoUseCase: remoteVideoUseCase,
+                                                           chatRoomUseCase: chatRoomUseCase,
+                                                           userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                           userImageUseCase: MockUserImageUseCase(),
+                                                           chatRoom: chatRoom,
+                                                           call: call)
+        
+        viewModel.dispatch(.onViewLoaded)
+        
+        let addedParticipantsNames: [String] = try await TimeoutTask(duration: 10) {
+            await withCheckedContinuation { continuation in
+                viewModel.invokeCommand = { command in
+                    switch command {
+                    case .participantsAdded(let addedParticipantsNames):
+                        continuation.resume(returning: addedParticipantsNames)
+                    default:
+                        break
+                    }
+                }
+                
+                viewModel.dispatch(.addParticipant(withHandle: 101))
+            }
+        }.value
+        
+        XCTAssertEqual(addedParticipantsNames, addedParticipantsNamesArray, "Added participants list must match")
+    }
+    
+    func testAction_MultipleParticipantsAdded() async throws {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let addedParticipantsNamesArray = ["User1", "User2", "User3"]
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedParticipantsNamesArray))
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                                           containerViewModel: containerViewModel,
+                                                           callUseCase: callUseCase,
+                                                           captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                           localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                           remoteVideoUseCase: remoteVideoUseCase,
+                                                           chatRoomUseCase: chatRoomUseCase,
+                                                           userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                           userImageUseCase: MockUserImageUseCase(),
+                                                           chatRoom: chatRoom,
+                                                           call: call)
+        
+        viewModel.dispatch(.onViewLoaded)
+        let addedParticipantsNames: [String] = try await TimeoutTask(duration: 10) {
+            await withCheckedContinuation { continuation in
+                viewModel.invokeCommand = { command in
+                    switch command {
+                    case .participantsAdded(let addedParticipantsNames):
+                        continuation.resume(returning: addedParticipantsNames)
+                    default:
+                        break
+                    }
+                }
+                
+                viewModel.dispatch(.addParticipant(withHandle: 101))
+                viewModel.dispatch(.addParticipant(withHandle: 102))
+                viewModel.dispatch(.addParticipant(withHandle: 103))
+            }
+        }.value
+        
+        XCTAssertEqual(addedParticipantsNames, addedParticipantsNamesArray, "Added participants list must match")
+    }
+    
+    func testAction_singleParticipantsRemoved() async throws {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let removedParticipantsNamesArray = ["User1"]
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(removedParticipantsNamesArray))
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                                           containerViewModel: containerViewModel,
+                                                           callUseCase: callUseCase,
+                                                           captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                           localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                           remoteVideoUseCase: remoteVideoUseCase,
+                                                           chatRoomUseCase: chatRoomUseCase,
+                                                           userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                           userImageUseCase: MockUserImageUseCase(),
+                                                           chatRoom: chatRoom,
+                                                           call: call)
+        
+        viewModel.dispatch(.onViewLoaded)
+        let removedParticipantsNames: [String] = try await TimeoutTask(duration: 10) {
+            await withCheckedContinuation { continuation in
+                viewModel.invokeCommand = { command in
+                    switch command {
+                    case .participantsRemoved(let removedParticipantsNames):
+                        continuation.resume(returning: removedParticipantsNames)
+                    default:
+                        break
+                    }
+                }
+                
+                viewModel.dispatch(.removeParticipant(withHandle: 101))
+            }
+        }.value
+        
+        XCTAssertEqual(removedParticipantsNames, removedParticipantsNamesArray, "Removed participant list must match")
+    }
+    
+    func testAction_MultipleParticipantsRemoved() async throws {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let removedParticipantsNamesArray = ["User1", "User2", "User3"]
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(removedParticipantsNamesArray))
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                                           containerViewModel: containerViewModel,
+                                                           callUseCase: callUseCase,
+                                                           captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                           localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                           remoteVideoUseCase: remoteVideoUseCase,
+                                                           chatRoomUseCase: chatRoomUseCase,
+                                                           userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                           userImageUseCase: MockUserImageUseCase(),
+                                                           chatRoom: chatRoom,
+                                                           call: call)
+        
+        viewModel.dispatch(.onViewLoaded)
+        let removedParticipantsNames: [String] = try await TimeoutTask(duration: 10) {
+            await withCheckedContinuation { continuation in
+                viewModel.invokeCommand = { command in
+                    switch command {
+                    case .participantsRemoved(let removedParticipantsNames):
+                        continuation.resume(returning: removedParticipantsNames)
+                    default:
+                        break
+                    }
+                }
+                
+                viewModel.dispatch(.removeParticipant(withHandle: 101))
+                viewModel.dispatch(.removeParticipant(withHandle: 102))
+                viewModel.dispatch(.removeParticipant(withHandle: 103))
+            }
+        }.value
+        
+        XCTAssertEqual(removedParticipantsNames, removedParticipantsNamesArray, "Removed participant list must match")
+    }
+    
+    func testAction_oneParticipantsRemovedAndAddedAtTheSameTime() async throws {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let addedParticipantsArray = ["User1"]
+        let removedParticipantsArray = ["User2"]
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedParticipantsArray + removedParticipantsArray))
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, call: call, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                                           containerViewModel: containerViewModel,
+                                                           callUseCase: callUseCase,
+                                                           captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                           localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                           remoteVideoUseCase: remoteVideoUseCase,
+                                                           chatRoomUseCase: chatRoomUseCase,
+                                                           userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                           userImageUseCase: MockUserImageUseCase(),
+                                                           chatRoom: chatRoom,
+                                                           call: call)
+        
+        viewModel.dispatch(.onViewLoaded)
+        
+        let participantNames: ([String], [String]) = try await TimeoutTask(duration: 10) {
+            await withCheckedContinuation { continuation in
+                viewModel.invokeCommand = { command in
+                    switch command {
+                    case .participantsStatusChanged(let addedParticipantNames, let removedParticipantNames):
+                        continuation.resume(returning: (addedParticipantNames, removedParticipantNames))
+                    default:
+                        break
+                    }
+                }
+                
+                viewModel.dispatch(.addParticipant(withHandle: 101))
+                viewModel.dispatch(.removeParticipant(withHandle: 102))
+            }
+        }.value
+        
+        XCTAssertEqual(participantNames.0, addedParticipantsArray, "Added participant list must match")
+        XCTAssertEqual(participantNames.1, removedParticipantsArray, "Removed participant list must match")
+    }
 }
 
 final class MockCallViewRouter: MeetingParticipantsLayoutRouting {

@@ -1894,6 +1894,10 @@
 		BF49DEE72818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */; };
 		BF49DF352820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DF342820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift */; };
 		BF49DF57282333BA00DE3742 /* CameraUploadManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */; };
+		BF49DFA5282B230800DE3742 /* participantJoined.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF49DFA2282B230800DE3742 /* participantJoined.wav */; };
+		BF49DFA7282B231300DE3742 /* participantLeft.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF49DFA6282B231300DE3742 /* participantLeft.wav */; };
+		BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DFBA282B30C700DE3742 /* TonePlayer.swift */; };
+		BF49DFBF282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */; };
 		BF4AC32927CC499800366C25 /* AnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32827CC499800366C25 /* AnalyticsUseCase.swift */; };
 		BF4AC32B27CC4A1300366C25 /* GoogleAnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32A27CC4A1300366C25 /* GoogleAnalyticsRepository.swift */; };
 		BF4AC32D27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */; };
@@ -2152,6 +2156,7 @@
 		BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */; };
 		BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
+		BFD28426283213A3001AACC2 /* TimeoutTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD28425283213A3001AACC2 /* TimeoutTask.swift */; };
 		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
 		BFD6534B25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */; };
 		BFD6535525EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD6535425EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib */; };
@@ -4213,6 +4218,10 @@
 		BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+Additions.swift"; sourceTree = "<group>"; };
 		BF49DF342820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBGRefreshManager.swift; sourceTree = "<group>"; };
 		BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadManager+Additions.swift"; sourceTree = "<group>"; };
+		BF49DFA2282B230800DE3742 /* participantJoined.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = participantJoined.wav; sourceTree = "<group>"; };
+		BF49DFA6282B231300DE3742 /* participantLeft.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = participantLeft.wav; sourceTree = "<group>"; };
+		BF49DFBA282B30C700DE3742 /* TonePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonePlayer.swift; sourceTree = "<group>"; };
+		BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantStatusPipeline.swift; sourceTree = "<group>"; };
 		BF4AC32827CC499800366C25 /* AnalyticsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsUseCase.swift; sourceTree = "<group>"; };
 		BF4AC32A27CC4A1300366C25 /* GoogleAnalyticsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsRepository.swift; sourceTree = "<group>"; };
 		BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -4451,6 +4460,7 @@
 		BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerDetailTableCell.swift; sourceTree = "<group>"; };
 		BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerActionTableViewCell.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		BFD28425283213A3001AACC2 /* TimeoutTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTask.swift; sourceTree = "<group>"; };
 		BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContactInfoHeaderView.swift; sourceTree = "<group>"; };
 		BFD6535425EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingContactInfoHeaderView.xib; sourceTree = "<group>"; };
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
@@ -7902,6 +7912,7 @@
 		836651272649374B00BC02F0 /* ParticipantsLayout */ = {
 			isa = PBXGroup;
 			children = (
+				BF49DFC1282C6E0400DE3742 /* Utils */,
 				839999D7264AE4E800520F38 /* OptionsMenu */,
 				8366517C26497B3600BC02F0 /* Views */,
 				8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */,
@@ -8722,6 +8733,8 @@
 			isa = PBXGroup;
 			children = (
 				A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */,
+				BF49DFA2282B230800DE3742 /* participantJoined.wav */,
+				BF49DFA6282B231300DE3742 /* participantLeft.wav */,
 				A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */,
 				A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */,
 			);
@@ -8867,6 +8880,7 @@
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
 				B60F05E82514C022005133C2 /* XCTestCase+Addition.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
+				BFD28425283213A3001AACC2 /* TimeoutTask.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -9865,6 +9879,15 @@
 				BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */,
 			);
 			path = PSA;
+			sourceTree = "<group>";
+		};
+		BF49DFC1282C6E0400DE3742 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */,
+				BF49DFBA282B30C700DE3742 /* TonePlayer.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		BF5E34152559E39A0055395E /* ExplorerContainerState */ = {
@@ -11394,6 +11417,7 @@
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				5B3B0D1E2684B8F200479A68 /* altIconMinimal@2x~ipad.png in Resources */,
 				5B727395240D32F9005816AB /* altIconDay@2x.png in Resources */,
+				BF49DFA7282B231300DE3742 /* participantLeft.wav in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
 				C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */,
 				5B92CEE72423E9F100FE1BCC /* UpgradeAccount.storyboard in Resources */,
@@ -11407,6 +11431,7 @@
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
 				5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */,
+				BF49DFA5282B230800DE3742 /* participantJoined.wav in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
 				BF9457C724FE07A40048F82B /* PhotoExplorerCollectionCell.xib in Resources */,
@@ -11832,6 +11857,7 @@
 				BF66DF2C2612C4CF00066F35 /* ChatRoomUseCase.swift in Sources */,
 				5BB72924255C52C20040CC2C /* HistoryRetentionPickerViewModel.swift in Sources */,
 				5B5E591320EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m in Sources */,
+				BF49DFBF282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift in Sources */,
 				77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */,
 				A89CBD2B27F45B06006D0949 /* WarningViewModel.swift in Sources */,
 				0D213E7B263A60B700B43723 /* NodeActionRepositoryProtocol.swift in Sources */,
@@ -12757,6 +12783,7 @@
 				BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */,
 				B67507CB27685F0E0034F951 /* PhotoLibraryModeView.swift in Sources */,
 				BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */,
+				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */,
 				5D4D672824AABE050034A4CD /* UINavigationViewController+Additions.swift in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
@@ -13696,6 +13723,7 @@
 				5BBC13DE26CE62D10010115B /* FavouritesViewModelTests.swift in Sources */,
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
+				BFD28426283213A3001AACC2 /* TimeoutTask.swift in Sources */,
 				83847D9926B83CAF00A79F48 /* CallEntity+Additions.swift in Sources */,
 				B6AADEEC2518A377009A874C /* MockSMSRepository.swift in Sources */,
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
