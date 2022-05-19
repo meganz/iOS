@@ -2022,6 +2022,8 @@
 		BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */; };
 		BF8895E82631213C002A18CA /* MockCallManagerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895E72631213C002A18CA /* MockCallManagerUseCase.swift */; };
 		BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895F126312EA1002A18CA /* MockCallUseCase.swift */; };
+		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
+		BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */; };
 		BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */; };
 		BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */; };
 		BF90C795260406FC006061F8 /* UserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C794260406FC006061F8 /* UserImageUseCase.swift */; };
@@ -4337,6 +4339,8 @@
 		BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContainerViewModelTests.swift; sourceTree = "<group>"; };
 		BF8895E72631213C002A18CA /* MockCallManagerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallManagerUseCase.swift; sourceTree = "<group>"; };
 		BF8895F126312EA1002A18CA /* MockCallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallUseCase.swift; sourceTree = "<group>"; };
+		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
+		BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MEGAProviderDelegate.swift; path = Chat/MEGAProviderDelegate.swift; sourceTree = "<group>"; };
 		BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageRepository.swift; sourceTree = "<group>"; };
 		BF90C794260406FC006061F8 /* UserImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageUseCase.swift; sourceTree = "<group>"; };
@@ -6147,6 +6151,7 @@
 				A89629741FACE78B00F02F7A /* MEGACallManager.m */,
 				A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */,
 				A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */,
+				BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */,
 				A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */,
 				A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */,
 				A8F1381A21D3ABF2003C7364 /* LocationSearchTableViewController.h */,
@@ -8733,6 +8738,7 @@
 			isa = PBXGroup;
 			children = (
 				A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */,
+				BF8B02EB28359EDD009AC794 /* callEnded.wav */,
 				BF49DFA2282B230800DE3742 /* participantJoined.wav */,
 				BF49DFA6282B231300DE3742 /* participantLeft.wav */,
 				A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */,
@@ -11429,6 +11435,7 @@
 				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
+				BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */,
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
 				5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */,
 				BF49DFA5282B230800DE3742 /* participantJoined.wav in Resources */,
@@ -12850,6 +12857,7 @@
 				8333E51F24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift in Sources */,
 				B662B87F24F7D05B0089376A /* CredentialRepository.swift in Sources */,
 				B662B85424EC982D0089376A /* AuthUseCase.swift in Sources */,
+				BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */,
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,

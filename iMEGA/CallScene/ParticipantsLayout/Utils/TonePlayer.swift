@@ -3,6 +3,7 @@ import Foundation
 
 final class TonePlayer: NSObject {
     enum ToneType: String {
+        case callEnded
         case participantJoined
         case participantLeft
         
