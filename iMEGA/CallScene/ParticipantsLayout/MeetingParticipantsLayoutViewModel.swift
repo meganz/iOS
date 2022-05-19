@@ -1,3 +1,4 @@
+import Combine
 
 protocol MeetingParticipantsLayoutRouting: Routing {
     func showRenameChatAlert()
@@ -21,6 +22,8 @@ enum CallViewAction: ActionType {
     case particpantIsVisible(_ participant: CallParticipantEntity, index: Int)
     case indexVisibleParticipants([Int])
     case pinParticipantAsSpeaker(CallParticipantEntity)
+    case addParticipant(withHandle: MEGAHandle)
+    case removeParticipant(withHandle: MEGAHandle)
 }
 
 enum ParticipantsLayoutMode {
@@ -53,8 +56,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case reloadParticipantAt(Int, [CallParticipantEntity])
         case updateSpeakerViewFor(CallParticipantEntity)
         case localVideoFrame(Int, Int, Data)
-        case participantAdded(String)
-        case participantRemoved(String)
+        case participantsAdded([String])
+        case participantsRemoved([String])
+        case participantsStatusChanged(addedParticipantNames: [String], removedParticipantNames: [String])
         case reconnecting
         case reconnected
         case updateCameraPositionTo(position: CameraPositionEntity)
@@ -117,6 +121,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
+    
+    private var meetingParticipantStatusPipelineSubscription: AnyCancellable?
+    private let meetingParticipantStatusPipeline = MeetingParticipantStatusPipeline(
+        collectionDuration: 1.0,
+        resetCollectionDurationUptoCount: 2
+    )
+    
+    private let tonePlayer = TonePlayer()
+    private var namesFetchingTask: Task<Void, Never>?
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -273,6 +286,35 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callParticipants.isEmpty && !call.clientSessions.isEmpty
     }
     
+    private func addMeetingParticipantStatusPipelineSubscription() {
+        meetingParticipantStatusPipelineSubscription?.cancel()
+        meetingParticipantStatusPipelineSubscription = meetingParticipantStatusPipeline
+            .statusPublisher
+            .sink { [weak self] handlerCollectionType in
+                guard let self = self else { return }
+                
+                if handlerCollectionType.removedHandlers.isEmpty == false {
+                    self.tonePlayer.play(tone: .participantLeft)
+                } else if handlerCollectionType.addedHandlers.isEmpty == false {
+                    self.tonePlayer.play(tone: .participantJoined)
+                }
+                
+                self.namesFetchingTask?.cancel()
+                self.namesFetchingTask = Task { [weak self] in
+                    guard let self = self else { return }
+
+                    let allHandlers = handlerCollectionType.addedHandlers + handlerCollectionType.removedHandlers
+
+                    do {
+                        let participantNames = try await self.chatRoomUseCase.userDisplayNames(forPeerIds: allHandlers, chatId: self.chatRoom.chatId)
+                        await self.handle(participantNames: participantNames, handlerCollectionType: handlerCollectionType)
+                    } catch {
+                        MEGALogDebug("Failed to load participants name \(error)")
+                    }
+                }
+            }
+    }
+    
     // MARK: - Dispatch action
     func dispatch(_ action: CallViewAction) {
         switch action {
@@ -306,6 +348,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
+            addMeetingParticipantStatusPipelineSubscription()
         case .onViewReady:
             if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
                 fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
@@ -380,6 +423,27 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             updateVisibeParticipants(for: visibleIndex)
         case .pinParticipantAsSpeaker(let participant):
             pinParticipantAsSpeaker(participant)
+        case .addParticipant(let handle):
+            meetingParticipantStatusPipeline.addParticipant(withHandle: handle)
+        case .removeParticipant(let handle):
+            meetingParticipantStatusPipeline.removeParticipant(withHandle: handle)
+        }
+    }
+    
+    @MainActor
+    private func handle(participantNames: [String], handlerCollectionType: MeetingParticipantStatusPipeline.HandlerCollectionType) {
+        if handlerCollectionType.addedHandlers.isEmpty == false && handlerCollectionType.removedHandlers.isEmpty == false {
+            let participantAddedCount = handlerCollectionType.addedHandlers.count
+            self.invokeCommand?(
+                .participantsStatusChanged(
+                    addedParticipantNames: Array(participantNames[...(participantAddedCount - 1)]),
+                    removedParticipantNames: Array(participantNames[participantAddedCount...])
+                )
+            )
+        } else if handlerCollectionType.addedHandlers.isEmpty == false {
+            self.invokeCommand?(.participantsAdded(participantNames))
+        } else {
+            self.invokeCommand?(.participantsRemoved(participantNames))
         }
     }
     
@@ -597,17 +661,11 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func participantAdded(with handle: MEGAHandle) {
-        participantName(for: handle) { [weak self] displayName in
-            guard let displayName = displayName else { return }
-            self?.invokeCommand?(.participantAdded(displayName))
-        }
+        dispatch(.addParticipant(withHandle: handle))
     }
     
     func participantRemoved(with handle: MEGAHandle) {
-        participantName(for: handle) { [weak self] displayName in
-            guard let displayName = displayName else { return }
-            self?.invokeCommand?(.participantRemoved(displayName))
-        }
+        dispatch(.removeParticipant(withHandle: handle))
     }
     
     func connecting() {
