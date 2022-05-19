@@ -4,8 +4,8 @@ import Foundation
 protocol FavouriteNodesUseCaseProtocol {
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
-    func getFavouriteAlbum(fromParent parent: NodeEntity) async throws -> AlbumEntity
-    func getFavouriteNodes(fromParent parent: NodeEntity) async throws -> [NodeEntity]
+    func favouriteAlbum(withCUHandle handle: MEGAHandle) async throws -> AlbumEntity
+    func favouriteAlbumsMediaNodes(withCUHandle handle: MEGAHandle) async throws -> [NodeEntity]
     func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
     func unregisterOnNodesUpdate() -> Void
 }
@@ -23,16 +23,24 @@ struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol>: FavouriteNode
     }
     
     /// Load favourites album cover node(this method will be remove when SDK album api is ready)
-    /// - Parameter parent: CU folder
-    /// - Returns: Favourites album entity
-    func getFavouriteAlbum(fromParent parent: NodeEntity) async throws -> AlbumEntity {
-        let nodes = try await getFavouriteNodes(fromParent: parent)
+    /// - Parameter handle: CU node handle, which is used for filtering video nodes
+    /// - Returns: Album Entity
+    func favouriteAlbum(withCUHandle handle: MEGAHandle) async throws -> AlbumEntity {
+        let nodes = try await favouriteAlbumsMediaNodes(withCUHandle: handle)
         
-        return AlbumEntity(coverNode: nodes.first, numberOfNodes: nodes.count)
+        return AlbumEntity(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
     }
     
-    func getFavouriteNodes(fromParent parent: NodeEntity) async throws -> [NodeEntity] {
-        var nodes = try await repo.getFavouritesNodes(fromParent: parent)
+    /// Get all favourites images from Cloud Drive and video nodes from Camerea Upload only
+    /// - Parameter handle: CU handle, used for filtering video nodes
+    /// - Returns: All valid media type favourites nodes
+    func favouriteAlbumsMediaNodes(withCUHandle handle: MEGAHandle) async throws -> [NodeEntity] {
+        var nodes = try await repo.allFavouritesNodes()
+
+        nodes = nodes.filter({
+            return ($0.name as NSString?)?.mnz_isImagePathExtension == true || ($0.name as NSString?)?.mnz_isVideoPathExtension == true && $0.parentHandle == handle
+        })
+        
         nodes = nodes.sorted { $0.modificationTime >= $1.modificationTime }
         
         return nodes

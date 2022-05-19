@@ -1,6 +1,7 @@
 @testable import MEGA
 
 final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
+    
     var getAllFavouriteNodesResult: Result<[NodeEntity], GetFavouriteNodesErrorEntity> = .failure(.generic)
     var getFavouriteNodesResult: Result<[NodeEntity], GetFavouriteNodesErrorEntity> = .failure(.generic)
     var onNodesUpdateCallback: [NodeEntity]? = [NodeEntity()]
@@ -13,11 +14,11 @@ final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         completion(getFavouriteNodesResult)
     }
     
-    func getFavouriteAlbum(fromParent parent: NodeEntity) async throws -> AlbumEntity {
+    func favouriteAlbum(withCUHandle handle: MEGAHandle) async throws -> AlbumEntity {
         return AlbumEntity()
     }
     
-    func getFavouriteNodes(fromParent parent: NodeEntity) async throws -> [NodeEntity] {
+    func favouriteAlbumsMediaNodes(withCUHandle handle: MEGAHandle) async throws -> [NodeEntity] {
         return []
     }
     

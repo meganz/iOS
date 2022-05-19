@@ -8,11 +8,15 @@ import SwiftUI
     
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?
+    let contentMode: PhotoLibraryContentMode
+    
     lazy var selection = PhotoSelection()
     
     // MARK: - Init
-    init(library: PhotoLibrary) {
+    init(library: PhotoLibrary, contentMode: PhotoLibraryContentMode = .library) {
         self.library = library
+        self.contentMode = contentMode
+        
         super.init()
     }
 }

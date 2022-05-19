@@ -36,7 +36,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         
         loadingTask = Task {
             do {
-                let albumEntity = try await favouriteUseCase.getFavouriteAlbum(fromParent: album)
+                let albumEntity = try await favouriteUseCase.favouriteAlbum(withCUHandle: album.handle)
                 numberOfNodes = albumEntity.numberOfNodes
                 
                 if let node = albumEntity.coverNode {
