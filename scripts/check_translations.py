@@ -30,7 +30,7 @@ def checkIfKeyIsPresent(key, filePath):
             line = line.strip()
             if "=" in line and not line.startswith("/*"):
                 line, _ = line.split("=", 1)
-                line = line.replace('"', '')
+                line = line.strip().replace('"', '')
                 if key == line:
                     return True
         return False  
