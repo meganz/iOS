@@ -1045,7 +1045,7 @@ public enum Strings {
     }
     /// Info
     public static let info = Strings.tr("Localizable", "info")
-    /// Insert your friends' emails:
+    /// Insert your friends’ emails:
     public static let insertYourFriendsEmails = Strings.tr("Localizable", "insertYourFriendsEmails")
     /// Internal error
     public static let internalError = Strings.tr("Localizable", "Internal error")
@@ -1929,11 +1929,11 @@ public enum Strings {
     public static let sendGIF = Strings.tr("Localizable", "Send GIF")
     /// Send Location
     public static let sendLocation = Strings.tr("Localizable", "Send Location")
-    /// Send original size, increased quality images
+    /// Always send original size images.
     public static let sendOriginalSizeIncreasedQualityImages = Strings.tr("Localizable", "Send original size, increased quality images")
-    /// Send smaller size images optimised for lower data consumption
+    /// Always send optimised images.
     public static let sendSmallerSizeImagesOptimisedForLowerDataConsumption = Strings.tr("Localizable", "Send smaller size images optimised for lower data consumption")
-    /// Send smaller size images through cellular networks and original size images through Wi-Fi
+    /// Send optimised images when on mobile data but original size images when on Wi-Fi.
     public static let sendSmallerSizeImagesThroughCellularNetworksAndOriginalSizeImagesThroughWifi = Strings.tr("Localizable", "Send smaller size images through cellular networks and original size images through wifi")
     /// Send this location
     public static let sendThisLocation = Strings.tr("Localizable", "Send This Location")
@@ -3923,7 +3923,7 @@ public enum Strings {
         }
       }
       public enum Error {
-        /// File removed as it violated our Terms of Service
+        /// Violated Terms of Service
         public static let termsOfServiceViolation = Strings.tr("Localizable", "transfer.error.termsOfServiceViolation")
       }
       public enum Storage {

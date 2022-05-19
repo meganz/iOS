@@ -1,4 +1,4 @@
-
+import UIKit
 
 extension MEGAPhotoBrowserViewController {
     @objc func subtitle(fromDate date: Date) -> String {
@@ -17,5 +17,17 @@ extension MEGAPhotoBrowserViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             SVProgressHUD.dismiss()
         }
+    }
+    
+    @objc func rootPesentingViewController() -> UIViewController? {
+        var curPresentingVC = presentingViewController
+        var prePesentingVC: UIViewController?
+        
+        while curPresentingVC != nil {
+            prePesentingVC = curPresentingVC
+            curPresentingVC = curPresentingVC?.presentingViewController
+        }
+        
+        return prePesentingVC
     }
 }
