@@ -476,8 +476,6 @@
 "rename_file_alert_title"="Rename File %@ ?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Replace";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="Move to the Rubbish Bin";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -2998,3 +2996,7 @@
 "meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="Move to Rubbish Bin";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="Delete permanently";
