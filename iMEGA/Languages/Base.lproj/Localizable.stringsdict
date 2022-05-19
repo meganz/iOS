@@ -162,5 +162,32 @@
         <string>%d years</string>
       </dict>
     </dict>
+    <key>recents.section.thumbnail.imageAndVideoCount</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@image@ and %#@video@</string>
+        <key>image</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>1 Image</string>
+            <key>other</key>
+            <string>%d Images</string>
+        </dict>
+        <key>video</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>1 Video</string>
+            <key>other</key>
+            <string>%d Videos</string>
+        </dict>
+    </dict>
   </dict>
 </plist>
