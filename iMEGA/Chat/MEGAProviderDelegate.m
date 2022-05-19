@@ -32,6 +32,8 @@
 
 @property (nonatomic, strong) NSMutableDictionary <NSNumber *, MEGAChatCall *> *endedCalls;
 
+@property (nonatomic, getter=shouldPlayCallEndedSound) BOOL playCallEndedSound;
+
 @end
 
 @implementation MEGAProviderDelegate
@@ -411,6 +413,11 @@
     self.isAudioSessionActive = NO;
     [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
     [CallActionManager.shared disableRTCAudioSession];
+    
+    if (self.shouldPlayCallEndedSound) {
+        self.playCallEndedSound = NO;
+        [self playCallEndedTone];
+    }
 }
 
 #pragma mark - MEGAChatCallDelegate
@@ -427,6 +434,11 @@
                && [self isOneToOneChatRoom:[MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId]]) {
         [self stopDialerTone];
         self.outgoingCall = NO;
+    } else if (session.status == MEGAChatSessionStatusDestroyed && session.termCode == MEGAChatSessionTermCodeNonRecoverable) {
+        MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
+        if (!chatRoom.isMeeting && !chatRoom.isGroup) {
+            self.playCallEndedSound = YES;
+        }
     }
 }
 
