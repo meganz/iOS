@@ -1295,8 +1295,6 @@ public enum Strings {
     public static func moveFoldersMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "moveFoldersMessage", p1)
     }
-    /// Move to the Rubbish Bin
-    public static let moveToTheRubbishBin = Strings.tr("Localizable", "moveToTheRubbishBin")
     /// Two-factor authentication required
     public static let multiFactorAuthenticationRequired = Strings.tr("Localizable", "Multi-factor authentication required")
     /// Mute
@@ -3549,6 +3547,12 @@ public enum Strings {
             return Strings.tr("Localizable", "general.format.retentionPeriod.year", p1)
           }
         }
+      }
+      public enum MenuAction {
+        /// Delete permanently
+        public static let deletePermanently = Strings.tr("Localizable", "general.menuAction.deletePermanently")
+        /// Move to Rubbish Bin
+        public static let moveToRubbishBin = Strings.tr("Localizable", "general.menuAction.moveToRubbishBin")
       }
       public enum Security {
         /// MEGA-RECOVERYKEY
