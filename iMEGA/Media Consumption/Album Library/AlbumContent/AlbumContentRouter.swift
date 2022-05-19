@@ -2,16 +2,16 @@ import UIKit
 
 @available(iOS 14.0, *)
 struct AlbumContentRouter: Routing {
-    private let parentNode: NodeEntity
+    private let cameraUploadNode: NodeEntity
     
-    init(parentNode: NodeEntity) {
-        self.parentNode = parentNode
+    init(cameraUploadNode: NodeEntity) {
+        self.cameraUploadNode = cameraUploadNode
     }
     
     func build() -> UIViewController {
         let repository = FavouriteNodesRepository(sdk: MEGASdkManager.sharedMEGASdk())
         let favouritesUseCase = FavouriteNodesUseCase(repo: repository)
-        let viewModel = AlbumContentViewModel(parentNode: parentNode,
+        let viewModel = AlbumContentViewModel(cameraUploadNode: cameraUploadNode,
                                               albumName: Strings.Localizable.CameraUploads.Albums.Favourites.title,
                                               favouritesUseCase: favouritesUseCase,
                                               router: self)

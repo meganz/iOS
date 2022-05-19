@@ -5,7 +5,7 @@ import SwiftUI
 final class AlbumContentViewController: UIViewController, ViewType {
     private let viewModel: AlbumContentViewModel
     
-    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
     lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
     

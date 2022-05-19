@@ -98,6 +98,7 @@
 		12BDD4DA28285C0700009D73 /* AlbumContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BDD4D928285C0700009D73 /* AlbumContentViewModel.swift */; };
 		12BDD4DD28285EDD00009D73 /* AlbumContainerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BDD4DC28285EDD00009D73 /* AlbumContainerWrapper.swift */; };
 		12BDD4DF282865CC00009D73 /* AlbumContent+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BDD4DE282865CC00009D73 /* AlbumContent+PhotoLibrary.swift */; };
+		12CC1F9828348A3B00CE3447 /* PhotoLibraryContentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC1F9728348A3B00CE3447 /* PhotoLibraryContentMode.swift */; };
 		12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */; };
 		12E9105528247C5300FBC6DA /* AlbumContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E9105428247C5200FBC6DA /* AlbumContentViewController.swift */; };
 		12F041CC27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */; };
@@ -2557,6 +2558,7 @@
 		12BDD4D928285C0700009D73 /* AlbumContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentViewModel.swift; sourceTree = "<group>"; };
 		12BDD4DC28285EDD00009D73 /* AlbumContainerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContainerWrapper.swift; sourceTree = "<group>"; };
 		12BDD4DE282865CC00009D73 /* AlbumContent+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumContent+PhotoLibrary.swift"; sourceTree = "<group>"; };
+		12CC1F9728348A3B00CE3447 /* PhotoLibraryContentMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentMode.swift; sourceTree = "<group>"; };
 		12E14BA1278CB38700AE1BE8 /* PhotoSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelection.swift; sourceTree = "<group>"; };
 		12E9105428247C5200FBC6DA /* AlbumContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentViewController.swift; sourceTree = "<group>"; };
 		12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+MedisDiscovery.swift"; sourceTree = "<group>"; };
@@ -9544,6 +9546,7 @@
 				B6F39F262773D546002386BE /* PhotoChronologicalCategory+Additions.swift */,
 				B67507AA2762EABA0034F951 /* PhotoLibraryViewMode.swift */,
 				B67507B32766BB580034F951 /* PhotoLibraryConstants.swift */,
+				12CC1F9728348A3B00CE3447 /* PhotoLibraryContentMode.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -11983,6 +11986,7 @@
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
 				120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */,
 				5D8A76F224FCD0C900C0610C /* MEGAAvatarUserCase.swift in Sources */,
+				12CC1F9828348A3B00CE3447 /* PhotoLibraryContentMode.swift in Sources */,
 				BF5E345F255A2E1A0055395E /* FilesExplorerGridSource.swift in Sources */,
 				83E345BA25B59FB4006F2AD6 /* RecentItemsUseCase.swift in Sources */,
 				A882F52127E1E6830032DC07 /* NetworkMonitorRepository.swift in Sources */,

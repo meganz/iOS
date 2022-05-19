@@ -9,7 +9,7 @@ struct AlbumContainerWrapper: UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> UINavigationController {
-        let nav = MEGANavigationController(rootViewController: AlbumContentRouter(parentNode: albumNode).build())
+        let nav = MEGANavigationController(rootViewController: AlbumContentRouter(cameraUploadNode: albumNode).build())
         nav.modalPresentationStyle = .fullScreen
         
         return nav

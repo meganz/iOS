@@ -3,6 +3,16 @@
     {
       "filename" : "Album Thumbnail.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Album Thumbnail-1.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
