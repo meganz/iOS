@@ -1492,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Video Quality";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="Low";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Medium";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="High";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Preparing…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2236,12 +2228,8 @@
 "Resume Transfers?"="Resume Transfers?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Image Quality";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="Automatic";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="Optimised";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Always send optimised images.";
 /* Description of High Image Quality option */
@@ -2252,8 +2240,6 @@
 "cloudDrive.scanDocument.defaultName"="Scan %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="File Type";
-/* export Quality Option for Scan document */
-"best"="Best";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Your account has been deactivated by your administrator. Please contact your business account administrator for further details.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2992,3 +2978,23 @@
 "general.menuAction.moveToRubbishBin"="Move to Rubbish Bin";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
 "general.menuAction.deletePermanently"="Delete permanently";
+/* Original image quality on Chat. Indicating that the image quality will be the same. */
+"chat.image.quality.original"="Original";
+/* Automatic image quality on Chat. Indicating that the image quality will be determine by MEGA. */
+"chat.image.quality.automatic"="Automatic";
+/* Optimised image quality on Chat. Indicating that the image will be optimised. */
+"chat.image.quality.optimised"="Optimised";
+/* Low video quality option, used together with “Medium”, “High” and “Original” */
+"media.video.quality.low"="Low";
+/* Medium video quality option, used together with “Low”, “High” and “Original” */
+"media.video.quality.medium"="Medium";
+/* High video quality option, used together with “Low”, “Medium” and “Original” */
+"media.video.quality.high"="High";
+/* Original video quality option, used together with “Low”, “Medium” and “High” */
+"media.video.quality.original"="Original";
+/* Best export quality option for Scan document */
+"media.document.quality.best"="Best";
+/* Low export quality option for Scan document */
+"media.document.quality.low"="Low";
+/* Medium export quality option for Scan document */
+"media.document.quality.medium"="Medium";

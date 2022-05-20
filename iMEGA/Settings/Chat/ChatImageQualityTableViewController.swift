@@ -46,15 +46,15 @@ class ChatImageQualityTableViewController: UITableViewController {
 
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = Strings.Localizable.automatic
+            cell.textLabel?.text = Strings.Localizable.Chat.Image.Quality.automatic
             cell.detailTextLabel?.text = Strings.Localizable.sendSmallerSizeImagesThroughCellularNetworksAndOriginalSizeImagesThroughWifi
 
         case 1:
-            cell.textLabel?.text = Strings.Localizable.high
+            cell.textLabel?.text = Strings.Localizable.Chat.Image.Quality.original
             cell.detailTextLabel?.text = Strings.Localizable.sendOriginalSizeIncreasedQualityImages
 
         case 2:
-            cell.textLabel?.text = Strings.Localizable.optimised
+            cell.textLabel?.text = Strings.Localizable.Chat.Image.Quality.optimised
             cell.detailTextLabel?.text = Strings.Localizable.sendSmallerSizeImagesOptimisedForLowerDataConsumption
         
         default:

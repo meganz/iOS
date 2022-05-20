@@ -199,15 +199,15 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     NSString *imageQualityString;
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
-            imageQualityString = NSLocalizedString(@"Automatic", @"Text for some option property indicating the user the action will be determine automatically by MEGA. For example: Image Quality option for chats");
+            imageQualityString = NSLocalizedString(@"chat.image.quality.automatic", @"Indicating that the image quality will be determine by MEGA.");
             break;
             
-        case ChatImageUploadQualityHigh:
-            imageQualityString = NSLocalizedString(@"high", @"Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.");
+        case ChatImageUploadQualityOriginal:
+            imageQualityString = NSLocalizedString(@"chat.image.quality.original", @"Indicating that the image quality will be the same.");
             break;
             
         case ChatImageUploadQualityOptimised:
-            imageQualityString = NSLocalizedString(@"Optimised", @"Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats");
+            imageQualityString = NSLocalizedString(@"chat.image.quality.optimised", @"Indicating that the image will be optimised.");
             break;
             
         default:
@@ -228,19 +228,19 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     
     switch (videoQuality) {
         case ChatVideoUploadQualityLow:
-            videoQualityString = NSLocalizedString(@"low", @"Low");
+            videoQualityString = NSLocalizedString(@"media.video.quality.low", @"Low");
             break;
             
         case ChatVideoUploadQualityMedium:
-            videoQualityString = NSLocalizedString(@"medium", @"Medium");
+            videoQualityString = NSLocalizedString(@"media.video.quality.medium", @"Medium");
             break;
             
         case ChatVideoUploadQualityHigh:
-            videoQualityString = NSLocalizedString(@"high", @"High");
+            videoQualityString = NSLocalizedString(@"media.video.quality.high", @"High");
             break;
             
         case ChatVideoUploadQualityOriginal:
-            videoQualityString = NSLocalizedString(@"original", @"Original");
+            videoQualityString = NSLocalizedString(@"media.video.quality.original", @"Original");
             break;
             
         default:
@@ -286,8 +286,8 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
                     footerTitle = NSLocalizedString(@"Send smaller size images through cellular networks and original size images through wifi", @"Description of Automatic Image Quality option");
                     break;
                     
-                case ChatImageUploadQualityHigh:
-                    footerTitle = NSLocalizedString(@"Send original size, increased quality images", @"Description of High Image Quality option");
+                case ChatImageUploadQualityOriginal:
+                    footerTitle = NSLocalizedString(@"Send original size, increased quality images", @"Description of Original Image Quality option");
                     break;
                     
                 case ChatImageUploadQualityOptimised:

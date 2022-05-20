@@ -26,10 +26,10 @@
     
     self.navigationItem.title = NSLocalizedString(@"videoQuality", @"Title that refers to the quality of the chat (Either Online or Offline)");
     
-    self.lowLabel.text = NSLocalizedString(@"low", @"Low");
-    self.mediumLabel.text = NSLocalizedString(@"medium", nil);
-    self.highLabel.text = NSLocalizedString(@"high", @"High");
-    self.originalLabel.text = NSLocalizedString(@"original", @"Original");
+    self.lowLabel.text = NSLocalizedString(@"media.video.quality.low", @"Low");
+    self.mediumLabel.text = NSLocalizedString(@"media.video.quality.medium", @"Medium");
+    self.highLabel.text = NSLocalizedString(@"media.video.quality.high", @"High");
+    self.originalLabel.text = NSLocalizedString(@"media.video.quality.original", @"Original");
     
     [self updateAppearance];
 }
