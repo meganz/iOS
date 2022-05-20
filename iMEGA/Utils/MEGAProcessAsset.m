@@ -197,7 +197,7 @@ static const float BPS_MEDIUM = 3000000.0f;
                 }
                 break;
                 
-            case ChatImageUploadQualityHigh:
+            case ChatImageUploadQualityOriginal:
                 [self requestImageForAsset:asset options:options];
                 break;
                 

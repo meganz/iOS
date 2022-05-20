@@ -295,8 +295,6 @@ public enum Strings {
     public static let autoAcceptFooter = Strings.tr("Localizable", "autoAcceptFooter")
     /// Auto-away
     public static let autoAway = Strings.tr("Localizable", "autoAway")
-    /// Automatic
-    public static let automatic = Strings.tr("Localizable", "Automatic")
     /// Automatically back up your photos and videos to your Cloud Drive.
     public static let automaticallyBackupYourPhotosAndVideosToTheCloudDrive = Strings.tr("Localizable", "Automatically backup your photos and videos to the Cloud Drive.")
     /// Automatically delete messages older than a certain amount of time.
@@ -323,8 +321,6 @@ public enum Strings {
     public static let balanceError = Strings.tr("Localizable", "Balance error")
     /// Begin Setup
     public static let beginSetup = Strings.tr("Localizable", "beginSetup")
-    /// Best
-    public static let best = Strings.tr("Localizable", "best")
     /// Billing failed
     public static let billingFailed = Strings.tr("Localizable", "Billing failed")
     /// Blocked
@@ -981,8 +977,6 @@ public enum Strings {
     public static let help = Strings.tr("Localizable", "help")
     /// Help Centre
     public static let helpCentreLabel = Strings.tr("Localizable", "helpCentreLabel")
-    /// High
-    public static let high = Strings.tr("Localizable", "high")
     /// History Clearing
     public static let historyClearing = Strings.tr("Localizable", "History Clearing")
     /// Home
@@ -1195,8 +1189,6 @@ public enum Strings {
     public static let logoutLabel = Strings.tr("Localizable", "logoutLabel")
     /// Lost your Authenticator device?
     public static let lostYourAuthenticatorDevice = Strings.tr("Localizable", "lostYourAuthenticatorDevice")
-    /// Low
-    public static let low = Strings.tr("Localizable", "low")
     /// Maintain my chosen status appearance even when I have no connected devices.
     public static let maintainMyChosenStatusAppearance = Strings.tr("Localizable", "maintainMyChosenStatusAppearance")
     /// Manage
@@ -1217,8 +1209,6 @@ public enum Strings {
     public static let masterKeyExportedAlertMessage = Strings.tr("Localizable", "masterKeyExported_alertMessage")
     /// Me
     public static let me = Strings.tr("Localizable", "me")
-    /// Medium
-    public static let medium = Strings.tr("Localizable", "medium")
     /// MEGA CAMERA UPLOADS FOLDER
     public static let megaCameraUploadsFolder = Strings.tr("Localizable", "MEGA CAMERA UPLOADS FOLDER")
     /// MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.
@@ -1475,16 +1465,12 @@ public enum Strings {
     public static let openIn = Strings.tr("Localizable", "openIn")
     /// Open MEGA and sign in to continue
     public static let openMEGAAndSignInToContinue = Strings.tr("Localizable", "openMEGAAndSignInToContinue")
-    /// Optimised
-    public static let optimised = Strings.tr("Localizable", "Optimised")
     /// Options
     public static let options = Strings.tr("Localizable", "options")
     /// Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items.
     public static let optionsSuchAsSendDecryptionKeySeparatelySetExpiryDateOrPasswordsAreOnlyAvailableForSingleItems = Strings.tr("Localizable", "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items.")
     /// Orange
     public static let orange = Strings.tr("Localizable", "Orange")
-    /// Original
-    public static let original = Strings.tr("Localizable", "original")
     /// Out of range
     public static let outOfRange = Strings.tr("Localizable", "Out of range")
     /// Outgoing
@@ -2956,6 +2942,16 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
+      public enum Image {
+        public enum Quality {
+          /// Automatic
+          public static let automatic = Strings.tr("Localizable", "chat.image.quality.automatic")
+          /// Optimised
+          public static let optimised = Strings.tr("Localizable", "chat.image.quality.optimised")
+          /// Original
+          public static let original = Strings.tr("Localizable", "chat.image.quality.original")
+        }
+      }
       public enum ManageHistory {
         public enum Clearing {
           public enum Custom {
@@ -3654,6 +3650,16 @@ public enum Strings {
           }
         }
       }
+      public enum Document {
+        public enum Quality {
+          /// Best
+          public static let best = Strings.tr("Localizable", "media.document.quality.best")
+          /// Low
+          public static let low = Strings.tr("Localizable", "media.document.quality.low")
+          /// Medium
+          public static let medium = Strings.tr("Localizable", "media.document.quality.medium")
+        }
+      }
       public enum PhotoLibrary {
         public enum Category {
           public enum All {
@@ -3672,6 +3678,18 @@ public enum Strings {
             /// Years
             public static let title = Strings.tr("Localizable", "media.photoLibrary.category.years.title")
           }
+        }
+      }
+      public enum Video {
+        public enum Quality {
+          /// High
+          public static let high = Strings.tr("Localizable", "media.video.quality.high")
+          /// Low
+          public static let low = Strings.tr("Localizable", "media.video.quality.low")
+          /// Medium
+          public static let medium = Strings.tr("Localizable", "media.video.quality.medium")
+          /// Original
+          public static let original = Strings.tr("Localizable", "media.video.quality.original")
         }
       }
     }
