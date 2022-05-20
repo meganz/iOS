@@ -153,6 +153,10 @@ final class NodeActionBuilder {
         }
     }
     
+    func multiselectAlbumBuild() -> [NodeAction] {
+        albumActions()
+    }
+    
     // MARK: - Private methods
     
     private func shouldAddRestoreAction() -> Bool {
@@ -365,6 +369,9 @@ final class NodeActionBuilder {
         case .chatAttachment:
             nodeActions = ownerAccessLevelNodeActionsForChatAttachment()
             
+        case .favouriteAlbumSelectionToolBar:
+            nodeActions = albumActions()
+            
         @unknown default: break
         }
         
@@ -543,6 +550,16 @@ final class NodeActionBuilder {
          NodeAction.moveAction(),
          NodeAction.copyAction(),
          NodeAction.moveToRubbishBinAction()]
+    }
+    
+    private func albumActions() -> [NodeAction] {
+        [.downloadAction(),
+         .shareLinksAction(),
+         .exportFilesAction(),
+         .sendToChatAction(),
+         .favouriteAction(isFavourite: isFavourite),
+         .copyAction(),
+         .moveToRubbishBinAction()]
     }
     
     func takedownNodeActions() -> [NodeAction] {
