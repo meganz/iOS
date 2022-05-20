@@ -12,13 +12,22 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     private var album: NodeEntity
     private var favouriteUseCase: FavouriteNodesUseCaseProtocol
     private var thumbnailUseCase: ThumbnailUseCaseProtocol
+    private var albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
     private let placeholderThumbnail: ImageContainer
     private var loadingTask: Task<Void, Never>?
     
-    init(album: NodeEntity, favouriteUseCase: FavouriteNodesUseCaseProtocol, thumbnailUseCase: ThumbnailUseCaseProtocol) {
+    private var updateSubscription: AnyCancellable?
+    
+    init(
+        album: NodeEntity,
+        favouriteUseCase: FavouriteNodesUseCaseProtocol,
+        thumbnailUseCase: ThumbnailUseCaseProtocol,
+        albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
+    ) {
         self.album = album
         self.favouriteUseCase = favouriteUseCase
         self.thumbnailUseCase = thumbnailUseCase
+        self.albumContentsUseCase = albumContentsUseCase
         
         isLoading = false
         
@@ -26,6 +35,8 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         thumbnailContainer = placeholderThumbnail
         
         super.init()
+        
+        setupSubscription()
     }
     
     @MainActor
@@ -79,5 +90,17 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         }
         
         isLoading = false
+    }
+    
+    private func reloadAlbumInfo() {
+        loadingTask = Task {
+            await loadAlbumInfo()
+        }
+    }
+
+    private func setupSubscription() {
+        updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
+            self?.reloadAlbumInfo()
+        }
     }
 }
