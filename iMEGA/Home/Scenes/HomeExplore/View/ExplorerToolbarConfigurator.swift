@@ -123,7 +123,6 @@ class ExplorerToolbarConfigurator {
             )
             
         case .accessOwner:
-            shareLinkItem.isEnabled = nodes.count < 100
             return enable(
                 true,
                 barButtonItems: [

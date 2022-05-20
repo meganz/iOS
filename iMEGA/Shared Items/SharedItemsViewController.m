@@ -244,7 +244,7 @@
     [_carbonCopyBarButtonItem setEnabled:boolValue];
     [_leaveShareBarButtonItem setEnabled:boolValue];
     
-    [self.shareLinkBarButtonItem setEnabled:((self.selectedNodesMutableArray.count < 100) ? boolValue : NO)];
+    [self.shareLinkBarButtonItem setEnabled:boolValue];
     [_shareFolderBarButtonItem setEnabled:boolValue];
     [_removeShareBarButtonItem setEnabled:boolValue];
     self.removeLinkBarButtonItem.enabled = boolValue;
