@@ -500,7 +500,7 @@
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = boolValue;
-    self.shareLinkBarButtonItem.enabled = ((self.selection.count < 100) ? boolValue : NO);
+    self.shareLinkBarButtonItem.enabled = boolValue;
     self.moveBarButtonItem.enabled = boolValue;
     self.actionBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
