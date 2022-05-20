@@ -3,10 +3,26 @@ import Foundation
 @available(iOS 14.0, *)
 extension AlbumContentViewController: PhotoLibraryProvider {
     func enableNavigationEditBarButton(_ enable: Bool) {
-        rightBarButtonItem.isEnabled = false
+        rightBarButtonItem.isEnabled = enable
     }
     
     func showNavigationRightBarButton(_ show: Bool) {
         navigationItem.rightBarButtonItem = show ? rightBarButtonItem : nil
+    }
+    
+    func setupPhotoLibrarySubscriptions() {
+        photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] in
+            self?.showNavigationRightBarButton($0 == .all)
+        }
+        
+        photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
+            self?.selection.setSelectedNodes(Array($0.values))
+            self?.didSelectedPhotoCountChange($0.count)
+        }
+    }
+    
+    func didSelectedPhotoCountChange(_ count: Int) {
+        updateNavigationTitle(withSelectedPhotoCount: count)
+        configureToolbarButtonsWithAlbumType()
     }
 }

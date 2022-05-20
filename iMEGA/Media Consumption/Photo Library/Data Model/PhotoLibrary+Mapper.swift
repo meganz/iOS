@@ -15,7 +15,7 @@ extension Array where Element == MEGANode {
 
 extension Array where Element == NodeEntity {
     func toPhotoLibrary() -> PhotoLibrary {
-        let megaNodes = compactMap { $0.toMEGANode(in: MEGASdkManager.sharedMEGASdk()) }
+        let megaNodes = toMEGANodes()
         
         var dayDict = [Date: PhotoByDay]()
         for node in self where NSString(string: node.name).mnz_isVisualMediaPathExtension {
@@ -45,5 +45,9 @@ extension Array where Element == NodeEntity {
         library.underlyingMEGANodes = megaNodes
         
         return library
+    }
+    
+    func toMEGANodes() -> [MEGANode] {
+        compactMap { $0.toMEGANode(in: MEGASdkManager.sharedMEGASdk()) }
     }
 }

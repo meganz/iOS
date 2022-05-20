@@ -200,6 +200,11 @@
 		2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */; };
 		2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */; };
 		32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */; };
+		32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */; };
+		32F9E68028348B320002132D /* AlbumContentsUpdateNotifierUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67F28348B320002132D /* AlbumContentsUpdateNotifierUseCase.swift */; };
+		32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */; };
+		32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E683283490A40002132D /* AlbumToolbarProvider.swift */; };
+		32F9E69B283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E69A283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
 		411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
@@ -2672,6 +2677,11 @@
 		2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewController.swift; sourceTree = "<group>"; };
 		2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewRouter.swift; sourceTree = "<group>"; };
 		2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModel.swift; sourceTree = "<group>"; };
+		32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepository.swift; sourceTree = "<group>"; };
+		32F9E67F28348B320002132D /* AlbumContentsUpdateNotifierUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierUseCase.swift; sourceTree = "<group>"; };
+		32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfigurator.swift; sourceTree = "<group>"; };
+		32F9E683283490A40002132D /* AlbumToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarProvider.swift; sourceTree = "<group>"; };
+		32F9E69A283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepositoryProtocol.swift; sourceTree = "<group>"; };
 		3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAIntent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -5257,6 +5267,7 @@
 			isa = PBXGroup;
 			children = (
 				129D51D12821D5A600A4D4D3 /* AlbumUseCase.swift */,
+				32F9E67F28348B320002132D /* AlbumContentsUpdateNotifierUseCase.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -5265,6 +5276,7 @@
 			isa = PBXGroup;
 			children = (
 				129D51D42821D63E00A4D4D3 /* AlbumRepository.swift */,
+				32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -5293,6 +5305,8 @@
 				12BDD4D528285BA900009D73 /* AlbumContentRouter.swift */,
 				12BDD4DC28285EDD00009D73 /* AlbumContainerWrapper.swift */,
 				12BDD4DE282865CC00009D73 /* AlbumContent+PhotoLibrary.swift */,
+				32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */,
+				32F9E683283490A40002132D /* AlbumToolbarProvider.swift */,
 			);
 			path = AlbumContent;
 			sourceTree = "<group>";
@@ -5552,6 +5566,14 @@
 				83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */,
 			);
 			path = StartMeetingScene;
+			sourceTree = "<group>";
+		};
+		32F9E697283728AE0002132D /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				32F9E69A283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift */,
+			);
+			path = Album;
 			sourceTree = "<group>";
 		};
 		41136FB91E1692650031C516 /* Views */ = {
@@ -9307,6 +9329,7 @@
 		B67A2C71251755A300B40D89 /* RepositoryProtocol */ = {
 			isa = PBXGroup;
 			children = (
+				32F9E697283728AE0002132D /* Album */,
 				B6ADE4DD2732195600C19F36 /* FileSystem */,
 				BFAC874A25FEF713009CA3F6 /* AudioVideo */,
 				8396FBE225D68E4C00EB50FD /* User */,
@@ -11970,6 +11993,7 @@
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */,
 				B65AC8E321F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.m in Sources */,
+				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */,
 				C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */,
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
@@ -12328,6 +12352,7 @@
 				B646DF30276FE9DB00BC543F /* ImageContainer.swift in Sources */,
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
+				32F9E68028348B320002132D /* AlbumContentsUpdateNotifierUseCase.swift in Sources */,
 				B67A2C862517EABE00B40D89 /* CredentialRepositoryProtocol.swift in Sources */,
 				5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */,
 				0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */,
@@ -12859,6 +12884,7 @@
 				B662B85424EC982D0089376A /* AuthUseCase.swift in Sources */,
 				BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */,
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
+				32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
 				B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */,
@@ -13027,6 +13053,7 @@
 				BF782D79269BA4BB0001D169 /* OfflineFileEntity.swift in Sources */,
 				B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */,
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
+				32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */,
 				83A49E79270475AB00FD0D85 /* TransfersRepositoryProtocol.swift in Sources */,
 				12397E172820C3B100A30CCC /* PageTabView.swift in Sources */,
 				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
@@ -13134,6 +13161,7 @@
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */,
+				32F9E69B283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift in Sources */,
 				5D8C5AB224EF95A400EDD7A9 /* TraitEnviromentAware.swift in Sources */,
 				B6E5D251274C5FED00C8AB96 /* CardImage.swift in Sources */,
 				0D7E5FB92634E4E300C5CB2A /* DownloadFileRepositoryProtocol.swift in Sources */,

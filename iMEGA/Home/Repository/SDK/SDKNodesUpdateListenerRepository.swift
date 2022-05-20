@@ -1,5 +1,8 @@
+protocol SDKNodesUpdateListenerProtocol {
+    var onUpdateHandler: (([MEGANode]) -> Void)? { get set }
+}
 
-final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate {
+final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate, SDKNodesUpdateListenerProtocol {
     private let sdk: MEGASdk
     var onUpdateHandler: (([MEGANode]) -> Void)?
     
