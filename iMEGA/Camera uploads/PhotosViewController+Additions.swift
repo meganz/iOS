@@ -36,6 +36,11 @@ extension PhotosViewController {
         nodes.forEach { MEGASdkManager.sharedMEGASdk().move($0, newParent: rubbish, delegate: delegate) }
     }
     
+    @objc func setUpRightNavigationBarButtonItem() {
+        objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem;
+        objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal)
+    }
+    
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {
         let entityNodes = nodes.map { NodeEntity(node: $0) }
         ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)

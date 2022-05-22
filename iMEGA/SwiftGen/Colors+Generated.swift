@@ -131,6 +131,7 @@ internal enum Colors {
   internal enum Photos {
     internal static let pageTabForeground = ColorAsset(name: "pageTabForeground")
     internal static let photoSeletionBorder = ColorAsset(name: "photoSeletionBorder")
+    internal static let rightBarButtonForeground = ColorAsset(name: "rightBarButtonForeground")
     internal static let zoomButtonForeground = ColorAsset(name: "zoomButtonForeground")
   }
   internal enum SharedViews {
