@@ -5,6 +5,18 @@ struct PageTabView: View {
     @ObservedObject private var viewModel: PagerTabViewModel
     @Environment(\.colorScheme) var colorScheme
     
+    private var albumForgroundColor: Color {
+        if !viewModel.isEditing {
+            return timelineForgroundColor
+        } else {
+            return Color(Colors.General.Gray._515151.color)
+        }
+    }
+    
+    private var timelineForgroundColor: Color {
+        colorScheme == .dark ? .white : .black
+    }
+    
     init(viewModel: PagerTabViewModel) {
         self.viewModel = viewModel
     }
@@ -21,7 +33,7 @@ struct PageTabView: View {
                     } label: {
                         Text(viewModel.timeLineTitle)
                             .frame(maxWidth: proxy.size.width, alignment: .center)
-                            .foregroundColor(viewModel.selectedTab == .timeline ? .red : colorScheme == .dark ? .white : .black)
+                            .foregroundColor(viewModel.selectedTab == .timeline ? .red : timelineForgroundColor)
                     }
                     
                     Button {
@@ -33,7 +45,7 @@ struct PageTabView: View {
                     } label: {
                         Text(viewModel.albumsTitle)
                             .frame(maxWidth: proxy.size.width, alignment: .center)
-                            .foregroundColor(viewModel.selectedTab == .album ? .red : colorScheme == .dark ? .white : .black)
+                            .foregroundColor(viewModel.selectedTab == .album ? .red : albumForgroundColor)
                     }
                 }
                 .padding(.top, 10)

@@ -80,8 +80,8 @@
         self.shouldShowRightBarButton = YES;
         self.showToolBar = YES;
         
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem;
-        
+        [self setUpRightNavigationBarButtonItem];
+        [self objcWrapper_configPhotosBannerView];
         self.cachedEditBarButtonItem = self.objcWrapper_parent.navigationItem.rightBarButtonItem;
     }
     

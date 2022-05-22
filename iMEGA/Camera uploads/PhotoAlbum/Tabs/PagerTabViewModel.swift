@@ -15,6 +15,7 @@ enum PhotoLibraryTab: CaseIterable {
 final class PagerTabViewModel: ObservableObject {
     @Published var tabOffset: CGFloat = 0
     @Published var selectedTab = PhotoLibraryTab.timeline
+    @Published var isEditing = false
     
     var timeLineTitle = Strings.Localizable.CameraUploads.Timeline.title
     var albumsTitle = Strings.Localizable.CameraUploads.Albums.title
