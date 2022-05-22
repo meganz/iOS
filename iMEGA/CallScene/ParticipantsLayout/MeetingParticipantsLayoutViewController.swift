@@ -162,12 +162,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             updateSpeaker(participant)
         case .localVideoFrame(let width, let height, let buffer):
             localUserView.frameData(width: width, height: height, buffer: buffer)
-        case .participantsAdded(let names):
-            participantsStatusChanged(addedParticipantsNames: names, removedParticipantsNames: nil)
-        case .participantsRemoved(let names):
-            participantsStatusChanged(addedParticipantsNames: nil, removedParticipantsNames: names)
-        case .participantsStatusChanged(let addedParticipantNames, let removedParticipantNames):
-            participantsStatusChanged(addedParticipantsNames: addedParticipantNames, removedParticipantsNames: removedParticipantNames)
+        case .participantsStatusChanged(let addedParticipantCount, let removedParticipantCount, let addedParticipantNames, let removedParticipantNames):
+            participantsStatusChanged(addedParticipantsCount: addedParticipantCount,
+                                      removedParticipantsCount: removedParticipantCount,
+                                      addedParticipantsNames: addedParticipantNames,
+                                      removedParticipantsNames: removedParticipantNames)
         case .reconnecting:
             showReconnectingNotification()
         case .reconnected:
@@ -352,16 +351,21 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         emptyMeetingMessageView = nil
     }
     
-    private func participantsStatusChanged(addedParticipantsNames: [String]?, removedParticipantsNames: [String]?) {
-        let addedMessage = notificationMessage(forParticipantNames: addedParticipantsNames,
-                                              oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserJoined,
-                                              twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersJoined,
-                                              moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersJoined)
+    private func participantsStatusChanged(addedParticipantsCount: Int,
+                                           removedParticipantsCount: Int,
+                                           addedParticipantsNames: [String]?,
+                                           removedParticipantsNames: [String]?) {
+        let addedMessage = notificationMessage(forParticipantCount: addedParticipantsCount,
+                                               participantNames: addedParticipantsNames,
+                                               oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserJoined,
+                                               twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersJoined,
+                                               moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersJoined)
         
-        let removedMessage = notificationMessage(forParticipantNames: removedParticipantsNames,
-                                              oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserLeft,
-                                              twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersLeft,
-                                              moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersLeft)
+        let removedMessage = notificationMessage(forParticipantCount: removedParticipantsCount,
+                                                 participantNames: removedParticipantsNames,
+                                                 oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserLeft,
+                                                 twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersLeft,
+                                                 moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersLeft)
         
         var message: String?
         if let addedMessage = addedMessage, let removedMessage = removedMessage {
@@ -379,21 +383,23 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
     }
     
-    private func notificationMessage(forParticipantNames participantNames: [String]?,
+    private func notificationMessage(forParticipantCount participantCount: Int,
+                                     participantNames: [String]?,
                                      oneParticipantMessageClosure: (String) -> String,
                                      twoParticpantsMessageClousre: (String, String) -> String,
                                      moreThanTwoParticipantsMessageClousre: (String, String) -> String) -> String? {
         var message: String?
         
         if let participantNames = participantNames {
-            let count = participantNames.count
-            switch count {
-            case 1:
+            switch participantCount {
+            case 1 where participantNames.count == 1:
                 message = oneParticipantMessageClosure(participantNames[0])
-            case 2:
+            case 2 where participantNames.count == 2:
                 message = twoParticpantsMessageClousre(participantNames[0], participantNames[1])
             default:
-                if count > 2, let spelledOutNumber = spellOut(number: count-1)  {
+                if participantCount > 2,
+                   participantNames.count == 1,
+                   let spelledOutNumber = spellOut(number: participantCount - 1) {
                     message = moreThanTwoParticipantsMessageClousre(participantNames[0], spelledOutNumber)
                 }
             }
