@@ -43,7 +43,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
 
     @IBOutlet private var offlineContainerView: UIView!
     
-    public var offlineScrollView: UIScrollView!
+    public var offlineScrollView: UIScrollView?
 
     // MARK: - Tab Control
 
@@ -108,6 +108,9 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     func isOverScroll() -> Bool {
         switch currentDisplayTab {
         case .offline:
+            guard let offlineScrollView = offlineScrollView else {
+                return true
+            }
             return offlineScrollView.contentOffset.y <= 0
         case .favourites:
             return favouritesScrollView.contentOffset.y <= 0
