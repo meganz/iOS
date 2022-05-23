@@ -52,6 +52,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 @property (weak, nonatomic) IBOutlet UIImageView *addPhoneNumberImageView;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *addPhoneNumberActivityIndicator;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -187,7 +188,9 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     if (!MEGASdkManager.sharedMEGASdk.isAchievementsEnabled) {
         self.addPhoneNumberDescription.text = NSLocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", nil);
     } else {
+        [self.addPhoneNumberActivityIndicator startAnimating];
         [MEGASdkManager.sharedMEGASdk getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            [self.addPhoneNumberActivityIndicator stopAnimating];
             if (error.type == MEGAErrorTypeApiOk) {
                 NSString *storageText = [Helper memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
                 self.addPhoneNumberDescription.text = [NSString stringWithFormat:NSLocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", nil), storageText];
