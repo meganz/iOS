@@ -1,6 +1,6 @@
 
 typedef NS_ENUM(NSUInteger, ChatImageUploadQuality) {
     ChatImageUploadQualityAuto,
-    ChatImageUploadQualityHigh,
+    ChatImageUploadQualityOriginal,
     ChatImageUploadQualityOptimised,
 };

@@ -14,14 +14,12 @@ struct PhotoLibraryContentView: View {
         } else {
             Group {
                 if #available(iOS 15.0, *) {
-                    photoContent()
-                        .safeAreaInset(edge: .bottom) {
-                            PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
-                        }
+                    content()
                 } else {
                     ZStack(alignment: .bottom) {
                         photoContent()
                         PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
+                            .opacity(viewModel.contentMode == .library ? 1 : 0)
                     }
                 }
             }
@@ -29,6 +27,19 @@ struct PhotoLibraryContentView: View {
             .onReceive(viewModel.selection.$editMode) {
                 editMode = $0
             }
+        }
+    }
+    
+    @ViewBuilder
+    @available(iOS 15.0, *)
+    private func content() -> some View {
+        if viewModel.contentMode == .library {
+            photoContent()
+                .safeAreaInset(edge: .bottom) {
+                    PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
+                }
+        } else {
+            photoContent()
         }
     }
     
@@ -41,19 +52,19 @@ struct PhotoLibraryContentView: View {
                     viewModel: PhotoLibraryYearViewModel(libraryViewModel: viewModel),
                     router: router
                 )
-                    .equatable()
+                .equatable()
             case .month:
                 PhotoLibraryMonthView(
                     viewModel: PhotoLibraryMonthViewModel(libraryViewModel: viewModel),
                     router: router
                 )
-                    .equatable()
+                .equatable()
             case .day:
                 PhotoLibraryDayView(
                     viewModel: PhotoLibraryDayViewModel(libraryViewModel: viewModel),
                     router: router
                 )
-                    .equatable()
+                .equatable()
             case .all:
                 EmptyView()
             }
@@ -62,8 +73,8 @@ struct PhotoLibraryContentView: View {
                 viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
                 router: router
             )
-                .opacity(viewModel.selectedMode == .all ? 1.0 : 0.0)
-                .zIndex(viewModel.selectedMode == .all ? 1.0 : -1.0)
+            .opacity(viewModel.selectedMode == .all ? 1.0 : 0.0)
+            .zIndex(viewModel.selectedMode == .all ? 1.0 : -1.0)
         }
     }
 }

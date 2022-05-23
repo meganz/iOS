@@ -9,15 +9,14 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
         self.sdk = sdk
     }
     
+    @available(*, renamed: "allFavouritesNodes()")
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         getFavouriteNodes(limitCount: 0, completion: completion)
     }
     
-    func getFavouritesNodes(fromParent parent: NodeEntity) async throws -> [NodeEntity] {
+    func allFavouritesNodes() async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation { continuation in
-            guard let node = parent.toMEGANode(in: sdk) else { continuation.resume(throwing: GetFavouriteNodesErrorEntity.generic); return }
-            
-            getFavouriteNodes(fromParent: node, limitCount: 0) { result in
+            getFavouriteNodes(limitCount: 0) { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: GetFavouriteNodesErrorEntity.generic); return }
                 
                 continuation.resume(with: result)
@@ -26,25 +25,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
     }
     
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        getFavouriteNodes(fromParent: nil, limitCount: 0, completion: completion)
-    }
-    
-    func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
-        sdk.add(self)
-        
-        onNodesUpdate = callback
-    }
-    
-    func unregisterOnNodesUpdate() {
-        sdk.remove(self)
-        
-        onNodesUpdate = nil
-    }
-    
-    // MARK: - Private
-    
-    private func getFavouriteNodes(fromParent parent: MEGANode?, limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        sdk.favourites(forParent: parent, count: limitCount, delegate: RequestDelegate { (result) in
+        sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { (result) in
             switch result {
             case .success(let request):
                 guard let favouritesHandleArray = request.megaHandleArray else {
@@ -65,6 +46,18 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
                 completion(.failure(.sdk))
             }
         })
+    }
+    
+    func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
+        sdk.add(self)
+        
+        onNodesUpdate = callback
+    }
+    
+    func unregisterOnNodesUpdate() {
+        sdk.remove(self)
+        
+        onNodesUpdate = nil
     }
 }
 

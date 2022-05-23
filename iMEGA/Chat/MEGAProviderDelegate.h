@@ -4,11 +4,13 @@
 
 #import "MEGACallManager.h"
 
+@class TonePlayer;
 
 @interface MEGAProviderDelegate : NSObject <CXProviderDelegate>
 
 @property (nonatomic, readonly) BOOL isAudioSessionActive;
 @property (getter=isOutgoingCall) BOOL outgoingCall;
+@property(nonatomic, strong) TonePlayer *tonePlayer;
 
 - (instancetype)initWithMEGACallManager:(MEGACallManager *)megaCallManager;
 

@@ -11,13 +11,25 @@ protocol AlbumLibraryContentViewRouting {
 struct AlbumLibraryContentViewRouter: AlbumLibraryContentViewRouting, Routing {
     
     func cell(for album: NodeEntity) -> AlbumCell {
-        let favouriteRepo = FavouriteNodesRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        let sdk = MEGASdkManager.sharedMEGASdk()
+        let favouriteRepo = FavouriteNodesRepository(sdk: sdk)
         let thumbnailRepo = ThumbnailRepository.default
+        let nodesUpdateRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
+        let albumContentsRepo = AlbumContentsUpdateNotifierRepository(
+            sdk: sdk,
+            nodesUpdateListenerRepo: nodesUpdateRepo
+        )
         
         let favouriteUsecase = FavouriteNodesUseCase(repo: favouriteRepo)
         let thumbnailUsecase = ThumbnailUseCase(repository: thumbnailRepo)
+        let albumContentsUseCase = AlbumContentsUseCase(albumContentsRepo: albumContentsRepo)
         
-        let vm = AlbumCellViewModel(album: album, favouriteUseCase: favouriteUsecase, thumbnailUseCase: thumbnailUsecase)
+        let vm = AlbumCellViewModel(
+            album: album,
+            favouriteUseCase: favouriteUsecase,
+            thumbnailUseCase: thumbnailUsecase,
+            albumContentsUseCase: albumContentsUseCase
+        )
         return AlbumCell(viewModel: vm)
     }
     

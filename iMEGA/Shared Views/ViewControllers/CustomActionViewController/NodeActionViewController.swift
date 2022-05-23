@@ -86,9 +86,17 @@ class NodeActionViewController: ActionSheetViewController {
             selectionType = .files
         }
         
-        self.actions = NodeActionBuilder()
-            .setNodeSelectionType(selectionType)
-            .multiselectBuild()
+        if displayMode == .favouriteAlbumSelectionToolBar {
+            actions = NodeActionBuilder()
+                .setNodeSelectionType(selectionType)
+                .setIsFavourite(true)
+                .multiselectAlbumBuild()
+        }
+        else {
+            actions = NodeActionBuilder()
+                .setNodeSelectionType(selectionType)
+                .multiselectBuild()
+        }
     }
     
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, sender: Any) {

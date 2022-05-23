@@ -1,3 +1,4 @@
+import Combine
 
 protocol MeetingParticipantsLayoutRouting: Routing {
     func showRenameChatAlert()
@@ -21,6 +22,8 @@ enum CallViewAction: ActionType {
     case particpantIsVisible(_ participant: CallParticipantEntity, index: Int)
     case indexVisibleParticipants([Int])
     case pinParticipantAsSpeaker(CallParticipantEntity)
+    case addParticipant(withHandle: MEGAHandle)
+    case removeParticipant(withHandle: MEGAHandle)
 }
 
 enum ParticipantsLayoutMode {
@@ -53,8 +56,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case reloadParticipantAt(Int, [CallParticipantEntity])
         case updateSpeakerViewFor(CallParticipantEntity)
         case localVideoFrame(Int, Int, Data)
-        case participantAdded(String)
-        case participantRemoved(String)
+        case participantsStatusChanged(addedParticipantCount: Int,
+                                       removedParticipantCount: Int,
+                                       addedParticipantNames: [String],
+                                       removedParticipantNames: [String])
         case reconnecting
         case reconnected
         case updateCameraPositionTo(position: CameraPositionEntity)
@@ -117,6 +122,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
+    
+    private var meetingParticipantStatusPipelineSubscription: AnyCancellable?
+    private let meetingParticipantStatusPipeline = MeetingParticipantStatusPipeline(
+        collectionDuration: 1.0,
+        resetCollectionDurationUptoCount: 2
+    )
+    
+    private let tonePlayer = TonePlayer()
+    private var namesFetchingTask: Task<Void, Never>?
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -273,6 +287,48 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callParticipants.isEmpty && !call.clientSessions.isEmpty
     }
     
+    private func addMeetingParticipantStatusPipelineSubscription() {
+        meetingParticipantStatusPipelineSubscription?.cancel()
+        meetingParticipantStatusPipelineSubscription = meetingParticipantStatusPipeline
+            .statusPublisher
+            .sink { [weak self] handlerCollectionType in
+                guard let self = self else { return }
+                
+                if handlerCollectionType.removedHandlers.isEmpty == false {
+                    self.tonePlayer.play(tone: .participantLeft)
+                } else if handlerCollectionType.addedHandlers.isEmpty == false {
+                    self.tonePlayer.play(tone: .participantJoined)
+                }
+                
+                self.namesFetchingTask?.cancel()
+                self.namesFetchingTask = Task { [weak self] in
+                    guard let self = self else { return }
+                    
+                    let addedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.addedHandlers)
+                    let removedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.removedHandlers)
+
+                    do {
+                        async let addedParticipantNamesAsyncTask = self.chatRoomUseCase.userDisplayNames(
+                            forPeerIds: addedParticipantHandlersSubset,
+                            chatId: self.chatRoom.chatId)
+                        
+                        async let removedParticipantNamesAsyncTask = self.chatRoomUseCase.userDisplayNames(
+                            forPeerIds: removedParticipantHandlersSubset,
+                            chatId: self.chatRoom.chatId)
+                        
+                        let participantNamesResult = try await [addedParticipantNamesAsyncTask, removedParticipantNamesAsyncTask]
+                        
+                        await self.handle(addedParticipantCount: handlerCollectionType.addedHandlers.count,
+                                          removedParticipantCount: handlerCollectionType.removedHandlers.count,
+                                          addedParticipantNames: participantNamesResult[0],
+                                          removedParticipantNames: participantNamesResult[1])
+                    } catch {
+                        MEGALogDebug("Failed to load participants name \(error)")
+                    }
+                }
+            }
+    }
+    
     // MARK: - Dispatch action
     func dispatch(_ action: CallViewAction) {
         switch action {
@@ -306,6 +362,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
+            addMeetingParticipantStatusPipelineSubscription()
         case .onViewReady:
             if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
                 fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
@@ -380,7 +437,34 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             updateVisibeParticipants(for: visibleIndex)
         case .pinParticipantAsSpeaker(let participant):
             pinParticipantAsSpeaker(participant)
+        case .addParticipant(let handle):
+            meetingParticipantStatusPipeline.addParticipant(withHandle: handle)
+        case .removeParticipant(let handle):
+            meetingParticipantStatusPipeline.removeParticipant(withHandle: handle)
         }
+    }
+    
+    private func handlersSubsetToFetch(forHandlers handlers: [MEGAHandle]) -> [MEGAHandle] {
+        var handlersSubset = [MEGAHandle]()
+        if handlers.count > 2 {
+            handlersSubset.append(handlers[0])
+        } else if handlers.count == 2 {
+            handlersSubset = Array(handlers.prefix(2))
+        } else if handlers.count == 1 {
+            handlersSubset.append(contentsOf: handlers)
+        }
+        
+        return handlersSubset
+    }
+    
+    @MainActor
+    private func handle(addedParticipantCount: Int, removedParticipantCount: Int, addedParticipantNames: [String], removedParticipantNames: [String]) {
+        self.invokeCommand?(
+            .participantsStatusChanged(addedParticipantCount: addedParticipantCount,
+                                       removedParticipantCount: removedParticipantCount,
+                                       addedParticipantNames: addedParticipantNames,
+                                       removedParticipantNames: removedParticipantNames)
+        )
     }
     
     private func updateVisibeParticipants(for visibleIndex: [Int]) {
@@ -597,17 +681,11 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func participantAdded(with handle: MEGAHandle) {
-        participantName(for: handle) { [weak self] displayName in
-            guard let displayName = displayName else { return }
-            self?.invokeCommand?(.participantAdded(displayName))
-        }
+        dispatch(.addParticipant(withHandle: handle))
     }
     
     func participantRemoved(with handle: MEGAHandle) {
-        participantName(for: handle) { [weak self] displayName in
-            guard let displayName = displayName else { return }
-            self?.invokeCommand?(.participantRemoved(displayName))
-        }
+        dispatch(.removeParticipant(withHandle: handle))
     }
     
     func connecting() {

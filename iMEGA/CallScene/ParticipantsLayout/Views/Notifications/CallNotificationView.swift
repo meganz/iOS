@@ -52,13 +52,13 @@ class CallNotificationView: UIView {
         fadeIn()
         
         if autoFadeOut {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.fadeOut()
             }
         }
     }
     
-    func fadeIn(withDuration duration: TimeInterval = 0.5) {
+    func fadeIn(withDuration duration: TimeInterval = 0.25) {
         var offsetY: CGFloat = frame.size.height + 16
         let offsetX: CGFloat = 0
 
@@ -71,7 +71,7 @@ class CallNotificationView: UIView {
         })
     }
     
-    func fadeOut(withDuration duration: TimeInterval = 0.3) {
+    func fadeOut(withDuration duration: TimeInterval = 0.25) {
         let offset: CGFloat = superview?.safeAreaInsets.top ?? 0 + frame.size.height + 16
 
         UIView.animate(withDuration: duration, animations: { [weak self] in

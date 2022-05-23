@@ -39,10 +39,6 @@ public enum Strings {
     public static let _1AndA2MoreA = Strings.tr("Localizable", "%1 and [A]%2 more[/A]")
     /// %1 Images
     public static let _1Images = Strings.tr("Localizable", "%1 Images")
-    /// %1 Images and %2 Videos
-    public static let _1ImagesAnd2Videos = Strings.tr("Localizable", "%1 Images and %2 Videos")
-    /// %1 Images and 1 Video
-    public static let _1ImagesAnd1Video = Strings.tr("Localizable", "%1 Images and 1 Video")
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
     /// %1$d items
@@ -95,10 +91,6 @@ public enum Strings {
     public static let recommended = Strings.tr("Localizable", "(Recommended)")
     /// 1 contact found on MEGA
     public static let _1ContactFoundOnMEGA = Strings.tr("Localizable", "1 contact found on MEGA")
-    /// 1 Image and %2 Videos
-    public static let _1ImageAnd2Videos = Strings.tr("Localizable", "1 Image and %2 Videos")
-    /// 1 Image and 1 Video
-    public static let _1ImageAnd1Video = Strings.tr("Localizable", "1 Image and 1 Video")
     /// 1 selected
     public static let _1Selected = Strings.tr("Localizable", "1 selected")
     /// 1 hour
@@ -303,8 +295,6 @@ public enum Strings {
     public static let autoAcceptFooter = Strings.tr("Localizable", "autoAcceptFooter")
     /// Auto-away
     public static let autoAway = Strings.tr("Localizable", "autoAway")
-    /// Automatic
-    public static let automatic = Strings.tr("Localizable", "Automatic")
     /// Automatically back up your photos and videos to your Cloud Drive.
     public static let automaticallyBackupYourPhotosAndVideosToTheCloudDrive = Strings.tr("Localizable", "Automatically backup your photos and videos to the Cloud Drive.")
     /// Automatically delete messages older than a certain amount of time.
@@ -331,8 +321,6 @@ public enum Strings {
     public static let balanceError = Strings.tr("Localizable", "Balance error")
     /// Begin Setup
     public static let beginSetup = Strings.tr("Localizable", "beginSetup")
-    /// Best
-    public static let best = Strings.tr("Localizable", "best")
     /// Billing failed
     public static let billingFailed = Strings.tr("Localizable", "Billing failed")
     /// Blocked
@@ -989,8 +977,6 @@ public enum Strings {
     public static let help = Strings.tr("Localizable", "help")
     /// Help Centre
     public static let helpCentreLabel = Strings.tr("Localizable", "helpCentreLabel")
-    /// High
-    public static let high = Strings.tr("Localizable", "high")
     /// History Clearing
     public static let historyClearing = Strings.tr("Localizable", "History Clearing")
     /// Home
@@ -1053,7 +1039,7 @@ public enum Strings {
     }
     /// Info
     public static let info = Strings.tr("Localizable", "info")
-    /// Insert your friends' emails:
+    /// Insert your friends’ emails:
     public static let insertYourFriendsEmails = Strings.tr("Localizable", "insertYourFriendsEmails")
     /// Internal error
     public static let internalError = Strings.tr("Localizable", "Internal error")
@@ -1203,8 +1189,6 @@ public enum Strings {
     public static let logoutLabel = Strings.tr("Localizable", "logoutLabel")
     /// Lost your Authenticator device?
     public static let lostYourAuthenticatorDevice = Strings.tr("Localizable", "lostYourAuthenticatorDevice")
-    /// Low
-    public static let low = Strings.tr("Localizable", "low")
     /// Maintain my chosen status appearance even when I have no connected devices.
     public static let maintainMyChosenStatusAppearance = Strings.tr("Localizable", "maintainMyChosenStatusAppearance")
     /// Manage
@@ -1225,8 +1209,6 @@ public enum Strings {
     public static let masterKeyExportedAlertMessage = Strings.tr("Localizable", "masterKeyExported_alertMessage")
     /// Me
     public static let me = Strings.tr("Localizable", "me")
-    /// Medium
-    public static let medium = Strings.tr("Localizable", "medium")
     /// MEGA CAMERA UPLOADS FOLDER
     public static let megaCameraUploadsFolder = Strings.tr("Localizable", "MEGA CAMERA UPLOADS FOLDER")
     /// MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.
@@ -1295,8 +1277,6 @@ public enum Strings {
     public static func moveFoldersMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "moveFoldersMessage", p1)
     }
-    /// Move to the Rubbish Bin
-    public static let moveToTheRubbishBin = Strings.tr("Localizable", "moveToTheRubbishBin")
     /// Two-factor authentication required
     public static let multiFactorAuthenticationRequired = Strings.tr("Localizable", "Multi-factor authentication required")
     /// Mute
@@ -1485,16 +1465,12 @@ public enum Strings {
     public static let openIn = Strings.tr("Localizable", "openIn")
     /// Open MEGA and sign in to continue
     public static let openMEGAAndSignInToContinue = Strings.tr("Localizable", "openMEGAAndSignInToContinue")
-    /// Optimised
-    public static let optimised = Strings.tr("Localizable", "Optimised")
     /// Options
     public static let options = Strings.tr("Localizable", "options")
     /// Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items.
     public static let optionsSuchAsSendDecryptionKeySeparatelySetExpiryDateOrPasswordsAreOnlyAvailableForSingleItems = Strings.tr("Localizable", "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items.")
     /// Orange
     public static let orange = Strings.tr("Localizable", "Orange")
-    /// Original
-    public static let original = Strings.tr("Localizable", "original")
     /// Out of range
     public static let outOfRange = Strings.tr("Localizable", "Out of range")
     /// Outgoing
@@ -1939,11 +1915,11 @@ public enum Strings {
     public static let sendGIF = Strings.tr("Localizable", "Send GIF")
     /// Send Location
     public static let sendLocation = Strings.tr("Localizable", "Send Location")
-    /// Send original size, increased quality images
+    /// Always send original size images.
     public static let sendOriginalSizeIncreasedQualityImages = Strings.tr("Localizable", "Send original size, increased quality images")
-    /// Send smaller size images optimised for lower data consumption
+    /// Always send optimised images.
     public static let sendSmallerSizeImagesOptimisedForLowerDataConsumption = Strings.tr("Localizable", "Send smaller size images optimised for lower data consumption")
-    /// Send smaller size images through cellular networks and original size images through Wi-Fi
+    /// Send optimised images when on mobile data but original size images when on Wi-Fi.
     public static let sendSmallerSizeImagesThroughCellularNetworksAndOriginalSizeImagesThroughWifi = Strings.tr("Localizable", "Send smaller size images through cellular networks and original size images through wifi")
     /// Send this location
     public static let sendThisLocation = Strings.tr("Localizable", "Send This Location")
@@ -2966,6 +2942,16 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
+      public enum Image {
+        public enum Quality {
+          /// Automatic
+          public static let automatic = Strings.tr("Localizable", "chat.image.quality.automatic")
+          /// Optimised
+          public static let optimised = Strings.tr("Localizable", "chat.image.quality.optimised")
+          /// Original
+          public static let original = Strings.tr("Localizable", "chat.image.quality.original")
+        }
+      }
       public enum ManageHistory {
         public enum Clearing {
           public enum Custom {
@@ -3550,6 +3536,12 @@ public enum Strings {
           }
         }
       }
+      public enum MenuAction {
+        /// Delete permanently
+        public static let deletePermanently = Strings.tr("Localizable", "general.menuAction.deletePermanently")
+        /// Move to Rubbish Bin
+        public static let moveToRubbishBin = Strings.tr("Localizable", "general.menuAction.moveToRubbishBin")
+      }
       public enum Security {
         /// MEGA-RECOVERYKEY
         public static let recoveryKeyFile = Strings.tr("Localizable", "general.security.recoveryKeyFile")
@@ -3658,6 +3650,16 @@ public enum Strings {
           }
         }
       }
+      public enum Document {
+        public enum Quality {
+          /// Best
+          public static let best = Strings.tr("Localizable", "media.document.quality.best")
+          /// Low
+          public static let low = Strings.tr("Localizable", "media.document.quality.low")
+          /// Medium
+          public static let medium = Strings.tr("Localizable", "media.document.quality.medium")
+        }
+      }
       public enum PhotoLibrary {
         public enum Category {
           public enum All {
@@ -3676,6 +3678,18 @@ public enum Strings {
             /// Years
             public static let title = Strings.tr("Localizable", "media.photoLibrary.category.years.title")
           }
+        }
+      }
+      public enum Video {
+        public enum Quality {
+          /// High
+          public static let high = Strings.tr("Localizable", "media.video.quality.high")
+          /// Low
+          public static let low = Strings.tr("Localizable", "media.video.quality.low")
+          /// Medium
+          public static let medium = Strings.tr("Localizable", "media.video.quality.medium")
+          /// Original
+          public static let original = Strings.tr("Localizable", "media.video.quality.original")
         }
       }
     }
@@ -3774,6 +3788,32 @@ public enum Strings {
           public static let endAndJoin = Strings.tr("Localizable", "meetings.new.anotherAlreadyExistsError.endAndJoin")
         }
       }
+      public enum Notification {
+        /// %@ and %@ others joined
+        public static func moreThanTwoUsersJoined(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersJoined", String(describing: p1), String(describing: p2))
+        }
+        /// %@ and %@ others left
+        public static func moreThanTwoUsersLeft(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersLeft", String(describing: p1), String(describing: p2))
+        }
+        /// %@ joined
+        public static func singleUserJoined(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.singleUserJoined", String(describing: p1))
+        }
+        /// %@ left
+        public static func singleUserLeft(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.singleUserLeft", String(describing: p1))
+        }
+        /// %@ and %@ joined
+        public static func twoUsersJoined(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.twoUsersJoined", String(describing: p1), String(describing: p2))
+        }
+        /// %@ and %@ left
+        public static func twoUsersLeft(_ p1: Any, _ p2: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.twoUsersLeft", String(describing: p1), String(describing: p2))
+        }
+      }
       public enum Notifications {
         /// You are the new call moderator
         public static let moderatorPrivilege = Strings.tr("Localizable", "meetings.notifications.moderatorPrivilege")
@@ -3832,6 +3872,14 @@ public enum Strings {
           public static let button = Strings.tr("Localizable", "recents.emptyState.activityHidden.button")
           /// Recent Activity Hidden
           public static let title = Strings.tr("Localizable", "recents.emptyState.activityHidden.title")
+        }
+      }
+      public enum Section {
+        public enum Thumbnail {
+          /// Plural format key: "%#@image@ and %#@video@"
+          public static func imageAndVideoCount(_ p1: Int, _ p2: Int) -> String {
+            return Strings.tr("Localizable", "recents.section.thumbnail.imageAndVideoCount", p1, p2)
+          }
         }
       }
     }
@@ -3893,7 +3941,7 @@ public enum Strings {
         }
       }
       public enum Error {
-        /// File removed as it violated our Terms of Service
+        /// Violated Terms of Service
         public static let termsOfServiceViolation = Strings.tr("Localizable", "transfer.error.termsOfServiceViolation")
       }
       public enum Storage {

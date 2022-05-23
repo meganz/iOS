@@ -123,7 +123,6 @@ class ExplorerToolbarConfigurator {
             )
             
         case .accessOwner:
-            shareLinkItem.isEnabled = nodes.count < 100
             return enable(
                 true,
                 barButtonItems: [
@@ -165,7 +164,7 @@ class ExplorerToolbarConfigurator {
         return lowestAccessLevel
     }
     
-    private func enable(_ enable: Bool,
+    func enable(_ enable: Bool,
                         barButtonItems: [UIBarButtonItem],
                         excludeBarButtonItems: [UIBarButtonItem] = []) -> [UIBarButtonItem] {
         barButtonItems.forEach {
