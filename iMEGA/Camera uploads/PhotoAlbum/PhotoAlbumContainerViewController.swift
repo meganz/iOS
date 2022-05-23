@@ -9,6 +9,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
     
     override var isEditing: Bool {
         willSet {
+            pageTabViewModel.isEditing = newValue
+            
             pageController.dataSource = newValue ? nil : self
             pageTabHostingController?.view?.isUserInteractionEnabled = !newValue
         }

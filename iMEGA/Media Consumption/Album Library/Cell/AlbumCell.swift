@@ -7,7 +7,7 @@ struct AlbumCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack {
-                PhotoCellImage(container: viewModel.thumbnailContainer, bgColor: Color.gray)
+                PhotoCellImage(container: viewModel.thumbnailContainer, bgColor: Color(Colors.General.Gray.ebebeb.color))
                     .cornerRadius(6)
                 
                 ProgressView()

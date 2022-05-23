@@ -645,7 +645,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = boolValue;
-    [self.shareLinkBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? boolValue : NO)];
+    self.shareLinkBarButtonItem.enabled = boolValue;
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;

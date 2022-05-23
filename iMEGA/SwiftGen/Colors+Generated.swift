@@ -75,6 +75,7 @@ internal enum Colors {
       internal static let e2E2E2 = ColorAsset(name: "E2E2E2")
       internal static let e5E5E5 = ColorAsset(name: "E5E5E5")
       internal static let e6E6E6 = ColorAsset(name: "E6E6E6")
+      internal static let ebebeb = ColorAsset(name: "EBEBEB")
       internal static let ebebf5 = ColorAsset(name: "EBEBF5")
       internal static let f4F4F4 = ColorAsset(name: "F4F4F4")
       internal static let navigationBgColor = ColorAsset(name: "navigationBgColor")
@@ -128,7 +129,9 @@ internal enum Colors {
     internal static let imageBackground = ColorAsset(name: "imageBackground")
   }
   internal enum Photos {
+    internal static let pageTabForeground = ColorAsset(name: "pageTabForeground")
     internal static let photoSeletionBorder = ColorAsset(name: "photoSeletionBorder")
+    internal static let rightBarButtonForeground = ColorAsset(name: "rightBarButtonForeground")
     internal static let zoomButtonForeground = ColorAsset(name: "zoomButtonForeground")
   }
   internal enum SharedViews {

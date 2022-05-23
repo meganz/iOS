@@ -87,16 +87,16 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     NSString *videoQualityString;
     switch (CameraUploadManager.HEVCToH264CompressionQuality) {
         case CameraUploadVideoQualityLow:
-            videoQualityString = NSLocalizedString(@"low", @"Low");
+            videoQualityString = NSLocalizedString(@"media.video.quality.low", @"Low");
             break;
         case CameraUploadVideoQualityMedium:
-            videoQualityString = NSLocalizedString(@"medium", @"Medium");
+            videoQualityString = NSLocalizedString(@"media.video.quality.medium", @"Medium");
             break;
         case CameraUploadVideoQualityHigh:
-            videoQualityString = NSLocalizedString(@"high", @"High");
+            videoQualityString = NSLocalizedString(@"media.video.quality.high", @"High");
             break;
         case CameraUploadVideoQualityOriginal:
-            videoQualityString = NSLocalizedString(@"original", @"Original");
+            videoQualityString = NSLocalizedString(@"media.video.quality.original", @"Original");
             break;
         default:
             break;

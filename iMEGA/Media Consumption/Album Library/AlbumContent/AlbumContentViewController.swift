@@ -5,7 +5,7 @@ import SwiftUI
 final class AlbumContentViewController: UIViewController, ViewType {
     private let viewModel: AlbumContentViewModel
     
-    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
     lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
     
@@ -21,6 +21,9 @@ final class AlbumContentViewController: UIViewController, ViewType {
                                                  target: self,
                                                  action: #selector(exitButtonTapped(_:))
     )
+    
+    lazy var toolbar = UIToolbar()
+    var albumToolbarConfigurator: AlbumToolbarConfigurator?
     
     // MARK: - Init
     
@@ -40,6 +43,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         buildNavigationBar()
         
         configPhotoLibraryView(in: view)
+        setupPhotoLibrarySubscriptions()
         
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
@@ -51,7 +55,44 @@ final class AlbumContentViewController: UIViewController, ViewType {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        if isToolbarShown {
+            endEditingMode()
+        }
+        
         viewModel.cancelLoading()
+    }
+    
+    // MARK: - Internal
+    
+    func selectedNodes() -> [MEGANode]? {
+        selection.nodes
+    }
+    
+    func endEditingMode() {
+        setEditing(false, animated: true)
+        
+        enablePhotoLibraryEditMode(isEditing)
+        configureBarButtons()
+        enableNavigationEditBarButton(true)
+        
+        navigationItem.title = viewModel.albumName
+        
+        hideToolbar()
+    }
+    
+    func configureToolbarButtonsWithAlbumType() {
+        configureToolbarButtons(albumType: .favourite)
+    }
+    
+    private func startEditingMode() {
+        setEditing(true, animated: true)
+        enablePhotoLibraryEditMode(isEditing)
+        updateNavigationTitle(withSelectedPhotoCount: 0)
+        
+        configureBarButtons()
+        configureToolbarButtonsWithAlbumType()
+        
+        showToolbar()
     }
     
     // MARK: - ViewType protocol
@@ -64,9 +105,6 @@ final class AlbumContentViewController: UIViewController, ViewType {
             if nodes.isEmpty {
                 showEmptyView()
             }
-            
-            // Disable it for now
-            rightBarButtonItem.isEnabled = false
         }
     }
     
@@ -90,7 +128,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
                 image: Asset.Images.NavigationBar.selectAll.image,
                 style: .plain,
                 target: self,
-                action: #selector(exitButtonTapped(_:))
+                action: #selector(selectAllButtonPressed(_:))
             )
         } else {
             leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
@@ -103,7 +141,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .cancel,
                 target: self,
-                action: #selector(exitButtonTapped(_:))
+                action: #selector(cancelButtonPressed(_:))
             )
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
         } else {
@@ -123,9 +161,20 @@ final class AlbumContentViewController: UIViewController, ViewType {
     
     // MARK: - Action
     
-    @objc func editButtonPressed(_ barButtonItem: UIBarButtonItem) {}
-    
-    @objc func exitButtonTapped(_ barButtonItem: UIBarButtonItem) {
+    @objc private func exitButtonTapped(_ barButtonItem: UIBarButtonItem) {
         dismiss(animated: true)
+    }
+    
+    @objc private func cancelButtonPressed(_ barButtonItem: UIBarButtonItem) {
+        endEditingMode()
+    }
+    
+    @objc private func editButtonPressed(_ barButtonItem: UIBarButtonItem) {
+        startEditingMode()
+    }
+    
+    @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
+        configPhotoLibrarySelectAll()
+        configureToolbarButtonsWithAlbumType()
     }
 }

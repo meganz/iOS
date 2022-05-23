@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 
 enum AlbumContentAction: ActionType {
     case onViewReady
@@ -11,9 +12,12 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     }
     
     private var favouritesUseCase: FavouriteNodesUseCaseProtocol
-    private let parentNode: NodeEntity
+    private var albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
+    private let cameraUploadNode: NodeEntity
     private let router: AlbumContentRouter
     private var loadingTask: Task<Void, Never>?
+    
+    private var updateSubscription: AnyCancellable?
     
     let albumName: String
     
@@ -21,13 +25,22 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     
     // MARK: - Init
     
-    init(parentNode: NodeEntity, albumName: String, favouritesUseCase: FavouriteNodesUseCaseProtocol, router: AlbumContentRouter) {
-        self.parentNode = parentNode
+    init(
+        cameraUploadNode: NodeEntity,
+        albumName: String,
+        favouritesUseCase: FavouriteNodesUseCaseProtocol,
+        albumContentsUseCase: AlbumContentsUpdateNotifierUseCase,
+        router: AlbumContentRouter
+    ) {
+        self.cameraUploadNode = cameraUploadNode
         self.favouritesUseCase = favouritesUseCase
+        self.albumContentsUseCase = albumContentsUseCase
         self.router = router
         self.albumName = albumName
         
         super.init()
+        
+        setupSubscription()
     }
     
     // MARK: - Dispatch action
@@ -52,11 +65,24 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     @MainActor
     private func loadNodes() async {
         do {
-            let nodes = try await favouritesUseCase.getFavouriteNodes(fromParent: parentNode)
-            
+            let nodes = try await favouritesUseCase.favouriteAlbumsMediaNodes(withCUHandle: cameraUploadNode.handle)
+
             invokeCommand?(.showAlbum(nodes: nodes))
         } catch {
             print(error)
+        }
+    }
+    
+    private func reloadAlbum() {
+        loadingTask = Task {
+            try? await Task.sleep(nanoseconds: 0_350_000_000)
+            await loadNodes()
+        }
+    }
+    
+    private func setupSubscription() {
+        updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
+            self?.reloadAlbum()
         }
     }
 }

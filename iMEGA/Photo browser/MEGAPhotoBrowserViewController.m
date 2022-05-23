@@ -107,7 +107,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
     doubleTap.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:doubleTap];
-
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGesture:)];
     singleTap.numberOfTapsRequired = 1;
     [singleTap requireGestureRecognizerToFail:doubleTap];
@@ -145,7 +145,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
             self.navigationItem.rightBarButtonItem = self.allMediaToolBarItem;
         }
-
+            
             break;
         default:
             break;
@@ -221,7 +221,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         [activityIndicatorView removeFromSuperview];
         [placeholderPlayImageView removeFromSuperview];
         [placeholderCurrentImageView removeFromSuperview];
-
+        
         if (self.presentedViewController) {
             self.needsReload = YES;
         }
@@ -589,7 +589,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             zoomableView.tag = 2;
             [zoomableView addSubview:imageView];
             [self resizeImageView:imageView];
-
+            
             if (node.name.mnz_isVideoPathExtension) {
                 UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
                 if (node.mnz_isPlayable) {
@@ -612,15 +612,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
-
+    
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
         [UIView transitionWithView:imageView
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            imageView.image = [UIImage imageWithContentsOfFile:request.file];
-                            [self resizeImageView:imageView];
-                        }
+            imageView.image = [UIImage imageWithContentsOfFile:request.file];
+            [self resizeImageView:imageView];
+        }
                         completion:nil];
         [self removeActivityIndicatorsFromView:imageView];
     };
@@ -682,7 +682,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             
             [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
-
+            
             break;
         }
     }
@@ -728,7 +728,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             imageView.frame = frame;
         }
     }
-
+    
     [self correctOriginForView:imageView scaledAt:1.0f];
 }
 
@@ -746,7 +746,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -1099,7 +1099,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case 0:
             color = [UIColor.whiteColor colorWithAlphaComponent:0.2];
             break;
- 
+            
         default:
             color = [UIColor.blackColor colorWithAlphaComponent:0.1];
             break;
@@ -1113,7 +1113,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case 0:
             valueForSlice = self.transferProgress;
             break;
-
+            
         default:
             valueForSlice = 1 - self.transferProgress;
             break;
@@ -1275,10 +1275,18 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
-
-    [self dismissViewControllerAnimated:YES completion:^{
-        [node navigateToParentAndPresent];
-    }];
+    
+    UIViewController *presentingViewController = [self rootPesentingViewController];
+    
+    if (presentingViewController != nil) {
+        [presentingViewController dismissViewControllerAnimated:YES completion:^{
+            [node navigateToParentAndPresent];
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [node navigateToParentAndPresent];
+        }];
+    }
 }
 
 #pragma mark - MEGADelegate
@@ -1292,7 +1300,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         NSMutableSet* updatedNodeSet = [NSMutableSet setWithArray:updatedNodesArray];
         NSSet* oldNodeSet = [NSSet setWithArray:self.mediaNodes];
         [updatedNodeSet intersectSet:oldNodeSet];
-
+        
         [self reloadPhotoFavouritesIfNeededForNodes:updatedNodesArray];
         
         for (MEGANode *node in updatedNodeSet) {
@@ -1348,12 +1356,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         MEGANode *node = self.mediaNodes[self.currentIndex];
         if (node.name.mnz_isVideoPathExtension) {
             UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
-     imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
+            imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
             
             return imageview;
         }
     }
-
+    
     return nil;
 }
 

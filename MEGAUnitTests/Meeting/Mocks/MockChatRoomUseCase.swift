@@ -2,6 +2,7 @@
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
+    var userDisplayNamesCompletion: Result<[(handle: MEGAHandle, name: String)], ChatRoomErrorEntity> = .failure(.generic)
     var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
     var createChatRoomCompletion: Result<ChatRoomEntity, ChatRoomErrorEntity>?
     var chatRoomEntity: ChatRoomEntity?
@@ -27,6 +28,17 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         completion(userDisplayNameCompletion)
+    }
+    
+    func userDisplayNames(forPeerIds peerIds: [MEGAHandle], chatId: MEGAHandle) async throws -> [String] {
+        switch userDisplayNamesCompletion {
+        case .success(let handleNamePairArray):
+            return peerIds.compactMap { handle in
+                return handleNamePairArray.filter({ $0.handle == handle }).first?.name
+            }
+        case .failure(let error):
+            throw error
+        }
     }
     
     func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {

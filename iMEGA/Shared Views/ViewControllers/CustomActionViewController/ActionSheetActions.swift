@@ -132,11 +132,11 @@ extension NodeAction {
     }
     
     class func moveToRubbishBinAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.moveToTheRubbishBin, detail: nil, image: Asset.Images.NodeActions.rubbishBin.image, type: .moveToRubbishBin)
+        return NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, detail: nil, image: Asset.Images.NodeActions.rubbishBin.image, type: .moveToRubbishBin)
     }
     
     class func removeAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.remove, detail: nil, image: Asset.Images.NodeActions.rubbishBin.image, type: .remove)
+        return NodeAction(title: Strings.Localizable.General.MenuAction.deletePermanently, detail: nil, image: Asset.Images.NodeActions.rubbishBin.image, type: .remove)
     }
     
     class func leaveSharingAction() -> NodeAction {
