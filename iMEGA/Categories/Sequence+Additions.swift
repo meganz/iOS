@@ -21,4 +21,8 @@ extension Sequence where Element: MEGANode {
     func modifiedFavourites() -> [MEGANode] {
         filter({ $0.hasChangedType(.favourite) })
     }
+    
+    func hasSharedLink() -> Bool {
+        !filter({ $0.publicLink != nil }).isEmpty
+    }
 }
