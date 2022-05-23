@@ -281,7 +281,7 @@ class NodeInfoViewController: UIViewController {
         sections.append(.details)
 
         if !self.node.mnz_isInRubbishBin() {
-            if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+            if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner && !node.isTakenDown() {
                 sections.append(.link)
             }
             if node.isFolder() && MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
