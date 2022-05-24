@@ -104,6 +104,7 @@
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
     MEGALogDebug(@"[StoreKit] Products request did receive response %lu products", (unsigned long)response.products.count);
     for (SKProduct *product in response.products) {
+        MEGALogDebug(@"[StoreKit] Product \"%@\" received", product.productIdentifier);
         [self.products addObject:product];
     }
     for (NSString *invalidProductIdentifiers in response.invalidProductIdentifiers) {
