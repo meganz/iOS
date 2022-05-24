@@ -27,7 +27,6 @@
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
-#import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
@@ -1423,39 +1422,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEAccess) {
-            if (request.type == MEGARequestTypeUpload) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") message:NSLocalizedString(@"permissionMessage", @"Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }
-        }
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in self.cdTableView.tableView.visibleCells) {
-                if (request.nodeHandle == nodeTableViewCell.node.handle) {
-                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
-                }
-            }
-            break;
-        }
-            
-        case MEGARequestTypeCancelTransfer:
-            break;
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
@@ -1476,27 +1442,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - MEGATransferDelegate
 
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.isStreamingTransfer) {
-        return;
-    }
-}
-
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (transfer.isStreamingTransfer) {
         return;
-    }
-    
-    if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEAccess) {
-            if ([transfer type] ==  MEGATransferTypeUpload) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }
-        } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transferCancelled", nil)];
-        }
     }
     
     if (transfer.type == MEGATransferTypeDownload && [transfer.path hasPrefix:Helper.relativePathForOffline]) {
