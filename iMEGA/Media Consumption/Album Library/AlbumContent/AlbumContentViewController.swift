@@ -2,7 +2,7 @@ import UIKit
 import SwiftUI
 
 @available(iOS 14.0, *)
-final class AlbumContentViewController: UIViewController, ViewType {
+final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {
     private let viewModel: AlbumContentViewModel
     
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
@@ -184,5 +184,15 @@ final class AlbumContentViewController: UIViewController, ViewType {
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
         configPhotoLibrarySelectAll()
         configureToolbarButtonsWithAlbumType()
+    }
+    
+    // MARK: - TraitEnviromentAware
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
     }
 }
