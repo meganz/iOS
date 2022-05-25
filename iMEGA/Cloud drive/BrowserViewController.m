@@ -780,7 +780,7 @@
     
     if (node.isTakenDown) {
         cell.infoLabel.enabled = node.isFolder;
-        cell.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:cell.nameLabel.font.capHeight];
+        cell.nameLabel.attributedText = [node attributedTakenDownName];
         cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
         cell.userInteractionEnabled = node.isFolder;
         cell.thumbnailImageView.alpha = node.isFolder ? 1.0 : 0.5;

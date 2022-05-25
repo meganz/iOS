@@ -208,7 +208,7 @@ class NodeActionViewController: ActionSheetViewController {
         
         headerView?.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
         if nodes.count == 1, let node = nodes.first, node.isTakenDown() {
-            titleLabel.attributedText = node.mnz_attributedTakenDownName(withHeight: titleLabel.font.capHeight)
+            titleLabel.attributedText = node.attributedTakenDownName()
             titleLabel.textColor = UIColor.mnz_red(for: traitCollection)
         } else {
             titleLabel.textColor = UIColor.mnz_label()
