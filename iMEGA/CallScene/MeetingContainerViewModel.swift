@@ -1,3 +1,4 @@
+import Combine
 
 enum MeetingContainerAction: ActionType {
     case onViewReady
@@ -14,6 +15,8 @@ enum MeetingContainerAction: ActionType {
     case displayParticipantInMainView(_ participant: CallParticipantEntity)
     case didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     case didSwitchToGridView
+    case participantAdded
+    case participantRemoved
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -27,11 +30,18 @@ final class MeetingContainerViewModel: ViewModelType {
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
-    private var call: CallEntity
+    private var muteMicTimerSubscription: AnyCancellable?
+
+    private var call: CallEntity? {
+        callUseCase.call(for: chatRoom.chatId)
+    }
+    
+    private var isOneToOneChat: Bool {
+        chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId)?.chatType == .oneToOne
+    }
 
     init(router: MeetingContainerRouting,
          chatRoom: ChatRoomEntity,
-         call: CallEntity,
          callUseCase: CallUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callManagerUseCase: CallManagerUseCaseProtocol,
@@ -39,7 +49,6 @@ final class MeetingContainerViewModel: ViewModelType {
          authUseCase: AuthUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
-        self.call = call
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callManagerUseCase = callManagerUseCase
@@ -47,7 +56,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.authUseCase = authUseCase
         
         self.callManagerUseCase.addCallRemoved { [weak self] uuid in
-            guard let uuid = uuid, let self = self, self.call.uuid == uuid else { return }
+            guard let uuid = uuid, let self = self, self.call?.uuid == uuid else { return }
             self.callManagerUseCase.removeCallRemovedHandler()
             router.dismiss(animated: false, completion: nil)
         }
@@ -59,6 +68,17 @@ final class MeetingContainerViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             router.showMeetingUI(containerViewModel: self)
+            if isOneToOneChat == false {
+                muteMicTimerSubscription = Timer
+                    .publish(every: 60, on: .main, in: .common)
+                    .autoconnect()
+                    .sink() { [weak self] _ in
+                        guard let self = self else { return }
+
+                        self.muteMicrophoneIfNoOtherParticipantsArePresent()
+                        self.cancelMuteMicrophoneSubscription()
+                    }
+            }
         case.hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
         case .tapOnBackButton:
@@ -105,6 +125,10 @@ final class MeetingContainerViewModel: ViewModelType {
             router.didDisplayParticipantInMainView(participant)
         case .didSwitchToGridView:
             router.didSwitchToGridView()
+        case .participantAdded:
+            cancelMuteMicrophoneSubscription()
+        case .participantRemoved:
+            muteMicrophoneIfNoOtherParticipantsArePresent()
         }
     }
     
@@ -120,7 +144,7 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func dismissCall(completion: (() -> Void)?) {
-        if let call = callUseCase.call(for: call.chatId) {
+        if let call = call {
             if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
                let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
                 MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
@@ -136,7 +160,22 @@ final class MeetingContainerViewModel: ViewModelType {
         router.dismiss(animated: true, completion: completion)
     }
     
+    private func muteMicrophoneIfNoOtherParticipantsArePresent() {
+        if let call = call,
+           call.hasLocalAudio,
+           call.numberOfParticipants == 1,
+           call.participants.first == userUseCase.myHandle {
+            callManagerUseCase.muteUnmuteCall(call, muted: true)
+        }
+    }
+        
+    private func cancelMuteMicrophoneSubscription() {
+        muteMicTimerSubscription?.cancel()
+        muteMicTimerSubscription = nil
+    }
+    
     deinit {
+        cancelMuteMicrophoneSubscription()
         self.callManagerUseCase.removeCallRemovedHandler()
     }
     
