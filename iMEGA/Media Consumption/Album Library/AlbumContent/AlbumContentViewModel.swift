@@ -13,7 +13,7 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     
     private var favouritesUseCase: FavouriteNodesUseCaseProtocol
     private var albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
-    private let cameraUploadNode: NodeEntity
+    private let cameraUploadNode: NodeEntity?
     private let router: AlbumContentRouter
     private var loadingTask: Task<Void, Never>?
     
@@ -26,7 +26,7 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     // MARK: - Init
     
     init(
-        cameraUploadNode: NodeEntity,
+        cameraUploadNode: NodeEntity?,
         albumName: String,
         favouritesUseCase: FavouriteNodesUseCaseProtocol,
         albumContentsUseCase: AlbumContentsUpdateNotifierUseCase,
@@ -65,7 +65,7 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     @MainActor
     private func loadNodes() async {
         do {
-            let nodes = try await favouritesUseCase.favouriteAlbumsMediaNodes(withCUHandle: cameraUploadNode.handle)
+            let nodes = try await favouritesUseCase.favouriteAlbumMediaNodes(withCUHandle: cameraUploadNode?.handle)
 
             invokeCommand?(.showAlbum(nodes: nodes))
         } catch {
