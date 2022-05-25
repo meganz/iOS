@@ -28,9 +28,12 @@ final class AlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRe
         let hasNewNodes = nodes.containsNewNode()
         let hasModifiedNodes = nodes.hasModifiedAttributes()
         let hasModifiedParent = nodes.hasModifiedParent()
-        let hasSharedLink = nodes.hasSharedLink()
+        let hasPublicLink = nodes.hasPublicLink()
+        let isPublicLinkRemoved = nodes.isPublicLinkRemoved()
         
-        if isAnyNodesTrashed || hasNewNodes || hasModifiedNodes || hasModifiedParent || hasSharedLink {
+        if isAnyNodesTrashed || hasNewNodes ||
+            hasModifiedNodes || hasModifiedParent ||
+            hasPublicLink || isPublicLinkRemoved {
             onAlbumReload?()
         }
     }
