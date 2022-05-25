@@ -25,6 +25,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
     lazy var toolbar = UIToolbar()
     var albumToolbarConfigurator: AlbumToolbarConfigurator?
     
+    private lazy var emptyView = EmptyStateView.create(for: .favourites)
+    
     // MARK: - Init
     
     init(viewModel: AlbumContentViewModel) {
@@ -105,6 +107,9 @@ final class AlbumContentViewController: UIViewController, ViewType {
             if nodes.isEmpty {
                 showEmptyView()
             }
+            else {
+                removeEmptyView()
+            }
         }
     }
     
@@ -151,12 +156,15 @@ final class AlbumContentViewController: UIViewController, ViewType {
     }
     
     private func showEmptyView() {
-        let emptyView = EmptyStateView.create(for: .favourites)
         view.addSubview(emptyView)
         
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         emptyView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         emptyView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+    }
+    
+    private func removeEmptyView() {
+        emptyView.removeFromSuperview()
     }
     
     // MARK: - Action
