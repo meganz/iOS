@@ -151,7 +151,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
             hostingController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             hostingController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             hostingController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            hostingController.view.heightAnchor.constraint(equalToConstant: 40)
+            hostingController.view.heightAnchor.constraint(equalToConstant: 38)
         ])
     }
     

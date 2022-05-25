@@ -50,7 +50,7 @@ struct PageTabView: View {
                 }
                 .padding(.vertical, 10)
             }
-            .frame(maxHeight: 35)
+            .frame(height: 40)
             .background(Color(Colors.Photos.pageTabForeground.color))
             .overlay(
                 BottomIndicator(width: proxy.size.width, height: 2, offset: viewModel.tabOffset, color: .red),
