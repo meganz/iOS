@@ -463,7 +463,9 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)getAllTransfers {
-    self.transfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper transfers]];
+    [self.transfersUseCaseHelper transfersWithCompletionHandler:^(NSArray<MEGATransfer *> *transfers) {
+        self.transfers = [[NSMutableArray alloc] initWithArray:transfers];
+    }];
     
     [self getQueuedUploadTransfers];
 }
@@ -849,7 +851,9 @@ static TransfersWidgetViewController* instance = nil;
 
 - (NSMutableArray *)transfers {
     if (!_transfers) {
-        _transfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper transfers]];
+        [self.transfersUseCaseHelper transfersWithCompletionHandler:^(NSArray<MEGATransfer *> *transfers) {
+            self.transfers = [[NSMutableArray alloc] initWithArray:transfers];
+        }];
     }
     return _transfers;
 }

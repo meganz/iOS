@@ -3,16 +3,18 @@ import XCTest
 @testable import MEGA
 
 final class TransferUseCaseTests: XCTestCase {
-    func testTransfers_withoutFilteringUserTransfers() {
+    func testTransfers_withoutFilteringUserTransfers() async {
         let repo = MockTransferRepository()
         let sut = TransfersUseCase(repo: repo)
-        XCTAssertEqual(sut.transfers(filteringUserTransfers: false).count, repo.transfers().count)
+        let transfersCount = await sut.transfers(filteringUserTransfers: false).count
+        XCTAssertEqual(transfersCount, repo.transfers().count)
     }
     
-    func testTransfers_filteringUserTransfers() {
+    func testTransfers_filteringUserTransfers() async {
         let repo = MockTransferRepository()
         let sut = TransfersUseCase(repo: repo)
-        XCTAssertEqual(sut.transfers(filteringUserTransfers: true).count, 2)
+        let transfersCount = await sut.transfers(filteringUserTransfers: true).count
+        XCTAssertEqual(transfersCount, 2)
     }
     
     func testDownloadTransfers_withoutFilteringUserTransfers() {
