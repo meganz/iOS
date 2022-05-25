@@ -22,7 +22,17 @@ extension Sequence where Element: MEGANode {
         filter({ $0.hasChangedType(.favourite) })
     }
     
-    func hasSharedLink() -> Bool {
-        !filter({ $0.publicLink != nil }).isEmpty
+    func hasPublicLink() -> Bool {
+        !filter({
+            $0.hasChangedType(.publicLink) &&
+            $0.publicLink != nil
+        }).isEmpty
+    }
+    
+    func isPublicLinkRemoved() -> Bool {
+        !filter({
+            $0.hasChangedType(.publicLink) &&
+            $0.publicLink == nil
+        }).isEmpty
     }
 }
