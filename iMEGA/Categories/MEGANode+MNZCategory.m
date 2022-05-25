@@ -920,17 +920,6 @@
     return nodeFilePath;
 }
 
-- (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height {
-    NSAssert(self.isTakenDown, @"Attributed string is only supported for takedown nodes");
-
-    NSMutableAttributedString *nameAttributedString = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ ", self.name]].mutableCopy;
-    NSString *takedownImageName = @"isTakedown";
-    NSAttributedString *takedownImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:takedownImageName fontCapHeight:height];
-    [nameAttributedString appendAttributedString:takedownImageAttributedString];
-    
-    return nameAttributedString;
-}
-
 #pragma mark - Shares
 
 - (nonnull NSMutableArray <MEGAShare *> *)outShares {

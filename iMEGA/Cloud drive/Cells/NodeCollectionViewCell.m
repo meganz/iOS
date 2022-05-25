@@ -90,7 +90,7 @@ static NSString *kDuration = @"kDuration";
     }
     
     if (node.isTakenDown) {
-        self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
+        self.nameLabel.attributedText = [node attributedTakenDownName];
         self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;

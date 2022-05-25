@@ -50,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)mnz_isPlaying;
 - (BOOL)mnz_isInRubbishBin;
 - (NSString *)mnz_voiceCachePath;
-- (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
 
 #pragma mark - Shares
 
