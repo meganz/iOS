@@ -12,9 +12,9 @@
         return []
     }
     
-    @objc func transfers() -> [MEGATransfer] {
-        let transfers = transfersUseCase.transfers(filteringUserTransfers: true)
-        let sharedFolderTransfers = sharedFolderTransfersUseCase.transfers(filteringUserTransfers: true)
+    @objc func transfers() async -> [MEGATransfer] {
+        let transfers = await transfersUseCase.transfers(filteringUserTransfers: true)
+        let sharedFolderTransfers = await sharedFolderTransfersUseCase.transfers(filteringUserTransfers: true)
         let megaTransfers = transfers.compactMap { MEGASdkManager.sharedMEGASdk().transfer(byTag: $0.tag) }
         let sharedFolderMegaTransfers = sharedFolderTransfers.compactMap { MEGASdkManager.sharedMEGASdkFolder().transfer(byTag: $0.tag) }
         return megaTransfers + sharedFolderMegaTransfers
