@@ -14,11 +14,11 @@ final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         completion(getFavouriteNodesResult)
     }
     
-    func favouriteAlbum(withCUHandle handle: MEGAHandle) async throws -> AlbumEntity {
+    func favouriteAlbum(withCUHandle handle: MEGAHandle?) async throws -> AlbumEntity {
         return AlbumEntity()
     }
     
-    func favouriteAlbumsMediaNodes(withCUHandle handle: MEGAHandle) async throws -> [NodeEntity] {
+    func favouriteAlbumMediaNodes(withCUHandle handle: MEGAHandle?) async throws -> [NodeEntity] {
         return []
     }
     

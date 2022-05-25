@@ -2,9 +2,9 @@ import UIKit
 
 @available(iOS 14.0, *)
 struct AlbumContentRouter: Routing {
-    private let cameraUploadNode: NodeEntity
+    private let cameraUploadNode: NodeEntity?
     
-    init(cameraUploadNode: NodeEntity) {
+    init(cameraUploadNode: NodeEntity?) {
         self.cameraUploadNode = cameraUploadNode
     }
     

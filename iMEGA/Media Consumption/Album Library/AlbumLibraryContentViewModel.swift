@@ -9,7 +9,8 @@ final class AlbumLibraryContentViewModel: NSObject, ObservableObject  {
     )
     
     @Published var albums: [NodeEntity] = []
-    @Published var selectedAlbum: NodeEntity?
+    @Published var shouldLoad = true
+    @Published var cameraUploadNode: NodeEntity?
     
     private var loadingTask: Task<Void, Never>?
     private var usecase: AlbumUseCaseProtocol
@@ -23,7 +24,11 @@ final class AlbumLibraryContentViewModel: NSObject, ObservableObject  {
         loadingTask = Task {
             do {
                 albums = try await usecase.loadAlbums()
-            } catch {}
+            } catch {
+                albums = []
+            }
+            
+            shouldLoad = false
         }
     }
     

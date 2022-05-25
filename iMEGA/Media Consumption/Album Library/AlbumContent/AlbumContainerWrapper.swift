@@ -2,9 +2,9 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct AlbumContainerWrapper: UIViewControllerRepresentable {
-    var albumNode: NodeEntity
+    var albumNode: NodeEntity?
     
-    init(albumNode: NodeEntity) {
+    init(albumNode: NodeEntity?) {
         self.albumNode = albumNode
     }
     

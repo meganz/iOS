@@ -9,7 +9,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     
     var title = Strings.Localizable.CameraUploads.Albums.Favourites.title
     
-    private var album: NodeEntity
+    private var albumHandle: MEGAHandle?
     private var favouriteUseCase: FavouriteNodesUseCaseProtocol
     private var thumbnailUseCase: ThumbnailUseCaseProtocol
     private var albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
@@ -19,12 +19,12 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     private var updateSubscription: AnyCancellable?
     
     init(
-        album: NodeEntity,
+        albumHandle: MEGAHandle?,
         favouriteUseCase: FavouriteNodesUseCaseProtocol,
         thumbnailUseCase: ThumbnailUseCaseProtocol,
         albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
     ) {
-        self.album = album
+        self.albumHandle = albumHandle
         self.favouriteUseCase = favouriteUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.albumContentsUseCase = albumContentsUseCase
@@ -47,7 +47,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         
         loadingTask = Task {
             do {
-                let albumEntity = try await favouriteUseCase.favouriteAlbum(withCUHandle: album.handle)
+                let albumEntity = try await favouriteUseCase.favouriteAlbum(withCUHandle: albumHandle)
                 numberOfNodes = albumEntity.numberOfNodes
                 
                 if let node = albumEntity.coverNode {
