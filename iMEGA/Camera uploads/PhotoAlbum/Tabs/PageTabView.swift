@@ -48,11 +48,14 @@ struct PageTabView: View {
                             .foregroundColor(viewModel.selectedTab == .album ? .red : albumForgroundColor)
                     }
                 }
-                .padding(.top, 10)
-                
-                BottomIndicator(width: proxy.size.width, height: 2, offset: viewModel.tabOffset, color: .red)
+                .padding(.vertical, 10)
             }
+            .frame(maxHeight: 35)
             .background(Color(Colors.Photos.pageTabForeground.color))
+            .overlay(
+                BottomIndicator(width: proxy.size.width, height: 2, offset: viewModel.tabOffset, color: .red),
+                alignment: .bottom
+            )
         }
     }
 }
