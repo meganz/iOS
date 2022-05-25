@@ -365,4 +365,8 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
                                    cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
+    
+    func localAvFlagsUpdated(video: Bool, audio: Bool) {
+        invokeCommand?(.microphoneMuted(muted: !audio))
+    }
 }

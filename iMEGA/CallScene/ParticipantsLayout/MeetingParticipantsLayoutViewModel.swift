@@ -682,10 +682,12 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     
     func participantAdded(with handle: MEGAHandle) {
         dispatch(.addParticipant(withHandle: handle))
+        containerViewModel?.dispatch(.participantAdded)
     }
     
     func participantRemoved(with handle: MEGAHandle) {
         dispatch(.removeParticipant(withHandle: handle))
+        containerViewModel?.dispatch(.participantRemoved)
     }
     
     func connecting() {

@@ -71,7 +71,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func build() -> UIViewController {
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
-                                                  call: call,
                                                   callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
