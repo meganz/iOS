@@ -30,7 +30,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
-    private var muteMicTimerSubscription: AnyCancellable?
+    private var muteMicSubscription: AnyCancellable?
 
     private var call: CallEntity? {
         callUseCase.call(for: chatRoom.chatId)
@@ -69,14 +69,13 @@ final class MeetingContainerViewModel: ViewModelType {
         case .onViewReady:
             router.showMeetingUI(containerViewModel: self)
             if isOneToOneChat == false {
-                muteMicTimerSubscription = Timer
-                    .publish(every: 60, on: .main, in: .common)
-                    .autoconnect()
+                muteMicSubscription = Just(Void.self)
+                    .delay(for: .seconds(60), scheduler: RunLoop.main)
                     .sink() { [weak self] _ in
                         guard let self = self else { return }
 
                         self.muteMicrophoneIfNoOtherParticipantsArePresent()
-                        self.cancelMuteMicrophoneSubscription()
+                        self.muteMicSubscription = nil
                     }
             }
         case.hangCall(let presenter, let sender):
@@ -170,8 +169,8 @@ final class MeetingContainerViewModel: ViewModelType {
     }
         
     private func cancelMuteMicrophoneSubscription() {
-        muteMicTimerSubscription?.cancel()
-        muteMicTimerSubscription = nil
+        muteMicSubscription?.cancel()
+        muteMicSubscription = nil
     }
     
     deinit {
