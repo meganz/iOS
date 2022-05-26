@@ -199,15 +199,15 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     NSString *imageQualityString;
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
-            imageQualityString = NSLocalizedString(@"chat.image.quality.automatic", @"Indicating that the image quality will be determine by MEGA.");
+            imageQualityString = NSLocalizedString(@"media.quality.automatic", @"Indicating that the image quality will be determine by MEGA.");
             break;
             
         case ChatImageUploadQualityOriginal:
-            imageQualityString = NSLocalizedString(@"chat.image.quality.original", @"Indicating that the image quality will be the same.");
+            imageQualityString = NSLocalizedString(@"media.quality.original", @"Indicating that the image quality will be the same.");
             break;
             
         case ChatImageUploadQualityOptimised:
-            imageQualityString = NSLocalizedString(@"chat.image.quality.optimised", @"Indicating that the image will be optimised.");
+            imageQualityString = NSLocalizedString(@"media.quality.optimised", @"Indicating that the image will be optimised.");
             break;
             
         default:
@@ -228,19 +228,19 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     
     switch (videoQuality) {
         case ChatVideoUploadQualityLow:
-            videoQualityString = NSLocalizedString(@"media.video.quality.low", @"Low");
+            videoQualityString = NSLocalizedString(@"media.quality.low", @"Low");
             break;
             
         case ChatVideoUploadQualityMedium:
-            videoQualityString = NSLocalizedString(@"media.video.quality.medium", @"Medium");
+            videoQualityString = NSLocalizedString(@"media.quality.medium", @"Medium");
             break;
             
         case ChatVideoUploadQualityHigh:
-            videoQualityString = NSLocalizedString(@"media.video.quality.high", @"High");
+            videoQualityString = NSLocalizedString(@"media.quality.high", @"High");
             break;
             
         case ChatVideoUploadQualityOriginal:
-            videoQualityString = NSLocalizedString(@"media.video.quality.original", @"Original");
+            videoQualityString = NSLocalizedString(@"media.quality.original", @"Original");
             break;
             
         default:

@@ -15,11 +15,11 @@ enum DocScanQuality: Float, CustomStringConvertible {
     var description: String {
         switch self {
         case .best:
-            return Strings.Localizable.Media.Document.Quality.best
+            return Strings.Localizable.Media.Quality.best
         case .medium:
-            return Strings.Localizable.Media.Document.Quality.medium
+            return Strings.Localizable.Media.Quality.medium
         case .low:
-            return Strings.Localizable.Media.Document.Quality.low
+            return Strings.Localizable.Media.Quality.low
         }
     }
     
