@@ -2942,16 +2942,6 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
-      public enum Image {
-        public enum Quality {
-          /// Automatic
-          public static let automatic = Strings.tr("Localizable", "chat.image.quality.automatic")
-          /// Optimised
-          public static let optimised = Strings.tr("Localizable", "chat.image.quality.optimised")
-          /// Original
-          public static let original = Strings.tr("Localizable", "chat.image.quality.original")
-        }
-      }
       public enum ManageHistory {
         public enum Clearing {
           public enum Custom {
@@ -3650,16 +3640,6 @@ public enum Strings {
           }
         }
       }
-      public enum Document {
-        public enum Quality {
-          /// Best
-          public static let best = Strings.tr("Localizable", "media.document.quality.best")
-          /// Low
-          public static let low = Strings.tr("Localizable", "media.document.quality.low")
-          /// Medium
-          public static let medium = Strings.tr("Localizable", "media.document.quality.medium")
-        }
-      }
       public enum PhotoLibrary {
         public enum Category {
           public enum All {
@@ -3680,17 +3660,21 @@ public enum Strings {
           }
         }
       }
-      public enum Video {
-        public enum Quality {
-          /// High
-          public static let high = Strings.tr("Localizable", "media.video.quality.high")
-          /// Low
-          public static let low = Strings.tr("Localizable", "media.video.quality.low")
-          /// Medium
-          public static let medium = Strings.tr("Localizable", "media.video.quality.medium")
-          /// Original
-          public static let original = Strings.tr("Localizable", "media.video.quality.original")
-        }
+      public enum Quality {
+        /// Automatic
+        public static let automatic = Strings.tr("Localizable", "media.quality.automatic")
+        /// Best
+        public static let best = Strings.tr("Localizable", "media.quality.best")
+        /// High
+        public static let high = Strings.tr("Localizable", "media.quality.high")
+        /// Low
+        public static let low = Strings.tr("Localizable", "media.quality.low")
+        /// Medium
+        public static let medium = Strings.tr("Localizable", "media.quality.medium")
+        /// Optimised
+        public static let optimised = Strings.tr("Localizable", "media.quality.optimised")
+        /// Original
+        public static let original = Strings.tr("Localizable", "media.quality.original")
       }
     }
     public enum Meetings {

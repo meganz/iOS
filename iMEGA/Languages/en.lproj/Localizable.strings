@@ -2978,23 +2978,17 @@
 "general.menuAction.moveToRubbishBin"="Move to Rubbish Bin";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
 "general.menuAction.deletePermanently"="Delete permanently";
-/* Original image quality on Chat. Indicating that the image quality will be the same. */
-"chat.image.quality.original"="Original";
-/* Automatic image quality on Chat. Indicating that the image quality will be determine by MEGA. */
-"chat.image.quality.automatic"="Automatic";
-/* Optimised image quality on Chat. Indicating that the image will be optimised. */
-"chat.image.quality.optimised"="Optimised";
-/* Low video quality option, used together with “Medium”, “High” and “Original” */
-"media.video.quality.low"="Low";
-/* Medium video quality option, used together with “Low”, “High” and “Original” */
-"media.video.quality.medium"="Medium";
-/* High video quality option, used together with “Low”, “Medium” and “Original” */
-"media.video.quality.high"="High";
-/* Original video quality option, used together with “Low”, “Medium” and “High” */
-"media.video.quality.original"="Original";
-/* Best export quality option for Scan document */
-"media.document.quality.best"="Best";
-/* Low export quality option for Scan document */
-"media.document.quality.low"="Low";
-/* Medium export quality option for Scan document */
-"media.document.quality.medium"="Medium";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="Original";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="Automatic";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="Optimised";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="Low";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="Medium";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="High";
+/* Best quality option used on exporting file in Scan document. */
+"media.quality.best"="Best";
