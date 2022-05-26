@@ -31,13 +31,13 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
 
     @IBOutlet private var recentsContainerView: UIView!
     
-    public var recentScrollView: UIScrollView!
+    public var recentScrollView: UIScrollView?
 
     // MARK: - Favourites Tab
 
     @IBOutlet private var favouritesContainerView: UIView!
     
-    public var favouritesScrollView: UIScrollView!
+    public var favouritesScrollView: UIScrollView?
     
     // MARK: - Offlines Tab
 
@@ -113,8 +113,14 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             }
             return offlineScrollView.contentOffset.y <= 0
         case .favourites:
+            guard let favouritesScrollView = favouritesScrollView else {
+                return true
+            }
             return favouritesScrollView.contentOffset.y <= 0
         case .recents:
+            guard let recentScrollView = recentScrollView else {
+                return true
+            }
             return recentScrollView.contentOffset.y <= 0
         }
     }

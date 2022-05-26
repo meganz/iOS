@@ -745,6 +745,6 @@ private extension Selector {
 extension HomeViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
         slidePanelView.offlineScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-        slidePanelView.recentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        slidePanelView.recentScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
     }
 }
