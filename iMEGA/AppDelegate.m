@@ -287,10 +287,6 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will resign active");
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    MEGALogDebug(@"[App Lifecycle] Application did enter background");
     
     [MEGASdkManager.sharedMEGASdk isLoggedInWithCompletion:^(BOOL isLoggedIn) {
         if (isLoggedIn) {
@@ -298,16 +294,20 @@
         }
     }];
     
-    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
-    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
-
-    [LTHPasscodeViewController.sharedUser setDelegate:self];
-
     [MEGASdkManager.sharedMEGASdk areTherePendingTransfersWithCompletion:^(BOOL pendingTransfers) {
         if (pendingTransfers) {
             [self beginBackgroundTaskWithName:@"PendingTasks"];
         }
     }];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    MEGALogDebug(@"[App Lifecycle] Application did enter background");
+    
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+
+    [LTHPasscodeViewController.sharedUser setDelegate:self];
     
     if (self.privacyView == nil) {
         UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
@@ -366,6 +366,8 @@
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
     
+    [self endBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
+    [self endBackgroundTaskWithName:@"PendingTasks"];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -579,10 +581,12 @@
             [self endBackgroundTaskWithName:name];
         }];
         
-        [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
+        if (name) {
+            NSString *message = [NSString stringWithFormat:@"Can't begin background task with name %@.", name];
+            [CrashlyticsLogger log:message];
+            [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
+        }
     } @catch (NSException *exception) {
-        NSString *message = [NSString stringWithFormat:@"Can't begin background task with name %@. Exception: %@", name, exception];
-        [CrashlyticsLogger log:message];
         MEGALogDebug(@"Can't begin background task with name %@ and with exception %@", name, exception);
     }
 }
@@ -592,10 +596,10 @@
     for (NSUInteger i = 0; i < allKeysArray.count; i++) {
         NSNumber *expiringBackgroundTaskIdentifierNumber = [allKeysArray objectAtIndex:i];
         [[UIApplication sharedApplication] endBackgroundTask:expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue];
+        MEGALogDebug(@"Ended background task %lu with name: %@", (unsigned long)expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue, name);
         
         [self.backgroundTaskMutableDictionary removeObjectForKey:expiringBackgroundTaskIdentifierNumber];
     }
-    MEGALogDebug(@"Ended all background tasks with name: %@", name);
 }
 
 - (void)manageLink:(NSURL *)url {
