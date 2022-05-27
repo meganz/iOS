@@ -985,7 +985,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.view.backgroundColor = UIColor.mnz_background;
             self.interfaceHidden = NO;
         } else {
-            self.view.backgroundColor = UIColor.mnz_background;
+            self.view.backgroundColor = UIColor.blackColor;
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             self.interfaceHidden = YES;
         }
