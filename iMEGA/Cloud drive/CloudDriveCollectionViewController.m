@@ -252,14 +252,6 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
     [self.collectionView reloadData];
 }
 
-- (void)reloadFileItem:(MEGAHandle)nodeHandle {
-    [self reloadItem:nodeHandle section:ThumbnailSectionFile];
-}
-
-- (void)reloadFolderItem:(MEGAHandle)nodeHandle {
-    [self reloadItem:nodeHandle section:ThumbnailSectionFolder];
-}
-
 #pragma mark - Private methods
 
 - (nullable MEGANode *)thumbnailNodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -283,16 +275,6 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
         }
     }
     return list.copy;
-}
-
-- (void)reloadItem:(MEGAHandle)nodeHandle section:(ThumbnailSection)section {
-    [UIView performWithoutAnimation:^{
-        if (nodeHandle) {
-            if (self.collectionView.numberOfSections > section) {
-                [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
-            }
-        }
-    }];
 }
 
 

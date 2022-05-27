@@ -1453,11 +1453,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 [self.cdTableView.tableView reloadData];
                 break;
             case ViewModePreferenceThumbnail:
-                if (transfer.publicNode.isFile) {
-                    [self.cdCollectionView reloadFileItem:transfer.nodeHandle];
-                } else {
-                    [self.cdCollectionView reloadFolderItem:transfer.nodeHandle];
-                }
+                [self.cdCollectionView reloadData];
                 break;
             default:
                 break;
