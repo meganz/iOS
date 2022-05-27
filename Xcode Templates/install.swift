@@ -1,6 +1,15 @@
 import Foundation
 
-let templates = ["MVVM.xctemplate", "Use Case.xctemplate", "Repository.xctemplate"]
+enum Options: Int {
+    case all = 1
+    case mvvm
+    case useCase
+    case repository
+    case uninstall
+    case exit
+}
+
+let templates = ["MVVM.xctemplate", "Use Case.xctemplate", "Repository.xctemplate", "Repository Protocol.xctemplate"]
 let destinationRelativePath = "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/iOS"
 let fileManager = FileManager.default
 let customMEGATemplatesFolderName = "MEGA Templates"
@@ -15,7 +24,7 @@ func selectAnyOption() {
         1. 🛠️  Install or update all MEGA templates.
         2. 🛠️  Install or update the MVVM template.
         3. 🛠️  Install or update the Use Case template.
-        4. 🛠️  Install or update the Repository template.
+        4. 🛠️  Install or update the Repository & Repository Protocol template.
         5. 🗑️  Uninstall all templates.
         6. 🚪🚶 Exit
         
@@ -25,20 +34,25 @@ func selectAnyOption() {
 }
 
 func evaluateUser(option: String) {
-    switch option {
-    case "1":
+    guard let integerOption = Int(option),
+          let selectedOption = Options(rawValue: integerOption) else {
+              print("🛑  incorrect option, choose one of the following options.... 🛑")
+              selectAnyOption()
+              return
+          }
+                                       
+    switch Options(rawValue: integerOption) {
+    case .all:
         templates.forEach(installOrUpdate(template:))
-    case "2", "3", "4":
-        guard let currentPosition = Int(option) else {
-            print("🛑  incorrect option, choose one of the following options.... 🛑")
-            selectAnyOption()
-            return
-        }
+    case .mvvm, .useCase, .repository:
+        installOrUpdate(template: templates[integerOption - 2])
         
-        installOrUpdate(template: templates[currentPosition - 2])
-    case "5":
+        if selectedOption == .repository {
+            installOrUpdate(template: templates[integerOption - 1])
+        }
+    case .uninstall:
         uninstallAllTemplates()
-    case "6":
+    case .exit:
         print("....🚶 🚪 ..... 👋👋 Bye! 👋👋")
         break
     default:

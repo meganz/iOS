@@ -1,5 +1,5 @@
-
-protocol ___VARIABLE_repositoryName:identifier___RepositoryProtocol {
+extension ___VARIABLE_repositoryName:identifier___Repository {
+    static let `default` = ___VARIABLE_repositoryName:identifier___Repository(sdk: MEGASdkManager.sharedMEGASdk())
 }
 
 struct ___VARIABLE_repositoryName:identifier___Repository: ___VARIABLE_repositoryName:identifier___RepositoryProtocol {
