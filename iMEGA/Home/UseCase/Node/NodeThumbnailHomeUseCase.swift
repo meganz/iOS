@@ -12,16 +12,16 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
     private var sdkNodeClient: SDKNodeClient
     private var fileSystemClient: FileSystemImageCacheClient
-    private var fileRepo: FileRepositoryProtocol
+    private var thumbnailRepo: ThumbnailRepositoryProtocol
 
     init(
         sdkNodeClient: SDKNodeClient,
         fileSystemClient: FileSystemImageCacheClient,
-        fileRepo: FileRepositoryProtocol
+        thumbnailRepo: ThumbnailRepositoryProtocol
     ) {
         self.sdkNodeClient = sdkNodeClient
         self.fileSystemClient = fileSystemClient
-        self.fileRepo = fileRepo
+        self.thumbnailRepo = thumbnailRepo
     }
 
     func loadThumbnail(
@@ -51,7 +51,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         base64Handle: MEGABase64Handle,
         completion: @escaping (UIImage?) -> Void
     ) {
-        let destinationThumbnailCachePath = fileRepo.cachedThumbnailURL(for: base64Handle)
+        let destinationThumbnailCachePath = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
         let fileExists = fileSystemClient.fileExists(destinationThumbnailCachePath)
         if fileExists {
             fileSystemClient.loadCachedImageAsync(destinationThumbnailCachePath) { cachedImageData in

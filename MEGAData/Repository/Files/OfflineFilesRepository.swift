@@ -1,5 +1,9 @@
 import Foundation
 
+extension OfflineFilesRepository {
+    static let `default` = OfflineFilesRepository(store: MEGAStore.shareInstance())
+}
+
 class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     
     private let store: MEGAStore

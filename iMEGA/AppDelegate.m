@@ -180,19 +180,7 @@
     
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    
-    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-    [sharedUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
-    
-    //Clear keychain (session) and delete passcode on first run in case of reinstallation
-    if (![NSUserDefaults.standardUserDefaults objectForKey:MEGAFirstRun]) {
-        sessionV3 = nil;
-        [Helper clearEphemeralSession];
-        [Helper clearSession];
-        [Helper deletePasscode];
-        [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
-    }
+    [[AppFirstLaunchSecurityChecker defaultChecker] performSecurityCheck];
     
     [AppearanceManager setupAppearance:self.window.traitCollection];
     
@@ -200,6 +188,7 @@
     isFetchNodesDone = NO;
     _presentInviteContactVCLater = NO;
     
+    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (sessionV3) {
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {

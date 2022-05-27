@@ -1,6 +1,10 @@
 import Foundation
 import SAMKeychain
 
+extension CredentialRepository {
+    static let `default` = CredentialRepository()
+}
+
 struct CredentialRepository: CredentialRepositoryProtocol {
     private enum Constants {
         static let keychainServiceName = "MEGA"

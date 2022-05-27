@@ -762,25 +762,11 @@
     [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];    
     [Helper cancelAllTransfers];
     
-    [Helper clearSession];
+    [self cleanAccount];
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
 
-    [Helper resetUserData];
-    
-    [Helper deletePasscode];
-}
-
-+ (void)logoutFromConfirmAccount {
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
-    [Helper cancelAllTransfers];
-    
-    [Helper clearSession];
-    
-    [Helper deleteUserData];
-    [Helper deleteMasterKey];
-    
     [Helper resetUserData];
     
     [Helper deletePasscode];
@@ -800,17 +786,7 @@
     [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
 }
 
-+ (void)clearSession {
-    [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
-}
-
 + (void)deleteUserData {
-    NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbsDirectory];
-    
-    NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:previewsDirectory];
-    
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlineDirectory];
@@ -824,11 +800,7 @@
             [NSFileManager.defaultManager mnz_removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file]];
         }
     }
-    
-    // Delete files saved by extensions
-    NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
-    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
-    
+
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteAllSearchableItemsWithCompletionHandler:^(NSError * _Nullable error) {
         if (error) {
@@ -849,12 +821,12 @@
     [[Helper uploadingNodes] removeAllObjects];
     
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
-
-    //Set default values on logout
-    [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
     
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
+    
+    // This key is to check if the app has been reinstalled. Don't remove it when logging out
+    [sharedUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
 }
 
 + (void)deletePasscode {

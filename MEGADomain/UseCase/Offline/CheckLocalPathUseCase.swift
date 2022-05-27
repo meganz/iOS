@@ -4,15 +4,14 @@ protocol CheckLocalPathUseCaseProtocol {
     func containsOriginalCacheDirectory(path: String) -> Bool
 }
 
-struct CheckLocalPathUseCase<T: FileRepositoryProtocol>: CheckLocalPathUseCaseProtocol {
-
+struct CheckLocalPathUseCase<T: FileCacheRepositoryProtocol>: CheckLocalPathUseCaseProtocol {
     private let repo: T
-
+    
     init(repo: T) {
         self.repo = repo
     }
     
     func containsOriginalCacheDirectory(path: String) -> Bool {
-        repo.containsOriginalCacheDirectory(path: path)
+        path.contains(repo.cachedOriginalImageDirectoryURL.path)
     }
 }

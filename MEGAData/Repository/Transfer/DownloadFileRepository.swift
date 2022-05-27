@@ -1,3 +1,8 @@
+
+extension DownloadFileRepository {
+    static let `default` = DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk())
+}
+
 struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     private let sdk: MEGASdk
     

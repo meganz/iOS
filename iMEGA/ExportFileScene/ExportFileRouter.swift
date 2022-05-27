@@ -12,25 +12,34 @@ final class ExportFileRouter: ExportFileViewRouting {
     
     //MARK: - Dispatch actions without viewcontroller -
     func export(node: NodeEntity) {
-        viewModel().dispatch(.exportFileFromNode(node))
+        viewModel.dispatch(.exportFileFromNode(node))
     }
     
     func export(nodes: [NodeEntity]) {
-        viewModel().dispatch(.exportFilesFromNodes(nodes))
+        viewModel.dispatch(.exportFilesFromNodes(nodes))
     }
     
     func export(messages: [MEGAChatMessage]) {
-        viewModel().dispatch(.exportFilesFromMessages(messages))
+        viewModel.dispatch(.exportFilesFromMessages(messages))
     }
     
     func exportMessage(node: MEGANode) {
-        viewModel().dispatch(.exportFileFromMessageNode(node))
+        viewModel.dispatch(.exportFileFromMessageNode(node))
     }
     
     //MARK: - Private -
-    private func viewModel() -> ExportFileViewModel {
-        ExportFileViewModel(router: self, exportFileUseCase: ExportFileUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance()), fileSystemRepository: FileSystemRepository.default, exportChatMessagesRepository: ExportChatMessagesRepository.default, importNodeRepository: ImportNodeRepository.default))
-    }
+    private lazy var viewModel: ExportFileViewModel = {
+        let uc = ExportFileUseCase(
+            downloadFileRepository: DownloadFileRepository.default,
+            offlineFilesRepository: OfflineFilesRepository.default,
+            fileCacheRepository: FileCacheRepository.default,
+            thumbnailRepository: ThumbnailRepository.default,
+            fileSystemRepository: FileSystemRepository.default,
+            exportChatMessagesRepository: ExportChatMessagesRepository.default,
+            importNodeRepository: ImportNodeRepository.default)
+        
+        return ExportFileViewModel(router: self, exportFileUseCase: uc)
+    }()
     
     //MARK: - ExportFileViewRouting -
     func exportedFiles(urls: [URL]) {
@@ -49,7 +58,7 @@ final class ExportFileRouter: ExportFileViewRouting {
         guard let presenter = presenter else {
             return
         }
-
+        
         TransfersWidgetViewController.sharedTransfer().showProgress(view: presenter.view, bottomAnchor: -100)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
     }

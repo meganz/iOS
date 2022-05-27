@@ -17,24 +17,24 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
 
     private let megaUserClient: SDKUserClient
 
-    private var fileRepo: FileRepositoryProtocol
+    private var thumbnailRepo: ThumbnailRepositoryProtocol
 
     init(
         megaAvatarClient: SDKAvatarClient,
         avatarFileSystemClient: FileSystemImageCacheClient,
         megaUserClient: SDKUserClient,
-        fileRepo: FileRepositoryProtocol
+        thumbnailRepo: ThumbnailRepositoryProtocol
     ) {
         self.avatarRepository = megaAvatarClient
         self.avatarFileSystemClient = avatarFileSystemClient
         self.megaUserClient = megaUserClient
-        self.fileRepo = fileRepo
+        self.thumbnailRepo = thumbnailRepo
     }
 
     // MARK: - Shared Avatar Caching Path
 
     private func cachedAvatarFilePath(of userBase64Handle: MEGABase64Handle) -> URL {
-        fileRepo.cachedThumbnailURL(for: userBase64Handle)
+        thumbnailRepo.cachedThumbnailURL(for: userBase64Handle, type: .thumbnail)
     }
 
     // MARK: - Search Local Cached Avatar

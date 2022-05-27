@@ -18,7 +18,16 @@ struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
         }
     }
     
-    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+    func cachedThumbnailURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+        switch type {
+        case .thumbnail:
+            return cachedThumbnailURL
+        case .preview:
+            return cachedPreviewURL
+        }
+    }
+    
+    func cachedThumbnailURL(for base64Handle: MEGABase64Handle, type: ThumbnailTypeEntity) -> URL {
         switch type {
         case .thumbnail:
             return cachedThumbnailURL

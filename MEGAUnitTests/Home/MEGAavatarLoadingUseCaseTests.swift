@@ -10,7 +10,7 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
             megaAvatarClient: .foundImage,
             avatarFileSystemClient: .foundNil,
             megaUserClient: .foundNil,
-            fileRepo: FileSystemRepository.default
+            thumbnailRepo: ThumbnailRepository.default
         )
         
         let expectations = expectation(description: "for async load image")
@@ -26,7 +26,7 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
             megaAvatarClient: .foundNil,
             avatarFileSystemClient: .foundNil,
             megaUserClient: .foundUser,
-            fileRepo: FileSystemRepository.default
+            thumbnailRepo: ThumbnailRepository.default
         )
         
         let expectations = expectation(description: "for async load image")
@@ -42,7 +42,7 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
             megaAvatarClient: .foundImage,
             avatarFileSystemClient: .foundNil,
             megaUserClient: .foundUser,
-            fileRepo: FileSystemRepository.default
+            thumbnailRepo: ThumbnailRepository.default
         )
         
         let expectations = expectation(description: "for async load image")

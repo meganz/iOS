@@ -141,6 +141,9 @@
 - (void)configureUI {
     [self configureProgressHUD];
     [SVProgressHUD setViewForExtension:self.view];
+    
+    [[AppFirstLaunchSecurityChecker defaultChecker] performSecurityCheck];
+    
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
         // Common scenario, present the browser after passcode.
