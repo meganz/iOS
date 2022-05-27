@@ -1,6 +1,6 @@
 // MARK: - Use case protocol -
 protocol TransfersUseCaseProtocol {
-    func transfers(filteringUserTransfers: Bool) async -> [TransferEntity]
+    func transfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
@@ -15,8 +15,8 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
         self.repo = repo
     }
     
-    func transfers(filteringUserTransfers: Bool) async -> [TransferEntity] {
-        let transfers = await repo.transfers()
+    func transfers(filteringUserTransfers: Bool) -> [TransferEntity] {
+        let transfers = repo.transfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {

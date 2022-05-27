@@ -6,12 +6,8 @@ struct TransfersRepository: TransfersRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func transfers() async -> [TransferEntity] {
-        let task = Task.detached {
-            sdk.transfers.mnz_transfersArrayFromTranferList().map { TransferEntity(transfer: $0) }
-        }
-        
-        return await task.value
+    func transfers() -> [TransferEntity] {
+        sdk.transfers.mnz_transfersArrayFromTranferList().map { TransferEntity(transfer: $0) }
     }
     
     func downloadTransfers() -> [TransferEntity] {
