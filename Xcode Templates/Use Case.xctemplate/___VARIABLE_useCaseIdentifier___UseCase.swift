@@ -2,10 +2,10 @@
 protocol ___VARIABLE_useCaseName:identifier___UseCaseProtocol {
 }
 
-struct ___VARIABLE_useCaseName:identifier___UseCase: ___VARIABLE_useCaseName:identifier___UseCaseProtocol {
-    private let repo: ___VARIABLE_useCaseName:identifier___RepositoryProtocol
+struct ___VARIABLE_useCaseName:identifier___UseCase<T: ___VARIABLE_useCaseName:identifier___RepositoryProtocol>: ___VARIABLE_useCaseName:identifier___UseCaseProtocol {
+    private let repository: T
     
-    init(repo: ___VARIABLE_useCaseName:identifier___RepositoryProtocol) {
-        self.repo = repo
+    init(repository: T) {
+        self.repository = repository
     }
 }
