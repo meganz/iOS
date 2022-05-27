@@ -9,7 +9,7 @@ extension TemporaryDirectoryFinding {
 
     static var live: Self {
         return Self(searchFor:  { searchType in
-            let temporaryDirectory = FileManager.default.temporaryDirectory()
+            let temporaryDirectory = NSTemporaryDirectory()
             let sdk = MEGASdkManager.sharedMEGASdk()
             switch searchType {
             case let .node(handle: handle, name: name, fingerprint):

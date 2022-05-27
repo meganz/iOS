@@ -35,7 +35,7 @@
                 megaAvatarClient: .live,
                 avatarFileSystemClient: .live,
                 megaUserClient: .live,
-                fileRepo: FileSystemRepository.default
+                thumbnailRepo: ThumbnailRepository.default
             ),
             megaAvatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
                 storeUserClient: .live,

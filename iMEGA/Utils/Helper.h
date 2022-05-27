@@ -90,9 +90,7 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (BOOL)hasSession_alertIfNot;
 
 + (void)logout;
-+ (void)logoutFromConfirmAccount;
 + (void)clearEphemeralSession;
-+ (void)clearSession;
 + (void)deletePasscode;
 
 #pragma mark - Log

@@ -28,6 +28,6 @@ extension PreferenceUseCase where T == PreferenceRepository {
     }
     
     static var group: PreferenceUseCase {
-        PreferenceUseCase(repository: PreferenceRepository(userDefaults: UserDefaults(suiteName: MEGAGroupIdentifier) ?? UserDefaults.standard))
+        PreferenceUseCase(repository: PreferenceRepository(userDefaults: UserDefaults(suiteName: MEGAGroupIdentifier)!))
     }
 }

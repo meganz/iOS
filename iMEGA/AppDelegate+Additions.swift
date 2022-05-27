@@ -265,7 +265,7 @@ extension AppDelegate {
     }
 }
 
-//MARK: - MEGAChatSdk onDBError
+// MARK: - MEGAChatSdk onDBError
 extension AppDelegate {
     @objc func handleChatDBError(error: MEGAChatDBError, message: String) {
         switch error {
@@ -280,7 +280,7 @@ extension AppDelegate {
     }
 }
 
-//MARK: - Register for background refresh
+// MARK: - Register for background refresh
 extension AppDelegate {
     @objc func registerCameraUploadBackgroundRefresh() {
         CameraUploadBGRefreshManager.shared.register()

@@ -1,39 +1,38 @@
 import Foundation
 
 extension ThumbnailRepository {
-    static let `default` = ThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), fileRepo: FileSystemRepository.default)
+    static let `default` = ThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), fileManager: .default)
 }
 
 struct ThumbnailRepository: ThumbnailRepositoryProtocol {
-    private let sdk: MEGASdk
-    private let fileRepo: FileRepositoryProtocol
+    private enum Constants {
+        static let thumbnailCacheDirectory = "thumbnailsV3"
+        static let previewCacheDirectory = "previewsV3"
+    }
     
-    init(sdk: MEGASdk, fileRepo: FileRepositoryProtocol) {
+    private let sdk: MEGASdk
+    private let fileManager: FileManager
+    private let groupContainer: AppGroupContainer
+    private let appGroupCacheURL: URL
+    
+    init(sdk: MEGASdk, fileManager: FileManager) {
         self.sdk = sdk
-        self.fileRepo = fileRepo
+        self.fileManager = fileManager
+        groupContainer = AppGroupContainer(fileManager: fileManager)
+        appGroupCacheURL = groupContainer.url(for: .cache)
     }
     
     func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
-        switch type {
-        case .thumbnail:
-            return fileRepo.fileExists(at: fileRepo.cachedThumbnailURL(for: node.base64Handle))
-        case .preview:
-            return fileRepo.fileExists(at: fileRepo.cachedPreviewURL(for: node.base64Handle))
-        }
+        fileExists(at: cachedThumbnailURL(for: node.base64Handle, type: type))
     }
     
-    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
-        switch type {
-        case .thumbnail:
-            return fileRepo.cachedThumbnailURL(for: node.base64Handle)
-        case .preview:
-            return fileRepo.cachedPreviewURL(for: node.base64Handle)
-        }
+    func cachedThumbnailURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+        cachedThumbnailURL(for: node.base64Handle, type: type)
     }
     
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        let url = cachedThumbnail(for: node, type: type)
-        if fileRepo.fileExists(at: url) {
+        let url = cachedThumbnailURL(for: node, type: type)
+        if fileExists(at: url) {
             completion(.success(url))
         } else {
             downloadThumbnail(for: node, type: type, to: url, completion: completion)
@@ -48,7 +47,23 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         }
     }
     
-    // MARK: - download thumbnail from server
+    func cachedThumbnailURL(for base64Handle: MEGABase64Handle, type: ThumbnailTypeEntity) -> URL {
+        let directory: String
+        switch type {
+        case .thumbnail:
+            directory = Constants.thumbnailCacheDirectory
+        case .preview:
+            directory = Constants.previewCacheDirectory
+        }
+        
+        let directoryURL = appGroupCacheURL.appendingPathComponent(directory, isDirectory: true)
+        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+        return directoryURL.appendingPathComponent(base64Handle)
+    }
+}
+
+// MARK: - download thumbnail from remote -
+extension ThumbnailRepository {
     private func downloadThumbnail(for node: NodeEntity,
                                    type: ThumbnailTypeEntity,
                                    to url: URL,
@@ -114,5 +129,11 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
                 }
             }
         })
+    }
+}
+
+extension ThumbnailRepository {
+    private func fileExists(at url: URL) -> Bool {
+        fileManager.fileExists(atPath: url.path)
     }
 }

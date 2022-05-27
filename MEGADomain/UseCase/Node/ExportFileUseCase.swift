@@ -15,16 +15,32 @@ protocol ExportFileChatMessageUseCaseProtocol {
 typealias ExportFileUseCaseProtocol = ExportFileNodeUseCaseProtocol & ExportFileChatMessageUseCaseProtocol
 
 // MARK: - Use case implementation -
-struct ExportFileUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileRepositoryProtocol, W: ExportChatMessagesRepositoryProtocol, X: ImportNodeRepositoryProtocol> {
+struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
+                         U: OfflineFilesRepositoryProtocol,
+                         V: FileCacheRepositoryProtocol,
+                         R: ThumbnailRepositoryProtocol,
+                         F: FileSystemRepositoryProtocol,
+                         W: ExportChatMessagesRepositoryProtocol,
+                         X: ImportNodeRepositoryProtocol> {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
-    private let fileSystemRepository: V
+    private let fileCacheRepository: V
     private let exportChatMessagesRepository: W
     private let importNodeRepository: X
-
-    init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, exportChatMessagesRepository: W, importNodeRepository: X) {
+    private let thumbnailRepository: R
+    private let fileSystemRepository: F
+    
+    init(downloadFileRepository: T,
+         offlineFilesRepository: U,
+         fileCacheRepository: V,
+         thumbnailRepository: R,
+         fileSystemRepository: F,
+         exportChatMessagesRepository: W,
+         importNodeRepository: X) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
+        self.fileCacheRepository = fileCacheRepository
+        self.thumbnailRepository = thumbnailRepository
         self.fileSystemRepository = fileSystemRepository
         self.exportChatMessagesRepository = exportChatMessagesRepository
         self.importNodeRepository = importNodeRepository
@@ -34,9 +50,9 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepos
     private func nodeUrl(_ node: NodeEntity) -> URL? {
         if let offlineUrl = offlineUrl(for: node.base64Handle) {
             return offlineUrl
-        } else if node.name.mnz_isImagePathExtension, let imageUrl = cachedImageUrl(for: node.base64Handle, name: node.name) {
+        } else if node.name.mnz_isImagePathExtension, let imageUrl = fileCacheRepository.existingOriginalImageURL(for: node) {
             return imageUrl
-        } else if let fileUrl = cachedFileUrl(for: node.base64Handle, name: node.name) {
+        } else if let fileUrl = fileCacheRepository.existingTempFileURL(for: node) {
             return fileUrl
         } else {
             return nil
@@ -48,29 +64,13 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepos
         return URL(fileURLWithPath: offlineFilesRepository.offlinePath.append(pathComponent: offlinePath))
     }
     
-    private func cachedImageUrl(for base64Handle: MEGABase64Handle, name: String) -> URL? {
-        let cachedImageUrl = fileSystemRepository.cachedOriginalURL(for: base64Handle, name: name)
-        guard fileSystemRepository.fileExists(at: cachedImageUrl) else {
-            return nil
-        }
-        return cachedImageUrl
-    }
-    
-    private func cachedFileUrl(for base64Handle: MEGABase64Handle, name: String) -> URL? {
-        let cachedFileUrl = fileSystemRepository.cachedFileURL(for: base64Handle, name: name)
-        guard fileSystemRepository.fileExists(at: cachedFileUrl) else {
-            return nil
-        }
-        return cachedFileUrl
-    }
-    
     private func processDownloadThenShareResult(result: Result<TransferEntity, TransferErrorEntity>, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
         switch result {
         case .success(let transferEntity):
             guard let path = transferEntity.path else { return }
             let url = URL(fileURLWithPath: path)
             completion(.success(url))
-
+            
         case .failure(_):
             completion(.failure(.downloadFailed))
         }
@@ -93,7 +93,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepos
             return
         }
         let appDataToExportFile = NSString().mnz_appDataToExportFile()
-        let path = node.name.mnz_isImagePathExtension ? fileSystemRepository.cachedOriginalURL(for: node.base64Handle, name: node.name).path : fileSystemRepository.cachedFileURL(for: node.base64Handle, name: node.name).path
+        let path = node.name.mnz_isImagePathExtension ? fileCacheRepository.cachedOriginalImageURL(for: node).path : fileCacheRepository.tempFileURL(for: node).path
         downloadFileRepository.download(nodeHandle: node.handle, to: path, appData: appDataToExportFile) { result in
             processDownloadThenShareResult(result: result, completion: completion)
         }
@@ -150,7 +150,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
                 completion(.failure(.failedToCreateContact))
                 return
             }
-            let avatarUrl = fileSystemRepository.cachedThumbnailURL(for: base64Handle)
+            let avatarUrl = thumbnailRepository.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
             if let contactUrl = exportChatMessagesRepository.exportContact(message: message, contactAvatarImage: fileSystemRepository.fileExists(at: avatarUrl) ? avatarUrl.path : nil) {
                 completion(.success(contactUrl))
             } else {

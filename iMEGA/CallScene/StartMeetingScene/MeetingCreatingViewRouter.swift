@@ -27,7 +27,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
-            fileRepo: FileSystemRepository.default
+            thumbnailRepo: ThumbnailRepository.default
         )
 
         let vm = MeetingCreatingViewModel(

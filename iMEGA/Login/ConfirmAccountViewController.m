@@ -308,7 +308,7 @@
         }
             
         case MEGARequestTypeLogout: {
-            [Helper logoutFromConfirmAccount];
+            [Helper logout];
             [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
             break;
         }

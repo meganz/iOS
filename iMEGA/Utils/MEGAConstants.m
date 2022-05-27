@@ -116,7 +116,7 @@ NSString * const MEGAShareExtensionStorageFolder = @"Share Extension Storage";
 NSString * const MEGAFileExtensionStorageFolder = @"File Provider Storage";
 NSString * const MEGAExtensionLogsFolder = @"logs";
 NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
-NSString * const MEGAExtensionCacheFolder = @"Library/Caches/";
+NSString * const MEGAExtensionCacheFolder = @"Library/Caches";
 NSString * const MEGANotificationServiceExtensionCacheFolder = @"Library/Caches/NSE";
 
 #pragma mark - MEGA Activity Types

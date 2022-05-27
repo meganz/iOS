@@ -70,7 +70,7 @@ struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtoco
     }
     
     func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
-        repository.cachedThumbnail(for: node, type: type)
+        repository.cachedThumbnailURL(for: node, type: type)
     }
     
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {

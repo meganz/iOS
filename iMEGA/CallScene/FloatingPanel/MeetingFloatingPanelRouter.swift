@@ -59,7 +59,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
-            fileRepo: FileSystemRepository.default
+            thumbnailRepo: ThumbnailRepository.default
         )
 
         let vc = MeetingFloatingPanelViewController(viewModel: viewModel,
