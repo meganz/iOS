@@ -162,76 +162,71 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }
         
         transfers.removeAll()
+        transfers = transfersUseCase.transfers(filteringUserTransfers: true) + sharedFolderTransfersUseCase.transfers(filteringUserTransfers: true)
         
-        Task { [weak self] in
-            async let sdkTransfers = transfersUseCase.transfers(filteringUserTransfers: true)
-            async let sdkFolderTransfers = sharedFolderTransfersUseCase.transfers(filteringUserTransfers: true)
-            transfers = await (sdkTransfers + sdkFolderTransfers)
-            
-            if let failedTransfer = transfersUseCase.completedTransfers(filteringUserTransfers: true).first(where: { (transfer) -> Bool in
-                return transfer.state != .complete && transfer.state != .cancelled
-            }) {
-                if let lastErrorExtended = failedTransfer.lastErrorExtended {
-                    if lastErrorExtended == .overquota {
-                        stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
-                    } else if lastErrorExtended != .generic {
-                        stateBadge.image = Asset.Images.Transfers.Widget.Error.FileList.FileAcessory.errorBadge.image
-                    }
-                } else {
-                    stateBadge.image = nil
+        if let failedTransfer = transfersUseCase.completedTransfers(filteringUserTransfers: true).first(where: { (transfer) -> Bool in
+            return transfer.state != .complete && transfer.state != .cancelled
+        }) {
+            if let lastErrorExtended = failedTransfer.lastErrorExtended {
+                if lastErrorExtended == .overquota {
+                    stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
+                } else if lastErrorExtended != .generic {
+                    stateBadge.image = Asset.Images.Transfers.Widget.Error.FileList.FileAcessory.errorBadge.image
                 }
             } else {
                 stateBadge.image = nil
             }
-            
-            if transfers.count > 0 {
-                self?.isHidden = false
-                self?.alpha = 1
-                self?.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
-                let hasDownloadTransfer = transfers.contains { (transfer) -> Bool in
-                    return transfer.type == .download
-                }
-                let hasUploadTransfer = transfers.contains { (transfer) -> Bool in
-                    return transfer.type == .upload
-                }
-                arrowImageView.image = hasDownloadTransfer ? Asset.Images.Transfers.transfersDownload.image : Asset.Images.Transfers.transfersUpload.image
-                if overquota {
-                    stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
-                    self?.progressLayer?.strokeColor = hasUploadTransfer ? #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1) : #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
-                } else if transfersPaused {
-                    stateBadge.image = Asset.Images.Transfers.Widget.Pause.combinedShape.image
-                }
-            } else {
-                let completedTransfers = transfersUseCase.completedTransfers(filteringUserTransfers: true)
-                if (completedTransfers.count) > 0 {
-                    progress = 1
-                    self?.isHidden = false
-                    
-                    if let failedTransfer = completedTransfers.first(where: { (transfer) -> Bool in
-                        return transfer.state != .complete && transfer.state != .cancelled
-                    }) {
-                        if let lastErrorExtended = failedTransfer.lastErrorExtended {
-                            if lastErrorExtended == .overquota {
-                                stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
-                                self?.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
-                            } else if lastErrorExtended != .generic {
-                                stateBadge.image = Asset.Images.Transfers.Widget.Error.FileList.FileAcessory.errorBadge.image
-                                self?.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
-                            }
-                        } else {
-                            stateBadge.image = Asset.Images.Transfers.Widget.Complete.completedBadge.image
-                            self?.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
-                            dismissWidget()
+        } else {
+            stateBadge.image = nil
+        }
+        
+        if transfers.count > 0 {
+            self.isHidden = false
+            self.alpha = 1
+            self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+            let hasDownloadTransfer = transfers.contains { (transfer) -> Bool in
+                return transfer.type == .download
+            }
+            let hasUploadTransfer = transfers.contains { (transfer) -> Bool in
+                return transfer.type == .upload
+            }
+            arrowImageView.image = hasDownloadTransfer ? Asset.Images.Transfers.transfersDownload.image : Asset.Images.Transfers.transfersUpload.image
+            if overquota {
+                stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
+                self.progressLayer?.strokeColor = hasUploadTransfer ? #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1) : #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+            } else if transfersPaused {
+                stateBadge.image = Asset.Images.Transfers.Widget.Pause.combinedShape.image
+            }
+        } else {
+            let completedTransfers = transfersUseCase.completedTransfers(filteringUserTransfers: true)
+            if (completedTransfers.count) > 0 {
+                progress = 1
+                self.isHidden = false
+                
+                if let failedTransfer = completedTransfers.first(where: { (transfer) -> Bool in
+                    return transfer.state != .complete && transfer.state != .cancelled
+                }) {
+                    if let lastErrorExtended = failedTransfer.lastErrorExtended {
+                        if lastErrorExtended == .overquota {
+                            stateBadge.image = Asset.Images.Transfers.Widget.overquota.image
+                            self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+                        } else if lastErrorExtended != .generic {
+                            stateBadge.image = Asset.Images.Transfers.Widget.Error.FileList.FileAcessory.errorBadge.image
+                            self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
                         }
                     } else {
                         stateBadge.image = Asset.Images.Transfers.Widget.Complete.completedBadge.image
-                        self?.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+                        self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
                         dismissWidget()
                     }
-                    
                 } else {
-                    self?.isHidden = true
+                    stateBadge.image = Asset.Images.Transfers.Widget.Complete.completedBadge.image
+                    self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+                    dismissWidget()
                 }
+                
+            } else {
+                self.isHidden = true
             }
         }
     }
