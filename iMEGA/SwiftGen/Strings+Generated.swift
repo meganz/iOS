@@ -39,6 +39,10 @@ public enum Strings {
     public static let _1AndA2MoreA = Strings.tr("Localizable", "%1 and [A]%2 more[/A]")
     /// %1 Images
     public static let _1Images = Strings.tr("Localizable", "%1 Images")
+    /// %1 Images and %2 Videos
+    public static let _1ImagesAnd2Videos = Strings.tr("Localizable", "%1 Images and %2 Videos")
+    /// %1 Images and 1 Video
+    public static let _1ImagesAnd1Video = Strings.tr("Localizable", "%1 Images and 1 Video")
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
     /// %1$d items
@@ -91,6 +95,10 @@ public enum Strings {
     public static let recommended = Strings.tr("Localizable", "(Recommended)")
     /// 1 contact found on MEGA
     public static let _1ContactFoundOnMEGA = Strings.tr("Localizable", "1 contact found on MEGA")
+    /// 1 Image and %2 Videos
+    public static let _1ImageAnd2Videos = Strings.tr("Localizable", "1 Image and %2 Videos")
+    /// 1 Image and 1 Video
+    public static let _1ImageAnd1Video = Strings.tr("Localizable", "1 Image and 1 Video")
     /// 1 selected
     public static let _1Selected = Strings.tr("Localizable", "1 selected")
     /// 1 hour
@@ -3856,14 +3864,6 @@ public enum Strings {
           public static let button = Strings.tr("Localizable", "recents.emptyState.activityHidden.button")
           /// Recent Activity Hidden
           public static let title = Strings.tr("Localizable", "recents.emptyState.activityHidden.title")
-        }
-      }
-      public enum Section {
-        public enum Thumbnail {
-          /// Plural format key: "%#@image@ and %#@video@"
-          public static func imageAndVideoCount(_ p1: Int, _ p2: Int) -> String {
-            return Strings.tr("Localizable", "recents.section.thumbnail.imageAndVideoCount", p1, p2)
-          }
         }
       }
     }
