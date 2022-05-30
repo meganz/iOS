@@ -135,8 +135,7 @@ class ExplorerToolbarConfigurator {
                     deleteItem,
                     flexibleItem,
                     moreItem
-                ],
-                excludeBarButtonItems: [shareLinkItem]
+                ]
             )
         default:
             break
