@@ -802,4 +802,23 @@ class NodeActionsTests: XCTestCase {
         
         XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .move, .copy, .moveToRubbishBin]))
     }
+    
+    func testExportedNodeActions_nodeExported() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsExported(true)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.manageLink, .removeLink]))
+    }
+    
+    func testExportedNodeActions_nodeNotExported() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .build()
+        
+        XCTAssertTrue(contains(nodeActionTypes: [.shareLink]))
+    }
 }

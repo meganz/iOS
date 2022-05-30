@@ -210,6 +210,22 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         node.mnz_remove(in: controller, completion: nil)
     }
     
+    func shareLink(from nodeHandle: MEGAHandle) {
+        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+            return
+        }
+        
+        CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: baseViewController)
+    }
+    
+    func removeLink(from nodeHandle: MEGAHandle) {
+        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+            return
+        }
+        
+        node.mnz_removeLink()
+    }
+    
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         let nodeHandle: MEGAHandle = node.handle
         switch action {
@@ -222,6 +238,10 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         case .info: viewInfo(node: node)
         case .viewVersions: viewVersions(node: node)
         case .remove: removeTextFile(node: node)
+        case .shareLink, .manageLink:
+            shareLink(from: nodeHandle)
+        case .removeLink:
+            removeLink(from: nodeHandle)
         default:
             break
         }

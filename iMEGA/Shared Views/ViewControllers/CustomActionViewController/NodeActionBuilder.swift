@@ -217,9 +217,9 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.importAction())
         }
         if accessLevel == .accessOwner {
-            nodeActions.append(NodeAction.shareLinkAction())
-            nodeActions.append(NodeAction.exportFileAction())
+            nodeActions.append(contentsOf: exportedNodeActions())
         }
+        nodeActions.append(.exportFileAction())
         nodeActions.append(NodeAction.sendToChatAction())
 
         return nodeActions
@@ -436,12 +436,7 @@ final class NodeActionBuilder {
         
         nodeActions.append(NodeAction.downloadAction())
         
-        if isExported {
-            nodeActions.append(NodeAction.manageLinkAction())
-            nodeActions.append(NodeAction.removeLinkAction())
-        } else {
-            nodeActions.append(NodeAction.shareLinkAction())
-        }
+        nodeActions.append(contentsOf: exportedNodeActions())
         
         if !isFile {
             if isOutShare {
@@ -562,11 +557,19 @@ final class NodeActionBuilder {
          .moveToRubbishBinAction()]
     }
     
-    func takedownNodeActions() -> [NodeAction] {
+    private func takedownNodeActions() -> [NodeAction] {
         [.infoAction(),
          .disputeTakedownAction(),
          .renameAction(),
          displayMode == .rubbishBin ? .removeAction() :
          .moveToRubbishBinAction()]
+    }
+    
+    private func exportedNodeActions() -> [NodeAction] {
+        if isExported {
+            return [.manageLinkAction(), .removeLinkAction()]
+        } else {
+            return [.shareLinkAction()]
+        }
     }
 }
