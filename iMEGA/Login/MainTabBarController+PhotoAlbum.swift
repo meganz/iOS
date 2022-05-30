@@ -3,13 +3,9 @@ import UIKit
 @available(iOS 14.0, *)
 extension MainTabBarController {
     @objc func photoAlbumViewController() -> MEGANavigationController? {
-        if FeatureFlag.isAlbumEnabled {
-            let storyboard = UIStoryboard(name: "Photos", bundle: nil)
-            let photosAlbumNavigationController = storyboard.instantiateViewController(withIdentifier: "photosAlbumNavigationController")
-            return photosAlbumNavigationController as? MEGANavigationController
-        } else {
-            return photoViewController()
-        }
+        let storyboard = UIStoryboard(name: "Photos", bundle: nil)
+        let photosAlbumNavigationController = storyboard.instantiateViewController(withIdentifier: "photosAlbumNavigationController")
+        return photosAlbumNavigationController as? MEGANavigationController
     }
     
     @objc func photoViewController() -> MEGANavigationController? {
