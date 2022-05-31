@@ -499,7 +499,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)cancelTransfersForDirection:(NSInteger)direction {
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
     if ([transferList.size integerValue] != 0) {
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:direction delegate:self];
+        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:direction];
     }
     
     transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
@@ -742,12 +742,12 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES delegate:self];
+    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
     [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES delegate:self];
 }
 
 - (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO delegate:self];
+    [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO];
     [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO delegate:self];
 }
 
