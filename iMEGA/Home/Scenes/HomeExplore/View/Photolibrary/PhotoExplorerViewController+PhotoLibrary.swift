@@ -13,7 +13,7 @@ extension PhotosExplorerViewController: PhotoLibraryProvider {
     
     func setupPhotoLibrarySubscriptions() {
         photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] in
-            self?.showNavigationRightBarButton($0 == .all)
+            self?.showNavigationRightBarButton($0 == .all && self?.photoLibraryContentViewModel.library.isEmpty == false)
         }
         
         photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
@@ -22,7 +22,8 @@ extension PhotosExplorerViewController: PhotoLibraryProvider {
         }
     }
     
-    func enableNavigationEditBarButton(_ enable: Bool) {
-        editBarButtonItem.isEnabled = enable
+    func hideNavigationEditBarButton(_ hide: Bool) {
+        editBarButtonItem.isEnabled = !hide
+        navigationItem.rightBarButtonItem = hide ? nil : editBarButtonItem
     }
 }

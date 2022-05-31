@@ -252,7 +252,7 @@
 - (void)hideRightBarButtonItem:(BOOL)shouldHide {
     self.shouldShowRightBarButton = !shouldHide;
     
-    if (self.shouldShowRightBarButton && self.showToolBar) {
+    if (self.shouldShowRightBarButton && self.showToolBar && self.mediaNodesArray.count > 0) {
         self.objcWrapper_parent.navigationItem.rightBarButtonItem = self.cachedEditBarButtonItem;
     } else {
         self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
@@ -464,7 +464,7 @@
 
 - (void)updateEditBarButton {
     if (self.mediaNodesArray.count == 0) {
-        self.editBarButtonItem.enabled = NO;
+        self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
         self.editBarButtonItem.title = @"";
         [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
     } else if (self.mediaNodesArray.count > 0 && !self.isEditing) {
@@ -472,7 +472,7 @@
         
         if (@available(iOS 14.0, *)) {}
         else {
-            self.editBarButtonItem.enabled = YES;
+            self.navigationItem.rightBarButtonItem = self.editButtonItem;
         }
     } else {
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
@@ -646,7 +646,7 @@
 }
 
 - (void)showToolbar:(BOOL)showToolbar {
-    BOOL result = self.shouldShowRightBarButton && showToolbar;
+    BOOL result = self.shouldShowRightBarButton && showToolbar && self.mediaNodesArray.count > 0;
     self.showToolBar = showToolbar;
     
     [UIView animateWithDuration:0.33f animations:^ {

@@ -8,7 +8,7 @@ protocol PhotoLibraryProvider: UIViewController {
     
     func configPhotoLibraryView(in container: UIView)
     func updatePhotoLibrary<T: PhotoLibraryNodeProtocol>(by nodes: [T])
-    func enableNavigationEditBarButton(_ enable: Bool)
+    func hideNavigationEditBarButton(_ hide: Bool)
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
     func updateNavigationTitle(withSelectedPhotoCount count: Int)
@@ -67,7 +67,7 @@ extension PhotoLibraryProvider {
             host.view.isHidden = photoLibrary.isEmpty
             photoLibraryContentViewModel.library = photoLibrary
             
-            enableNavigationEditBarButton(!photoLibrary.isEmpty)
+            hideNavigationEditBarButton(photoLibrary.isEmpty)
         }
     }
     

@@ -75,7 +75,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         
         enablePhotoLibraryEditMode(isEditing)
         configureBarButtons()
-        enableNavigationEditBarButton(true)
+        hideNavigationEditBarButton(photoLibraryContentViewModel.library.isEmpty)
         
         navigationItem.title = viewModel.albumName
         
@@ -150,7 +150,6 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
             )
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
         } else {
-            rightBarButtonItem.isEnabled = false
             navigationItem.rightBarButtonItem = rightBarButtonItem
         }
     }
