@@ -39,7 +39,6 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
         super.viewDidLoad()
         
         configureRightBarButton()
-        editBarButtonItem.isEnabled = false
         
         if #available(iOS 14.0, *) {
             configPhotoLibraryView(in: view)
@@ -47,6 +46,8 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
         } else {
             registerNibs()
             cellSize = collectionView.mnz_calculateCellSize(forInset: cellInset)
+            
+            navigationItem.rightBarButtonItem = listSource?.isDataSetEmpty() == false ? editBarButtonItem : nil
         }
         
         collectionView.emptyDataSetSource = self
@@ -111,7 +112,7 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
             )
             collectionView.dataSource = listSource
             collectionView.reloadData()
-            editBarButtonItem.isEnabled = !(listSource?.isDataSetEmpty() ?? true)
+            navigationItem.rightBarButtonItem = listSource?.isDataSetEmpty() == false ? editBarButtonItem : nil
         case .modified(nodes: let nodes, indexPaths: let indexPaths):
             guard !(collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking) else { return }
             

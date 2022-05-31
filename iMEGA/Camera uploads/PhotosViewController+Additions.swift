@@ -37,7 +37,8 @@ extension PhotosViewController {
     }
     
     @objc func setUpRightNavigationBarButtonItem() {
-        objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem;
+        editBarButtonItem?.isEnabled = true
+        objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem
         objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal)
     }
     

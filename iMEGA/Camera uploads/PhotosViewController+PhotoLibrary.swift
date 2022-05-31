@@ -29,8 +29,8 @@ extension PhotosViewController: PhotoLibraryProvider {
         enablePhotoLibraryEditMode(enable)
     }
     
-    func enableNavigationEditBarButton(_ enable: Bool) {
-        self.editBarButtonItem?.isEnabled = enable
+    func hideNavigationEditBarButton(_ hide: Bool) {
+        objcWrapper_parent.navigationItem.rightBarButtonItem = hide ? nil : editBarButtonItem
     }
     
     // Mark: - override
