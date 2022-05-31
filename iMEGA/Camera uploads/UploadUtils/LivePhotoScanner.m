@@ -2,9 +2,9 @@
 #import "LivePhotoScanner.h"
 #import "CameraUploadRecordManager.h"
 #import "SavedIdentifierParser.h"
-#import "PHAsset+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
 #import "PHFetchOptions+CameraUpload.h"
+#import "MEGA-Swift.h"
 
 @implementation LivePhotoScanner
 

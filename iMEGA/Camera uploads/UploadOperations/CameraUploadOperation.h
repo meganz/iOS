@@ -9,6 +9,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class MOAssetUploadRecord;
 
+typedef NS_ENUM(NSUInteger, UploadQueueType) {
+    UploadQueueTypePhoto,
+    UploadQueueTypeVideo,
+};
+
 /**
  A base class for camera upload operation. It's supposed to be subclassed.
  */
@@ -22,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)handleProcessedFileWithMediaType:(PHAssetMediaType)type;
 
 - (void)finishOperationWithStatus:(CameraAssetUploadStatus)status;
+
+/// Subclass needs to override to specify the upload queue type needed
+- (UploadQueueType)uploadQueueType;
 
 @end
 

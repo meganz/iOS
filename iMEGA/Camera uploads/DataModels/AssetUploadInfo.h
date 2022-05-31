@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *originalFingerprint;
 
 @property (strong, nonatomic) NSURL *directoryURL;
-@property (readonly) NSURL *fileURL;
+@property (nullable, readonly) NSURL *fileURL;
 @property (readonly) NSURL *previewURL;
 @property (readonly) NSURL *thumbnailURL;
 

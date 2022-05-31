@@ -13,9 +13,6 @@
 #import "MediaInfoLoader.h"
 #import "DiskSpaceDetector.h"
 #import "MEGAReachabilityManager.h"
-#import "VideoUploadOperation.h"
-#import "LivePhotoUploadOperation.h"
-#import "PhotoUploadOperation.h"
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
@@ -537,16 +534,17 @@ static const NSUInteger VideoUploadBatchCount = 1;
 }
 
 - (void)queueUpOperation:(CameraUploadOperation *)operation {
-    if ([operation isKindOfClass:[PhotoUploadOperation class]]) {
-        [self queueUpIfNeededForOperation:operation inOperationQueue:self.photoUploadOperationQueue];
-    } else if ([operation isKindOfClass:[LivePhotoUploadOperation class]]) {
-        [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
-    } else if ([operation isKindOfClass:[VideoUploadOperation class]]) {
-        [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
+    switch (operation.uploadQueueType) {
+        case UploadQueueTypePhoto:
+            [self queueUpOperation:operation inOperationQueue:self.photoUploadOperationQueue];
+            break;
+        case UploadQueueTypeVideo:
+            [self queueUpOperation:operation inOperationQueue:self.videoUploadOperationQueue];
+            break;
     }
 }
 
-- (void)queueUpIfNeededForOperation:(CameraUploadOperation *)uploadOperation inOperationQueue:(NSOperationQueue *)queue {
+- (void)queueUpOperation:(CameraUploadOperation *)uploadOperation inOperationQueue:(NSOperationQueue *)queue {
     BOOL hasPendingOperation = NO;
     for (NSOperation *operation in queue.operations) {
         if ([operation isKindOfClass:[CameraUploadOperation class]]) {

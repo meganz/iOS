@@ -94,7 +94,7 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 
 #pragma mark - error handings
 
-- (void)handleCloudDownloadError:(NSError *)error {
+- (void)handleAssetDownloadError:(NSError *)error {
     if ([error.domain isEqualToString:AVFoundationErrorDomain] && error.code == AVErrorDiskFull) {
         [self finishUploadWithNoEnoughDiskSpace];
     } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {

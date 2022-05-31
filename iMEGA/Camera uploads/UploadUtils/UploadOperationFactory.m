@@ -7,6 +7,7 @@
 #import "PHFetchOptions+CameraUpload.h"
 #import "NSError+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
+#import "MEGA-Swift.h"
 @import Photos;
 
 @implementation UploadOperationFactory
@@ -45,6 +46,8 @@
                         *error = [NSError mnz_cameraUploadDisabledMediaSubtype:identifierInfo.mediaSubtype];
                     }
                 }
+            } else if (uploadInfo.asset.mnz_isRawImage) {
+                operation = [[RawPhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             } else {
                 operation = [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             }
