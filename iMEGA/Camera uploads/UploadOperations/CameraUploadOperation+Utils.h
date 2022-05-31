@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension error:(NSError * __autoreleasing _Nullable *)error;
 
-- (void)handleCloudDownloadError:(NSError *)error;
+- (void)handleAssetDownloadError:(NSError *)error;
 - (void)handleMEGARequestError:(MEGAError *)error;
 
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;

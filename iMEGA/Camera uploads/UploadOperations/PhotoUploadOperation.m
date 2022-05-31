@@ -2,9 +2,9 @@
 #import "PhotoUploadOperation.h"
 #import "NSFileManager+MNZCategory.h"
 #import "CameraUploadManager+Settings.h"
-#import "PHAsset+CameraUpload.h"
 #import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
+#import "MEGA-Swift.h"
 @import CoreServices;
 @import FirebaseCrashlytics;
 
@@ -23,15 +23,6 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 
 - (void)start {
     [super start];
-    
-    if (self.isFinished) {
-        return;
-    }
-    
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-        return;
-    }
     
     [self requestImageData];
 }
@@ -58,7 +49,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
             *stop = YES;
-            [weakSelf handleCloudDownloadError:error];
+            [weakSelf handleAssetDownloadError:error];
         }
     };
     
@@ -135,7 +126,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:MEGAJPGFileExtension error:&error];
         outputTypeUTI = (__bridge NSString *)kUTTypeJPEG;
     } else {
-        NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
+        NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo uniformTypeIdentifier:dataUTI];
         self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:fileExtension error:&error];
     }
     
@@ -165,6 +156,10 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 
 - (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {
     return [CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC);
+}
+
+- (UploadQueueType)uploadQueueType {
+    return UploadQueueTypePhoto;
 }
 
 #pragma mark - cancel operation

@@ -8,10 +8,17 @@
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-
 #import "UIApplication+MNZCategory.h"
-#import "PHAsset+CameraUpload.h"
 #import "NSString+MNZCategory.h"
+
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @import SDAVAssetExportSession;
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
@@ -504,7 +511,7 @@ static const float BPS_MEDIUM = 3000000.0f;
         return @"jpg";
     }
     
-    return [asset mnz_fileExtensionFromAssetInfo:info];
+    return [asset mnz_fileExtensionFromAssetInfo:info uniformTypeIdentifier:nil];
 }
 
 - (void)proccessImageData:(NSData *)imageData asset:(PHAsset *)asset withInfo:(NSDictionary *)info {

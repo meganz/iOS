@@ -161,3 +161,7 @@
 #import "HelpTableViewController.h"
 #import "CameraUploadBackgroundRefreshPerformer.h"
 #import "UsageViewController.h"
+#import "CameraUploadOperation.h"
+#import "CameraUploadOperation+Utils.h"
+#import "AssetResourceUploadOperation.h"
+#import "AssetUploadStatus.h"

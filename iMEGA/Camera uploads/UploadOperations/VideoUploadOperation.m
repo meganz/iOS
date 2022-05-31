@@ -5,6 +5,7 @@
 #import "AVAsset+CameraUpload.h"
 #import "AVURLAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
+#import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
 
 @interface VideoUploadOperation ()
@@ -20,20 +21,15 @@
 
 - (void)start {
     [super start];
-    
-    if (self.isFinished) {
-        return;
-    }
-    
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-        return;
-    }
 
     [self requestVideoDataByVersion:PHVideoRequestOptionsVersionOriginal];
 }
 
 #pragma mark - data processing
+
+- (UploadQueueType)uploadQueueType {
+    return UploadQueueTypeVideo;
+}
 
 - (void)requestVideoDataByVersion:(PHVideoRequestOptionsVersion)version {
     if (self.isCancelled) {
@@ -55,7 +51,7 @@
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to download video from iCloud: %@", weakSelf, error);
             *stop = YES;
-            [weakSelf handleCloudDownloadError:error];
+            [weakSelf handleAssetDownloadError:error];
         }
     };
     

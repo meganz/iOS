@@ -1,16 +1,16 @@
 
 #import "LivePhotoUploadOperation.h"
-#import "PHAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
 #import "PHAssetResource+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
+#import "MEGA-Swift.h"
 @import Photos;
 @import CoreServices;
 @import FirebaseCrashlytics;
 
 static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResource.mov";
 
-@interface LivePhotoUploadOperation ()
+@interface LivePhotoUploadOperation () <AssetResourcExportDelegate>
 
 @property (strong, nonatomic) AVAssetExportSession *exportSession;
 
@@ -21,15 +21,6 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
 - (void)start {
     [super start];
     
-    if (self.isFinished) {
-        return;
-    }
-    
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-        return;
-    }
-    
     [self requestLivePhotoResource];
 }
 
@@ -38,29 +29,24 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
-    
-    NSArray *livePhotoSearchTypes = @[@(PHAssetResourceTypeFullSizePairedVideo), @(PHAssetResourceTypePairedVideo), @(PHAssetResourceTypeAdjustmentBasePairedVideo)];
-    
-    PHAssetResource *videoResource = [self.uploadInfo.asset searchAssetResourceByTypes:livePhotoSearchTypes];
+
+    PHAssetResource *videoResource = self.uploadInfo.asset.mnz_livePhotoResource;
     if (videoResource) {
         NSURL *videoURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:LivePhotoVideoResourceExportName];
-        [self exportAssetResource:videoResource toURL:videoURL];
+        [self exportAssetResource:videoResource toURL:videoURL delegate:self];
     } else {
         MEGALogError(@"[Camera Upload] %@ can not find the video resource in live photo", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
     }
 }
 
+- (UploadQueueType)uploadQueueType {
+    return UploadQueueTypeVideo;
+}
+
 #pragma mark - asset resource export delegate
 
 - (void)assetResource:(PHAssetResource *)resource didExportToURL:(NSURL *)URL {
-    [super assetResource:resource didExportToURL:URL];
-    
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-        return;
-    }
-    
     MEGALogDebug(@"[Camera Upload] %@ starts exporting live photo to video", self);
     
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:URL];

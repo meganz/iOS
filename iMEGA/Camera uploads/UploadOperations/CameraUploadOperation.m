@@ -9,13 +9,13 @@
 #import "CameraUploadRequestDelegate.h"
 #import "FileEncrypter.h"
 #import "NSURL+CameraUpload.h"
-#import "PHAsset+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSError+CameraUpload.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAError+MNZCategory.h"
 #import "CameraUploadOperation+Utils.h"
 #import "NSDate+MNZCategory.h"
+#import "MEGA-Swift.h"
 @import Photos;
 @import FirebaseCrashlytics;
 
@@ -126,6 +126,10 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     self.sdk = nil;
     return thumbnailCreated && previewCreated;
+}
+
+- (UploadQueueType)uploadQueueType {
+    return UploadQueueTypePhoto;
 }
 
 #pragma mark - upload task

@@ -2,7 +2,7 @@
 #import "PHFetchResult+CameraUpload.h"
 #import "MOAssetUploadRecord+CoreDataClass.h"
 #import "SavedIdentifierParser.h"
-#import "PHAsset+CameraUpload.h"
+#import "MEGA-Swift.h"
 
 @implementation PHFetchResult (CameraUpload)
 
