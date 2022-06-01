@@ -476,8 +476,6 @@
 "rename_file_alert_title"="Zmiana nazwy pliku %@?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Zamień";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="Przenieś do kosza";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 plik przeniesiony do kosza";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="Jakość filmów wgrywanych do czatu:";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Jakość wideo";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="Niska";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Średnie";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="Wysoka";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Oryginalny";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Przygotowywanie…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,24 +2236,18 @@
 "Resume Transfers?"="Wznowić transfery?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Jakość obrazu";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="Automatyczny";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="Zoptymalizowany";
+"Send smaller size images through cellular networks and original size images through wifi"="Wysyłaj zoptymalizowane obrazy w przypadku korzystania z danych mobilnych, a obrazy w oryginalnym rozmiarze w przypadku korzystania z sieci Wi-Fi.";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Always send optimised images.";
+"Send smaller size images optimised for lower data consumption"="Zawsze wysyłaj zoptymalizowane obrazy.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Always send original size images.";
+"Send original size, increased quality images"="Zawsze wysyłaj obrazy w oryginalnym rozmiarze.";
 /* Setting title for Doc scan view */
 "Save Settings"="Zapisz ustawienia";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
 "cloudDrive.scanDocument.defaultName"="Skanuj %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Rodzaj";
-/* export Quality Option for Scan document */
-"best"="Najlepsze";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Twoje konto zostało dezaktywowane przez administratora. Prosimy o kontakt z administratorem konta biznesowego w celu uzyskania dalszych szczegółów.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2459,7 +2443,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Automatycznie usuwaj wiadomości starsze niż jeden miesiąc.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatycznie usuwaj wiadomości starsze niż %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Usuń wszystkie wiadomości i pliki udostępnione w tej rozmowie. To działanie jest nieodwracalne.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="Dostępny limit został przekroczony";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Dalej";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ joined";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ left";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ and %@ left";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="Przenieś do kosza";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="Usuń trwale";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="Oryginalne";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="Automatyczny";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="Zoptymalizowany";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="Niska";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="Średnia";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="Wysoka";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="Najlepsze";

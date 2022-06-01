@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
+"fileLinkUnavailableText2"="ไฟล์ถูกลบออกเนื่องจากละเมิดเงื่อนไขการให้บริการของเรา";
 /*  */
 "fileLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
 /*  */
-"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
+"folderLinkUnavailableText2"="ลิงก์โฟลเดอร์ถูกลบเนื่องจากละเมิดเงื่อนไขการให้บริการของเรา";
 /*  */
 "folderLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
 /*  */
@@ -476,8 +476,6 @@
 "rename_file_alert_title"="เปลี่ยนชื่อไฟล์ %@ หรือไม่";
 /* Title for the action that allows you to replace a file. */
 "replace"="แทนที่";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="ย้ายไปที่ถังขยะ";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 ไฟล์ถูกย้ายไปที่ถังขยะ";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -1461,7 +1459,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="การถ่ายโอนล้มเหลวเนื่องจากมีโครงสร้างของไดเรกทอรีที่ซ้ำกัน";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Violated Terms of Service";
+"transfer.error.termsOfServiceViolation"="ละเมิดเงื่อนไขการให้บริการ";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="การตรวจสอบ SSL ล้มเหลว";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="คุณภาพของวิดีโอที่อัปโหลดไปยังการแชท";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="คุณภาพวีดีโอ";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="ต่ำ";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="ปานกลาง";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="สูง";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="ต้นฉบับ";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="กำลังจัดเตรียม…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,24 +2236,18 @@
 "Resume Transfers?"="ดำเนินการถ่ายโอนต่อหรือไม่";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="คุณภาพของรูป";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="อัตโนมัติ";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="ปรับให้เหมาะสม";
+"Send smaller size images through cellular networks and original size images through wifi"="เมื่อใช้เน็ตมือถือให้ส่งภาพที่ผ่านการปรับให้เหมาะสมแล้ว แต่ถ้าใช้ Wi-Fi เมื่อไหร่ให้ส่งภาพเป็นขนาดดั้งเดิม";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Always send optimised images.";
+"Send smaller size images optimised for lower data consumption"="ส่งเป็นภาพที่ผ่านการปรับให้เหมาะสมเสมอ";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Always send original size images.";
+"Send original size, increased quality images"="ส่งเป็นภาพต้นฉบับเสมอ";
 /* Setting title for Doc scan view */
 "Save Settings"="บันทึกการตั้งค่า";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
 "cloudDrive.scanDocument.defaultName"="สแกน %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="ประเภทไฟล์";
-/* export Quality Option for Scan document */
-"best"="ดีที่สุด";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="บัญชีของคุณถูกปิดใช้งานโดยผู้ดูแลระบบของคุณ กรุณาติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อขอรายละเอียดเพิ่มเติม";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2459,7 +2443,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="ลบข้อความที่เก่ากว่าหนึ่งเดือนโดยอัตโนมัติ";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="ลบข้อความที่เก่ากว่า %@ โดยอัตโนมัติ";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="ลบข้อความและไฟล์ทั้งหมดที่แชร์ในการสนทนานี้ การดำเนินการนี้จะไม่สามารถยกเลิกได้";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2749,7 +2733,7 @@
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="จัดการการสมัครใช้งาน";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.googlePlay"="คุณมีการสมัครใช้งาน MEGA กับ Google คุณต้องยกเลิกที่ Google Play เนื่องจาก MEGA ไม่สามารถยกเลิกให้คุณได้ เยี่ยมชมศูนย์ช่วยเหลือของเราเพื่อศึกษาข้อมูลเพิ่มเติม";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="เยี่ยมชม Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="เกินโควต้าพื้นที่จัดเก็บ";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="ต่อไป";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ joined";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ left";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ and %@ left";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="ย้ายไปถังขยะ";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="ลบอย่างถาวร";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="ต้นฉบับ";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="อัตโนมัติ";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="ปรับให้เหมาะสม";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="ต่ำ";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="ปานกลาง";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="สูง";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="ดีที่สุด";

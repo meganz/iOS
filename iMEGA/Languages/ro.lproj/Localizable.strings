@@ -476,8 +476,6 @@
 "rename_file_alert_title"="Rename File %@ ?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Replace";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="Mută la coșul de gunoi";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 fișier mutat în coșul de gunoi";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -667,7 +665,7 @@
 /* Title of Photo's Years tab */
 "media.photoLibrary.category.years.title"="Ani";
 /* Title of Photo's Months tab */
-"media.photoLibrary.category.months.title"="Months";
+"media.photoLibrary.category.months.title"="Luni";
 /* Title of Photo's Days tab */
 "media.photoLibrary.category.days.title"="Zile";
 /* Title of Photo's All date tab */
@@ -1013,7 +1011,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonusuri pentru recomandări";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install the MEGA Desktop App";
+"account.achievement.desktopApp.title"="Instalează aplicația desktop MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA Desktop App.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="Calitatea videoclipurilor încărcate într-un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Calitate video";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="Scăzut(ă)";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Medie";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="Ridicat(ă)";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Se pregătește…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="Reiei transferurile?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Calitatea imaginilor";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="Automat";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="Optimizată";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Always send optimised images.";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="Scan %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Tipul fișierului";
-/* export Quality Option for Scan document */
-"best"="Cea mai bună";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2973,7 +2957,7 @@
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
+"help.reportIssue.creating.cancel.title"="Sigur vrei să anulezi încărcarea problemei raportate?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="Cotă de stocare depășită";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Înainte";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ joined";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ left";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ and %@ left";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="Mută în coșul de gunoi";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="Delete permanently";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="Original";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="Automat";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="Optimizată";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="Scăzut(ă)";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="Medie";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="Ridicat(ă)";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="Cea mai bună";

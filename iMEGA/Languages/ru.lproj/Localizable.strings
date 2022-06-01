@@ -476,8 +476,6 @@
 "rename_file_alert_title"="Переименовать файл %@?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Заменить";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="Переместить в корзину";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 файл перемещён в корзину";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="Качество видео, загружаемого в чат";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Качество видео";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="Низкое";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Средний";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="Высокое";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Оригинал";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Подготовка…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2015,7 +2005,7 @@
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="Изображения (1) и видео (%2)";
 /* Multiple images and 1 video */
-"%1 Images and 1 Video"="Изображения (%1) и 1 видео";
+"%1 Images and 1 Video"="Изображения (%1) и видео (1)";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="Изображения (%1) и видео (%2)";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="Возобновить передачи?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Качество изображения";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="Автоматически";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Отправлять оптимизированные изображения при использовании мобильного Интернета и изображения в исходном качестве при подключении по Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="Оптимизированное";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Всегда отправлять оптимизированные изображения.";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="Скан %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Тип файла";
-/* export Quality Option for Scan document */
-"best"="Лучшее";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Администратор заблокировал ваш аккаунт. Пожалуйста, обратитесь к администратору вашего бизнес-аккаунта за подробностями.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="Недостаточно места";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Далее";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ присоединился";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ вышел";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@ и %@ присоединились";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ и %@ вышли";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@ и ещё %@ присоединились";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@ и ещё %@ вышли";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="Переместить в корзину";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="Удалить безвозвратно";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="Исходное";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="Автоматическое";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="Оптимизированное";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="Низкое";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="Среднее";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="Высокое";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="Лучшее";

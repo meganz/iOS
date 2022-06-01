@@ -476,8 +476,6 @@
 "rename_file_alert_title"="是否重命名文件%@？";
 /* Title for the action that allows you to replace a file. */
 "replace"="替换";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="移至回收站";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1个文件已移至回收站";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -653,7 +651,7 @@
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="仅读写";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="完全访问权限";
+"fullAccess"="完全访问";
 /* Title of the Settings section */
 "settingsTitle"="设置";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="上传到聊天的视频质量";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="视频画质";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="低";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="中";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="高";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="原始";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="准备中…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -1865,9 +1855,9 @@
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Pro会员即将到期";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="侵权移除通知";
+"Takedown notice"="删除通知";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
-"Takedown reinstated"="移除已恢复";
+"Takedown reinstated"="删除已恢复";
 /* Label shown inside an unseen notification */
 "New"="新消息";
 /* When a contact sent a contact/friend request */
@@ -2099,11 +2089,11 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="立即";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="此文件已被移除。";
+"This file has been the subject of a takedown notice."="此文件已被删除。";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="此文件夹已被移除。";
+"This folder has been the subject of a takedown notice."="此文件夹已被删除。";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="争议移除";
+"Dispute Takedown"="争议删除";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="用户管理仅可通过桌面版网页浏览器使用。";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="继续传输？";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="图片质量";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="自动";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="使用移动数据时发送优化的图像，而使用Wi-Fi时发送原始大小的图像。";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="已优化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="始终发送优化的图像。";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="扫描件%@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="文件类型";
-/* export Quality Option for Scan document */
-"best"="最高";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="您的帐户已被管理员禁用。请联系您的企业帐户管理员了解详情。";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="已超出存储空间上限";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="接下来";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@已加入";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@已离开";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@和%@已加入";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@和%@已离开";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@和其他%@人已加入";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@和其他%@人已离开";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="移至回收站";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="永久删除";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="原画";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="自动";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="优化";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="较低";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="中等";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="较高";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="最高";

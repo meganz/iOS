@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Dies könnte eine der folgenden Ursachen haben:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="The file has been removed as it violated our Terms of Service";
+"fileLinkUnavailableText2"="Die Datei wurde entfernt, da sie gegen unsere Nutzungsbedingungen verstieß";
 /*  */
 "fileLinkUnavailableText3"="Ungültiger URL - der Link, den Sie öffnen möchten, existiert nicht";
 /*  */
@@ -476,8 +476,6 @@
 "rename_file_alert_title"="Datei %@ umbenennen?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Ersetzen";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="In den Papierkorb verschieben";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 Datei in den Papierkorb verschoben";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -1081,7 +1079,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="gültig bis %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
-"Renews on"="Erneuert sich am";
+"Renews on"="Verlängerung am";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="An Sie freigegebene Ordner";
 /* Button title which triggers the action to upgrade your MEGA account level */
@@ -1461,7 +1459,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transfer wegen Verzeichnisrekursion fehlgeschlagen";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Violated Terms of Service";
+"transfer.error.termsOfServiceViolation"="Verstoß gegen die Nutzungsbedingungen";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="SSL-Prüfung fehlgeschlagen";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="Videoqualität bei Upload in einen Chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Videoqualität";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="Niedrig";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Mittel";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="Hoch";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Vorbereitung…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,24 +2236,18 @@
 "Resume Transfers?"="Transfers fortsetzen?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Bildqualität";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="Optimiert";
+"Send smaller size images through cellular networks and original size images through wifi"="Bilder bei mobiler Datenverbindung optimieren und bei WLAN-Verbindung in Originalgröße übertragen.";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Always send optimised images.";
+"Send smaller size images optimised for lower data consumption"="Bilder immer optimiert übertragen.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Always send original size images.";
+"Send original size, increased quality images"="Bilder immer in Originalgröße übertragen.";
 /* Setting title for Doc scan view */
 "Save Settings"="Einstellungen speichern";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
 "cloudDrive.scanDocument.defaultName"="Scan %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Dateityp";
-/* export Quality Option for Scan document */
-"best"="Maximal";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Ihr Account wurde von Ihrem Administrator gesperrt. Bitte setzen Sie sich für weitere Informationen direkt mit ihm in Verbindung.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2417,7 +2401,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Mehr erfahren";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link läuft ab am %@";
+"Link expires %@"="Link gültig bis %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Zum Kopieren antippen";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2459,7 +2443,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Nachrichten nach einem Monat automatisch löschen.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Nachrichten automatisch löschen, wenn sie älter sind als %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Alle Nachrichten und Dateifreigaben in dieser Unterhaltung löschen. Diese Aktion kann nicht rückgängig gemacht werden.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2981,8 +2965,38 @@
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Keine Internetverbindung möglich. Bitte prüfen Sie Ihre Verbindung und versuchen Sie es dann noch einmal.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
-"meetings.displayInMainView.title"="Display in Main View";
+"meetings.displayInMainView.title"="In Hauptansicht anzeigen";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Speicherlimit überschritten";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Weiter";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ joined";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ left";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ and %@ left";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="In den Papierkorb verschieben";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="Endgültig löschen";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="Original";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="Automatisch";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="Optimiert";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="Niedrig";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="Mittel";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="Hoch";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="Maximal";
