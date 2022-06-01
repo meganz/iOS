@@ -36,8 +36,9 @@ class GetFileExtensionUseCaseTests: XCTestCase {
         XCTAssertEqual(sut.fileExtension(for: .video, url: nil, uniformTypeIdentifier: nil), FileExtensionEntity.mov.rawValue)
     }
     
-    @available(iOS 14.0, *)
     func testFileExtension_url_utType_mediaType() throws {
+        guard #available(iOS 14.0, *) else { return }
+        
         let url = try XCTUnwrap(URL(string: "file://temp/file.hello"))
         
         for media in MediaTypeEntity.allCases {
@@ -47,8 +48,9 @@ class GetFileExtensionUseCaseTests: XCTestCase {
         }
     }
     
-    @available(iOS 14.0, *)
     func testFileExtension_utType_mediaType() throws {
+        guard #available(iOS 14.0, *) else { return }
+        
         for media in MediaTypeEntity.allCases {
             for (uti, ext) in extensionsKeyedByUTIs {
                 XCTAssertEqual(sut.fileExtension(for: media, url: nil, uti: UTType(uti)), ext)
