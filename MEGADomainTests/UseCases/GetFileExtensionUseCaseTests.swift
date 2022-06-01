@@ -8,6 +8,7 @@ class GetFileExtensionUseCaseTests: XCTestCase {
                                  "public.heic": "heic",
                                  "public.heif": "heif",
                                  "public.png": "png",
+                                 "public.camera-raw-image": "dng",
                                  "com.apple.quicktime-movie": "mov",
                                  "public.mpeg-4": "mp4",
                                  "com.compuserve.gif": "gif",
@@ -53,7 +54,9 @@ class GetFileExtensionUseCaseTests: XCTestCase {
         
         for media in MediaTypeEntity.allCases {
             for (uti, ext) in extensionsKeyedByUTIs {
-                XCTAssertEqual(sut.fileExtension(for: media, url: nil, uti: UTType(uti)), ext)
+                if let utType = UTType(uti) {
+                    XCTAssertEqual(sut.fileExtension(for: media, url: nil, uti: utType), ext)
+                }
             }
         }
     }
