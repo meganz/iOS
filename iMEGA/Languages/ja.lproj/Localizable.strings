@@ -476,8 +476,6 @@
 "rename_file_alert_title"="ファイル%@の名前を変更しますか？";
 /* Title for the action that allows you to replace a file. */
 "replace"="置き換える";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="ごみ箱に移動";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1個のファイルをごみ箱に移動しました";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="チャットにアップロードされた動画の品質";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="動画の品質";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="低い";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="普通";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="高い";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="オリジナル";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="準備中…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="転送を再開しますか？";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="画質";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="自動";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="モバイルデータ通信時は最適化された画像を送信し、Wi-Fi時は元サイズの画像を送信します。";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="最適化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="常に最適化された画像を送信してください。";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="%@をスキャン";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="ファイルの種類";
-/* export Quality Option for Scan document */
-"best"="最高";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="あなたのアカウントはあなたの管理者によって無効化されました。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="ストレージ容量が超過しました";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="次";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@さんが参加しました";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@さんが抜けました";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@さんと%@さんが参加しました";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@さんと%@さんが抜けました";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@さんとその他%@人の方々が参加しました";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@さんとその他%@人の方々が抜けました";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="ごみ箱に移す";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="恒久的に削除";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="元の";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="自動";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="最適化";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="低い";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="中";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="高い";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="最高";

@@ -476,8 +476,6 @@
 "rename_file_alert_title"="Bestand %@ Hernoemen?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Vervangen";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="Verplaats naar de Vuilnisbak";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 bestand verplaatst naar de Prullenbak";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="Kwaliteit van video's geüpload in een chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Video Kwaliteit";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="Laag";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Gemiddeld";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="Hoog";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Orgineel";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Voorbereiden…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="Overdrachten Hervatten?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Afbeelding Kwaliteit";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Verstuur geoptimaliseerde afbeeldingen wanneer u mobiele data gebruikt, maar afbeeldingen op origineel formaat wanneer u wifi gebruikt.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="Geoptimaliseerd";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Stuur altijd geoptimaliseerde afbeeldingen.";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="Scan %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Bestandstype";
-/* export Quality Option for Scan document */
-"best"="Beste";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Uw account is gedeactiveerd door uw beheerder. Neem contact op met uw zakelijke accountbeheerder voor meer informatie.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2459,7 +2443,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Verwijder automatisch berichten ouder dan een maand.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatisch berichten verwijderen die ouder zijn dan %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Verwijder alle berichten en bestanden gedeeld in dit gesprek. Deze actie onomkeerbaar.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="Opslag tegoed overschreden";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Volgende";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ is aangesloten";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ heeft de oproep verlaten";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@en %@ zijn aangesloten";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ en %@ hebben de oproep verlaten";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@ en %@ anderen zijn aangesloten";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@en %@ anderen hebben de oproep verlaten";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="Verplaatsen naar Prullenbak";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="Permanent verwijderen";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="Orgineel";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="Automatisch";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="Geoptimaliseerd";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="Laag";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="Gemiddeld";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="Hoog";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="Beste";

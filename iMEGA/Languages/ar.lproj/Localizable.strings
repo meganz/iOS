@@ -476,8 +476,6 @@
 "rename_file_alert_title"="أعد تسمية الملفّ %@ ؟";
 /* Title for the action that allows you to replace a file. */
 "replace"="استبدال";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="نقل إلى سلة المحذوفات";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 ملف تم نقله لسلة المحذوفات";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -987,7 +985,7 @@
 /*  */
 "howItWorks"="كيف تعمل";
 /*  */
-"howItWorksMain"="على صديقك التسجيل للحصول على حساب مجاني على ميغا MEGA و [S]تثبيت أحد تطبيقات ميغا MEGA على الأقل[/S] (إما تطبيق الحاسوب المكتبي أو أحد تطبيقات ميغا MEGA للهاتف المحمول الخاصة بنا)";
+"howItWorksMain"="على صديقك التسجيل للحصول على حساب مجاني على ميغا MEGA و [S]تثبيت أحد تطبيقات ميغا MEGA على الأقل[/S] (إما تطبيق ميغا MEGA للحاسوب المكتبي أو أحد تطبيقات ميغا MEGA للهاتف المحمول الخاصة بنا)";
 /*  */
 "howItWorksSecondary"="يمكنك إخطار صديقك بأي طريقة. ستربح الحصة إذا أدخلت البريد الإلكتروني لصديقك هنا قبل تسجيله بهذا العنوان.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="جودة الفيديوهات المرفعة الى المحادثة";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="جودة الفيديو";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="منخفضة";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="متوسطة";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="مرتفعة";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="الأصلي";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="جاري التحضير…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="استئناف عمليات التراسل؟";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="جودة الصورة";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="تلقائي";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="أرسل صورًا معدلة الجودة عندما تكون على بيانات الهاتف المحمول ولكن صور بالحجم الأصلي عند الاتصال بشبكة Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="الأمثل";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="دائما إرسال الصور بالحجم المعدل.";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="مسح ضوئي %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="نوع الملف";
-/* export Quality Option for Scan document */
-"best"="الأفضل";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="تم إلغاء تفعيل حسابك من قبل مديرك. يرجى الاتصال مع مدير حساب الاعمال خاصتك للحصول على مزيد من التفاصيل.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2459,7 +2443,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="حذف الرسائل الأقدم من شهر تلقائيًا.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="احذف الرسائل الأقدم من %@ تلقائيًا";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="احذف جميع الرسائل والملفات المشاركة في هذه المحادثة. هذا الإجراء لا رجوع فيه.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="تم تجاوز مساحة التخزين المتاحة";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="التالي";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ انضم";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ غادر";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@ و %@ انضما";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ و%@ غادرا";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="انضم %@ و %@ آخرون";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="غادر %@ و %@ آخرون";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="نقل إلى سلة المحذوفات";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="حذف بشكل دائم";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="الأصلية";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="تلقائي";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="معدل";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="منخفضة";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="متوسطة";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="عالية";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="الأفضل";

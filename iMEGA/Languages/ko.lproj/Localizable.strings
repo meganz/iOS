@@ -476,8 +476,6 @@
 "rename_file_alert_title"="%@ 파일의 이름을 바꿀까요?";
 /* Title for the action that allows you to replace a file. */
 "replace"="바꾸기";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="휴지통으로 이동";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="파일 1개가 휴지통으로 이동됨";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -987,7 +985,7 @@
 /*  */
 "howItWorks"="작동 원리";
 /*  */
-"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 어플리케이션 중 하나를 설치[/S]해야합니다 (데스크톱 앱이나 모바일 앱 중 하나)";
+"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 애플리케이션 중 하나를 설치[/S]해야합니다 (데스크톱 앱이나 모바일 앱 중 하나)";
 /*  */
 "howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구가 이메일을 사용하여 가입하기 전에 여기에 입력하면 할당량을 얻을 것입니다.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1455,7 +1453,7 @@
 /* Label to show that an error related with an read error occurs during a SDK operation. */
 "Read error"="읽기 오류";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
-"Invalid application key"="잘못된 어플리케이션 키";
+"Invalid application key"="잘못된 애플리케이션 키";
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="이용 약관 침해됨";
 /* SDK error returned when an upload would produce recursivity */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="대화에 업로드된 동영상의 품질";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="동영상 품질";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="낮음";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="보통";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="높음";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="원본";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="준비중…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2011,13 +2001,13 @@
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="동영상 %2개";
 /* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="이미지 1개와 동영상 1개";
+"1 Image and 1 Video"="1 Image and 1 Video";
 /* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="이미지 1개와 동영상 %2개";
+"1 Image and %2 Videos"="1 Image and %2 Videos";
 /* Multiple images and 1 video */
-"%1 Images and 1 Video"="이미지 %1개와 동영상 1개";
+"%1 Images and 1 Video"="%1 Images and 1 Video";
 /* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="이미지 %1개와 동영상 %2개";
+"%1 Images and %2 Videos"="%1 Images and %2 Videos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@님이 수정";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2153,7 +2143,7 @@
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="알림 꺼짐";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="재접속중…";
+"Reconnecting..."="다시 접속중…";
 /* Title shown when the user reconnect in a call. */
 "You are back!"="돌아왔습니다.";
 /* Subtitle of chat screen when the chat is inactive */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="전송을 재개할까요?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="이미지 품질";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="자동";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="모바일 데이터를 사용할 때는 최적화된 이미지를 보내지만 Wi-Fi에 연결되있을 때에는 원본 크기 이미지를 보냅니다.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="최적화";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="항상 최적화된 이미지 전송";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="%@ 스캔";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="파일 유형";
-/* export Quality Option for Scan document */
-"best"="최고";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="저장소 할당량 초과";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="다음";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@님 참여함";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@님 떠남";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@님과 %@님 참여함";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@님과 %@님 떠남";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@님 외 %@명 참여함";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@님 외 %@명 떠남";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="휴지통으로 이동";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="영구적으로 삭제";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="원본";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="자동";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="최적화";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="낮음";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="중간";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="높음";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="최고";

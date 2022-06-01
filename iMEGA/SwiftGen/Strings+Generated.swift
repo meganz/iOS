@@ -3537,7 +3537,7 @@ public enum Strings {
       public enum MenuAction {
         /// Delete permanently
         public static let deletePermanently = Strings.tr("Localizable", "general.menuAction.deletePermanently")
-        /// Move to Rubbish Bin
+        /// Move to rubbish bin
         public static let moveToRubbishBin = Strings.tr("Localizable", "general.menuAction.moveToRubbishBin")
       }
       public enum Security {

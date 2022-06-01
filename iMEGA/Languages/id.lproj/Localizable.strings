@@ -476,8 +476,6 @@
 "rename_file_alert_title"="Ganti Nama File %@ ?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Ganti";
-/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="Pindahkan ke Sampah";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 file dipindahkan ke Sampah";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -1494,14 +1492,6 @@
 "qualityOfVideosUploadedToAChat"="Kualitas video yang diunggah ke obrolan";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Kualitas video";
-/* Video and scanned document option quality, used together with 24950 “Medium” and 19186 “High” and 17785 “Original” for video quality */
-"low"="Rendah";
-/* Video and scanned document option quality, used together with 19185 “Low” and 19186 “High” and 17785 “Original” for video quality */
-"medium"="Sedang";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 17785 “Original” */
-"high"="Tinggi";
-/* Video quality option, used together with 19185 “Low”, 24950 “Medium”, and 19186 “High” */
-"original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Mempersiapkan…";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -2246,12 +2236,8 @@
 "Resume Transfers?"="Lanjutkan Transfer?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Kualitas gambar";
-/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
-"Automatic"="Otomatis";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Kirim gambar yang dioptimalkan saat menggunakan data seluler tetapi gambar ukuran asli saat menggunakan Wi-Fi.";
-/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
-"Optimised"="Dioptimalkan";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Selalu kirim gambar yang dioptimalkan.";
 /* Description of High Image Quality option */
@@ -2262,8 +2248,6 @@
 "cloudDrive.scanDocument.defaultName"="Pindai %@";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Jenis File";
-/* export Quality Option for Scan document */
-"best"="Terbaik";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dinonaktifkan oleh administrator Anda. Anda dapat menghubungi administrator akun bisnis Anda untuk rincian lebih lanjut.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
@@ -2459,7 +2443,7 @@
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Hapus pesan yang lebih lama dari satu bulan secara otomatis.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Secara otomatis menghapus pesan yang lebih lama dari %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Hapus semua pesan dan file yang dibagikan dalam percakapan ini. Tindakan ini tidak dapat diubah.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -2986,3 +2970,33 @@
 "transfer.storage.quotaExceeded"="Kuota penyimpanan terlewati";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Berikutnya";
+/* Meetings: Notification message to be shown when one person joins the call. */
+"meetings.notification.singleUserJoined"="%@ joined";
+/* Meetings: Notification message to be shown when one person leaves the call. */
+"meetings.notification.singleUserLeft"="%@ left";
+/* Meetings: Notification message to be shown when two people join the call at the same time */
+"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+/* Meetings: Notification message to be shown when two people are leaving the call at the same time */
+"meetings.notification.twoUsersLeft"="%@ and %@ left";
+/* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+/* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
+"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+/* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
+"general.menuAction.moveToRubbishBin"="Pindahkan ke Sampah";
+/* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
+"general.menuAction.deletePermanently"="Hapus secara permanen";
+/* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
+"media.quality.original"="Asli";
+/* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
+"media.quality.automatic"="Otomatis";
+/* Optimised quality option used on Chat Images. Indicating that the image will be optimised. */
+"media.quality.optimised"="Dioptimalkan";
+/* Low quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.low"="Rendah";
+/* Medium quality option used on CU and Chat Video uploads and exporting file in Scan Document. */
+"media.quality.medium"="Menengah";
+/* High quality option used on CU and Chat Video uploads. */
+"media.quality.high"="Tinggi";
+/* Best quality option for exporting file in Scan document. */
+"media.quality.best"="Terbaik";
