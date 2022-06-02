@@ -21,6 +21,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var stackViewTopConstraint: NSLayoutConstraint!
     
     private var reconncectingNotificationView: CallNotificationView?
+    private var poorConnectionNotificationView: CallNotificationView?
     private var appBecomeActiveObserver: NSObjectProtocol?
     private var callEndTimerNotificationView: CallNotificationView?
 
@@ -178,8 +179,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             }
         case .reconnecting:
             showReconnectingNotification()
+            addParticipantsBlurEffect()
         case .reconnected:
             removeReconnectingNotification()
+            removeParticipantsBlurEffect()
             showNotification(message: Strings.Localizable.online, backgroundColor: UIColor.systemGreen, textColor: Constants.notificatitionMessageWhiteTextColor)
         case .updateCameraPositionTo(let position):
             localUserView.addBlurEffect()
@@ -209,8 +212,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showNotification(message: Strings.Localizable.Meetings.Notifications.moderatorPrivilege,
                              backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
                              textColor: Constants.notificatitionMessageBlackTextColor)
-        case .lowNetworkQuality:
-            showNotification(message: Strings.Localizable.poorConnection, backgroundColor: UIColor.systemOrange, textColor: Constants.notificatitionMessageWhiteTextColor)
+        case .showBadNetworkQuality:
+            if reconncectingNotificationView == nil {
+                showPoorConnectionNotification()
+            }
+        case .hideBadNetworkQuality:
+            removePoorConnectionNotification()
         case .updateAvatar(let image, let participant):
             callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
@@ -352,10 +359,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func showReconnectingNotification() {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: Strings.Localizable.reconnecting,
-                          backgroundColor: UIColor.systemOrange,
+        notification.show(message: Strings.Localizable.Meetings.Reconnecting.title,
+                          backgroundColor: .clear,
                           textColor: Constants.notificatitionMessageWhiteTextColor,
-                          autoFadeOut: false)
+                          autoFadeOut: false,
+                          blinking: true)
         reconncectingNotificationView = notification
     }
     
@@ -363,6 +371,30 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         guard let notification = reconncectingNotificationView else { return }
         notification.removeFromSuperview()
         reconncectingNotificationView = nil
+    }
+    
+    private func showPoorConnectionNotification() {
+        let notification = CallNotificationView.instanceFromNib
+        view.addSubview(notification)
+        notification.show(message: Strings.Localizable.Meetings.poorConnection,
+                          backgroundColor: .clear,
+                          textColor: Constants.notificatitionMessageWhiteTextColor,
+                          autoFadeOut: false)
+        poorConnectionNotificationView = notification
+    }
+    
+    private func removePoorConnectionNotification() {
+        guard let notification = poorConnectionNotificationView else { return }
+        notification.removeFromSuperview()
+        poorConnectionNotificationView = nil
+    }
+    
+    private func addParticipantsBlurEffect() {
+        callCollectionView.addBlurEffect()
+    }
+    
+    private func removeParticipantsBlurEffect() {
+        callCollectionView.removeBlurEffect()
     }
     
     private func showWaitingForOthersMessageView() {

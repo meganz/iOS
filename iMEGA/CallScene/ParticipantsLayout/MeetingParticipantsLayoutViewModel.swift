@@ -75,7 +75,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case selectPinnedCellAt(IndexPath?)
         case shouldHideSpeakerView(Bool)
         case ownPrivilegeChangedToModerator
-        case lowNetworkQuality
+        case showBadNetworkQuality
+        case hideBadNetworkQuality
         case updateAvatar(UIImage, CallParticipantEntity)
         case updateSpeakerAvatar(UIImage)
         case updateMyAvatar(UIImage)
@@ -728,9 +729,14 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func callTerminated(_ call: CallEntity) {
         callUseCase.stopListeningForCall()
         timer?.invalidate()
-        if (call.termCodeType == .tooManyParticipants)  {
+        if (call.termCodeType == .tooManyParticipants) {
             containerViewModel?.dispatch(.dismissCall(completion: {
                 SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+            }))
+        } else if reconnecting {
+            tonePlayer.play(tone: .callEnded)
+            containerViewModel?.dispatch(.dismissCall(completion: {
+                SVProgressHUD.showError(withStatus: Strings.Localizable.Meetings.Reconnecting.failed)
             }))
         }
     }
@@ -748,6 +754,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func connecting() {
         if !reconnecting {
             reconnecting = true
+            tonePlayer.play(tone: .reconnecting)
             invokeCommand?(.reconnecting)
             invokeCommand?(.hideEmptyRoomMessage)
         }
@@ -789,8 +796,13 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         invokeCommand?(.updateName(title))
     }
     
-    func networkQuality() {
-        invokeCommand?(.lowNetworkQuality)
+    func networkQualityChanged(_ quality: NetworkQuality) {
+        switch quality {
+        case .bad:
+            invokeCommand?(.showBadNetworkQuality)
+        case .good:
+            invokeCommand?(.hideBadNetworkQuality)
+        }
     }
 }
 

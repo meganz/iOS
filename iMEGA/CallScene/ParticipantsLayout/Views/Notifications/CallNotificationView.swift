@@ -35,7 +35,7 @@ class CallNotificationView: UIView {
         }
     }
     
-    func show(message: String, backgroundColor: UIColor, textColor: UIColor, autoFadeOut: Bool, completion: (() -> Void)? = nil) {
+    func show(message: String, backgroundColor: UIColor, textColor: UIColor, autoFadeOut: Bool, blinking: Bool = false, completion: (() -> Void)? = nil) {
         translatesAutoresizingMaskIntoConstraints = false
         
         guard let superview = superview else {
@@ -55,6 +55,8 @@ class CallNotificationView: UIView {
         
         fadeIn()
         
+        blinking ? addBlinkingAnimation() : removeOpacityAnimations()
+        
         if autoFadeOut {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.fadeOut(completion: completion)
@@ -62,6 +64,18 @@ class CallNotificationView: UIView {
         }
     }
     
+    func addBlinkingAnimation() {
+        UIView.animate(withDuration: 0.8,
+                       delay: 0.5,
+                       options: [.curveEaseInOut, .autoreverse, .repeat],
+                       animations: { [weak self] in self?.notificationLabel.alpha = 0 },
+                       completion: nil)
+    }
+    
+    func removeOpacityAnimations() {
+        self.layer.removeAnimation(forKey: "opacity")
+    }
+
     func show(message: String, backgroundColor: UIColor, textColor: UIColor) {
         guard let superview = superview else {
             return
