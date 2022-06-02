@@ -103,6 +103,12 @@
 		12E9105528247C5300FBC6DA /* AlbumContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E9105428247C5200FBC6DA /* AlbumContentViewController.swift */; };
 		12F041CC27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */; };
 		12F4F965282CAA2D00B85DB0 /* AlbumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F4F964282CAA2D00B85DB0 /* AlbumEntity.swift */; };
+		12FF88E12846E2CC00D99BED /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
+		12FF88E72846EE2800D99BED /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
+		12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
+		12FF88EE2846F03100D99BED /* EmptyStateView+Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */; };
+		12FF88EF2846F03200D99BED /* EmptyStateView+Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */; };
+		12FF88F02846F03300D99BED /* EmptyStateView+Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
@@ -405,8 +411,6 @@
 		5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E126CE635B0010115B /* MockFavouritesRouter.swift */; };
 		5BBC13E626CE64F50010115B /* NodeCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E526CE64F50010115B /* NodeCellViewModelTests.swift */; };
 		5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E726CE68380010115B /* MockFavouriteNodesUseCase.swift */; };
-		5BC1276E2375A73000CCAF26 /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
-		5BC1276F2375A75600CCAF26 /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
 		5BC25725220080FD0098E781 /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3D05F242A36240048123A /* UIColor+Additions.swift */; };
 		5BC3D061242A45BA0048123A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3D05F242A36240048123A /* UIColor+Additions.swift */; };
@@ -445,7 +449,6 @@
 		5BE689BA2419189400462134 /* AppearancePreference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689A32419122C00462134 /* AppearancePreference+CoreDataProperties.swift */; };
 		5BE689BB2419189600462134 /* AppearancePreference+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689A22419122B00462134 /* AppearancePreference+CoreDataClass.swift */; };
 		5BE689BC2419189700462134 /* AppearancePreference+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689A22419122B00462134 /* AppearancePreference+CoreDataClass.swift */; };
-		5BE7BEE523745FC700BBD23F /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
 		5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
 		5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
@@ -2619,6 +2622,7 @@
 		12E9105428247C5200FBC6DA /* AlbumContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentViewController.swift; sourceTree = "<group>"; };
 		12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+MedisDiscovery.swift"; sourceTree = "<group>"; };
 		12F4F964282CAA2D00B85DB0 /* AlbumEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumEntity.swift; sourceTree = "<group>"; };
+		12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmptyStateView+Timeline.swift"; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -6662,6 +6666,7 @@
 			isa = PBXGroup;
 			children = (
 				5B98624526B1A39900BB9945 /* EmptyStateView+Config.swift */,
+				12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */,
 				5B79E88C26E6973A0070D782 /* EmptyStateType.swift */,
 				5BE7BEE223745FC600BBD23F /* EmptyStateView.h */,
 				5BE7BEE323745FC600BBD23F /* EmptyStateView.m */,
@@ -12345,6 +12350,7 @@
 				B6C9596E2689B7DE00CF73A8 /* ShareRepositoryProtocol.swift in Sources */,
 				A81971E826FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift in Sources */,
 				BF33EF70243DA31D00CD35AC /* ChatViewAttachmentCellViewModel.swift in Sources */,
+				12FF88EE2846F03100D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */,
 				5DC0FD4D24D903A4004DB649 /* ButtonStyleFactory.swift in Sources */,
 				7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */,
@@ -12798,6 +12804,7 @@
 				A80B66E125E7F72000486EC5 /* MEGANode+Mapper.swift in Sources */,
 				BF6D30AA25390BBA00BD4653 /* FilesSearchUseCase.swift in Sources */,
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
+				12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */,
 				5B9F5D51259DD5BB00BADB11 /* CookieSettingsRepositoryProtocol.swift in Sources */,
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				BF782D7B269BA4BB0001D169 /* ShareAccessLevelEntity.swift in Sources */,
@@ -12866,7 +12873,6 @@
 				836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
 				B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */,
-				5BE7BEE523745FC700BBD23F /* EmptyStateView.m in Sources */,
 				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				BFAB113D23CEA5C300BCE72D /* PhotoGridViewCell.swift in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
@@ -13467,7 +13473,6 @@
 				77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */,
 				B68ED08B27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */,
 				83FB143D219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
-				5BC1276E2375A73000CCAF26 /* EmptyStateView.m in Sources */,
 				77F0522222CB8BBE00032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				C460506A27282D7200D67A44 /* NodeHandle+Additions.swift in Sources */,
 				A873E84526E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */,
@@ -13505,6 +13510,7 @@
 				A82D5CDF26BC080D00E73D27 /* PreferenceUseCase.swift in Sources */,
 				C482B7D3271F36070074CFC4 /* MEGAError+MNZCategory.m in Sources */,
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
+				12FF88E72846EE2800D99BED /* EmptyStateView.m in Sources */,
 				5BE689B72419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				B6F8CE0C262823230074CBBF /* CoreDataErrorHandler.m in Sources */,
@@ -13559,6 +13565,7 @@
 				B6990193262F93AA00176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				83FB143B219C3C6D00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
+				12FF88EF2846F03200D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				72991F0D27E1E32B00BB00D5 /* MEGANode+Backup.swift in Sources */,
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
 				C46517A7272C9E31004F27A0 /* NodeEntity.swift in Sources */,
@@ -13618,6 +13625,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12FF88E12846E2CC00D99BED /* EmptyStateView.m in Sources */,
 				77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */,
 				5BE6898A2417CB3D00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
@@ -13635,6 +13643,7 @@
 				5B205D1A2449AD1A00EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
+				12FF88F02846F03300D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				C46517B2272C9FBD004F27A0 /* NodeTypeEntity+Mapper.swift in Sources */,
 				5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */,
 				B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */,
@@ -13770,7 +13779,6 @@
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
 				BF943E9F235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */,
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
-				5BC1276F2375A75600CCAF26 /* EmptyStateView.m in Sources */,
 				C4C6A49A27A4632600873165 /* MegaNode+Additions.swift in Sources */,
 				77892EA020E5029E0020A533 /* MOUser.m in Sources */,
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,

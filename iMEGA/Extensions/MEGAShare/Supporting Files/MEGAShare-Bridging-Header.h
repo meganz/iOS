@@ -24,6 +24,7 @@
 #import "SelectableTableViewCell.h"
 #import "MegaNodeActionType.h"
 #import "Helper.h"
+#import "EmptyStateView.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
