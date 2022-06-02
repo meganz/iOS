@@ -1,6 +1,7 @@
 import UIKit
 import MessageKit
 import KeyboardLayoutGuide
+import Combine
 
 class ChatViewController: MessagesViewController {
 
@@ -27,6 +28,9 @@ class ChatViewController: MessagesViewController {
             reloadInputViews()
         }
     }
+    
+    var endCallSubscription: AnyCancellable?
+    var endCallDialog: EndCallDialog?
     
     lazy var exportBarButtonItem: UIBarButtonItem = {
         let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.exportSelectedMessages))

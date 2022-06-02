@@ -1950,6 +1950,7 @@
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
 		BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
 		BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */; };
+		BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5455E82844377600544A53 /* EndCallDialog.swift */; };
 		BF5BC7682611681000716CD6 /* UserInviteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */; };
 		BF5BC7742611687A00716CD6 /* UserInviteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */; };
 		BF5BC77E2611693800716CD6 /* UserInviteRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BC77D2611693800716CD6 /* UserInviteRepositoryProtocol.swift */; };
@@ -4298,6 +4299,7 @@
 		BF4AC32C27CC4A7100366C25 /* AnalyticsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
 		BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatCall+Additions.swift"; sourceTree = "<group>"; };
+		BF5455E82844377600544A53 /* EndCallDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialog.swift; sourceTree = "<group>"; };
 		BF5BC7672611681000716CD6 /* UserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteUseCase.swift; sourceTree = "<group>"; };
 		BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteRepository.swift; sourceTree = "<group>"; };
 		BF5BC77D2611693800716CD6 /* UserInviteRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInviteRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -8271,6 +8273,7 @@
 				BF66E00826140BE900066F35 /* MeetingContainerRouter.swift */,
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
 				BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */,
+				BF5455E82844377600544A53 /* EndCallDialog.swift */,
 				836651272649374B00BC02F0 /* ParticipantsLayout */,
 				2FFCF39E25FB1A1500E1718D /* StartMeetingScene */,
 			);
@@ -12498,6 +12501,7 @@
 				5D8DC6B1248CB0C40067A4F9 /* CornerStyle.swift in Sources */,
 				129D51D22821D5A600A4D4D3 /* AlbumUseCase.swift in Sources */,
 				BFE6E55E25535DEB00050DCA /* UITableViewCell+Additions.swift in Sources */,
+				BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */,
 				B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */,

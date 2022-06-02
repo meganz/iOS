@@ -3000,3 +3000,13 @@
 "media.quality.high"="High";
 /* Best quality option used on exporting file in Scan document. */
 "media.quality.best"="Best";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="You’re the only one here";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on Call";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="End Call Now";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="Call will end in %@";

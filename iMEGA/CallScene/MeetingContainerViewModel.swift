@@ -17,6 +17,8 @@ enum MeetingContainerAction: ActionType {
     case didSwitchToGridView
     case participantAdded
     case participantRemoved
+    case showEndCallDialogIfNeeded
+    case removeEndCallAlertAndEndCall
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -126,8 +128,13 @@ final class MeetingContainerViewModel: ViewModelType {
             router.didSwitchToGridView()
         case .participantAdded:
             cancelMuteMicrophoneSubscription()
+            router.removeEndCallDialog(completion: nil)
         case .participantRemoved:
             muteMicrophoneIfNoOtherParticipantsArePresent()
+        case .showEndCallDialogIfNeeded:
+            showEndCallDialogIfNeeded()
+        case .removeEndCallAlertAndEndCall:
+            removeEndCallAlertAndEndCall()
         }
     }
     
@@ -162,15 +169,35 @@ final class MeetingContainerViewModel: ViewModelType {
     private func muteMicrophoneIfNoOtherParticipantsArePresent() {
         if let call = call,
            call.hasLocalAudio,
-           call.numberOfParticipants == 1,
-           call.participants.first == userUseCase.myHandle {
+           isOnlyMyselfInTheMeeting() {
             callManagerUseCase.muteUnmuteCall(call, muted: true)
         }
     }
+    
+    private func isOnlyMyselfInTheMeeting() -> Bool {
+        guard let call = call,
+           call.numberOfParticipants == 1,
+           call.participants.first == userUseCase.myHandle else {
+            return false
+        }
         
+        return true
+    }
+    
+    private func showEndCallDialogIfNeeded() {
+        guard isOnlyMyselfInTheMeeting() else { return }
+        router.showEndCallDialog()
+    }
+    
     private func cancelMuteMicrophoneSubscription() {
         muteMicSubscription?.cancel()
         muteMicSubscription = nil
+    }
+    
+    private func removeEndCallAlertAndEndCall() {
+        router.removeEndCallDialog { [weak self] in
+            self?.dismissCall(completion: nil)
+        }
     }
     
     deinit {

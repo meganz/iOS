@@ -260,7 +260,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _):
+                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
                         continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
                     default:
                         break
@@ -305,7 +305,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _):
+                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
                         continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
                     default:
                         break
@@ -350,7 +350,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _):
+                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
                         continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
                     default:
                         break
@@ -394,7 +394,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames):
+                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
                         continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
                     default:
                         break
@@ -438,7 +438,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames):
+                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
                         continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
                     default:
                         break
@@ -482,7 +482,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames):
+                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
                         continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
                     default:
                         break
@@ -532,7 +532,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                     case .participantsStatusChanged(let addedParticipantCount,
                                                     let removedParticipantCount,
                                                     let addedParticipantNames,
-                                                    let removedParticipantNames):
+                                                    let removedParticipantNames,
+                                                    _):
                         continuation.resume(
                             returning: (addedParticipantCount: addedParticipantCount,
                                         removedParticipantCount: removedParticipantCount,
@@ -593,7 +594,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                     case .participantsStatusChanged(let addedParticipantCount,
                                                     let removedParticipantCount,
                                                     let addedParticipantNames,
-                                                    let removedParticipantNames):
+                                                    let removedParticipantNames,
+                                                    _):
                         continuation.resume(
                             returning: (addedParticipantCount: addedParticipantCount,
                                         removedParticipantCount: removedParticipantCount,
@@ -654,7 +656,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                     case .participantsStatusChanged(let addedParticipantCount,
                                                     let removedParticipantCount,
                                                     let addedParticipantNames,
-                                                    let removedParticipantNames):
+                                                    let removedParticipantNames,
+                                                    _ ):
                         continuation.resume(
                             returning: (addedParticipantCount: addedParticipantCount,
                                         removedParticipantCount: removedParticipantCount,
@@ -698,4 +701,8 @@ final class MockCallViewRouter: MeetingParticipantsLayoutRouting {
     func didAddFirstParticipant() {
         didAddFirstParticipant_calledTimes += 1
     }
+    
+    func startCallEndCountDownTimer() {}
+    
+    func endCallEndCountDownTimer() {}
 }

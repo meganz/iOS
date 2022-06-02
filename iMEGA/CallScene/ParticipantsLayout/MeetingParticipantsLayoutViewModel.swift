@@ -1,8 +1,5 @@
 import Combine
-
-protocol MeetingParticipantsLayoutRouting: Routing {
-    func showRenameChatAlert()
-}
+import Foundation
 
 enum CallViewAction: ActionType {
     case onViewLoaded
@@ -24,6 +21,9 @@ enum CallViewAction: ActionType {
     case pinParticipantAsSpeaker(CallParticipantEntity)
     case addParticipant(withHandle: MEGAHandle)
     case removeParticipant(withHandle: MEGAHandle)
+    case startCallEndCountDownTimer
+    case endCallEndCountDownTimer
+    case didEndDisplayLastPeerLeftStatusMessage
 }
 
 enum ParticipantsLayoutMode {
@@ -38,6 +38,7 @@ enum DeviceOrientation {
 
 private enum CallViewModelConstant {
     static let maxParticipantsCountForHighResolution = 5
+    static let callEndCountDownTimerDuration: TimeInterval = 120
 }
 
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
@@ -59,7 +60,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case participantsStatusChanged(addedParticipantCount: Int,
                                        removedParticipantCount: Int,
                                        addedParticipantNames: [String],
-                                       removedParticipantNames: [String])
+                                       removedParticipantNames: [String],
+                                       isOnlyMyselfRemainingInTheCall: Bool)
         case reconnecting
         case reconnected
         case updateCameraPositionTo(position: CameraPositionEntity)
@@ -77,6 +79,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updateAvatar(UIImage, CallParticipantEntity)
         case updateSpeakerAvatar(UIImage)
         case updateMyAvatar(UIImage)
+        case updateCallEndDurationRemainingString(String)
+        case removeCallEndDurationView
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -122,6 +126,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
+    
+    private var callEndCountDownSubscription: AnyCancellable?
+    private lazy var dateComponentsFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        formatter.unitsStyle = .positional
+        return formatter
+    }()
     
     private var meetingParticipantStatusPipelineSubscription: AnyCancellable?
     private let meetingParticipantStatusPipeline = MeetingParticipantStatusPipeline(
@@ -441,7 +454,45 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             meetingParticipantStatusPipeline.addParticipant(withHandle: handle)
         case .removeParticipant(let handle):
             meetingParticipantStatusPipeline.removeParticipant(withHandle: handle)
+        case .startCallEndCountDownTimer:
+            startCallEndCountDownTimer()
+        case .endCallEndCountDownTimer:
+            endCallEndCountDownTimer()
+        case .didEndDisplayLastPeerLeftStatusMessage:
+            containerViewModel?.dispatch(.showEndCallDialogIfNeeded)
         }
+    }
+    
+    private func startCallEndCountDownTimer() {
+        let callEndCountDownTimerStartDate = Date()
+        if let timeRemainingString = self.dateComponentsFormatter.string(from: CallViewModelConstant.callEndCountDownTimerDuration) {
+            invokeCommand?(.updateCallEndDurationRemainingString(timeRemainingString))
+        }
+
+        callEndCountDownSubscription = Timer
+            .publish(every: 1.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] date in
+                guard let self = self else { return }
+                
+                let timeElapsed = date.timeIntervalSince(callEndCountDownTimerStartDate)
+                let timeRemaining = round(CallViewModelConstant.callEndCountDownTimerDuration - timeElapsed)
+                
+                if timeRemaining > 0 {
+                    if let timeRemainingString = self.dateComponentsFormatter.string(from: timeRemaining) {
+                        self.invokeCommand?(.updateCallEndDurationRemainingString(timeRemainingString))
+                    }
+                } else {
+                    self.endCallEndCountDownTimer()
+                    self.containerViewModel?.dispatch(.removeEndCallAlertAndEndCall)
+                }
+            }
+    }
+    
+    private func endCallEndCountDownTimer() {
+        invokeCommand?(.removeCallEndDurationView)
+        callEndCountDownSubscription?.cancel()
+        callEndCountDownSubscription = nil
     }
     
     private func handlersSubsetToFetch(forHandlers handlers: [MEGAHandle]) -> [MEGAHandle] {
@@ -459,11 +510,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     @MainActor
     private func handle(addedParticipantCount: Int, removedParticipantCount: Int, addedParticipantNames: [String], removedParticipantNames: [String]) {
+        guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
+        let isOnlyMyselfRemainingInTheCall = call.numberOfParticipants == 1 && call.participants.first == userUseCase.myHandle
+        
         self.invokeCommand?(
             .participantsStatusChanged(addedParticipantCount: addedParticipantCount,
                                        removedParticipantCount: removedParticipantCount,
                                        addedParticipantNames: addedParticipantNames,
-                                       removedParticipantNames: removedParticipantNames)
+                                       removedParticipantNames: removedParticipantNames,
+                                       isOnlyMyselfRemainingInTheCall: isOnlyMyselfRemainingInTheCall)
         )
     }
     
