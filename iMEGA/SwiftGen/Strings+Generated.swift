@@ -3718,6 +3718,16 @@ public enum Strings {
         /// Display in Main View
         public static let title = Strings.tr("Localizable", "meetings.displayInMainView.title")
       }
+      public enum EndCallDialog {
+        /// Call will automatically end in 2 mins unless you want to stay on it.
+        public static let description = Strings.tr("Localizable", "meetings.endCallDialog.description")
+        /// End Call Now
+        public static let endCallNowButtonTitle = Strings.tr("Localizable", "meetings.endCallDialog.endCallNowButtonTitle")
+        /// Stay on Call
+        public static let stayOnCallButtonTitle = Strings.tr("Localizable", "meetings.endCallDialog.stayOnCallButtonTitle")
+        /// You’re the only one here
+        public static let title = Strings.tr("Localizable", "meetings.endCallDialog.title")
+      }
       public enum EnterMeetingLink {
         /// Enter Meeting Link
         public static let title = Strings.tr("Localizable", "meetings.enterMeetingLink.title")
@@ -3781,6 +3791,10 @@ public enum Strings {
         }
       }
       public enum Notification {
+        /// Call will end in %@
+        public static func endCallTimerDuration(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.EndCallTimerDuration", String(describing: p1))
+        }
         /// %@ and %@ others joined
         public static func moreThanTwoUsersJoined(_ p1: Any, _ p2: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersJoined", String(describing: p1), String(describing: p2))
