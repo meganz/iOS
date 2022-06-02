@@ -253,8 +253,11 @@
     self.shouldShowRightBarButton = !shouldHide;
     
     if (self.shouldShowRightBarButton && self.showToolBar && self.mediaNodesArray.count > 0) {
+        [self.editBarButtonItem setImage:[UIImage imageNamed:@"selectAll"]];
         self.objcWrapper_parent.navigationItem.rightBarButtonItem = self.cachedEditBarButtonItem;
     } else {
+        self.editBarButtonItem.image = nil;
+        self.editBarButtonItem.title = @"";
         self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
     }
 }
@@ -468,7 +471,12 @@
         self.editBarButtonItem.title = @"";
         [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
     } else if (self.mediaNodesArray.count > 0 && !self.isEditing) {
-        [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
+        if (self.showToolBar && self.shouldShowRightBarButton) {
+            [self.editBarButtonItem setImage:[UIImage imageNamed:@"selectAll"]];
+        } else {
+            self.editBarButtonItem.image = nil;
+            self.editBarButtonItem.title = @"";
+        }
         
         if (@available(iOS 14.0, *)) {}
         else {
@@ -648,6 +656,13 @@
 - (void)showToolbar:(BOOL)showToolbar {
     BOOL result = self.shouldShowRightBarButton && showToolbar && self.mediaNodesArray.count > 0;
     self.showToolBar = showToolbar;
+    
+    if (result) {
+        [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
+    } else {
+        self.editBarButtonItem.title = @"";
+        self.editBarButtonItem.image = nil;
+    }
     
     [UIView animateWithDuration:0.33f animations:^ {
         self.objcWrapper_parent.navigationItem.rightBarButtonItem = result ? self.cachedEditBarButtonItem : nil;
