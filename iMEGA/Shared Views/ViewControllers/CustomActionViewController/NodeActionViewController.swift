@@ -1,7 +1,10 @@
 import UIKit
 
 @objc protocol NodeActionViewControllerDelegate {
+    // Method that handles selected node action for a single node. It may have an action specifically for single nodes. e.g Info, Versions
+    // Don't remove this method.
     @objc optional func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) ->  ()
+    // Method that handles selected node action for multiple nodes.
     @objc optional func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) ->  ()
 }
 
