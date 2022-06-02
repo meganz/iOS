@@ -1589,8 +1589,6 @@ public enum Strings {
     public static let pleaseStrengthenYourPassword = Strings.tr("Localizable", "pleaseStrengthenYourPassword")
     /// Please write your feedback here:
     public static let pleaseWriteYourFeedback = Strings.tr("Localizable", "pleaseWriteYourFeedback")
-    /// Poor connection.
-    public static let poorConnection = Strings.tr("Localizable", "Poor connection.")
     /// Port
     public static let port = Strings.tr("Localizable", "Port")
     /// Preparing…
@@ -3686,6 +3684,8 @@ public enum Strings {
       }
     }
     public enum Meetings {
+      /// Poor connection
+      public static let poorConnection = Strings.tr("Localizable", "meetings.poorConnection")
       public enum Action {
         /// Rename Meeting
         public static let rename = Strings.tr("Localizable", "meetings.action.rename")
@@ -3847,6 +3847,12 @@ public enum Strings {
         public static let flip = Strings.tr("Localizable", "meetings.quickAction.flip")
         /// Speaker
         public static let speaker = Strings.tr("Localizable", "meetings.quickAction.speaker")
+      }
+      public enum Reconnecting {
+        /// Unable to Reconnect
+        public static let failed = Strings.tr("Localizable", "meetings.reconnecting.failed")
+        /// Reconnecting
+        public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
       }
       public enum Sharelink {
         /// Meeting link could not be generated. Please try again.

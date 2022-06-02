@@ -13,6 +13,22 @@ class CallCollectionView: UICollectionView {
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
     
+    private lazy var blurEffectView : UIVisualEffectView = {
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.clipsToBounds = true
+        return blurEffectView
+    }()
+    
+    func addBlurEffect() {
+        addSubview(blurEffectView)
+    }
+    
+    func removeBlurEffect() {
+        blurEffectView.removeFromSuperview()
+    }
+    
     func configure(with callCollectionViewDelegate: CallCollectionViewDelegate) {
         dataSource = self
         delegate = self

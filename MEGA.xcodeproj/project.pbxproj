@@ -948,6 +948,7 @@
 		8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
 		8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
 		8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
+		8361D9E5283E53620001FAC1 /* NetworkQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8361D9E4283E53620001FAC1 /* NetworkQuality.swift */; };
 		836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836370362461D2EA00842E38 /* SendLinkToChatsDelegate.swift */; };
 		8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */; };
 		83655A5F259379C2001A0846 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
@@ -1043,6 +1044,7 @@
 		839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839999F6264AE6A300520F38 /* MeetingOptionsMenuRouter.swift */; };
 		839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839A1C9C27CCF694004A387B /* ExportFileRouter.swift */; };
 		839A1CA127CCF694004A387B /* ExportFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839A1C9E27CCF694004A387B /* ExportFileViewModel.swift */; };
+		839B9FCF283D2DCA001A49DF /* reconnecting.wav in Resources */ = {isa = PBXBuildFile; fileRef = 839B9FCE283D2DCA001A49DF /* reconnecting.wav */; };
 		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
@@ -3457,6 +3459,7 @@
 		8361358D21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataClass.h"; sourceTree = "<group>"; };
 		8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOUploadTransfer+CoreDataClass.m"; sourceTree = "<group>"; };
 		8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOUploadTransfer+CoreDataProperties.m"; sourceTree = "<group>"; };
+		8361D9E4283E53620001FAC1 /* NetworkQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkQuality.swift; sourceTree = "<group>"; };
 		836370362461D2EA00842E38 /* SendLinkToChatsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SendLinkToChatsDelegate.swift; path = Chat/SendLinkToChatsDelegate.swift; sourceTree = "<group>"; };
 		8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAShowPasswordReminderRequestDelegate.h; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.h; sourceTree = "<group>"; };
 		8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAShowPasswordReminderRequestDelegate.m; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.m; sourceTree = "<group>"; };
@@ -3545,6 +3548,7 @@
 		839999F6264AE6A300520F38 /* MeetingOptionsMenuRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingOptionsMenuRouter.swift; sourceTree = "<group>"; };
 		839A1C9C27CCF694004A387B /* ExportFileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRouter.swift; sourceTree = "<group>"; };
 		839A1C9E27CCF694004A387B /* ExportFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileViewModel.swift; sourceTree = "<group>"; };
+		839B9FCE283D2DCA001A49DF /* reconnecting.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reconnecting.wav; sourceTree = "<group>"; };
 		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
 		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
 		83A49E78270475AB00FD0D85 /* TransfersRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -8171,6 +8175,7 @@
 				BF782D32269BA4BA0001D169 /* CameraPositionEntity.swift */,
 				BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */,
 				BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */,
+				8361D9E4283E53620001FAC1 /* NetworkQuality.swift */,
 			);
 			path = Call;
 			sourceTree = "<group>";
@@ -8809,6 +8814,7 @@
 		A8BB54191FB9ABBD004FD03B /* Audios */ = {
 			isa = PBXGroup;
 			children = (
+				839B9FCE283D2DCA001A49DF /* reconnecting.wav */,
 				A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */,
 				BF8B02EB28359EDD009AC794 /* callEnded.wav */,
 				BF49DFA2282B230800DE3742 /* participantJoined.wav */,
@@ -11459,6 +11465,7 @@
 				BF7EBD2F244E916F0015255F /* AddToChatViewController.xib in Resources */,
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
 				BFB463FC243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib in Resources */,
+				839B9FCF283D2DCA001A49DF /* reconnecting.wav in Resources */,
 				5B3B0D1F2684B8F200479A68 /* defaultIcon@2x~ipad.png in Resources */,
 				BF99A3D524A994CB0035A183 /* MessageOptionItemTableCell.xib in Resources */,
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
@@ -12078,6 +12085,7 @@
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
 				BF782D5A269BA4BB0001D169 /* TransferEntity.swift in Sources */,
 				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
+				8361D9E5283E53620001FAC1 /* NetworkQuality.swift in Sources */,
 				2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */,
 				5DD6B16B24D67E7C00F14515 /* SlidePanelView.swift in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,

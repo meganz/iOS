@@ -31,7 +31,7 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
     func inProgress()
     func localAvFlagsUpdated(video: Bool, audio: Bool)
     func chatTitleChanged(chatRoom: ChatRoomEntity)
-    func networkQuality()
+    func networkQualityChanged(_ quality: NetworkQuality)
 }
 
 //Default implementation for optional callbacks
@@ -47,7 +47,7 @@ extension CallCallbacksUseCaseProtocol {
     func inProgress() { }
     func localAvFlagsUpdated(video: Bool, audio: Bool) { }
     func chatTitleChanged(chatRoom: ChatRoomEntity) { }
-    func networkQuality() { }
+    func networkQualityChanged(_ quality: NetworkQuality) { }
 }
 
 final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtocol {
@@ -172,7 +172,7 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom)
     }
     
-    func networkQuality() {
-        callbacksDelegate?.networkQuality()
+    func networkQualityChanged(_ quality: NetworkQuality) {
+        callbacksDelegate?.networkQualityChanged(quality)
     }
 }
