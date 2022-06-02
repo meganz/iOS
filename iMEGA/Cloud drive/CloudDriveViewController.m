@@ -556,6 +556,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case DisplayModeRecents: {
+            self.recentActionBucket = [MEGASdkManager.sharedMEGASdk.recentActions objectOrNilAtIndex:self.recentIndex];
+            self.nodes = self.recentActionBucket.nodesList;
             [self updateNavigationBarTitle];
             break;
         }
