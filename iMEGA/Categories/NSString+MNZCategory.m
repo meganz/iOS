@@ -342,7 +342,7 @@ static NSString* const B = @"[B]";
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
             if (isGroup) {
-                if (duration) {
+                if (duration != nil) {
                     endCallReasonString = [[NSLocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
                 } else {
                     endCallReasonString = NSLocalizedString(@"Group call ended", @"When an active goup call is ended");
