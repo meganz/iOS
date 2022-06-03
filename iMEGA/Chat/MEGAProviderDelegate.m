@@ -53,12 +53,12 @@
         _provider = [[CXProvider alloc] initWithConfiguration:configuration];
         
         [_provider setDelegate:self queue:nil];
+        
+        _endedCalls = NSMutableDictionary.new;
     }
     
     [MEGASdkManager.sharedMEGAChatSdk addChatCallDelegate:self];
     [MEGASdkManager.sharedMEGAChatSdk addChatDelegate:self];
-    
-    _endedCalls = NSMutableDictionary.new;
     
     return self;
 }

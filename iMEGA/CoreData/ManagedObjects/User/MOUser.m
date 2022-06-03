@@ -50,7 +50,7 @@
 - (NSNumber *)interactedWith {
     NSNumber * interactedWith = [NSNumber numberWithBool:NO];
     if (self) {
-        if (self.interactedwith) {
+        if (self.interactedwith != nil) {
             interactedWith = self.interactedwith;
         }
     }
