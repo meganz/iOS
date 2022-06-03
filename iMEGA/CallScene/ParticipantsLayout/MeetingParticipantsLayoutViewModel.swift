@@ -146,6 +146,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let tonePlayer = TonePlayer()
     private var namesFetchingTask: Task<Void, Never>?
 
+    private var reconnecting1on1Subscription: AnyCancellable?
+
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
@@ -177,6 +179,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     deinit {
+        cancelReconnecting1on1Subscription()
         callUseCase.stopListeningForCall()
     }
     
@@ -599,6 +602,33 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         }
     }
+    
+    private func cancelReconnecting1on1Subscription() {
+        reconnecting1on1Subscription?.cancel()
+        reconnecting1on1Subscription = nil
+    }
+    
+    private func waitForRecoverable1on1Call(participant: CallParticipantEntity) {
+        
+        reconnecting1on1Subscription = Just(Void.self)
+            .delay(for: .seconds(10), scheduler: RunLoop.main)
+            .sink() { [weak self] _ in
+                guard let self = self else { return }
+                self.tonePlayer.play(tone: .callEnded)
+                self.reconnecting1on1Subscription = nil
+                self.callTerminated(self.call)
+                self.containerViewModel?.dispatch(.dismissCall(completion: nil))
+            }
+    }
+    
+    private func updateParticipantJoinedBeforeLeft(participant: CallParticipantEntity) {
+        MEGALogDebug("onChatSessionUpdate updateParticipantJoinedBeforeLeft")
+        participant.videoDataDelegate = callParticipants.first?.videoDataDelegate
+        callParticipants = [participant]
+        if participant.video == .on {
+            enableRemoteVideo(for: participant)
+        }
+    }
 }
 
 struct CallDurationInfo {
@@ -608,19 +638,26 @@ struct CallDurationInfo {
 
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
-        initTimerIfNeeded(with: Int(call.duration))
-        participantName(for: participant.participantId) { [weak self] in
-            participant.name = $0
-            self?.callParticipants.append(participant)
-            self?.invokeCommand?(.insertParticipant(self?.callParticipants ?? []))
-            if self?.callParticipants.count == 1 && self?.layoutMode == .speaker {
-                self?.invokeCommand?(.shouldHideSpeakerView(false))
-                self?.speakerParticipant = self?.callParticipants.first
+        if chatRoom.chatType == .oneToOne && participant.participantId == callParticipants.first?.participantId {
+            updateParticipantJoinedBeforeLeft(participant: participant)
+        } else {
+            if chatRoom.chatType == .oneToOne && reconnecting1on1Subscription != nil {
+                cancelReconnecting1on1Subscription()
             }
-            if self?.layoutMode == .grid {
-                self?.invokeCommand?(.updatePageControl(self?.callParticipants.count ?? 0))
+            initTimerIfNeeded(with: Int(call.duration))
+            participantName(for: participant.participantId) { [weak self] in
+                participant.name = $0
+                self?.callParticipants.append(participant)
+                self?.invokeCommand?(.insertParticipant(self?.callParticipants ?? []))
+                if self?.callParticipants.count == 1 && self?.layoutMode == .speaker {
+                    self?.invokeCommand?(.shouldHideSpeakerView(false))
+                    self?.speakerParticipant = self?.callParticipants.first
+                }
+                if self?.layoutMode == .grid {
+                    self?.invokeCommand?(.updatePageControl(self?.callParticipants.count ?? 0))
+                }
+                self?.invokeCommand?(.hideEmptyRoomMessage)
             }
-            self?.invokeCommand?(.hideEmptyRoomMessage)
         }
     }
     
@@ -628,6 +665,9 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if callUseCase.call(for: call.chatId) == nil {
             callTerminated(call)
         } else if let index = callParticipants.firstIndex(of: participant) {
+            if chatRoom.chatType == .oneToOne && participant.sessionRecoverable && participant.clientId == callParticipants.first?.clientId {
+                waitForRecoverable1on1Call(participant: participant)
+            }
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             stopVideoForParticipant(participant)
