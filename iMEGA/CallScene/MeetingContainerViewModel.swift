@@ -19,6 +19,7 @@ enum MeetingContainerAction: ActionType {
     case participantRemoved
     case showEndCallDialogIfNeeded
     case removeEndCallAlertAndEndCall
+    case showJoinMegaScreen
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -135,6 +136,8 @@ final class MeetingContainerViewModel: ViewModelType {
             showEndCallDialogIfNeeded()
         case .removeEndCallAlertAndEndCall:
             removeEndCallAlertAndEndCall()
+        case .showJoinMegaScreen:
+            router.showJoinMegaScreen()
         }
     }
     
@@ -186,7 +189,10 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func showEndCallDialogIfNeeded() {
         guard isOnlyMyselfInTheMeeting() else { return }
-        router.showEndCallDialog()
+        router.showEndCallDialog { [weak self] in
+            guard let self = self else { return }
+            self.endCall()
+        }
     }
     
     private func cancelMuteMicrophoneSubscription() {
@@ -196,7 +202,18 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func removeEndCallAlertAndEndCall() {
         router.removeEndCallDialog { [weak self] in
-            self?.dismissCall(completion: nil)
+            guard let self = self else { return }
+            self.endCall()
+        }
+    }
+    
+    private func endCall() {
+        if self.userUseCase.isGuest {
+            self.dispatch(.endGuestUserCall {
+                self.dispatch(.showJoinMegaScreen)
+            })
+        } else {
+            self.dismissCall(completion: nil)
         }
     }
     
