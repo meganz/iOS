@@ -8,7 +8,6 @@ class GetFileExtensionUseCaseTests: XCTestCase {
                                  "public.heic": "heic",
                                  "public.heif": "heif",
                                  "public.png": "png",
-                                 "public.camera-raw-image": "dng",
                                  "com.apple.quicktime-movie": "mov",
                                  "public.mpeg-4": "mp4",
                                  "com.compuserve.gif": "gif",

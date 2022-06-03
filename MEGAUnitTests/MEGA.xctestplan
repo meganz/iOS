@@ -44,9 +44,6 @@
   },
   "testTargets" : [
     {
-      "skippedTests" : [
-        "GetFileExtensionUseCaseTests"
-      ],
       "target" : {
         "containerPath" : "container:MEGA.xcodeproj",
         "identifier" : "B6CED48A22B8AC70009C4861",
