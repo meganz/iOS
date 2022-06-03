@@ -79,19 +79,13 @@
         NSString *tempString = NSLocalizedString(@"%1 Images", @"Multiple Images title shown in recents section of webclient");
         title = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
     } else {
-        if ((numberOfPhotos == 1) && (numberOfVideos == 1)) {
-            title = NSLocalizedString(@"1 Image and 1 Video", @"A single image and single video title shown in recents section of webclient.");
-        } else if (numberOfPhotos == 1) {
-            NSString *tempString = NSLocalizedString(@"1 Image and %2 Videos", @"One image and multiple videos title in recents.");
-            title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", numberOfVideos]];
-        } else if (numberOfVideos == 1) {
-            NSString *tempString = NSLocalizedString(@"%1 Images and 1 Video", @"Multiple images and 1 video");
-            title = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
-        } else {
-            NSString *tempString = NSLocalizedString(@"%1 Images and %2 Videos", @"Title for multiple images and multiple videos in recents section");
-            tempString = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
-            title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", numberOfVideos]];
-        }
+        NSString *imageCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.imageAndVideo.image", @"Image count on recents section that will be concatenated with number of videos. e.g 1 image and 1 video, 2 images and 1 video");
+        NSString *imageCount = [NSString stringWithFormat:imageCountFormat, numberOfPhotos];
+        
+        NSString *videoCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.imageAndVideo.video", @"Video count on recents section that will be concatenated with number of images. e.g 1 image and 1 video, 2 images and 1 video");
+        NSString *videoCount = [NSString stringWithFormat:videoCountFormat, numberOfVideos];
+        
+        title = [NSString stringWithFormat:@"%@ %@", imageCount, videoCount];
     }
     self.nameLabel.text = title;
     
