@@ -136,6 +136,16 @@ final class MeetingContainerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .removeEndCallAlertAndEndCall, expectedCommands: [])
         XCTAssert(router.removeEndDialog_calledTimes == 1)
     }
+    
+    func testAction_showJoinMegaScreen() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let callManagerUserCase = MockCallManagerUseCase()
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: callManagerUserCase, userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: true), authUseCase: MockAuthUseCase(isUserLoggedIn: false))
+        test(viewModel: viewModel, action: .showJoinMegaScreen, expectedCommands: [])
+        XCTAssert(router.showJoinMegaScreen_calledTimes == 1)
+    }
 }
 
 final class MockMeetingContainerRouter: MeetingContainerRouting {
@@ -153,6 +163,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var didSwitchToGridView_calledTimes = 0
     var didShowEndDialog_calledTimes = 0
     var removeEndDialog_calledTimes = 0
+    var showJoinMegaScreen_calledTimes = 0
 
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
@@ -203,11 +214,15 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
         didSwitchToGridView_calledTimes += 1
     }
     
-    func showEndCallDialog() {
+    func showEndCallDialog(endCallCompletion completion: @escaping () -> Void) {
         didShowEndDialog_calledTimes += 1
     }
     
     func removeEndCallDialog(completion: (() -> Void)?) {
         removeEndDialog_calledTimes += 1
+    }
+    
+    func showJoinMegaScreen() {
+        showJoinMegaScreen_calledTimes += 1
     }
 }

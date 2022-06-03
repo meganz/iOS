@@ -15,8 +15,9 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func displayParticipantInMainView(_ participant: CallParticipantEntity)
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
-    func showEndCallDialog()
+    func showEndCallDialog(endCallCompletion completion: @escaping () -> Void)
     func removeEndCallDialog(completion: (() -> Void)?)
+    func showJoinMegaScreen()
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -190,7 +191,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         isSpeakerEnabled = enable
     }
     
-    func showEndCallDialog() {
+    func showEndCallDialog(endCallCompletion completion: @escaping () -> Void) {
         guard self.endCallDialog == nil else { return }
         
         let endCallDialog = EndCallDialog(forceDarkMode: true) { [weak self] in
@@ -198,7 +199,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             self?.meetingParticipantsRouter?.endCallEndCountDownTimer()
         } endCallAction: { [weak self] in
             self?.endCallDialog = nil
-            self?.containerViewModel?.dispatch(.dismissCall(completion: nil))
+            completion()
         }
 
         meetingParticipantsRouter?.startCallEndCountDownTimer()
@@ -212,6 +213,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             self?.endCallDialog = nil
             completion?()
         }
+    }
+    
+    func showJoinMegaScreen() {
+        EncourageGuestUserToJoinMegaRouter(presenter: UIApplication.mnz_presentingViewController()).start()
     }
     
     //MARK:- Private methods.
