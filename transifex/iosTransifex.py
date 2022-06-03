@@ -1306,6 +1306,8 @@ def store_file(resource, content, lang = "Base"):
         file_path += lang + ".lproj/" + get_file_basename(resource)
     print("Saving file " + file_path)
     file_put_contents(file_path, content)
+    if lang == "Base" and ("Localizable" in resource or "InfoPlist" in resource or "Plurals" in resource):
+        file_put_contents(file_path.replace("Base", "en"), content)
 
 # Wrapper to write content to file
 def file_put_contents(filepath, content):
