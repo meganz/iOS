@@ -1423,7 +1423,6 @@
 		A8C2629F1FA0B57C006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
 		A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
-		A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */; };
 		A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */; };
 		A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
@@ -3815,8 +3814,6 @@
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A8C262A61FA0B60B006172CE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		A8C262AB1FA1D85E006172CE /* MEGARemoteImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGARemoteImageView.h; sourceTree = "<group>"; };
-		A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGARemoteImageView.m; sourceTree = "<group>"; };
 		A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAccountType+Mapper.swift"; sourceTree = "<group>"; };
 		A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASubscriptionStatus+Mapper.swift"; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -5649,8 +5646,6 @@
 		41136FB91E1692650031C516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A8C262AB1FA1D85E006172CE /* MEGARemoteImageView.h */,
-				A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -12572,7 +12567,6 @@
 				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,
 				B6F8CDCB262821820074CBBF /* CoreDataErrorHandler.m in Sources */,
 				BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */,
-				A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */,
 				5D5DE4F82511F88900F2B4FD /* SearchFileUseCase.swift in Sources */,
 				124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */,
 				834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */,
