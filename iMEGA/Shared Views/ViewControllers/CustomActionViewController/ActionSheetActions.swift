@@ -112,7 +112,7 @@ extension NodeAction {
     }
     
     class func downloadAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.download, detail: nil, image: Asset.Images.NodeActions.offline.image, type: .download)
+        return NodeAction(title: Strings.Localizable.General.downloadToOffline, detail: nil, image: Asset.Images.NodeActions.offline.image, type: .download)
     }
     
     class func infoAction() -> NodeAction {
