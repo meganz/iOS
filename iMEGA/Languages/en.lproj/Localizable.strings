@@ -344,8 +344,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Save for offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox is reserved for use by Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -3002,3 +3000,5 @@
 "meetings.endCallDialog.endCallNowButtonTitle"="End Call Now";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="Call will end in %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

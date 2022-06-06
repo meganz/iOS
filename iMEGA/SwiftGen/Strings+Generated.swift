@@ -1845,8 +1845,6 @@ public enum Strings {
     public static let saved = Strings.tr("Localizable", "saved")
     /// Saved to Photos
     public static let savedToPhotos = Strings.tr("Localizable", "Saved to Photos")
-    /// Save for offline
-    public static let saveForOffline = Strings.tr("Localizable", "saveForOffline")
     /// Save Image
     public static let saveImage = Strings.tr("Localizable", "saveImage")
     /// Saving to Photos…
@@ -3280,6 +3278,8 @@ public enum Strings {
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
+      /// Download to Offline
+      public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
       /// Export File
