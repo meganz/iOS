@@ -1029,14 +1029,6 @@ public enum Strings {
     public static let incompleteRestoreMessage = Strings.tr("Localizable", "incompleteRestore_message")
     /// Restore issue
     public static let incompleteRestoreTitle = Strings.tr("Localizable", "incompleteRestore_title")
-    /// %1$d of %2$d file
-    public static func indexOfTotalFile(_ p1: Int, _ p2: Int) -> String {
-      return Strings.tr("Localizable", "indexOfTotalFile", p1, p2)
-    }
-    /// %1$d of %2$d files
-    public static func indexOfTotalFiles(_ p1: Int, _ p2: Int) -> String {
-      return Strings.tr("Localizable", "indexOfTotalFiles", p1, p2)
-    }
     /// Info
     public static let info = Strings.tr("Localizable", "info")
     /// Insert your friends’ emails:
@@ -3635,6 +3627,14 @@ public enum Strings {
               /// Next
               public static let title = Strings.tr("Localizable", "media.audio.playlist.section.next.title")
             }
+          }
+        }
+      }
+      public enum Photo {
+        public enum Browser {
+          /// Plural format key: "%d of %#@total@"
+          public static func indexOfTotalFiles(_ p1: Int, _ p2: Int) -> String {
+            return Strings.tr("Localizable", "media.photo.browser.indexOfTotalFiles", p1, p2)
           }
         }
       }
