@@ -325,14 +325,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         default: {
-            if (self.mediaNodes.count == 1) {
-                subtitle = NSLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
-            } else {
-                subtitle = NSLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
-            }
-            subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
-            subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
-            
+            NSString *format = NSLocalizedString(@"media.photo.browser.indexOfTotalFiles", @"The index of file from the total number of files. e.g. 1 of 1 file, 1 of 3 files");
+            subtitle = [NSString stringWithFormat:format, (unsigned long)newIndex+1, (unsigned long)self.mediaNodes.count];
             break;
         }
     }
