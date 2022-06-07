@@ -252,18 +252,6 @@
 "oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
 "files"="%d files";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d folder";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d folders";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 folder • 1 file";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] folders • [B] files";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d folders • 1 file";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 folder • %d files";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ device";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */

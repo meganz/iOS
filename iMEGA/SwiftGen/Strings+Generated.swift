@@ -893,12 +893,6 @@ public enum Strings {
     public static let folder = Strings.tr("Localizable", "folder")
     /// Folder link unavailable
     public static let folderLinkUnavailable = Strings.tr("Localizable", "Folder link unavailable")
-    /// 1 folder • 1 file
-    public static let folderAndFile = Strings.tr("Localizable", "folderAndFile")
-    /// 1 folder • %d files
-    public static func folderAndFiles(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "folderAndFiles", p1)
-    }
     /// The folder “%@” can’t be created
     public static func folderCreationError(_ p1: Any) -> String {
       return Strings.tr("Localizable", "folderCreationError", String(describing: p1))
@@ -919,16 +913,6 @@ public enum Strings {
     public static let folderMovedToRubbishBinMessage = Strings.tr("Localizable", "folderMovedToRubbishBinMessage")
     /// 1 folder removed from MEGA
     public static let folderRemovedToRubbishBinMessage = Strings.tr("Localizable", "folderRemovedToRubbishBinMessage")
-    /// %d folders
-    public static func folders(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "folders", p1)
-    }
-    /// %d folders • 1 file
-    public static func foldersAndFile(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "foldersAndFile", p1)
-    }
-    /// [A] folders • [B] files
-    public static let foldersAndFiles = Strings.tr("Localizable", "foldersAndFiles")
     /// %d folders moved to the Rubbish Bin
     public static func foldersMovedToRubbishBinMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "foldersMovedToRubbishBinMessage", p1)
@@ -1424,10 +1408,6 @@ public enum Strings {
     /// %d file
     public static func oneFile(_ p1: Int) -> String {
       return Strings.tr("Localizable", "oneFile", p1)
-    }
-    /// %d folder
-    public static func oneFolder(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "oneFolder", p1)
     }
     /// 1 folder
     public static let oneFolderShared = Strings.tr("Localizable", "oneFolderShared")
@@ -3493,6 +3473,26 @@ public enum Strings {
         public static let zip = Strings.tr("Localizable", "general.filetype.zip")
       }
       public enum Format {
+        public enum Count {
+          /// Plural format key: "%#@file@"
+          public static func file(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.count.file", p1)
+          }
+          /// Plural format key: "%#@folder@"
+          public static func folder(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.count.folder", p1)
+          }
+          public enum FolderAndFile {
+            /// Plural format key: "• %#@file@"
+            public static func file(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "general.format.count.folderAndFile.file", p1)
+            }
+            /// Plural format key: "%#@folder@"
+            public static func folder(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "general.format.count.folderAndFile.folder", p1)
+            }
+          }
+        }
         public enum RetentionPeriod {
           /// Plural format key: "%#@day@"
           public static func day(_ p1: Int) -> String {
