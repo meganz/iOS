@@ -463,7 +463,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .endCallEndCountDownTimer:
             endCallEndCountDownTimer()
         case .didEndDisplayLastPeerLeftStatusMessage:
-            containerViewModel?.dispatch(.showEndCallDialogIfNeeded)
+            if chatRoom.chatType == .group || chatRoom.chatType == .meeting {
+                containerViewModel?.dispatch(.showEndCallDialogIfNeeded)
+            }
         }
     }
     
