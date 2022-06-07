@@ -487,8 +487,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                         self.invokeCommand?(.updateCallEndDurationRemainingString(timeRemainingString))
                     }
                 } else {
+                    self.tonePlayer.play(tone: .callEnded)
                     self.endCallEndCountDownTimer()
-                    self.containerViewModel?.dispatch(.removeEndCallAlertAndEndCall)
+
+                    // when ending call, CallKit decativation will interupt playing of tone.
+                    // Adding a delay of 0.7 seconds so there is enough time to play the tone
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        self.containerViewModel?.dispatch(.removeEndCallAlertAndEndCall)
+                    }
                 }
             }
     }
