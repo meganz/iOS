@@ -170,8 +170,8 @@
     
     NSMutableAttributedString *firstPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
-    NSRange firstPartRange = NSMakeRange(0, 0);
-    NSRange secondPartRange  = NSMakeRange(0, 0);
+    NSRange firstPartRange;
+    NSRange secondPartRange;
     
     NSString *firstPartString = [self.numberFormatter stringFromNumber:number];
     firstPartRange = [firstPartString rangeOfString:firstPartString];
