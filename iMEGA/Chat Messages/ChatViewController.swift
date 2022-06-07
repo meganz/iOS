@@ -31,6 +31,7 @@ class ChatViewController: MessagesViewController {
     
     var endCallSubscription: AnyCancellable?
     var endCallDialog: EndCallDialog?
+    private(set) lazy var tonePlayer = TonePlayer()
     
     lazy var exportBarButtonItem: UIBarButtonItem = {
         let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.exportSelectedMessages))

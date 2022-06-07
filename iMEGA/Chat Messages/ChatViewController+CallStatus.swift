@@ -119,9 +119,15 @@ extension ChatViewController {
         endCallSubscription = Just(Void.self)
             .delay(for: .seconds(120), scheduler: RunLoop.main)
             .sink() { [weak self] _ in
-                self?.removeEndCallDialogIfNeeded()
-                self?.endCall(call)
-                self?.endCallSubscription = nil
+                self?.tonePlayer.play(tone: .callEnded)
+                
+                // When ending call, CallKit decativation will interupt playing of tone.
+                // Adding a delay of 0.7 seconds so there is enough time to play the tone
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    self?.removeEndCallDialogIfNeeded()
+                    self?.endCall(call)
+                    self?.endCallSubscription = nil
+                }
             }
     }
     
