@@ -1,5 +1,5 @@
 protocol AlbumUseCaseProtocol {
-    func loadAlbums() async throws -> [NodeEntity]
+    func loadCameraUploadNode() async throws -> NodeEntity?
 }
 
 struct AlbumUseCase<T: AlbumRepositoryProtocol>: AlbumUseCaseProtocol {
@@ -9,7 +9,7 @@ struct AlbumUseCase<T: AlbumRepositoryProtocol>: AlbumUseCaseProtocol {
         albumRepository = repository
     }
     
-    func loadAlbums() async throws -> [NodeEntity] {
-        return try await albumRepository.loadAlbums()
+    func loadCameraUploadNode() async throws -> NodeEntity? {
+        return try await albumRepository.loadCameraUploadNode()
     }
 }

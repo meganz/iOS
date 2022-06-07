@@ -74,4 +74,8 @@ extension NodeEntity {
     var isVideo: Bool {
         (name as NSString).mnz_isVideoPathExtension
     }
+    
+    var isVisualMedia: Bool {
+        (name as NSString).mnz_isVisualMediaPathExtension
+    }
 }

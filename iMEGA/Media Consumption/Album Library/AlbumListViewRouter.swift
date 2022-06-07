@@ -2,39 +2,15 @@ import SwiftUI
 import Combine
 
 @available(iOS 14.0, *)
-protocol AlbumLibraryContentViewRouting {
-    func cell(for album: MEGAHandle) -> AlbumCell
-    func singleCell() -> AlbumCell
+protocol AlbumListViewRouting {
+    func cell(withCameraUploadNode node: NodeEntity?) -> AlbumCell
     func albumContent(for photo: NodeEntity?) -> AlbumContainerWrapper
 }
 
 @available(iOS 14.0, *)
-struct AlbumLibraryContentViewRouter: AlbumLibraryContentViewRouting, Routing {
+struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     
-    func cell(for album: MEGAHandle) -> AlbumCell {
-        return buildCell(with: album)
-    }
-    
-    func singleCell() -> AlbumCell {
-        return buildCell()
-    }
-    
-    func albumContent(for album: NodeEntity?) -> AlbumContainerWrapper {
-        return AlbumContainerWrapper(albumNode: album)
-    }
-    
-    func build() -> UIViewController {
-        let vm = AlbumLibraryContentViewModel(usecase: AlbumUseCase(repository: AlbumRepository()))
-        let content = AlbumLibraryContentView(viewModel: vm, router: self)
-        
-        return UIHostingController(rootView: content)
-    }
-    
-    func start() {}
-    
-    // MARK: Private
-    
-    private func buildCell(with handle: MEGAHandle? = nil) -> AlbumCell {
+    func cell(withCameraUploadNode node: NodeEntity?) -> AlbumCell {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let favouriteRepo = FavouriteNodesRepository(sdk: sdk)
         let thumbnailRepo = ThumbnailRepository.default
@@ -49,7 +25,7 @@ struct AlbumLibraryContentViewRouter: AlbumLibraryContentViewRouting, Routing {
         let albumContentsUseCase = AlbumContentsUseCase(albumContentsRepo: albumContentsRepo)
         
         let vm = AlbumCellViewModel(
-            albumHandle: handle,
+            cameraUploadNode: node,
             favouriteUseCase: favouriteUsecase,
             thumbnailUseCase: thumbnailUsecase,
             albumContentsUseCase: albumContentsUseCase
@@ -57,4 +33,17 @@ struct AlbumLibraryContentViewRouter: AlbumLibraryContentViewRouting, Routing {
         
         return AlbumCell(viewModel: vm)
     }
+    
+    func albumContent(for album: NodeEntity?) -> AlbumContainerWrapper {
+        return AlbumContainerWrapper(albumNode: album)
+    }
+    
+    func build() -> UIViewController {
+        let vm = AlbumListViewModel(usecase: AlbumUseCase(repository: AlbumRepository()))
+        let content = AlbumListView(viewModel: vm, router: self)
+        
+        return UIHostingController(rootView: content)
+    }
+    
+    func start() {}
 }

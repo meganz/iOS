@@ -65,8 +65,9 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     @MainActor
     private func loadNodes() async {
         do {
-            let nodes = try await favouritesUseCase.favouriteAlbumMediaNodes(withCUHandle: cameraUploadNode?.handle)
-
+            var nodes = try await favouritesUseCase.allFavouriteNodes()
+            nodes = filterMediaNodes(with: nodes)
+            
             invokeCommand?(.showAlbum(nodes: nodes))
         } catch {
             print(error)
@@ -84,5 +85,15 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
         updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
             self?.reloadAlbum()
         }
+    }
+    
+    private func filterMediaNodes(with nodes: [NodeEntity]) -> [NodeEntity] {
+        var nodes = nodes
+        
+        nodes = nodes.filter({
+            return $0.isVisualMedia && $0.parentHandle == cameraUploadNode?.handle
+        })
+        
+        return nodes
     }
 }

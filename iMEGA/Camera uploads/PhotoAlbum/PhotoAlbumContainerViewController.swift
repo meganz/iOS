@@ -66,7 +66,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         switch viewController {
         case is PhotosViewController:
             return .timeline
-        case is UIHostingController<AlbumLibraryContentView>:
+        case is UIHostingController<AlbumListView>:
             return .album
         default:
             return .timeline
@@ -84,7 +84,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Photos", bundle: nil)
         photoViewController = storyboard.instantiateViewController(withIdentifier: "photoViewController") as? PhotosViewController
         
-        albumHostingController = AlbumLibraryContentViewRouter().build()
+        albumHostingController = AlbumListViewRouter().build()
         
         photoViewController?.parentPhotoAlbumsController = self
         photoViewController?.configureMyAvatarManager()
