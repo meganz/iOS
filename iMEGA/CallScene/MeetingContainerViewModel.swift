@@ -58,8 +58,9 @@ final class MeetingContainerViewModel: ViewModelType {
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
         
+        let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callManagerUseCase.addCallRemoved { [weak self] uuid in
-            guard let uuid = uuid, let self = self, self.call?.uuid == uuid else { return }
+            guard let uuid = uuid, let self = self, callUUID == uuid else { return }
             self.callManagerUseCase.removeCallRemovedHandler()
             router.dismiss(animated: false, completion: nil)
         }
