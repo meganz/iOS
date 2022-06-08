@@ -12,9 +12,9 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var shouldLoad = true
     
     private var loadingTask: Task<Void, Never>?
-    private var usecase: AlbumUseCaseProtocol
+    private var usecase: AlbumListUseCaseProtocol
     
-    init(usecase: AlbumUseCaseProtocol) {
+    init(usecase: AlbumListUseCaseProtocol) {
         self.usecase = usecase
     }
     

@@ -20,13 +20,11 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
         
-        let favouriteUsecase = FavouriteNodesUseCase(repo: favouriteRepo)
         let thumbnailUsecase = ThumbnailUseCase(repository: thumbnailRepo)
-        let albumContentsUseCase = AlbumContentsUseCase(albumContentsRepo: albumContentsRepo)
+        let albumContentsUseCase = AlbumContentsUseCase(albumContentsRepo: albumContentsRepo, favouriteRepo: favouriteRepo)
         
         let vm = AlbumCellViewModel(
             cameraUploadNode: node,
-            favouriteUseCase: favouriteUsecase,
             thumbnailUseCase: thumbnailUsecase,
             albumContentsUseCase: albumContentsUseCase
         )
@@ -39,7 +37,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     }
     
     func build() -> UIViewController {
-        let vm = AlbumListViewModel(usecase: AlbumUseCase(repository: AlbumRepository()))
+        let vm = AlbumListViewModel(usecase: AlbumListUseCase(repository: AlbumRepository()))
         let content = AlbumListView(viewModel: vm, router: self)
         
         return UIHostingController(rootView: content)

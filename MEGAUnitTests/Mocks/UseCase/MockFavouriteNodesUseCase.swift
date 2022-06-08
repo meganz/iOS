@@ -14,10 +14,6 @@ final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         completion(getFavouriteNodesResult)
     }
     
-    func allFavouriteNodes() async throws -> [NodeEntity] {
-        return []
-    }
-    
     func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
         guard let onNodesUpdateCallback = onNodesUpdateCallback else { return }
         callback(onNodesUpdateCallback)

@@ -10,9 +10,8 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     var title = Strings.Localizable.CameraUploads.Albums.Favourites.title
     
     private var cameraUploadNode: NodeEntity?
-    private var favouriteUseCase: FavouriteNodesUseCaseProtocol
     private var thumbnailUseCase: ThumbnailUseCaseProtocol
-    private var albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
+    private var albumContentsUseCase: AlbumContentsUseCaseProtocol
     private let placeholderThumbnail: ImageContainer
     private var loadingTask: Task<Void, Never>?
     
@@ -20,12 +19,10 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     
     init(
         cameraUploadNode: NodeEntity?,
-        favouriteUseCase: FavouriteNodesUseCaseProtocol,
         thumbnailUseCase: ThumbnailUseCaseProtocol,
-        albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
+        albumContentsUseCase: AlbumContentsUseCaseProtocol
     ) {
         self.cameraUploadNode = cameraUploadNode
-        self.favouriteUseCase = favouriteUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.albumContentsUseCase = albumContentsUseCase
         
@@ -47,7 +44,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         
         loadingTask = Task {
             do {
-                var nodes = try await favouriteUseCase.allFavouriteNodes()
+                var nodes = try await albumContentsUseCase.favouriteAlbumNodes()
                 nodes = sortMediaNodesInDescending(with: nodes)
                 
                 let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)

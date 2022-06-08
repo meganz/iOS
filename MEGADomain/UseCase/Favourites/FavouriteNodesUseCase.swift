@@ -4,7 +4,6 @@ import Foundation
 protocol FavouriteNodesUseCaseProtocol {
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
-    func allFavouriteNodes() async throws -> [NodeEntity]
     func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
     func unregisterOnNodesUpdate() -> Void
 }
@@ -20,10 +19,6 @@ struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol>: FavouriteNode
     @available(*, renamed: "allFavouriteNodes()")
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         repo.getAllFavouriteNodes(completion: completion)
-    }
-    
-    func allFavouriteNodes() async throws -> [NodeEntity] {
-        try await repo.allFavouritesNodes()
     }
     
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
