@@ -60,6 +60,7 @@
             break;
             
         default:
+            title = @"";
             break;
     }
     

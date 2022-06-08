@@ -155,7 +155,13 @@
                     } else {
                         body = [NSString stringWithFormat:@"📄 %@", node.name];
                     }
+                } else {
+                    MEGALogWarning(@"[Notification] Attachment message wiht nodelist with more than one node is not expected");
+                    body = [NSString stringWithFormat:NSLocalizedString(@"files", nil), nodeList.size.integerValue];
                 }
+            } else {
+                MEGALogError(@"[Notification] Attachment message without nodelist");
+                body = NSLocalizedString(@"Not found", nil);
             }
         }
             break;

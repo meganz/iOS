@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - File names and extensions
 
 - (NSString *)mnz_fileNameWithLowercaseExtension;
-- (NSString *)mnz_lastExtensionInLowercase;
+- (nullable NSString *)mnz_lastExtensionInLowercase;
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;
 - (NSString *)mnz_fileNameWithoutExtension;
 
