@@ -1605,7 +1605,7 @@
                 if (@available(iOS 14.0, *)) {
                     [QuickAccessWidgetManager reloadAllWidgetsContent];
                 }
-                if (sessionInvalidateInOtherClient) {
+                if (sessionInvalidateInOtherClient && !self.API_ESIDAlertController) {
                     [self presentLogoutFromOtherClientAlert];
                 }
                 
