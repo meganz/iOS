@@ -1,8 +1,8 @@
-protocol AlbumUseCaseProtocol {
+protocol AlbumListUseCaseProtocol {
     func loadCameraUploadNode() async throws -> NodeEntity?
 }
 
-struct AlbumUseCase<T: AlbumRepositoryProtocol>: AlbumUseCaseProtocol {
+struct AlbumListUseCase<T: AlbumRepositoryProtocol>: AlbumListUseCaseProtocol {
     private let albumRepository: T
     
     init(repository: T) {
