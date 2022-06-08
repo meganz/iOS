@@ -3771,7 +3771,7 @@ public enum Strings {
         }
         /// You are the only one here…
         public static let noOtherParticipants = Strings.tr("Localizable", "meetings.message.noOtherParticipants")
-        /// Waiting for others to join…
+        /// Waiting for others to join
         public static let waitingOthers = Strings.tr("Localizable", "meetings.message.waitingOthers")
       }
       public enum New {
