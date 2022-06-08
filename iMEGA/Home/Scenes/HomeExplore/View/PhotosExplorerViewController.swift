@@ -15,13 +15,15 @@ final class PhotosExplorerViewController: ExplorerBaseViewController {
         action: #selector(editButtonPressed(_:))
     )
     
+    private lazy var _photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
     @available(iOS 14.0, *)
-    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+    var photoLibraryContentViewModel: PhotoLibraryContentViewModel { _photoLibraryContentViewModel }
     
     lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
     
+    private lazy var _photoLibraryPublisher = PhotoLibraryPublisher(viewModel: _photoLibraryContentViewModel)
     @available(iOS 14.0, *)
-    lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
+    var photoLibraryPublisher: PhotoLibraryPublisher { _photoLibraryPublisher }
     
     init(viewModel: PhotoExplorerViewModel) {
         self.viewModel = viewModel
