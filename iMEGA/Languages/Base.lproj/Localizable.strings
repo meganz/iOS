@@ -2657,7 +2657,7 @@
 /* Action of a call/meeting to share its link */
 "meetings.action.shareLink"="Share Meeting Link";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join…";
+"meetings.message.waitingOthers"="Waiting for others to join";
 /* Message shown when the user is the only one left in the meeting */
 "meetings.message.noOtherParticipants"="You are the only one here…";
 /* Message header when the user enters a invalid meeting URL */

@@ -22,6 +22,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private var reconncectingNotificationView: CallNotificationView?
     private var poorConnectionNotificationView: CallNotificationView?
+    private var waitingForOthersNotificationView: CallNotificationView?
     private var appBecomeActiveObserver: NSObjectProtocol?
     private var callEndTimerNotificationView: CallNotificationView?
 
@@ -201,7 +202,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .showWaitingForOthersMessage:
             showWaitingForOthersMessageView()
         case .hideEmptyRoomMessage:
-            removeEmptyRoomMessageView()
+            removeEmptyRoomMessageViewIfNeeded()
+            removeWaitingForOthersMessageViewIfNeeded()
         case .updateHasLocalAudio(let audio):
             localUserView.localAudio(enabled: audio)
         case .selectPinnedCellAt(let indexPath):
@@ -398,11 +400,22 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     private func showWaitingForOthersMessageView() {
-        let emptyMessage = EmptyMeetingMessageView.instanceFromNib
-        emptyMessage.messageLabel.text = Strings.Localizable.Meetings.Message.waitingOthers
-        view.addSubview(emptyMessage)
-        emptyMessage.autoCenterInSuperview()
-        emptyMeetingMessageView = emptyMessage
+        guard waitingForOthersNotificationView == nil else { return }
+        
+        let notification = CallNotificationView.instanceFromNib
+        view.addSubview(notification)
+        notification.show(
+            message: Strings.Localizable.Meetings.Message.waitingOthers,
+            backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
+            textColor: Constants.notificatitionMessageBlackTextColor
+        )
+        waitingForOthersNotificationView = notification
+    }
+    
+    private func removeWaitingForOthersMessageViewIfNeeded() {
+        guard let waitingForOthersNotificationView = waitingForOthersNotificationView else { return }
+        waitingForOthersNotificationView.removeFromSuperview()
+        self.waitingForOthersNotificationView = nil
     }
     
     private func showNoOneElseHereMessageView() {
@@ -413,9 +426,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         emptyMeetingMessageView = emptyMessage
     }
     
-    private func removeEmptyRoomMessageView() {
-        emptyMeetingMessageView?.removeFromSuperview()
-        emptyMeetingMessageView = nil
+    private func removeEmptyRoomMessageViewIfNeeded() {
+        guard let emptyMeetingMessageView = emptyMeetingMessageView else { return }
+        emptyMeetingMessageView.removeFromSuperview()
+        self.emptyMeetingMessageView = nil
     }
     
     private func participantsStatusChanged(addedParticipantsCount: Int,

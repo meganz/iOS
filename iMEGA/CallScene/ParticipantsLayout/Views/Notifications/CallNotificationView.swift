@@ -17,6 +17,13 @@ class CallNotificationView: UIView {
         }
     }
     
+    private var topLayoutConstraint: NSLayoutConstraint?
+    
+    private var topPadding: CGFloat? {
+        guard let superview = superview else { return nil }
+        return Constants.defaultPaddingTop + superview.safeAreaInsets.top
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -85,14 +92,16 @@ class CallNotificationView: UIView {
         self.backgroundColor = backgroundColor
         self.notificationLabel.textColor = textColor
         
-        let topPadding = Constants.defaultPaddingTop + superview.safeAreaInsets.top
+        let topLayoutConstraint = topAnchor.constraint(equalTo: superview.topAnchor, constant: topPadding ?? 0.0)
         
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-            topAnchor.constraint(equalTo: superview.topAnchor, constant: topPadding),
+            topLayoutConstraint,
             heightAnchor.constraint(equalToConstant: Constants.notificationHeight)
         ])
+        
+        self.topLayoutConstraint = topLayoutConstraint
     }
     
     func updateMessage(string: String) {
@@ -122,5 +131,14 @@ class CallNotificationView: UIView {
             self?.removeFromSuperview()
             completion?()
         })
+    }
+    
+    override func safeAreaInsetsDidChange() {
+        super.safeAreaInsetsDidChange()
+        
+        if let topLayoutConstraint = topLayoutConstraint,
+           let topPadding = topPadding {
+            topLayoutConstraint.constant = topPadding
+        }
     }
 }
