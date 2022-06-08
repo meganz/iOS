@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink inViewController:(UIViewController *_Nullable)viewController;
+- (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink inViewController:(UIViewController *_Nullable)viewController;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Utils
 
-- (MEGANode *)mnz_firstbornInShareOrOutShareParentNode;
+- (nullable MEGANode *)mnz_firstbornInShareOrOutShareParentNode;
 - (NSMutableArray *)mnz_parentTreeArray;
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;

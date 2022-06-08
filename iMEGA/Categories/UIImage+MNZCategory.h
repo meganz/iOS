@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (nullable UIImage *)imageByRotateRight90;
 
 + (UIImage *)mnz_convertToUIImage:(NSData *)data withWidth:(NSInteger)width withHeight:(NSInteger)height;
-+ (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer withWidth:(NSInteger)width withHeight:(NSInteger)height;
++ (nullable UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer withWidth:(NSInteger)width withHeight:(NSInteger)height;
 
 + (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle name:(NSString *)name size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate;
 + (UIImage *)imageWithColor:(UIColor *)color andBounds:(CGRect)imgBounds;

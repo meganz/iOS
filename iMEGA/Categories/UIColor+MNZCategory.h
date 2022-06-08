@@ -64,7 +64,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 #pragma mark - Utils
 
-+ (UIColor *)mnz_fromHexString:(NSString *)hexString;
++ (nullable UIColor *)mnz_fromHexString:(NSString *)hexString;
 + (nullable UIColor *)mnz_colorForChatStatus:(MEGAChatStatus)onlineStatus;
 
 @end
