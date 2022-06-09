@@ -40,7 +40,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         self.chatViewController?.deleteMessage(chatMessage)
     }
     
-    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.saveForOffline, detail: nil, image: Asset.Images.NodeActions.offline.image, style: .default) {
+    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.General.downloadToOffline, detail: nil, image: Asset.Images.NodeActions.offline.image, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }

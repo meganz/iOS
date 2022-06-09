@@ -1,12 +1,19 @@
 
 extension EmptyStateView {
-    class func create(for type: EmptyStateType) -> EmptyStateView {
+    @objc class func create(for type: EmptyStateType,
+                            image: UIImage? = nil,
+                            title: String? = nil,
+                            description: String? = nil,
+                            buttonTitle: String? = nil) -> EmptyStateView {
         switch type {
         case .favourites:
             return favouritesEmptyState()
-        
+            
         case .photos:
             return photosEmptyState()
+            
+        case .timeline:
+            return timelineEmptyState(image: image, title: title, description: description, buttonTitle: buttonTitle)
             
         case .documents:
             return documentsEmptyState()
@@ -19,7 +26,7 @@ extension EmptyStateView {
         }
     }
     
-    class func photosEmptyState() -> EmptyStateView {
+    private class func photosEmptyState() -> EmptyStateView {
         let view = EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
                                   title: Strings.Localizable.Home.Images.empty,
                                   description: nil,
@@ -28,7 +35,18 @@ extension EmptyStateView {
         return view
     }
     
-    class func documentsEmptyState() -> EmptyStateView {
+    private class func timelineEmptyState(image: UIImage?, title: String?, description: String?, buttonTitle: String?) -> EmptyStateView {
+        let view = EmptyStateView(forHomeWith: image,
+                                  title: title,
+                                  description: description,
+                                  buttonTitle: buttonTitle)
+        
+        view.type = EmptyStateType.timeline.rawValue
+        
+        return view
+    }
+    
+    private class func documentsEmptyState() -> EmptyStateView {
         let view = EmptyStateView(forHomeWith: Asset.Images.Home.documentsEmptyState.image,
                                   title: Strings.Localizable.noDocumentsFound,
                                   description: nil,
@@ -37,7 +55,7 @@ extension EmptyStateView {
         return view
     }
     
-    class func audioEmptyState() -> EmptyStateView {
+    private class func audioEmptyState() -> EmptyStateView {
         let view = EmptyStateView(forHomeWith: Asset.Images.Home.audioEmptyState.image,
                                   title: Strings.Localizable.noAudioFilesFound,
                                   description: nil,
@@ -46,7 +64,7 @@ extension EmptyStateView {
         return view
     }
     
-    class func videoEmptyState() -> EmptyStateView {
+    private class func videoEmptyState() -> EmptyStateView {
         let view = EmptyStateView(forHomeWith: Asset.Images.Home.videoEmptyState.image,
                                   title: Strings.Localizable.noVideosFound,
                                   description: nil,
@@ -55,7 +73,7 @@ extension EmptyStateView {
         return view
     }
     
-    class func favouritesEmptyState() -> EmptyStateView {
+    private class func favouritesEmptyState() -> EmptyStateView {
         let view = EmptyStateView(forHomeWith: Asset.Images.EmptyStates.favouritesEmptyState.image,
                                   title: Strings.Localizable.noFavourites,
                                   description: nil,

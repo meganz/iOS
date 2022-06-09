@@ -39,10 +39,6 @@ public enum Strings {
     public static let _1AndA2MoreA = Strings.tr("Localizable", "%1 and [A]%2 more[/A]")
     /// %1 Images
     public static let _1Images = Strings.tr("Localizable", "%1 Images")
-    /// %1 Images and %2 Videos
-    public static let _1ImagesAnd2Videos = Strings.tr("Localizable", "%1 Images and %2 Videos")
-    /// %1 Images and 1 Video
-    public static let _1ImagesAnd1Video = Strings.tr("Localizable", "%1 Images and 1 Video")
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
     /// %1$d items
@@ -95,10 +91,6 @@ public enum Strings {
     public static let recommended = Strings.tr("Localizable", "(Recommended)")
     /// 1 contact found on MEGA
     public static let _1ContactFoundOnMEGA = Strings.tr("Localizable", "1 contact found on MEGA")
-    /// 1 Image and %2 Videos
-    public static let _1ImageAnd2Videos = Strings.tr("Localizable", "1 Image and %2 Videos")
-    /// 1 Image and 1 Video
-    public static let _1ImageAnd1Video = Strings.tr("Localizable", "1 Image and 1 Video")
     /// 1 selected
     public static let _1Selected = Strings.tr("Localizable", "1 selected")
     /// 1 hour
@@ -901,12 +893,6 @@ public enum Strings {
     public static let folder = Strings.tr("Localizable", "folder")
     /// Folder link unavailable
     public static let folderLinkUnavailable = Strings.tr("Localizable", "Folder link unavailable")
-    /// 1 folder • 1 file
-    public static let folderAndFile = Strings.tr("Localizable", "folderAndFile")
-    /// 1 folder • %d files
-    public static func folderAndFiles(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "folderAndFiles", p1)
-    }
     /// The folder “%@” can’t be created
     public static func folderCreationError(_ p1: Any) -> String {
       return Strings.tr("Localizable", "folderCreationError", String(describing: p1))
@@ -927,16 +913,6 @@ public enum Strings {
     public static let folderMovedToRubbishBinMessage = Strings.tr("Localizable", "folderMovedToRubbishBinMessage")
     /// 1 folder removed from MEGA
     public static let folderRemovedToRubbishBinMessage = Strings.tr("Localizable", "folderRemovedToRubbishBinMessage")
-    /// %d folders
-    public static func folders(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "folders", p1)
-    }
-    /// %d folders • 1 file
-    public static func foldersAndFile(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "foldersAndFile", p1)
-    }
-    /// [A] folders • [B] files
-    public static let foldersAndFiles = Strings.tr("Localizable", "foldersAndFiles")
     /// %d folders moved to the Rubbish Bin
     public static func foldersMovedToRubbishBinMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "foldersMovedToRubbishBinMessage", p1)
@@ -1037,14 +1013,6 @@ public enum Strings {
     public static let incompleteRestoreMessage = Strings.tr("Localizable", "incompleteRestore_message")
     /// Restore issue
     public static let incompleteRestoreTitle = Strings.tr("Localizable", "incompleteRestore_title")
-    /// %1$d of %2$d file
-    public static func indexOfTotalFile(_ p1: Int, _ p2: Int) -> String {
-      return Strings.tr("Localizable", "indexOfTotalFile", p1, p2)
-    }
-    /// %1$d of %2$d files
-    public static func indexOfTotalFiles(_ p1: Int, _ p2: Int) -> String {
-      return Strings.tr("Localizable", "indexOfTotalFiles", p1, p2)
-    }
     /// Info
     public static let info = Strings.tr("Localizable", "info")
     /// Insert your friends’ emails:
@@ -1441,10 +1409,6 @@ public enum Strings {
     public static func oneFile(_ p1: Int) -> String {
       return Strings.tr("Localizable", "oneFile", p1)
     }
-    /// %d folder
-    public static func oneFolder(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "oneFolder", p1)
-    }
     /// 1 folder
     public static let oneFolderShared = Strings.tr("Localizable", "oneFolderShared")
     /// %lu item selected
@@ -1589,8 +1553,6 @@ public enum Strings {
     public static let pleaseStrengthenYourPassword = Strings.tr("Localizable", "pleaseStrengthenYourPassword")
     /// Please write your feedback here:
     public static let pleaseWriteYourFeedback = Strings.tr("Localizable", "pleaseWriteYourFeedback")
-    /// Poor connection.
-    public static let poorConnection = Strings.tr("Localizable", "Poor connection.")
     /// Port
     public static let port = Strings.tr("Localizable", "Port")
     /// Preparing…
@@ -1863,8 +1825,6 @@ public enum Strings {
     public static let saved = Strings.tr("Localizable", "saved")
     /// Saved to Photos
     public static let savedToPhotos = Strings.tr("Localizable", "Saved to Photos")
-    /// Save for offline
-    public static let saveForOffline = Strings.tr("Localizable", "saveForOffline")
     /// Save Image
     public static let saveImage = Strings.tr("Localizable", "saveImage")
     /// Saving to Photos…
@@ -3298,6 +3258,8 @@ public enum Strings {
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
+      /// Download to Offline
+      public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
       /// Export File
@@ -3511,6 +3473,26 @@ public enum Strings {
         public static let zip = Strings.tr("Localizable", "general.filetype.zip")
       }
       public enum Format {
+        public enum Count {
+          /// Plural format key: "%#@file@"
+          public static func file(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.count.file", p1)
+          }
+          /// Plural format key: "%#@folder@"
+          public static func folder(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.count.folder", p1)
+          }
+          public enum FolderAndFile {
+            /// Plural format key: "• %#@file@"
+            public static func file(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "general.format.count.folderAndFile.file", p1)
+            }
+            /// Plural format key: "%#@folder@"
+            public static func folder(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "general.format.count.folderAndFile.folder", p1)
+            }
+          }
+        }
         public enum RetentionPeriod {
           /// Plural format key: "%#@day@"
           public static func day(_ p1: Int) -> String {
@@ -3648,6 +3630,14 @@ public enum Strings {
           }
         }
       }
+      public enum Photo {
+        public enum Browser {
+          /// Plural format key: "%d of %#@total@"
+          public static func indexOfTotalFiles(_ p1: Int, _ p2: Int) -> String {
+            return Strings.tr("Localizable", "media.photo.browser.indexOfTotalFiles", p1, p2)
+          }
+        }
+      }
       public enum PhotoLibrary {
         public enum Category {
           public enum All {
@@ -3686,6 +3676,8 @@ public enum Strings {
       }
     }
     public enum Meetings {
+      /// Poor connection
+      public static let poorConnection = Strings.tr("Localizable", "meetings.poorConnection")
       public enum Action {
         /// Rename Meeting
         public static let rename = Strings.tr("Localizable", "meetings.action.rename")
@@ -3717,6 +3709,16 @@ public enum Strings {
       public enum DisplayInMainView {
         /// Display in Main View
         public static let title = Strings.tr("Localizable", "meetings.displayInMainView.title")
+      }
+      public enum EndCallDialog {
+        /// Call will automatically end in 2 mins unless you want to stay on it.
+        public static let description = Strings.tr("Localizable", "meetings.endCallDialog.description")
+        /// End Call Now
+        public static let endCallNowButtonTitle = Strings.tr("Localizable", "meetings.endCallDialog.endCallNowButtonTitle")
+        /// Stay on Call
+        public static let stayOnCallButtonTitle = Strings.tr("Localizable", "meetings.endCallDialog.stayOnCallButtonTitle")
+        /// You’re the only one here
+        public static let title = Strings.tr("Localizable", "meetings.endCallDialog.title")
       }
       public enum EnterMeetingLink {
         /// Enter Meeting Link
@@ -3769,7 +3771,7 @@ public enum Strings {
         }
         /// You are the only one here…
         public static let noOtherParticipants = Strings.tr("Localizable", "meetings.message.noOtherParticipants")
-        /// Waiting for others to join…
+        /// Waiting for others to join
         public static let waitingOthers = Strings.tr("Localizable", "meetings.message.waitingOthers")
       }
       public enum New {
@@ -3781,6 +3783,10 @@ public enum Strings {
         }
       }
       public enum Notification {
+        /// Call will end in %@
+        public static func endCallTimerDuration(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "meetings.notification.EndCallTimerDuration", String(describing: p1))
+        }
         /// %@ and %@ others joined
         public static func moreThanTwoUsersJoined(_ p1: Any, _ p2: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersJoined", String(describing: p1), String(describing: p2))
@@ -3834,6 +3840,12 @@ public enum Strings {
         /// Speaker
         public static let speaker = Strings.tr("Localizable", "meetings.quickAction.speaker")
       }
+      public enum Reconnecting {
+        /// Unable to Reconnect
+        public static let failed = Strings.tr("Localizable", "meetings.reconnecting.failed")
+        /// Reconnecting
+        public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
+      }
       public enum Sharelink {
         /// Meeting link could not be generated. Please try again.
         public static let error = Strings.tr("Localizable", "meetings.sharelink.Error")
@@ -3864,6 +3876,22 @@ public enum Strings {
           public static let button = Strings.tr("Localizable", "recents.emptyState.activityHidden.button")
           /// Recent Activity Hidden
           public static let title = Strings.tr("Localizable", "recents.emptyState.activityHidden.title")
+        }
+      }
+      public enum Section {
+        public enum Thumbnail {
+          public enum Count {
+            public enum ImageAndVideo {
+              /// Plural format key: "%#@image@"
+              public static func image(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "recents.section.thumbnail.count.imageAndVideo.image", p1)
+              }
+              /// Plural format key: "and %#@video@"
+              public static func video(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "recents.section.thumbnail.count.imageAndVideo.video", p1)
+              }
+            }
+          }
         }
       }
     }

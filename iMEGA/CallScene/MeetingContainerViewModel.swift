@@ -17,6 +17,9 @@ enum MeetingContainerAction: ActionType {
     case didSwitchToGridView
     case participantAdded
     case participantRemoved
+    case showEndCallDialogIfNeeded
+    case removeEndCallAlertAndEndCall
+    case showJoinMegaScreen
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -55,8 +58,9 @@ final class MeetingContainerViewModel: ViewModelType {
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
         
+        let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callManagerUseCase.addCallRemoved { [weak self] uuid in
-            guard let uuid = uuid, let self = self, self.call?.uuid == uuid else { return }
+            guard let uuid = uuid, let self = self, callUUID == uuid else { return }
             self.callManagerUseCase.removeCallRemovedHandler()
             router.dismiss(animated: false, completion: nil)
         }
@@ -126,8 +130,15 @@ final class MeetingContainerViewModel: ViewModelType {
             router.didSwitchToGridView()
         case .participantAdded:
             cancelMuteMicrophoneSubscription()
+            router.removeEndCallDialog(completion: nil)
         case .participantRemoved:
             muteMicrophoneIfNoOtherParticipantsArePresent()
+        case .showEndCallDialogIfNeeded:
+            showEndCallDialogIfNeeded()
+        case .removeEndCallAlertAndEndCall:
+            removeEndCallAlertAndEndCall()
+        case .showJoinMegaScreen:
+            router.showJoinMegaScreen()
         }
     }
     
@@ -162,15 +173,49 @@ final class MeetingContainerViewModel: ViewModelType {
     private func muteMicrophoneIfNoOtherParticipantsArePresent() {
         if let call = call,
            call.hasLocalAudio,
-           call.numberOfParticipants == 1,
-           call.participants.first == userUseCase.myHandle {
+           isOnlyMyselfInTheMeeting() {
             callManagerUseCase.muteUnmuteCall(call, muted: true)
         }
     }
+    
+    private func isOnlyMyselfInTheMeeting() -> Bool {
+        guard let call = call,
+           call.numberOfParticipants == 1,
+           call.participants.first == userUseCase.myHandle else {
+            return false
+        }
         
+        return true
+    }
+    
+    private func showEndCallDialogIfNeeded() {
+        guard isOnlyMyselfInTheMeeting() else { return }
+        router.showEndCallDialog { [weak self] in
+            guard let self = self else { return }
+            self.endCall()
+        }
+    }
+    
     private func cancelMuteMicrophoneSubscription() {
         muteMicSubscription?.cancel()
         muteMicSubscription = nil
+    }
+    
+    private func removeEndCallAlertAndEndCall() {
+        router.removeEndCallDialog { [weak self] in
+            guard let self = self else { return }
+            self.endCall()
+        }
+    }
+    
+    private func endCall() {
+        if self.userUseCase.isGuest {
+            self.dispatch(.endGuestUserCall {
+                self.dispatch(.showJoinMegaScreen)
+            })
+        } else {
+            self.dismissCall(completion: nil)
+        }
     }
     
     deinit {

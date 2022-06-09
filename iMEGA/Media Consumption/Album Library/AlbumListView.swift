@@ -1,9 +1,9 @@
 import SwiftUI
 
 @available(iOS 14.0, *)
-struct AlbumLibraryContentView: View {
-    @StateObject var viewModel: AlbumLibraryContentViewModel
-    var router: AlbumLibraryContentViewRouting
+struct AlbumListView: View {
+    @StateObject var viewModel: AlbumListViewModel
+    var router: AlbumListViewRouting
     
     @State private var isPresenting = false
     
@@ -17,7 +17,10 @@ struct AlbumLibraryContentView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns, spacing: 5) {
-                            cell()
+                            router.cell(withCameraUploadNode: viewModel.cameraUploadNode)
+                                .onTapGesture(count: 1)  {
+                                    isPresenting.toggle()
+                                }
                                 .clipped()
                         }
                     }
@@ -30,29 +33,10 @@ struct AlbumLibraryContentView: View {
         }
         .padding([.top, .bottom], 10)
         .onAppear {
-            viewModel.loadAlbums()
+            viewModel.loadCameraUploadNode()
         }
         .onDisappear {
             viewModel.cancelLoading()
-        }
-    }
-    
-    @ViewBuilder
-    private func cell() -> some View {
-        if !viewModel.albums.isEmpty {
-            ForEach(viewModel.albums) { album in
-                router.cell(for: album.handle)
-                    .onTapGesture(count: 1) {
-                        isPresenting.toggle()
-                        viewModel.cameraUploadNode = album
-                    }
-            }
-        } else {
-            router.singleCell()
-                .onTapGesture(count: 1) {
-                    isPresenting.toggle()
-                    viewModel.cameraUploadNode = nil
-                }
         }
     }
 }

@@ -702,7 +702,6 @@ static const float BPS_MEDIUM = 3000000.0f;
     
     MEGALogDebug(@"[PA] Export session started");
     [encoder exportAsynchronouslyWithCompletionHandler:^{
-        NSString *filePath = encoder.outputURL.path;
         if (encoder.status == AVAssetExportSessionStatusCompleted) {
             MEGALogDebug(@"[PA] Export session finished");
             if ([encoder.asset isKindOfClass:[AVURLAsset class]]) {
@@ -718,11 +717,11 @@ static const float BPS_MEDIUM = 3000000.0f;
                 MEGALogError(@"[PA] Set attributes failed with error: %@", error);
             }
             if (self.filePath) {
-                filePath = encoder.outputURL.path.mnz_relativeLocalPath;
+                NSString *filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                 self.filePath(filePath);
             }
             if (self.filePaths) {
-                filePath = encoder.outputURL.path.mnz_relativeLocalPath;
+                NSString *filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                 [self.filePathsArray addObject:filePath];
                 dispatch_semaphore_signal(self.semaphore);
             }

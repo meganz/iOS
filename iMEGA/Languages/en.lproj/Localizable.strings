@@ -252,18 +252,6 @@
 "oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
 "files"="%d files";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d folder";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d folders";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 folder • 1 file";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] folders • [B] files";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d folders • 1 file";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 folder • %d files";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ device";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +332,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Save for offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox is reserved for use by Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +522,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off; %lu videos not uploaded";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d of %2$d file";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d of %2$d files";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item selected";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1846,8 +1828,6 @@
 "Thumbnail View"="Thumbnail View";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Page View";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Poor connection.";
 /* There are no notifications to display. */
 "No notifications"="No notifications";
 /* The header of a notification related to payments */
@@ -2000,14 +1980,6 @@
 "%1 Images"="%1 Images";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 Videos";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 Image and 1 Video";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 Image and %2 Videos";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 Images and 1 Video";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 Images and %2 Videos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modified by %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2685,7 +2657,7 @@
 /* Action of a call/meeting to share its link */
 "meetings.action.shareLink"="Share Meeting Link";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Waiting for others to join…";
+"meetings.message.waitingOthers"="Waiting for others to join";
 /* Message shown when the user is the only one left in the meeting */
 "meetings.message.noOtherParticipants"="You are the only one here…";
 /* Message header when the user enters a invalid meeting URL */
@@ -2716,6 +2688,12 @@
 "meetings.quickAction.speaker"="Speaker";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Switch";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="Reconnecting";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="Unable to Reconnect";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="Poor connection";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Preview high resolution images";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -3000,3 +2978,15 @@
 "media.quality.high"="High";
 /* Best quality option used on exporting file in Scan document. */
 "media.quality.best"="Best";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="You’re the only one here";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on Call";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="End Call Now";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

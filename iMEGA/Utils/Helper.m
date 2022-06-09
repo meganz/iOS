@@ -698,6 +698,7 @@
             [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {
                 if (error || myChatFilesFolderNode == nil) {
                     MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
+                    return;
                 }
                 [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesFolderNode delegate:copyRequestDelegate];
             }];

@@ -206,7 +206,7 @@
         if ([b isKindOfClass:MEGAChatListItem.class]) {
             MEGAChatListItem *chatListItem = b;
             second = chatListItem.title;
-        } else if ([b isKindOfClass:MEGAUser.class]) {
+        } else {
             second = ((MEGAUser *)b).mnz_displayName;
         }
         

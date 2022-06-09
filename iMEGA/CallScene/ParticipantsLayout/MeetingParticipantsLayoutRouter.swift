@@ -1,4 +1,10 @@
 
+protocol MeetingParticipantsLayoutRouting: Routing {
+    func showRenameChatAlert()
+    func startCallEndCountDownTimer()
+    func endCallEndCountDownTimer()
+}
+
 final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayoutRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UINavigationController?
@@ -53,6 +59,14 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     
     func showRenameChatAlert() {
         viewModel?.dispatch(.showRenameChatAlert)
+    }
+    
+    func startCallEndCountDownTimer() {
+        viewModel?.dispatch(.startCallEndCountDownTimer)
+    }
+    
+    func endCallEndCountDownTimer() {
+        viewModel?.dispatch(.endCallEndCountDownTimer)
     }
     
     func pinParticipantAsSpeaker(_ participant: CallParticipantEntity) {

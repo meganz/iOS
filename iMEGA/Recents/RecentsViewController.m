@@ -244,8 +244,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
             }];
         } else {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.nodes = recentActionBucket.nodesList;
-            cloudDriveVC.recentActionBucket = recentActionBucket;
+            cloudDriveVC.recentIndex = indexPath.section;
             cloudDriveVC.displayMode = DisplayModeRecents;
             cloudDriveVC.shouldRemovePlayerDelegate = NO;
             

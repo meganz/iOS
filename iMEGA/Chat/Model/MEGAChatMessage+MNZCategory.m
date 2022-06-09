@@ -179,6 +179,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                     }
                         
                     default:
+                        text = @"";
                         break;
                 }
                 break;

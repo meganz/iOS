@@ -30,5 +30,5 @@ protocol CallCallbacksRepositoryProtocol {
     func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle)
     func localAvFlagsUpdated(video: Bool, audio: Bool)
     func chatTitleChanged(chatRoom: ChatRoomEntity)
-    func networkQuality()
+    func networkQualityChanged(_ quality: NetworkQuality)
 }

@@ -711,7 +711,7 @@
     NSString *cellIdentifier;
     if (self.cloudDriveButton.selected) {
         cellIdentifier = @"nodeCell";
-    } else if (self.incomingButton.selected) {
+    } else {
         cellIdentifier = @"incomingNodeCell";
     }
     
