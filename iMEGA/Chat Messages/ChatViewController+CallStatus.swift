@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 extension ChatViewController {
     var joinCallString: String {
@@ -66,11 +67,15 @@ extension ChatViewController {
         joinCall()
     }
     
+    private func endCall(_ call: CallEntity) {
+        let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
+        CallUseCase(repository: callRepository).hangCall(for: call.callId)
+        CallManagerUseCase().endCall(call)
+    }
+    
     private func endActiveCallAndJoinCurrentChatroomCall() {
         if let activeCall = MEGASdkManager.sharedMEGAChatSdk().firstActiveCall {
-            let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
-            CallUseCase(repository: callRepository).hangCall(for: activeCall.callId)
-            CallManagerUseCase().endCall(CallEntity(with: activeCall))
+            endCall(CallEntity(with: activeCall))
         }
         
         joinCall()
@@ -85,6 +90,57 @@ extension ChatViewController {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
             }
         }
+    }
+    
+    private func showCallEndTimerIfNeeded(call: CallEntity) {
+        guard MeetingContainerRouter.isAlreadyPresented == false,
+              call.changeTye == .callComposition,
+              call.numberOfParticipants == 1,
+              call.participants.first == MEGASdkManager.sharedMEGAChatSdk().myUserHandle else {
+            
+            if call.changeTye == .callComposition, call.numberOfParticipants > 1 {
+                removeEndCallDialogIfNeeded()
+                cancelEndCallSubscription()
+            }
+            
+            return
+        }
+        
+        let endCallDialog = EndCallDialog { [weak self] in
+            self?.cancelEndCallSubscription()
+        } endCallAction: { [weak self] in
+            self?.endCall(call)
+            self?.cancelEndCallSubscription()
+        }
+
+        self.endCallDialog = endCallDialog
+        endCallDialog.show()
+        
+        endCallSubscription = Just(Void.self)
+            .delay(for: .seconds(120), scheduler: RunLoop.main)
+            .sink() { [weak self] _ in
+                self?.tonePlayer.play(tone: .callEnded)
+                
+                // When ending call, CallKit decativation will interupt playing of tone.
+                // Adding a delay of 0.7 seconds so there is enough time to play the tone
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    self?.removeEndCallDialogIfNeeded()
+                    self?.endCall(call)
+                    self?.endCallSubscription = nil
+                }
+            }
+    }
+    
+    private func cancelEndCallSubscription() {
+        endCallSubscription?.cancel()
+        endCallSubscription = nil
+    }
+    
+    private func removeEndCallDialogIfNeeded() {
+        guard let endCallDialog = endCallDialog else { return }
+        
+        endCallDialog.dismiss()
+        self.endCallDialog = nil
     }
     
     private func onCallUpdate(_ call: MEGAChatCall) {
@@ -106,6 +162,7 @@ extension ChatViewController {
             showJoinCall(withTitle: joinCallString)
         case .inProgress:
             initTimerForCall(call)
+            showCallEndTimerIfNeeded(call: CallEntity(with: call))
         case .connecting:
             showJoinCall(withTitle: Strings.Localizable.reconnecting)
         case .destroyed, .terminatingUserParticipation, .undefined:

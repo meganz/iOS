@@ -1,4 +1,3 @@
-
 #import "EmptyStateView.h"
 
 #import "NSString+MNZCategory.h"
@@ -11,17 +10,18 @@
 #import "MEGA-Swift.h"
 #endif
 
+
 @interface EmptyStateView ()
 
 @property (nullable, weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYDefaultConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYTimelineConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYHomeConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYHomePlusBannerConstraint;
 
 @property (nullable, weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nullable, weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-
 @property (nullable, weak, nonatomic) IBOutlet UIView *audioPlayerShownView;
 
 @end
@@ -40,7 +40,10 @@
     return _nib;
 }
 
-- (UIView *)initWithImage:(nullable UIImage *)image title:(nullable NSString *)title description:(nullable NSString *)description buttonTitle:(nullable NSString *)buttonTitle {
+- (UIView *)initWithImage:(nullable UIImage *)image
+                    title:(nullable NSString *)title
+              description:(nullable NSString *)description
+              buttonTitle:(nullable NSString *)buttonTitle {
     self = [super init];
     if (self) {
         self = [[EmptyStateView nib] instantiateWithOwner:nil options:nil].firstObject;
@@ -64,14 +67,21 @@
     return self;
 }
 
-- (UIView *)initForHomeWithImage:(nullable UIImage *)image title:(nullable NSString *)title description:(nullable NSString *)description buttonTitle:(nullable NSString *)buttonTitle {
-
+- (UIView *)initForHomeWithImage:(nullable UIImage *)image
+                           title:(nullable NSString *)title
+                     description:(nullable NSString *)description
+                     buttonTitle:(nullable NSString *)buttonTitle {
     self = [self initWithImage:image title:title description:description buttonTitle:buttonTitle];
     
     [NSLayoutConstraint deactivateConstraints:@[self.imageViewYDefaultConstraint]];
     [NSLayoutConstraint activateConstraints:@[self.imageViewYHomeConstraint]];
     
     return self;
+}
+
+- (void)enableTimelineLayoutConstraint {
+    self.imageViewYDefaultConstraint.active = NO;
+    self.imageViewYTimelineConstraint.active = YES;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -88,13 +98,21 @@
     [super awakeFromNib];
     
     [self updateAppearance];
-      
+    
 #ifdef MAIN_APP_TARGET
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(bottomViewVisibility) name:MEGAAudioPlayerShouldUpdateContainerNotification object:nil];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(homeChangedHeight:) name:MEGAHomeChangedHeightNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(bannerChangedHomeHeight:) name:MEGABannerChangedHomeHeightNotification object:nil];
 #endif
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (self.type == EmptyStateTypeTimeline) {
+        [self updateLayoutForTimeline];
+    }
 }
 
 - (void)dealloc {

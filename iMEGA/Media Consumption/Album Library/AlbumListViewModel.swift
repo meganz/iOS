@@ -2,31 +2,28 @@ import Combine
 import SwiftUI
 
 @available(iOS 14.0, *)
-final class AlbumLibraryContentViewModel: NSObject, ObservableObject  {
+final class AlbumListViewModel: NSObject, ObservableObject  {
     var columns: [GridItem] = Array(
         repeating: .init(.flexible(), spacing: 10),
         count: 3
     )
     
-    @Published var albums: [NodeEntity] = []
-    @Published var shouldLoad = true
     @Published var cameraUploadNode: NodeEntity?
+    @Published var shouldLoad = true
     
     private var loadingTask: Task<Void, Never>?
-    private var usecase: AlbumUseCaseProtocol
+    private var usecase: AlbumListUseCaseProtocol
     
-    init(usecase: AlbumUseCaseProtocol) {
+    init(usecase: AlbumListUseCaseProtocol) {
         self.usecase = usecase
     }
     
     @MainActor
-    func loadAlbums() {
+    func loadCameraUploadNode() {
         loadingTask = Task {
             do {
-                albums = try await usecase.loadAlbums()
-            } catch {
-                albums = []
-            }
+                cameraUploadNode = try await usecase.loadCameraUploadNode()
+            } catch {}
             
             shouldLoad = false
         }

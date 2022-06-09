@@ -9,23 +9,20 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     
     var title = Strings.Localizable.CameraUploads.Albums.Favourites.title
     
-    private var albumHandle: MEGAHandle?
-    private var favouriteUseCase: FavouriteNodesUseCaseProtocol
+    private var cameraUploadNode: NodeEntity?
     private var thumbnailUseCase: ThumbnailUseCaseProtocol
-    private var albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
+    private var albumContentsUseCase: AlbumContentsUseCaseProtocol
     private let placeholderThumbnail: ImageContainer
     private var loadingTask: Task<Void, Never>?
     
     private var updateSubscription: AnyCancellable?
     
     init(
-        albumHandle: MEGAHandle?,
-        favouriteUseCase: FavouriteNodesUseCaseProtocol,
+        cameraUploadNode: NodeEntity?,
         thumbnailUseCase: ThumbnailUseCaseProtocol,
-        albumContentsUseCase: AlbumContentsUpdateNotifierUseCase
+        albumContentsUseCase: AlbumContentsUseCaseProtocol
     ) {
-        self.albumHandle = albumHandle
-        self.favouriteUseCase = favouriteUseCase
+        self.cameraUploadNode = cameraUploadNode
         self.thumbnailUseCase = thumbnailUseCase
         self.albumContentsUseCase = albumContentsUseCase
         
@@ -47,7 +44,10 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         
         loadingTask = Task {
             do {
-                let albumEntity = try await favouriteUseCase.favouriteAlbum(withCUHandle: albumHandle)
+                var nodes = try await albumContentsUseCase.favouriteAlbumNodes()
+                nodes = sortMediaNodesInDescending(with: nodes)
+                
+                let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
                 numberOfNodes = albumEntity.numberOfNodes
                 
                 if let node = albumEntity.coverNode {
@@ -97,10 +97,22 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
             await loadAlbumInfo()
         }
     }
-
+    
     private func setupSubscription() {
         updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
             self?.reloadAlbumInfo()
         }
+    }
+    
+    private func sortMediaNodesInDescending(with nodes: [NodeEntity]) -> [NodeEntity] {
+        var nodes = nodes
+        
+        nodes = nodes.filter({
+            return $0.isImage || ($0.isVideo && $0.parentHandle == cameraUploadNode?.handle)
+        })
+        
+        nodes = nodes.sorted { $0.modificationTime >= $1.modificationTime }
+        
+        return nodes
     }
 }

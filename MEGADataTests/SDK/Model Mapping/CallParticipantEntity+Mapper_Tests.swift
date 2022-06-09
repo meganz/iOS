@@ -4,7 +4,7 @@ import XCTest
 final class CallParticipantEntity_Mapper_Tests: XCTestCase {
     
     private func createChatSessionEntity(hasAudio: Bool = true, hasVideo: Bool = true) -> ChatSessionEntity {
-        ChatSessionEntity(statusType: nil, hasAudio: hasAudio, hasVideo: hasVideo, peerId: 1, clientId: 1, audioDetected: true, isOnHold: true, changes: 1, isHighResolution: true, isLowResolution: true, canReceiveVideoHiRes: true, canReceiveVideoLowRes:true)
+        ChatSessionEntity(statusType: nil, termCode: .invalid, hasAudio: hasAudio, hasVideo: hasVideo, peerId: 1, clientId: 1, audioDetected: true, isOnHold: true, changes: 1, isHighResolution: true, isLowResolution: true, canReceiveVideoHiRes: true, canReceiveVideoLowRes:true)
     }
     
     private var sampleUsers: [MockUser] {

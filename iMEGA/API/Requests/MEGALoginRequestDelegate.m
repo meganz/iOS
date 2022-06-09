@@ -97,7 +97,8 @@
             case MEGAErrorTypeApiEIncomplete:
                 message = NSLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
                 break;
-                
+            
+            case MEGAErrorTypeApiESid:
             case MEGAErrorTypeApiEBlocked:
                 return;
                 

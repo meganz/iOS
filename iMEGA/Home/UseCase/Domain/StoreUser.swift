@@ -14,7 +14,7 @@ struct StoreUser {
 extension StoreUser {
     init(from user: MOUser) {
         self.fullName = user.fullName
-        self.firstName = user.firstName
+        self.firstName = user.firstName ?? ""
         self.displayName = user.displayName
         self.interactedWith = user.interactedWith.boolValue
     }

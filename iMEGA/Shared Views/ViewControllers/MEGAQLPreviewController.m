@@ -4,8 +4,8 @@
 
 @interface MEGAQLPreviewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource>
 
-@property (nonatomic, strong, nonnull) NSString *filePath;
-@property (nonatomic, strong, nonnull) NSArray *files;
+@property (nonatomic, strong) NSString *filePath;
+@property (nonatomic, strong) NSArray *files;
 
 @end
 

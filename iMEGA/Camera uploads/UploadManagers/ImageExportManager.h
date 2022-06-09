@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-- (void)exportImageAtURL:(NSURL *)imageURL dataTypeUTI:(NSString *)dataUTI toURL:(NSURL *)outputURL outputTypeUTI:(NSString *)outputUTI shouldStripGPSInfo:(BOOL)shouldStripGPSInfo completion:(void (^)(BOOL))completion;
+- (void)exportImageAtURL:(NSURL *)imageURL dataTypeUTI:(NSString *)dataUTI toURL:(NSURL *)outputURL outputTypeUTI:(nullable NSString *)outputUTI shouldStripGPSInfo:(BOOL)shouldStripGPSInfo completion:(void (^)(BOOL))completion;
 
 @end
 

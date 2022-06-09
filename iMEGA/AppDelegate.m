@@ -1301,12 +1301,12 @@
 }
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (!nodeList) {
+    if (nodeList) {
+        if (@available(iOS 14.0, *)) {
+            [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
+        }
+    } else {
         [Helper startPendingUploadTransferIfNeeded];
-    }
-    
-    if (@available(iOS 14.0, *)) {
-        [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
     }
 }
 
@@ -1605,7 +1605,7 @@
                 if (@available(iOS 14.0, *)) {
                     [QuickAccessWidgetManager reloadAllWidgetsContent];
                 }
-                if (sessionInvalidateInOtherClient) {
+                if (sessionInvalidateInOtherClient && !self.API_ESIDAlertController) {
                     [self presentLogoutFromOtherClientAlert];
                 }
                 
@@ -1873,15 +1873,17 @@
             return;
         }
         
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
-        if (!offlineNodeExist) {
-            NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
-            if (replaceRange.location != NSNotFound) {
-                MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
-                NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
-                [[MEGAStore shareInstance] insertOfflineNode:node api:sdk path:[result decomposedStringWithCanonicalMapping]];
-                if (@available(iOS 14.0, *)) {
-                    [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
+        if (node) {
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
+            if (!offlineNodeExist) {
+                NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
+                if (replaceRange.location != NSNotFound) {
+                    MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
+                    NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
+                    [[MEGAStore shareInstance] insertOfflineNode:node api:sdk path:[result decomposedStringWithCanonicalMapping]];
+                    if (@available(iOS 14.0, *)) {
+                        [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
+                    }
                 }
             }
         }

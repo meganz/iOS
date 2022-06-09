@@ -232,7 +232,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"downloadedDate" ascending:NO]];
-    if (fetchLimit) {
+    if (fetchLimit != nil) {
         request.fetchLimit = fetchLimit.intValue;
     }
     
