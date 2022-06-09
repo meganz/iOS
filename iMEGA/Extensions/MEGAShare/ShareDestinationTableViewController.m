@@ -174,7 +174,7 @@
     if (section == 0) {
         sectionTitle = NSLocalizedString(@"selectDestination", nil);
     } else if (section == 1) {
-        NSString *format = [ShareAttachment attachmentsArray].count == 1 ? NSLocalizedString(@"oneFile", nil) : NSLocalizedString(@"files", nil);
+        NSString *format = NSLocalizedString(@"extensions.share.destination.section.files","Share extension section title that displays number of selected files to be shared to Mega.");
         sectionTitle = [NSString stringWithFormat:format, [ShareAttachment attachmentsArray].count];
     }
     
