@@ -88,7 +88,7 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
         var nodes = nodes
         
         nodes = nodes.filter({
-            return $0.isVisualMedia && $0.parentHandle == cameraUploadNode?.handle
+            return $0.isImage || ($0.isVideo && $0.parentHandle == cameraUploadNode?.handle)
         })
         
         return nodes
