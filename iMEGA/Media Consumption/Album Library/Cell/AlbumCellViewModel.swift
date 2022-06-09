@@ -108,7 +108,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         var nodes = nodes
         
         nodes = nodes.filter({
-            return $0.isVisualMedia && $0.parentHandle == cameraUploadNode?.handle
+            return $0.isImage || ($0.isVideo && $0.parentHandle == cameraUploadNode?.handle)
         })
         
         nodes = nodes.sorted { $0.modificationTime >= $1.modificationTime }
