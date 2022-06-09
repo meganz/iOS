@@ -248,10 +248,6 @@
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d file";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d files";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ device";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */

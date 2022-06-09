@@ -845,10 +845,6 @@ public enum Strings {
     public static let fileNotSupported = Strings.tr("Localizable", "fileNotSupported")
     /// 1 file removed from MEGA
     public static let fileRemovedToRubbishBinMessage = Strings.tr("Localizable", "fileRemovedToRubbishBinMessage")
-    /// %d files
-    public static func files(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "files", p1)
-    }
     /// %d files selected were already uploaded into this folder.
     public static func filesAlreadyExistMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "filesAlreadyExistMessage", p1)
@@ -1405,10 +1401,6 @@ public enum Strings {
     public static let oneWeek = Strings.tr("Localizable", "One Week")
     /// 1 contact
     public static let oneContact = Strings.tr("Localizable", "oneContact")
-    /// %d file
-    public static func oneFile(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "oneFile", p1)
-    }
     /// 1 folder
     public static let oneFolderShared = Strings.tr("Localizable", "oneFolderShared")
     /// %lu item selected
@@ -3248,6 +3240,18 @@ public enum Strings {
           public static let stepTwo = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepTwo")
           /// Turn on Notifications
           public static let title = Strings.tr("Localizable", "dialog.turnOnNotifications.label.title")
+        }
+      }
+    }
+    public enum Extensions {
+      public enum Share {
+        public enum Destination {
+          public enum Section {
+            /// Plural format key: "%#@file@"
+            public static func files(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "extensions.share.destination.section.files", p1)
+            }
+          }
         }
       }
     }
