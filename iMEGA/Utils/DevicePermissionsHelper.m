@@ -50,7 +50,7 @@
                                                    handler:^(PHAuthorizationStatus status) {
             if (handler) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    handler(status == PHAuthorizationStatusAuthorized);
+                    handler(status == PHAuthorizationStatusAuthorized || status == PHAuthorizationStatusLimited);
                 });
             }
         }];
