@@ -3,7 +3,7 @@ import Combine
 protocol AlbumContentsUseCaseProtocol {
     var updatePublisher: AnyPublisher<Void, Never> { get }
     
-    func favouriteAlbumNodes() async throws -> [NodeEntity]
+    func favouriteAlbumNodes(withCameraUploadNode node: NodeEntity?) async throws -> [NodeEntity]
 }
 
 final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: FavouriteNodesRepositoryProtocol>: AlbumContentsUseCaseProtocol {
@@ -26,7 +26,15 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
     
     // MARK: Protocols
     
-    func favouriteAlbumNodes() async throws -> [NodeEntity] {
-        try await favouriteRepo.allFavouritesNodes()
+    func favouriteAlbumNodes(withCameraUploadNode node: NodeEntity?) async throws -> [NodeEntity] {
+        var nodes = try await favouriteRepo.allFavouritesNodes()
+        
+        nodes = nodes.filter({
+            return $0.isImage || ($0.isVideo && $0.parentHandle == node?.handle)
+        })
+        
+        nodes = nodes.sorted { $0.modificationTime >= $1.modificationTime }
+        
+        return nodes
     }
 }
