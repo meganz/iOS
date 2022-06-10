@@ -44,8 +44,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         
         loadingTask = Task {
             do {
-                var nodes = try await albumContentsUseCase.favouriteAlbumNodes()
-                nodes = sortMediaNodesInDescending(with: nodes)
+                let nodes = try await albumContentsUseCase.favouriteAlbumNodes(withCameraUploadNode: cameraUploadNode)
                 
                 let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
                 numberOfNodes = albumEntity.numberOfNodes
@@ -102,17 +101,5 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
             self?.reloadAlbumInfo()
         }
-    }
-    
-    private func sortMediaNodesInDescending(with nodes: [NodeEntity]) -> [NodeEntity] {
-        var nodes = nodes
-        
-        nodes = nodes.filter({
-            return $0.isImage || ($0.isVideo && $0.parentHandle == cameraUploadNode?.handle)
-        })
-        
-        nodes = nodes.sorted { $0.modificationTime >= $1.modificationTime }
-        
-        return nodes
     }
 }
