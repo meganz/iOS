@@ -93,7 +93,6 @@
     
     NSArray *nodesUpdatedArray = self.mnz_nodesArrayFromNodeList;
     for (MEGANode *nodeUpdated in nodesUpdatedArray) {
-        NSLog(@"parentNode Handle: %llu, nodeUpdate Handle: %llu", parentNode.handle, nodeUpdated.parentHandle);
         if (parentNode.handle == nodeUpdated.parentHandle) { //It is a child node
             shouldProcessOnNodesUpdate = YES;
             break;
