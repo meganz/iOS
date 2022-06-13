@@ -84,6 +84,18 @@ final class PhotoAlbumContainerViewController: UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Photos", bundle: nil)
         photoViewController = storyboard.instantiateViewController(withIdentifier: "photoViewController") as? PhotosViewController
         
+        if let photoViewController = photoViewController {
+            let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photoViewController)
+            let photoLibraryRepository = PhotoLibraryRepository.default
+            let photoLibraryUseCase = PhotoLibraryUseCase(repository: photoLibraryRepository)
+            let viewModel = PhotoViewModel(
+                photoUpdatePublisher: photoUpdatePublisher,
+                photoLibraryUseCase: photoLibraryUseCase
+            )
+            photoViewController.viewModel = viewModel
+            photoViewController.photoUpdatePublisher = photoUpdatePublisher
+        }
+
         albumHostingController = AlbumListViewRouter().build()
         
         photoViewController?.parentPhotoAlbumsController = self

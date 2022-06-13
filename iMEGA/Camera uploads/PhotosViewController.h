@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, WarningViewModel, PhotoAlbumContainerViewController;
+@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, WarningViewModel, PhotoAlbumContainerViewController, PhotoViewModel;
 
 typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateDisabled,
@@ -23,13 +23,15 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @property (strong, nonatomic) PhotoSelectionAdapter *selection;
 @property (strong, nonatomic) PhotoLibraryContentViewModel *photoLibraryContentViewModel;
 @property (strong, nonatomic) WarningViewModel *warningViewModel;
-@property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
 
 @property (weak,   nonatomic) PhotoAlbumContainerViewController *parentPhotoAlbumsController;
 @property (assign, nonatomic) BOOL shouldShowRightBarButton;
 
 @property (nonatomic) IBOutlet UIView *photosBannerView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+
+@property (nonatomic, strong) PhotoViewModel *viewModel;
+@property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
 
 - (void)reloadHeader;
 - (void)reloadPhotos;

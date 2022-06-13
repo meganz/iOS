@@ -15,6 +15,17 @@ extension MainTabBarController {
            let photosVC = navigationController.viewControllers.first as? PhotosViewController {
             photosVC.configureMyAvatarManager()
             
+            let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photosVC)
+            let photoLibraryRepository = PhotoLibraryRepository.default
+            let photoLibraryUseCase = PhotoLibraryUseCase(repository: photoLibraryRepository)
+            let viewModel = PhotoViewModel(
+                photoUpdatePublisher: photoUpdatePublisher,
+                photoLibraryUseCase: photoLibraryUseCase
+            )
+            
+            photosVC.viewModel = viewModel
+            photosVC.photoUpdatePublisher = photoUpdatePublisher
+            
             return navigationController
         }
         
