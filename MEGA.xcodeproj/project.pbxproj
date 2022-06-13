@@ -205,6 +205,14 @@
 		2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */; };
 		2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */; };
 		2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */; };
+		321AF2E4284F3E5F004FCC1E /* PhotoLibraryRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321AF2E3284F3E5F004FCC1E /* PhotoLibraryRepositoryProtocol.swift */; };
+		321AF2E728505FD7004FCC1E /* PhotoLibraryResultEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321AF2E628505FD7004FCC1E /* PhotoLibraryResultEntity.swift */; };
+		321AF2E9285062AC004FCC1E /* PhotoLibraryErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321AF2E8285062AC004FCC1E /* PhotoLibraryErrorEntity.swift */; };
+		321AF2EF2852F13A004FCC1E /* PhotoSourceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321AF2EE2852F13A004FCC1E /* PhotoSourceEntity.swift */; };
+		325857332845D410007890F5 /* MediaUploadNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325857322845D410007890F5 /* MediaUploadNodeAccess.swift */; };
+		3293D8092845B4380013EA72 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3293D8082845B4380013EA72 /* PhotoViewModel.swift */; };
+		32CB4911284EF42400697BA9 /* PhotoLibraryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4910284EF42400697BA9 /* PhotoLibraryUseCase.swift */; };
+		32CB4914284EF56900697BA9 /* PhotoLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */; };
 		32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */; };
 		32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */; };
 		32F9E68028348B320002132D /* AlbumContentsUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67F28348B320002132D /* AlbumContentsUseCaseProtocol.swift */; };
@@ -2724,6 +2732,14 @@
 		2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewController.swift; sourceTree = "<group>"; };
 		2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewRouter.swift; sourceTree = "<group>"; };
 		2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModel.swift; sourceTree = "<group>"; };
+		321AF2E3284F3E5F004FCC1E /* PhotoLibraryRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryRepositoryProtocol.swift; sourceTree = "<group>"; };
+		321AF2E628505FD7004FCC1E /* PhotoLibraryResultEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryResultEntity.swift; sourceTree = "<group>"; };
+		321AF2E8285062AC004FCC1E /* PhotoLibraryErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryErrorEntity.swift; sourceTree = "<group>"; };
+		321AF2EE2852F13A004FCC1E /* PhotoSourceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSourceEntity.swift; sourceTree = "<group>"; };
+		325857322845D410007890F5 /* MediaUploadNodeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaUploadNodeAccess.swift; sourceTree = "<group>"; };
+		3293D8082845B4380013EA72 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
+		32CB4910284EF42400697BA9 /* PhotoLibraryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryUseCase.swift; sourceTree = "<group>"; };
+		32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryRepository.swift; sourceTree = "<group>"; };
 		32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepository.swift; sourceTree = "<group>"; };
 		32F9E67F28348B320002132D /* AlbumContentsUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUseCaseProtocol.swift; sourceTree = "<group>"; };
 		32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -5636,6 +5652,40 @@
 			path = StartMeetingScene;
 			sourceTree = "<group>";
 		};
+		321AF2E0284F3E3E004FCC1E /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				321AF2E3284F3E5F004FCC1E /* PhotoLibraryRepositoryProtocol.swift */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		321AF2E528505F6B004FCC1E /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				321AF2E628505FD7004FCC1E /* PhotoLibraryResultEntity.swift */,
+				321AF2EE2852F13A004FCC1E /* PhotoSourceEntity.swift */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		32CB490D284EF40B00697BA9 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				32CB4910284EF42400697BA9 /* PhotoLibraryUseCase.swift */,
+				321AF2E8285062AC004FCC1E /* PhotoLibraryErrorEntity.swift */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		32CB4912284EF55900697BA9 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
 		32F9E697283728AE0002132D /* Album */ = {
 			isa = PBXGroup;
 			children = (
@@ -5960,6 +6010,7 @@
 				B6FCBFD627121B4500B3599F /* PhotosViewController+PhotoLibrary.swift */,
 				12397E2F2820C98A00A30CCC /* PhotosViewController+PhotoAlbum.swift */,
 				B6E6726A277D4E4B00158FA0 /* PhotoUpdatePublisher.swift */,
+				3293D8082845B4380013EA72 /* PhotoViewModel.swift */,
 				41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */,
 				41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */,
 				41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */,
@@ -9251,6 +9302,7 @@
 				B6FD64F8268AAC5800988A17 /* Share */,
 				B645BC32252FAF8200D1D7CF /* Account */,
 				B645BC33252FAF9D00D1D7CF /* Preference */,
+				32CB4912284EF55900697BA9 /* Photos */,
 				A861B58127BE7D52009C29C2 /* Help */,
 				A882F52227E1E6990032DC07 /* Network */,
 			);
@@ -9277,6 +9329,7 @@
 				83344FD9258A2C570052DB3C /* Data */,
 				B645BC2F252FAF4C00D1D7CF /* Authentication */,
 				B645BC2C252FAF4000D1D7CF /* Account */,
+				32CB490D284EF40B00697BA9 /* Photos */,
 				B645BC30252FAF5800D1D7CF /* Preference */,
 				A861B58427BE7E5C009C29C2 /* Help */,
 				A882F51F27E1E6050032DC07 /* Network */,
@@ -9405,6 +9458,7 @@
 				B645BC34252FAFC700D1D7CF /* Authentication */,
 				B6FD64F7268AAC3F00988A17 /* Share */,
 				B645BC35252FAFCC00D1D7CF /* Account */,
+				321AF2E0284F3E3E004FCC1E /* Photos */,
 				B645BC36252FAFD000D1D7CF /* Preference */,
 				A861B57927BE7B8C009C29C2 /* Help */,
 				A882F52527E1E74A0032DC07 /* Network */,
@@ -10081,6 +10135,7 @@
 				BF782D25269BA4BA0001D169 /* General */,
 				BF782D28269BA4BA0001D169 /* Transfer */,
 				BF782D2D269BA4BA0001D169 /* Favourites */,
+				321AF2E528505F6B004FCC1E /* Photos */,
 				BF782D2F269BA4BA0001D169 /* Preference */,
 				BF782D33269BA4BA0001D169 /* Recents */,
 				BF782D37269BA4BA0001D169 /* Node */,
@@ -10812,6 +10867,7 @@
 			isa = PBXGroup;
 			children = (
 				B616D807254DFBA300712012 /* CameraUploadNodeAccess.swift */,
+				325857322845D410007890F5 /* MediaUploadNodeAccess.swift */,
 			);
 			path = "Camera Uploads";
 			sourceTree = "<group>";
@@ -11935,6 +11991,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B596A4082810F94E0097254B /* MEGANodeArray+Additions.swift in Sources */,
+				325857332845D410007890F5 /* MediaUploadNodeAccess.swift in Sources */,
 				B64F9A9F2238F4A4000A4EA7 /* AssetResourceUploadOperation.m in Sources */,
 				B6CE0D0F221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m in Sources */,
 				C4EDB73826655229006A114F /* RoundedView.swift in Sources */,
@@ -12453,6 +12510,7 @@
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
+				32CB4914284EF56900697BA9 /* PhotoLibraryRepository.swift in Sources */,
 				B646DF30276FE9DB00BC543F /* ImageContainer.swift in Sources */,
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
@@ -12530,6 +12588,7 @@
 				777AC33E21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				BFAB113823CEA5C300BCE72D /* PhotoGridViewDelegate.swift in Sources */,
 				123E3019275B2EC400EEDAAA /* NumberBadge.swift in Sources */,
+				321AF2E9285062AC004FCC1E /* PhotoLibraryErrorEntity.swift in Sources */,
 				BFAC87BE260006FB009CA3F6 /* CaptureDeviceUseCase.swift in Sources */,
 				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
 				5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */,
@@ -12584,6 +12643,7 @@
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				5D6D0F4F252702C2002A777D /* UserSDKEntity.swift in Sources */,
 				C4A9146725814E2B008D879F /* UICollectionView+Additions.swift in Sources */,
+				321AF2EF2852F13A004FCC1E /* PhotoSourceEntity.swift in Sources */,
 				5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */,
 				5DD91D2F24D7EE62001C72DB /* HandlerView.swift in Sources */,
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
@@ -12753,6 +12813,7 @@
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				0D7E5FCC2634F07F00C5CB2A /* DownloadFileUseCase.swift in Sources */,
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
+				3293D8092845B4380013EA72 /* PhotoViewModel.swift in Sources */,
 				12E9105528247C5300FBC6DA /* AlbumContentViewController.swift in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
@@ -12856,6 +12917,7 @@
 				C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
 				A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */,
+				32CB4911284EF42400697BA9 /* PhotoLibraryUseCase.swift in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
@@ -12876,6 +12938,7 @@
 				B67507B22766B8060034F951 /* PhotoLibrary+Mapper.swift in Sources */,
 				BF9457CE24FF02360048F82B /* PhotoExplorerCollectionSectionHeaderView.swift in Sources */,
 				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
+				321AF2E4284F3E5F004FCC1E /* PhotoLibraryRepositoryProtocol.swift in Sources */,
 				BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */,
 				2F53F84F2612B8860027A5EF /* NSURL+Deeplinking.swift in Sources */,
 				BFAB114223CEA5C300BCE72D /* PhotoCarouselVideoIcon.swift in Sources */,
@@ -12995,6 +13058,7 @@
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
 				B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */,
 				B662B88D24FC3F990089376A /* RegionListSource.swift in Sources */,
+				321AF2E728505FD7004FCC1E /* PhotoLibraryResultEntity.swift in Sources */,
 				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,
 				5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
