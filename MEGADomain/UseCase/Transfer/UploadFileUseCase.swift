@@ -35,21 +35,15 @@ struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRepositor
             return
         }
         
-        guard nodeRepository.copyNodeIfExistsWithSameFingerprint(at: uploadUrl.path, parentHandle: parent) else {
-            uploadFileRepository.uploadFile(withLocalPath: uploadUrl.path, toParent: parent, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken, start: start, update: update) { result in
-                switch result {
-                case .success(_):
-                    completion?(.success)
-                case .failure(let error):
-                    completion?(.failure(error))
-                }
-                fileSystemRepository.removeFile(at: uploadUrl)
+        uploadFileRepository.uploadFile(withLocalPath: uploadUrl.path, toParent: parent, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken, start: start, update: update) { result in
+            switch result {
+            case .success:
+                completion?(.success)
+            case .failure(let error):
+                completion?(.failure(error))
             }
-            return
+            fileSystemRepository.removeFile(at: uploadUrl)
         }
-        
-        fileSystemRepository.removeFile(at: uploadUrl)
-        completion?(.success)
     }
     
     func uploadSupportFile(atPath path: String, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {

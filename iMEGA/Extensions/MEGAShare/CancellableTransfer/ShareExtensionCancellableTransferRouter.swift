@@ -7,7 +7,7 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
     private let transfers: [CancellableTransfer]
     private var wrapper: CancellableTransferControllerWrapper<ShareExtensionCancellableTransferViewModel>?
 
-    init(presenter: UIViewController, transfers: [CancellableTransfer], parentNodeHandle: MEGAHandle) {
+    init(presenter: UIViewController, transfers: [CancellableTransfer]) {
         self.presenter = presenter
         self.transfers = transfers
     }

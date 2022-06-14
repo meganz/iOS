@@ -13,4 +13,6 @@ protocol FileRepositoryProtocol {
     func moveFileToUploadsPath(at sourcePath: URL, name: String) -> Bool
     func tempUploadURL(for name: String) -> URL
     func removeFile(at url: URL)
+    func fileSize(at url: URL) -> UInt64?
+    func fileCreationDate(at url: URL) -> Date?
 }

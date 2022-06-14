@@ -848,13 +848,13 @@
         NSString *message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [ShareExtensionCancellableTransferRouterOCWrapper.alloc.init uploadFiles:self.transfers toParent:self.parentNode.handle presenter:self];
+            [NameCollisionRouterOCWrapper.alloc.init uploadFiles:self.transfers presenter:self type:CancellableTransferTypeUpload];
         }]];
         [NSOperationQueue.mainQueue addOperationWithBlock:^{
             [self presentViewController:alertController animated:YES completion:nil];
         }];
     } else {
-        [ShareExtensionCancellableTransferRouterOCWrapper.alloc.init uploadFiles:self.transfers toParent:self.parentNode.handle presenter:self];
+        [NameCollisionRouterOCWrapper.alloc.init uploadFiles:self.transfers presenter:self type:CancellableTransferTypeUpload];
     }
 }
 

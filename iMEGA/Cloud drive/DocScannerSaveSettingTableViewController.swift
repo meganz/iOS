@@ -354,7 +354,8 @@ extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegat
     func upload(toParentNode parentNode: MEGANode) {
         dismiss(animated: true) {
             let transfers = self.exportScannedDocs().map { CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, path: $0, name: nil, appData: NSString().mnz_appData(toSaveCoordinates: $0.mnz_coordinatesOfPhotoOrVideo() ?? ""), priority: false, isFile: true, type: .upload) }
-            CancellableTransferRouter(presenter: UIApplication.mnz_presentingViewController(), transfers: transfers, transferType: CancellableTransferType.upload).start()
+            let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: URL(fileURLWithPath: $0.path).lastPathComponent, isFile: $0.isFile, fileUrl: URL(fileURLWithPath: $0.path))}
+            NameCollisionViewRouter(presenter: UIApplication.mnz_presentingViewController(), transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
         }
     }
 }
