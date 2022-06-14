@@ -33,6 +33,7 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         })
     }
     
+#if MAIN_APP_TARGET
     func rootNodeFileVersionCount() -> Int64 {
         guard let rootNode = sdk.rootNode,
               let count = sdk.mnz_accountDetails?.numberOfVersionFiles(forHandle: rootNode.handle) else {
@@ -48,7 +49,8 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         }
         return size
     }
-    
+#endif
+
     func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
         sdk.removeVersions(with: RequestDelegate { (result) in
             switch result {

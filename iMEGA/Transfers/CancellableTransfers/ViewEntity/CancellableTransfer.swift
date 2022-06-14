@@ -5,16 +5,15 @@
     let messageId: MEGAHandle
     let chatId: MEGAHandle
     let path: String
-    let name: String?
+    var name: String?
     let appData: String?
     let priority: Bool
     let isFile: Bool
     let type: CancellableTransferType
     var state: TransferStateEntity = .none
     var stage: TransferStageEntity = .none
-    var collision: Bool = false
     
-    @objc init(handle: MEGAHandle = MEGAInvalidHandle, parentHandle: MEGAHandle = .invalid, path: String, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
+    @objc init(handle: MEGAHandle = .invalid, parentHandle: MEGAHandle = .invalid, path: String, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
         self.handle = handle
         self.parentHandle = parentHandle
         self.messageId = .invalid

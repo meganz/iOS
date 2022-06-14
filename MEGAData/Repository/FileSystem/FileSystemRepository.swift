@@ -59,4 +59,13 @@ struct FileSystemRepository: FileSystemRepositoryProtocol {
             MEGALogError("Failed to remove upload temp file in uploads folder with error: \(error)")
         }
     }
+    
+    //MARK: - File attributes
+    func fileSize(at url: URL) -> UInt64? {
+        url.attributes?[.size] as? UInt64
+    }
+    
+    func fileCreationDate(at url: URL) -> Date? {
+        url.attributes?[.creationDate] as? Date
+    }
 }

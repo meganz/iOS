@@ -6,4 +6,6 @@ protocol FileSystemRepositoryProtocol {
     func moveFile(at sourceURL: URL, to destinationURL: URL, name: String) -> Bool
     func copyFile(at sourceURL: URL, to destinationURL: URL, name: String) -> Bool
     func removeFile(at url: URL)
+    func fileSize(at url: URL) -> UInt64?
+    func fileCreationDate(at url: URL) -> Date?
 }

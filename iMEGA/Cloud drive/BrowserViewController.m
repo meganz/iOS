@@ -480,7 +480,7 @@
 }
 
 - (void)attachNodes {
-    [self dismissAndSelectNodesIfNeeded:YES];
+    [self dismissAndSelectNodesIfNeeded:YES completion:nil];
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
@@ -505,7 +505,7 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
 }
 
-- (void)dismissAndSelectNodesIfNeeded:(BOOL)selectNodes {
+- (void)dismissAndSelectNodesIfNeeded:(BOOL)selectNodes completion:(void (^ __nullable)(void))completion {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
@@ -513,9 +513,12 @@
     if (selectNodes) {
         [self dismissViewControllerAnimated:YES completion:^{
             self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
+            completion();
         }];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            completion();
+        }];
     }
 }
 
@@ -544,32 +547,25 @@
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
+#ifdef MAIN_APP_TARGET
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
-        NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
-        NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
-        __weak __typeof__(self) weakSelf = self;
-        MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initWithFiles:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [weakSelf dismissAndSelectNodesIfNeeded:NO];
+        [self dismissAndSelectNodesIfNeeded:NO completion:^{
+            [[NameCollisionRouterOCWrapper.alloc init] moveNodes:self.selectedNodesArray to:self.parentNode presenter:UIApplication.mnz_presentingViewController];
         }];
-        
-        for (MEGANode *n in self.selectedNodesArray) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode delegate:moveRequestDelegate];
-        }
     }
+#endif
 }
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
+#ifdef MAIN_APP_TARGET
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
-        for (MEGANode *node in self.selectedNodesArray) {
-            self.remainingOperations++;
-            MEGANode *tempNode = (self.browserAction == BrowserActionImportFromFolderLink) ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
-            [[MEGASdkManager sharedMEGASdk] copyNode:tempNode newParent:self.parentNode];
-        }
+        [self dismissAndSelectNodesIfNeeded:NO completion:^{
+            [[NameCollisionRouterOCWrapper.alloc init] copyNodes:self.selectedNodesArray to:self.parentNode isFolderLink:self.browserAction == BrowserActionImportFromFolderLink presenter:UIApplication.mnz_presentingViewController];
+        }];
     }
+#endif
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
@@ -624,30 +620,23 @@
         [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }
     
-    [self dismissAndSelectNodesIfNeeded:NO];
+    [self dismissAndSelectNodesIfNeeded:NO completion:nil];
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
+#ifndef MNZ_PICKER_EXTENSION
     if (self.browserAction == BrowserActionOpenIn) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-#ifdef MAIN_APP_TARGET
-            [CancellableTransferRouterOCWrapper.alloc.init
-             uploadFiles:@[[self transferToUpload]]
-             presenter:UIApplication.mnz_visibleViewController
-             type:CancellableTransferTypeUpload];
-#elif MNZ_SHARE_EXTENSION
-            [ShareExtensionCancellableTransferRouterOCWrapper.alloc.init
-             uploadFiles:@[[self transferToUpload]]
-             toParent:self.parentNode.handle
-             presenter:UIApplication.mnz_visibleViewController];
-#endif
-            [self dismissAndSelectNodesIfNeeded:NO];
+            [self dismissAndSelectNodesIfNeeded:NO completion:^{
+                [NameCollisionRouterOCWrapper.alloc.init uploadFiles:@[[self transferToUpload]] presenter: UIApplication.mnz_visibleViewController type: CancellableTransferTypeUpload];
+            }];
         }
     } else if (self.browserAction == BrowserActionShareExtension
                || self.browserAction == BrowserActionNewHomeUpload
                || self.browserAction == BrowserActionNewFileSave) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
     }
+#endif
 }
 
 - (IBAction)sendNodes:(UIBarButtonItem *)sender {
@@ -699,7 +688,7 @@
 
 - (IBAction)selectBarButtonPressed:(UIBarButtonItem *)sender {
     [self.browserViewControllerDelegate didSelectNode:self.parentNode];
-    [self dismissAndSelectNodesIfNeeded:NO];
+    [self dismissAndSelectNodesIfNeeded:NO completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -1045,7 +1034,7 @@
                     }
                 }
                 
-                [self dismissAndSelectNodesIfNeeded:NO];
+                [self dismissAndSelectNodesIfNeeded:NO completion:nil];
             }
             break;
         }

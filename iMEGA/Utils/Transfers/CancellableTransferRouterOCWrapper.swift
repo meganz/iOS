@@ -9,7 +9,8 @@
     }
     
     @objc func uploadFiles(_ transfers: [CancellableTransfer], presenter: UIViewController, type: CancellableTransferType) {
-        CancellableTransferRouter(presenter: presenter, transfers: transfers, transferType: type).start()
+        let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: URL(fileURLWithPath: $0.path).lastPathComponent, isFile: $0.isFile, fileUrl: URL(fileURLWithPath: $0.path))}
+        NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
     }
     
     private func transferViewEntities(fromNodes nodes: [MEGANode]) -> [CancellableTransfer] {

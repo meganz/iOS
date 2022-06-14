@@ -1,4 +1,8 @@
 
+extension NodeRepository {
+    static let `default` = NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())
+}
+
 struct NodeRepository: NodeRepositoryProtocol {
     private let sdk: MEGASdk
     private let chatSdk: MEGAChatSdk
@@ -8,6 +12,14 @@ struct NodeRepository: NodeRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
+    func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity? {
+        guard let node = sdk.node(forHandle: handle) else {
+            return nil
+        }
+        
+        return NodeEntity(node: node)
+    }
+
     func nameForNode(handle: MEGAHandle) -> String? {
         guard let node = sdk.node(forHandle: handle) else {
             return nil
@@ -64,7 +76,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node.isFile()
     }
     
-    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: MEGAHandle) -> Bool {
+    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: MEGAHandle, newName: String?) -> Bool {
         guard let fileFingerprint = sdk.fingerprint(forFilePath: path),
               let parentNode = sdk.node(forHandle: parentHandle),
               let node = sdk.node(forFingerprint: fileFingerprint) else {
@@ -72,11 +84,75 @@ struct NodeRepository: NodeRepositoryProtocol {
         }
         
         if node.parentHandle != parentHandle {
-            sdk.copy(node, newParent: parentNode)
+            if let newName = newName {
+                sdk.copy(node, newParent: parentNode, newName: newName)
+            } else {
+                sdk.copy(node, newParent: parentNode)
+            }
         }
         
         return true
     }
+    
+    func copyNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?, isFolderLink: Bool) async throws -> NodeHandle {
+        try await withCheckedThrowingContinuation { continuation in
+            var megaNode: MEGANode
+            guard let parentNode = sdk.node(forHandle: parentHandle),
+                  let node = sdk.node(forHandle: handle) else {
+                continuation.resume(throwing: CopyOrMoveErrorEntity.nodeNotFound)
+                return
+            }
+            
+            megaNode = node
+
+            if isFolderLink {
+                guard let authorizedNode = sdk.authorizeNode(node) else {
+                    continuation.resume(throwing: CopyOrMoveErrorEntity.nodeAuthorizeFailed)
+                    return
+                }
+                megaNode = authorizedNode
+            }
+            
+            let delegate = RequestDelegate { result in
+                switch result {
+                case .failure(_):
+                    continuation.resume(throwing: CopyOrMoveErrorEntity.nodeCopyFailed)
+                case .success(let request):
+                    continuation.resume(returning: request.nodeHandle)
+                }
+            }
+            if let newName = newName {
+                sdk.copy(megaNode, newParent: parentNode, newName: newName, delegate: delegate)
+            } else {
+                sdk.copy(megaNode, newParent: parentNode, delegate: delegate)
+            }
+        }
+    }
+    
+    func moveNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?) async throws -> NodeHandle {
+        try await withCheckedThrowingContinuation { continuation in
+            guard let parentNode = sdk.node(forHandle: parentHandle),
+                  let node = sdk.node(forHandle: handle) else {
+                continuation.resume(throwing: CopyOrMoveErrorEntity.nodeNotFound)
+                return
+            }
+                        
+            let delegate = RequestDelegate { result in
+                switch result {
+                case .failure(_):
+                    continuation.resume(throwing: CopyOrMoveErrorEntity.nodeCopyFailed)
+                case .success(let request):
+                    continuation.resume(returning: request.nodeHandle)
+                }
+            }
+            if let newName = newName {
+                sdk.move(node, newParent: parentNode, newName: newName, delegate: delegate)
+            } else {
+                sdk.move(node, newParent: parentNode, delegate: delegate)
+            }
+        }
+    }
+
     
     func fingerprintForFile(at path: String) -> String? {
         sdk.fingerprint(forFilePath: path)
@@ -90,5 +166,21 @@ struct NodeRepository: NodeRepositoryProtocol {
             return
         }
         sdk.setNodeCoordinates(node, latitude: latitude as NSNumber, longitude: longitude as NSNumber)
+    }
+    
+    func childNodeNamed(name: String, in parentHandle: MEGAHandle) -> NodeEntity? {
+        guard let parent = sdk.node(forHandle: parentHandle), let node = sdk.childNode(forParent: parent, name: name) else {
+            return nil
+        }
+        
+        return NodeEntity(node: node)
+    }
+
+    func creationDateForNode(handle: MEGAHandle) -> Date? {
+        guard let node = sdk.node(forHandle: handle) else {
+            return nil
+        }
+        
+        return node.creationTime
     }
 }

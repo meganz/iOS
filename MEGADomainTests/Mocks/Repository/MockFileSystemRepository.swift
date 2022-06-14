@@ -6,6 +6,8 @@ struct MockFileSystemRepository: FileSystemRepositoryProtocol {
     var copiedNode: Bool = false
     var movedNode: Bool = false
     var containsOriginalsDirectory: Bool = false
+    var fileSize: UInt64 = 0
+    var creationDate: Date = Date()
 
     func fileExists(at url: URL) -> Bool {
         fileExists
@@ -24,4 +26,12 @@ struct MockFileSystemRepository: FileSystemRepositoryProtocol {
     }
     
     func removeFile(at url: URL) { }
+    
+    func fileSize(at url: URL) -> UInt64? {
+        fileSize
+    }
+    
+    func fileCreationDate(at url: URL) -> Date? {
+        creationDate
+    }
 }

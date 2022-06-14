@@ -130,7 +130,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                          toParent: transferViewEntity.parentHandle,
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
-                                         isSourceTemporary: false,
+                                         isSourceTemporary: true,
                                          startFirst: transferViewEntity.priority,
                                          cancelToken: cancelToken)
             { transferEntity in
@@ -155,7 +155,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                          toParent: transferViewEntity.parentHandle,
                                          fileName: nil,
                                          appData: transferViewEntity.appData,
-                                         isSourceTemporary: false,
+                                         isSourceTemporary: true,
                                          startFirst: transferViewEntity.priority,
                                          cancelToken: cancelToken,
                                          start: nil)
@@ -181,6 +181,7 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
+    //MARK: - Downloads
     private func startChatFileDownloads() {
         fileTransfers.forEach { transferViewEntity in
             downloadNodeUseCase.downloadChatFileToOffline(forNodeHandle: transferViewEntity.handle,
@@ -209,7 +210,6 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
-    //MARK: - Downloads
     private func startFileDownloads() {
         fileTransfers.forEach { transferViewEntity in
             downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,
