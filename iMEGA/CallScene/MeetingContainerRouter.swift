@@ -15,7 +15,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func displayParticipantInMainView(_ participant: CallParticipantEntity)
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
-    func showEndCallDialog(endCallCompletion completion: @escaping () -> Void)
+    func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)?)
     func removeEndCallDialog(completion: (() -> Void)?)
     func showJoinMegaScreen()
 }
@@ -43,7 +43,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     static var isAlreadyPresented: Bool {
-        UIApplication.mnz_presentingViewController() is MeetingContainerViewController
+        MeetingContainerViewController.isAlreadyPresented
     }
     
     init(presenter: UIViewController,
@@ -63,13 +63,20 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func build() -> UIViewController {
+        let authUseCase = AuthUseCase(
+            repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            credentialRepo: CredentialRepository.default
+        )
+        let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.default)
+        
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
                                                   callUseCase: createCallUseCase,
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),
-                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()), credentialRepo: CredentialRepository()))
+                                                  authUseCase: authUseCase,
+                                                  noUserJoinedUseCase: meetingNoUserJoinedUseCase)
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         containerViewModel = viewModel
@@ -191,15 +198,16 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         isSpeakerEnabled = enable
     }
     
-    func showEndCallDialog(endCallCompletion completion: @escaping () -> Void) {
+    func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)? = nil) {
         guard self.endCallDialog == nil else { return }
         
         let endCallDialog = EndCallDialog(forceDarkMode: true) { [weak self] in
             self?.endCallDialog = nil
             self?.meetingParticipantsRouter?.endCallEndCountDownTimer()
+            stayOnCallCompletion?()
         } endCallAction: { [weak self] in
             self?.endCallDialog = nil
-            completion()
+            endCallCompletion()
         }
 
         meetingParticipantsRouter?.startCallEndCountDownTimer()
@@ -208,6 +216,11 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func removeEndCallDialog(completion: (() -> Void)?) {
+        guard endCallDialog != nil else {
+            completion?()
+            return
+        }
+        
         meetingParticipantsRouter?.endCallEndCountDownTimer()
         endCallDialog?.dismiss(animated: true) { [weak self] in
             self?.endCallDialog = nil

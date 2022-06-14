@@ -91,6 +91,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var callDurationInfo: CallDurationInfo?
     private var callParticipants = [CallParticipantEntity]()
     private var indexOfVisibleParticipants = [Int]()
+    private var hasParticipantJoinedBefore = false
     private var speakerParticipant: CallParticipantEntity? {
         willSet {
             speakerParticipant?.speakerVideoDataDelegate = nil
@@ -459,9 +460,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .removeParticipant(let handle):
             meetingParticipantStatusPipeline.removeParticipant(withHandle: handle)
         case .startCallEndCountDownTimer:
+            invokeCommand?(.hideEmptyRoomMessage)
             startCallEndCountDownTimer()
         case .endCallEndCountDownTimer:
             endCallEndCountDownTimer()
+            invokeCommand?(hasParticipantJoinedBefore ? .showNoOneElseHereMessage : .showWaitingForOthersMessage)
         case .didEndDisplayLastPeerLeftStatusMessage:
             if chatRoom.chatType == .group || chatRoom.chatType == .meeting {
                 containerViewModel?.dispatch(.showEndCallDialogIfNeeded)
@@ -646,6 +649,7 @@ struct CallDurationInfo {
 
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
+        self.hasParticipantJoinedBefore = true
         if chatRoom.chatType == .oneToOne && participant.participantId == callParticipants.first?.participantId {
             updateParticipantJoinedBeforeLeft(participant: participant)
         } else {

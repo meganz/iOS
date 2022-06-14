@@ -30,6 +30,8 @@ class ChatViewController: MessagesViewController {
     }
     
     var endCallSubscription: AnyCancellable?
+    var meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase?
+    var noUserJoinedSubscription: AnyCancellable?
     var endCallDialog: EndCallDialog?
     private(set) lazy var tonePlayer = TonePlayer()
     
@@ -203,7 +205,7 @@ class ChatViewController: MessagesViewController {
         addObservers()
         addChatBottomInfoScreenToView()
         configureGuesture()
-        
+        subscribeToNoUserJoinedNotification()
     }
     
     @objc func update(chatRoom: MEGAChatRoom) {

@@ -26,6 +26,10 @@ final class MeetingContainerViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
     }
     
+    private enum Constants {
+        static let muteMicTimerDuration = 60 // 1 minute
+    }
+    
     private let router: MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
     private let callUseCase: CallUseCaseProtocol
@@ -33,6 +37,8 @@ final class MeetingContainerViewModel: ViewModelType {
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
+    private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
+    private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
 
     private var call: CallEntity? {
@@ -49,7 +55,8 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callManagerUseCase: CallManagerUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
-         authUseCase: AuthUseCaseProtocol) {
+         authUseCase: AuthUseCaseProtocol,
+         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
@@ -57,6 +64,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.callManagerUseCase = callManagerUseCase
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
+        self.noUserJoinedUseCase = noUserJoinedUseCase
         
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callManagerUseCase.addCallRemoved { [weak self] uuid in
@@ -74,13 +82,25 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showMeetingUI(containerViewModel: self)
             if isOneToOneChat == false {
                 muteMicSubscription = Just(Void.self)
-                    .delay(for: .seconds(60), scheduler: RunLoop.main)
+                    .delay(for: .seconds(Constants.muteMicTimerDuration), scheduler: RunLoop.main)
                     .sink() { [weak self] _ in
                         guard let self = self else { return }
 
                         self.muteMicrophoneIfNoOtherParticipantsArePresent()
                         self.muteMicSubscription = nil
                     }
+                
+                noUserJoinedSubscription = noUserJoinedUseCase
+                    .monitor
+                    .receive(on: DispatchQueue.main)
+                    .sink() { [weak self] in
+                        guard let self = self else { return }
+                        
+                        self.showEndCallDialogIfNeeded {
+                            self.cancelNoUserJoinedSubscription()
+                        }
+                        self.noUserJoinedSubscription = nil
+                }
             }
         case.hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
@@ -130,6 +150,7 @@ final class MeetingContainerViewModel: ViewModelType {
             router.didSwitchToGridView()
         case .participantAdded:
             cancelMuteMicrophoneSubscription()
+            cancelNoUserJoinedSubscription()
             router.removeEndCallDialog(completion: nil)
         case .participantRemoved:
             muteMicrophoneIfNoOtherParticipantsArePresent()
@@ -188,17 +209,24 @@ final class MeetingContainerViewModel: ViewModelType {
         return true
     }
     
-    private func showEndCallDialogIfNeeded() {
+    private func showEndCallDialogIfNeeded(stayOnCallCompletion: (() -> Void)? = nil) {
         guard isOnlyMyselfInTheMeeting() else { return }
         router.showEndCallDialog { [weak self] in
             guard let self = self else { return }
             self.endCall()
+        } stayOnCallCompletion: {
+            stayOnCallCompletion?()
         }
     }
     
     private func cancelMuteMicrophoneSubscription() {
         muteMicSubscription?.cancel()
         muteMicSubscription = nil
+    }
+    
+    private func cancelNoUserJoinedSubscription() {
+        noUserJoinedSubscription?.cancel()
+        noUserJoinedSubscription = nil
     }
     
     private func removeEndCallAlertAndEndCall() {
@@ -220,6 +248,7 @@ final class MeetingContainerViewModel: ViewModelType {
     
     deinit {
         cancelMuteMicrophoneSubscription()
+        cancelNoUserJoinedSubscription()
         self.callManagerUseCase.removeCallRemovedHandler()
     }
     
