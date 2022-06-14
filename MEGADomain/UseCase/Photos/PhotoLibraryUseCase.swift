@@ -1,50 +1,54 @@
 import Combine
 
 protocol PhotoLibraryUseCaseProtocol {
-    func retrieveCameraAndMediaContents() async throws -> PhotoLibraryResultEntity
+    func photoLibraryContainer() async -> PhotoLibraryContainerEntity
+    func allPhotos() async throws -> [MEGANode]
 }
 
 struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol>: PhotoLibraryUseCaseProtocol {
     private let photosRepository: T
     
+    enum ContainerType {
+        case camera(MEGANode?)
+        case media(MEGANode?)
+    }
+    
     init(repository: T) {
         photosRepository = repository
     }
     
-    func retrieveCameraAndMediaContents() async throws -> PhotoLibraryResultEntity {
-        let photoLibraryTask = Task { () -> PhotoLibraryResultEntity in
-            async let cameraUploadNode = try? await photosRepository.node(in: .camera)
-            async let mediaUploadNode = try? await photosRepository.node(in: .media)
-            
-            var nodes = await [
-                photosRepository.nodes(inParent: cameraUploadNode),
-                photosRepository.nodes(inParent: mediaUploadNode)
-            ].flatMap { $0 }
-            
-            nodes.sort { node1, node2 in
-                if let modiTime1 = node1.modificationTime,
-                   let modiTime2 = node2.modificationTime {
-                    return modiTime1 > modiTime2
-                }
-                else {
-                    return node1.name ?? "" < node2.name ?? ""
-                }
-            }
-            
-            if nodes.count > 0 {
-                return await PhotoLibraryResultEntity(
-                    cameraUploadNode: cameraUploadNode,
-                    mediaUploadNode: mediaUploadNode,
-                    photos: nodes
-                )
+    func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
+        async let cameraUploadNode = try? await photosRepository.node(in: .camera)
+        async let mediaUploadNode = try? await photosRepository.node(in: .media)
+        
+        return await PhotoLibraryContainerEntity(
+            cameraUploadNode: cameraUploadNode,
+            mediaUploadNode: mediaUploadNode
+        )
+    }
+    
+    func allPhotos() async throws -> [MEGANode] {
+        let container = await photoLibraryContainer()
+        
+        let nodesFromCameraUpload = photosRepository.nodes(inParent: container.cameraUploadNode)
+        let nodesFromMediaUpload = photosRepository.nodes(inParent: container.mediaUploadNode)
+        var nodes = nodesFromCameraUpload + nodesFromMediaUpload
+        
+        nodes.sort { node1, node2 in
+            if let modiTime1 = node1.modificationTime,
+               let modiTime2 = node2.modificationTime {
+                return modiTime1 > modiTime2
             }
             else {
-                throw PhotoLibraryErrorEntity.nodeDoesNotExist
+                return node1.name ?? "" < node2.name ?? ""
             }
         }
         
-        let result = await photoLibraryTask.result
-        let photoLibraryResultEntity = try result.get()
-        return photoLibraryResultEntity
+        if nodes.count > 0 {
+            return nodes
+        }
+        else {
+            throw PhotoLibraryErrorEntity.nodeDoesNotExist
+        }
     }
 }

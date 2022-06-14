@@ -1,8 +1,6 @@
 import Combine
 
 final class PhotoViewModel: NSObject {
-    @objc var cameraUploadParentNode: MEGANode?
-    @objc var mediaUploadParentNode: MEGANode?
     @objc var mediaNodesArray: [MEGANode] = [MEGANode]() {
         didSet {
             photoUpdatePublisher.updatePhotoLibrary()
@@ -21,22 +19,49 @@ final class PhotoViewModel: NSObject {
         super.init()
     }
     
-    @objc func retrieveCameraAndMediaContents() {
+    @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
         Task {
             do {
-                let photoLibraryResult = try await photoLibraryUseCase.retrieveCameraAndMediaContents()
-                self.mediaNodesArray = photoLibraryResult.photos
-                if let cuNode = photoLibraryResult.cameraUploadNode {
-                    self.cameraUploadParentNode = cuNode
-                }
-                if let muNode = photoLibraryResult.mediaUploadNode {
-                    self.mediaUploadParentNode = muNode
-                }
+                let container = await photoLibraryUseCase.photoLibraryContainer()
                 
+                guard shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) else { return }
+                
+                let photos = try await photoLibraryUseCase.allPhotos()
+                self.mediaNodesArray = photos
             }
             catch {
                 self.mediaNodesArray = []
             }
         }
+    }
+    
+    @objc func loadAllPhotos() {
+        Task {
+            do {
+                let photos = try await photoLibraryUseCase.allPhotos()
+                self.mediaNodesArray = photos
+            }
+            catch {
+                self.mediaNodesArray = []
+            }
+        }
+    }
+    
+    // MARK: - Private
+    private func shouldProcessOnNodesUpdate(
+        nodeList: MEGANodeList,
+        container: PhotoLibraryContainerEntity
+    ) -> Bool {
+        let cameraUploadNodesModified = nodeList.mnz_shouldProcessOnNodesUpdate(
+            forParentNode: container.cameraUploadNode,
+            childNodesArray: mediaNodesArray
+        )
+        
+        let mediaUploadNodesModified = nodeList.mnz_shouldProcessOnNodesUpdate(
+            forParentNode: container.mediaUploadNode,
+            childNodesArray: mediaNodesArray
+        )
+        
+        return cameraUploadNodesModified || mediaUploadNodesModified
     }
 }
