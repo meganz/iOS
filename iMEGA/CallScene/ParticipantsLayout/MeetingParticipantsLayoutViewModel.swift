@@ -375,7 +375,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             if isActiveCall() {
                 callUseCase.createActiveSessions()
             } else {
-                if chatRoom.chatType == .meeting {
+                if chatRoom.chatType == .meeting || chatRoom.chatType == .group {
                     invokeCommand?(.showWaitingForOthersMessage)
                 }
             }
