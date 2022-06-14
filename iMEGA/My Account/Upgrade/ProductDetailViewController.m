@@ -44,19 +44,19 @@
         case MEGAAccountTypeProI:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProI];
-            title = @"Pro I";
+            title = NSLocalizedString(@"Pro I", nil);
             break;
             
         case MEGAAccountTypeProII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProII];
-            title = @"Pro II";
+            title = NSLocalizedString(@"Pro II", nil);
             break;
             
         case MEGAAccountTypeProIII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProIII];
-            title = @"Pro III";
+            title = NSLocalizedString(@"Pro III", nil);
             break;
             
         default:

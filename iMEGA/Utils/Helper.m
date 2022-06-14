@@ -543,12 +543,12 @@
         [Helper apiURLChanged];
     }]];
     
-    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Staging:444" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Staging:444", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [Helper setApiURL:MEGAAPIEnvStaging444];
         [Helper apiURLChanged];
     }]];
     
-    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Sandbox3" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Sandbox3", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [Helper setApiURL:MEGAAPIEnvSandbox3];
         [Helper apiURLChanged];
     }]];
