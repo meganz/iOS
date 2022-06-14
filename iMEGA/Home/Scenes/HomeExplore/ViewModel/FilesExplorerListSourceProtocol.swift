@@ -6,6 +6,7 @@ protocol FilesExplorerListSourceDelegate: UIViewController {
     func shouldBeginMultipleSelectionInteraction()
     func didBeginMultipleSelectionInteraction()
     func didEndMultipleSelectionInteraction()
+    func download(node: MEGANode)
 }
 
 protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDelegate {

@@ -15,9 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Actions
 
 - (void)mnz_editTextFileInViewController:(UIViewController *)viewController;
-- (BOOL)mnz_downloadNode;
-- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api;
-- (BOOL)mnz_downloadNodeTopPriority;
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^ _Nullable)(MEGARequest *request))completion;
@@ -29,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
 - (void)mnz_restore;
 - (void)mnz_removeLink;
-- (void)mnz_saveToPhotos;
 - (void)mnz_sendToChatInViewController:(UIViewController *)viewController;
 - (void)mnz_moveInViewController:(UIViewController *)viewController;
 - (void)mnz_copyInViewController:(UIViewController *)viewController;

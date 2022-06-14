@@ -12,6 +12,7 @@ class ChatSharedItemsViewController: UIViewController {
     private lazy var messagesArray = [MEGAChatMessage]()
     
     private var requestedParticipantsMutableSet = Set<UInt64>()
+    private var cancelToken = MEGACancelToken()
 
     private lazy var cancelBarButton: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.cancel, style: .plain, target: self, action: #selector(cancelSelectTapped)
     )
@@ -131,8 +132,14 @@ class ChatSharedItemsViewController: UIViewController {
         guard let selectedMessages = selectedMessages() else {
             return
         }
-        
-        downloadNodes(selectedMessages.compactMap {$0.nodeList?.node(at: 0)})
+        var transfers = [CancellableTransfer]()
+        selectedMessages.forEach { message in
+            if let node = message.nodeList?.node(at: 0) {
+                transfers.append(CancellableTransfer(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, path: Helper.pathForOffline(), name: nil, appData: nil, priority: false, type: .downloadChat))
+            }
+        }
+        CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .downloadChat).start()
+        cancelSelectTapped()
     }
     
     @objc private func importTapped() {
@@ -225,13 +232,6 @@ class ChatSharedItemsViewController: UIViewController {
         let browserController = browserNavigation.viewControllers.first as! BrowserViewController
         browserController.selectedNodesArray = nodes
         browserController.browserAction = .import
-        
-        cancelSelectTapped()
-    }
-    
-    private func downloadNodes(_ nodes: [MEGANode]) {
-        SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: Strings.Localizable.downloadStarted)
-        nodes.forEach { $0.mnz_downloadNode() }
         
         cancelSelectTapped()
     }
@@ -475,10 +475,30 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             forwardMessages([message])
             
         case .saveToPhotos:
-            node.mnz_saveToPhotos()
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
+                return
+            }
+            
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+            cancelToken = MEGACancelToken()
+            
+            TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
+            
+            saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, cancelToken: cancelToken, completion: { error in
+                SVProgressHUD.dismiss()
+                if error != nil {
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
+            })
             
         case .download:
-            downloadNodes([node])
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
+                return
+            }
+            let transfer = CancellableTransfer(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat)
+            CancellableTransferRouter(presenter: self, transfers: [transfer], transferType: .downloadChat).start()
+            cancelSelectTapped()
             
         case .import:
             importNodes([node])

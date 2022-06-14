@@ -213,6 +213,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
             } else {
                 let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedNodesViewControllerID") as! ChatAttachedNodesViewController
                 chatAttachedNodesVC.message = megaMessage
+                chatAttachedNodesVC.chatId = chatRoom.chatId
                 navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
             }
             

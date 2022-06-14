@@ -32,6 +32,8 @@
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
+
 @end
 
 @implementation NodeVersionsViewController
@@ -264,8 +266,7 @@
     }
         
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        MEGANode *node = [self nodeForIndexPath:indexPath];
-        [node mnz_downloadNode];
+        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[[self nodeForIndexPath:indexPath]] presenter:self isFolderLink:NO];
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
@@ -348,13 +349,8 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     if (self.selectedNodesArray.count == 1) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
-        
-        [self.selectedNodesArray.firstObject mnz_downloadNode];
-        
+        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:NO];
         [self setEditing:NO animated:YES];
-        
-        [self.tableView reloadData];
     }
 }
 
@@ -437,8 +433,7 @@
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNode];
+            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
             break;
             
         case MegaNodeActionTypeRemove:
@@ -452,7 +447,8 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotos];
+            self.cancelToken = MEGACancelToken.alloc.init;
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
             break;
             
         case MegaNodeActionTypeExportFile:

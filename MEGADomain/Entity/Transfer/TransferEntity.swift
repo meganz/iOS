@@ -32,4 +32,5 @@ struct TransferEntity {
     let appData: String?
     let state: TransferStateEntity
     let priority: UInt64
+    let stage: TransferStageEntity
 }

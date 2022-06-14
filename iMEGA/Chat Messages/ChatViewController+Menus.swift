@@ -99,29 +99,23 @@ extension ChatViewController {
     }
     
     func downloadMessage(_ messages: [ChatMessage]) {
-        var downloading = false
-        
+        var transfers = [CancellableTransfer]()
         for message in messages {
-            let megaMessage =  message.message
-            
-            guard let nodelist = megaMessage.nodeList else { return }
-            
+            guard let nodelist = message.message.nodeList else { return }
+
             for index in 0..<nodelist.size.intValue {
                 var node = nodelist.node(at: index)
                 if chatRoom.isPreview {
                     node = sdk.authorizeNode(nodelist.node(at: index))
                 }
-                
                 if let node = node {
-                    Helper.downloadNode(node, folderPath: Helper.relativePathForOffline(), isFolderLink: false)
-                    downloading = true
+                    transfers.append(CancellableTransfer(handle: node.handle, messageId: message.message.messageId, chatId: chatRoom.chatId, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat))
                 }
             }
         }
-        
-        if downloading {
-            SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: Strings.Localizable.downloadStarted)
-        }
+        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+        CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .downloadChat).start()
     }
     
     func importMessage(_ messages: [ChatMessage]) {
@@ -178,8 +172,18 @@ extension ChatViewController {
                    let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
                     node = authorizedNode
                 }
+                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+                cancelToken = MEGACancelToken()
                 
-                node.mnz_saveToPhotos()
+                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
+                
+                saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId, cancelToken: cancelToken, completion: { error in
+                    SVProgressHUD.dismiss()
+                    if error != nil {
+                        SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                    }
+                })
             } else {
                 MEGALogDebug("Wrong Message type to be saved to album")
             }

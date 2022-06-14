@@ -109,19 +109,6 @@
       }
 }
 
-- (void)mnz_parseSavePhotosAndSetCoordinatesAppData {
-    [self enumerateAppDataTypeWithBlock:^(NSString * appDataType, NSString *appDataComponent) {
-        
-        if ([appDataType isEqualToString:@"SaveInPhotosApp"]) {
-            [self mnz_saveInPhotosApp];
-        }
-        
-        if ([appDataType isEqualToString:@"setCoordinates"]) {
-            [self mnz_setCoordinates:appDataComponent];
-        }
-    }];
-}
-
 - (void)mnz_parseChatAttachmentAppData {
     [self enumerateAppDataTypeWithBlock:^(NSString * appDataType, NSString *appDataComponent) {
         
@@ -137,17 +124,6 @@
         }
         
     }];
-}
-
-- (void)mnz_saveInPhotosApp {
-    [self mnz_setNodeCoordinates];
-    
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
-    if (!node) {
-        node = [self publicNode];
-    }
-    
-    [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]];
 }
 
 - (void)mnz_attachtToChatID:(NSString *)attachToChatID asVoiceClip:(BOOL)asVoiceClip {
@@ -195,25 +171,6 @@
         if (node) {
             NSString *nodeFilePath = [node mnz_voiceCachePath];
             [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
-        }
-    }
-}
-
-- (void)mnz_setNodeCoordinates {
-    if (self.fileName.mnz_isVisualMediaPathExtension) {
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
-        if (node.latitude && node.longitude) {
-            return;
-        }
-        
-        if (self.type == MEGATransferTypeDownload) {
-            NSString *coordinates = [[NSString new] mnz_appDataToSaveCoordinates:self.path.mnz_coordinatesOfPhotoOrVideo];
-            if (!coordinates.mnz_isEmpty) {
-                [self mnz_setCoordinates:coordinates];
-            }
-        } else {
-            [self mnz_parseSavePhotosAndSetCoordinatesAppData];
-            [self mnz_parseChatAttachmentAppData];
         }
     }
 }

@@ -67,6 +67,14 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     [[ShareAttachment attachmentsArray] addObject:shareAttachment];
 }
 
++ (void)addFolderURL:(NSURL *)url {
+    ShareAttachment *shareAttachment = [[ShareAttachment alloc] init];
+    shareAttachment.type = ShareAttachmentTypeFolder;
+    shareAttachment.name = [ShareAttachment suggestedNameForFileURL:url];
+    shareAttachment.content = url;
+    [[ShareAttachment attachmentsArray] addObject:shareAttachment];
+}
+
 #pragma mark - Naming
 
 + (NSString *)suggestedUniqueNameWithItemProvider:(NSItemProvider *)itemProvider {

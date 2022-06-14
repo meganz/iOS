@@ -43,6 +43,8 @@
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
+
 @end
 
 @implementation FileLinkViewController
@@ -326,10 +328,6 @@
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
-- (void)saveToPhotos {
-    [self.node mnz_saveToPhotos];
-}
-
 - (void)sendFileLinkToChat {
     UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:[NSBundle bundleForClass:SendToViewController.class]];
     SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
@@ -397,7 +395,8 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [self saveToPhotos];
+            self.cancelToken = MEGACancelToken.alloc.init;
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
             break;
             
         default:

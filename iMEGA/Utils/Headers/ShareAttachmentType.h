@@ -6,5 +6,6 @@ typedef NS_ENUM(NSUInteger, ShareAttachmentType) {
     ShareAttachmentTypeFile,
     ShareAttachmentTypeURL,
     ShareAttachmentTypeContact,
-    ShareAttachmentTypePlainText
+    ShareAttachmentTypePlainText,
+    ShareAttachmentTypeFolder,
 };

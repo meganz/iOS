@@ -18,6 +18,7 @@
 #import "MEGAConstants.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAStore.h"
 
 #import "CustomModalAlertViewController.h"

@@ -177,11 +177,7 @@ extension DocAndAudioListSource {
     }
 
     private func download(node: MEGANode) {
-        if node.mnz_downloadNode(),
-           let indexPath = indexPath(forNode: node) {
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-
+        delegate?.download(node: node)
         tableView.setEditing(false, animated: true)
     }
 

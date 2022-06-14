@@ -52,16 +52,22 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     //MARK: - U-R-MVVM Routing
     @objc func build() -> UIViewController {
         let sdk = MEGASdkManager.sharedMEGASdk()
-        let uploadUC = UploadFileUseCase(repo: UploadFileRepository(sdk: sdk))
-        let downloadFileRepository = DownloadFileRepository(sdk: sdk)
-        let downloadUC = DownloadFileUseCase(repo: downloadFileRepository)
+        let nodeRepository = NodeRepository(sdk: sdk)
+        let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
+        let uploadUC = UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.default)
+        let downloadUC = DownloadNodeUseCase(
+            downloadFileRepository: DownloadFileRepository(sdk: sdk),
+            offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
+            fileSystemRepository: fileSystemRepository,
+            nodeRepository: nodeRepository,
+            fileCacheRepository: FileCacheRepository.default)
         let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk, nodeHandle: nodeEntity?.handle))
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,
             textEditorMode: textEditorMode,
             uploadFileUseCase: uploadUC,
-            downloadFileUseCase: downloadUC,
+            downloadNodeUseCase: downloadUC,
             nodeActionUseCase: nodeActionUC,
             parentHandle: parentHandle,
             nodeEntity: nodeEntity
@@ -111,17 +117,13 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         baseViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func showActions(sender button: Any) {
-        guard let nodeHandle = nodeEntity?.handle,
-              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
-                  return
-              }
+    func showActions(nodeHandle: MEGAHandle, delegate: NodeActionViewControllerDelegate, sender button: Any) {
+        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+            return
+        }
         
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
-        let nodeActionViewController = NodeActionViewController(node: node,
-                                                                delegate: self,
-                                                                displayMode: displayMode,
-                                                                sender: button)
+        let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, sender: button)
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
@@ -138,20 +140,6 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         baseViewController?.dismiss(animated: true, completion: {
             self.presenter?.present(navigationController, animated: true, completion: nil)
         })
-    }
-}
-
-extension TextEditorViewRouter: NodeActionViewControllerDelegate {
-    
-    //MARK: - NodeActionViewControllerDelegate
-    private func editTextFile() {
-        guard let vc = baseViewController as? TextEditorViewController else { return }
-        vc.executeCommand(.editFile)
-    }
-    
-    private func downloadToOffline() {
-        guard let vc = baseViewController as? TextEditorViewController else { return }
-        vc.executeCommand(.downloadToOffline)
     }
     
     func importNode(nodeHandle: MEGAHandle?) {
@@ -171,28 +159,31 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         }
     }
     
-    private func sendToChat(nodeHandle: MEGAHandle?) {
-        guard let vc = baseViewController,
-              let nodeHandle = nodeHandle,
-              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+    func exportFile(from node: NodeEntity, sender button: Any) {
+        guard let vc = baseViewController as? TextEditorViewController else { return }
+        ExportFileRouter(presenter: vc, sender: button).export(node: node)
+    }
+    
+    func showDownloadTransfer(node: NodeEntity) {
+        guard let navigationController = navigationController else {
+            return
+        }
+        
+        let transfer = CancellableTransfer(handle: node.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile, type: .download)
+        
+        CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download, isFolderLink: false).start()
+    }
+    
+    func sendToChat(node: MEGANode) {
+        guard let vc = baseViewController else {
             return
         }
         node.mnz_sendToChat(in: vc)
     }
     
-    private func exportFile() {
-        guard let vc = baseViewController as? TextEditorViewController else { return }
-        vc.executeCommand(.exportFile)
-    }
-    
     func restoreTextFile(node: MEGANode) {
         dismissTextEditorVC()
         node.mnz_restore()
-    }
-
-    func exportFile(from node: NodeEntity, sender button: Any) {
-        guard let vc = baseViewController as? TextEditorViewController else { return }
-        ExportFileRouter(presenter: vc, sender: button).export(node: node)
     }
 
     func viewInfo(node: MEGANode) {
@@ -225,26 +216,4 @@ extension TextEditorViewRouter: NodeActionViewControllerDelegate {
         
         node.mnz_removeLink()
     }
-    
-    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
-        let nodeHandle: MEGAHandle = node.handle
-        switch action {
-        case .editTextFile: editTextFile()
-        case .download: downloadToOffline()
-        case .import: importNode(nodeHandle: nodeHandle)
-        case .sendToChat: sendToChat(nodeHandle: nodeHandle)
-        case .exportFile: exportFile()
-        case .restore: restoreTextFile(node: node)
-        case .info: viewInfo(node: node)
-        case .viewVersions: viewVersions(node: node)
-        case .remove: removeTextFile(node: node)
-        case .shareLink, .manageLink:
-            shareLink(from: nodeHandle)
-        case .removeLink:
-            removeLink(from: nodeHandle)
-        default:
-            break
-        }
-    }
 }
-

@@ -35,6 +35,8 @@
 
 @property (nonatomic) NSDate *lastProgressChange;
 
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
+
 @end
 
 @implementation DocumentPickerViewController
@@ -342,7 +344,8 @@
                     MEGALogError(@"Error creating destination folder");
                 }
             }
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
+            self.cancelToken = MEGACancelToken.alloc.init;
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:documentFilePath fileName:nil appData:nil startFirst:NO cancelToken:self.cancelToken delegate:self];
         } else {
             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileTooBigMessage_open", @"Error message shown when you try to open something bigger than the free space in your device")];
         }
