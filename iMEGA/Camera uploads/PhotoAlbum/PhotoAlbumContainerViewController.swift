@@ -161,8 +161,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            hostingController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             hostingController.view.heightAnchor.constraint(equalToConstant: 38)
         ])
     }
@@ -173,8 +173,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             self.pageController.view.topAnchor.constraint(equalTo: hostingController.view.bottomAnchor, constant: 2),
-            self.pageController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.pageController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.pageController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
