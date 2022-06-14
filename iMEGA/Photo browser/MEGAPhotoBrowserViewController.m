@@ -326,7 +326,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
         default: {
             NSString *format = NSLocalizedString(@"media.photo.browser.indexOfTotalFiles", @"The index of file from the total number of files. e.g. 1 of 1 file, 1 of 3 files");
-            subtitle = [NSString stringWithFormat:format, (unsigned long)newIndex+1, (unsigned long)self.mediaNodes.count];
+            NSString *subtitleString = [NSString stringWithFormat:format, (unsigned long)self.mediaNodes.count];
+            subtitle = [subtitleString stringByReplacingOccurrencesOfString:@"[A]"
+                                                      withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
             break;
         }
     }
