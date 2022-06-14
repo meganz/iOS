@@ -50,6 +50,7 @@ extension TransferEntity {
         self.appData = transfer.appData
         self.state = TransferStateEntity.init(transferState: transfer.state)!
         self.priority = transfer.priority
+        self.stage = TransferStageEntity.init(transferStage: transfer.stage) ?? .none
     }
     
     func toMEGATransfer(in sdk: MEGASdk) -> MEGATransfer? {

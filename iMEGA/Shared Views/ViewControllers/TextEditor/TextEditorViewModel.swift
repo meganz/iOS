@@ -26,10 +26,18 @@ protocol TextEditorViewRouting: Routing {
     func chooseParentNode(completion: @escaping (MEGAHandle) -> Void)
     func dismissTextEditorVC()
     func dismissBrowserVC()
-    func showActions(sender button: Any)
+    func showActions(nodeHandle: MEGAHandle, delegate: NodeActionViewControllerDelegate, sender button: Any)
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool)
     func importNode(nodeHandle: MEGAHandle?)
     func exportFile(from node: NodeEntity, sender button: Any)
+    func showDownloadTransfer(node: NodeEntity)
+    func sendToChat(node: MEGANode)
+    func restoreTextFile(node: MEGANode)
+    func viewInfo(node: MEGANode)
+    func viewVersions(node: MEGANode)
+    func removeTextFile(node: MEGANode)
+    func shareLink(from nodeHandle: MEGAHandle)
+    func removeLink(from nodeHandle: MEGAHandle)
 }
 
 final class TextEditorViewModel: ViewModelType {
@@ -44,10 +52,7 @@ final class TextEditorViewModel: ViewModelType {
         case editFile
         case updateProgressView(progress: Float)
         case showError(message: String)
-        case downloadToOffline
-        case startDownload(status: String)
         case showDiscardChangeAlert
-        case exportFile
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -57,17 +62,19 @@ final class TextEditorViewModel: ViewModelType {
     private var parentHandle: MEGAHandle?
     private var nodeEntity: NodeEntity?
     private var uploadFileUseCase: UploadFileUseCaseProtocol
-    private var downloadFileUseCase: DownloadFileUseCaseProtocol
+    private var downloadNodeUseCase: DownloadNodeUseCaseProtocol
     private var nodeActionUseCase: NodeActionUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     
+    private var cancelToken = MEGACancelToken()
+
     init(
         router: TextEditorViewRouting,
         textFile: TextFile,
         textEditorMode: TextEditorMode,
         uploadFileUseCase: UploadFileUseCaseProtocol,
-        downloadFileUseCase: DownloadFileUseCaseProtocol,
+        downloadNodeUseCase: DownloadNodeUseCaseProtocol,
         nodeActionUseCase: NodeActionUseCaseProtocol,
         parentHandle: MEGAHandle? = nil,
         nodeEntity: NodeEntity? = nil
@@ -76,7 +83,7 @@ final class TextEditorViewModel: ViewModelType {
         self.textFile = textFile
         self.textEditorMode = textEditorMode
         self.uploadFileUseCase = uploadFileUseCase
-        self.downloadFileUseCase = downloadFileUseCase
+        self.downloadNodeUseCase = downloadNodeUseCase
         self.nodeActionUseCase = nodeActionUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
@@ -101,7 +108,8 @@ final class TextEditorViewModel: ViewModelType {
         case .editAfterOpen:
             editAfterOpen()
         case .showActions(sender: let button):
-            router.showActions(sender: button)
+            guard let handle = nodeEntity?.handle else { return }
+            router.showActions(nodeHandle: handle, delegate: self, sender: button)
         case .cancelText(let content):
             cancelText(content: content)
         case .cancel:
@@ -173,7 +181,7 @@ final class TextEditorViewModel: ViewModelType {
         let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
         do {
             try content.write(toFile: tempPath, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
-            uploadFileUseCase.uploadFile(withLocalPath: tempPath, toParent: parentHandle) { (result) in
+            uploadFileUseCase.uploadFile(withLocalPath: tempPath, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, cancelToken: cancelToken, start: nil, update: nil) { result in
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
                 }
@@ -235,13 +243,16 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func downloadToOffline() {
-        invokeCommand?(.startDownload(status: Strings.Localizable.downloadStarted))
-        nodeActionUseCase.downloadToOffline()
+        guard let nodeEntity = nodeEntity else {
+            return
+        }
+        
+        router.showDownloadTransfer(node: nodeEntity)
     }
     
     private func downloadToTempFolder() {
         guard let nodeHandle = nodeEntity?.handle else { return }
-        downloadFileUseCase.downloadToTempFolder(nodeHandle: nodeHandle, appData: nil) { (transferEntity) in
+        downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil, cancelToken: cancelToken) { (transferEntity) in
             let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
             self.invokeCommand?(.updateProgressView(progress: percentage))
         } completion: { (result) in
@@ -339,5 +350,36 @@ final class TextEditorViewModel: ViewModelType {
         }
         
         router.exportFile(from: nodeEntity, sender: sender)
+    }
+}
+
+extension TextEditorViewModel: NodeActionViewControllerDelegate {
+    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
+        switch action {
+        case .editTextFile:
+            editFile(shallUpdateContent: false)
+        case .download:
+            router.showDownloadTransfer(node: NodeEntity(node: node))
+        case .import:
+            router.importNode(nodeHandle: node.handle)
+        case .sendToChat:
+            router.sendToChat(node: node)
+        case .exportFile:
+            exportFile(sender: sender)
+        case .restore:
+            router.restoreTextFile(node: node)
+        case .info:
+            router.viewInfo(node: node)
+        case .viewVersions:
+            router.viewVersions(node: node)
+        case .remove:
+            router.removeTextFile(node: node)
+        case .shareLink, .manageLink:
+            router.shareLink(from: node.handle)
+        case .removeLink:
+            router.removeLink(from: node.handle)
+        default:
+            break
+        }
     }
 }

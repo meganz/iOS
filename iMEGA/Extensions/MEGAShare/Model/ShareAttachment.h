@@ -16,5 +16,6 @@
 + (void)addURL:(NSURL *)url;
 + (void)addContact:(NSData *)vCardData;
 + (void)addPlainText:(NSString *)text;
++ (void)addFolderURL:(NSURL *)url;
 
 @end

@@ -14,13 +14,6 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
         return NodeAccessTypeEntity(shareAccess: sdk.accessLevel(for: node)) ?? .unknown
     }
     
-    func downloadToOffline() {
-        guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
-            return
-        }
-        node.mnz_downloadNode()
-    }
-    
     func labelString(label: NodeLabelTypeEntity) -> String {
         let nodeLabel = MEGANodeLabel(nodeLabelTypeEntity: label) ?? .unknown
         return MEGANode.string(for: nodeLabel) ?? "" + "Small"

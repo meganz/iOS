@@ -32,7 +32,17 @@ final class HomeRecentActionViewModel:
         devicePermissionUseCase.getAlbumAuthorizationStatus { [weak self] photoAuthorization in
             switch photoAuthorization {
             case .authorized:
-                node.mnz_saveToPhotos()
+                guard let self = self else { return }
+                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
+                self.cancelToken = MEGACancelToken()
+                self.saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node), cancelToken: self.cancelToken) { error in
+                    SVProgressHUD.dismiss()
+                    if error != nil {
+                        SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                    }
+                }
+                
             default:
                 guard let self = self else { return }
                 self.error = .photos
@@ -93,13 +103,19 @@ final class HomeRecentActionViewModel:
 
     private let nodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol
 
+    private let saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol
+
     init(
         devicePermissionUseCase: DevicePermissionCheckingProtocol,
-        nodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol
+        nodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol,
+        saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol
     ) {
         self.devicePermissionUseCase = devicePermissionUseCase
         self.nodeFavouriteActionUseCase = nodeFavouriteActionUseCase
+        self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
     }
+    
+    private var cancelToken = MEGACancelToken()
 }
 
 // MARK: - View Error

@@ -252,10 +252,6 @@
     return destinationFilePath;
 }
 
-+ (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path {
-    return [self pathForNode:node searchPath:path directory:@""];
-}
-
 + (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory {
     return [self pathForHandle:node.base64Handle inSharedSandboxCacheDirectory:directory];
 }
@@ -321,38 +317,6 @@
     return YES;
 }
 
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
-    [self downloadNode:node folderPath:folderPath isFolderLink:isFolderLink isTopPriority:NO];
-}
-
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink isTopPriority:(BOOL)isTopPriority {
-    // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
-    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self relativePathForOffline]]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderInboxError", nil)];
-        return;
-    }
-    
-    MEGASdk *api;
-    if (isFolderLink) {
-        api = [MEGASdkManager sharedMEGASdkFolder];
-        node = [api authorizeNode:node];
-    } else {
-        api = [MEGASdkManager sharedMEGASdk];
-    }
-    
-    NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
-    NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
-    if (isTopPriority) {
-        [MEGASdkManager.sharedMEGASdk startDownloadTopPriorityWithNode:node localPath:relativeFilePath appData:nil];
-    } else {
-        [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:relativeFilePath];
-    }
-}
-
-+ (void)downloadNodeTopPriority:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
-    [self downloadNode:node folderPath:folderPath isFolderLink:isFolderLink isTopPriority:YES];
-}
-
 + (void)copyNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
     NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
     if (replaceRange.location != NSNotFound) {
@@ -388,7 +352,7 @@
     return uploadingNodes;
 }
 
-+ (void)startUploadTransferWithTransferRecordDTO:(TransferRecordDTO *)transferRecordDTO {
++ (void)startUploadTransferWithTransferRecordDTO:(TransferRecordDTO *)transferRecordDTO andCancelToken:(MEGACancelToken *)cancelToken {
     PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[transferRecordDTO.localIdentifier]
                                                       options:nil].firstObject;
     
@@ -411,9 +375,9 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
+            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:cancelToken];
         } else {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
+            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:cancelToken];
         }
         
         if (transferRecordDTO.localIdentifier) {
@@ -423,13 +387,13 @@
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", NSLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
-        [Helper startPendingUploadTransferIfNeeded];
+        [Helper startPendingUploadTransferIfNeededWithCancelToken:cancelToken];
     }];
     
     [processAsset prepare];
 }
 
-+ (void)startPendingUploadTransferIfNeeded {
++ (void)startPendingUploadTransferIfNeededWithCancelToken:(MEGACancelToken *)cancelToken {
     BOOL allUploadTransfersPaused = YES;
     
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
@@ -446,7 +410,7 @@
     if (allUploadTransfersPaused) {
         TransferRecordDTO *transferRecordDTO = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
         if (transferRecordDTO != nil) {
-            [self startUploadTransferWithTransferRecordDTO:transferRecordDTO];
+            [self startUploadTransferWithTransferRecordDTO:transferRecordDTO andCancelToken:cancelToken];
         }
     }
 }

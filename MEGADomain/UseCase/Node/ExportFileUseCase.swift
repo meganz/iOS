@@ -30,6 +30,8 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     private let thumbnailRepository: R
     private let fileSystemRepository: F
     
+    private let cancelToken = MEGACancelToken()
+    
     init(downloadFileRepository: T,
          offlineFilesRepository: U,
          fileCacheRepository: V,
@@ -61,7 +63,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     
     private func offlineUrl(for base64Handle: MEGABase64Handle) -> URL? {
         guard let offlinePath = offlineFilesRepository.offlineFile(for: base64Handle)?.localPath else { return nil }
-        return URL(fileURLWithPath: offlineFilesRepository.offlinePath.append(pathComponent: offlinePath))
+        return URL(fileURLWithPath: offlineFilesRepository.relativeOfflinePath.append(pathComponent: offlinePath))
     }
     
     private func processDownloadThenShareResult(result: Result<TransferEntity, TransferErrorEntity>, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
@@ -94,7 +96,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         }
         let appDataToExportFile = NSString().mnz_appDataToExportFile()
         let path = node.name.mnz_isImagePathExtension ? fileCacheRepository.cachedOriginalImageURL(for: node).path : fileCacheRepository.tempFileURL(for: node).path
-        downloadFileRepository.download(nodeHandle: node.handle, to: path, appData: appDataToExportFile) { result in
+        downloadFileRepository.download(nodeHandle: node.handle, to: path, appData: appDataToExportFile, cancelToken: cancelToken) { result in
             processDownloadThenShareResult(result: result, completion: completion)
         }
     }

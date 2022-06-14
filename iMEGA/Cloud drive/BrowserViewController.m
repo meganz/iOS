@@ -533,6 +533,14 @@
     self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
+#ifndef MNZ_PICKER_EXTENSION
+- (CancellableTransfer *)transferToUpload {
+    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
+
+    return [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle path:self.localpath name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload];
+}
+#endif
+
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
@@ -622,19 +630,17 @@
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
     if (self.browserAction == BrowserActionOpenIn) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            NSError *error = nil;
-            NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:self.localpath.lastPathComponent];
-            if (self.localpath != nil && [[NSFileManager defaultManager] moveItemAtPath:self.localpath toPath:localFilePath error:&error]) {
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"uploadStarted_Message", @"Message shown when uploading a file from the Open In Browser")];
-                
-                NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
-                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
-            } else {
-                MEGALogError(@"Move item at path failed with error: %@", error);
-                NSString *status = [NSString stringWithFormat:@"Move item failed with error %@", error];
-                [SVProgressHUD showErrorWithStatus:status];
-            }
-            
+#ifdef MAIN_APP_TARGET
+            [CancellableTransferRouterOCWrapper.alloc.init
+             uploadFiles:@[[self transferToUpload]]
+             presenter:UIApplication.mnz_visibleViewController
+             type:CancellableTransferTypeUpload];
+#elif MNZ_SHARE_EXTENSION
+            [ShareExtensionCancellableTransferRouterOCWrapper.alloc.init
+             uploadFiles:@[[self transferToUpload]]
+             toParent:self.parentNode.handle
+             presenter:UIApplication.mnz_visibleViewController];
+#endif
             [self dismissAndSelectNodesIfNeeded:NO];
         }
     } else if (self.browserAction == BrowserActionShareExtension

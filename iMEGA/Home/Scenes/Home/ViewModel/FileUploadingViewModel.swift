@@ -47,11 +47,11 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromSourceItems() -> [FileUploadingSourceItem] {
-        return uploadFilesUseCase.uploadOptions().map { source in
+        return FileUploadingSourceItem.Source.allCases.map { source in
             switch source {
             case .photos: return FileUploadingSourceItem(source: .photos)
             case .textFile: return FileUploadingSourceItem(source: .textFile)
-            case .camera: return FileUploadingSourceItem(source: .capture)
+            case .capture: return FileUploadingSourceItem(source: .capture)
             case .imports: return FileUploadingSourceItem(source: .imports)
             case .documentScan: return FileUploadingSourceItem(source: .documentScan)
             }
@@ -85,22 +85,14 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
             switch devicePermissionRequestResult {
             case .failure(let error): self.error = error
             case .success:
-                let selectionHandler: (String, MEGANode) -> Void = { [weak self] filePath, targetNode in
-                    guard let self = self else { return }
-                    self.uploadFile(fromFilePath: filePath, to: targetNode)
-                }
-                self.router.upload(from: .camera(selectionHandler))
+                self.router.upload(from: .camera)
             }
             self.notifyUpdate?(self.outputs)
         }
     }
 
     func didTapUploadFromImports() {
-        let selectionHandler: ([URL], MEGANode) -> Void = { [weak self] urls, targetNode in
-            guard let self = self else { return }
-            urls.forEach { self.uploadFile(fromURL: $0, to: targetNode) }
-        }
-        router.upload(from: .imports(selectionHandler))
+        router.upload(from: .imports)
     }
 
     func didTapUploadFromDocumentScan() {
@@ -117,30 +109,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     private func uploadFiles(fromPhotoAssets assets: [PHAsset], to parentNode: MEGANode) {
-        do {
-            try uploadFilesUseCase.upload(
-                photoIdentifiers: assets.map(\.localIdentifier),
-                to: parentNode.handle
-            )
-        } catch {}
-    }
-
-    private func uploadFile(fromURL url: URL, to parentNode: MEGANode) {
-        do {
-            try uploadFilesUseCase.upload(from: url, to: parentNode.handle)
-        } catch {}
-    }
-
-    func uploadFile(fromFilePath filePath: String, to node: MEGANode) {
-        do {
-            try uploadFilesUseCase.uploadFile(fromFilePath: filePath, to: node.handle)
-        } catch {}
-    }
-
-    func uploadFile(fromSelectedImages images: [UIImage], to node: MEGANode) {
-        do {
-            try uploadFilesUseCase.uploadFile(fromSelectedImages: images, to: node.handle)
-        } catch {}
+        uploadPhotoAssetsUseCase.upload(photoIdentifiers: assets.map(\.localIdentifier), to: parentNode.handle)
     }
 
     private func notifyView(of error: DevicePermissionDeniedError) {
@@ -175,19 +144,19 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     // MARK: - Use Cases
 
-    private let uploadFilesUseCase: HomeUploadFilesUseCaseProtocol
+    private let uploadPhotoAssetsUseCase: UploadPhotoAssetsUseCaseProtocol
 
     private let devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol
 
     private let reachabilityUseCase: ReachabilityUseCaseProtocol
 
     init(
-        uploadFilesUseCase: HomeUploadFilesUseCaseProtocol,
+        uploadFilesUseCase: UploadPhotoAssetsUseCaseProtocol,
         devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol,
         reachabilityUseCase: ReachabilityUseCaseProtocol,
         router: FileUploadingRouter
     ) {
-        self.uploadFilesUseCase = uploadFilesUseCase
+        self.uploadPhotoAssetsUseCase = uploadFilesUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
         self.reachabilityUseCase = reachabilityUseCase
         self.router = router
@@ -223,7 +192,7 @@ struct FileUploadingSourceItem {
 
     let source: Source
 
-    enum Source {
+    enum Source: CaseIterable {
         case photos
         case textFile
         case capture

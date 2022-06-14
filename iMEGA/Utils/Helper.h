@@ -25,8 +25,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
 
-+ (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path;
-
 + (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
 /// Return a path in cache shared sandbox including base64 node handle as parent folder (eg xxx/Caches/directory/base64Handle/nodeName)
 /// @param node MEGANode used to get the path
@@ -39,12 +37,8 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 #pragma mark - Utils for transfers
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink isTopPriority:(BOOL)isTopPriority;
-+ (void)downloadNodeTopPriority:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
-
 + (NSMutableArray *)uploadingNodes;
-+ (void)startPendingUploadTransferIfNeeded;
++ (void)startPendingUploadTransferIfNeededWithCancelToken:(MEGACancelToken *)cancelToken;
 
 #pragma mark - Utils
 

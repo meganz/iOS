@@ -1,7 +1,6 @@
 // MARK: - Use case protocol -
 protocol NodeActionUseCaseProtocol {
     func nodeAccessLevel() -> NodeAccessTypeEntity
-    func downloadToOffline()
     func labelString(label: NodeLabelTypeEntity) -> String
     func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int)
     func hasVersions() -> Bool
@@ -19,10 +18,6 @@ struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseCaseProt
     
     func nodeAccessLevel() -> NodeAccessTypeEntity {
         repo.nodeAccessLevel()
-    }
-    
-    func downloadToOffline() {
-        repo.downloadToOffline()
     }
     
     func labelString(label: NodeLabelTypeEntity) -> String {

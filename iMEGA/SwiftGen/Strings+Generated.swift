@@ -3965,6 +3965,26 @@ public enum Strings {
         public static let quotaExceeded = Strings.tr("Localizable", "transfer.storage.quotaExceeded")
       }
     }
+    public enum Transfers {
+      public enum Cancellable {
+        /// Cancel Transfer
+        public static let cancel = Strings.tr("Localizable", "transfers.cancellable.cancel")
+        /// Interrupting the transfer process may render some of the items incomplete.
+        public static let confirmCancel = Strings.tr("Localizable", "transfers.cancellable.confirmCancel")
+        /// Dismiss
+        public static let dismiss = Strings.tr("Localizable", "transfers.cancellable.dismiss")
+        /// Please do not close the application.
+        public static let donotclose = Strings.tr("Localizable", "transfers.cancellable.donotclose")
+        /// Proceed
+        public static let proceed = Strings.tr("Localizable", "transfers.cancellable.proceed")
+        /// Scanning...
+        public static let scanning = Strings.tr("Localizable", "transfers.cancellable.scanning")
+        /// Cancel transfers
+        public static let title = Strings.tr("Localizable", "transfers.cancellable.title")
+        /// Transfer cancelled
+        public static let trasnferCancelled = Strings.tr("Localizable", "transfers.cancellable.trasnferCancelled")
+      }
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

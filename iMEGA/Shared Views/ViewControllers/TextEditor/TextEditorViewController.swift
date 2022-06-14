@@ -70,15 +70,8 @@ extension TextEditorViewController: ViewType {
             SVProgressHUD.dismiss()
         case .showError(let error):
             SVProgressHUD.showError(withStatus: error)
-        case .startDownload(let status):
-            startDownload(status: status)
-        case .downloadToOffline:
-            viewModel.dispatch(.downloadToOffline)
         case .showDiscardChangeAlert:
             showDiscardChangeAlert()
-        case .exportFile:
-            guard let exportFileBarButtonItem = toolbarItems?.last else { return }
-            exportFileTapped(button: exportFileBarButtonItem)
         }
     }
     
@@ -263,12 +256,6 @@ extension TextEditorViewController: ViewType {
     private func startLoading() {
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()
-    }
-    
-    private func startDownload(status: String) {
-        SVProgressHUD.setDefaultMaskType(.none)
-        SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: status)
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
     }
     
     private func showDiscardChangeAlert() {

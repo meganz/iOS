@@ -11,7 +11,8 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     
     var currentNode: MEGANode?
     weak var messagesCollectionView: MessagesCollectionView?
-    
+    let cancelToken = MEGACancelToken()
+
     open var waveView: UIImageView = {
         let waveView = UIImageView(image: Asset.Images.Chat.Wave.waveform0000.image)
         waveView.animationDuration = 1
@@ -122,7 +123,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
             let nodePath = currentNode.mnz_voiceCachePath()
             if !FileManager.default.fileExists(atPath: nodePath) {
                 let appData = NSString().mnz_appDataToDownloadAttach(toMessageID: megaMessage.messageId)
-                MEGASdkManager.sharedMEGASdk().startDownloadTopPriority(with: currentNode, localPath: nodePath, appData: appData, delegate: MEGAStartDownloadTransferDelegate(start: nil, progress: nil, completion: nil, onError: nil))
+                MEGASdkManager.sharedMEGASdk().startDownloadNode(currentNode, localPath: nodePath, fileName: nil, appData: appData, startFirst: true, cancelToken: cancelToken)
                 configureLoadingView()
             } else {
                 configureLoadedView()

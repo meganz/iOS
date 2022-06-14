@@ -66,6 +66,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
+
 @end
 
 @implementation MEGAPhotoBrowserViewController
@@ -100,7 +102,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.modalPresentationCapturesStatusBarAppearance = YES;
     
     self.currentIndex = self.preferredIndex;
-    
+    self.cancelToken = MEGACancelToken.alloc.init;
     self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     
@@ -455,6 +457,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     return NO;
 }
 
+- (void)saveToPhotos:(MEGANode *)node {
+    self.cancelToken = MEGACancelToken.alloc.init;
+    [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -677,7 +684,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             MEGAStartDownloadTransferDelegate *delegate =[[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:transferProgress completion:transferCompletion onError:nil];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             
-            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath fileName:nil appData:nil startFirst:NO cancelToken:self.cancelToken delegate:delegate];
             
             break;
         }
@@ -805,7 +812,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (node == nil) {
         return;
     }
-    [node mnz_saveToPhotos];
+    [self saveToPhotos:node];
 }
 
 - (IBAction)didPressForwardbarButton:(UIBarButtonItem *)sender {
@@ -869,7 +876,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            [node mnz_saveToPhotos];
+            [self saveToPhotos:node];
             break;
             
         default:
@@ -1135,8 +1142,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     break;
                     
                 default:
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                    [node mnz_downloadNodeWithApi:self.api];
+                    [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
                     break;
             }
             break;
@@ -1216,7 +1222,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotos];
+            [self saveToPhotos:node];
             break;
             
         case MegaNodeActionTypeShareLink:

@@ -40,7 +40,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     @objc var docs: [UIImage]?
     @objc var chatRoom: MEGAChatRoom?
     var charactersNotAllowed: Bool = false
-    
+
     @IBOutlet weak var sendButton: UIBarButtonItem!
     
     var originalFileName = Strings.Localizable.CloudDrive.ScanDocument.defaultName(NSDate().mnz_formattedDefaultNameForMedia())
@@ -352,12 +352,10 @@ extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellD
 
 extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegate {
     func upload(toParentNode parentNode: MEGANode) {
-        let paths = exportScannedDocs()
-        paths.forEach { (path) in
-            let appData = NSString().mnz_appData(toSaveCoordinates: path.mnz_coordinatesOfPhotoOrVideo() ?? "")
-            MEGASdkManager.sharedMEGASdk().startUpload(withLocalPath: path, parent: parentNode, appData: appData, isSourceTemporary: true)
+        dismiss(animated: true) {
+            let transfers = self.exportScannedDocs().map { CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, path: $0, name: nil, appData: NSString().mnz_appData(toSaveCoordinates: $0.mnz_coordinatesOfPhotoOrVideo() ?? ""), priority: false, isFile: true, type: .upload) }
+            CancellableTransferRouter(presenter: UIApplication.mnz_presentingViewController(), transfers: transfers, transferType: CancellableTransferType.upload).start()
         }
-        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -396,7 +394,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                     }
                     completionCounter = completionCounter + 1
                 }
-                MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: path, parent: myChatFilesFolderNode, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
+                MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: path, parent: myChatFilesFolderNode, appData: appData, isSourceTemporary: true, fileName: nil, delegate: startUploadTransferDelegate!)
             }
         }
         dismiss(animated: true, completion: nil)

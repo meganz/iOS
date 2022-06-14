@@ -590,8 +590,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             for (PHAsset *asset in assets) {
                 [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
             }
-            
-            [Helper startPendingUploadTransferIfNeeded];
+            self.cancelToken = MEGACancelToken.alloc.init;
+            [Helper startPendingUploadTransferIfNeededWithCancelToken:self.cancelToken];
         }
     }];
     MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];
@@ -1309,20 +1309,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-    
-    for (MEGANode *node in self.selectedNodesArray) {
-        if ([node mnz_downloadNode]) {
-            [self.cdTableView.tableView reloadData];
-        } else {
-            return;
-        }
-    }
-    
+    [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:NO];
     [self setEditMode:NO];
-    
-    [self reloadData];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
@@ -1389,38 +1378,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
     if (controller.documentPickerMode == UIDocumentPickerModeImport) {
+        NSMutableArray *transfers = [NSMutableArray<CancellableTransfer *> new];
         for (NSURL* url in urls) {
-            NSError *error = nil;
-            NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:url.lastPathComponent];
-            if (![[NSFileManager defaultManager] moveItemAtPath:[url path] toPath:localFilePath error:&error]) {
-                MEGALogError(@"Move item at path failed with error: %@", error);
-            }
-            
-            NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localFilePath];
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
-            
-            if (node.parentHandle == self.parentNode.handle) {
-                [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];
-                
-                NSString *alertMessage = NSLocalizedString(@"fileExistAlertController_Message", nil);
-                
-                NSString *localNameString = [NSString stringWithFormat:@"%@", [url lastPathComponent]];
-                NSString *megaNameString = [NSString stringWithFormat:@"%@", node.name];
-                alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:localNameString];
-                alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[B]" withString:megaNameString];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *alertController = [UIAlertController
-                                                          alertControllerWithTitle:nil
-                                                          message:alertMessage
-                                                          preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
-                    [self presentViewController:alertController animated:YES completion:nil];
-                });
-            }
+            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:url.path.mnz_coordinatesOfPhotoOrVideo];
+            [transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle path:url.path name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload]];
         }
+        [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:transfers presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
     }
 }
 
@@ -1497,11 +1460,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-            if ([node mnz_downloadNode]) {
-                [self.cdTableView.tableView reloadData];
-            }
+            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
             break;
             
         case MegaNodeActionTypeCopy:
@@ -1606,7 +1566,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotos];
+            self.cancelToken = MEGACancelToken.alloc.init;
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
             break;
             
         case MegaNodeActionTypeSendToChat:

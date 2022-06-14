@@ -236,14 +236,6 @@
     [viewController.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
-- (BOOL)mnz_downloadNode {
-    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk]];
-}
-
-- (BOOL)mnz_downloadNodeTopPriority {
-    return [self mnz_downloadNodeWithApi:[MEGASdkManager sharedMEGASdk] isTopPriority:YES];
-}
-
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController {
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
     
@@ -284,47 +276,6 @@
     
     ActionSheetViewController *labelsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:viewController.navigationItem.rightBarButtonItems.firstObject];
     [viewController presentViewController:labelsActionSheet animated:YES completion:nil];
-}
-
-- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api {
-    return [self mnz_downloadNodeWithApi:api isTopPriority:NO];
-}
-
-- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api isTopPriority:(BOOL)isTopPriority {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
-        if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink isTopPriority:isTopPriority];
-            return YES;
-        } else {
-            return NO;
-        }
-    } else {
-        return NO;
-    }
-}
-
-- (void)mnz_saveToPhotos {
-    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
-        if (granted) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
-            [SVProgressHUD dismissWithDelay:1.0];
-            NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
-            NSString *temporaryFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:temporaryPath];
-            if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
-                [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
-            } else if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                NSString *downloadsDirectory = [NSFileManager.defaultManager downloadsDirectory];
-                downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
-                NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
-                NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
-                [MEGASdkManager.sharedMEGASdk startDownloadNode:self localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
-            }
-        } else {
-            [DevicePermissionsHelper alertPhotosPermission];
-        }
-    }];
 }
 
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController {
@@ -539,15 +490,9 @@
 
 - (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            return;
-        }
-
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink];
-            
             [viewController dismissViewControllerAnimated:YES completion:^{
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
+                [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self] presenter:viewController.presentingViewController isFolderLink:isFolderLink];
             }];
         } else {
             if (isFolderLink) {
@@ -1046,47 +991,6 @@
         
         rightButtonAction.enabled = enableRightButton;
     }
-}
-
-- (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
-    if (self.name.mnz_isVideoPathExtension) {
-        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
-            UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
-        } else {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
-            MEGALogError(@"The video can be saved to the Camera Roll album");
-        }
-    }
-    
-    if (self.name.mnz_isImagePathExtension) {
-        NSURL *imageURL = [NSURL fileURLWithPath:path];
-        
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
-            [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
-            
-        } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-            [NSFileManager.defaultManager mnz_removeItemAtPath:path];
-            if (nserror) {
-                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
-                MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%td)", nserror.localizedDescription, nserror.domain, nserror.code);
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
-            }
-            [SVProgressHUD dismissWithDelay:1.0];
-        }];
-    }
-}
-
-- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    if (error) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
-        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%td)", error.localizedDescription, error.domain, error.code);
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:NSLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
-        [NSFileManager.defaultManager mnz_removeItemAtPath:videoPath];
-    }
-    [SVProgressHUD dismissWithDelay:1.0];
 }
 
 @end

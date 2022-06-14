@@ -65,18 +65,10 @@ class ExplorerBaseViewController: UIViewController {
               !selectedNodes.isEmpty else {
                   return
               }
-        
+
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-        
-        SVProgressHUD.show(Asset.Images.Hud.hudDownload.image,
-                           status: Strings.Localizable.downloadStarted)
-        
-        selectedNodes.forEach { node in
-            if node.mnz_downloadNode() {
-                downloadStarted(forNode: node)
-            }
-        }
-        
+        let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
         endEditingMode()
     }
     
@@ -184,8 +176,6 @@ class ExplorerBaseViewController: UIViewController {
     func endEditingMode() {
         fatalError("endEditingMode() method needs to be implemented by the subclass")
     }
-    
-    func downloadStarted(forNode node: MEGANode) { }
 }
 
 extension ExplorerBaseViewController: TraitEnviromentAware {

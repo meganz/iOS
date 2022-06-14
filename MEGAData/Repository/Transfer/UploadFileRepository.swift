@@ -11,12 +11,24 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
         return nodeList.mnz_existsFile(withName: name)
     }
     
-    func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         guard let parentNode = sdk.node(forHandle: parent) else {
-            completion(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
+            completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
             return
         }
-        sdk.startUploadTopPriority(withLocalPath: path, parent: parentNode, appData: nil, isSourceTemporary: true, delegate: TransferDelegate(completion: completion))
+        
+        if let completion = completion {
+            let transferDelegate = TransferDelegate(completion: completion)
+            if let start = start {
+                transferDelegate.start = start
+            }
+            if let update = update {
+                transferDelegate.progress = update
+            }
+            sdk.startUpload(withLocalPath: path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
+        } else {
+            sdk.startUpload(withLocalPath: path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken)
+        }
     }
     
     func uploadSupportFile(atPath path: String, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {

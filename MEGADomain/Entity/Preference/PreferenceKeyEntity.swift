@@ -17,4 +17,6 @@ enum PreferenceKeyEntity: String {
     case sortingPreference = "MEGASortingPreference"
     case sortingPreferenceType = "SortOrderType"
     case favouritesIndexed
+    case savePhotoToGallery = "IsSavePhotoToGalleryEnabled"
+    case saveVideoToGallery = "IsSaveVideoToGalleryEnabled"
 }
