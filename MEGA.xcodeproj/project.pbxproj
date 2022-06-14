@@ -2227,6 +2227,10 @@
 		BFDDF19127C7108A0034C5D6 /* AnalyticsEventEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDDF19027C7108A0034C5D6 /* AnalyticsEventEntity.swift */; };
 		BFDDF19327C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDDF19227C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift */; };
 		BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */; };
+		BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */; };
+		BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */; };
+		BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */; };
+		BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */; };
 		BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -4565,6 +4569,10 @@
 		BFDDF19027C7108A0034C5D6 /* AnalyticsEventEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEventEntity.swift; sourceTree = "<group>"; };
 		BFDDF19227C711A10034C5D6 /* CameraUploadsTableViewController+Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Analytics.swift"; sourceTree = "<group>"; };
 		BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserInviteUseCase.swift; sourceTree = "<group>"; };
+		BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedRepository.swift; sourceTree = "<group>"; };
+		BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedRepositoryProtocol.swift; sourceTree = "<group>"; };
+		BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
+		BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
 		BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		BFE556F627E183B40028EF1F /* MEGANode+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions_Tests.swift"; sourceTree = "<group>"; };
 		BFE556F727E183B40028EF1F /* NodeHandle+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NodeHandle+Additions_Tests.swift"; sourceTree = "<group>"; };
@@ -8185,6 +8193,7 @@
 				83143BB52604E61B0033161A /* CallRemoteVideoUseCase.swift */,
 				2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */,
 				8338E0F22666552900D1458B /* CallManagerUseCase.swift */,
+				BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -8196,6 +8205,7 @@
 				83143B672604A4540033161A /* CallLocalVideoRepository.swift */,
 				83143BA12604E5780033161A /* CallRemoteVideoRepository.swift */,
 				2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */,
+				BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -8207,6 +8217,7 @@
 				83143B5B2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift */,
 				83143BAB2604E5EC0033161A /* CallRemoteVideoListenerRepositoryProtocol.swift */,
 				2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */,
+				BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -10336,6 +10347,7 @@
 				BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */,
 				8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */,
 				8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */,
+				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -12360,6 +12372,7 @@
 				BF782D66269BA4BB0001D169 /* NodeEntity.swift in Sources */,
 				83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */,
 				BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */,
+				BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				BFAB115323CEA5C300BCE72D /* AlbumsTableViewDataSource.swift in Sources */,
 				5B947A9E267A2A3400715B0C /* GenericNodeTableViewCell.swift in Sources */,
@@ -12954,6 +12967,7 @@
 				837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */,
 				8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				B6E7A8D72500D74600CD6AC2 /* NSLayoutConstraint+Layout.swift in Sources */,
+				BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */,
 				B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */,
 				833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */,
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
@@ -13294,6 +13308,7 @@
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
+				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,
 				5D8A76F024FCD0C900C0610C /* MEGANotificationUseCase.swift in Sources */,
@@ -13879,6 +13894,7 @@
 				B6FD651E268D8EC600988A17 /* TransferEntity+Additions.swift in Sources */,
 				B6FD6515268D818D00988A17 /* MockShareUseCase.swift in Sources */,
 				B67B182025CAACC00022D6C0 /* SDKUserClient+Additions.swift in Sources */,
+				BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */,
 				A81F9BB027E9F93F00D47C0D /* MockAnalyticsUseCase.swift in Sources */,
 				A81BD5CC27EB68C400234902 /* MockManageChatHistoryRepository.swift in Sources */,
 				A81BD5D427EB702200234902 /* MockClearChatHistoryUseCase.swift in Sources */,

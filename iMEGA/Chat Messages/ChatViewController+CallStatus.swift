@@ -92,6 +92,24 @@ extension ChatViewController {
         }
     }
     
+    func subscribeToNoUserJoinedNotification() {
+        let usecase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.default)
+        noUserJoinedSubscription = usecase
+            .monitor
+            .receive(on: DispatchQueue.main)
+            .sink() { [weak self] _ in
+                guard let self = self,
+                      MeetingContainerRouter.isAlreadyPresented == false,
+                      let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: self.chatRoom.chatId) else {
+                    return
+                }
+                
+                self.showCallEndDialog(withCall: CallEntity(with: call))
+            }
+        
+        self.meetingNoUserJoinedUseCase = usecase
+    }
+    
     private func showCallEndTimerIfNeeded(call: CallEntity) {
         guard MeetingContainerRouter.isAlreadyPresented == false,
               call.changeTye == .callComposition,
@@ -106,6 +124,10 @@ extension ChatViewController {
             return
         }
         
+        showCallEndDialog(withCall: call)
+    }
+    
+    private func showCallEndDialog(withCall call: CallEntity) {
         let endCallDialog = EndCallDialog { [weak self] in
             self?.cancelEndCallSubscription()
         } endCallAction: { [weak self] in
