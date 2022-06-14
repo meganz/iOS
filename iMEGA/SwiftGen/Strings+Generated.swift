@@ -3636,9 +3636,9 @@ public enum Strings {
       }
       public enum Photo {
         public enum Browser {
-          /// Plural format key: "%d of %#@total@"
-          public static func indexOfTotalFiles(_ p1: Int, _ p2: Int) -> String {
-            return Strings.tr("Localizable", "media.photo.browser.indexOfTotalFiles", p1, p2)
+          /// Plural format key: "%#@total@"
+          public static func indexOfTotalFiles(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "media.photo.browser.indexOfTotalFiles", p1)
           }
         }
       }
