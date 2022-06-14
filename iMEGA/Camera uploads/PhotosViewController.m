@@ -104,7 +104,7 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self.viewModel retrieveCameraAndMediaContents];
+    [self.viewModel loadAllPhotos];
     [self refreshMyAvatar];
     
     if (@available(iOS 14.0, *)) {
@@ -979,13 +979,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        BOOL cameraUploadNodesModified = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode: self.viewModel.cameraUploadParentNode childNodesArray:self.viewModel.mediaNodesArray.copy];
-        
-        BOOL mediaUploadNodesModified = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode: self.viewModel.mediaUploadParentNode childNodesArray:self.viewModel.mediaNodesArray.copy];
-        
-        if (cameraUploadNodesModified || mediaUploadNodesModified) {
-            [self.viewModel retrieveCameraAndMediaContents];
-        }
+        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
     });
 }
 
