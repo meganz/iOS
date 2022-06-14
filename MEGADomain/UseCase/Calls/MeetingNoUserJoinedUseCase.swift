@@ -8,7 +8,7 @@ protocol MeetingNoUserJoinedUseCaseProtocol {
 
 struct MeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
     private enum Constants {
-        static let timerDuration: TimeInterval = 5 // 5 minutes
+        static let timerDuration: TimeInterval = 300 // 5 minutes
     }
     
     private let repository: MeetingNoUserJoinedRepositoryProtocol
