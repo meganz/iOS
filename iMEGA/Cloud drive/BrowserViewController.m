@@ -314,7 +314,7 @@
     [self updatePromptTitle];
     
     if (self.isParentBrowser) {
-        self.navigationItem.title = @"MEGA";
+        self.navigationItem.title = NSLocalizedString(@"MEGA", nil);
 
         if (self.browserAction == BrowserActionDocumentProvider) {
             self.navigationItem.title = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");

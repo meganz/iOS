@@ -289,7 +289,7 @@
                 NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
                 durationString = [NSString mnz_stringFromTimeInterval:duration];
             } else {
-                durationString = @"00:00";
+                durationString = NSLocalizedString(@"00:00", nil);
             }
             
             NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;

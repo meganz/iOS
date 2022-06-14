@@ -280,7 +280,7 @@
                                                           bundle:[NSBundle bundleForClass:[LoginRequiredViewController class]]] instantiateViewControllerWithIdentifier:@"LoginRequiredNavigationControllerID"];
         
         LoginRequiredViewController *loginRequiredVC = self.loginRequiredNC.childViewControllers.firstObject;
-        loginRequiredVC.navigationItem.title = @"MEGA";
+        loginRequiredVC.navigationItem.title = NSLocalizedString(@"MEGA", nil);
         loginRequiredVC.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
         
         __weak __typeof__(self) weakSelf = self;
@@ -297,7 +297,7 @@
 }
 
 - (void)loginToMEGA {
-    self.navigationItem.title = @"MEGA";
+    self.navigationItem.title = NSLocalizedString(@"MEGA", nil);
     
     LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
     launchVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);

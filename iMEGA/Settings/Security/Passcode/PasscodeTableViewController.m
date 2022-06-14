@@ -35,13 +35,13 @@
     [self.changePasscodeLabel setText:NSLocalizedString(@"changePasscodeLabel", @"Section title where you can change the app's passcode")];
     self.requirePasscodeLabel.text = NSLocalizedString(@"Require Passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
 
-    self.biometricsLabel.text = @"Touch ID";
+    self.biometricsLabel.text = NSLocalizedString(@"Touch ID", nil);
     
     LAContext *context = [[LAContext alloc] init];
     
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
         if (context.biometryType == LABiometryTypeFaceID) {
-            self.biometricsLabel.text = @"Face ID";
+            self.biometricsLabel.text = NSLocalizedString(@"Face ID", nil);
         }
     }
     

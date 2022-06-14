@@ -240,7 +240,7 @@
         self.infoStringRightLabel.lineBreakMode = NSLineBreakByTruncatingHead;
         BOOL shouldIncludeRootFolder = self.node.isInShare
         || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
-        self.infoLabel.text = shouldIncludeRootFolder ? @"" : @"> ";
+        self.infoLabel.text = shouldIncludeRootFolder ? NSLocalizedString(@"", nil) : NSLocalizedString(@"> ", nil);
         self.infoStringRightLabel.text = [self.node filePathWithDelimeter:@" > "
                                                             sdk:MEGASdkManager.sharedMEGASdk
                                           includeRootFolderName:shouldIncludeRootFolder
