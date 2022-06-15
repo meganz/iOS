@@ -702,6 +702,78 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(participantResult.addedParticipantNames, Array(addedHandleNamePairArray.map(\.name).prefix(1)), "Participant name must be returned")
         XCTAssertEqual(participantResult.removedParticipantNames, Array(removedHandleNamePairArray.map(\.name).prefix(1)), "Participant name must be returned")
     }
+    
+    func testCallback_outgoingRingingStop_hangOneToOne() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true), noUserJoinedUseCase: MockMeetingNoUserJoinedUseCase())
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: MockUserImageUseCase(),
+                                      chatRoom: chatRoom,
+                                      call: call)
+        callUseCase.callbacksDelegate = viewModel
+        callUseCase.outgoingRingingStopReceived()
+        XCTAssert(callUseCase.hangCall_CalledTimes == 1)
+    }
+    
+    func testCallback_outgoingRingingStop_doNotHangGroupCall() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true), noUserJoinedUseCase: MockMeetingNoUserJoinedUseCase())
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: MockUserImageUseCase(),
+                                      chatRoom: chatRoom,
+                                      call: call)
+        callUseCase.callbacksDelegate = viewModel
+        callUseCase.outgoingRingingStopReceived()
+        XCTAssert(callUseCase.hangCall_CalledTimes == 0)
+    }
+    
+    func testCallback_outgoingRingingStop_doNotHangMeeting() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true), noUserJoinedUseCase: MockMeetingNoUserJoinedUseCase())
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: MockUserImageUseCase(),
+                                      chatRoom: chatRoom,
+                                      call: call)
+        callUseCase.callbacksDelegate = viewModel
+        callUseCase.outgoingRingingStopReceived()
+        XCTAssert(callUseCase.hangCall_CalledTimes == 0)
+    }
 }
 
 final class MockCallViewRouter: MeetingParticipantsLayoutRouting {

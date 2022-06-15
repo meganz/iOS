@@ -31,4 +31,5 @@ protocol CallCallbacksRepositoryProtocol {
     func localAvFlagsUpdated(video: Bool, audio: Bool)
     func chatTitleChanged(chatRoom: ChatRoomEntity)
     func networkQualityChanged(_ quality: NetworkQuality)
+    func outgoingRingingStopReceived()
 }

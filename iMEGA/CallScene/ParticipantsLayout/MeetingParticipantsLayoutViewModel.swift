@@ -851,6 +851,13 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             invokeCommand?(.hideBadNetworkQuality)
         }
     }
+    
+    func outgoingRingingStopReceived() {
+        if chatRoom.chatType == .oneToOne {
+            callUseCase.hangCall(for: call.callId)
+            self.tonePlayer.play(tone: .callEnded)
+        }
+    }
 }
 
 extension MeetingParticipantsLayoutViewModel: CallLocalVideoCallbacksUseCaseProtocol {
