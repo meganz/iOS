@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="沒有上傳";
 /* Title of the Cloud Drive section */
 "cloudDrive"="雲端硬碟";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d個檔案";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d個檔案";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d個資料夾";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d個資料夾";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1資料夾 • 1檔案";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A]資料夾 • [B]檔案";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d資料夾 • 1檔案";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1資料夾 • %d檔案";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@個裝置";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="您不再有存取此檔案的權限";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="您不再有存取此資料夾的權限";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="儲存為可離線存取";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="這個收件夾僅保留給Apple使用。";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="照片已上傳，影片上傳關閉；1個影片未上傳";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="照片已上傳，影片上傳關閉；%lu個影片未上傳";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%2$d之%1$d檔案";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%2$d之%1$d個檔案";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="已選擇%lu項目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1699,7 +1677,7 @@
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="儲存於相簿";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將MEGA應用程式中拍攝的照片和影片備份儲存至裝置的媒體庫中。";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將MEGA應用程式中拍攝的圖片和影片備份儲存至裝置的媒體庫中。";
 /* Title of the Spotlight Search section */
 "Search"="搜尋";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="縮圖檢視";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="頁面檢視";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="連線品質不良。";
 /* There are no notifications to display. */
 "No notifications"="沒有新的通知";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="%1張圖片";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2個影片";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1張圖像與1個影片";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1張圖像與%2個影片";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1圖像與一個影片";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1圖像與%2影片";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="由%@修改";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2239,9 +2207,9 @@
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="使用行動數據網路時發送最佳化的圖像，但使用Wi-Fi時則發送原始大小的圖像。";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="總是發送最佳化的圖像。";
+"Send smaller size images optimised for lower data consumption"="總是發送最佳化的圖片。";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="總是發送原始大小的圖像。";
+"Send original size, increased quality images"="總是發送原始大小的圖片。";
 /* Setting title for Doc scan view */
 "Save Settings"="儲存設定";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2685,7 +2653,7 @@
 /* Action of a call/meeting to share its link */
 "meetings.action.shareLink"="分享會議連結";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="等待其他人加入…";
+"meetings.message.waitingOthers"="正等待其他人加入…";
 /* Message shown when the user is the only one left in the meeting */
 "meetings.message.noOtherParticipants"="這裡只有您一人…";
 /* Message header when the user enters a invalid meeting URL */
@@ -2716,10 +2684,16 @@
 "meetings.quickAction.speaker"="喇叭";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="翻轉";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="正在重新連線";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="無法重新連線";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="連線不穩";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
-"settings.fileManagement.useMobileData.header"="預覽高解析度影像";
+"settings.fileManagement.useMobileData.header"="預覽高解析度圖片";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="預覽時使用行動數據網路載入高解析度影像。如果停用，則只會在放大檢視時載入高解析度影像。";
+"settings.fileManagement.useMobileData.footer"="預覽時使用行動數據網路載入高解析度圖片。如果停用，則只會在放大檢視時載入高解析度影像。";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.title"="您已經有一個現行的訂閱";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="附上日誌檔案";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="是否要附上診斷日誌檔案以協助除錯？";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="取消傳輸";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="中斷傳輸可能會使某些項目不完整。";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="是，取消";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="否，繼續";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="正在掃描…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="請不要關閉應用程式。";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="已取消傳輸";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="報告問題";
 /* Title of the dialog button to discard a report. */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="高";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高的";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="重複的項目";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="此位置已存在%@的資料夾。";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="選擇您要合併資料夾或是略過此資料夾。";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="複製並合併";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="將目的地資料夾與您複製的資料夾合併。";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="不要複製";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="移動並合併";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="將目的地資料夾與您移動的資料夾合併。";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="不要移動";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="上傳並合併";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="將目的地資料夾與您上傳的資料夾合併。";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="不要上傳";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="略過此資料夾。";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="此位置已存在名稱為%@的檔案。";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="選擇您要保留的檔案：";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="複製並取代";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="您複製的檔案將取代目的地資料夾中的檔案。";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="移動並取代";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="將目的地資料夾中的檔案替換為您正在移動的檔案。";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="上傳並取代";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="將目的地資料夾中的檔案替換為您正在上傳的檔案。";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="將不會更動任何檔案。您將保留以下檔案：";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="複製並重新命名";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="您複製的檔案將重新命名為：";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="移動並重新命名";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="您移動的檔案將重新命名為：";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="上傳並重新命名";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="您上傳的檔案將重新命名為：";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="上傳並更新";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="檔案將被更新同時保留歷史版本：";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="這裡只有你一人";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="除非您想繼續通話，否則通話將在2分鐘後自動結束。";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="保持通話";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="立即結束通話";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="通話將於%@後結束";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

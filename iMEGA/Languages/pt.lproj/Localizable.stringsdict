@@ -13,9 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>hour</string>
+        <string>hora</string>
+        <key>many</key>
+        <string>horas</string>
         <key>other</key>
-        <string>hours</string>
+        <string>horas</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.day</key>
@@ -29,9 +31,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>day</string>
+        <string>dia</string>
+        <key>many</key>
+        <string>dias</string>
         <key>other</key>
-        <string>days</string>
+        <string>dias</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.week</key>
@@ -45,9 +49,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>week</string>
+        <string>semana</string>
+        <key>many</key>
+        <string>semanas</string>
         <key>other</key>
-        <string>weeks</string>
+        <string>semanas</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.month</key>
@@ -61,9 +67,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>month</string>
+        <string>mês</string>
+        <key>many</key>
+        <string>meses</string>
         <key>other</key>
-        <string>months</string>
+        <string>meses</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.year</key>
@@ -77,9 +85,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>year</string>
+        <string>ano</string>
+        <key>many</key>
+        <string>anos</string>
         <key>other</key>
-        <string>years</string>
+        <string>anos</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.hour</key>
@@ -93,9 +103,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 hour</string>
+        <string>1 hora</string>
+        <key>many</key>
+        <string>%d horas</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d horas</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -109,9 +121,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 day</string>
+        <string>1 dia</string>
+        <key>many</key>
+        <string>%d dias</string>
         <key>other</key>
-        <string>%d days</string>
+        <string>%d dias</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.week</key>
@@ -125,9 +139,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 week</string>
+        <string>1 semana</string>
+        <key>many</key>
+        <string>%d semanas</string>
         <key>other</key>
-        <string>%d weeks</string>
+        <string>%d semanas</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.month</key>
@@ -141,9 +157,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 month</string>
+        <string>1 mês</string>
+        <key>many</key>
+        <string>%d meses</string>
         <key>other</key>
-        <string>%d months</string>
+        <string>%d meses</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.year</key>
@@ -157,9 +175,139 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 year</string>
+        <string>1 ano</string>
+        <key>many</key>
+        <string>%d anos</string>
         <key>other</key>
-        <string>%d years</string>
+        <string>%d anos</string>
+      </dict>
+    </dict>
+    <key>general.format.count.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file</string>
+        <key>other</key>
+        <string>%d files</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>other</key>
+        <string>%d folders</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>other</key>
+        <string>%d folders</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>• %d file</string>
+        <key>other</key>
+        <string>• %d files</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d image</string>
+        <key>other</key>
+        <string>%d images</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>and %d video</string>
+        <key>other</key>
+        <string>and %d videos</string>
+      </dict>
+    </dict>
+    <key>media.photo.browser.indexOfTotalFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] of %d file</string>
+        <key>other</key>
+        <string>[A] of %d files</string>
+      </dict>
+    </dict>
+    <key>extensions.share.destination.section.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file</string>
+        <key>other</key>
+        <string>%d files</string>
       </dict>
     </dict>
   </dict>
