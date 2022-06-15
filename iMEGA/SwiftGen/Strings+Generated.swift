@@ -3487,7 +3487,7 @@ public enum Strings {
             return Strings.tr("Localizable", "general.format.count.folder", p1)
           }
           public enum FolderAndFile {
-            /// Plural format key: "• %#@file@"
+            /// Plural format key: "%#@file@"
             public static func file(_ p1: Int) -> String {
               return Strings.tr("Localizable", "general.format.count.folderAndFile.file", p1)
             }
@@ -3680,7 +3680,7 @@ public enum Strings {
       }
     }
     public enum Meetings {
-      /// Poor connection
+      /// Bad connection
       public static let poorConnection = Strings.tr("Localizable", "meetings.poorConnection")
       public enum Action {
         /// Rename Meeting
@@ -3717,9 +3717,9 @@ public enum Strings {
       public enum EndCallDialog {
         /// Call will automatically end in 2 mins unless you want to stay on it.
         public static let description = Strings.tr("Localizable", "meetings.endCallDialog.description")
-        /// End Call Now
+        /// End call now
         public static let endCallNowButtonTitle = Strings.tr("Localizable", "meetings.endCallDialog.endCallNowButtonTitle")
-        /// Stay on Call
+        /// Stay on call
         public static let stayOnCallButtonTitle = Strings.tr("Localizable", "meetings.endCallDialog.stayOnCallButtonTitle")
         /// You’re the only one here
         public static let title = Strings.tr("Localizable", "meetings.endCallDialog.title")
@@ -3775,7 +3775,7 @@ public enum Strings {
         }
         /// You are the only one here…
         public static let noOtherParticipants = Strings.tr("Localizable", "meetings.message.noOtherParticipants")
-        /// Waiting for others to join
+        /// Waiting for others to join…
         public static let waitingOthers = Strings.tr("Localizable", "meetings.message.waitingOthers")
       }
       public enum New {
@@ -3845,7 +3845,7 @@ public enum Strings {
         public static let speaker = Strings.tr("Localizable", "meetings.quickAction.speaker")
       }
       public enum Reconnecting {
-        /// Unable to Reconnect
+        /// Unable to reconnect
         public static let failed = Strings.tr("Localizable", "meetings.reconnecting.failed")
         /// Reconnecting
         public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
@@ -3872,35 +3872,35 @@ public enum Strings {
         public enum Copy {
           /// The file you are copying will be renamed as:
           public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.copy.renameDescription")
-          /// Copy and Rename
+          /// Copy and rename
           public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.copy.renameTitle")
           /// Replace the file in the destination folder with the file you are copying.
           public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.copy.replaceDescription")
-          /// Copy and Replace
+          /// Copy and replace
           public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.copy.replaceTitle")
         }
         public enum Move {
           /// The file you are moving will be renamed as:
           public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.move.renameDescription")
-          /// Move and Rename
+          /// Move and rename
           public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.move.renameTitle")
           /// Replace the file in the destination folder with the file you are moving.
           public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.move.replaceDescription")
-          /// Move and Replace
+          /// Move and replace
           public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.move.replaceTitle")
         }
         public enum Upload {
           /// The file you are uploading will be renamed as:
           public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.upload.renameDescription")
-          /// Upload and Rename
+          /// Upload and rename
           public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.upload.renameTitle")
           /// Replace the file in the destination folder with the file you are uploading.
           public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.upload.replaceDescription")
-          /// Upload and Replace
+          /// Upload and replace
           public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.upload.replaceTitle")
           /// The file will be updated with version history:
           public static let updateDescription = Strings.tr("Localizable", "nameCollision.files.upload.updateDescription")
-          /// Upload and Update
+          /// Upload and update
           public static let updateTitle = Strings.tr("Localizable", "nameCollision.files.upload.updateTitle")
         }
       }
@@ -3916,28 +3916,28 @@ public enum Strings {
         public enum Copy {
           /// Merge the folder at the destination with the folder you are copying.
           public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.copy.mergeDescription")
-          /// Copy and Merge
+          /// Copy and merge
           public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.copy.mergeTitle")
         }
         public enum Move {
           /// Merge the folder at the destination with the folder you are moving.
           public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.move.mergeDescription")
-          /// Move and Merge
+          /// Move and merge
           public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.move.mergeTitle")
         }
         public enum Upload {
           /// Merge the folder at the destination with the folder you are uploading.
           public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.upload.mergeDescription")
-          /// Upload and Merge
+          /// Upload and merge
           public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.upload.mergeTitle")
         }
       }
       public enum General {
-        /// Don't Upload
+        /// Don’t upload
         public static let cancelTitle = Strings.tr("Localizable", "nameCollision.general.cancelTitle")
-        /// Don't Copy
+        /// Don’t copy
         public static let dontCopy = Strings.tr("Localizable", "nameCollision.general.dontCopy")
-        /// Don't Move
+        /// Don’t move
         public static let dontMove = Strings.tr("Localizable", "nameCollision.general.dontMove")
       }
     }
@@ -3976,7 +3976,7 @@ public enum Strings {
               public static func image(_ p1: Int) -> String {
                 return Strings.tr("Localizable", "recents.section.thumbnail.count.imageAndVideo.image", p1)
               }
-              /// Plural format key: "and %#@video@"
+              /// Plural format key: "%#@video@"
               public static func video(_ p1: Int) -> String {
                 return Strings.tr("Localizable", "recents.section.thumbnail.count.imageAndVideo.video", p1)
               }
@@ -4053,19 +4053,19 @@ public enum Strings {
     }
     public enum Transfers {
       public enum Cancellable {
-        /// Cancel Transfer
+        /// Cancel transfer
         public static let cancel = Strings.tr("Localizable", "transfers.cancellable.cancel")
         /// Interrupting the transfer process may render some of the items incomplete.
         public static let confirmCancel = Strings.tr("Localizable", "transfers.cancellable.confirmCancel")
-        /// Dismiss
+        /// No, continue
         public static let dismiss = Strings.tr("Localizable", "transfers.cancellable.dismiss")
-        /// Please do not close the application.
+        /// Please don’t close the application.
         public static let donotclose = Strings.tr("Localizable", "transfers.cancellable.donotclose")
-        /// Proceed
+        /// Yes, cancel
         public static let proceed = Strings.tr("Localizable", "transfers.cancellable.proceed")
-        /// Scanning...
+        /// Scanning…
         public static let scanning = Strings.tr("Localizable", "transfers.cancellable.scanning")
-        /// Cancel transfers
+        /// Cancel transfers?
         public static let title = Strings.tr("Localizable", "transfers.cancellable.title")
         /// Transfer cancelled
         public static let trasnferCancelled = Strings.tr("Localizable", "transfers.cancellable.trasnferCancelled")

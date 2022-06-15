@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="Não há uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Nuvem de arquivos";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d arquivo";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d arquivos";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d pasta";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d pastas";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 pasta • 1 arquivo";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] pastas • [B] arquivos";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d pastas • 1 arquivo";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 pasta • %d arquivos";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ dispositivo";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Você já não acesso a este arquivo";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Você já não tem acesso a esta pasta";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Salvar para uso offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="A etiqueda desta caixa de entrada é de uso reservado pela Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito.";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de %lu vídeos não foi feito.";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d de %2$d arquivo";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d de %2$d arquivos";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item selecionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -985,7 +963,7 @@
 /*  */
 "howItWorks"="Como funciona";
 /*  */
-"howItWorksMain"="O seu amigo precisa criar uma conta gratuita no MEGA e [S]instalar pelo menos um aplicativo do MEGA[/S] (pode ser o cliente de sincronização ou um dos nossos aplicativos móveis)";
+"howItWorksMain"="O seu amigo precisa criar uma conta gratuita no MEGA e [S]instalar pelo menos um aplicativo do MEGA[/S] (pode ser o Aplicativo do MEGA para desktop ou um dos nossos aplicativos móveis)";
 /*  */
 "howItWorksSecondary"="Você pode notificar o seu amigo através de qualquer método. Você receberá a cota se você digitou o email do seu amigo aqui antes dele se registrar com esse email.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="Visualização em miniaturas";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Visualização de página";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Conexão ruim.";
 /* There are no notifications to display. */
 "No notifications"="Não há notificações";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="%1 imagens";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 vídeos";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 imagem e 1 vídeo";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 imagem e %2 vídeos";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 imagens e 1 vídeo";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 imagens e %2 vídeos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Alterado por %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="Viva-voz";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Inverter";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="Reconectando";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="Unable to reconnect";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="Bad connection";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Visualização de imagens em alta resolução";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="Anexar arquivos de log";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Você quer anexar os arquivos de log para ajudar na depuração?";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="Cancelar transferência";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="Yes, cancel";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="No, continue";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="Examinando…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="Please don’t close the application.";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="transferência cancelada";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Informar sobre um problema";
 /* Title of the dialog button to discard a report. */
@@ -2971,17 +2961,17 @@
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Seguinte";
 /* Meetings: Notification message to be shown when one person joins the call. */
-"meetings.notification.singleUserJoined"="%@ joined";
+"meetings.notification.singleUserJoined"="%@ entrou";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ left";
+"meetings.notification.singleUserLeft"="%@ saiu";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
-"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+"meetings.notification.twoUsersJoined"="%@ e %@ entraram";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left";
+"meetings.notification.twoUsersLeft"="%@ e %@ saíram";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+"meetings.notification.moreThanTwoUsersJoined"="%@ e outros %@ entraram";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+"meetings.notification.moreThanTwoUsersLeft"="%@ e outros %@ saíram";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Mover para a lixeira";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="Alta";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Superior";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="Duplicated item";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="Copiar e combinar";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="Combina a pasta já existente no destino com a pasta que você está copiando.";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="Não copiar";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="Mover e combinar";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="Combina a pasta já existente no destino com a pasta que você está movendo.";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="Não mover";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="Fazer upload e combinar";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="Combina a pasta já existente no destino com a pasta que você está enviando.";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="Não fazer o upload";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="Skip this folder.";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="Selecione o arquivo que quiser manter:";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="Copiar e substituir";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="Substituir o arquivo na pasta de destino pelo arquivo que você está copiando.";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="Mover e substituir";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="Substituir o arquivo na pasta de destino pelo arquivo que você está movendo.";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="Enviar e substituir";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="Nenhum arquivo será alterado. Você manterá o arquivo abaixo:";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="Copiar com um nome diferente";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="O arquivo que você está copiando será renomeado como:";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="Mover com um nome diferente";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="O arquivo que você está movendo será renomeado como:";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="Fazer upload e renomear";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="O arquivo que você está enviando será renomeado como:";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="Fazer upload e atualizar";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="O arquivo será atualizado com um histórico de versões:";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="You’re the only one here";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Permanecer na chamada";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="Finalizar chamada agora";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

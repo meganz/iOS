@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="Nicio încărcare";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Unitate cloud";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d fișier";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d fișiere";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d folder";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d foldere";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 folder • 1 fișier";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] foldere • [B] fișiere";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d foldere • 1 fișier";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 folder • %d fișier";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ device";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Nu mai ai acces la acest fișier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Nu mai ai acces la acest folder";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Salvează pentru offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox este rezervat pentru folosire de Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -523,7 +505,7 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Încărcare în curs, %lu fișiere în așteptare";
 /* Timeline title within CU tab */
-"cameraUploads.timeline.title"="Timeline";
+"cameraUploads.timeline.title"="Cronologie";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albume";
 /* Favourites album title */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotografiile au fost încărcate, încărcările video sunt dezactivate; 1 videoclip nu a fost încărcat";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Fotografiile au fost încărcate, încărcările video sunt dezactivate; %lu videoclipuri nu au fost încărcate";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d din %2$d fișier";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d din %2$d fișiere";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu element selectat";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -793,7 +771,7 @@
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Șterge fișierele offline";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
-"settings.fileManagement.alert.clearAllOfflineFiles"="Clear all offline files?";
+"settings.fileManagement.alert.clearAllOfflineFiles"="Ștergi toate fișierele offline?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Șterge cache-ul";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -1103,7 +1081,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selectează un tip de cont:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Un abonament anual este cu 16% mai ieftin decât 12 plăți lunare";
+"twoMonthsFree"="Un abonament anual este cu 16 % mai ieftin decât 12 plăți lunare";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1119,7 +1097,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selectează contul de membru:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Economisește 16%";
+"save17"="Economisește 16 %";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="ACHIZIȚIE GREȘITĂ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="Vizualizare tip miniaturi";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Vizualizare tip pagini";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Conexiune slabă.";
 /* There are no notifications to display. */
 "No notifications"="Nicio notificare";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="%1 imagini";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 videoclipuri";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 imagine și 1 videoclip";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 imagine și %2 videoclipuri";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 imagini și 1 videoclip";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 imagini și %2 videoclipuri";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modified by %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2165,7 +2133,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Include etichetele locațiilor";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, location information will be included with your pictures. Please be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Dacă opțiunea este activată, informațiile privind locația vor fi incluse în fotografii. Te rugăm să fii atent(ă) atunci când le partajezi.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Trimite (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2267,7 +2235,7 @@
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ascunde activitatea recentă";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Hide recent activity in Home section.";
+"settings.userInterface.hideRecentActivity.footer"="Ascunde activitatea recentă în secțiunea Start.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Implicită";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
@@ -2473,7 +2441,7 @@
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
-"Upload File"="Încarcă fișier(e)";
+"Upload File"="Încarcă fișierul";
 /* Text title for shortcuts, ie in the widget */
 "Shortcuts"="Comenzi rapide";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
@@ -2575,7 +2543,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Logging out deletes your offline content.";
+"offline.logOut.warning.message"="Deconectarea șterge conținutul tău offline.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Proprietarul partajării depășește cota de stocare.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="Difuzor";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Switch";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="Se reconectează";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="Unable to reconnect";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="Bad connection";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Preview high resolution images";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="Attach log files";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Do you want to attach diagnostic log files to assist with debug?";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="Anulează transferul";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="Yes, cancel";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="No, continue";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="Scanning…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="Please don’t close the application.";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="Transfer anulat";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Report Issue";
 /* Title of the dialog button to discard a report. */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="Ridicat(ă)";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Cea mai bună";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="Duplicated item";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="Copiază și îmbină";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="Îmbină folderul la destinație cu folderul pe care îl copiezi.";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="Nu copia";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="Mută și îmbină";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="Îmbină folderul la destinație cu folderul pe care îl copiezi.";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="Nu muta";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="Încarcă și îmbină";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="Merge the folder at the destination with the folder you are uploading.";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="Nu încărca";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="Skip this folder.";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="Selectează fișierul pe care vrei să-l păstrezi:";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="Copiază și înlocuiește";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="Înlocuiește fișierul în folderul de destinație cu fișierul pe care îl copiezi.";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="Mută și înlocuiește";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="Înlocuiește fișierul în folderul de destinație cu fișierul pe care îl muți.";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="Încarcă și înlocuiește";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="Niciun fișier nu va fi modificat. Vei păstra fișierul de mai jos:";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="Copiază și redenumește";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="Fișierul pe care îl copiezi va fi redenumit sub numele:";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="Mută și redenumește";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="Fișierul pe care îl muți va fi redenumit sub numele:";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="Încarcă și redenumește";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="Fișierul pe care îl încarci va fi redenumit sub numele:";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="Încarcă și actualizează";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="Fișierul va fi actualizat cu istoricul versiunilor:";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="You’re the only one here";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on call";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="End call now";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";
