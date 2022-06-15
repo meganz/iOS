@@ -191,6 +191,10 @@ extension CallRepository: MEGAChatCallDelegate {
             }
         }
         
+        if call.hasChanged(for: .outgoingRingingStop) {
+            callbacksDelegate?.outgoingRingingStopReceived()
+        }
+        
         switch call.status {
         case .undefined:
             break
