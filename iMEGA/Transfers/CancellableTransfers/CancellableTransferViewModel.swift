@@ -73,7 +73,7 @@ final class CancellableTransferViewModel: ViewModelType {
     }
     
     private func folderTransfersStartedTransferring() -> Bool {
-        folderTransfers.filter({ $0.state == .failed || $0.stage == .transferringFiles }).count == folderTransfers.count
+        folderTransfers.filter({ $0.state == .failed || $0.stage == .transferringFiles || $0.state == .complete }).count == folderTransfers.count
     }
     
     private func continueFolderTransfersIfNeeded() {
@@ -108,6 +108,9 @@ final class CancellableTransferViewModel: ViewModelType {
     }
     
     private func manageTransfersCompletion() {
+        if processingComplete {
+            return
+        }
         processingComplete = true
         if transferErrors.isEmpty {
             switch self.transferType {
@@ -263,8 +266,8 @@ final class CancellableTransferViewModel: ViewModelType {
                     if error != .alreadyDownloaded && error != .copiedFromTempFolder {
                         self?.transferErrors.append(error)
                     }
-                    self?.checkIfAllTransfersStartedTranferring()
                 }
+                self?.checkIfAllTransfersStartedTranferring()
             }
         }
     }
