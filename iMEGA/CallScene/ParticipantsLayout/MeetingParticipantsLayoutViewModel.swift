@@ -464,11 +464,19 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             startCallEndCountDownTimer()
         case .endCallEndCountDownTimer:
             endCallEndCountDownTimer()
-            invokeCommand?(hasParticipantJoinedBefore ? .showNoOneElseHereMessage : .showWaitingForOthersMessage)
+            showEmptyCallMessageIfNeeded()
         case .didEndDisplayLastPeerLeftStatusMessage:
             if chatRoom.chatType == .group || chatRoom.chatType == .meeting {
                 containerViewModel?.dispatch(.showEndCallDialogIfNeeded)
             }
+        }
+    }
+    
+    private func showEmptyCallMessageIfNeeded() {
+        if let call = callUseCase.call(for: chatRoom.chatId),
+           call.numberOfParticipants == 1,
+           call.participants.first == userUseCase.myHandle {
+            invokeCommand?(hasParticipantJoinedBefore ? .showNoOneElseHereMessage : .showWaitingForOthersMessage)
         }
     }
     
