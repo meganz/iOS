@@ -513,11 +513,15 @@
     if (selectNodes) {
         [self dismissViewControllerAnimated:YES completion:^{
             self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
-            completion();
+            if (completion) {
+                completion();
+            }
         }];
     } else {
         [self dismissViewControllerAnimated:YES completion:^{
-            completion();
+            if (completion) {
+                completion();
+            }
         }];
     }
 }
