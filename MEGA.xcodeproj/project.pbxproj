@@ -79,6 +79,7 @@
 		12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682A275DBE0500C94335 /* TextEditorViewModel.swift */; };
 		12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */; };
 		12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */; };
+		125E606E285A87C2003C7BB5 /* SearchResultErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */; };
 		12647CD427D7F7C3002033AF /* MediaDiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12647CD327D7F7C2002033AF /* MediaDiscoveryViewController.swift */; };
 		12647CD627D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */; };
 		12696B0E27A8B122008628EA /* PhotoLibraryZoomControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0A27A8B121008628EA /* PhotoLibraryZoomControl.swift */; };
@@ -2717,6 +2718,7 @@
 		1246682A275DBE0500C94335 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorViewRouter.swift; sourceTree = "<group>"; };
 		1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewModel.swift; sourceTree = "<group>"; };
+		125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultErrorEntity.swift; sourceTree = "<group>"; };
 		12647CD327D7F7C2002033AF /* MediaDiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryViewController.swift; sourceTree = "<group>"; };
 		12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaDiscovery+PhotoLibrary.swift"; sourceTree = "<group>"; };
 		12696B0A27A8B121008628EA /* PhotoLibraryZoomControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomControl.swift; sourceTree = "<group>"; };
@@ -10569,6 +10571,7 @@
 				5B8B3DE126FE4C1400882245 /* ThumbnailErrorEntity.swift */,
 				BF782D43269BA4BA0001D169 /* GetFavouriteNodesErrorEntity.swift */,
 				BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */,
+				125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */,
 				BF782D45269BA4BA0001D169 /* PSAErrorEntity.swift */,
 				BF782D46269BA4BA0001D169 /* Chat */,
 				BF782D49269BA4BA0001D169 /* InviteErrorEntity.swift */,
@@ -13460,6 +13463,7 @@
 				BF5E340E2559E2EC0055395E /* FilesExplorerContainerGridViewState.swift in Sources */,
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */,
+				125E606E285A87C2003C7BB5 /* SearchResultErrorEntity.swift in Sources */,
 				12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */,
 				A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */,
 				B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */,

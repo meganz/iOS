@@ -26,24 +26,20 @@ final class PhotoViewModel: NSObject {
                 
                 guard shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) else { return }
                 
-                let photos = try await photoLibraryUseCase.allPhotos()
+                let photos = try await FeatureFlag.shouldRemoveHomeImage ? photoLibraryUseCase.allPhotos() : photoLibraryUseCase.cameraUploadPhotos()
                 self.mediaNodesArray = photos
             }
-            catch {
-                self.mediaNodesArray = []
-            }
+            catch {}
         }
     }
     
     @objc func loadAllPhotos() {
         Task {
             do {
-                let photos = try await photoLibraryUseCase.allPhotos()
+                let photos = try await FeatureFlag.shouldRemoveHomeImage ? photoLibraryUseCase.allPhotos() : photoLibraryUseCase.cameraUploadPhotos()
                 self.mediaNodesArray = photos
             }
-            catch {
-                self.mediaNodesArray = []
-            }
+            catch {}
         }
     }
     
