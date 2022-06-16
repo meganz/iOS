@@ -1559,6 +1559,15 @@
 		A8E5E52F282A917D007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC8D7627A0258900A9ED13 /* ReportIssueViewModel.swift */; };
+		A8ECCA0F285B2AD000E6BB7F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA0E285B2AD000E6BB7F /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		A8ECCA11285B2AD000E6BB7F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA10285B2AD000E6BB7F /* FirebaseCrashlytics */; };
+		A8ECCA13285B2AD000E6BB7F /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA12285B2AD000E6BB7F /* FirebasePerformance */; };
+		A8ECCA15285B2B1A00E6BB7F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA14285B2B1A00E6BB7F /* FirebaseCrashlytics */; };
+		A8ECCA17285B2B2000E6BB7F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA16285B2B2000E6BB7F /* FirebaseCrashlytics */; };
+		A8ECCA19285B2B2700E6BB7F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA18285B2B2700E6BB7F /* FirebaseCrashlytics */; };
+		A8ECCA1B285B2B2F00E6BB7F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA1A285B2B2F00E6BB7F /* FirebaseCrashlytics */; };
+		A8ECCA1D285B2B3500E6BB7F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA1C285B2B3500E6BB7F /* FirebaseCrashlytics */; };
+		A8ECCA1F285B2B3D00E6BB7F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECCA1E285B2B3D00E6BB7F /* FirebaseCrashlytics */; };
 		A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECD8CA27F34BB0008D75B8 /* PinLayout */; };
 		A8EE475E27DF561300D37685 /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE475D27DF561300D37685 /* TextEditorView.swift */; };
 		A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */; };
@@ -2006,15 +2015,6 @@
 		BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */ = {isa = PBXBuildFile; productRef = BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */; };
 		BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = BF11647C27F6734C00E5C5A4 /* PhoneNumberKit */; };
 		BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF11648127F6764B00E5C5A4 /* CocoaLumberjackSwift */; };
-		BF11649B27F6891500E5C5A4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF11649A27F6891500E5C5A4 /* FirebaseAnalytics */; };
-		BF11649D27F6891500E5C5A4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF11649C27F6891500E5C5A4 /* FirebaseCrashlytics */; };
-		BF11649F27F6891500E5C5A4 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = BF11649E27F6891500E5C5A4 /* FirebasePerformance */; };
-		BF1164A327F689C500E5C5A4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164A227F689C500E5C5A4 /* FirebaseCrashlytics */; };
-		BF1164A527F689D400E5C5A4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164A427F689D400E5C5A4 /* FirebaseCrashlytics */; };
-		BF1164A727F689ED00E5C5A4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164A627F689ED00E5C5A4 /* FirebaseCrashlytics */; };
-		BF1164A927F68A0300E5C5A4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164A827F68A0300E5C5A4 /* FirebaseCrashlytics */; };
-		BF1164AB27F68C4A00E5C5A4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164AA27F68C4A00E5C5A4 /* FirebaseCrashlytics */; };
-		BF1164AD27F68CE700E5C5A4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164AC27F68CE700E5C5A4 /* FirebaseCrashlytics */; };
 		BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164B427F6906A00E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164B327F6906A00E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */; };
@@ -4956,6 +4956,7 @@
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */,
+				A8ECCA11285B2AD000E6BB7F /* FirebaseCrashlytics in Frameworks */,
 				2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
@@ -4965,7 +4966,6 @@
 				BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */,
 				77FD20032359A5A7004FB892 /* libnative_api.a in Frameworks */,
 				77FD20042359A5A7004FB892 /* libvideocapture_objc.a in Frameworks */,
-				BF11649B27F6891500E5C5A4 /* FirebaseAnalytics in Frameworks */,
 				77FD20052359A5A7004FB892 /* libnative_video.a in Frameworks */,
 				77FD1FFD2359A59C004FB892 /* libwebrtc.a in Frameworks */,
 				A811DCC02476C4F7002FCD98 /* CoreServices.framework in Frameworks */,
@@ -4977,7 +4977,6 @@
 				A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */,
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */,
-				BF11649F27F6891500E5C5A4 /* FirebasePerformance in Frameworks */,
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
@@ -4987,12 +4986,13 @@
 				A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */,
 				A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */,
 				BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */,
+				A8ECCA13285B2AD000E6BB7F /* FirebasePerformance in Frameworks */,
 				A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */,
 				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
-				BF11649D27F6891500E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
+				A8ECCA0F285B2AD000E6BB7F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
@@ -5024,6 +5024,7 @@
 				7794AF0F231E7D340039C1D2 /* CoreVideo.framework in Frameworks */,
 				7794AEEF231E6CE10039C1D2 /* ImageIO.framework in Frameworks */,
 				7794AF10231E7D4E0039C1D2 /* Metal.framework in Frameworks */,
+				A8ECCA19285B2B2700E6BB7F /* FirebaseCrashlytics in Frameworks */,
 				7794AF15231E7EF00039C1D2 /* QuartzCore.framework in Frameworks */,
 				7794AF21232100F30039C1D2 /* Security.framework in Frameworks */,
 				BF0CC98B27FD38B800244AEB /* DateToolsObjc in Frameworks */,
@@ -5039,7 +5040,6 @@
 				7794AEF8231E757E0039C1D2 /* libsqlite3.tbd in Frameworks */,
 				77AEB94623CDBC560047CEBF /* libvideoframebuffer_objc.a in Frameworks */,
 				7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */,
-				BF1164A727F689ED00E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				A811DCBF2476C4EB002FCD98 /* CoreServices.framework in Frameworks */,
 				7E04501233DD45005BD169D5 /* Pods_iMEGA_MEGANotifications.framework in Frameworks */,
 			);
@@ -5079,10 +5079,10 @@
 				BF0CC99127FD38C100244AEB /* DateToolsSwift in Frameworks */,
 				835EE3C7258244D100D8E3B8 /* libmediainfo.a in Frameworks */,
 				835EE3BC2582445D00D8E3B8 /* libcurl.a in Frameworks */,
-				BF1164A927F68A0300E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				835EE3BE2582445D00D8E3B8 /* libcryptopp.a in Frameworks */,
 				835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */,
 				83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */,
+				A8ECCA17285B2B2000E6BB7F /* FirebaseCrashlytics in Frameworks */,
 				83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */,
 				D5AA6B2E51A36623F0D218DB /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */,
 			);
@@ -5093,7 +5093,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */,
-				BF1164AB27F68C4A00E5C5A4 /* FirebaseCrashlytics in Frameworks */,
+				A8ECCA15285B2B1A00E6BB7F /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5110,6 +5110,7 @@
 				BFA275E527ED316A00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				77B3AE232163BDB8008E889A /* UserNotifications.framework in Frameworks */,
 				7714901520F7592100769BD4 /* Contacts.framework in Frameworks */,
+				A8ECCA1F285B2B3D00E6BB7F /* FirebaseCrashlytics in Frameworks */,
 				5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */,
 				A811DCC42476C557002FCD98 /* Photos.framework in Frameworks */,
 				BF1CEA3A27FA755C00C1A2E5 /* GKContactImage in Frameworks */,
@@ -5150,7 +5151,6 @@
 				943229151EDD836A007DB542 /* libsqlite3.tbd in Frameworks */,
 				943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */,
 				A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */,
-				BF1164A327F689C500E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
 				D73C71AA95D9B6E977AC1E94 /* Pods_iMEGA_MEGAPicker.framework in Frameworks */,
 			);
@@ -5177,6 +5177,7 @@
 				A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */,
 				942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */,
 				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
+				A8ECCA1D285B2B3500E6BB7F /* FirebaseCrashlytics in Frameworks */,
 				A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
@@ -5185,7 +5186,6 @@
 				942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */,
 				A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */,
-				BF1164AD27F68CE700E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				942ED2B51EDEE5F500C9908D /* libz.tbd in Frameworks */,
 				DAECA35E488889DD64F98876 /* Pods_iMEGA_MEGAPickerFileProvider.framework in Frameworks */,
 			);
@@ -5216,6 +5216,7 @@
 				943F8B331EF286C000AFD89F /* AVFoundation.framework in Frameworks */,
 				943F8B361EF286D200AFD89F /* CoreData.framework in Frameworks */,
 				943F8B301EF286A800AFD89F /* CoreGraphics.framework in Frameworks */,
+				A8ECCA1B285B2B2F00E6BB7F /* FirebaseCrashlytics in Frameworks */,
 				943F8B371EF286D600AFD89F /* CoreMedia.framework in Frameworks */,
 				943F8B341EF286C700AFD89F /* ImageIO.framework in Frameworks */,
 				BF0CB93E2803AF4A00C21F11 /* SAMKeychain in Frameworks */,
@@ -5234,7 +5235,6 @@
 				943F8B2E1EF2866A00AFD89F /* libstdc++.tbd in Frameworks */,
 				A811DCBA2476C47F002FCD98 /* MetalKit.framework in Frameworks */,
 				A811DCBE2476C4E0002FCD98 /* CoreServices.framework in Frameworks */,
-				BF1164A527F689D400E5C5A4 /* FirebaseCrashlytics in Frameworks */,
 				943F8B2B1EF2864D00AFD89F /* libz.tbd in Frameworks */,
 				BF0CC98927FD38B000244AEB /* DateToolsSwift in Frameworks */,
 				1E4FEE43BA4A9B2FBBB75D86 /* Pods_iMEGA_MEGAShare.framework in Frameworks */,
@@ -11459,9 +11459,6 @@
 				BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */,
 				BF11647C27F6734C00E5C5A4 /* PhoneNumberKit */,
 				BF11648127F6764B00E5C5A4 /* CocoaLumberjackSwift */,
-				BF11649A27F6891500E5C5A4 /* FirebaseAnalytics */,
-				BF11649C27F6891500E5C5A4 /* FirebaseCrashlytics */,
-				BF11649E27F6891500E5C5A4 /* FirebasePerformance */,
 				BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */,
 				BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */,
 				BF1164BF27F6A74D00E5C5A4 /* PureLayout */,
@@ -11476,6 +11473,9 @@
 				BF0CC98027FD388700244AEB /* DateToolsSwift */,
 				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
 				BFD2ED4C281228B30018C05A /* PieChart */,
+				A8ECCA0E285B2AD000E6BB7F /* FirebaseAnalyticsWithoutAdIdSupport */,
+				A8ECCA10285B2AD000E6BB7F /* FirebaseCrashlytics */,
+				A8ECCA12285B2AD000E6BB7F /* FirebasePerformance */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -11496,10 +11496,10 @@
 			);
 			name = MEGANotifications;
 			packageProductDependencies = (
-				BF1164A627F689ED00E5C5A4 /* FirebaseCrashlytics */,
 				BF0CC98A27FD38B800244AEB /* DateToolsObjc */,
 				BF0CC98C27FD38B800244AEB /* DateToolsSwift */,
 				BF0CB93F2803AF5500C21F11 /* SAMKeychain */,
+				A8ECCA18285B2B2700E6BB7F /* FirebaseCrashlytics */,
 			);
 			productName = MEGANotifications;
 			productReference = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */;
@@ -11520,10 +11520,10 @@
 			);
 			name = MEGAWidgetExtension;
 			packageProductDependencies = (
-				BF1164A827F68A0300E5C5A4 /* FirebaseCrashlytics */,
 				BF0CC98E27FD38C100244AEB /* DateToolsObjc */,
 				BF0CC99027FD38C100244AEB /* DateToolsSwift */,
 				BF0CB9412803AF6000C21F11 /* SAMKeychain */,
+				A8ECCA16285B2B2000E6BB7F /* FirebaseCrashlytics */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -11544,7 +11544,7 @@
 			);
 			name = MEGAIntent;
 			packageProductDependencies = (
-				BF1164AA27F68C4A00E5C5A4 /* FirebaseCrashlytics */,
+				A8ECCA14285B2B1A00E6BB7F /* FirebaseCrashlytics */,
 			);
 			productName = MEGAIntent;
 			productReference = 831B490E256FED6F0086002B /* MEGAIntent.appex */;
@@ -11566,7 +11566,6 @@
 			name = MEGAPicker;
 			packageProductDependencies = (
 				BFA275E427ED316A00E15B92 /* SDAVAssetExportSession */,
-				BF1164A227F689C500E5C5A4 /* FirebaseCrashlytics */,
 				BF1164B327F6906A00E5C5A4 /* SDWebImageWebPCoder */,
 				BF1164C527F6A81600E5C5A4 /* PureLayout */,
 				A8F5157B27F6F95800AEE4D6 /* DZNEmptyDataSet */,
@@ -11574,6 +11573,7 @@
 				BF0CC98227FD38A000244AEB /* DateToolsObjc */,
 				BF0CC98427FD38A000244AEB /* DateToolsSwift */,
 				BF0CB9392803AF2400C21F11 /* SAMKeychain */,
+				A8ECCA1E285B2B3D00E6BB7F /* FirebaseCrashlytics */,
 			);
 			productName = MEGAPicker;
 			productReference = 942254DC1EDC03130074C51A /* MEGAPicker.appex */;
@@ -11594,8 +11594,8 @@
 			);
 			name = MEGAPickerFileProvider;
 			packageProductDependencies = (
-				BF1164AC27F68CE700E5C5A4 /* FirebaseCrashlytics */,
 				BF0CB93B2803AF3500C21F11 /* SAMKeychain */,
+				A8ECCA1C285B2B3500E6BB7F /* FirebaseCrashlytics */,
 			);
 			productName = MEGAPickerFileProvider;
 			productReference = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */;
@@ -11617,7 +11617,6 @@
 			name = MEGAShare;
 			packageProductDependencies = (
 				BFA275E627ED317600E15B92 /* SDAVAssetExportSession */,
-				BF1164A427F689D400E5C5A4 /* FirebaseCrashlytics */,
 				BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */,
 				BF1164C927F6A81F00E5C5A4 /* PureLayout */,
 				A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */,
@@ -11625,6 +11624,7 @@
 				BF0CC98627FD38B000244AEB /* DateToolsObjc */,
 				BF0CC98827FD38B000244AEB /* DateToolsSwift */,
 				BF0CB93D2803AF4A00C21F11 /* SAMKeychain */,
+				A8ECCA1A285B2B2F00E6BB7F /* FirebaseCrashlytics */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -11789,7 +11789,6 @@
 				BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */,
 				BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
-				BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 				BF1164B927F692DB00E5C5A4 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */,
 				BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */,
@@ -11801,6 +11800,7 @@
 				BF0CC97D27FD388600244AEB /* XCRemoteSwiftPackageReference "DateTools" */,
 				BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */,
 				BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */,
+				A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -15805,6 +15805,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/layoutBox/PinLayout";
@@ -15901,14 +15909,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.0.0;
-			};
-		};
 		BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageWebPCoder.git";
@@ -15969,6 +15969,51 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */;
 			productName = WSTagsField;
+		};
+		A8ECCA0E285B2AD000E6BB7F /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		A8ECCA10285B2AD000E6BB7F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		A8ECCA12285B2AD000E6BB7F /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
+		};
+		A8ECCA14285B2B1A00E6BB7F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		A8ECCA16285B2B2000E6BB7F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		A8ECCA18285B2B2700E6BB7F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		A8ECCA1A285B2B2F00E6BB7F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		A8ECCA1C285B2B3500E6BB7F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		A8ECCA1E285B2B3D00E6BB7F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		A8ECD8CA27F34BB0008D75B8 /* PinLayout */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -16119,51 +16164,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwift;
-		};
-		BF11649A27F6891500E5C5A4 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		BF11649C27F6891500E5C5A4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		BF11649E27F6891500E5C5A4 /* FirebasePerformance */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebasePerformance;
-		};
-		BF1164A227F689C500E5C5A4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		BF1164A427F689D400E5C5A4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		BF1164A627F689ED00E5C5A4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		BF1164A827F68A0300E5C5A4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		BF1164AA27F68C4A00E5C5A4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		BF1164AC27F68CE700E5C5A4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11649927F6891500E5C5A4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */ = {
 			isa = XCSwiftPackageProductDependency;
