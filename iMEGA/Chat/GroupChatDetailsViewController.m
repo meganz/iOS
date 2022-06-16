@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     GroupChatDetailsSectionManageChatHistory,
     GroupChatDetailsSectionArchiveChat,
     GroupChatDetailsSectionLeaveGroup,
+    GroupChatDetailsSectionEndCallForAll,
     GroupChatDetailsSectionEncryptedKeyRotation,
     GroupChatDetailsSectionObservers,
     GroupChatDetailsSectionParticipants,
@@ -46,6 +47,8 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 @property (weak, nonatomic) IBOutlet UIView *groupInfoBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) NSArray<NSNumber *> *groupDetailsSections;
 
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
@@ -70,6 +73,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
 
     [self updateAppearance];
+    [self populateSections];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -77,6 +81,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [MEGASdkManager.sharedMEGAChatSdk addChatRequestDelegate:self];
+    [self addChatCallDelegate];
     
     [self updateHeadingView];
     [self setParticipants];
@@ -88,6 +93,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [MEGASdkManager.sharedMEGAChatSdk removeChatRequestDelegate:self];
+    [self removeChatCallDelegate];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -102,7 +108,46 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     }
 }
 
+- (void)reloadData {
+    [self populateSections];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Private
+
+- (void)populateSections {
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoom.chatId];
+
+    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator
+        && call.status == MEGAChatCallStatusInProgress) {
+        self.groupDetailsSections = @[
+            @(GroupChatDetailsSectionChatNotifications),
+            @(GroupChatDetailsSectionRenameGroup),
+            @(GroupChatDetailsSectionSharedFiles),
+            @(GroupChatDetailsSectionGetChatLink),
+            @(GroupChatDetailsSectionManageChatHistory),
+            @(GroupChatDetailsSectionArchiveChat),
+            @(GroupChatDetailsSectionLeaveGroup),
+            @(GroupChatDetailsSectionEndCallForAll),
+            @(GroupChatDetailsSectionEncryptedKeyRotation),
+            @(GroupChatDetailsSectionObservers),
+            @(GroupChatDetailsSectionParticipants)
+        ];
+    } else {
+        self.groupDetailsSections = @[
+            @(GroupChatDetailsSectionChatNotifications),
+            @(GroupChatDetailsSectionRenameGroup),
+            @(GroupChatDetailsSectionSharedFiles),
+            @(GroupChatDetailsSectionGetChatLink),
+            @(GroupChatDetailsSectionManageChatHistory),
+            @(GroupChatDetailsSectionArchiveChat),
+            @(GroupChatDetailsSectionLeaveGroup),
+            @(GroupChatDetailsSectionEncryptedKeyRotation),
+            @(GroupChatDetailsSectionObservers),
+            @(GroupChatDetailsSectionParticipants)
+        ];
+    }
+}
 
 - (void)updateAppearance {
     self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
@@ -416,12 +461,12 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 10;
+    return self.groupDetailsSections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    switch (section) {
+    switch (self.groupDetailsSections[section].unsignedIntegerValue) {
         case GroupChatDetailsSectionChatNotifications:
             numberOfRows = [self shouldShowChatNotificationEnabledCell] ? 1 : 0;
             break;
@@ -449,7 +494,10 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         case GroupChatDetailsSectionLeaveGroup:
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 1 : 0;
             break;
-            
+        
+        case GroupChatDetailsSectionEndCallForAll:
+            numberOfRows = 1;
+            break;
         case GroupChatDetailsSectionEncryptedKeyRotation: {
             numberOfRows = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
             break;
@@ -478,12 +526,14 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     GroupChatDetailsViewTableViewCell *cell;
     cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
-    if (indexPath.section != GroupChatDetailsSectionParticipants && indexPath.section != GroupChatDetailsSectionObservers && indexPath.section != GroupChatDetailsSectionChatNotifications) {
+    if (self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionParticipants
+        && self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionObservers
+        && self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionChatNotifications) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
         cell.enableLabel.text = @"";
     }
     
-    switch (indexPath.section) {
+    switch (self.groupDetailsSections[indexPath.section].unsignedIntegerValue) {
         case GroupChatDetailsSectionChatNotifications:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsNotificationsTypeID" forIndexPath:indexPath];
             [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
@@ -526,6 +576,15 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
             cell.nameLabel.text = self.chatRoom.isPreview ? NSLocalizedString(@"close", nil) : NSLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
             [cell setDestructive:YES];
+            break;
+        
+        case GroupChatDetailsSectionEndCallForAll:
+            cell.leftImageView.image = [UIImage imageNamed:@"endCall"];
+            cell.leftImageView.tintColor = [UIColor redColor];
+            cell.leftImageView.contentMode = UIViewContentModeScaleAspectFit;
+            cell.nameLabel.text = NSLocalizedString(@"meetings.endCall.endForAllButtonTitle", @"Button title that ends the call for all the participants.");
+            [cell setDestructive:YES];
+            cell.accessoryType = UITableViewCellAccessoryNone;
             break;
 
         case GroupChatDetailsSectionEncryptedKeyRotation:
@@ -649,7 +708,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
-    switch (section) {
+    switch (self.groupDetailsSections[section].unsignedIntegerValue) {
         case GroupChatDetailsSectionChatNotifications:
             [headerView configureWithTitle:nil topDistance:[self shouldShowChatNotificationEnabledCell] ? 20.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
@@ -699,7 +758,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         case GroupChatDetailsSectionLeaveGroup:
             [headerView configureWithTitle:nil topDistance:self.chatRoom.isPreview ? 20.0f : 10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
-            
+        
+        case GroupChatDetailsSectionEndCallForAll:
+            [headerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+            break;
+        
         case GroupChatDetailsSectionEncryptedKeyRotation:
             [headerView configureWithTitle:nil topDistance:(!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
@@ -725,7 +788,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     GenericHeaderFooterView *footerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
-    switch (section) {
+    switch (self.groupDetailsSections[section].unsignedIntegerValue) {
         case GroupChatDetailsSectionChatNotifications: {
             NSString *remainingTimeString = [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
             
@@ -759,7 +822,10 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         case GroupChatDetailsSectionLeaveGroup:
             [footerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
-            
+        case GroupChatDetailsSectionEndCallForAll:
+            [footerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+            break;
+        
         case GroupChatDetailsSectionEncryptedKeyRotation: {
             if (self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
                 footerView.titleLabel.numberOfLines = 0;
@@ -797,7 +863,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        switch (indexPath.section) {
+        switch (self.groupDetailsSections[indexPath.section].unsignedIntegerValue) {
             case GroupChatDetailsSectionRenameGroup:
                 [self renameChatGroup];
                 break;
@@ -867,6 +933,10 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 } else {
                     [self showLeaveChatAlert];
                 }
+                break;
+            
+            case GroupChatDetailsSectionEndCallForAll:
+                [self showEndCallForAll];
                 break;
                 
             case GroupChatDetailsSectionEncryptedKeyRotation: {

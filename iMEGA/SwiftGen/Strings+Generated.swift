@@ -3722,6 +3722,16 @@ public enum Strings {
         /// Display in Main View
         public static let title = Strings.tr("Localizable", "meetings.displayInMainView.title")
       }
+      public enum EndCall {
+        /// End Call
+        public static let buttonTitle = Strings.tr("Localizable", "meetings.endCall.buttonTitle")
+        /// End Call for All
+        public static let endForAllButtonTitle = Strings.tr("Localizable", "meetings.endCall.endForAllButtonTitle")
+        /// End Call for All?
+        public static let endForAllPopupTitle = Strings.tr("Localizable", "meetings.endCall.endForAllPopupTitle")
+        /// You're a host on this call. If you leave this call it will end for all participants.
+        public static let popupDescription = Strings.tr("Localizable", "meetings.endCall.popupDescription")
+      }
       public enum EndCallDialog {
         /// Call will automatically end in 2 mins unless you want to stay on it.
         public static let description = Strings.tr("Localizable", "meetings.endCallDialog.description")
