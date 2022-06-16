@@ -50,8 +50,9 @@ final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
         self.nodesUpdateHandler = nodesUpdateHandler
     }
     
-    //MARK:- Private methods
-    func addNodesUpdateHandler() {
+    // MARK: - Private
+    
+    private func addNodesUpdateHandler() {
         self.nodesUpdateListenerRepo.onUpdateHandler = { [weak self] nodes in
             guard let self = self else { return }
             self.nodesUpdateHandler?(nodes)

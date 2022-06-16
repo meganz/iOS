@@ -19,8 +19,23 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol {
             order: MEGASortOrderType.modificationDesc.rawValue
         )
         
-        return nodeList.toNodeArray().filter{
+        return nodeList.toNodeArray().filter {
             $0.name?.mnz_isVisualMediaPathExtension ?? false
+        }
+    }
+    
+    func videoNodes(inParent parentNode: MEGANode?) -> [MEGANode] {
+        guard let parentNode = parentNode else {
+            return []
+        }
+
+        let nodeList = sdk.children(
+            forParent: parentNode,
+            order: MEGASortOrderType.modificationDesc.rawValue
+        )
+        
+        return nodeList.toNodeArray().filter {
+            $0.name?.mnz_isVideoPathExtension ?? false
         }
     }
     

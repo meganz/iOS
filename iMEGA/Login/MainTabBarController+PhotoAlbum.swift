@@ -17,7 +17,8 @@ extension MainTabBarController {
             
             let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photosVC)
             let photoLibraryRepository = PhotoLibraryRepository.default
-            let photoLibraryUseCase = PhotoLibraryUseCase(repository: photoLibraryRepository)
+            let fileSearchRepository = SDKFilesSearchRepository.default
+            let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
             let viewModel = PhotoViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
                 photoLibraryUseCase: photoLibraryUseCase
