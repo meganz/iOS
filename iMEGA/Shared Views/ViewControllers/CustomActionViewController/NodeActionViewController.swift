@@ -94,10 +94,10 @@ class NodeActionViewController: ActionSheetViewController {
                 .setNodeSelectionType(selectionType)
                 .setIsFavourite(true)
                 .multiselectAlbumBuild()
-        }
-        else {
+        } else {
             actions = NodeActionBuilder()
                 .setNodeSelectionType(selectionType)
+                .setLinkedNodeCount(nodes.publicLinkedNodes().count)
                 .multiselectBuild()
         }
     }

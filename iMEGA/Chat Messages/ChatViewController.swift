@@ -318,7 +318,7 @@ class ChatViewController: MessagesViewController {
                 customModalAlertVC?.dismiss(animated: true, completion: {
                     MEGASdkManager.sharedMEGAChatSdk().removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                         if error.type == .MEGAChatErrorTypeOk {
-                            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.linkRemoved)
+                            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
                         }
                     }))
                     

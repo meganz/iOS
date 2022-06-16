@@ -1630,6 +1630,7 @@
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
+		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
 		B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
@@ -4073,6 +4074,7 @@
 		B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBannerViewProvider.swift; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
+		B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MenuActions.swift"; sourceTree = "<group>"; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
@@ -6303,6 +6305,7 @@
 				5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */,
 				72991F0727E1E14C00BB00D5 /* MEGANode+Backup.swift */,
 				C4C6A49527A4632600873165 /* MegaNode+Additions.swift */,
+				B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */,
 				411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */,
 				411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */,
 				41DC6F701D54E7080081832C /* NSFileManager+MNZCategory.h */,
@@ -13464,6 +13467,7 @@
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */,
 				125E606E285A87C2003C7BB5 /* SearchResultErrorEntity.swift in Sources */,
+				B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */,
 				12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */,
 				A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */,
 				B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */,

@@ -26,6 +26,9 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .sendToChat:
             showSendToChat(nodes)
             setEditMode(false)
+        case .removeLink:
+            removeLinksForNodes(nodes)
+            setEditMode(false)
         default:
             break
         }

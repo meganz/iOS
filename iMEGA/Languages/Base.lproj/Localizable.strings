@@ -398,14 +398,6 @@
 "filesSentToChat"="Files sent to chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d files sent successfully";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Remove Link";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Remove Links";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Link removed";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Links removed";
 /* Title show when a file is being downloaded */
 "downloading"="Downloading";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -2224,6 +2216,8 @@
 "Enter group name"="Enter group name";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Message…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Link removed";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Drag left to cancel, release to send";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */

@@ -49,4 +49,8 @@ extension CloudDriveViewController {
     @objc func prepareToMoveNodes(_ nodes: [MEGANode]) {
         showBrowserNavigation(for: nodes, action: .move)
     }
+    
+    @objc func removeLinksForNodes(_ nodes: [MEGANode]) {
+        nodes.publicLinkedNodes().mnz_removeLinks()
+    }
 }
