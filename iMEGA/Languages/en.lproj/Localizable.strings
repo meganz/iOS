@@ -3056,3 +3056,11 @@
 "meetings.notification.EndCallTimerDuration"="Call will end in %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Download to Offline";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="End Call for All";
+/*Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="End Call for All?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="You're a host on this call. If you leave this call it will end for all participants.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="End Call";

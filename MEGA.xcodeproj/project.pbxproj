@@ -2341,6 +2341,8 @@
 		BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */; };
 		BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */; };
 		BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */; };
+		BFE3B9FE28596715003949FF /* GroupChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9FD28596715003949FF /* GroupChatDetailsViewController.swift */; };
+		BFE3BA40285BD6F9003949FF /* EndCallDialogType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */; };
 		BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -4734,6 +4736,8 @@
 		BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
 		BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
+		BFE3B9FD28596715003949FF /* GroupChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatDetailsViewController.swift; sourceTree = "<group>"; };
+		BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialogType.swift; sourceTree = "<group>"; };
 		BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		BFE556F627E183B40028EF1F /* MEGANode+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions_Tests.swift"; sourceTree = "<group>"; };
 		BFE556F727E183B40028EF1F /* NodeHandle+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NodeHandle+Additions_Tests.swift"; sourceTree = "<group>"; };
@@ -6463,6 +6467,7 @@
 				5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */,
 				E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */,
 				E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */,
+				BFE3B9FD28596715003949FF /* GroupChatDetailsViewController.swift */,
 				BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */,
 				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,
 				E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */,
@@ -8459,6 +8464,7 @@
 				BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */,
 				BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */,
 				8361D9E4283E53620001FAC1 /* NetworkQuality.swift */,
+				BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */,
 			);
 			path = Call;
 			sourceTree = "<group>";
@@ -8645,6 +8651,7 @@
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
 				BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */,
 				BF5455E82844377600544A53 /* EndCallDialog.swift */,
+				BFE3BA05285A880D003949FF /* Utils */,
 				836651272649374B00BC02F0 /* ParticipantsLayout */,
 				2FFCF39E25FB1A1500E1718D /* StartMeetingScene */,
 			);
@@ -10964,6 +10971,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		BFE3BA05285A880D003949FF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		BFE556F427E183B40028EF1F /* SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -12510,6 +12524,7 @@
 				B6F39F232773D338002386BE /* PhotoCellImage.swift in Sources */,
 				B67507C527684FC00034F951 /* PhotoLibraryModeViewModel.swift in Sources */,
 				83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
+				BFE3BA40285BD6F9003949FF /* EndCallDialogType.swift in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				8340CAEF284E222D007C3B39 /* HeaderView.swift in Sources */,
 				8346CA68283CD6E100462F50 /* CopyOrMoveErrorEntity.swift in Sources */,
@@ -13673,6 +13688,7 @@
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
+				BFE3B9FE28596715003949FF /* GroupChatDetailsViewController.swift in Sources */,
 				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,

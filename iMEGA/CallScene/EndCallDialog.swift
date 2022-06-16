@@ -1,29 +1,72 @@
 import UIKit
 
-struct EndCallDialog {
-    private var endCallDialogViewController: UIAlertController
+final class EndCallDialog {
     
-    init(forceDarkMode: Bool = false, stayOnCallAction: @escaping () -> Void, endCallAction: @escaping () -> Void) {
+    //MARK: - Private properties
+
+    private var endCallDialogViewController: UIAlertController?
+    
+    private var type: EndCallDialogType
+    private var forceDarkMode: Bool
+    private var autodismiss: Bool
+    private var stayOnCallAction: () -> Void
+    private var endCallAction: () -> Void
+    
+    //MARK: - Init
+
+    init(type: EndCallDialogType = .endCallForMyself,
+         forceDarkMode: Bool = false,
+         autodismiss: Bool = false,
+         stayOnCallAction: @escaping () -> Void,
+         endCallAction: @escaping () -> Void) {
+        
+        self.type = type
+        self.forceDarkMode = forceDarkMode
+        self.autodismiss = autodismiss
+        self.stayOnCallAction = stayOnCallAction
+        self.endCallAction = endCallAction
+    }
+    
+    //MARK: - Interface methods
+
+    func show(animated: Bool = true) {
+        let endCallDialogViewController = createDialog()
+        self.endCallDialogViewController = endCallDialogViewController
+        UIApplication.mnz_presentingViewController().present(endCallDialogViewController, animated: animated)
+    }
+    
+    func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
+        endCallDialogViewController?.dismiss(animated: animated, completion: completion)
+    }
+    
+    //MARK: - Private methods
+    
+    private func createDialog() -> UIAlertController {
         let endCallDialogViewController = UIAlertController(
-            title: Strings.Localizable.Meetings.EndCallDialog.title,
-            message: Strings.Localizable.Meetings.EndCallDialog.description,
+            title: type.title,
+            message: type.message,
             preferredStyle: .alert
         )
         
         endCallDialogViewController.addAction(
             UIAlertAction(
-                title: Strings.Localizable.Meetings.EndCallDialog.stayOnCallButtonTitle,
+                title: type.cancelTitle,
                 style: .cancel
-            ) { _ in
-                stayOnCallAction()
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.stayOnCallAction()
             }
         )
         
         let endCall = UIAlertAction(
-            title: Strings.Localizable.Meetings.EndCallDialog.endCallNowButtonTitle,
+            title: type.endCallTitle,
             style: .default
-        ) { _ in
-            endCallAction()
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.endCallAction()
+            if self.autodismiss {
+                self.endCallDialogViewController?.dismiss(animated: true)
+            }
         }
         
         endCallDialogViewController.addAction(endCall)
@@ -33,14 +76,6 @@ struct EndCallDialog {
             endCallDialogViewController.overrideUserInterfaceStyle = .dark
         }
         
-        self.endCallDialogViewController = endCallDialogViewController
-    }
-    
-    func show(animated: Bool = true) {
-        UIApplication.mnz_presentingViewController().present(endCallDialogViewController, animated: animated)
-    }
-    
-    func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
-        endCallDialogViewController.dismiss(animated: animated, completion: completion)
+        return endCallDialogViewController
     }
 }
