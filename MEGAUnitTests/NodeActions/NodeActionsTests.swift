@@ -450,6 +450,60 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download]))
     }
     
+    func testFileLinkArrayWithPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files)
+            .setLinkedNodeCount(2)
+            .multiselectBuild()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.download, .shareLink, .removeLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFolderLinkArrayWithPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders)
+            .setLinkedNodeCount(2)
+            .multiselectBuild()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.download, .shareLink, .removeLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFileAndFolderLinkArrayWithPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders)
+            .setLinkedNodeCount(2)
+            .multiselectBuild()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.download, .shareLink, .removeLink, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFileLinkArrayWithoutPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files)
+            .setLinkedNodeCount(0)
+            .multiselectBuild()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFolderLinkArrayWithoutPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders)
+            .setLinkedNodeCount(0)
+            .multiselectBuild()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.download, .shareLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFileAndFolderLinkArrayWithoutPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders)
+            .setLinkedNodeCount(0)
+            .multiselectBuild()
+        
+        XCTAssertTrue(containsExact(nodeActionTypes: [.download, .shareLink, .move, .copy, .moveToRubbishBin]))
+    }
+    
     // MARK: - Text Editor
     
     func testTextEditorAcessUnknown() {

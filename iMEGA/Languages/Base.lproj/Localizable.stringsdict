@@ -290,5 +290,37 @@
         <string>%d files</string>
       </dict>
     </dict>
+    <key>general.menuAction.removeLink.title</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@link@</string>
+        <key>link</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Remove Link</string>
+            <key>other</key>
+            <string>Remove Links</string>
+        </dict>
+    </dict>
+    <key>general.menuAction.removeLink.message.success</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@link@</string>
+        <key>link</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Link removed</string>
+            <key>other</key>
+            <string>Links removed</string>
+        </dict>
+    </dict>
   </dict>
 </plist>

@@ -1125,16 +1125,12 @@ public enum Strings {
     public static let linkCopied = Strings.tr("Localizable", "linkCopied")
     /// Invalid link
     public static let linkNotValid = Strings.tr("Localizable", "linkNotValid")
-    /// Link removed
-    public static let linkRemoved = Strings.tr("Localizable", "linkRemoved")
     /// Links
     public static let links = Strings.tr("Localizable", "Links")
     /// Links Copied to Clipboard
     public static let linksCopiedToClipboard = Strings.tr("Localizable", "Links Copied to Clipboard")
     /// Links copied
     public static let linksCopied = Strings.tr("Localizable", "linksCopied")
-    /// Links removed
-    public static let linksRemoved = Strings.tr("Localizable", "linksRemoved")
     /// Unavailable link
     public static let linkUnavailable = Strings.tr("Localizable", "linkUnavailable")
     /// Link with key
@@ -1693,10 +1689,6 @@ public enum Strings {
     public static let removeItemFromOffline = Strings.tr("Localizable", "removeItemFromOffline")
     /// Are you sure you want to delete these items from Offline?
     public static let removeItemsFromOffline = Strings.tr("Localizable", "removeItemsFromOffline")
-    /// Remove Link
-    public static let removeLink = Strings.tr("Localizable", "removeLink")
-    /// Remove Links
-    public static let removeLinks = Strings.tr("Localizable", "removeLinks")
     /// Are you sure you want to remove these shares? (Shared with %d contacts)
     public static func removeMultipleSharesMultipleContactsMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "removeMultipleSharesMultipleContactsMessage", p1)
@@ -2902,6 +2894,10 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
+      public enum Link {
+        /// Link removed
+        public static let linkRemoved = Strings.tr("Localizable", "chat.link.linkRemoved")
+      }
       public enum ManageHistory {
         public enum Clearing {
           public enum Custom {
@@ -3525,6 +3521,18 @@ public enum Strings {
         public static let deletePermanently = Strings.tr("Localizable", "general.menuAction.deletePermanently")
         /// Move to rubbish bin
         public static let moveToRubbishBin = Strings.tr("Localizable", "general.menuAction.moveToRubbishBin")
+        public enum RemoveLink {
+          /// Plural format key: "%#@link@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.removeLink.title", p1)
+          }
+          public enum Message {
+            /// Plural format key: "%#@link@"
+            public static func success(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "general.menuAction.removeLink.message.success", p1)
+            }
+          }
+        }
       }
       public enum Security {
         /// MEGA-RECOVERYKEY

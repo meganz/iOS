@@ -39,6 +39,11 @@ extension PhotosViewController {
         nodes.forEach { MEGASdkManager.sharedMEGASdk().move($0, newParent: rubbish, delegate: delegate) }
     }
     
+    func handleRemoveLinks(for nodes: [MEGANode]) {
+        nodes.publicLinkedNodes().mnz_removeLinks()
+        setEditing(false, animated: true)
+    }
+    
     @objc func setUpRightNavigationBarButtonItem() {
         editBarButtonItem?.isEnabled = true
         objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem
@@ -90,6 +95,8 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
             handleExportFile(for: nodes, sender: sender)
         case .sendToChat:
             handleSendToChat(for: nodes)
+        case .removeLink:
+            handleRemoveLinks(for: nodes)
         default:
             break
         }

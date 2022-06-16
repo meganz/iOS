@@ -441,14 +441,6 @@
     }
 }
 
-- (void)mnz_removeLink {
-    MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
-        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
-    } multipleLinks:NO];
-    
-    [MEGASdkManager.sharedMEGASdk disableExportNode:self delegate:requestDelegate];
-}
-
 - (void)mnz_sendToChatInViewController:(UIViewController *)viewController {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
