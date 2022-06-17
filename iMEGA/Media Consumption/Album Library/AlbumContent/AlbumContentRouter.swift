@@ -17,9 +17,15 @@ struct AlbumContentRouter: Routing {
             sdk: sdk,
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
+        let photoUseCase = PhotoLibraryUseCase(
+            photosRepository: PhotoLibraryRepository.default,
+            searchRepository: SDKFilesSearchRepository.default
+        )
+        
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            favouriteRepo: favouriteRepo
+            favouriteRepo: favouriteRepo,
+            photoUseCase: photoUseCase
         )
         
         let viewModel = AlbumContentViewModel(cameraUploadNode: cameraUploadNode,

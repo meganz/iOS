@@ -19,9 +19,17 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             sdk: sdk,
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
+        let photoUseCase = PhotoLibraryUseCase(
+            photosRepository: PhotoLibraryRepository.default,
+            searchRepository: SDKFilesSearchRepository.default
+        )
         
         let thumbnailUsecase = ThumbnailUseCase(repository: thumbnailRepo)
-        let albumContentsUseCase = AlbumContentsUseCase(albumContentsRepo: albumContentsRepo, favouriteRepo: favouriteRepo)
+        let albumContentsUseCase = AlbumContentsUseCase(
+            albumContentsRepo: albumContentsRepo,
+            favouriteRepo: favouriteRepo,
+            photoUseCase: photoUseCase
+        )
         
         let vm = AlbumCellViewModel(
             cameraUploadNode: node,
