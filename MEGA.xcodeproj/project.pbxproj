@@ -1461,9 +1461,6 @@
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */; };
-		A871EF94281C288400443810 /* CheckLocalPathUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A871EF93281C288400443810 /* CheckLocalPathUseCase.swift */; };
-		A871EF9A281C309300443810 /* CheckLocalPathUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A871EF99281C309300443810 /* CheckLocalPathUseCaseOCWrapper.swift */; };
-		A871EFA4281C3C4900443810 /* CheckLocalPathUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A871EF9F281C376D00443810 /* CheckLocalPathUseCaseTests.swift */; };
 		A873E84426E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */; };
 		A873E84526E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */; };
 		A873E84626E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */; };
@@ -3929,9 +3926,6 @@
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
 		A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexer.swift; sourceTree = "<group>"; };
-		A871EF93281C288400443810 /* CheckLocalPathUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckLocalPathUseCase.swift; sourceTree = "<group>"; };
-		A871EF99281C309300443810 /* CheckLocalPathUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckLocalPathUseCaseOCWrapper.swift; sourceTree = "<group>"; };
-		A871EF9F281C376D00443810 /* CheckLocalPathUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckLocalPathUseCaseTests.swift; sourceTree = "<group>"; };
 		A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFirstLaunchSecurityChecker.swift; sourceTree = "<group>"; };
 		A873E85A26E2228400CBB174 /* FileVersioningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewModel.swift; sourceTree = "<group>"; };
 		A873E85C26E2248E00CBB174 /* FileVersioningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewRouter.swift; sourceTree = "<group>"; };
@@ -8277,7 +8271,6 @@
 			isa = PBXGroup;
 			children = (
 				83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */,
-				A871EF93281C288400443810 /* CheckLocalPathUseCase.swift */,
 			);
 			path = Offline;
 			sourceTree = "<group>";
@@ -9001,7 +8994,6 @@
 		A871EF9C281C35C000443810 /* LocalPath */ = {
 			isa = PBXGroup;
 			children = (
-				A871EF99281C309300443810 /* CheckLocalPathUseCaseOCWrapper.swift */,
 			);
 			path = LocalPath;
 			sourceTree = "<group>";
@@ -9916,7 +9908,6 @@
 				A81BD5CF27EB697B00234902 /* ClearChatHistoryUseCaseTests.swift */,
 				A81BD5D127EB6CEB00234902 /* HistoryRetentionUseCaseTests.swift */,
 				72718980280054F900B2DB08 /* GetFeedbackInfoUseCaseTests.swift */,
-				A871EF9F281C376D00443810 /* CheckLocalPathUseCaseTests.swift */,
 				B630CD4B284583D000A298EE /* GetFileExtensionUseCaseTests.swift */,
 				83B5E87F27F70DF20073C870 /* DownloadNodeUseCaseTests.swift */,
 			);
@@ -12641,7 +12632,6 @@
 				1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */,
 				B67A2C73251755D500B40D89 /* L10nRepositoryProtocol.swift in Sources */,
 				BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */,
-				A871EF94281C288400443810 /* CheckLocalPathUseCase.swift in Sources */,
 				B654BF5D24FF4D7B00A3CBC8 /* PreferenceUseCase.swift in Sources */,
 				5D8303BC256262350082CA18 /* BannerRepository.swift in Sources */,
 				83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */,
@@ -13380,7 +13370,6 @@
 				C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
 				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
-				A871EF9A281C309300443810 /* CheckLocalPathUseCaseOCWrapper.swift in Sources */,
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
 				BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */,
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
@@ -14417,7 +14406,6 @@
 				83B5E87E27F6FE4A0073C870 /* MockDownloadNodeUseCase.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6D54834283E2D5F00D7302F /* MockAccountCleanerUseCase.swift in Sources */,
-				A871EFA4281C3C4900443810 /* CheckLocalPathUseCaseTests.swift in Sources */,
 				B6AADF0B2518BB0E009A874C /* AchievementUseCaseTests.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
 				5D0C56E324BC17A800EF40B4 /* DateFormatter_SystemRelativeFormatter+ConvientTests.swift in Sources */,
