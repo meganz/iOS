@@ -214,7 +214,7 @@
 		32CB4914284EF56900697BA9 /* PhotoLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */; };
 		32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */; };
 		32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */; };
-		32F9E68028348B320002132D /* AlbumContentsUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67F28348B320002132D /* AlbumContentsUseCaseProtocol.swift */; };
+		32F9E68028348B320002132D /* AlbumContentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67F28348B320002132D /* AlbumContentsUseCase.swift */; };
 		32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */; };
 		32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E683283490A40002132D /* AlbumToolbarProvider.swift */; };
 		32F9E69B283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E69A283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift */; };
@@ -2856,7 +2856,7 @@
 		32CB4910284EF42400697BA9 /* PhotoLibraryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryUseCase.swift; sourceTree = "<group>"; };
 		32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryRepository.swift; sourceTree = "<group>"; };
 		32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepository.swift; sourceTree = "<group>"; };
-		32F9E67F28348B320002132D /* AlbumContentsUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUseCaseProtocol.swift; sourceTree = "<group>"; };
+		32F9E67F28348B320002132D /* AlbumContentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUseCase.swift; sourceTree = "<group>"; };
 		32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfigurator.swift; sourceTree = "<group>"; };
 		32F9E683283490A40002132D /* AlbumToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarProvider.swift; sourceTree = "<group>"; };
 		32F9E69A283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -5531,7 +5531,7 @@
 			isa = PBXGroup;
 			children = (
 				129D51D12821D5A600A4D4D3 /* AlbumListUseCase.swift */,
-				32F9E67F28348B320002132D /* AlbumContentsUseCaseProtocol.swift */,
+				32F9E67F28348B320002132D /* AlbumContentsUseCase.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -12889,7 +12889,7 @@
 				B646DF30276FE9DB00BC543F /* ImageContainer.swift in Sources */,
 				B6E7A8E32503897A00CD6AC2 /* PreferenceWrapper.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
-				32F9E68028348B320002132D /* AlbumContentsUseCaseProtocol.swift in Sources */,
+				32F9E68028348B320002132D /* AlbumContentsUseCase.swift in Sources */,
 				B67A2C862517EABE00B40D89 /* CredentialRepositoryProtocol.swift in Sources */,
 				5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */,
 				0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */,
