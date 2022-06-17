@@ -24,7 +24,7 @@ final class PhotoViewModel: NSObject {
             do {
                 let container = await photoLibraryUseCase.photoLibraryContainer()
                 
-                guard shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) else { return }
+                guard FeatureFlag.shouldRemoveHomeImage || shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) else { return }
                 
                 let photos = try await FeatureFlag.shouldRemoveHomeImage ? photoLibraryUseCase.allPhotos() : photoLibraryUseCase.cameraUploadPhotos()
                 self.mediaNodesArray = photos
