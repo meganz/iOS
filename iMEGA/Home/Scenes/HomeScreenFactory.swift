@@ -51,7 +51,7 @@ final class HomeScreenFactory: NSObject {
             nodeFavouriteActionUseCase: NodeFavouriteActionUseCase(
                 nodeFavouriteRepository: NodeFavouriteActionRepository()
             ),
-            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: sdk))
+            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(
             userBannerUseCase: UserBannerUseCase(

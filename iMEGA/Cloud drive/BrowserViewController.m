@@ -565,9 +565,18 @@
 #ifdef MAIN_APP_TARGET
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
-        [self dismissAndSelectNodesIfNeeded:NO completion:^{
-            [[NameCollisionRouterOCWrapper.alloc init] copyNodes:self.selectedNodesArray to:self.parentNode isFolderLink:self.browserAction == BrowserActionImportFromFolderLink presenter:UIApplication.mnz_presentingViewController];
-        }];
+        if (self.browserAction == BrowserActionImport && [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.selectedNodesArray[0]] == MEGAShareTypeAccessUnknown) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
+            for (MEGANode *node in self.selectedNodesArray) {
+                self.remainingOperations++;
+                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode];
+            }
+        } else {
+            [self dismissAndSelectNodesIfNeeded:NO completion:^{
+                [[NameCollisionRouterOCWrapper.alloc init] copyNodes:self.selectedNodesArray to:self.parentNode isFolderLink:self.browserAction == BrowserActionImportFromFolderLink presenter:UIApplication.mnz_presentingViewController];
+            }];
+        }
     }
 #endif
 }

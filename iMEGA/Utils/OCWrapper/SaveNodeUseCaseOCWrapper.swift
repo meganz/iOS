@@ -3,7 +3,7 @@
     let saveNodeUseCase = SaveNodeUseCase(
         offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk()),
         fileCacheRepository: FileCacheRepository.default,
-        nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+        nodeRepository: NodeRepository.default,
         photosLibraryRepository: PhotosLibraryRepository())
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {

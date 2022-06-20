@@ -5,7 +5,7 @@ final class NodeActionViewControllerGenericDelegate:
 {
     private weak var viewController: UIViewController?
 
-    private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+    private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
 
     private let saveToPhotosCompletion: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
         SVProgressHUD.dismiss()

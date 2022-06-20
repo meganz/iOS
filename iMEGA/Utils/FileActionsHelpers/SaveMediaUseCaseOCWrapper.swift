@@ -9,7 +9,7 @@
         }
     }
     
-    let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+    let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
     
     @objc func saveToPhotos(node: MEGANode, cancelToken: MEGACancelToken) {
         DevicePermissionsHelper.photosPermission { granted in
