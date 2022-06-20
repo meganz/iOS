@@ -2340,6 +2340,7 @@
 		BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */; };
 		BFE3B9FE28596715003949FF /* GroupChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9FD28596715003949FF /* GroupChatDetailsViewController.swift */; };
 		BFE3BA40285BD6F9003949FF /* EndCallDialogType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */; };
+		BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */; };
 		BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -4732,6 +4733,7 @@
 		BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
 		BFE3B9FD28596715003949FF /* GroupChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatDetailsViewController.swift; sourceTree = "<group>"; };
 		BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialogType.swift; sourceTree = "<group>"; };
+		BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingContainerViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFE40CA4265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		BFE556F627E183B40028EF1F /* MEGANode+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions_Tests.swift"; sourceTree = "<group>"; };
 		BFE556F727E183B40028EF1F /* NodeHandle+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NodeHandle+Additions_Tests.swift"; sourceTree = "<group>"; };
@@ -10677,6 +10679,7 @@
 				8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */,
 				8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */,
 				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
+				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -14445,6 +14448,7 @@
 				83B5E88A27F71BC70073C870 /* MockPhotosLibraryRepository.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
+				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				A8B8E02E273A697200C64E0A /* MockTransferRepository.swift in Sources */,
 				B66BA2472514DD2C009787BD /* MockPreferenceUseCase.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
