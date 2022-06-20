@@ -172,7 +172,7 @@ extension ChatViewController {
                    let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
                     node = authorizedNode
                 }
-                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
                 cancelToken = MEGACancelToken()
                 
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()

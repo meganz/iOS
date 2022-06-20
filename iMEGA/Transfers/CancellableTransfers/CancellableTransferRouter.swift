@@ -19,7 +19,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting {
     
     func build() -> UIViewController {
         let sdk = isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
-        let nodeRepository = NodeRepository(sdk: sdk)
+        let nodeRepository = NodeRepository.default
         let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
         
         let viewModel = CancellableTransferViewModel(

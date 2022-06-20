@@ -14,7 +14,7 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
     
     func build() -> UIViewController {
         let sdk = MEGASdkManager.sharedMEGASdk()
-        let nodeRepository = NodeRepository(sdk: sdk)
+        let nodeRepository = NodeRepository.default
         let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
         
         let viewModel =  ShareExtensionCancellableTransferViewModel(router: self, uploadFileUseCase: UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.default), transfers: transfers)
