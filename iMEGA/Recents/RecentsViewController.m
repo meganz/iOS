@@ -149,7 +149,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (ThumbnailViewerTableViewCell *)thumbnailViewerTableViewCellForIndexPath:(NSIndexPath *)indexPath recentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
-    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? @"RecentsMediaTVC" : @"RecentsSharedMediaTVC";
+    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:self.myEmail] ? @"RecentsMediaTVC" : @"RecentsSharedMediaTVC";
     ThumbnailViewerTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [ThumbnailViewerTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
