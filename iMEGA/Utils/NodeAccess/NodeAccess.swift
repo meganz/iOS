@@ -4,8 +4,8 @@ typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: Error?) -> Void
 
 struct NodeAccessConfiguration {
     var autoCreate: (() -> Bool)? = nil
-    let updateInMemoryNotificationName: Notification.Name
-    let updateInRemoteNotificationName: Notification.Name
+    let updateInMemoryNotificationName: Notification.Name?
+    let updateInRemoteNotificationName: Notification.Name?
     let loadNodeRequest: (MEGARequestDelegate) -> Void
     var setNodeRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)? = nil
     var nodeName: String? = nil
@@ -22,8 +22,8 @@ class NodeAccess: NSObject {
     /// All changes in the SDK and in memory are notified so that the handle value is always up to date. This handle is the single source of truth on target node handle check.
     private var handle: NodeHandle? {
         didSet {
-            if handle != oldValue && oldValue != nil {
-                NotificationCenter.default.post(name: nodeAccessConfiguration.updateInMemoryNotificationName, object: nil)
+            if handle != oldValue && oldValue != nil, let updateInMemoryNotificationName = nodeAccessConfiguration.updateInMemoryNotificationName {
+                NotificationCenter.default.post(name: updateInMemoryNotificationName, object: nil)
             }
         }
     }
@@ -33,7 +33,9 @@ class NodeAccess: NSObject {
         
         super.init()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNodeChangeNotification), name: nodeAccessConfiguration.updateInRemoteNotificationName, object: nil)
+        if let updateInRemoteNotificationName = nodeAccessConfiguration.updateInRemoteNotificationName {
+            NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNodeChangeNotification), name: updateInRemoteNotificationName, object: nil)
+        }
         
         loadNodeToMemory()
     }
