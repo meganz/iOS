@@ -1308,6 +1308,8 @@
         if (@available(iOS 14.0, *)) {
             [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
         }
+        
+        [self postNodeUpdatesNotificationsFor:nodeList];
     } else {
         self.cancelToken = MEGACancelToken.alloc.init;
         [Helper startPendingUploadTransferIfNeededWithCancelToken:self.cancelToken];
