@@ -262,11 +262,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (ContactTableViewCell *)cellForVerifyCredentialsWithIndexPath:(NSIndexPath *)indexPath {
-    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsVerifyCredentialsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
     cell.nameLabel.text = NSLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
     cell.nameLabel.textColor = UIColor.mnz_label;
-    cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? NSLocalizedString(@"verified", @"Button title") : @"";
     
     return cell;
 }
