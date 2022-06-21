@@ -33,6 +33,7 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
         let container = await photoUseCase.photoLibraryContainer()
         
         var filteredNodes = try await nodes.filter { isNodeInContainer($0, container: container) }
+        filteredNodes = filteredNodes.filter { $0.name.mnz_isVisualMediaPathExtension }
         filteredNodes.sort { $0.modificationTime >= $1.modificationTime }
         
         return filteredNodes
