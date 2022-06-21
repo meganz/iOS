@@ -56,7 +56,6 @@ final class PhotoCellViewModel: ObservableObject {
         
         configZoomState(with: viewModel)
         configSelection()
-        subscribeLibraryChange(viewModel: viewModel)
         subscribeToPhotoFavouritesChange()
     }
     
@@ -138,19 +137,6 @@ final class PhotoCellViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.currentZoomScaleFactor = $0.scaleFactor
-            }
-            .store(in: &subscriptions)
-    }
-    
-    private func subscribeLibraryChange(viewModel: PhotoLibraryAllViewModel) {
-        viewModel
-            .libraryViewModel
-            .$library
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                if let self = self, let photo = $0.allPhotos.first(where: { $0 == self.photo }), self.isFavorite != photo.isFavourite {
-                    self.isFavorite = photo.isFavourite
-                }
             }
             .store(in: &subscriptions)
     }
