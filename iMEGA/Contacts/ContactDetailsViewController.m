@@ -85,6 +85,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (nonatomic, getter=shouldWaitForChatConnectivity) BOOL waitForChatConnectivity;
 @property (nonatomic, getter=isVideoCall) BOOL videoCall;
 
+@property (assign, nonatomic, getter=areCredentialsVerified) BOOL credentialsVerified;
+
 @end
 
 @implementation ContactDetailsViewController
@@ -179,6 +181,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self updateAppearance];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
+    
+    [self updateCredentialsVerified];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -266,7 +270,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
     cell.nameLabel.text = NSLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
     cell.nameLabel.textColor = UIColor.mnz_label;
-    
+    cell.permissionsImageView.hidden = !self.areCredentialsVerified;
     return cell;
 }
 
@@ -484,10 +488,19 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
 }
 
+- (void)updateCredentialsVerified {
+    self.credentialsVerified = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user];
+}
+
 - (void)presentVerifyCredentialsViewController {
     VerifyCredentialsViewController *verifyCredentialsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyCredentialsViewControllerID"];
     verifyCredentialsVC.user = self.user;
     verifyCredentialsVC.userName = self.userName;
+    typeof(self) weakself = self;
+    verifyCredentialsVC.statusUpdateCompletionBlock = ^() {
+        [weakself updateCredentialsVerified];
+        [weakself.tableView reloadData];
+    };
     MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:verifyCredentialsVC];
     [navigationController addRightCancelButton];
     
