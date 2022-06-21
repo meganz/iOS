@@ -146,6 +146,7 @@
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
             } else {
                 [self updateVerifyOrResetButton];
+                self.statusUpdateCompletionBlock();
             }
         }];
         [MEGASdkManager.sharedMEGASdk resetCredentialsOfUser:self.user delegate:resetCredentialsOfUserDelegate];
@@ -157,6 +158,7 @@
                 [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"verified", @"Button title")];
                 
                 [self updateVerifyOrResetButton];
+                self.statusUpdateCompletionBlock();
             }
         }];
         [MEGASdkManager.sharedMEGASdk verifyCredentialsOfUser:self.user delegate:verifyCredentialsOfUserDelegate];
