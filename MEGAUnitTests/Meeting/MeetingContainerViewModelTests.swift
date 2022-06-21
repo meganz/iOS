@@ -159,6 +159,54 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(router.didShowEndDialog_calledTimes == 1)
         subscription = nil
     }
+    
+    func testAction_muteMicrophoneForMeetingsWhenLastParticipantLeft() {
+        let chatRoom = ChatRoomEntity(chatType: .meeting)
+        let chatRoomUsecase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+
+        let call = CallEntity(hasLocalAudio: true, numberOfParticipants: 1, participants: [100])
+        let callUseCase = MockCallUseCase(call: call)
+        
+        let userUseCase = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false)
+        let callManagerUseCase = MockCallManagerUseCase()
+        
+        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callManagerUseCase: callManagerUseCase, userUseCase: userUseCase)
+        
+        test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
+        XCTAssert(callManagerUseCase.muteUnmute_CalledTimes == 1)
+    }
+    
+    func testAction_muteMicrophoneForGroupWhenLastParticipantLeft() {
+        let chatRoom = ChatRoomEntity(chatType: .group)
+        let chatRoomUsecase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+
+        let call = CallEntity(hasLocalAudio: true, numberOfParticipants: 1, participants: [100])
+        let callUseCase = MockCallUseCase(call: call)
+        
+        let userUseCase = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false)
+        let callManagerUseCase = MockCallManagerUseCase()
+        
+        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callManagerUseCase: callManagerUseCase, userUseCase: userUseCase)
+        
+        test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
+        XCTAssert(callManagerUseCase.muteUnmute_CalledTimes == 1)
+    }
+    
+    func testAction_donotMuteMicrophoneForOneToOneWhenLastParticipantLeft() {
+        let chatRoom = ChatRoomEntity(chatType: .oneToOne)
+        let chatRoomUsecase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+
+        let call = CallEntity(hasLocalAudio: true, numberOfParticipants: 1, participants: [100])
+        let callUseCase = MockCallUseCase(call: call)
+        
+        let userUseCase = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false)
+        let callManagerUseCase = MockCallManagerUseCase()
+        
+        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callManagerUseCase: callManagerUseCase, userUseCase: userUseCase)
+        
+        test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
+        XCTAssert(callManagerUseCase.muteUnmute_CalledTimes == 0)
+    }
 }
 
 final class MockMeetingContainerRouter: MeetingContainerRouting {

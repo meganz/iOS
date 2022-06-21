@@ -194,6 +194,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private func muteMicrophoneIfNoOtherParticipantsArePresent() {
         if let call = call,
            call.hasLocalAudio,
+           isOneToOneChat == false,
            isOnlyMyselfInTheMeeting() {
             callManagerUseCase.muteUnmuteCall(call, muted: true)
         }
