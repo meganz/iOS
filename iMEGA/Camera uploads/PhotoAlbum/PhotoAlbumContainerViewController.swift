@@ -66,7 +66,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         switch viewController {
         case is PhotosViewController:
             return .timeline
-        case is UIHostingController<AlbumLibraryContentView>:
+        case is UIHostingController<AlbumListView>:
             return .album
         default:
             return .timeline
@@ -84,7 +84,20 @@ final class PhotoAlbumContainerViewController: UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Photos", bundle: nil)
         photoViewController = storyboard.instantiateViewController(withIdentifier: "photoViewController") as? PhotosViewController
         
-        albumHostingController = AlbumLibraryContentViewRouter().build()
+        if let photoViewController = photoViewController {
+            let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photoViewController)
+            let photoLibraryRepository = PhotoLibraryRepository.default
+            let fileSearchRepository = SDKFilesSearchRepository.default
+            let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
+            let viewModel = PhotoViewModel(
+                photoUpdatePublisher: photoUpdatePublisher,
+                photoLibraryUseCase: photoLibraryUseCase
+            )
+            photoViewController.viewModel = viewModel
+            photoViewController.photoUpdatePublisher = photoUpdatePublisher
+        }
+
+        albumHostingController = AlbumListViewRouter().build()
         
         photoViewController?.parentPhotoAlbumsController = self
         photoViewController?.configureMyAvatarManager()
@@ -149,8 +162,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            hostingController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             hostingController.view.heightAnchor.constraint(equalToConstant: 38)
         ])
     }
@@ -161,8 +174,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             self.pageController.view.topAnchor.constraint(equalTo: hostingController.view.bottomAnchor, constant: 2),
-            self.pageController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.pageController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.pageController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }

@@ -17,10 +17,17 @@ enum MeetingContainerAction: ActionType {
     case didSwitchToGridView
     case participantAdded
     case participantRemoved
+    case showEndCallDialogIfNeeded
+    case removeEndCallAlertAndEndCall
+    case showJoinMegaScreen
 }
 
 final class MeetingContainerViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
+    }
+    
+    private enum Constants {
+        static let muteMicTimerDuration = 60 // 1 minute
     }
     
     private let router: MeetingContainerRouting
@@ -30,6 +37,8 @@ final class MeetingContainerViewModel: ViewModelType {
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
+    private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
+    private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
 
     private var call: CallEntity? {
@@ -46,7 +55,8 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callManagerUseCase: CallManagerUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
-         authUseCase: AuthUseCaseProtocol) {
+         authUseCase: AuthUseCaseProtocol,
+         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
@@ -54,9 +64,11 @@ final class MeetingContainerViewModel: ViewModelType {
         self.callManagerUseCase = callManagerUseCase
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
+        self.noUserJoinedUseCase = noUserJoinedUseCase
         
+        let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callManagerUseCase.addCallRemoved { [weak self] uuid in
-            guard let uuid = uuid, let self = self, self.call?.uuid == uuid else { return }
+            guard let uuid = uuid, let self = self, callUUID == uuid else { return }
             self.callManagerUseCase.removeCallRemovedHandler()
             router.dismiss(animated: false, completion: nil)
         }
@@ -70,13 +82,25 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showMeetingUI(containerViewModel: self)
             if isOneToOneChat == false {
                 muteMicSubscription = Just(Void.self)
-                    .delay(for: .seconds(60), scheduler: RunLoop.main)
+                    .delay(for: .seconds(Constants.muteMicTimerDuration), scheduler: RunLoop.main)
                     .sink() { [weak self] _ in
                         guard let self = self else { return }
 
                         self.muteMicrophoneIfNoOtherParticipantsArePresent()
                         self.muteMicSubscription = nil
                     }
+                
+                noUserJoinedSubscription = noUserJoinedUseCase
+                    .monitor
+                    .receive(on: DispatchQueue.main)
+                    .sink() { [weak self] in
+                        guard let self = self else { return }
+                        
+                        self.showEndCallDialogIfNeeded {
+                            self.cancelNoUserJoinedSubscription()
+                        }
+                        self.noUserJoinedSubscription = nil
+                }
             }
         case.hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
@@ -126,8 +150,16 @@ final class MeetingContainerViewModel: ViewModelType {
             router.didSwitchToGridView()
         case .participantAdded:
             cancelMuteMicrophoneSubscription()
+            cancelNoUserJoinedSubscription()
+            router.removeEndCallDialog(completion: nil)
         case .participantRemoved:
             muteMicrophoneIfNoOtherParticipantsArePresent()
+        case .showEndCallDialogIfNeeded:
+            showEndCallDialogIfNeeded()
+        case .removeEndCallAlertAndEndCall:
+            removeEndCallAlertAndEndCall()
+        case .showJoinMegaScreen:
+            router.showJoinMegaScreen()
         }
     }
     
@@ -162,19 +194,62 @@ final class MeetingContainerViewModel: ViewModelType {
     private func muteMicrophoneIfNoOtherParticipantsArePresent() {
         if let call = call,
            call.hasLocalAudio,
-           call.numberOfParticipants == 1,
-           call.participants.first == userUseCase.myHandle {
+           isOneToOneChat == false,
+           isOnlyMyselfInTheMeeting() {
             callManagerUseCase.muteUnmuteCall(call, muted: true)
         }
     }
+    
+    private func isOnlyMyselfInTheMeeting() -> Bool {
+        guard let call = call,
+           call.numberOfParticipants == 1,
+           call.participants.first == userUseCase.myHandle else {
+            return false
+        }
         
+        return true
+    }
+    
+    private func showEndCallDialogIfNeeded(stayOnCallCompletion: (() -> Void)? = nil) {
+        guard isOnlyMyselfInTheMeeting() else { return }
+        router.showEndCallDialog { [weak self] in
+            guard let self = self else { return }
+            self.endCall()
+        } stayOnCallCompletion: {
+            stayOnCallCompletion?()
+        }
+    }
+    
     private func cancelMuteMicrophoneSubscription() {
         muteMicSubscription?.cancel()
         muteMicSubscription = nil
     }
     
+    private func cancelNoUserJoinedSubscription() {
+        noUserJoinedSubscription?.cancel()
+        noUserJoinedSubscription = nil
+    }
+    
+    private func removeEndCallAlertAndEndCall() {
+        router.removeEndCallDialog { [weak self] in
+            guard let self = self else { return }
+            self.endCall()
+        }
+    }
+    
+    private func endCall() {
+        if self.userUseCase.isGuest {
+            self.dispatch(.endGuestUserCall {
+                self.dispatch(.showJoinMegaScreen)
+            })
+        } else {
+            self.dismissCall(completion: nil)
+        }
+    }
+    
     deinit {
         cancelMuteMicrophoneSubscription()
+        cancelNoUserJoinedSubscription()
         self.callManagerUseCase.removeCallRemovedHandler()
     }
     

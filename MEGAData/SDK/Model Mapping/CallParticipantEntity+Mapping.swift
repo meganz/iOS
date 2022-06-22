@@ -28,7 +28,8 @@ extension CallParticipantEntity {
                   isVideoHiRes: session.isHighResolution,
                   isVideoLowRes: session.isLowResolution,
                   canReceiveVideoHiRes: session.canReceiveVideoHiRes,
-                  canReceiveVideoLowRes: session.canReceiveVideoLowRes)
+                  canReceiveVideoLowRes: session.canReceiveVideoLowRes,
+                  sessionRecoverable: session.termCode == .recoverable)
     }
     
     static func myself(

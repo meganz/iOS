@@ -7,6 +7,7 @@ extension FileCacheRepository {
 final class FileCacheRepository: FileCacheRepositoryProtocol {
     private enum Constants {
         static let originalCacheDirectory = "originalV3"
+        static let uploadsDirectory = "Uploads"
     }
     
     private let fileManager: FileManager
@@ -43,5 +44,31 @@ final class FileCacheRepository: FileCacheRepositoryProtocol {
     func existingOriginalImageURL(for node: NodeEntity) -> URL? {
         let url = cachedOriginalImageURL(for: node)
         return fileManager.fileExists(atPath: url.path) ? url : nil
+    }
+    
+    func cachedOriginalURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
+        let directory = cachedOriginalImageDirectoryURL.appendingPathComponent(base64Handle, isDirectory: true)
+        try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
+        return directory.appendingPathComponent(name)
+    }
+    
+    // MARK: - Uploads
+    func tempUploadURL(for name: String) -> URL {
+        let directory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(Constants.uploadsDirectory)
+        try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
+        return directory.appendingPathComponent(name)
+    }
+    
+    //MARK: - Tempfolder
+    func cachedFileURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
+        let directory = NSTemporaryDirectory().append(pathComponent: base64Handle)
+        try? fileManager.createDirectory(atPath: directory, withIntermediateDirectories: true)
+        
+        return URL(fileURLWithPath: directory).appendingPathComponent(name)
+    }
+    
+    //MARK: - Offline
+    func offlineFileURL(name: String) -> URL {
+        (fileManager.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: "")).appendingPathComponent(name)
     }
 }

@@ -43,7 +43,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Неправильная ссылка";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Аккаунт владельца этой ссылки быа заблокирован за многочисленные нарушения [A]условий предоставления услуг[/A].";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Аккаунт владельца этой ссылки быа заблокирован за многочисленные нарушения [A]условий использования[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Введите ключ дешифрирования";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -97,7 +97,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Пожалуйста, проверьте адрес эл. почты и перейдите по ссылке для подтверждения.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Ваш аккаунт был заблокирован из-за нарушения условий предоставления услуг MEGA, включая, помимо прочего, пункт 15.";
+"accountBlocked"="Ваш аккаунт был заблокирован из-за нарушения условий использования MEGA, включая, помимо прочего, пункт 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Введите правильный email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -131,7 +131,7 @@
 /*  */
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Я согласен с <a href=\"terms\">Условиями предоставления услуг</a> MEGA";
+"agreeWithTheMEGATermsOfService"="Я согласен с <a href=\"terms\">Условиями использования</a> MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
 "agreeWithLosingPasswordYouLoseData"="Я понимаю, что, [S]если я потеряю пароль, я могу потерять свои данные.[/S] Подробнее о <a href=\"terms\">сквозном шифровании MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Пароли не совпадают";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Вы должны принять условия предоставления услуг, чтобы зарегистрировать учётную запись в MEGA.";
+"termsCheckboxUnselected"="Вы должны принять условия использования, чтобы зарегистрировать аккаунт в MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Вы должны согласиться с тем, что понимаете опасность потери пароля";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Это могло произойти в силу следующих причин:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Файл был удалён, поскольку он нарушал наши условия обслуживания";
+"fileLinkUnavailableText2"="Файл был удалён из-за нарушения наших условий использования";
 /*  */
 "fileLinkUnavailableText3"="Запрошенная вами страница не существует. Возможно ссылка, по которой вы перешли, не существует";
 /*  */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Это могло произойти в силу следующих причин:";
 /*  */
-"folderLinkUnavailableText2"="Ссылка на папку была удалёна, поскольку она нарушала наши условия обслуживания.";
+"folderLinkUnavailableText2"="Ссылка на папку была удалёна из-за нарушения наших условий использования.";
 /*  */
 "folderLinkUnavailableText3"="Запрошенная вами страница не существует. Возможно ссылка, по которой вы перешли, не существует";
 /*  */
@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="Нет загрузок в облако";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Облачный диск";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d файл";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="файлов: %d";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d папка";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="Папок: %d";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 папка • 1 файл";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="Папок: [A] • файлов: [B]";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="Папок: %d • 1 файл";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 папка • файлов: %d";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ устройство";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="У вас больше нет доступа к этому файлу";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="У вас больше нет доступа к этой папке";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Сохранить локально";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Название «Входящие» зарезервировано для использования Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Фото загружены, загрузка видео отключена; 1 видео не загружено";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Фото загружены, загрузка видео отключена; %lu видео не загружено";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="файлы: %1$d из %2$d";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="файлы: %1$d из %2$d";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="Элементов выбрано: %lu";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -691,7 +669,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Настройки куки";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Условия предоставления услуг";
+"termsOfServicesLabel"="Условия использования";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Регламент по защите данных";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -1163,7 +1141,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Включить режим ОТЛАДКИ";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Журнал будет создан локально (MEGAiOS.log). Журналы могут содержать информацию о вашей учётной записи.";
+"enableDebugMode_message"="Журнал будет создан локально (MEGAiOS.log). Журналы могут содержать информацию о вашем аккаунте.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Отключить режим ОТЛАДКИ";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1281,7 +1259,7 @@
 /* start a chat/conversation */
 "startConversation"="Начать Разговор";
 /* Label title for a group chat */
-"groupChat"="Групповой Чат";
+"groupChat"="Групповой чат";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Переименовать группу";
 /* A button label. The button allows the user to leave the group conversation. */
@@ -1455,11 +1433,11 @@
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Неверный ключ приложения";
 /* Error shown when terms of service are breached during download. */
-"Terms of Service breached"="Нарушены условия предоставления услуг";
+"Terms of Service breached"="Нарушены условия использования";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Передача не удалась из-за рекурсивной структуры директорий";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Нарушены условия обслуживания";
+"transfer.error.termsOfServiceViolation"="Нарушены условия использования";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Сбой проверки SSL";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="Отображение эскизов";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Вид страницы";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Плохое соединение.";
 /* There are no notifications to display. */
 "No notifications"="Нет оповещений";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="Изображения (%1)";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="Видео (%2)";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="Изображения (1) и видео (1)";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="Изображения (1) и видео (%2)";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="Изображения (%1) и видео (1)";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="Изображения (%1) и видео (%2)";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Изменено пользователем %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2423,7 +2391,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Сбросить пароль";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Эта ссылка недоступна, так как аккаунт пользователя был закрыт за грубое нарушение [A]условий обслуживания[/A] MEGA.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Эта ссылка недоступна, так как аккаунт пользователя был закрыт за грубое нарушение [A]условий использования[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Нам сообщили, что эта папка/файл содержит нежелательный контент, такой как эксплуатация детей, насильственный экстремизм или жестокое обращение с животными. Аккаунт пользователя, создавшего ссылку, был закрыт, и его полная информация, включая IP-адрес, была предоставлена властям.";
 /* Text used to show the user that some resource is not available */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="Динамик";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Сменить";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="Переподключение";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="Unable to reconnect";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="Bad connection";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Превью изображений с высоким разрешением";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="Прикрепить лог-файлы?";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Прикрепить файлы журналов диагностики, чтобы облегчить отладку?";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="Отменить передачу";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="Да, отменить";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="Нет, продолжить";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="Сканирование…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="Пожалуйста, не закрывайте приложение.";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="Передача отменена";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Сообщение об ошибке";
 /* Title of the dialog button to discard a report. */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="Высокое";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Лучшее";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="Duplicated item";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="Скопировать и объединить";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="Объединить существующую папку с копируемой.";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="Не копировать";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="Переместить и объединить";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="Объединить существующую папку с перемещаемой.";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="Не перемещать";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="Загрузить и объединить";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="Объединить существующую папку с загружаемой.";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="Не загружать";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="Skip this folder.";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="Выберите файл, который хотите оставить:";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="Копировать и заменить";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="Заменить файл в папке назначения копируемым.";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="Переместить и заменить";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="Заменить файл в папке назначения перемещаемым.";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="Загрузить и заменить";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="Файлы не изменятся. Останется этот файл:";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="Копировать и переименовать";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="Копируемый файл будет переименован в:";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="Переместить и переименовать";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="Перемещаемый файл будет переименован в:";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="Загрузить и переименовать";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="Загружаемый файл будет переименован в:";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="Загрузить и заменить";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="Этот файл будет обновлён с изменением версии:";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="Здесь только вы";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="Звонок автоматически завершится через 2 минуты, если вы не захотите остаться в нём.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Продолжить звонок";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="Завершить звонок";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="Звонок завершится через %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

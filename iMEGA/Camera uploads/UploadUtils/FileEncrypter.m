@@ -124,13 +124,14 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             lastPosition = position.unsignedLongLongValue;
             
             NSError *fileHandleError;
-            [self truncateFileIfPossibleAtOffset:lastPosition withHandle:fileHandle error:&fileHandleError];
-            if (fileHandleError) {
-                if (error != NULL) {
-                    *error = fileHandleError;
+            if(![self truncateFileIfPossibleAtOffset:lastPosition withHandle:fileHandle error:&fileHandleError]){
+                if (fileHandleError) {
+                    if (error != NULL) {
+                        *error = fileHandleError;
+                    }
+                    
+                    return @{};
                 }
-                
-                return @{};
             }
         } else {
             if (error != NULL) {
@@ -148,18 +149,21 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     return chunksDict;
 }
 
-- (void)truncateFileIfPossibleAtOffset:(unsigned long long)offset withHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing _Nullable *)error {
+- (BOOL)truncateFileIfPossibleAtOffset:(unsigned long long)offset withHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing _Nullable *)error {
     if (self.shouldTruncateFile && fileHandle) {
         @try {
             [fileHandle truncateFileAtOffset:offset];
+            return YES;
         } @catch (NSException *exception) {
             if (NSFileManager.defaultManager.mnz_fileSystemFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes && error != NULL) {
                 *error = [NSError mnz_cameraUploadNoEnoughDiskSpaceError];
             } else if (error != NULL) {
                 *error = [NSError mnz_cameraUploadFileHandleException:exception];
             }
+            return NO;
         }
     }
+    return NO;
 }
 
 - (NSArray<NSNumber *> *)calculteChunkPositionsForFileAtURL:(NSURL *)fileURL chunkSize:(NSUInteger)chunkSize error:(NSError **)error {

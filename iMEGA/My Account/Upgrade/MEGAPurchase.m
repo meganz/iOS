@@ -152,10 +152,12 @@
                 NSTimeInterval lastPublicTimestampAccessed = [NSUserDefaults.standardUserDefaults doubleForKey:MEGALastPublicTimestampAccessed];
                 uint64_t lastPublicHandleAccessed = [[NSUserDefaults.standardUserDefaults objectForKey:MEGALastPublicHandleAccessed] unsignedLongLongValue];
                 NSInteger lastPublicTypeAccessed = [NSUserDefaults.standardUserDefaults integerForKey:MEGALastPublicTypeAccessed];
-                if (lastPublicTimestampAccessed && lastPublicHandleAccessed && lastPublicTypeAccessed) {
+                if (lastPublicTimestampAccessed && lastPublicHandleAccessed && lastPublicTypeAccessed && receipt) {
                     [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:receipt lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:self];
                 } else {
-                    [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
+                    if (receipt) {
+                        [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
+                    }
                 }
                 
                 MEGALogDebug(@"[StoreKit] Transaction purchased");
@@ -173,7 +175,9 @@
             case SKPaymentTransactionStateRestored:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 if (shouldSubmitReceiptOnRestore) {
-                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
+                    if (receipt) {
+                        [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
+                    }
                     MEGALogDebug(@"[StoreKit] Transaction restored");
                     for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
                         [restoreDelegate successfulRestore:self];

@@ -35,7 +35,6 @@
 @property (nonatomic) NSUInteger pendingAssets;
 @property (nonatomic) NSUInteger totalAssets;
 @property (nonatomic) NSUInteger unsupportedAssets;
-@property (nonatomic) NSUInteger alreadyInDestinationAssets;
 @property (nonatomic) float progress;
 @property (nonatomic) NSDate *lastProgressChange;
 
@@ -55,6 +54,9 @@
 @property (nonatomic) NSArray<MEGAUser *> *users;
 @property (nonatomic) NSMutableSet<NSNumber *> *openedChatIds;
 @property (nonatomic, strong) MEGAGenericRequestDelegate *logoutDelegate;
+
+@property (strong, nonatomic) MEGANode *parentNode;
+@property (nonatomic) NSMutableArray<CancellableTransfer *> *transfers;
 
 @end
 
@@ -148,6 +150,7 @@
     
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
     self.lastProgressChange = [NSDate new];
+    self.transfers = NSMutableArray.new;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -280,7 +283,7 @@
                                                           bundle:[NSBundle bundleForClass:[LoginRequiredViewController class]]] instantiateViewControllerWithIdentifier:@"LoginRequiredNavigationControllerID"];
         
         LoginRequiredViewController *loginRequiredVC = self.loginRequiredNC.childViewControllers.firstObject;
-        loginRequiredVC.navigationItem.title = @"MEGA";
+        loginRequiredVC.navigationItem.title = NSLocalizedString(@"MEGA", nil);
         loginRequiredVC.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
         
         __weak __typeof__(self) weakSelf = self;
@@ -297,7 +300,7 @@
 }
 
 - (void)loginToMEGA {
-    self.navigationItem.title = @"MEGA";
+    self.navigationItem.title = NSLocalizedString(@"MEGA", nil);
     
     LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
     launchVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
@@ -481,7 +484,7 @@
     NSExtensionItem *content = self.extensionContext.inputItems.firstObject;
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
-    self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
+    self.unsupportedAssets = 0;
     
     // This ordered array is needed because the allKeys properties of the classSupport dictionary are unordered, and the order here is determining
     NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeFileURL,
@@ -526,7 +529,9 @@
                                     break;
                                 } else if (supportedClass == NSURL.class) {
                                     NSURL *url = (NSURL *)data;
-                                    if (url.isFileURL) {
+                                    if (url.hasDirectoryPath) {
+                                        [ShareAttachment addFolderURL:url];
+                                    } else if (url.isFileURL) {
                                         [ShareAttachment addFileURL:url];
                                     } else {
                                         [ShareAttachment addURL:url];
@@ -617,18 +622,24 @@
                                 attachment.name = [attachment.name stringByDeletingPathExtension];
                                 attachment.name = [attachment.name stringByAppendingPathExtension:@"mp4"];
                             }
-                            [self uploadData:downscaledVideoUrl withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                            [self uploadData:downscaledVideoUrl withName:attachment.name toParentNode:parentNode isSourceMovable:NO isFile: YES];
                         } error:^(NSError *error) {
                             [SVProgressHUD dismiss];
                         } presenter:self];
                         [processAsset prepare];
                     } else {
-                        [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                        [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO isFile: YES];
                     }
                 } else {
-                    [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                    [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO isFile:YES];
                 }
+                break;
+            }
                 
+            case ShareAttachmentTypeFolder: {
+                NSURL *url = attachment.content;
+                [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO isFile:NO];
+
                 break;
             }
                 
@@ -658,7 +669,7 @@
                     NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
                     NSError *error;
                     if ([text writeToFile:tempPath atomically:YES encoding:NSUTF8StringEncoding error:&error]) {
-                        [self smartUploadLocalPath:tempPath parent:parentNode];
+                        [self smartUploadLocalPath:tempPath parent:parentNode isFile:YES];
                     } else {
                         MEGALogError(@".txt writeToFile failed:\n- At path: %@\n- With error: %@", tempPath, error);
                         [self oneUnsupportedMore];
@@ -743,7 +754,7 @@
                                                                                      MEGALogError(@"Share extension error downloading resource at %@: %@", urlToDownload, error);
                                                                                      [self oneUnsupportedMore];
                                                                                  } else {
-                                                                                     [self uploadData:location withName:response.suggestedFilename toParentNode:parentNode isSourceMovable:YES];
+                                                                                     [self uploadData:location withName:response.suggestedFilename toParentNode:parentNode isSourceMovable:YES isFile:YES];
                                                                                  }
                                                                              }];
     [downloadTask resume];
@@ -754,14 +765,14 @@
     NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
 
     if (isPNG ? [UIImagePNGRepresentation(image) writeToFile:tempPath atomically:YES] : [UIImageJPEGRepresentation(image, 0.75) writeToFile:tempPath atomically:YES]) {
-        [self smartUploadLocalPath:tempPath parent:parentNode];
+        [self smartUploadLocalPath:tempPath parent:parentNode isFile:YES];
     } else {
         MEGALogError(@"Image writeToFile failed at path: %@", tempPath);
         [self oneUnsupportedMore];
     }
 }
 
-- (void)uploadData:(NSURL *)url withName:(NSString *)name toParentNode:(MEGANode *)parentNode isSourceMovable:(BOOL)sourceMovable {
+- (void)uploadData:(NSURL *)url withName:(NSString *)name toParentNode:(MEGANode *)parentNode isSourceMovable:(BOOL)sourceMovable isFile:(BOOL)isFile {
     if (url.class == NSURL.class) {
         NSString *storagePath = [self shareExtensionStorage];
         NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
@@ -777,7 +788,7 @@
         }
         
         if (success) {
-            [self smartUploadLocalPath:tempPath parent:parentNode];
+            [self smartUploadLocalPath:tempPath parent:parentNode isFile:isFile];
         } else {
             MEGALogError(@"%@ item failed:\n- At path: %@\n- With error: %@", sourceMovable ? @"Move" : @"Copy", tempPath, error);
             [self oneUnsupportedMore];
@@ -793,7 +804,7 @@
     NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
     NSData *data = attachment.content;
     if ([data writeToFile:tempPath atomically:YES]) {
-        [self smartUploadLocalPath:tempPath parent:parentNode];
+        [self smartUploadLocalPath:tempPath parent:parentNode isFile:YES];
     } else {
         MEGALogError(@"writeToFile failed at path: %@", tempPath);
         [self oneUnsupportedMore];
@@ -809,9 +820,9 @@
     return storagePath;
 }
 
-- (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode {
-    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES delegate:self];
+- (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile {
+    [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle path:localPath name:nil appData:[NSString.new mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo] priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
+    [self onePendingLess];
 }
 
 - (void)onePendingLess {
@@ -833,30 +844,17 @@
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:chatIdNumber.unsignedLongLongValue delegate:self];
     }
     
-    __weak __typeof__(self) weakSelf = self;
-    if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
-        NSString *message;
-        if (self.unsupportedAssets > 0) {
-            message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
-        } else {
-            message = [NSString stringWithFormat:NSLocalizedString(@"filesAlreadyExistMessage", @"Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder"), self.alreadyInDestinationAssets];
-        }
+    if (self.unsupportedAssets > 0) {
+        NSString *message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [weakSelf hideViewWithCompletion:^{
-                [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-            }];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [NameCollisionRouterOCWrapper.alloc.init uploadFiles:self.transfers presenter:self type:CancellableTransferTypeUpload];
         }]];
         [NSOperationQueue.mainQueue addOperationWithBlock:^{
             [self presentViewController:alertController animated:YES completion:nil];
         }];
     } else {
-        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf hideViewWithCompletion:^{
-                [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-            }];
-        });
+        [NameCollisionRouterOCWrapper.alloc.init uploadFiles:self.transfers presenter:self type:CancellableTransferTypeUpload];
     }
 }
 
@@ -869,6 +867,7 @@
 
 - (void)uploadToParentNode:(MEGANode *)parentNode {
     if (parentNode) {
+        self.parentNode = parentNode;
         [self performUploadToParentNode:parentNode];
     } else {
         __weak __typeof__(self) weakSelf = self;
@@ -889,6 +888,7 @@
         if (error || myChatFilesFolderNode == nil) {
             MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
         }
+        weakSelf.parentNode = myChatFilesFolderNode;
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf performUploadToParentNode:myChatFilesFolderNode];
         });

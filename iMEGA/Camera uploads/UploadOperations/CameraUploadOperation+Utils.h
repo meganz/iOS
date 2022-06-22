@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)handleAssetDownloadError:(NSError *)error;
 - (void)handleMEGARequestError:(MEGAError *)error;
 
-- (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;
+- (nullable MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;
 
 - (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node;
 - (void)finishUploadWithNoEnoughDiskSpace;

@@ -592,11 +592,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             case .saveToPhotos:
                 self.recentsViewModel.inputs.saveToPhotoAlbum(of: node)
             case .download:
-                SVProgressHUD.show(
-                    Asset.Images.Hud.hudDownload.image,
-                    status: Strings.Localizable.downloadStarted
-                )
-                node.mnz_downloadNode()
+                router?.showDownloadTransfer(node: node)
 
             // MARK: Rename
             case .rename:

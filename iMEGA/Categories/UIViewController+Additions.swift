@@ -2,6 +2,23 @@
 import Foundation
 
 extension UIViewController {
+    
+    static var isAlreadyPresented: Bool {
+        var presentedViewController: UIViewController? = UIApplication.mnz_presentingViewController()
+        if presentedViewController is Self {
+            return true
+        } else {
+            while presentedViewController?.presentingViewController != nil {
+                presentedViewController = presentedViewController?.presentingViewController
+                if presentedViewController is Self {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
     @objc func add(_ child: UIViewController, container: UIView, animate: Bool = true) {
         if animate {
             UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {

@@ -182,10 +182,8 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         var customizeActions:Array<ActionSheetAction>? = []
         if (viewModel.getExplorerType() == .document) {
             let uploadViewModel = HomeUploadingViewModel(
-                uploadFilesUseCase: HomeUploadFileUseCase(
-                    uploadFromAlbum: .live,
-                    uploadFromURL: .live,
-                    uploadFromLocalPath: .live
+                uploadFilesUseCase: UploadPhotoAssetsUseCase(
+                    uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
                 ),
                 devicePermissionUseCase: DevicePermissionRequestUseCase(
                     photoPermission: .live,

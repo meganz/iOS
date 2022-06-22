@@ -52,6 +52,7 @@ import Combine
         NotificationCenter.default
             .publisher(for: Notification.Name.MEGACameraUploadStatsChanged)
             .throttle(for: .seconds(Constants.headerReloadInterval), scheduler: DispatchQueue.main, latest: true)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.photosVC?.reloadHeader()
             }
@@ -61,6 +62,7 @@ import Combine
     private func subscribleToPhotoLibraryUpdate() {
         photoLibrarySubject
             .throttle(for: .seconds(Constants.photoUpdateThrottleInterval), scheduler: DispatchQueue.global(qos: .userInitiated), latest: true)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.photosVC?.reloadPhotos()
             }

@@ -1,8 +1,5 @@
 import Combine
-
-protocol MeetingParticipantsLayoutRouting: Routing {
-    func showRenameChatAlert()
-}
+import Foundation
 
 enum CallViewAction: ActionType {
     case onViewLoaded
@@ -24,6 +21,9 @@ enum CallViewAction: ActionType {
     case pinParticipantAsSpeaker(CallParticipantEntity)
     case addParticipant(withHandle: MEGAHandle)
     case removeParticipant(withHandle: MEGAHandle)
+    case startCallEndCountDownTimer
+    case endCallEndCountDownTimer
+    case didEndDisplayLastPeerLeftStatusMessage
 }
 
 enum ParticipantsLayoutMode {
@@ -38,6 +38,7 @@ enum DeviceOrientation {
 
 private enum CallViewModelConstant {
     static let maxParticipantsCountForHighResolution = 5
+    static let callEndCountDownTimerDuration: TimeInterval = 120
 }
 
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
@@ -59,7 +60,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case participantsStatusChanged(addedParticipantCount: Int,
                                        removedParticipantCount: Int,
                                        addedParticipantNames: [String],
-                                       removedParticipantNames: [String])
+                                       removedParticipantNames: [String],
+                                       isOnlyMyselfRemainingInTheCall: Bool)
         case reconnecting
         case reconnected
         case updateCameraPositionTo(position: CameraPositionEntity)
@@ -73,10 +75,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case selectPinnedCellAt(IndexPath?)
         case shouldHideSpeakerView(Bool)
         case ownPrivilegeChangedToModerator
-        case lowNetworkQuality
+        case showBadNetworkQuality
+        case hideBadNetworkQuality
         case updateAvatar(UIImage, CallParticipantEntity)
         case updateSpeakerAvatar(UIImage)
         case updateMyAvatar(UIImage)
+        case updateCallEndDurationRemainingString(String)
+        case removeCallEndDurationView
     }
     
     private let router: MeetingParticipantsLayoutRouting
@@ -86,6 +91,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var callDurationInfo: CallDurationInfo?
     private var callParticipants = [CallParticipantEntity]()
     private var indexOfVisibleParticipants = [Int]()
+    private var hasParticipantJoinedBefore = false
     private var speakerParticipant: CallParticipantEntity? {
         willSet {
             speakerParticipant?.speakerVideoDataDelegate = nil
@@ -123,6 +129,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let userUseCase: UserUseCaseProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
     
+    private var callEndCountDownSubscription: AnyCancellable?
+    private lazy var dateComponentsFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        formatter.unitsStyle = .positional
+        return formatter
+    }()
+    
     private var meetingParticipantStatusPipelineSubscription: AnyCancellable?
     private let meetingParticipantStatusPipeline = MeetingParticipantStatusPipeline(
         collectionDuration: 1.0,
@@ -131,6 +146,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private let tonePlayer = TonePlayer()
     private var namesFetchingTask: Task<Void, Never>?
+
+    private var reconnecting1on1Subscription: AnyCancellable?
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -163,6 +180,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     deinit {
+        cancelReconnecting1on1Subscription()
         callUseCase.stopListeningForCall()
     }
     
@@ -357,7 +375,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             if isActiveCall() {
                 callUseCase.createActiveSessions()
             } else {
-                if chatRoom.chatType == .meeting {
+                if chatRoom.chatType == .meeting || chatRoom.chatType == .group {
                     invokeCommand?(.showWaitingForOthersMessage)
                 }
             }
@@ -441,7 +459,63 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             meetingParticipantStatusPipeline.addParticipant(withHandle: handle)
         case .removeParticipant(let handle):
             meetingParticipantStatusPipeline.removeParticipant(withHandle: handle)
+        case .startCallEndCountDownTimer:
+            invokeCommand?(.hideEmptyRoomMessage)
+            startCallEndCountDownTimer()
+        case .endCallEndCountDownTimer:
+            endCallEndCountDownTimer()
+            showEmptyCallMessageIfNeeded()
+        case .didEndDisplayLastPeerLeftStatusMessage:
+            if chatRoom.chatType == .group || chatRoom.chatType == .meeting {
+                containerViewModel?.dispatch(.showEndCallDialogIfNeeded)
+            }
         }
+    }
+    
+    private func showEmptyCallMessageIfNeeded() {
+        if let call = callUseCase.call(for: chatRoom.chatId),
+           call.numberOfParticipants == 1,
+           call.participants.first == userUseCase.myHandle {
+            invokeCommand?(hasParticipantJoinedBefore ? .showNoOneElseHereMessage : .showWaitingForOthersMessage)
+        }
+    }
+    
+    private func startCallEndCountDownTimer() {
+        let callEndCountDownTimerStartDate = Date()
+        if let timeRemainingString = self.dateComponentsFormatter.string(from: CallViewModelConstant.callEndCountDownTimerDuration) {
+            invokeCommand?(.updateCallEndDurationRemainingString(timeRemainingString))
+        }
+
+        callEndCountDownSubscription = Timer
+            .publish(every: 1.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] date in
+                guard let self = self else { return }
+                
+                let timeElapsed = date.timeIntervalSince(callEndCountDownTimerStartDate)
+                let timeRemaining = round(CallViewModelConstant.callEndCountDownTimerDuration - timeElapsed)
+                
+                if timeRemaining > 0 {
+                    if let timeRemainingString = self.dateComponentsFormatter.string(from: timeRemaining) {
+                        self.invokeCommand?(.updateCallEndDurationRemainingString(timeRemainingString))
+                    }
+                } else {
+                    self.tonePlayer.play(tone: .callEnded)
+                    self.endCallEndCountDownTimer()
+
+                    // when ending call, CallKit decativation will interupt playing of tone.
+                    // Adding a delay of 0.7 seconds so there is enough time to play the tone
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        self.containerViewModel?.dispatch(.removeEndCallAlertAndEndCall)
+                    }
+                }
+            }
+    }
+    
+    private func endCallEndCountDownTimer() {
+        invokeCommand?(.removeCallEndDurationView)
+        callEndCountDownSubscription?.cancel()
+        callEndCountDownSubscription = nil
     }
     
     private func handlersSubsetToFetch(forHandlers handlers: [MEGAHandle]) -> [MEGAHandle] {
@@ -459,11 +533,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     @MainActor
     private func handle(addedParticipantCount: Int, removedParticipantCount: Int, addedParticipantNames: [String], removedParticipantNames: [String]) {
+        guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
+        let isOnlyMyselfRemainingInTheCall = call.numberOfParticipants == 1 && call.participants.first == userUseCase.myHandle
+        
         self.invokeCommand?(
             .participantsStatusChanged(addedParticipantCount: addedParticipantCount,
                                        removedParticipantCount: removedParticipantCount,
                                        addedParticipantNames: addedParticipantNames,
-                                       removedParticipantNames: removedParticipantNames)
+                                       removedParticipantNames: removedParticipantNames,
+                                       isOnlyMyselfRemainingInTheCall: isOnlyMyselfRemainingInTheCall)
         )
     }
     
@@ -543,6 +621,24 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         }
     }
+    
+    private func cancelReconnecting1on1Subscription() {
+        reconnecting1on1Subscription?.cancel()
+        reconnecting1on1Subscription = nil
+    }
+    
+    private func waitForRecoverable1on1Call(participant: CallParticipantEntity) {
+        
+        reconnecting1on1Subscription = Just(Void.self)
+            .delay(for: .seconds(10), scheduler: RunLoop.main)
+            .sink() { [weak self] _ in
+                guard let self = self else { return }
+                self.tonePlayer.play(tone: .callEnded)
+                self.reconnecting1on1Subscription = nil
+                self.callTerminated(self.call)
+                self.containerViewModel?.dispatch(.dismissCall(completion: nil))
+            }
+    }
 }
 
 struct CallDurationInfo {
@@ -552,6 +648,10 @@ struct CallDurationInfo {
 
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
+        self.hasParticipantJoinedBefore = true
+        if chatRoom.chatType == .oneToOne && reconnecting1on1Subscription != nil {
+            cancelReconnecting1on1Subscription()
+        }
         initTimerIfNeeded(with: Int(call.duration))
         participantName(for: participant.participantId) { [weak self] in
             participant.name = $0
@@ -572,6 +672,9 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if callUseCase.call(for: call.chatId) == nil {
             callTerminated(call)
         } else if let index = callParticipants.firstIndex(of: participant) {
+            if chatRoom.chatType == .oneToOne && participant.sessionRecoverable {
+                waitForRecoverable1on1Call(participant: participant)
+            }
             callParticipants.remove(at: index)
             invokeCommand?(.deleteParticipantAt(index, callParticipants))
             stopVideoForParticipant(participant)
@@ -673,9 +776,14 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func callTerminated(_ call: CallEntity) {
         callUseCase.stopListeningForCall()
         timer?.invalidate()
-        if (call.termCodeType == .tooManyParticipants)  {
+        if (call.termCodeType == .tooManyParticipants) {
             containerViewModel?.dispatch(.dismissCall(completion: {
                 SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+            }))
+        } else if reconnecting {
+            tonePlayer.play(tone: .callEnded)
+            containerViewModel?.dispatch(.dismissCall(completion: {
+                SVProgressHUD.showError(withStatus: Strings.Localizable.Meetings.Reconnecting.failed)
             }))
         }
     }
@@ -693,6 +801,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func connecting() {
         if !reconnecting {
             reconnecting = true
+            tonePlayer.play(tone: .reconnecting)
             invokeCommand?(.reconnecting)
             invokeCommand?(.hideEmptyRoomMessage)
         }
@@ -734,8 +843,20 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         invokeCommand?(.updateName(title))
     }
     
-    func networkQuality() {
-        invokeCommand?(.lowNetworkQuality)
+    func networkQualityChanged(_ quality: NetworkQuality) {
+        switch quality {
+        case .bad:
+            invokeCommand?(.showBadNetworkQuality)
+        case .good:
+            invokeCommand?(.hideBadNetworkQuality)
+        }
+    }
+    
+    func outgoingRingingStopReceived() {
+        if chatRoom.chatType == .oneToOne {
+            callUseCase.hangCall(for: call.callId)
+            self.tonePlayer.play(tone: .callEnded)
+        }
     }
 }
 

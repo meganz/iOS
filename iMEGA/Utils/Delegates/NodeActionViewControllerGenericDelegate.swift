@@ -5,8 +5,22 @@ final class NodeActionViewControllerGenericDelegate:
 {
     private weak var viewController: UIViewController?
 
+    private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+
+    private let saveToPhotosCompletion: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
+        SVProgressHUD.dismiss()
+
+        if error != nil {
+            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+        }
+    }
+
     init(viewController: UIViewController) {
         self.viewController = viewController
+    }
+    
+    deinit {
+        print("deinit NodeActionViewControllerGenericDelegate")
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
@@ -61,7 +75,7 @@ final class NodeActionViewControllerGenericDelegate:
             node.mnz_sendToChat(in: viewController)
             
         case .saveToPhotos:
-            node.mnz_saveToPhotos()
+            saveToPhotos(node)
             
         case .favourite:
             favourite(node)
@@ -132,12 +146,19 @@ final class NodeActionViewControllerGenericDelegate:
         }
     }
     
+    private func saveToPhotos(_ node: MEGANode) {
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+        SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
+
+        saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node), cancelToken: MEGACancelToken(), completion: saveToPhotosCompletion)
+    }
+    
     private func download(_ node: MEGANode) {
-        SVProgressHUD.show(
-            Asset.Images.Hud.hudDownload.image,
-            status: Strings.Localizable.downloadStarted
-        )
-        node.mnz_downloadNode()
+        guard let viewController = viewController else {
+            return
+        }
+        let transfer = CancellableTransfer(handle: node.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
+        CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download).start()
     }
     
     private func shareFolder(_ node: MEGANode) {

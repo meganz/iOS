@@ -79,6 +79,8 @@
 
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
+
 @end
 
 @implementation SharedItemsViewController
@@ -752,19 +754,7 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        for (MEGANode *n in _selectedNodesMutableArray) {
-            if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
-                [self endEditingMode];
-                return;
-            }
-        }
-        
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
-        
-        for (MEGANode *n in _selectedNodesMutableArray) {
-            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
-        }
-        
+        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesMutableArray presenter:self isFolderLink:NO];
         [self endEditingMode];
     }
 }
@@ -1295,8 +1285,7 @@
         }
             
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
-            [node mnz_downloadNode];
+            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
             break;
             
         case MegaNodeActionTypeRename:
@@ -1368,7 +1357,8 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotos];
+            self.cancelToken = MEGACancelToken.alloc.init;
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
             break;
             
         case MegaNodeActionTypeMove:

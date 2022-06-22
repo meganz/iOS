@@ -314,7 +314,7 @@
     [self updatePromptTitle];
     
     if (self.isParentBrowser) {
-        self.navigationItem.title = @"MEGA";
+        self.navigationItem.title = NSLocalizedString(@"MEGA", nil);
 
         if (self.browserAction == BrowserActionDocumentProvider) {
             self.navigationItem.title = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
@@ -480,7 +480,7 @@
 }
 
 - (void)attachNodes {
-    [self dismissAndSelectNodesIfNeeded:YES];
+    [self dismissAndSelectNodesIfNeeded:YES completion:nil];
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
@@ -505,7 +505,7 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
 }
 
-- (void)dismissAndSelectNodesIfNeeded:(BOOL)selectNodes {
+- (void)dismissAndSelectNodesIfNeeded:(BOOL)selectNodes completion:(void (^ __nullable)(void))completion {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
@@ -513,9 +513,16 @@
     if (selectNodes) {
         [self dismissViewControllerAnimated:YES completion:^{
             self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
+            if (completion) {
+                completion();
+            }
         }];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (completion) {
+                completion();
+            }
+        }];
     }
 }
 
@@ -533,35 +540,36 @@
     self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
+#ifndef MNZ_PICKER_EXTENSION
+- (CancellableTransfer *)transferToUpload {
+    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
+
+    return [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle path:self.localpath name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload];
+}
+#endif
+
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
+#ifdef MAIN_APP_TARGET
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
-        NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
-        NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
-        __weak __typeof__(self) weakSelf = self;
-        MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initWithFiles:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [weakSelf dismissAndSelectNodesIfNeeded:NO];
+        [self dismissAndSelectNodesIfNeeded:NO completion:^{
+            [[NameCollisionRouterOCWrapper.alloc init] moveNodes:self.selectedNodesArray to:self.parentNode presenter:UIApplication.mnz_presentingViewController];
         }];
-        
-        for (MEGANode *n in self.selectedNodesArray) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode delegate:moveRequestDelegate];
-        }
     }
+#endif
 }
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
+#ifdef MAIN_APP_TARGET
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
-        for (MEGANode *node in self.selectedNodesArray) {
-            self.remainingOperations++;
-            MEGANode *tempNode = (self.browserAction == BrowserActionImportFromFolderLink) ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
-            [[MEGASdkManager sharedMEGASdk] copyNode:tempNode newParent:self.parentNode];
-        }
+        [self dismissAndSelectNodesIfNeeded:NO completion:^{
+            [[NameCollisionRouterOCWrapper.alloc init] copyNodes:self.selectedNodesArray to:self.parentNode isFolderLink:self.browserAction == BrowserActionImportFromFolderLink presenter:UIApplication.mnz_presentingViewController];
+        }];
     }
+#endif
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
@@ -616,32 +624,23 @@
         [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }
     
-    [self dismissAndSelectNodesIfNeeded:NO];
+    [self dismissAndSelectNodesIfNeeded:NO completion:nil];
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
+#ifndef MNZ_PICKER_EXTENSION
     if (self.browserAction == BrowserActionOpenIn) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            NSError *error = nil;
-            NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:self.localpath.lastPathComponent];
-            if (self.localpath != nil && [[NSFileManager defaultManager] moveItemAtPath:self.localpath toPath:localFilePath error:&error]) {
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"uploadStarted_Message", @"Message shown when uploading a file from the Open In Browser")];
-                
-                NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
-                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
-            } else {
-                MEGALogError(@"Move item at path failed with error: %@", error);
-                NSString *status = [NSString stringWithFormat:@"Move item failed with error %@", error];
-                [SVProgressHUD showErrorWithStatus:status];
-            }
-            
-            [self dismissAndSelectNodesIfNeeded:NO];
+            [self dismissAndSelectNodesIfNeeded:NO completion:^{
+                [NameCollisionRouterOCWrapper.alloc.init uploadFiles:@[[self transferToUpload]] presenter: UIApplication.mnz_visibleViewController type: CancellableTransferTypeUpload];
+            }];
         }
     } else if (self.browserAction == BrowserActionShareExtension
                || self.browserAction == BrowserActionNewHomeUpload
                || self.browserAction == BrowserActionNewFileSave) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
     }
+#endif
 }
 
 - (IBAction)sendNodes:(UIBarButtonItem *)sender {
@@ -693,7 +692,7 @@
 
 - (IBAction)selectBarButtonPressed:(UIBarButtonItem *)sender {
     [self.browserViewControllerDelegate didSelectNode:self.parentNode];
-    [self dismissAndSelectNodesIfNeeded:NO];
+    [self dismissAndSelectNodesIfNeeded:NO completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -711,7 +710,7 @@
     NSString *cellIdentifier;
     if (self.cloudDriveButton.selected) {
         cellIdentifier = @"nodeCell";
-    } else if (self.incomingButton.selected) {
+    } else {
         cellIdentifier = @"incomingNodeCell";
     }
     
@@ -1039,7 +1038,7 @@
                     }
                 }
                 
-                [self dismissAndSelectNodesIfNeeded:NO];
+                [self dismissAndSelectNodesIfNeeded:NO completion:nil];
             }
             break;
         }

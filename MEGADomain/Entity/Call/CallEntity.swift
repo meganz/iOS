@@ -34,6 +34,10 @@ struct CallEntity {
         case ringingStatus = 0x04
         case callComposition = 0x08
         case onHold = 0x10
+        case callSpeak = 0x20
+        case audioLevel = 0x40
+        case networkQuality = 0x80
+        case outgoingRingingStop = 0x100
     }
     
     enum ConfigurationType: Int {

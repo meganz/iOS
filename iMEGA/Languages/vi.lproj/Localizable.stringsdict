@@ -12,10 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>hour</string>
         <key>other</key>
-        <string>hours</string>
+        <string>tiếng</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.day</key>
@@ -28,10 +26,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>day</string>
         <key>other</key>
-        <string>days</string>
+        <string>ngày</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.week</key>
@@ -44,10 +40,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>week</string>
         <key>other</key>
-        <string>weeks</string>
+        <string>tuần</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.month</key>
@@ -60,10 +54,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>month</string>
         <key>other</key>
-        <string>months</string>
+        <string>tháng</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.year</key>
@@ -76,10 +68,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>year</string>
         <key>other</key>
-        <string>years</string>
+        <string>năm</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.hour</key>
@@ -92,10 +82,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>1 hour</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d tiếng</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -108,10 +96,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>1 day</string>
         <key>other</key>
-        <string>%d days</string>
+        <string>%d ngày</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.week</key>
@@ -124,10 +110,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>1 week</string>
         <key>other</key>
-        <string>%d weeks</string>
+        <string>%d tuần</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.month</key>
@@ -140,10 +124,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>1 month</string>
         <key>other</key>
-        <string>%d months</string>
+        <string>%d tháng</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.year</key>
@@ -156,10 +138,120 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>1 year</string>
         <key>other</key>
-        <string>%d years</string>
+        <string>%d năm</string>
+      </dict>
+    </dict>
+    <key>general.format.count.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d tệp tin</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d thư mục</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d thư mục</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>• %d tệp tin</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d hình ảnh</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>và %d videos</string>
+      </dict>
+    </dict>
+    <key>media.photo.browser.indexOfTotalFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[A] trong tổng %d tệp</string>
+      </dict>
+    </dict>
+    <key>extensions.share.destination.section.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d tệp tin</string>
       </dict>
     </dict>
   </dict>

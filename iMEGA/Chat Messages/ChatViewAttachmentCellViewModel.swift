@@ -58,7 +58,7 @@ class ChatViewAttachmentCellViewModel {
         if message.nodeList?.size.uintValue == 1 {
             return message.nodeList?.node(at: 0)?.name ?? ""
         } else {
-            return Strings.Localizable.files(message.nodeList?.size.intValue ?? 0)
+            return Strings.Localizable.General.Format.Count.file(message.nodeList?.size.intValue ?? 0)
         }
     }
     

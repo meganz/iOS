@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="업로드 없음";
 /* Title of the Cloud Drive section */
 "cloudDrive"="클라우드 드라이브";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="파일 %d개";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="파일 %d개";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="폴더 %d개";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="폴더 %d개";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="폴더 1개 • 파일 1개";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="폴더 [A]개 • 파일 [B]개";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="폴더 %d개 • 파일 1개";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="폴더 1개 • 파일 %d개";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="장치 %@개";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="이 파일에 더 이상 접근 권한이 없습니다";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="이 폴더에 더 이상 접근 권한이 없습니다";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="오프라인용으로 저장";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="수신함 라벨은 Apple에 의해 사용이 예약되었습니다.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져 있습니다; 동영상 1개가 업로드 되지 않았습니다.";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져 있습니다; 동영상 %lu개가 업로드 되지 않았습니다.";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="파일 %2$d개 중 %1$d개";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="파일 %2$d개 중 %1$d개";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu개 선택됨";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="섬네일 보기";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="페이지 보기";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="연결 상태 나쁨.";
 /* There are no notifications to display. */
 "No notifications"="알림 없음";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="이미지 %1개";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="동영상 %2개";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 Image and 1 Video";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 Image and %2 Videos";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 Images and 1 Video";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 Images and %2 Videos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@님이 수정";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="스피커";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="전환";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="다시 연결중";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="다시 연결할 수 없습니다";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="연결 상태 나쁨";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="고해상도 이미지 미리 보기";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="로그 파일 첨부";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="디버그를 돕기 위해 진단 로그 파일을 첨부하시겠습니까?";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="전송 취소";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="전송 과정을 중단하면 일부 항목이 완성되지 않은 상태로 나타날 수 있습니다.";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="네, 취소합니다";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="아니오, 계속합니다";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="스캔 중…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="애플리케이션을 닫지 마세요.";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="전송 취소됨";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="문제 보고";
 /* Title of the dialog button to discard a report. */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="높음";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="최고";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="중복된 항목";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="%@ 폴더가 이미 이 위치에 존재합니다.";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="폴더를 합칠지 또는 건너뛸지 선택하세요.";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="복사하고 합치기";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="복사하려는 폴더와 대상 위치의 폴더를 합칩니다.";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="복사하지 않기";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="이동하고 합치기";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="이동하려는 폴더와 대상 위치의 폴더를 합칩니다.";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="이동하지 않기";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="업로드하고 합치기";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="업로드하려는 폴더와 대상 위치의 폴더를 합칩니다.";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="업로드 하지 않기";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="이 폴더 건너뛰기.";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="%@ 파일이 이미 이 위치에 존재합니다.";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="유지할 파일을 선택하세요:";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="복사하고 교체";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="대상 폴더에 있는 파일을 복사하려는 파일로 교체합니다.";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="이동하고 교체";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="대상 폴더에 있는 파일을 이동하려는 파일로 교체.";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="업로드하고 교체하기";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="대상 폴더에 있는 파일을 업로드 중인 파일로 교체합니다.";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="파일이 변경되지 않습니다. 아래의 파일을 유지합니다:";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="복사하고 이름 바꾸기";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="복사하려는 파일이 다음과 같이 변경됩니다:";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="이동하고 이름 바꾸기";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="이동하려는 파일이 다음과 같이 변경됩니다:";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="업로드하고 이름 바꾸기";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="업로드하는 파일은 다음과 같이 이름이 변경됩니다:";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="업로드하고 업데이트하기";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="파일이 버전 기록과 함께 업데이트됩니다:";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="여기에 당신만 있습니다";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="통화 유지를 원하지 않으면 통화가 2분 내로 자동 종료됩니다.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="통화 유지";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="지금 통화 종료";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="%@ 내에 통화가 종료됩니다";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

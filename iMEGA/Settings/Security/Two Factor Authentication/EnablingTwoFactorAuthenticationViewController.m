@@ -103,7 +103,7 @@
 - (void)youNeedATwoFactorAuthenticationAppAlertWithTitle:(NSString *)message {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Authenticator app required", @"Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device") message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"App Store" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"App Store", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/search"];
         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
     }]];

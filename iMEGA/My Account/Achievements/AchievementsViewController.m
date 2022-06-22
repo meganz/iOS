@@ -144,7 +144,7 @@
     }
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? NSLocalizedString(@"— GB", nil) : [Helper memoryStyleStringFromByteCount:classStorageReward];
 }
 
 - (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath achievementClass:(MEGAAchievement)achievementClass {

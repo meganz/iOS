@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21179.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21169.4"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -106,19 +106,19 @@
                             <constraint firstAttribute="width" constant="80" id="bbE-Tn-l3C"/>
                         </constraints>
                     </imageView>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01:12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcI-0v-fGK" userLabel="Timestamp">
-                        <rect key="frame" x="4" y="152.5" width="37" height="16.5"/>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01:12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VcI-0v-fGK" userLabel="Timestamp">
+                        <rect key="frame" x="8" y="152.5" width="37" height="16.5"/>
                         <color key="backgroundColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.086274509799999996" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="37" id="ER7-6k-6TU"/>
-                            <constraint firstAttribute="height" constant="16.5" id="yTF-GY-uc6"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="37" id="ER7-6k-6TU"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16.5" id="yTF-GY-uc6"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="fkb-nZ-O3q">
-                        <rect key="frame" x="8" y="181" width="56.5" height="25"/>
+                        <rect key="frame" x="8" y="181" width="60" height="25"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="17X-wI-JXr">
                                 <rect key="frame" x="0.0" y="0.0" width="45.5" height="12.5"/>
@@ -153,16 +153,16 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="a6B-zj-cfi">
-                                <rect key="frame" x="0.0" y="12.5" width="56.5" height="12.5"/>
+                                <rect key="frame" x="0.0" y="12.5" width="60" height="12.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QM6-Pq-Dgr" userLabel="Info Label">
-                                        <rect key="frame" x="0.0" y="0.0" width="40.5" height="12.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="12.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDh-Tg-PB8">
-                                        <rect key="frame" x="44.5" y="0.0" width="12" height="12.5"/>
+                                        <rect key="frame" x="48" y="0.0" width="12" height="12.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded" translatesAutoresizingMaskIntoConstraints="NO" id="jSy-VY-TY9">
                                                 <rect key="frame" x="0.0" y="0.5" width="12" height="12"/>
@@ -212,7 +212,7 @@
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="VcI-0v-fGK" firstAttribute="leading" secondItem="xGO-hx-rX5" secondAttribute="leading" constant="4" id="5O5-Ys-toi"/>
+                    <constraint firstItem="VcI-0v-fGK" firstAttribute="leading" secondItem="xGO-hx-rX5" secondAttribute="leading" constant="8" id="5O5-Ys-toi"/>
                     <constraint firstItem="fkb-nZ-O3q" firstAttribute="leading" secondItem="xGO-hx-rX5" secondAttribute="leading" constant="8" id="6rj-2D-eGd"/>
                     <constraint firstItem="imJ-KD-GDx" firstAttribute="centerY" secondItem="fkb-nZ-O3q" secondAttribute="centerY" id="71d-lz-Ab9"/>
                     <constraint firstItem="UkI-84-Qe9" firstAttribute="leading" secondItem="xGO-hx-rX5" secondAttribute="leading" id="9f0-50-IOm"/>
@@ -223,6 +223,7 @@
                     <constraint firstAttribute="trailing" secondItem="UkI-84-Qe9" secondAttribute="trailing" id="Cdt-lD-MTj"/>
                     <constraint firstAttribute="trailing" secondItem="UhZ-2d-SmK" secondAttribute="trailing" id="EDq-pV-a8S"/>
                     <constraint firstItem="fkb-nZ-O3q" firstAttribute="top" secondItem="UhZ-2d-SmK" secondAttribute="bottom" constant="8" id="EcS-Rs-1dE"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VcI-0v-fGK" secondAttribute="trailing" constant="8" id="Nyv-Mw-2wb"/>
                     <constraint firstItem="UhZ-2d-SmK" firstAttribute="leading" secondItem="xGO-hx-rX5" secondAttribute="leading" id="QRN-du-XFb"/>
                     <constraint firstItem="UkI-84-Qe9" firstAttribute="top" secondItem="xGO-hx-rX5" secondAttribute="top" id="TbG-mZ-EWE"/>
                     <constraint firstItem="8co-zD-JSo" firstAttribute="centerX" secondItem="imJ-KD-GDx" secondAttribute="centerX" id="UFH-ay-w24"/>

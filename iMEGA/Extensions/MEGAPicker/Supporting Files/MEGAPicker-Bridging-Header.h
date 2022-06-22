@@ -16,6 +16,7 @@
 
 #import "CustomModalAlertViewController.h"
 #import "Helper.h"
+#import "EmptyStateView.h"
 #import "SelectableTableViewCell.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"

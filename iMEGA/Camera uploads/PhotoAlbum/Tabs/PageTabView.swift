@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 
+@available(iOS 14.0, *)
 struct PageTabView: View {
     @ObservedObject private var viewModel: PagerTabViewModel
     @Environment(\.colorScheme) var colorScheme
@@ -57,5 +58,6 @@ struct PageTabView: View {
                 alignment: .bottom
             )
         }
+        .ignoresSafeArea()
     }
 }

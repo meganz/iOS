@@ -16,21 +16,7 @@ class NodeActionsTests: XCTestCase {
 
     //MARK: - Private methods
     
-    func contains(nodeActionType type: MegaNodeActionType) -> Bool {
-        return !(actions.filter { $0.type == type }).isEmpty
-    }
-    
-    func contains(nodeActionTypes types: [MegaNodeActionType]) -> Bool {
-        var containsAllActions = true
-        types.forEach { (type) in
-            if !contains(nodeActionType: type) {
-                containsAllActions = false
-            }
-        }
-        return containsAllActions
-    }
-    
-    func containsExact(nodeActionTypes types: [MegaNodeActionType]) -> Bool {
+    func isEqual(nodeActionTypes types: [MegaNodeActionType]) -> Bool {
         guard actions.count == types.count else {
             return false
         }
@@ -48,7 +34,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .saveToPhotos, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .saveToPhotos, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeMediaFileExported() {
@@ -60,7 +46,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .saveToPhotos, .download, .manageLink, .removeLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .saveToPhotos, .download, .manageLink, .removeLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolder() {
@@ -70,7 +56,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderExported() {
@@ -81,7 +67,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderShared() {
@@ -92,7 +78,7 @@ class NodeActionsTests: XCTestCase {
             .setIsOutshare(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFolderSharedExported() {
@@ -104,7 +90,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeFile() {
@@ -114,7 +100,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeExportedFile() {
@@ -125,7 +111,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeTextFile() {
@@ -136,7 +122,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testCloudDriveNodeTextFileExported() {
@@ -148,36 +134,49 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .manageLink, .removeLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .manageLink, .removeLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
+    
+    func testCloudDriveNodeWithNoVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(0)
+            .build()
         
-        func testCloudDriveNodeWithNoVersion() {
-            actions = NodeActionBuilder()
-                .setDisplayMode(.cloudDrive)
-                .setAccessLevel(.accessOwner)
-                .setIsFile(true)
-                .setVersionCount(0)
-                .build()
-            
-            XCTAssertFalse(contains(nodeActionType: .viewVersions))
-        }
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testCloudDriveNodeWithMultiVersions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .build()
         
-        func testCloudDriveNodeWithMultiVersions() {
-            actions = NodeActionBuilder()
-                .setDisplayMode(.cloudDrive)
-                .setAccessLevel(.accessOwner)
-                .setIsFile(true)
-                .setVersionCount(2)
-                .build()
-            
-            XCTAssertTrue(contains(nodeActionType: .viewVersions))
-        }
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testCloudDriveTextFileNodeWithMultiVersions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsEditableTextFile(true)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+    }
     
     func testFileFolderNodeDoNotShowInfoAction() {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeInfo)
             .build()
-        XCTAssertFalse(contains(nodeActionType: .info))
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download]))
     }
     
     func testCloudDriveTakedownNode() {
@@ -185,7 +184,8 @@ class NodeActionsTests: XCTestCase {
             .setDisplayMode(.cloudDrive)
             .setIsTakedown(true)
             .build()
-        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
     }
     
     //MARK: - Rubbish Bin
@@ -197,7 +197,7 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(true)
             .build()
         
-        XCTAssertTrue(containsExact(nodeActionTypes: [.restore, .info, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.restore, .info, .remove]))
     }
     
     func testRubbishBinNodeUnrestorableFolder() {
@@ -208,7 +208,7 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(false)
             .build()
         
-        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .remove]))
     }
     
     func testRubbishBinNodeRestorableFile() {
@@ -220,7 +220,7 @@ class NodeActionsTests: XCTestCase {
             .setIsInVersionsView(false)
             .build()
         
-        XCTAssertTrue(containsExact(nodeActionTypes: [.restore, .info, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.restore, .info, .remove]))
     }
     
     func testRubbishBinNodeUnrestorableFile() {
@@ -231,7 +231,7 @@ class NodeActionsTests: XCTestCase {
             .setIsRestorable(false)
             .build()
         
-        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .remove]))
     }
     
     func testRubbishBinNodeVersionPreview() {
@@ -243,7 +243,7 @@ class NodeActionsTests: XCTestCase {
             .setIsInVersionsView(true)
             .build()
         
-        XCTAssertTrue(containsExact(nodeActionTypes: [.info]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info]))
     }
     
     
@@ -252,9 +252,9 @@ class NodeActionsTests: XCTestCase {
             .setDisplayMode(.rubbishBin)
             .setIsTakedown(true)
             .build()
-        XCTAssertTrue(containsExact(nodeActionTypes: [.info, .disputeTakedown, .rename, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .remove]))
     }
-
+    
     //MARK: - Recent Items tests
     
     func testRecentNodeNoVersion() {
@@ -265,7 +265,7 @@ class NodeActionsTests: XCTestCase {
             .setVersionCount(0)
             .build()
         
-        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testRecentNodeWithMultiVersion() {
@@ -276,11 +276,11 @@ class NodeActionsTests: XCTestCase {
             .setVersionCount(2)
             .build()
         
-        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     // MARK: - Shared Items tests
-
+    
     func testIncomingFullSharedFolder() {
         actions = NodeActionBuilder()
             .setDisplayMode(.sharedItem)
@@ -289,7 +289,7 @@ class NodeActionsTests: XCTestCase {
             .setisIncomingShareChildView(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .rename, .copy, .leaveSharing]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .rename, .copy, .leaveSharing]))
     }
     
     func testIncomingFullSharedFolderTextFile() {
@@ -300,7 +300,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .copy]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .favourite, .label, .download, .rename, .copy, .move, .moveToRubbishBin]))
     }
     
     func testIncomingFullSharedFolderNodeNoVersion() {
@@ -311,7 +311,7 @@ class NodeActionsTests: XCTestCase {
             .setVersionCount(0)
             .build()
         
-        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .rename, .copy, .move, .moveToRubbishBin]))
     }
     
     func testIncomingFullSharedFolderNodeWithMultiVersion() {
@@ -322,7 +322,7 @@ class NodeActionsTests: XCTestCase {
             .setVersionCount(2)
             .build()
         
-        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .favourite, .label, .download, .rename, .copy, .move, .moveToRubbishBin]))
     }
     
     func testIncomingReadAndReadWriteSharedFolder() {
@@ -333,7 +333,7 @@ class NodeActionsTests: XCTestCase {
             .setisIncomingShareChildView(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .download, .copy, .leaveSharing]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .download, .copy, .leaveSharing]))
     }
     
     func testIncomingReadAndReadWriteSharedFolderTextFile() {
@@ -344,7 +344,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .info, .download, .copy]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .download, .copy]))
     }
     
     func testIncomingReadAndReadWriteSharedFolderNodeNoVersion() {
@@ -355,7 +355,7 @@ class NodeActionsTests: XCTestCase {
             .setVersionCount(0)
             .build()
         
-        XCTAssertFalse(contains(nodeActionType: .viewVersions))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .download, .copy]))
     }
     
     func testIncomingReadAndReadWriteSharedFolderNodeWithMultiVersion() {
@@ -366,9 +366,9 @@ class NodeActionsTests: XCTestCase {
             .setVersionCount(2)
             .build()
         
-        XCTAssertTrue(contains(nodeActionType: .viewVersions))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .download, .copy]))
     }
-
+    
     func testOutgoingSharedFolder() {
         actions = NodeActionBuilder()
             .setDisplayMode(.sharedItem)
@@ -377,7 +377,7 @@ class NodeActionsTests: XCTestCase {
             .setIsOutshare(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .copy, .removeSharing]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .copy, .removeSharing]))
     }
     
     func testOutgoingSharedFolderExported() {
@@ -389,7 +389,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .copy, .removeSharing]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .copy, .removeSharing]))
     }
     
     // MARK: - Links tests
@@ -401,7 +401,7 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .saveToPhotos]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .saveToPhotos]))
     }
     
     func testFileLink() {
@@ -410,7 +410,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .shareLink, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat]))
     }
     
     func testFolderLinkList() {
@@ -419,7 +419,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .select, .thumbnail]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat, .sort, .thumbnail]))
     }
     
     func testFolderLinkThumbnail() {
@@ -428,7 +428,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .select, .thumbnail]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat, .sort, .thumbnail]))
     }
     
     func testFolderLinkChildMediaFile() {
@@ -437,8 +437,8 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .saveToPhotos]))
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .saveToPhotos]))
     }
     
     func testFolderLinkChildFile() {
@@ -447,7 +447,61 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download]))
+    }
+    
+    func testFileLinkArrayWithPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files)
+            .setLinkedNodeCount(2)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFolderLinkArrayWithPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders)
+            .setLinkedNodeCount(2)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFileAndFolderLinkArrayWithPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders)
+            .setLinkedNodeCount(2)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFileLinkArrayWithoutPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files)
+            .setLinkedNodeCount(0)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFolderLinkArrayWithoutPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders)
+            .setLinkedNodeCount(0)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testFileAndFolderLinkArrayWithoutPublicLink() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders)
+            .setLinkedNodeCount(0)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .move, .copy, .moveToRubbishBin]))
     }
     
     // MARK: - Text Editor
@@ -458,7 +512,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessUnknown)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .import, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .import, .exportFile, .sendToChat]))
     }
     
     func testTextEditorAcessRead() {
@@ -467,7 +521,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessRead)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .import, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .import, .exportFile, .sendToChat]))
     }
     
     func testTextEditorAcessReadWrite() {
@@ -476,7 +530,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessReadWrite)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .import, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .import, .exportFile, .sendToChat]))
     }
     
     func testTextEditorAcessFull() {
@@ -485,7 +539,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessFull)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .import, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .import, .exportFile, .sendToChat]))
     }
     
     func testTextEditorAcessOwner() {
@@ -494,7 +548,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat]))
     }
 
     // MARK: - Preview Documents
@@ -505,7 +559,7 @@ class NodeActionsTests: XCTestCase {
             .setIsLink(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .shareLink, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat]))
     }
     
     func testDocumentPreviewPdfPageViewLink() {
@@ -516,7 +570,7 @@ class NodeActionsTests: XCTestCase {
             .setIsLink(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]))
     }
     
     func testDocumentPreviewPdfThumbnailLink() {
@@ -527,7 +581,7 @@ class NodeActionsTests: XCTestCase {
             .setIsPageView(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
     }
         
     func testPreviewDocument() {
@@ -535,7 +589,7 @@ class NodeActionsTests: XCTestCase {
             .setDisplayMode(.previewDocument)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat]))
     }
     
     func testPreviewDocumentOwner() {
@@ -544,7 +598,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat]))
     }
     
     func testPreviewPdfPageViewDocument() {
@@ -554,7 +608,7 @@ class NodeActionsTests: XCTestCase {
             .setIsPageView(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .search, .pdfThumbnailView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfThumbnailView]))
     }
     
     func testPreviewPdfPageViewDocumentLink() {
@@ -565,7 +619,7 @@ class NodeActionsTests: XCTestCase {
             .setIsLink(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .sendToChat, .search, .pdfThumbnailView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]))
     }
     
     func testPreviewPdfPageViewDocumentOwner() {
@@ -576,7 +630,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfThumbnailView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfThumbnailView]))
     }
     
     func testPreviewPdfThumbnailDocument() {
@@ -586,7 +640,7 @@ class NodeActionsTests: XCTestCase {
             .setIsPageView(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView]))
     }
     
     func testPreviewPdfThumbnailDocumentLink() {
@@ -597,7 +651,7 @@ class NodeActionsTests: XCTestCase {
             .setIsLink(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .sendToChat, .search, .pdfPageView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
     }
     
     func testPreviewPdfThumbnailDocumentOwner() {
@@ -608,7 +662,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView]))
     }
     
     // MARK: - Chat tests
@@ -619,8 +673,8 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import]))
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile, .saveToPhotos, .import]))
     }
     
     func testChatSharedMediaFile_accessOwner() {
@@ -630,8 +684,8 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .setAccessLevel(.accessOwner)
             .build()
-
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile]))
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile, .saveToPhotos]))
     }
     
     func testChatSharedFile() {
@@ -641,7 +695,7 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile, .import]))
     }
     
     func testChatSharedFile_accessOwner() {
@@ -652,7 +706,7 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile]))
     }
     
     func testChatAttachmentMediaFile() {
@@ -661,8 +715,8 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile, .import]))
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile, .saveToPhotos, .import]))
     }
     
     func testChatAttachmentMediaFile_accessOwner() {
@@ -672,8 +726,8 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .setAccessLevel(.accessOwner)
             .build()
-
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .exportFile]))
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile, .saveToPhotos]))
     }
     
     func testChatAttachmentFile() {
@@ -683,7 +737,7 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile, .import]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile, .import]))
     }
     
     func testChatAttachmentFile_accessOwner() {
@@ -694,11 +748,11 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.forward, .download, .exportFile]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.forward, .download, .exportFile]))
     }
     
     // MARK: - Versions tests
-
+    
     func testNodeVersionChildMediaFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeVersions)
@@ -708,7 +762,7 @@ class NodeActionsTests: XCTestCase {
             .setIsChildVersion(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.saveToPhotos, .download, .revertVersion, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.saveToPhotos, .download, .exportFile, .revertVersion, .remove]))
     }
     
     func testNodeVersionMediaFile() {
@@ -719,7 +773,7 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.saveToPhotos, .download, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.saveToPhotos, .download, .exportFile, .remove]))
     }
     
     func testNodeVersionChildFile() {
@@ -730,7 +784,7 @@ class NodeActionsTests: XCTestCase {
             .setIsChildVersion(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .revertVersion, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .exportFile, .revertVersion, .remove]))
     }
     
     func testNodeVersionFile() {
@@ -740,7 +794,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .exportFile, .remove]))
     }
     
     
@@ -754,7 +808,7 @@ class NodeActionsTests: XCTestCase {
             .setIsChildVersion(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .revertVersion, .remove]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .revertVersion, .remove]))
     }
     
     func testNodeVersionFileIncomingReadWriteSharedFolder() {
@@ -765,7 +819,7 @@ class NodeActionsTests: XCTestCase {
             .setIsChildVersion(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .revertVersion]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .revertVersion]))
     }
     
     func testNodeVersionFileIncomingReadOnlySharedFolder() {
@@ -776,7 +830,7 @@ class NodeActionsTests: XCTestCase {
             .setIsChildVersion(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download]))
     }
     
     func testMultiselectFiles() {
@@ -784,7 +838,7 @@ class NodeActionsTests: XCTestCase {
             .setNodeSelectionType(.files)
             .multiselectBuild()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
     }
     
     func testMultiselectFolders() {
@@ -792,7 +846,7 @@ class NodeActionsTests: XCTestCase {
             .setNodeSelectionType(.folders)
             .multiselectBuild()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
     }
     
     func testMultiselectFilesAndFolders() {
@@ -800,7 +854,7 @@ class NodeActionsTests: XCTestCase {
             .setNodeSelectionType(.filesAndFolders)
             .multiselectBuild()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.download, .shareLink, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .move, .copy, .moveToRubbishBin]))
     }
     
     func testExportedNodeActions_nodeExported() {
@@ -810,7 +864,7 @@ class NodeActionsTests: XCTestCase {
             .setIsExported(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.manageLink, .removeLink]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
     func testExportedNodeActions_nodeNotExported() {
@@ -819,6 +873,6 @@ class NodeActionsTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.shareLink]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
     }
 }

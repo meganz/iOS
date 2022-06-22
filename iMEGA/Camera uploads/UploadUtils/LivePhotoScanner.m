@@ -80,7 +80,6 @@
 }
 
 - (void)insertLivePhotoRecordIfNeededForAsset:(PHAsset *)asset inContext:(NSManagedObjectContext *)context withIdentifierParser:(SavedIdentifierParser *)parser {
-    MOAssetUploadRecord *livePhotoRecord;
     if (asset.mnz_isLivePhoto) {
         NSString *parsedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
         NSError *error;
@@ -88,7 +87,7 @@
         if (error) {
             MEGALogError(@"[Camera Upload] error when to fetch record by identifier %@ %@", parsedIdentifier, error);
         } else if (!hasExistingRecord ) {
-            livePhotoRecord = [self createLivePhotoRecordForAsset:asset inContext:context withParsedIdentifier:parsedIdentifier];
+            [self createLivePhotoRecordForAsset:asset inContext:context withParsedIdentifier:parsedIdentifier];
         }
     }
 }

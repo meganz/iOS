@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="Aucun téléversement";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Disque nuagique";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d fichier";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d fichiers";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d dossier";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d dossiers";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 dossier • 1 fichier";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] dossiers • [B] fichiers";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d dossiers • 1 fichier";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 dossier • %d fichiers";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ appareil";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Vous n’avez plus accès à ce fichier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n’avez plus accès à ce dossier";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Enregistrer Hors ligne";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="« Boîte de réception » est réservé à l’usage d’Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Les photos ont été téléversées, les téléversements des vidéos sont désactivés ; 1 vidéo n’a pas été téléversée";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Les photos ont été téléversées, les téléversements des vidéos sont désactivés ; %lu vidéos n’ont pas été téléversées";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d de %2$d fichier";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d de %2$d fichiers";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu élément est sélectionné";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -977,7 +955,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Inviter vos amies et amis";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ d’espace de stockage pour chaque parrainage. \nValide pendant 365 jours.";
+"account.achievement.referral.subtitle"="%@ d’espace de stockage pour chaque parrainage. \nValable pendant 365 jours.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Sélectionner des contacts sur votre appareil ou saisir plusieurs adresses courriel";
 /*  */
@@ -1015,15 +993,15 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé l’appli MEGA pour ordinateur.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="En installant l’appli MEGA pour ordinateur, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA pour ordinateur est proposée pour Windows, macOS et la plupart des versions de Linux.";
+"account.achievement.desktopApp.incomplete.explaination.label"="En installant l’appli MEGA pour ordinateur, vous obtenez %@ d’espace de stockage gratuit valable pendant 365 jours. L’appli MEGA pour ordinateur est proposée pour Windows, macOS et la plupart des versions de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Installer l’appli MEGA mobile";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé l’appli MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="En installant l’appli MEGA mobile, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours. L’appli MEGA mobile est proposée pour iOS et Android.";
+"account.achievement.mobileApp.incomplete.explaination.label"="En installant l’appli MEGA mobile, vous obtenez %@ d’espace de stockage gratuit valable pendant 365 jours. L’appli MEGA mobile est proposée pour iOS et Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
-"account.achievement.incomplete.subtitle"="%@ d’espace de stockage. Valide pendant 365 jours.";
+"account.achievement.incomplete.subtitle"="%@ d’espace de stockage. Valable pendant 365 jours.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
 "account.achievement.complete.valid.cell.subtitle"="Il reste %@ jours";
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
@@ -1033,7 +1011,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir ajouté votre numéro de téléphone.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="Quand vous ajoutez votre numéro de téléphone, vous obtenez %@ d’espace de stockage gratuit valide pendant 365 jours.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Quand vous ajoutez votre numéro de téléphone, vous obtenez %@ d’espace de stockage gratuit valable pendant 365 jours.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtenez %@ gratuits si vous ajoutez votre numéro de téléphone. Vos contacts vous trouveront plus facilement sur MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="Vue en imagettes";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Vue par page";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="La connexion est de mauvaise qualité.";
 /* There are no notifications to display. */
 "No notifications"="Aucune notification";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="%1 images";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 vidéos";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 image et 1 vidéo";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 image et %2 vidéos";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 images et 1 vidéo";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 images et %2 vidéos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modifié par %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="Haut-parleur";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Basculer";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="Reconnexion";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="Impossible de se reconnecter";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="La connexion est mauvaise";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Prévisualiser des images à haute résolution";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="Joindre les fichiers journaux";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Voulez-vous joindre les fichiers journaux de diagnostic pour faciliter le débogage ?";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="Annuler le transfert";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="L’interruption du processus de transfert pourrait rendre incomplets certains éléments.";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="Oui, annuler";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="Non, poursuivre";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="Analyse…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="Veuillez ne pas fermer l’application.";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="Le transfert a été annulé";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Signaler un problème";
 /* Title of the dialog button to discard a report. */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="Haute";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="La meilleure";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="Élément en double";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="Le dossier « %@ » existe déjà dans cet emplacement.";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="Choisir de fusionner les dossiers ou d’ignorer ce dossier.";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="Copier et fusionner";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="Sur la destination, fusionner le dossier avec celui que vous copiez.";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="Ne pas copier";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="Déplacer et fusionner";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="Sur la destination, fusionner le dossier avec celui que vous déplacez.";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="Ne pas déplacer";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="Téléverser et fusionner";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="Sur la destination, fusionner le dossier avec celui que vous téléversez.";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="Ne pas téléverser";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="Ignorer ce dossier.";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="Un fichier nommé « %@ » existe déjà dans cet emplacement.";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="Sélectionnez le fichier à conserver :";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="Copier et remplacer";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="Remplacer le fichier dans le dossier de destination par le fichier que vous copiez.";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="Déplacer et remplacer";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="Remplacer le fichier dans le dossier de destination par le fichier que vous déplacez.";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="Téléverser et remplacer";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="Remplacer le fichier dans le dossier de destination par le fichier que vous téléversez.";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="Aucun fichier ne sera modifié. Vous conserverez le fichier ci-dessous :";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="Copier et renommer";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="Le fichier que vous copiez sera renommé :";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="Déplacer et renommer";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="Le fichier que vous déplacez sera renommé :";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="Téléverser et renommer";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="Le fichier que vous téléversez sera renommé :";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="Téléverser et mettre à jour";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="Le fichier sera mis à jour avec un historique de version :";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="Vous êtes la seule personne ici";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="L’appel cessera dans 2 minutes à moins que vous ne vouliez rester sur l’appel.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Rester dans l’appel";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="Mettre fin à l’appel maintenant";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="L’appel se terminera dans %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

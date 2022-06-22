@@ -136,9 +136,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             if chatRoom.isPreview {
                 api.closeChatPreview(chat.chatId)
                 chatViewController?.reloadInputViews()
-                let statusString = Strings.Localizable.linkRemoved
                 chatViewController?.updateJoinView()
-                SVProgressHUD.showInfo(withStatus: statusString)
+                SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
             } else {
                 api.closeChatRoom(chat.chatId, delegate: self)
                 chatViewController?.navigationController?.popViewController(animated: true)

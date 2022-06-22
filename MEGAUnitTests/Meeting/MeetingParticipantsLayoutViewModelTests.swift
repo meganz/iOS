@@ -8,7 +8,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -38,7 +38,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity(clientSessions: [ChatSessionEntity(statusType: .inProgress)])
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -68,7 +68,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -94,7 +94,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -116,7 +116,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
                                       callUseCase: callUseCase,
@@ -141,7 +141,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -166,7 +166,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -189,7 +189,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -212,7 +212,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: MockChatRoomUseCase(), callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                       containerViewModel: containerViewModel,
@@ -239,7 +239,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -260,7 +260,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _):
+                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
                         continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
                     default:
                         break
@@ -284,7 +284,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1"), (102, "User2")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -305,7 +305,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _):
+                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
                         continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
                     default:
                         break
@@ -329,7 +329,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1"), (102, "User2"), (103, "User3"), (104, "User4")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -350,7 +350,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _):
+                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
                         continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
                     default:
                         break
@@ -374,7 +374,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -394,7 +394,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames):
+                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
                         continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
                     default:
                         break
@@ -418,7 +418,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1"), (102, "User2")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -438,7 +438,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames):
+                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
                         continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
                     default:
                         break
@@ -462,7 +462,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1"), (102, "User2"), (103, "User3"), (104, "User4"), (105, "User5")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -482,7 +482,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             await withCheckedContinuation { continuation in
                 viewModel.invokeCommand = { command in
                     switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames):
+                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
                         continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
                     default:
                         break
@@ -507,7 +507,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let addedHandleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1")]
         let removedHandleNamePairArray: [(handle: MEGAHandle, name: String)] = [(103, "User1")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedHandleNamePairArray + removedHandleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -532,7 +532,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                     case .participantsStatusChanged(let addedParticipantCount,
                                                     let removedParticipantCount,
                                                     let addedParticipantNames,
-                                                    let removedParticipantNames):
+                                                    let removedParticipantNames,
+                                                    _):
                         continuation.resume(
                             returning: (addedParticipantCount: addedParticipantCount,
                                         removedParticipantCount: removedParticipantCount,
@@ -568,7 +569,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let addedHandleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1"), (102, "User2")]
         let removedHandleNamePairArray: [(handle: MEGAHandle, name: String)] = [(103, "User1"), (104, "User2")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedHandleNamePairArray + removedHandleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -593,7 +594,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                     case .participantsStatusChanged(let addedParticipantCount,
                                                     let removedParticipantCount,
                                                     let addedParticipantNames,
-                                                    let removedParticipantNames):
+                                                    let removedParticipantNames,
+                                                    _):
                         continuation.resume(
                             returning: (addedParticipantCount: addedParticipantCount,
                                         removedParticipantCount: removedParticipantCount,
@@ -629,7 +631,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let addedHandleNamePairArray: [(handle: MEGAHandle, name: String)] = [(101, "User1"), (102, "User2"), (103, "User1"), (104, "User2")]
         let removedHandleNamePairArray: [(handle: MEGAHandle, name: String)] = [(105, "User1"), (106, "User2"), (107, "User1"), (108, "User2")]
         let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedHandleNamePairArray + removedHandleNamePairArray))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, callManagerUseCase: MockCallManagerUseCase(), userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false), authUseCase: MockAuthUseCase(isUserLoggedIn: true))
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
                                                            containerViewModel: containerViewModel,
@@ -654,7 +656,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                     case .participantsStatusChanged(let addedParticipantCount,
                                                     let removedParticipantCount,
                                                     let addedParticipantNames,
-                                                    let removedParticipantNames):
+                                                    let removedParticipantNames,
+                                                    _ ):
                         continuation.resume(
                             returning: (addedParticipantCount: addedParticipantCount,
                                         removedParticipantCount: removedParticipantCount,
@@ -681,6 +684,78 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(participantResult.addedParticipantNames, Array(addedHandleNamePairArray.map(\.name).prefix(1)), "Participant name must be returned")
         XCTAssertEqual(participantResult.removedParticipantNames, Array(removedHandleNamePairArray.map(\.name).prefix(1)), "Participant name must be returned")
     }
+    
+    func testCallback_outgoingRingingStop_hangOneToOne() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: MockUserImageUseCase(),
+                                      chatRoom: chatRoom,
+                                      call: call)
+        callUseCase.callbacksDelegate = viewModel
+        callUseCase.outgoingRingingStopReceived()
+        XCTAssert(callUseCase.hangCall_CalledTimes == 1)
+    }
+    
+    func testCallback_outgoingRingingStop_doNotHangGroupCall() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: MockUserImageUseCase(),
+                                      chatRoom: chatRoom,
+                                      call: call)
+        callUseCase.callbacksDelegate = viewModel
+        callUseCase.outgoingRingingStopReceived()
+        XCTAssert(callUseCase.hangCall_CalledTimes == 0)
+    }
+    
+    func testCallback_outgoingRingingStop_doNotHangMeeting() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: MockChatRoomUseCase(),
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: MockUserImageUseCase(),
+                                      chatRoom: chatRoom,
+                                      call: call)
+        callUseCase.callbacksDelegate = viewModel
+        callUseCase.outgoingRingingStopReceived()
+        XCTAssert(callUseCase.hangCall_CalledTimes == 0)
+    }
 }
 
 final class MockCallViewRouter: MeetingParticipantsLayoutRouting {
@@ -698,4 +773,8 @@ final class MockCallViewRouter: MeetingParticipantsLayoutRouting {
     func didAddFirstParticipant() {
         didAddFirstParticipant_calledTimes += 1
     }
+    
+    func startCallEndCountDownTimer() {}
+    
+    func endCallEndCountDownTimer() {}
 }

@@ -6,6 +6,7 @@ final class HomeScreenFactory: NSObject {
     @objc func createHomeScreen(from tabBarController: MainTabBarController) -> UIViewController {
         let homeViewController = HomeViewController()
         let navigationController = MEGANavigationController(rootViewController: homeViewController)
+        let sdk = MEGASdkManager.sharedMEGASdk()
 
         let myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
@@ -25,10 +26,8 @@ final class HomeScreenFactory: NSObject {
         )
 
         let uploadViewModel = HomeUploadingViewModel(
-            uploadFilesUseCase: HomeUploadFileUseCase(
-                uploadFromAlbum: .live,
-                uploadFromURL: .live,
-                uploadFromLocalPath: .live
+            uploadFilesUseCase: UploadPhotoAssetsUseCase(
+                uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
             ),
             devicePermissionUseCase: DevicePermissionRequestUseCase(
                 photoPermission: .live,
@@ -51,7 +50,8 @@ final class HomeScreenFactory: NSObject {
             devicePermissionUseCase: .live,
             nodeFavouriteActionUseCase: NodeFavouriteActionUseCase(
                 nodeFavouriteRepository: NodeFavouriteActionRepository()
-            )
+            ),
+            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: sdk))
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(
             userBannerUseCase: UserBannerUseCase(
@@ -60,7 +60,7 @@ final class HomeScreenFactory: NSObject {
             router: HomeBannerRouter(navigationController: navigationController)
         )
 
-        homeViewController.quickAccessWidgetViewModel = QuickAccessWidgetViewModel(offlineFilesUseCase: OfflineFilesUseCase(repo: OfflineFilesRepository(store: MEGAStore.shareInstance())))
+        homeViewController.quickAccessWidgetViewModel = QuickAccessWidgetViewModel(offlineFilesUseCase: OfflineFilesUseCase(repo: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk())))
                 
         navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
 

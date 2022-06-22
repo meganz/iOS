@@ -149,7 +149,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (ThumbnailViewerTableViewCell *)thumbnailViewerTableViewCellForIndexPath:(NSIndexPath *)indexPath recentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
-    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail] ? @"RecentsMediaTVC" : @"RecentsSharedMediaTVC";
+    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:self.myEmail] ? @"RecentsMediaTVC" : @"RecentsSharedMediaTVC";
     ThumbnailViewerTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [ThumbnailViewerTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
@@ -244,8 +244,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
             }];
         } else {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.nodes = recentActionBucket.nodesList;
-            cloudDriveVC.recentActionBucket = recentActionBucket;
+            cloudDriveVC.recentIndex = indexPath.section;
             cloudDriveVC.displayMode = DisplayModeRecents;
             cloudDriveVC.shouldRemovePlayerDelegate = NO;
             

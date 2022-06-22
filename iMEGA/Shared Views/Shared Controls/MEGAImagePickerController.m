@@ -119,8 +119,10 @@
 - (void)actionForImagePath:(NSString *)imagePath {
     if (self.toUploadSomething) {
         self.filePath = imagePath.mnz_relativeLocalPath;
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            CancellableTransfer *transfer = [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle path:self.filePath name:nil appData:nil priority:NO isFile:YES type:CancellableTransferTypeUpload];
+            [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:@[transfer] presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
+        }];
     } else if (self.toChangeAvatar) {
         NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
         [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
@@ -142,8 +144,10 @@
 
 - (void)actionForVideo {
     if (self.toUploadSomething) {
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            CancellableTransfer *transfer = [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle path:self.filePath name:nil appData:nil priority:NO isFile:YES type:CancellableTransferTypeUpload];
+            [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:@[transfer] presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
+        }];
     } else if (self.toShareThroughChat) {
         __weak __typeof__(self) weakSelf = self;
         [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {

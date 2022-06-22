@@ -1,3 +1,4 @@
+import Combine
 
 protocol MeetingContainerRouting: AnyObject, Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)
@@ -14,6 +15,9 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func displayParticipantInMainView(_ participant: CallParticipantEntity)
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
+    func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)?)
+    func removeEndCallDialog(completion: (() -> Void)?)
+    func showJoinMegaScreen()
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -24,12 +28,22 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
-    private var appBecomeActiveObserver: NSObjectProtocol?
+    private var appDidBecomeActiveSubscription: AnyCancellable?
     private weak var containerViewModel: MeetingContainerViewModel?
+    private var endCallDialog: EndCallDialog?
     private var chatRoomUseCase: ChatRoomUseCase<ChatRoomRepository, UserStoreRepository> {
         let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
         return ChatRoomUseCase(chatRoomRepo: chatRoomRepository,
                                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+    }
+    
+    private var createCallUseCase: CallUseCase<CallRepository> {
+        let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
+        return CallUseCase(repository: callRepository)
+    }
+    
+    static var isAlreadyPresented: Bool {
+        MeetingContainerViewController.isAlreadyPresented
     }
     
     init(presenter: UIViewController,
@@ -45,37 +59,24 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             MEGALogDebug("Adding notifications for the call \(callId)")
         }
         
-        // While the application becomes active, if the floating panel is not shown to the user. Show it.
-        self.appBecomeActiveObserver = NotificationCenter.default.addObserver(
-            forName: UIApplication.didBecomeActiveNotification,
-            object: nil,
-            queue: OperationQueue.main
-        ) { [weak self] _ in
-            guard let self = self else { return }
-            
-            if let baseViewController = self.baseViewController,
-               !baseViewController.navigationBar.isHidden,
-               baseViewController.presentedViewController == nil,
-               let containerViewModel = self.containerViewModel {
-                self.showFloatingPanel(containerViewModel: containerViewModel)
-            }
-        }
-    }
-    
-    deinit {
-        if let appBecomeActiveObserver = appBecomeActiveObserver {
-            NotificationCenter.default.removeObserver(appBecomeActiveObserver)
-        }
+        subscribeToAppDidBecomeActiveSubscription(withChatRoom: chatRoom)
     }
     
     func build() -> UIViewController {
+        let authUseCase = AuthUseCase(
+            repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            credentialRepo: CredentialRepository.default
+        )
+        let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.default)
+        
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
-                                                  callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+                                                  callUseCase: createCallUseCase,
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callManagerUseCase: CallManagerUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),
-                                                  authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()), credentialRepo: CredentialRepository()))
+                                                  authUseCase: authUseCase,
+                                                  noUserJoinedUseCase: meetingNoUserJoinedUseCase)
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         containerViewModel = viewModel
@@ -83,8 +84,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func start() {
-        let presentedViewController = UIApplication.mnz_presentingViewController()
-        guard !(presentedViewController is MeetingContainerViewController) else {
+        guard Self.isAlreadyPresented == false else {
             MEGALogDebug("Meeting UI is already presented")
             return
         }
@@ -198,6 +198,40 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         isSpeakerEnabled = enable
     }
     
+    func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)? = nil) {
+        guard self.endCallDialog == nil else { return }
+        
+        let endCallDialog = EndCallDialog(forceDarkMode: true) { [weak self] in
+            self?.endCallDialog = nil
+            self?.meetingParticipantsRouter?.endCallEndCountDownTimer()
+            stayOnCallCompletion?()
+        } endCallAction: { [weak self] in
+            self?.endCallDialog = nil
+            endCallCompletion()
+        }
+
+        meetingParticipantsRouter?.startCallEndCountDownTimer()
+        endCallDialog.show()
+        self.endCallDialog = endCallDialog
+    }
+    
+    func removeEndCallDialog(completion: (() -> Void)?) {
+        guard endCallDialog != nil else {
+            completion?()
+            return
+        }
+        
+        meetingParticipantsRouter?.endCallEndCountDownTimer()
+        endCallDialog?.dismiss(animated: true) { [weak self] in
+            self?.endCallDialog = nil
+            completion?()
+        }
+    }
+    
+    func showJoinMegaScreen() {
+        EncourageGuestUserToJoinMegaRouter(presenter: UIApplication.mnz_presentingViewController()).start()
+    }
+    
     //MARK:- Private methods.
     private func showCallViewRouter(containerViewModel: MeetingContainerViewModel) {
         guard let baseViewController = baseViewController else { return }
@@ -221,5 +255,22 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                              isSpeakerEnabled: isSpeakerEnabled)
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
+    }
+    
+    private func subscribeToAppDidBecomeActiveSubscription(withChatRoom chatRoom: ChatRoomEntity) {
+        self.appDidBecomeActiveSubscription = NotificationCenter.default
+            .publisher(for: UIApplication.didBecomeActiveNotification)
+            .sink() { [weak self] _ in
+                guard let self = self else { return }
+                
+                if self.createCallUseCase.call(for: chatRoom.chatId) == nil {
+                    self.containerViewModel?.dispatch(.dismissCall(completion: nil))
+                } else if let baseViewController = self.baseViewController,
+                          !baseViewController.navigationBar.isHidden,
+                          baseViewController.presentedViewController == nil,
+                          let containerViewModel = self.containerViewModel {
+                    self.showFloatingPanel(containerViewModel: containerViewModel)
+                }
+            }
     }
 }

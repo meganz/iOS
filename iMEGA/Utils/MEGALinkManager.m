@@ -115,7 +115,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     MEGALinkManager.selectedOption = LinkOptionDefault;
 }
 
-+ (void)processSelectedOptionOnLink {
++ (void)processSelectedOptionOnLinkWithCancelToken:(MEGACancelToken *)cancelToken {
     if (MEGALinkManager.selectedOption == LinkOptionDefault) {
         return;
     }
@@ -133,13 +133,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case LinkOptionDownloadNode: {
-            MEGANode *node = [MEGALinkManager.nodesFromLinkMutableArray firstObject];
-            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                return;
-            }
-            
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:NO];
+            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:MEGALinkManager.nodesFromLinkMutableArray presenter:UIApplication.mnz_visibleViewController isFolderLink:NO];
             break;
         }
             
@@ -154,16 +148,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case LinkOptionDownloadFolderOrNodes: {
-            for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
-                if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
-                    return;
-                }
-            }
-                
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
-                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES];
-            }
+            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:MEGALinkManager.nodesFromLinkMutableArray presenter:UIApplication.mnz_visibleViewController isFolderLink:YES];
+
             break;
         }
             

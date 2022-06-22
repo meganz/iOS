@@ -35,4 +35,8 @@ extension Sequence where Element: MEGANode {
             $0.publicLink == nil
         }).isEmpty
     }
+    
+    func publicLinkedNodes() -> [MEGANode] {
+        filter({ $0.isExported() })
+    }
 }

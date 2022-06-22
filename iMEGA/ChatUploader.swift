@@ -69,6 +69,7 @@
                                                               parent: parentNode,
                                                               appData: appData,
                                                               isSourceTemporary: isSourceTemporary,
+                                                              fileName: nil,
                                                               delegate: delegate)
         }
     }

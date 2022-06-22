@@ -13,6 +13,14 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var removePeerAsModerator_CalledTimes = 0
     var call: CallEntity
     
+    var callbacksDelegate: CallCallbacksUseCaseProtocol?
+    var networkQuality: NetworkQuality = .bad
+    var chatRoom: ChatRoomEntity?
+    var video: Bool = false
+    var audio: Bool = false
+    var chatSession: ChatSessionEntity?
+    var participantHandle: MEGAHandle = .invalid
+    
     init(call: CallEntity) {
         self.call = call
     }
@@ -67,5 +75,100 @@ final class MockCallUseCase: CallUseCaseProtocol {
     
     func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
         removePeerAsModerator_CalledTimes += 1
+    }
+}
+
+extension MockCallUseCase: CallCallbacksRepositoryProtocol {
+
+    func createdSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+            MEGALogDebug("Error getting mock properties")
+            return
+        }
+        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+    }
+    
+    func destroyedSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+            MEGALogDebug("Error getting mock properties")
+            return
+        }
+        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+    }
+    
+    func avFlagsUpdated(for session: ChatSessionEntity, in chatId: MEGAHandle) {
+        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+            MEGALogDebug("Error getting mock properties")
+            return
+        }
+        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+    }
+    
+    func audioLevel(for session: ChatSessionEntity, in chatId: MEGAHandle) {
+        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+            MEGALogDebug("Error getting mock properties")
+            return
+        }
+        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+    }
+    
+    func callTerminated(_ call: CallEntity) {
+        callbacksDelegate?.callTerminated(self.call)
+    }
+    
+    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+        guard let chatRoom = self.chatRoom else {
+            MEGALogDebug("Error getting mock properties")
+            return
+        }
+        callbacksDelegate?.ownPrivilegeChanged(to: chatRoom.ownPrivilege, in: chatRoom)
+    }
+    
+    func participantAdded(with handle: MEGAHandle) {
+        callbacksDelegate?.participantAdded(with: participantHandle)
+    }
+    
+    func participantRemoved(with handle: MEGAHandle) {
+        callbacksDelegate?.participantRemoved(with: participantHandle)
+    }
+    
+    func connecting() {
+        callbacksDelegate?.connecting()
+    }
+    
+    func inProgress() {
+        callbacksDelegate?.inProgress()
+    }
+    
+    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+            MEGALogDebug("Error getting mock properties")
+            return
+        }
+        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+    }
+    
+    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+            MEGALogDebug("Error getting mock properties")
+            return
+        }
+        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+    }
+    
+    func localAvFlagsUpdated(video: Bool, audio: Bool) {
+        callbacksDelegate?.localAvFlagsUpdated(video: video, audio: audio)
+    }
+    
+    func chatTitleChanged(chatRoom: ChatRoomEntity) {
+        callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom)
+    }
+    
+    func networkQualityChanged(_ quality: NetworkQuality) {
+        callbacksDelegate?.networkQualityChanged(networkQuality)
+    }
+    
+    func outgoingRingingStopReceived() {
+        callbacksDelegate?.outgoingRingingStopReceived()
     }
 }
