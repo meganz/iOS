@@ -9,14 +9,11 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
 
     private let viewModel: FilesExplorerViewModel
-    private var uploadViewModel: HomeUploadingViewModelType?
+    private var uploadViewModel: HomeUploadingViewModel?
     private let viewPreference: ViewPreference
     
-    private lazy var selectAllBarButtonItem = UIBarButtonItem(
-        image: Asset.Images.Generic.moreList.image,
-        style: .plain,
-        target: self, action: #selector(moreButtonItemSelected(_:))
-    )
+    private var contextBarButtonItem = UIBarButtonItem()
+    private var uploadAddBarButonItem = UIBarButtonItem()
     
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
@@ -58,7 +55,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     override func viewDidLoad() {
         super.viewDidLoad()
         currentState.showContent()
-        showMoreRightBarButton()
+        configureNavigationBarButtons()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
@@ -106,7 +103,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     func configureNavigationBarToDefault() {
-        showMoreRightBarButton()
+        configureNavigationBarButtons()
         navigationItem.leftBarButtonItem = nil
         updateTitle(currentState.title)
     }
@@ -114,10 +111,14 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     func setViewModePreference(_ preference: ViewModePreference) {
         assert(preference != .perFolder, "Preference cannot be per folder")
         UserDefaults.standard.setValue(preference.rawValue, forKey: MEGAExplorerViewModePreference)
+        viewModel.dispatch(.didChangeViewMode(preference.rawValue))
     }
     
     func showMoreButton(_ show: Bool) {
-        selectAllBarButtonItem.isEnabled = show
+        contextBarButtonItem.isEnabled = show
+        if viewModel.getExplorerType() == .document {
+            uploadAddBarButonItem.isEnabled = show
+        }
     }
     
     func showSelectButton(_ show: Bool) {
@@ -129,8 +130,28 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         }
     }
     
-    private func showMoreRightBarButton() {
-        navigationItem.rightBarButtonItem = selectAllBarButtonItem
+    private func configureNavigationBarButtons() {
+        contextBarButtonItem.image = Asset.Images.Generic.moreList.image
+        
+        if #unavailable(iOS 14.0) {
+            contextBarButtonItem.style = .plain
+            contextBarButtonItem.target = self
+            contextBarButtonItem.action = #selector(moreButtonItemSelected(_:))
+        }
+        
+        if viewModel.getExplorerType() == .document {
+            uploadAddBarButonItem.image = Asset.Images.NavigationBar.add.image
+            
+            if #unavailable(iOS 14.0) {
+                uploadAddBarButonItem.style = .plain
+                uploadAddBarButonItem.target = self
+                uploadAddBarButonItem.action = #selector(uploadAddButtonItemSelected(_:))
+            }
+
+            navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButonItem]
+        } else {
+            navigationItem.rightBarButtonItem = contextBarButtonItem
+        }
     }
     
     func audioPlayer(hidden: Bool) {
@@ -139,10 +160,56 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         }
     }
     
+    @available(iOS 14.0, *)
+    func updateContextMenu(menu: UIMenu) {
+        contextBarButtonItem.menu = menu
+    }
+    
+    @available(iOS 14.0, *)
+    func updateUploadAddMenu(menu: UIMenu) {
+        uploadAddBarButonItem.menu = menu
+    }
+    
+    func updateCurrentState() {
+        currentState.toggleState()
+    }
+    
+    func didSelect(action: UploadAddAction) {
+        if uploadViewModel == nil {
+            let uploadViewModel = HomeUploadingViewModel(
+                uploadFilesUseCase: UploadPhotoAssetsUseCase(
+                    uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
+                ),
+                devicePermissionUseCase: DevicePermissionRequestUseCase(
+                    photoPermission: .live,
+                    devicePermission: .live
+                ),
+                reachabilityUseCase: ReachabilityUseCase(),
+                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()),
+                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
+            )
+            self.uploadViewModel = uploadViewModel
+        }
+        
+        switch action {
+        case .newTextFile:
+            uploadViewModel?.didTapUploadFromNewTextFile()
+        case .scanDocument:
+            uploadViewModel?.didTapUploadFromDocumentScan()
+        case .importFrom:
+            uploadViewModel?.didTapUploadFromImports()
+        default: break
+        }
+    }
+    
     //MARK:- Actions
 
     @objc private func moreButtonItemSelected(_ button: UIBarButtonItem) {
-        currentState.showPreferences(sender: button)
+        viewModel.dispatch(.didTapOnMoreButton)
+    }
+    
+    @objc private func uploadAddButtonItemSelected(_ button: UIBarButtonItem) {
+        viewModel.dispatch(.didTapOnAddUploadButton)
     }
     
     @objc private func cancelButtonPressed(_ button: UIBarButtonItem) {
@@ -160,113 +227,13 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     //MARK:- Action sheet methods
-    
-    func showPreferences(withViewPreferenceAction viewPreferenceAction: ActionSheetAction?, sender: UIBarButtonItem) {
-        let sortPreferenceAction = ActionSheetAction(
-            title: Strings.Localizable.sortTitle,
-            detail: NSString.localizedSortOrderType(Helper.sortType(for: nil)),
-            image: Asset.Images.ActionSheetIcons.sort.image, style: .default) { [weak self] in
-            self?.showSortOptions(sender: sender)
-        }
-        
-        let selectAction = ActionSheetAction(
-            title: Strings.Localizable.select,
-            detail: nil,
-            image: Asset.Images.ActionSheetIcons.select.image,
-            style: .default) { [weak self] in
-            self?.showCancelRightBarButton()
-            self?.showSelectAllBarButton()
-            self?.currentState.setEditingMode()
-        }
-        
-        var customizeActions:Array<ActionSheetAction>? = []
-        if (viewModel.getExplorerType() == .document) {
-            let uploadViewModel = HomeUploadingViewModel(
-                uploadFilesUseCase: UploadPhotoAssetsUseCase(
-                    uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
-                ),
-                devicePermissionUseCase: DevicePermissionRequestUseCase(
-                    photoPermission: .live,
-                    devicePermission: .live
-                ),
-                reachabilityUseCase: ReachabilityUseCase(),
-                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
-            )
-            self.uploadViewModel = uploadViewModel
-            
-            let sources: [FileUploadingSourceItem.Source] = [.textFile, .documentScan, .imports]
-            for source in sources {
-                let item = FileUploadingSourceItem(source: source)
-                let action = ActionSheetAction(title: item.title, detail: nil, accessoryView: nil, image: item.icon, style: .default) {
-                    switch source {
-                    case .textFile:
-                        uploadViewModel.didTapUploadFromNewTextFile()
-                    case .documentScan:
-                        uploadViewModel.didTapUploadFromDocumentScan()
-                    case .imports:
-                        uploadViewModel.didTapUploadFromImports()
-                    default:
-                        break
-                    }
-                }
-                customizeActions?.append(action)
-            }
-        }
-        
-        var actionList = [sortPreferenceAction, selectAction]
-        if let action = viewPreferenceAction {
-            actionList.insert(action, at: 0)
-        }
-        
-        if let actions = customizeActions {
-            actionList = actions + actionList
-        }
-        
-        let actionSheetVC: ActionSheetViewController
-        
-        if viewPreference == .list {
-            actionSheetVC = ActionSheetViewController(
-                actions: [sortPreferenceAction],
-                headerTitle: nil,
-                dismissCompletion: nil,
-                sender: sender
-            )
-        } else {
-            actionSheetVC = ActionSheetViewController(
-                actions: actionList,
-                headerTitle: nil,
-                dismissCompletion: nil,
-                sender: sender
-            )
-        }
-        
+    func showActionSheet(with actions: [ContextActionSheetAction]) {
+        let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
         present(actionSheetVC, animated: true)
     }
     
-    func showSortOptions(sender: UIBarButtonItem) {
-        let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
-                
-        let actions = SortOrderType.allValid.map { sortOrderType in
-            ActionSheetAction(title: sortOrderType.localizedString,
-                              detail: nil,
-                              accessoryView: SortOrderType.defaultSortOrderType(forNode: nil) == sortOrderType ? checkmarkImageView : nil,
-                              image: sortOrderType.image,
-                              style: .default) { [weak self] in
-                Helper.save(sortOrderType.megaSortOrderType, for: nil)
-                
-                guard let self = self else { return }
-                self.updateSearchResults(for: self.searchController)
-            }
-        }
-        
-        let actionSheetVC = ActionSheetViewController(
-            actions: actions,
-            headerTitle: nil,
-            dismissCompletion: nil,
-            sender: sender
-        )
-        
-        present(actionSheetVC, animated: true)
+    func showActionSheet(actions: [ContextActionSheetAction]) {
+        showActionSheet(with: actions)
     }
 }
 

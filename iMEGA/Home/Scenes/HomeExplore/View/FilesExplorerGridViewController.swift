@@ -150,6 +150,29 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             delegate?.updateSearchResults()
         case .setViewConfiguration(let configuration):
             self.configuration = configuration
+        case .updateContextMenu(let menu):
+            if #available(iOS 14.0, *) {
+                delegate?.updateContextMenu(menu: menu)
+            }
+        case .updateUploadAddMenu(let menu):
+            if #available(iOS 14.0, *) {
+                delegate?.updateUploadAddMenu(menu: menu)
+            }
+        case .showActionSheet(let actions):
+            delegate?.showActionSheet(actions: actions)
+        case .sortTypeHasChanged:
+            delegate?.updateSearchResults()
+        case .editingModeStatusChanges:
+            if collectionView.allowsMultipleSelection {
+                endEditingMode()
+            } else {
+                setEditingMode()
+                delegate?.showSelectButton(true)
+            }
+        case .viewTypeHasChanged:
+            delegate?.changeCurrentViewType()
+        case .didSelect(let action):
+            delegate?.didSelect(action: action)
         default:
             break
         }

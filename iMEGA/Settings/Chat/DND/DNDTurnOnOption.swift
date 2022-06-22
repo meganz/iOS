@@ -1,6 +1,6 @@
 import Foundation
 
-enum DNDTurnOnOption {
+enum DNDTurnOnOption: String, CaseIterable {
     case thirtyMinutes
     case oneHour
     case sixHours
@@ -52,7 +52,7 @@ enum DNDTurnOnOption {
         }
     }
     
-    private var localizedTitle: String {
+    var localizedTitle: String {
         switch self {
         case .thirtyMinutes:
             return Strings.Localizable._30Minutes

@@ -34,6 +34,7 @@ final class HomeScreenFactory: NSObject {
                 devicePermission: .live
             ),
             reachabilityUseCase: ReachabilityUseCase(),
+            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()),
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
         )
 

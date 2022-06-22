@@ -4,19 +4,7 @@ protocol HomeUploadingViewModelInputs {
 
     func viewIsReady()
 
-    func didTapUploadFromSourceItems() -> [FileUploadingSourceItem]
-
-    // MARK: - Event for user tapping uploading options
-
-    func didTapUploadFromPhotoAlbum()
-    
-    func didTapUploadFromNewTextFile()
-
-    func didTapUploadFromCamera()
-
-    func didTapUploadFromImports()
-
-    func didTapUploadFromDocumentScan()
+    func didTapUploadFromSourceItems() -> [ContextActionSheetAction]?
 }
 
 protocol HomeUploadingViewModelOutputs {
@@ -24,6 +12,9 @@ protocol HomeUploadingViewModelOutputs {
     var state: HomeUploadingViewState { get }
 
     var networkReachable: Bool { get }
+    
+    @available(iOS 14.0, *)
+    var contextMenu: UIMenu? { get }
 }
 
 protocol HomeUploadingViewModelType {
@@ -36,26 +27,22 @@ protocol HomeUploadingViewModelType {
 }
 
 final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingViewModelInputs {
-
     // MARK: - HomeUploadingViewModelInputs
 
     func viewIsReady() {
+        self.contextMenuManager = ContextMenuManager(uploadAddMenuDelegate: self,
+                                                     createContextMenuUseCase: createContextMenuUseCase)
+        notifyUpdate?(self.outputs)
+        
         reachabilityUseCase.registerNetworkChangeListener { [weak self] _ in
             guard let self = self else { return }
             self.notifyUpdate?(self.outputs)
         }
     }
 
-    func didTapUploadFromSourceItems() -> [FileUploadingSourceItem] {
-        return FileUploadingSourceItem.Source.allCases.map { source in
-            switch source {
-            case .photos: return FileUploadingSourceItem(source: .photos)
-            case .textFile: return FileUploadingSourceItem(source: .textFile)
-            case .capture: return FileUploadingSourceItem(source: .capture)
-            case .imports: return FileUploadingSourceItem(source: .imports)
-            case .documentScan: return FileUploadingSourceItem(source: .documentScan)
-            }
-        }
+    func didTapUploadFromSourceItems() -> [ContextActionSheetAction]? {
+        let cmConfigEntity = CMConfigEntity(menuType: .uploadAdd, isHome: true)
+        return contextMenuManager?.actionSheetActions(with: cmConfigEntity)
     }
 
     func didTapUploadFromPhotoAlbum() {
@@ -127,13 +114,32 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     var outputs: HomeUploadingViewModelOutputs {
         let networkReachable = reachabilityUseCase.isReachable()
+        let cmConfigEntity = CMConfigEntity(menuType: .uploadAdd, isHome: true)
         if let error = error {
-            return ViewState(
-                state: .permissionDenied(error),
-                networkReachable: networkReachable
+            if #available(iOS 14.0, *) {
+                return ViewState(
+                    state: .permissionDenied(error),
+                    networkReachable: networkReachable,
+                    contextMenu: contextMenuManager?.contextMenu(with: cmConfigEntity)
+                )
+            } else {
+                return ViewState(
+                    state: .permissionDenied(error),
+                    networkReachable: networkReachable
+                )
+            }
+        }
+        
+        if #available(iOS 14.0, *) {
+            return ViewState(state: .normal,
+                             networkReachable: networkReachable,
+                             contextMenu: contextMenuManager?.contextMenu(with: cmConfigEntity)
+            )
+        } else {
+            return ViewState(state: .normal,
+                             networkReachable: networkReachable
             )
         }
-        return ViewState(state: .normal, networkReachable: networkReachable)
     }
 
     var notifyUpdate: ((HomeUploadingViewModelOutputs) -> Void)?
@@ -149,23 +155,50 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     private let devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol
 
     private let reachabilityUseCase: ReachabilityUseCaseProtocol
+    
+    private let createContextMenuUseCase: CreateContextMenuUseCaseProtocol
+    
+    private var contextMenuManager: ContextMenuManager?
 
     init(
         uploadFilesUseCase: UploadPhotoAssetsUseCaseProtocol,
         devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol,
         reachabilityUseCase: ReachabilityUseCaseProtocol,
+        createContextMenuUseCase: CreateContextMenuUseCaseProtocol,
         router: FileUploadingRouter
     ) {
         self.uploadPhotoAssetsUseCase = uploadFilesUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
         self.reachabilityUseCase = reachabilityUseCase
+        self.createContextMenuUseCase = createContextMenuUseCase
         self.router = router
     }
 
     struct ViewState: HomeUploadingViewModelOutputs {
         var state: HomeUploadingViewState
         var networkReachable: Bool
+        var contextMenu: UIMenu?
     }
+}
+
+extension HomeUploadingViewModel: UploadAddMenuDelegate {
+    func uploadAddMenu(didSelect action: UploadAddAction) {
+        switch action {
+        case .chooseFromPhotos:
+            didTapUploadFromPhotoAlbum()
+        case .newTextFile:
+            didTapUploadFromNewTextFile()
+        case .scanDocument:
+            didTapUploadFromDocumentScan()
+        case .capture:
+            didTapUploadFromCamera()
+        case .importFrom:
+            didTapUploadFromImports()
+        default: break
+        }
+    }
+    
+    func showActionSheet(with actions: [ContextActionSheetAction]) {}
 }
 
 // MARK: - Upload Options

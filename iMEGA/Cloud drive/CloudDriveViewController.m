@@ -34,8 +34,6 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
-#import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
 #import "EmptyStateView.h"
@@ -56,7 +54,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, TextFileEditable> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, TextFileEditable> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -81,13 +79,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 
-@property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
-@property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
-
 @property (nonatomic, assign) ViewModePreference viewModePreference;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @property (nonatomic, assign) BOOL onlyUploadOptions;
 
@@ -103,6 +97,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.view.backgroundColor = self.containerView.backgroundColor = UIColor.mnz_background;
     
     self.definesPresentationContext = YES;
+    
+    [self configureContextMenuManager];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -334,167 +330,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.cdCollectionView.collectionView.emptyDataSetSource = self;
 }
 
-- (void)changeViewModePreference {
-    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
-    if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
-        [MEGAStore.shareInstance insertOrUpdateCloudViewModeWithHandle:self.parentNode.handle viewMode:self.viewModePreference];
-    } else {
-        [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
-    }
-    
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
-}
-
-#pragma mark - DZNEmptyDataSetSource
-
-- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
-    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
-    
-    return emptyStateView;
-}
-
-#pragma mark - Empty State
-
-- (NSString *)titleForEmptyState {
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.parentNode == nil) {
-            return nil;
-        }
-        
-        if (self.searchController.isActive) {
-            text = NSLocalizedString(@"noResults", nil);
-        } else {
-            switch (self.displayMode) {
-                case DisplayModeCloudDrive: {
-                    if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        text = NSLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.");
-                    } else {
-                        text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-                    }
-                    break;
-                }
-                    
-                case DisplayModeRubbishBin:
-                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        text = NSLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
-                    } else {
-                        text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-                    }
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
-    } else {
-        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
-    }
-    
-    return text;
-}
-
-- (NSString *)descriptionForEmptyState {
-    NSString *text = @"";
-    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
-    }
-    
-    return text;
-}
-
-- (UIImage *)imageForEmptyState {
-    UIImage *image = nil;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.parentNode == nil) {
-            return nil;
-        }
-        
-        if (self.searchController.isActive) {
-            image = [UIImage imageNamed:@"searchEmptyState"];
-        } else {
-            switch (self.displayMode) {
-                case DisplayModeCloudDrive: {
-                    if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        image = [UIImage imageNamed:@"cloudEmptyState"];
-                    } else {
-                        image = [UIImage imageNamed:@"folderEmptyState"];
-                    }
-                    break;
-                }
-                    
-                case DisplayModeRubbishBin: {
-                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        image = [UIImage imageNamed:@"rubbishEmptyState"];
-                    } else {
-                        image = [UIImage imageNamed:@"folderEmptyState"];
-                    }
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-        }
-    } else {
-        image = [UIImage imageNamed:@"noInternetEmptyState"];
-    }
-    
-    return image;
-}
-
-- (NSString *)buttonTitleForEmptyState {
-    MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-    if (parentShareType == MEGAShareTypeAccessRead) {
-        return nil;
-    }
-    
-    NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.parentNode == nil) {
-            return nil;
-        }
-        
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if (!self.searchController.isActive) {
-                    text = NSLocalizedString(@"addFiles", nil);
-                }
-                break;
-            }
-                
-            default:
-                text = @"";
-                break;
-        }
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
-        }
-    }
-    
-    return text;
-}
-
-- (void)buttonTouchUpInsideEmptyState {
-    if (MEGAReachabilityManager.isReachable) {
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                [self presentUploadOptions];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-        }
-    }
-}
-
 #pragma mark - Public
 
 - (void)didSelectNode:(MEGANode *)node {
@@ -533,6 +368,25 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self moveAction:nil];
 }
 
+- (BOOL)isListViewModeSelected {
+    return self.viewModePreference == ViewModePreferenceList;
+}
+
+- (void)changeViewModePreference {
+    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
+    if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
+        [MEGAStore.shareInstance insertOrUpdateCloudViewModeWithHandle:self.parentNode.handle viewMode:self.viewModePreference];
+    } else {
+        [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
+    }
+    
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
+}
+
+- (void)nodesSortTypeHasChanged {
+    [self reloadUI];
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -543,6 +397,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            [self setNavigationBarButtons];
             
             break;
         }
@@ -698,18 +553,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)setNavigationBarButtonItems {
     switch (self.displayMode) {
-        case DisplayModeCloudDrive: {
-            if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode] == MEGAShareTypeAccessRead) {
-                self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
-            } else {
-                self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
-            }
+        case DisplayModeCloudDrive:
+        case DisplayModeRubbishBin: {
+            [self setNavigationBarButtons];
             break;
         }
-            
-        case DisplayModeRubbishBin:
-            self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
-            break;
             
         case DisplayModeRecents:
             self.navigationItem.rightBarButtonItems = @[];
@@ -751,51 +599,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-- (void)presentSortByActionSheet {
-    MEGASortOrderType sortType = [Helper sortTypeFor:self.parentNode];
-    
-    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
-    
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"cloudDrive.sort.label", @"A menu item in the left panel drop down menu to allow sorting by label.") detail:nil accessoryView:sortType == MEGASortOrderTypeLabelAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"label"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeLabelAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites") detail:nil accessoryView:sortType == MEGASortOrderTypeFavouriteAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"favourite"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeFavouriteAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    
-    ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-    [self presentViewController:sortByActionSheet animated:YES completion:nil];
-}
-
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
     if ([newFolderAlertController isKindOfClass:UIAlertController.class]) {
@@ -805,45 +608,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
-}
-
-- (void)presentUploadOptions {
-    self.onlyUploadOptions = YES;
-    [self moreAction:self.moreBarButtonItem];
-    self.onlyUploadOptions = NO;
-}
-
-- (void)presentUploadAlertController {
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") detail:nil image:[UIImage imageNamed:@"saveToPhotos"] style:UIAlertActionStyleDefault actionHandler:^{
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") detail:nil image:[UIImage imageNamed:@"capture"] style:UIAlertActionStyleDefault actionHandler:^{
-        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-            if (granted) {
-                [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
-                    if (granted) {
-                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                    } else {
-                        [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                    }
-                }];
-            } else {
-                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
-            }
-        }];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"cloudDrive.upload.importFromFiles", nil) detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
-        UIDocumentPickerViewController *documentPicker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
-        documentPicker.delegate = self;
-        documentPicker.allowsMultipleSelection = YES;
-        documentPicker.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
-        [self presentViewController:documentPicker animated:YES completion:nil];
-    }]];
-    
-    ActionSheetViewController *uploadActions =[ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-    [self presentViewController:uploadActions animated:YES completion:nil];
 }
 
 - (void)presentScanDocument {
@@ -963,6 +727,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     } else {
         [self.cdCollectionView reloadData];
     }
+    
+    [self setNavigationBarButtons];
 }
 
 - (void)setEditMode:(BOOL)editMode {
@@ -971,17 +737,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     } else {
         [self.cdCollectionView setCollectionViewEditing:editMode animated:YES];
     }
-}
-
-- (NSInteger)numberOfRows {
-    NSInteger numberOfRows = 0;
-    if (self.viewModePreference == ViewModePreferenceList) {
-        numberOfRows = [self.cdTableView.tableView numberOfRowsInSection:0];
-    } else {
-        numberOfRows = [self.cdCollectionView.collectionView mnz_totalRows];
-    }
-    
-    return numberOfRows;
 }
 
 - (void)dismissHUD {
@@ -1153,100 +908,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
 }
 
-- (IBAction)moreAction:(UIBarButtonItem *)sender {
-    __weak __typeof__(self) weakSelf = self;
-    
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
-        [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-        [weakSelf presentUploadAlertController];
-    }]];
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf presentScanDocument];
-    }]];
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf createNewFolderAction];
-    }]];
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"new_text_file", @"Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"textfile"] style:UIAlertActionStyleDefault actionHandler:^{
-         [[CreateTextFileAlertViewRouter.alloc initWithPresenter:self.navigationController parentHandle:self.parentNode.handle] start];
-     }]];
-    
-    if (@available(iOS 14.0, *)) {
-        ActionSheetAction *action = [self mediaDiscoveryAction];
-        
-        if (action) {
-            [actions addObject: action];
-        }
-    }
-    
-    if ([self numberOfRows] && !self.onlyUploadOptions) {
-        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
-        UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeViewModePreference];
-        }]];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf presentSortByActionSheet];
-        }]];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
-            BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
-            [weakSelf setEditMode:enableEditing];
-            
-        }]];
-    }
-    
-    ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-    [self presentViewController:moreActionSheet animated:YES completion:nil];
-}
-
-- (IBAction)moreMinimizedAction:(UIBarButtonItem *)sender {
-    __weak __typeof__(self) weakSelf = self;
-    
-    if (self.parentNode.isFolder &&
-        self.displayMode == DisplayModeRubbishBin &&
-        self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rubbishNode].handle) {
-        [self showCustomActionsForNode:self.parentNode sender:sender];
-        return;
-    }
-    
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    if ([self numberOfRows]) {
-        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
-        UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeViewModePreference];
-        }]];
-    }
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf presentSortByActionSheet];
-    }]];
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
-        BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
-        [weakSelf setEditMode:enableEditing];
-    }]];
-    
-    if (self.displayMode == DisplayModeRubbishBin) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [MEGASdkManager.sharedMEGASdk cleanRubbishBin];
-                }]];
-                
-                [UIApplication.mnz_visibleViewController presentViewController:clearRubbishBinAlertController animated:YES completion:nil];
-            }
-        }]];
-    }
-    ActionSheetViewController *moreMinimizedActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-    [self presentViewController:moreMinimizedActionSheet animated:YES completion:nil];
-}
-
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
     BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
     [self setEditMode:enableEditing];
@@ -1326,10 +987,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
     [self showBrowserNavigationFor:self.selectedNodesArray action:BrowserActionCopy];
-}
-
-- (IBAction)sortByAction:(UIBarButtonItem *)sender {
-    [self presentSortByActionSheet];
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(id)sender {
@@ -1447,144 +1104,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             nav;
         }) animated:YES completion:nil];
     }];
-}
-
-#pragma mark - NodeActionViewControllerDelegate
-
-- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(UIButton *)sender {
-    [self setEditMode:NO];
-    switch (action) {
-        case MegaNodeActionTypeEditTextFile: {
-            [node mnz_editTextFileInViewController:self];
-            break;
-        }
-            
-        case MegaNodeActionTypeDownload:
-            [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
-            break;
-            
-        case MegaNodeActionTypeCopy:
-            [self showBrowserNavigationFor:@[node] action:BrowserActionCopy];
-            break;
-            
-        case MegaNodeActionTypeMove:
-            [self showBrowserNavigationFor:@[node] action:BrowserActionMove];
-            break;
-            
-        case MegaNodeActionTypeRename:
-            [node mnz_renameNodeInViewController:self];
-            break;
-            
-        case MegaNodeActionTypeExportFile:
-            [self exportFileFrom:node sender:sender];
-            break;
-            
-        case MegaNodeActionTypeShareFolder:
-            [self showShareFolderForNodes:@[node]];
-            break;
-            
-        case MegaNodeActionTypeManageShare: {
-            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-            contactsVC.node = node;
-            contactsVC.contactsMode = ContactsModeFolderSharedWith;
-            [self.navigationController pushViewController:contactsVC animated:YES];
-            break;
-        }
-            
-        case MegaNodeActionTypeInfo:
-            [self showNodeInfo:node];
-            break;
-            
-        case MegaNodeActionTypeFavourite: {
-            if (@available(iOS 14.0, *)) {
-                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-                    if (error.type == MEGAErrorTypeApiOk) {
-                        if (request.numDetails == 1) {
-                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
-                        } else {
-                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
-                        }
-                    }
-                }];
-                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
-            } else {
-                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
-            }
-            break;
-        }
-            
-        case MegaNodeActionTypeLabel:
-            [node mnz_labelActionSheetInViewController:self];
-            break;
-            
-        case MegaNodeActionTypeLeaveSharing:
-            [node mnz_leaveSharingInViewController:self];
-            break;
-            
-        case MegaNodeActionTypeShareLink:
-        case MegaNodeActionTypeManageLink: {
-            [self presentGetLinkVCForNodes:@[node]];
-            break;
-        }
-            
-        case MegaNodeActionTypeRemoveLink: {
-            [node mnz_removeLink];
-            break;
-        }
-            
-        case MegaNodeActionTypeMoveToRubbishBin:
-            [self moveToRubbishBinFor:node];
-            break;
-            
-        case MegaNodeActionTypeRemove: {
-            [node mnz_removeInViewController:self completion:^(BOOL shouldRemove) {
-                if (shouldRemove) {
-                    if (node.mnz_isPlaying) {
-                        [AudioPlayerManager.shared closePlayer];
-                    } else if (node.isFolder &&
-                               self.parentNode.handle == node.handle) {
-                        [self.navigationController popViewControllerAnimated:YES];
-                    }
-                }
-            }];
-            
-            break;
-        }
-            
-        case MegaNodeActionTypeRemoveSharing:
-            [node mnz_removeSharing];
-            break;
-            
-        case MegaNodeActionTypeRestore:
-            [node mnz_restore];
-            
-            if (node.isFolder &&
-                self.parentNode.handle == node.handle) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            break;
-            
-        case MegaNodeActionTypeSaveToPhotos:
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
-            break;
-            
-        case MegaNodeActionTypeSendToChat:
-            [self showSendToChat:@[node]];
-            break;
-            
-        case MegaNodeActionTypeViewVersions:
-            [node mnz_showNodeVersionsInViewController:self];
-            break;
-            
-        case MegaNodeActionTypeDisputeTakedown:
-            [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
-            break;
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - NodeInfoViewControllerDelegate

@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MEGAQLPreviewController, MOOfflineNode;
+@class MEGAQLPreviewController, MOOfflineNode, ContextMenuManager;
 
 typedef NS_ENUM(NSUInteger, OfflineViewControllerFlavor) {
     AccountScreen = 0,
@@ -30,6 +30,8 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 @property (nonatomic, readonly) NSString *currentOfflinePath;
 @property (nonatomic, strong, nullable) NSString *folderPathFromOffline;
 
+@property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
+@property (nonatomic, strong) UIBarButtonItem *contextBarButtonItem;
 @property (nonatomic, strong) NSString *logsPath;
 
 - (nullable NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;
@@ -45,6 +47,9 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 - (void)openFileFromWidgetWith:(NSString *)path;
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName;
 
+- (void)changeViewModePreference;
+- (void)changeEditingModeStatus;
+- (void)nodesSortTypeHasChanged;
 @end
 
 NS_ASSUME_NONNULL_END

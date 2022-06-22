@@ -61,16 +61,16 @@ class GlobalDNDNotificationControl: PushNotificationControl {
     }
 }
 
-// MARK:- Private method extension
-
 extension GlobalDNDNotificationControl {
-    private func turnOnDND(dndTurnOnOption: DNDTurnOnOption) {
+    func turnOnDND(dndTurnOnOption: DNDTurnOnOption, completion: (() -> Void)? = nil) {
         updatePushNotificationSettings {
             if let timeStamp = dndTimeInterval(dndTurnOnOption: dndTurnOnOption) {
                 self.pushNotificationSettings?.globalChatsDNDTimestamp = timeStamp
             } else {
                 MEGALogDebug("[GlobalDNDNotificationControl] timestamp is nil")
             }
+            
+            completion?()
         }
     }
 }
