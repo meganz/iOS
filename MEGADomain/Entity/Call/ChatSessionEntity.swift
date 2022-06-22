@@ -7,7 +7,14 @@ struct ChatSessionEntity {
         case destroyed
     }
     
+    enum ChatSessionTermCode: Int {
+        case invalid = -1
+        case recoverable
+        case nonRecoverable
+    }
+    
     let statusType: StatusType?
+    let termCode: ChatSessionTermCode?
     let hasAudio: Bool
     let hasVideo: Bool
     let peerId: UInt64

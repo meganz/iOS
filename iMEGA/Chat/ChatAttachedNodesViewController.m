@@ -17,6 +17,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @interface ChatAttachedNodesViewController ()
 
@@ -68,7 +69,7 @@
     self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
-    self.downloadBarButtonItem.title = NSLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
+    self.downloadBarButtonItem.title = NSLocalizedString(@"downloadToOffline", @"List option shown on the details of a file or folder");
     [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
     self.importBarButtonItem.title = NSLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
     [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
@@ -148,19 +149,8 @@
 }
 
 - (void)downloadSelectedNodes {
-    for (MEGANode *node in self.selectedNodesMutableArray) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
-            [self setEditing:NO animated:YES];
-            return;
-        }
-    }
-    
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
-    
     if (self.tableView.isEditing) {
-        for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
-        }
+        [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:self.selectedNodesMutableArray messageId:self.message.messageId chatId:self.chatId presenter:self];
     }
 }
 
@@ -205,22 +195,7 @@
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    if (self.tableView.isEditing) {
-        for (MEGANode *node in self.selectedNodesMutableArray) {
-            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
-                [self setEditing:NO animated:YES];
-                return;
-            }
-        }
-        
-        for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
-        }
-    }
-    
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    [self downloadSelectedNodes];
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {

@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="Tidak ada Unggahan";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d file";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d file";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d folder";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d folder";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 folder • 1 file";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] folder • [B] file";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d folder • 1 file";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 folder • %d file";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ perangkat ";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Anda tidak lagi memiliki akses ke file ini";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Anda tidak lagi memiliki akses ke folder ini";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Simpan untuk offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Label inbox telah disediakan khusus untuk Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Foto diunggah, unggahan video tidak aktif; 1 video tidak diunggah";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Foto diunggah, unggahan video tidak aktif; %lu video tidak diunggah";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d dari %2$d file";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d dari %2$d files";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item terpilih";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="Tampilan Gambar Kecil";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Tampilan Halaman";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Koneksi lemah.";
 /* There are no notifications to display. */
 "No notifications"="Tidak ada notifikasi";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="%1 Gambar";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 Video";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 Gambar dan 1 Video";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 Gambar dan %2 Video";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 Gambar dan 1 Video";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 Gambar dan %2 Video";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Diubah oleh %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="Suara";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Alihkan";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="Menghubungkan kembali";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="Unable to reconnect";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="Bad connection";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Pratinjau gambar resolusi tinggi";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="Lampirkan file log";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Apakah anda ingin melampirkan file log diagnostik untuk membantu debug?";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="Batalkan transfer";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="Yes, cancel";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="No, continue";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="Memindai…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="Please don’t close the application.";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="Pemindahan dibatalkan";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Laporkan Masalah";
 /* Title of the dialog button to discard a report. */
@@ -2971,17 +2961,17 @@
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Berikutnya";
 /* Meetings: Notification message to be shown when one person joins the call. */
-"meetings.notification.singleUserJoined"="%@ joined";
+"meetings.notification.singleUserJoined"="%@ bergabung";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ left";
+"meetings.notification.singleUserLeft"="%@ pergi";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
-"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+"meetings.notification.twoUsersJoined"="%@ dan %@ bergabung";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left";
+"meetings.notification.twoUsersLeft"="%@ dan %@ pergi";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+"meetings.notification.moreThanTwoUsersJoined"="%@ dan %@ lainnya bergabung";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+"meetings.notification.moreThanTwoUsersLeft"="%@ dan %@ lainnya pergi";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Pindahkan ke Sampah";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="Tinggi";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Terbaik";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="Duplicated item";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="Salin dan gabungkan";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="Gabungkan folder di tujuan dengan folder yang anda salin.";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="Jangan salin";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="Pindah dan gabungkan";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="Gabungkan folder di tempat tujuan dengan folder yang anda pindahkan.";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="Jangan pindahkan";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="Unggah dan gabungkan";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="Gabungkan folder di tujuan dengan folder yang anda unggah.";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="Jangan upload";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="Skip this folder.";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="Pilih file yang ingin Anda simpan:";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="Copy dan ganti";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="Ganti file di folder tujuan dengan file yang anda salin.";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="Pindahkan dan ganti";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="Ganti file di folder tujuan dengan file yang anda pindahkan.";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="Unggah dan ganti";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="Tidak ada file yang akan diubah. Anda akan menyimpan file di bawah ini:";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="Salin dan ganti nama";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="File yang anda salin akan diganti namanya menjadi:";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="Pindahkan dan ganti nama";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="File yang anda pindahkan akan diganti namanya menjadi:";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="Unggah dan ganti nama";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="File yang Anda upload akan diganti namanya menjadi:";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="Unggah dan perbarui";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="File akan diperbarui dengan riwayat versi:";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="You’re the only one here";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Tetap di panggilan";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="Akhiri panggilan sekarang";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

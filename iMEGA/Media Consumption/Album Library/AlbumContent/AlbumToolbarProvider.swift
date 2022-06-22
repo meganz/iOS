@@ -74,18 +74,13 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                   return
               }
         
+        endEditingMode()
+
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
         
-        SVProgressHUD.show(Asset.Images.Hud.hudDownload.image,
-                           status: Strings.Localizable.downloadStarted)
+        let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
         
-        selectedNodes.forEach { node in
-            if node.mnz_downloadNode() {
-                downloadStarted(forNode: node)
-            }
-        }
-        
-        endEditingMode()
     }
     
     func shareLinkButtonPressed(_ button: UIBarButtonItem) {

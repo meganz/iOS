@@ -13,10 +13,10 @@ final class FileUploadingRouter {
             presentPhotoAlbumSelection(completion: completion)
         case .textFile:
             CreateTextFileAlertViewRouter(presenter: navigationController).start()
-        case .camera(let completion):
-            presentCameraViewController(withCompletion: completion)
-        case .imports(let completion):
-            presentImportSelection(withCompletion: completion)
+        case .camera:
+            presentCameraViewController()
+        case .imports:
+            presentImportSelection()
         case .documentScan:
             presentDocumentScanViewController()
         }
@@ -47,7 +47,7 @@ final class FileUploadingRouter {
 
     // MARK: - Display Import Selection View Controller
 
-    private func presentImportSelection(withCompletion completion: @escaping ([URL], MEGANode) -> Void) {
+    private func presentImportSelection() {
         let documentPickerViewController = UIDocumentPickerViewController(
             documentTypes: [
                 kUTTypeContent as String,
@@ -67,9 +67,17 @@ final class FileUploadingRouter {
             documentImportsDelegate.importsURLsCompletion = { [documentImportsDelegate, weak self] urls in
                 _ = documentImportsDelegate
                 asyncOnMain {
-                    self?.presentDestinationFolderBrowser(with: { targetNode in
-                        completion(urls, targetNode)
-                    })
+                    self?.presentDestinationFolderBrowser { [weak self] parentNode in
+                        guard let presenter = self?.navigationController else {
+                            return
+                        }
+                        let transfers = urls.map {
+                            let coordinates = $0.path.mnz_coordinatesOfPhotoOrVideo()
+                            let appData = coordinates.map(NSString().mnz_appData(toSaveCoordinates:))
+                            return CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, path: $0.path, name: nil, appData: appData, priority: false, isFile: true, type: .upload)
+                        } as [CancellableTransfer]
+                        CancellableTransferRouter.init(presenter: presenter, transfers: transfers, transferType: .upload).start()
+                    }
                 }
             }
             return documentImportsDelegate
@@ -89,7 +97,7 @@ final class FileUploadingRouter {
 
     // MARK: - Display Camera Capture View Controller
 
-    private func presentCameraViewController(withCompletion completion: @escaping (String, MEGANode) -> Void) {
+    private func presentCameraViewController() {
         asyncOnMain { [weak self] in
             guard let self = self else { return }
             let imagePickerController = UploadImagePickerViewController()
@@ -100,8 +108,13 @@ final class FileUploadingRouter {
                         switch result {
                         case .failure: break
                         case .success(let filePath):
-                            self.presentDestinationFolderBrowser { parentNode in
-                                completion(filePath, parentNode)
+                            let coordinates = filePath.mnz_coordinatesOfPhotoOrVideo()
+                            let appData = coordinates.map(NSString().mnz_appData(toSaveCoordinates:))
+                            self.presentDestinationFolderBrowser { [weak self] parentNode in
+                                guard let presenter = self?.navigationController else {
+                                    return
+                                }
+                                CancellableTransferRouter.init(presenter: presenter, transfers: [CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, path: filePath, name: nil, appData: appData, priority: false, isFile: true, type: .upload)], transferType: .upload).start()
                             }
                         }
                     }
@@ -148,8 +161,9 @@ final class FileUploadingRouter {
             .instantiateViewController(withIdentifier: "BrowserViewControllerID") as! BrowserViewController
         browserVCDelegate = TargetFolderBrowserVCDelegate()
         browserVCDelegate?.completion = { node in
-            completion(node)
-            browserViewController.dismiss(animated: true, completion: nil)
+            browserViewController.dismiss(animated: true) {
+                completion(node)
+            }
         }
 
         browserViewController.browserViewControllerDelegate = browserVCDelegate
@@ -180,10 +194,10 @@ final class FileUploadingRouter {
         case textFile
 
         // Upload from camera
-        case camera(_ completion: (String, MEGANode) -> Void)
+        case camera
 
         // Upload from imports
-        case imports(_ completion: ([URL], MEGANode) -> Void)
+        case imports
 
         // Upload from document scan
         case documentScan

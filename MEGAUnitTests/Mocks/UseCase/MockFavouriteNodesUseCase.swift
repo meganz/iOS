@@ -14,14 +14,6 @@ final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         completion(getFavouriteNodesResult)
     }
     
-    func favouriteAlbum(withCUHandle handle: MEGAHandle?) async throws -> AlbumEntity {
-        return AlbumEntity()
-    }
-    
-    func favouriteAlbumMediaNodes(withCUHandle handle: MEGAHandle?) async throws -> [NodeEntity] {
-        return []
-    }
-    
     func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
         guard let onNodesUpdateCallback = onNodesUpdateCallback else { return }
         callback(onNodesUpdateCallback)

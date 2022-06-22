@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink inViewController:(UIViewController *_Nullable)viewController;
+- (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink inViewController:(UIViewController *_Nullable)viewController;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
@@ -15,9 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Actions
 
 - (void)mnz_editTextFileInViewController:(UIViewController *)viewController;
-- (BOOL)mnz_downloadNode;
-- (BOOL)mnz_downloadNodeWithApi:(MEGASdk *)api;
-- (BOOL)mnz_downloadNodeTopPriority;
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^ _Nullable)(MEGARequest *request))completion;
@@ -26,10 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_removeInViewController:(UIViewController *)viewController completion:(void (^ _Nullable)(BOOL shouldRemove))actionCompletion;
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
 - (void)mnz_removeSharing;
-- (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
 - (void)mnz_restore;
-- (void)mnz_removeLink;
-- (void)mnz_saveToPhotos;
 - (void)mnz_sendToChatInViewController:(UIViewController *)viewController;
 - (void)mnz_moveInViewController:(UIViewController *)viewController;
 - (void)mnz_copyInViewController:(UIViewController *)viewController;
@@ -42,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Utils
 
-- (MEGANode *)mnz_firstbornInShareOrOutShareParentNode;
+- (nullable MEGANode *)mnz_firstbornInShareOrOutShareParentNode;
 - (NSMutableArray *)mnz_parentTreeArray;
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;

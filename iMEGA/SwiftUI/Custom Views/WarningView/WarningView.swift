@@ -22,5 +22,6 @@ struct WarningView: View {
             .onTapGesture {
                 viewModel.tapAction()
             }
+            .edgesIgnoringSafeArea(.all)
     }
 }

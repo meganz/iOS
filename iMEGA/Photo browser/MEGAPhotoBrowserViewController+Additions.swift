@@ -5,10 +5,6 @@ extension MEGAPhotoBrowserViewController {
         DateFormatter.fromTemplate("MMMM dd • HH:mm").localisedString(from: date)
     }
     
-    @objc func reloadPhotoFavouritesIfNeeded(forNodes nodes: [MEGANode]) {
-        nodes.updatePhotoFavouritesIfNeeded()
-    }
-    
     @objc func freeUpSpace(onImageViewCache cache: NSCache<NSNumber, UIScrollView>, scrollView: UIScrollView) {
         SVProgressHUD.show()
         scrollView.subviews.forEach({ $0.removeFromSuperview() })

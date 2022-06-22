@@ -66,6 +66,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
+
 @end
 
 @implementation MEGAPhotoBrowserViewController
@@ -100,7 +102,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.modalPresentationCapturesStatusBarAppearance = YES;
     
     self.currentIndex = self.preferredIndex;
-    
+    self.cancelToken = MEGACancelToken.alloc.init;
     self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     
@@ -325,14 +327,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         default: {
-            if (self.mediaNodes.count == 1) {
-                subtitle = NSLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
-            } else {
-                subtitle = NSLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
-            }
-            subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
-            subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
-            
+            NSString *format = NSLocalizedString(@"media.photo.browser.indexOfTotalFiles", @"The index of file from the total number of files. e.g. 1 of 1 file, 1 of 3 files");
+            NSString *subtitleString = [NSString stringWithFormat:format, (unsigned long)self.mediaNodes.count];
+            subtitle = [subtitleString stringByReplacingOccurrencesOfString:@"[A]"
+                                                      withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
             break;
         }
     }
@@ -457,6 +455,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
     }
     return NO;
+}
+
+- (void)saveToPhotos:(MEGANode *)node {
+    self.cancelToken = MEGACancelToken.alloc.init;
+    [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -681,7 +684,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             MEGAStartDownloadTransferDelegate *delegate =[[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:transferProgress completion:transferCompletion onError:nil];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             
-            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath fileName:nil appData:nil startFirst:NO cancelToken:self.cancelToken delegate:delegate];
             
             break;
         }
@@ -809,7 +812,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (node == nil) {
         return;
     }
-    [node mnz_saveToPhotos];
+    [self saveToPhotos:node];
 }
 
 - (IBAction)didPressForwardbarButton:(UIBarButtonItem *)sender {
@@ -873,7 +876,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            [node mnz_saveToPhotos];
+            [self saveToPhotos:node];
             break;
             
         default:
@@ -1139,8 +1142,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     break;
                     
                 default:
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                    [node mnz_downloadNodeWithApi:self.api];
+                    [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
                     break;
             }
             break;
@@ -1220,7 +1222,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotos];
+            [self saveToPhotos:node];
             break;
             
         case MegaNodeActionTypeShareLink:
@@ -1300,9 +1302,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         NSMutableSet* updatedNodeSet = [NSMutableSet setWithArray:updatedNodesArray];
         NSSet* oldNodeSet = [NSSet setWithArray:self.mediaNodes];
         [updatedNodeSet intersectSet:oldNodeSet];
-        
-        [self reloadPhotoFavouritesIfNeededForNodes:updatedNodesArray];
-        
         for (MEGANode *node in updatedNodeSet) {
             if ([node hasChangedType:MEGANodeChangeTypeRemoved] ||
                 [node hasChangedType:MEGANodeChangeTypeParent]) {

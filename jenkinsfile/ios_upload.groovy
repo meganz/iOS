@@ -25,34 +25,60 @@ pipeline {
     post {
         success {
             script {
-                def slackMessage = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Testflight"
-                
+                def message = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Testflight"
+
                 if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
-                    slackMessage = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded \nbranch: ${GIT_BRANCH}"
+                    message = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded"
                 } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices' || env.GIT_BRANCH == 'origin/develop') {
-                    slackMessage = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Firebase \nbranch: ${GIT_BRANCH}"
+                    message = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Firebase"
                 } else if (env.gitlabTriggerPhrase == 'verify_translations') {
-                    slackMessage = ":white_check_mark: No missing translation keys. \nbranch: ${GIT_BRANCH}"
+                    message = ":white_check_mark: No missing translation keys."
                 }
-                
-                slackSend color: "good", message: slackMessage
+
+                if (hasGitLabMergeRequest()) {
+                    def mrNumber = env.gitlabMergeRequestIid
+
+                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                        env.MARKDOWN_LINK = message
+                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
+                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+                    }
+                }
+
+                slackSend color: "good", message: "${message} \nbranch: ${GIT_BRANCH}"
             }
         }
         failure {
             script {
-                def slackMessage = ":x: Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed \nbranch: ${GIT_BRANCH}"
+                def message = ":x: Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
 
                 if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
-                    slackMessage = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed \nbranch: ${GIT_BRANCH}"
+                    message = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed"
                 } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices' || env.GIT_BRANCH == 'origin/develop') {
-                    slackMessage = ":x: Firebase Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed \nbranch: ${GIT_BRANCH}"
+                    message = ":x: Firebase Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
                 } else if (env.gitlabTriggerPhrase == 'verify_translations') {
-                    slackMessage = ":x: Missing translation keys. \nbranch: ${GIT_BRANCH}"
+                    message = ":x: Missing translation keys."
+                }
+
+                if (hasGitLabMergeRequest()) {
+                    def mrNumber = env.gitlabMergeRequestIid
+
+                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
+                    }
+
+                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                        final String response = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
+                        def json = new groovy.json.JsonSlurperClassic().parseText(response)
+                        env.MARKDOWN_LINK = "${message} <br />Build Log: ${json.markdown}"
+                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
+                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+                    }
                 }
 
                 withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
                     sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    slackUploadFile filePath:"console.txt", initialComment: slackMessage
+                    slackUploadFile filePath:"console.txt", initialComment: "${message} \nbranch: ${GIT_BRANCH}"
                 }
             }                    
         }
@@ -351,3 +377,13 @@ pipeline {
         }
     }
 }
+
+/**
+ * Check if this build is triggered by a GitLab Merge Request.
+ * @return true if this build is triggerd by a GitLab MR. False if this build is triggerd
+ * by a plain git push.
+ */
+private boolean hasGitLabMergeRequest() {
+    return env.gitlabMergeRequestIid != null && !env.gitlabMergeRequestIid.isEmpty()
+}
+

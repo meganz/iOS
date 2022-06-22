@@ -39,14 +39,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         listSource?.selectedNodes
     }
     
-    override func downloadStarted(forNode node: MEGANode) {
-        guard let nodes = listSource?.nodes else { return }
-        if let index = nodes.firstIndex(of: node) {
-            let indexPath = IndexPath(row: index, section: 0)
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
     //MARK: - Interface methods
     
     override func toggleSelectAllNodes() {
@@ -157,5 +149,9 @@ extension FilesExplorerListViewController: FilesExplorerListSourceDelegate {
     
     func didEndMultipleSelectionInteraction() {
         tableView.alwaysBounceVertical = true
+    }
+    
+    func download(node: MEGANode) {
+        viewModel.dispatch(.downloadNode(node))
     }
 }

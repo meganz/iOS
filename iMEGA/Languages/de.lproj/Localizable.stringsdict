@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>hour</string>
+        <string>Stunde</string>
         <key>other</key>
-        <string>hours</string>
+        <string>Stunden</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.day</key>
@@ -29,9 +29,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>day</string>
+        <string>Tag</string>
         <key>other</key>
-        <string>days</string>
+        <string>Tagen</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.week</key>
@@ -45,9 +45,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>week</string>
+        <string>Woche</string>
         <key>other</key>
-        <string>weeks</string>
+        <string>Wochen</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.month</key>
@@ -61,9 +61,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>month</string>
+        <string>Monat</string>
         <key>other</key>
-        <string>months</string>
+        <string>Monate</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.year</key>
@@ -77,9 +77,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>year</string>
+        <string>Jahr</string>
         <key>other</key>
-        <string>years</string>
+        <string>Jahre</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.hour</key>
@@ -93,9 +93,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 hour</string>
+        <string>1 Stunde</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d Stunden</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -109,9 +109,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 day</string>
+        <string>1 Tag</string>
         <key>other</key>
-        <string>%d days</string>
+        <string>%d Tage</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.week</key>
@@ -125,9 +125,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 week</string>
+        <string>1 Woche</string>
         <key>other</key>
-        <string>%d weeks</string>
+        <string>%d Wochen</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.month</key>
@@ -141,9 +141,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 month</string>
+        <string>1 Monat</string>
         <key>other</key>
-        <string>%d months</string>
+        <string>%d Monate</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.year</key>
@@ -157,9 +157,137 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 year</string>
+        <string>1 Jahr</string>
         <key>other</key>
-        <string>%d years</string>
+        <string>%d Jahre</string>
+      </dict>
+    </dict>
+    <key>general.format.count.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file</string>
+        <key>other</key>
+        <string>%d files</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>other</key>
+        <string>%d folders</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>other</key>
+        <string>%d folders</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>• %d file</string>
+        <key>other</key>
+        <string>• %d files</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d Bild</string>
+        <key>other</key>
+        <string>%d Bilder</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>und %d Video</string>
+        <key>other</key>
+        <string>und %d Videos</string>
+      </dict>
+    </dict>
+    <key>media.photo.browser.indexOfTotalFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] of %d file</string>
+        <key>other</key>
+        <string>[A] of %d files</string>
+      </dict>
+    </dict>
+    <key>extensions.share.destination.section.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file</string>
+        <key>other</key>
+        <string>%d files</string>
       </dict>
     </dict>
   </dict>

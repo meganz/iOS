@@ -3,7 +3,8 @@
 final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
     var duplicate: Bool = true
     var newName: String?
-    var result: (Result<TransferEntity, TransferErrorEntity>)? = nil
+    var uploadFileResult: (Result<Void, TransferErrorEntity>)? = nil
+    var uploadSupportFileResult: (Result<TransferEntity, TransferErrorEntity>)? = nil
     var cancelTransferResult: (Result<Void, TransferErrorEntity>) = .failure(.generic)
     
     
@@ -12,13 +13,14 @@ final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
         return duplicate
     }
     
-    func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let result = result else { return }
-        completion(result)
+    func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
+    {
+        guard let result = uploadFileResult else { return }
+        completion?(result)
     }
     
     func uploadSupportFile(atPath path: String, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let result = result else { return }
+        guard let result = uploadSupportFileResult else { return }
         completion(result)
     }
     

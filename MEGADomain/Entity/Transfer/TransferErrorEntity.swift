@@ -7,4 +7,9 @@ enum TransferErrorEntity: Error {
     case couldNotFindNodeByHandle
     case overquota
     case noInternetConnection
+    case notEnoughSpace
+    case inboxFolderNameNotAllowed
+    case alreadyDownloaded
+    case copiedFromTempFolder
+    case moveFileToUploadsFolderFailed
 }

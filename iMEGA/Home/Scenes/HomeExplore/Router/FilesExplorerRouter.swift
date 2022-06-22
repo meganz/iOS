@@ -37,4 +37,13 @@ struct FilesExplorerRouter {
     func didSelect(node: MEGANode, allNodes: [MEGANode]) {
         NodeOpener(navigationController: navigationController).openNode(node, allNodes: allNodes)
     }
+    
+    func showDownloadTransfer(node: MEGANode) {
+        guard let navigationController = navigationController else {
+            return
+        }
+        
+        let transfer = CancellableTransfer(handle: node.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
+        CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download).start()
+    }
 }

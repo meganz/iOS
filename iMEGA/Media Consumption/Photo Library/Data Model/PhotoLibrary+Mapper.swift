@@ -8,7 +8,7 @@ extension MEGANodeList {
 
 extension Array where Element == MEGANode {
     func toPhotoLibrary() -> PhotoLibrary {
-        let library = map { $0.toNodeEntity() }.toPhotoLibrary()
+        let library = toNodeEntities().toPhotoLibrary()
         return library
     }
 }

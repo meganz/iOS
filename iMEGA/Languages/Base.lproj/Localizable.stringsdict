@@ -162,5 +162,165 @@
         <string>%d years</string>
       </dict>
     </dict>
+    <key>general.format.count.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file</string>
+        <key>other</key>
+        <string>%d files</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>other</key>
+        <string>%d folders</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>other</key>
+        <string>%d folders</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>• %d file</string>
+        <key>other</key>
+        <string>• %d files</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d image</string>
+        <key>other</key>
+        <string>%d images</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>and %d video</string>
+        <key>other</key>
+        <string>and %d videos</string>
+      </dict>
+    </dict>
+    <key>media.photo.browser.indexOfTotalFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] of %d file</string>
+        <key>other</key>
+        <string>[A] of %d files</string>
+      </dict>
+    </dict>
+    <key>extensions.share.destination.section.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file</string>
+        <key>other</key>
+        <string>%d files</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.title</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@link@</string>
+        <key>link</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Remove Link</string>
+            <key>other</key>
+            <string>Remove Links</string>
+        </dict>
+    </dict>
+    <key>general.menuAction.removeLink.message.success</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@link@</string>
+        <key>link</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Link removed</string>
+            <key>other</key>
+            <string>Links removed</string>
+        </dict>
+    </dict>
   </dict>
 </plist>

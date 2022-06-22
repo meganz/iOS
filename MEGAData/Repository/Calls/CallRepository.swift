@@ -182,13 +182,17 @@ extension CallRepository: MEGAChatCallDelegate {
         
         if call.hasChanged(for: .networkQuality) {
             switch call.networkQuality {
-            case .good:
-                break
             case .bad:
-                callbacksDelegate?.networkQuality()
+                callbacksDelegate?.networkQualityChanged(.bad)
+            case .good:
+                callbacksDelegate?.networkQualityChanged(.good)
             @unknown default:
                 MEGALogDebug("Call network quality has an unkown status")
             }
+        }
+        
+        if call.hasChanged(for: .outgoingRingingStop) {
+            callbacksDelegate?.outgoingRingingStopReceived()
         }
         
         switch call.status {

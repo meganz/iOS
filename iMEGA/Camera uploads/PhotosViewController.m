@@ -33,8 +33,6 @@
     BOOL allNodesSelected;
 }
 
-@property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, strong) NSMutableArray<MEGANode *> *mediaNodesArray;
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 
 @property (nonatomic) CGSize cellSize;
@@ -71,7 +69,6 @@
 @implementation PhotosViewController
 
 #pragma mark - Lifecycle
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
@@ -107,7 +104,7 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self loadTargetFolder];
+    [self.viewModel loadAllPhotos];
     [self refreshMyAvatar];
     
     if (@available(iOS 14.0, *)) {
@@ -196,14 +193,6 @@
     return _photoLibraryContentViewModel;
 }
 
-- (PhotoUpdatePublisher *)photoUpdatePublisher {
-    if (_photoUpdatePublisher == nil) {
-        _photoUpdatePublisher = [[PhotoUpdatePublisher alloc] initWithPhotosViewController:self];
-    }
-    
-    return _photoUpdatePublisher;
-}
-
 - (PhotoSelectionAdapter *)selection {
     if (_selection == nil) {
         _selection = [[PhotoSelectionAdapter alloc] initWithSdk:MEGASdkManager.sharedMEGASdk];
@@ -220,39 +209,12 @@
     return _warningViewModel;
 }
 
-#pragma mark - load Camera Uploads target folder
-- (void)loadTargetFolder {
-    __weak __typeof__(self) weakSelf = self;
-    [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
-        if (error) {
-            MEGALogWarning(@"Could not load CU target folder due to error %@", error)
-        }
-        
-        [NSOperationQueue.mainQueue addOperationWithBlock:^{
-            weakSelf.parentNode = node;
-            [weakSelf updateContents];
-        }];
-    }];
-}
-
-- (void)updateContents {
-    [self buildMediaNodes];
-    [self.photoUpdatePublisher updatePhotoLibrary];
-    [self reloadHeader];
-    
-    if (self.mediaNodesArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
-        [self showCameraUploadBoardingScreen];
-    } else if (CameraUploadManager.shared.isDiskStorageFull) {
-        [self showLocalDiskIsFullWarningScreen];
-    }
-}
-
 #pragma mark - uploads state
 
 - (void)hideRightBarButtonItem:(BOOL)shouldHide {
     self.shouldShowRightBarButton = !shouldHide;
     
-    if (self.shouldShowRightBarButton && self.showToolBar && self.mediaNodesArray.count > 0) {
+    if (self.shouldShowRightBarButton && self.showToolBar && self.viewModel.mediaNodesArray.count > 0) {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"selectAll"]];
         self.objcWrapper_parent.navigationItem.rightBarButtonItem = self.cachedEditBarButtonItem;
     } else {
@@ -272,7 +234,7 @@
     }
     
     if (!CameraUploadManager.isCameraUploadEnabled) {
-        if (self.mediaNodesArray.count == 0) {
+        if (self.viewModel.mediaNodesArray.count == 0) {
             self.currentState = MEGACameraUploadsStateEmpty;
         } else {
             self.currentState = MEGACameraUploadsStateDisabled;
@@ -382,7 +344,7 @@
             self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             break;
         case MEGACameraUploadsStateNoInternetConnection:
-            if (self.mediaNodesArray.count == 0) {
+            if (self.viewModel.mediaNodesArray.count == 0) {
                 self.stateView.hidden = YES;
             } else {
                 self.stateLabel.text = NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
@@ -414,19 +376,19 @@
 }
 
 - (void)reloadPhotos {
-    [self buildMediaNodes];
     [self updateNavigationTitleBar];
+    [self reloadHeader];
     
     if (@available(iOS 14.0, *)) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self objcWrapper_updatePhotoLibraryBy:self.mediaNodesArray];
+            [self objcWrapper_updatePhotoLibraryBy: self.viewModel.mediaNodesArray];
         });
     } else {
         NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
         self.photosByMonthYearArray = [NSMutableArray new];
         NSMutableArray *photosArray = [NSMutableArray new];
         
-        for (MEGANode *node in self.mediaNodesArray) {
+        for (MEGANode *node in self.viewModel.mediaNodesArray) {
             NSString *currentMonthYearString = node.modificationTime.mnz_formattedMonthAndYear;
             
             if (![photosByMonthYearDictionary objectForKey:currentMonthYearString]) {
@@ -444,21 +406,6 @@
     }
 }
 
-- (void)buildMediaNodes {
-    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
-    self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodeList.size.unsignedIntegerValue];
-    for (NSInteger i = 0; i < [nodeList.size integerValue]; i++) {
-        MEGANode *node = [nodeList nodeAtIndex:i];
-        if (node.name.mnz_isVisualMediaPathExtension) {
-            @try {
-                [self.mediaNodesArray addObject:node];
-            } @catch (NSException *exception) {
-                MEGALogError(@"Exception on adding object to mediaNodes: %@", exception);
-            }
-        }
-    }
-}
-
 - (void)reloadPhotosCollectionView {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.photosCollectionView reloadData];
@@ -466,11 +413,11 @@
 }
 
 - (void)updateEditBarButton {
-    if (self.mediaNodesArray.count == 0) {
+    if (self.viewModel.mediaNodesArray.count == 0) {
         self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
         self.editBarButtonItem.title = @"";
         [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
-    } else if (self.mediaNodesArray.count > 0 && !self.isEditing) {
+    } else if (self.viewModel.mediaNodesArray.count > 0 && !self.isEditing) {
         if (self.showToolBar && self.shouldShowRightBarButton) {
             [self.editBarButtonItem setImage:[UIImage imageNamed:@"selectAll"]];
         } else {
@@ -573,7 +520,7 @@
     [self.selection removeAll];
     
     if (!allNodesSelected) {
-        [self.selection setSelectedNodes:self.mediaNodesArray];
+        [self.selection setSelectedNodes:self.viewModel.mediaNodesArray];
         allNodesSelected = YES;
     } else {
         allNodesSelected = NO;
@@ -654,7 +601,7 @@
 }
 
 - (void)showToolbar:(BOOL)showToolbar {
-    BOOL result = self.shouldShowRightBarButton && showToolbar && self.mediaNodesArray.count > 0;
+    BOOL result = self.shouldShowRightBarButton && showToolbar && self.viewModel.mediaNodesArray.count > 0;
     self.showToolBar = showToolbar;
     
     if (result) {
@@ -803,7 +750,7 @@
     if (![self.photosCollectionView allowsMultipleSelection]) {
         CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
         
-        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:[self.viewModel.mediaNodesArray mutableCopy] api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
         photoBrowserVC.originFrame = cellFrame;
         photoBrowserVC.delegate = self;
         
@@ -815,7 +762,7 @@
         [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
         [self setToolbarActionsEnabled:YES];
         
-        if (self.selection.count == self.mediaNodesArray.count) {
+        if (self.selection.count == self.viewModel.mediaNodesArray.count) {
             allNodesSelected = YES;
         } else {
             allNodesSelected = NO;
@@ -907,7 +854,12 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    EmptyStateView *emptyStateView = [EmptyStateView createFor:EmptyStateTypeTimeline
+                                                         image:[self imageForEmptyState]
+                                                         title:[self titleForEmptyState]
+                                                   description:[self descriptionForEmptyState]
+                                                   buttonTitle:[self buttonTitleForEmptyState]];
+    
     [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
     
     return emptyStateView;
@@ -1027,9 +979,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.mediaNodesArray.copy]) {
-            [self.photoUpdatePublisher updatePhotoLibrary];
-        }
+        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
     });
 }
 

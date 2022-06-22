@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="لا يوجد أي ترفيعات";
 /* Title of the Cloud Drive section */
 "cloudDrive"="السواقة السحابية";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d ملف";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d ملف";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d مجلد";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d مجلد";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 مجلد • 1 ملف";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] مجلد • [B] ملف";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d مجلد • 1 ملف";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 مجلد • %d ملف";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@ جهاز";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="لم يعد لديك صلاحية الدخول لهذا الملف";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="لم يعد لديك صلاحية الدخول لهذا المجلد";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="احفظ دون اتصال";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox محجوز للاستخدام من قبل آبل Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="تم ترفيع الصور, ترفيعات الفيديو متوقفة؛ لم يتم ترفيع 1 فيديو";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="تم ترفيع الصور, ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %lu فيديو";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d من %2$d ملف";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d من %2$d ملف";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="تم تحديد %lu عنصر ";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="عرض كصور مصغرة";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="عرض الصفحة";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="اتصال ضعيف.";
 /* There are no notifications to display. */
 "No notifications"="لا يوجد إشعارات";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="%1 صورة";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 فيديو";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 صورة و 1 فيديو";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 صورة و%2 فيديو";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 صورة و 1 فيديو";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 صورة و %2 فيديو";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="تم التعديل من قبل %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="مكبر الصوت";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="تبديل";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="إعادة الاتصال";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="غير قادر على إعادة الاتصال";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="اتصال ردئ";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="عرض الصور عالية الدقة";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="أرفق ملفات السجل";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="هل تريد إرفاق ملفات السجل التشخيصي للمساعدة في التصحيح؟";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="إلغاء التراسل";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="Yes, cancel";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="No, continue";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="جاري الفحص…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="Please don’t close the application.";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="تم الغاء التراسل";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="بلغ عن مشكلة";
 /* Title of the dialog button to discard a report. */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="عالية";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="الأفضل";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="Duplicated item";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="انسخ وادمج";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="ادمج المجلد الموجود في الوجهة مع المجلد الذي تنسخه.";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="لا تنسخ";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="انقل وادمج";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="ادمج المجلد الموجود في الوجهة مع المجلد الذي تنقله.";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="لا تنقل";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="ارفع وادمج";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="ادمج المجلد الموجود في الوجهة مع المجلد الذي تقوم بترفيعه.";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="لا ترفع";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="Skip this folder.";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="اختر الملف الذي تريد حفظه:";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="نسخ واستبدال";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="استبدل الملف الموجود في المجلد الوجهة بالملف الذي تنسخه.";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="نقل واستبدال";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="استبدل الملف في المجلد الوجهة بالملف الذي تقوم بنقله.";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="ارفع واستبدل";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="لن يتم تغيير أي ملفات. ستحتفظ بالملف أدناه:";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="انسخ وغير الاسم";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="الملف الذي نسخته سيتم إعادة تسميته إلى:";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="انقل وغير الاسم";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="الملف الذي نقلته سيتم إعادة تسميته إلى:";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="ارفع وغير الاسم";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="الملف الذي ترفع سيتم تسميته إلى:";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="رفع التحديث";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="سيتم تحديث الملف بالنسخة المحفوظة:";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="انت الوحيد هنا";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="ستنتهي المكالمة تلقائيًا في غضون 2 دقيقتين ما لم ترغب في الاستمرار فيها.";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on call";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="End call now";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="ستنتهي المكالمة في %@";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

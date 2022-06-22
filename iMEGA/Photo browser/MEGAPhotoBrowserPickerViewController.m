@@ -34,12 +34,7 @@
     self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
     
     NSString *folderName = [self.api nodeForHandle:self.mediaNodes.firstObject.parentHandle].name;
-    NSString *numberOfFiles;
-    if (self.mediaNodes.count==1) {
-        numberOfFiles = [NSString stringWithFormat:NSLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\""), 1];
-    } else {
-        numberOfFiles = [NSString stringWithFormat:NSLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), self.mediaNodes.count];
-    }
+    NSString *numberOfFiles = [NSString stringWithFormat:NSLocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), self.mediaNodes.count];
     
     if (!folderName) {
         folderName = numberOfFiles;

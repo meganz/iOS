@@ -26,7 +26,8 @@ final class CallParticipantEntity: Equatable {
     weak var videoDataDelegate: CallParticipantVideoDelegate?
     weak var speakerVideoDataDelegate: CallParticipantVideoDelegate?
     var isSpeakerPinned: Bool = false
-
+    var sessionRecoverable: Bool
+    
     init(chatId: MEGAHandle,
          participantId: MEGAHandle,
          clientId: MEGAHandle,
@@ -40,7 +41,8 @@ final class CallParticipantEntity: Equatable {
          isVideoLowRes: Bool,
          canReceiveVideoHiRes: Bool,
          canReceiveVideoLowRes: Bool,
-         name: String? = nil) {
+         name: String? = nil,
+         sessionRecoverable: Bool = false) {
         self.chatId = chatId
         self.participantId = participantId
         self.clientId = clientId
@@ -54,6 +56,7 @@ final class CallParticipantEntity: Equatable {
         self.canReceiveVideoHiRes = canReceiveVideoHiRes
         self.canReceiveVideoLowRes = canReceiveVideoLowRes
         self.name = name
+        self.sessionRecoverable = sessionRecoverable
     }
     
     static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {

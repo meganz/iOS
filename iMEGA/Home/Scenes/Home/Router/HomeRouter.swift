@@ -8,6 +8,8 @@ protocol HomeRouterProtocol {
     func showFavourites(navigationController: UINavigationController, homeViewController: HomeViewController, slidePanelView: SlidePanelView)
     
     func showNode(_ base64Handle: MEGABase64Handle)
+    
+    func showDownloadTransfer(node: MEGANode)
 }
 
 enum HomeRoutingSource {
@@ -147,6 +149,15 @@ final class HomeRouter: HomeRouterProtocol {
         NodeOpener(navigationController: navigationController).openNode(handle)
     }
     
+    func showDownloadTransfer(node: MEGANode) {
+        guard let navigationController = navigationController else {
+            return
+        }
+        
+        let transfer = CancellableTransfer(handle: node.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
+        CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download).start()
+    }
+
     // MARK: - Show Photos Explorer View Controller
     
     func photosExplorerSelected() {

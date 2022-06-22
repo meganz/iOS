@@ -3,6 +3,7 @@ enum FilesExplorerAction: ActionType {
     case onViewReady
     case startSearching(String?)
     case didSelectNode(MEGANode, [MEGANode])
+    case downloadNode(MEGANode)
 }
 
 final class FilesExplorerViewModel {
@@ -86,6 +87,8 @@ final class FilesExplorerViewModel {
             startSearching(text)
         case .didSelectNode(let node, let allNodes):
             didSelect(node: node, allNodes: allNodes)
+        case .downloadNode(let node):
+            router.showDownloadTransfer(node: node)
         }
     }
     

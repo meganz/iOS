@@ -308,11 +308,8 @@
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
         UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-            if ([node mnz_downloadNode]) {
-                [self.tableView reloadData];
-            }
-            
-            [self setTableViewEditing:NO animated:YES];
+            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+            [self.cloudDrive setEditMode:NO];
         }];
         downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
         downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];

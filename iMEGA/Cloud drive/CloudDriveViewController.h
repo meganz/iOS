@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
 @property (nonatomic, strong, nullable) MEGARecentActionBucket *recentActionBucket;
+@property (nonatomic) NSInteger recentIndex;
 
 @property (strong, nonatomic, nullable) UISearchController *searchController;
 

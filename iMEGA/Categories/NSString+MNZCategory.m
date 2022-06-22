@@ -270,41 +270,22 @@ static NSString* const B = @"[B]";
 }
 
 + (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
-    if (files > 1 && folders > 1) {
-        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
-        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
-        NSString *filesAndFoldersString = NSLocalizedString(@"foldersAndFiles", @"Subtitle shown on folders that gives you information about its content. This case \"[A] = {1+} folders ‚ [B] = {1+} files\"");
-        filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:A withString:foldersString];
-        filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:B withString:filesString];
-        return filesAndFoldersString;
+    if (files > 0 && folders > 0) {
+        NSString *foldersFormat = NSLocalizedString(@"general.format.count.folderAndFile.folder", @"Subtitle shown on folders that shows its folder and file content count. Two strings will be used to make the full sentence to accommodate the multiple plural need. Full sentence examples: 1 folder • 1 file, 2 folders • 2 files, etc");
+        NSString *folderCount = [NSString stringWithFormat:foldersFormat, folders];
+        
+        NSString *filesFormat = NSLocalizedString(@"general.format.count.folderAndFile.file", @"Subtitle shown on folders that shows its folder and file content count. Two strings will be used to make the full sentence to accommodate the multiple plural need. Full sentence examples: 1 folder • 1 file, 2 folders • 2 files, etc");
+        NSString *fileCount = [NSString stringWithFormat:filesFormat, files];
+        
+        return [NSString stringWithFormat:@"%@ %@", folderCount, fileCount];
     }
     
-    if (files > 1 && folders == 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"folderAndFiles", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1+} file\""), (int)files];
+    if (!files && folders > 0) {
+        return [NSString stringWithFormat:NSLocalizedString(@"general.format.count.folder", @"Subtitle shown on folders that gives you information about its folder content count. e.g 1 folder, 2 folders"), folders];
     }
     
-    if (files > 1 && !folders) {
-        return [NSString stringWithFormat:NSLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), (int)files];
-    }
-    
-    if (files == 1 && folders > 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"foldersAndFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1+} file\""), (int)folders];
-    }
-    
-    if (files == 1 && folders == 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"folderAndFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1} file\""), (int)folders];
-    }
-    
-    if (files == 1 && !folders) {
-        return [NSString stringWithFormat:NSLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\""), (int)files];
-    }
-    
-    if (!files && folders > 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"folders", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} folders\""), (int)folders];
-    }
-    
-    if (!files && folders == 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"oneFolder", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder\""), (int)folders];
+    if (files > 0 && !folders) {
+        return [NSString stringWithFormat:NSLocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), files];
     }
     
     return NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
@@ -342,7 +323,7 @@ static NSString* const B = @"[B]";
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
             if (isGroup) {
-                if (duration) {
+                if (duration != nil) {
                     endCallReasonString = [[NSLocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
                 } else {
                     endCallReasonString = NSLocalizedString(@"Group call ended", @"When an active goup call is ended");

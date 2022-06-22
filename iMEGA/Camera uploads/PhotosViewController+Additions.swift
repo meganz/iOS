@@ -6,7 +6,10 @@ extension PhotosViewController {
     
     @objc func handleDownloadAction(for nodes: [MEGANode]) {
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-        nodes.forEach { $0.mnz_downloadNode() }
+        let transfers = nodes.map {
+            CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download)
+        }
+        CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
         setEditing(false, animated: true)
     }
     
@@ -34,6 +37,11 @@ extension PhotosViewController {
             self?.setEditing(false, animated: true)
         }
         nodes.forEach { MEGASdkManager.sharedMEGASdk().move($0, newParent: rubbish, delegate: delegate) }
+    }
+    
+    func handleRemoveLinks(for nodes: [MEGANode]) {
+        nodes.publicLinkedNodes().mnz_removeLinks()
+        setEditing(false, animated: true)
     }
     
     @objc func setUpRightNavigationBarButtonItem() {
@@ -87,6 +95,8 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
             handleExportFile(for: nodes, sender: sender)
         case .sendToChat:
             handleSendToChat(for: nodes)
+        case .removeLink:
+            handleRemoveLinks(for: nodes)
         default:
             break
         }

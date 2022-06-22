@@ -15,6 +15,7 @@ final class NodeActionBuilder {
     private var isPageView: Bool = true
     private var isIncomingShareChildView: Bool = false
     private var isExported: Bool = false
+    private var linkedNodeCount: Int = 0
     private var isOutShare: Bool = false
     private var isChildVersion: Bool = false
     private var isBackupFolder: Bool = false
@@ -90,6 +91,11 @@ final class NodeActionBuilder {
     
     func setIsExported(_ isExported: Bool) -> NodeActionBuilder {
         self.isExported = isExported
+        return self
+    }
+    
+    func setLinkedNodeCount(_ count: Int) -> NodeActionBuilder {
+        self.linkedNodeCount = count
         return self
     }
     
@@ -521,30 +527,42 @@ final class NodeActionBuilder {
     }
     
     private func multiselectFoldersActions() -> [NodeAction] {
-        [NodeAction.downloadAction(),
-         NodeAction.shareLinksAction(),
-         NodeAction.shareFoldersAction(),
-         NodeAction.moveAction(),
-         NodeAction.copyAction(),
-         NodeAction.moveToRubbishBinAction()]
+        var actions = [NodeAction.downloadAction(),
+                       NodeAction.shareLinksAction(),
+                       NodeAction.shareFoldersAction(),
+                       NodeAction.moveAction(),
+                       NodeAction.copyAction(),
+                       NodeAction.moveToRubbishBinAction()]
+        if linkedNodeCount > 0 {
+            actions.insert(NodeAction.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
+        }
+        return actions
     }
     
     private func multiselectFilesActions() -> [NodeAction] {
-        [NodeAction.downloadAction(),
-         NodeAction.shareLinksAction(),
-         NodeAction.exportFilesAction(),
-         NodeAction.sendToChatAction(),
-         NodeAction.moveAction(),
-         NodeAction.copyAction(),
-         NodeAction.moveToRubbishBinAction()]
+        var actions = [NodeAction.downloadAction(),
+                       NodeAction.shareLinksAction(),
+                       NodeAction.exportFilesAction(),
+                       NodeAction.sendToChatAction(),
+                       NodeAction.moveAction(),
+                       NodeAction.copyAction(),
+                       NodeAction.moveToRubbishBinAction()]
+        if linkedNodeCount > 0 {
+            actions.insert(NodeAction.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
+        }
+        return actions
     }
     
     private func multiselectFoldersAndFilesActions() -> [NodeAction] {
-        [NodeAction.downloadAction(),
-         NodeAction.shareLinksAction(),
-         NodeAction.moveAction(),
-         NodeAction.copyAction(),
-         NodeAction.moveToRubbishBinAction()]
+        var actions = [NodeAction.downloadAction(),
+                       NodeAction.shareLinksAction(),
+                       NodeAction.moveAction(),
+                       NodeAction.copyAction(),
+                       NodeAction.moveToRubbishBinAction()]
+        if linkedNodeCount > 0 {
+            actions.insert(NodeAction.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
+        }
+        return actions
     }
     
     private func albumActions() -> [NodeAction] {

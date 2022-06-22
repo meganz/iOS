@@ -6,6 +6,7 @@ final class TonePlayer: NSObject {
         case callEnded
         case participantJoined
         case participantLeft
+        case reconnecting
         
         fileprivate var fileURL: URL? {
             Bundle.main.url(forResource: rawValue, withExtension: "wav")

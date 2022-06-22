@@ -12,10 +12,7 @@
 
 #pragma mark - App data
 
-- (void)mnz_parseSavePhotosAndSetCoordinatesAppData;
 - (void)mnz_parseChatAttachmentAppData;
-- (void)mnz_saveInPhotosApp;
-- (void)mnz_setNodeCoordinates;
 - (NSString *)mnz_extractChatIDFromAppData;
 - (NSString *)mnz_extractMessageIDFromAppData;
 - (void)mnz_moveFileToDestinationIfVoiceClipData;

@@ -248,22 +248,6 @@
 "transfersEmptyState_titleUpload"="アップロードなし";
 /* Title of the Cloud Drive section */
 "cloudDrive"="クラウドドライブ";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d個のファイル";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d個のファイル";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d個のフォルダ";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d個のフォルダ";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1個のフォルダ・1個のファイル";
-/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A]個のフォルダ・[B]個のファイル";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d個のフォルダ・1個のファイル";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1個のフォルダ・%d個のファイル";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
 "cloudDrive.root.backup.folder.device.subtitle"="%@端末";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
@@ -344,8 +328,6 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="このファイルへは、もうアクセスできません。";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="このフォルダへは、もうアクセスできません。";
-/* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="オフラインで保存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="InboxはAppleが使用するために予約されています。";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -536,10 +518,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="写真がアップロードされましたが、動画のアップロードはオフです。1本の動画がアップロードされていません";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="写真がアップロードされましたが、動画のアップロードはオフです。%lu本の動画がアップロードされていません";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d/%2$dファイル";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d/%2$dファイル";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu項目が選択されました";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1846,8 +1824,6 @@
 "Thumbnail View"="サムネイル表示";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="ページ表示";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="接続不良。";
 /* There are no notifications to display. */
 "No notifications"="通知はありません";
 /* The header of a notification related to payments */
@@ -2000,14 +1976,6 @@
 "%1 Images"="%1個の画像";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2個の動画";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1個の画像と1個の動画";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1個の画像と%2個の動画";
-/* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1個の画像と1個の動画";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1個の画像と%2個の動画";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@さんが変更しました";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2716,6 +2684,12 @@
 "meetings.quickAction.speaker"="スピーカー";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="フリップ";
+/* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
+"meetings.reconnecting.title"="再接続中";
+/* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
+"meetings.reconnecting.failed"="再接続できません";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"meetings.poorConnection"="接続不良です";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="高解像度画像のプレビュー";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2940,6 +2914,22 @@
 "help.reportIssue.attachLogFiles.title"="ログファイルを添付";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="デバッグの補助として、診断ログファイルを添付しますか？";
+/* Title of the alert shown when you confirm to cancel pending transfers */
+"transfers.cancellable.title"="Cancel transfers?";
+/* Message for action of cancelling a transfer */
+"transfers.cancellable.cancel"="転送をキャンセル";
+/* Message informing the user about transfers lost */
+"transfers.cancellable.confirmCancel"="転送プロセスを中断すると、一部の項目が不完全になる可能性があります。";
+/* Confirm action of cancelling a transfer */
+"transfers.cancellable.proceed"="はい、キャンセル";
+/* Dismiss action of cancelling a transfer */
+"transfers.cancellable.dismiss"="いいえ、続けます";
+/* First step message for cancellable transfer (letting known the user not to close the app) */
+"transfers.cancellable.scanning"="スキャン中…";
+/* Message asking the user to not close the app during a process */
+"transfers.cancellable.donotclose"="アプリケーションを終了しないでください。";
+/* Message info for a cancelled transfer */
+"transfers.cancellable.trasnferCancelled"="転送がキャンセルされました";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="問題を報告";
 /* Title of the dialog button to discard a report. */
@@ -3000,3 +2990,75 @@
 "media.quality.high"="高い";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高";
+/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
+"nameCollision.duplicatedItem.title"="重複項目";
+/* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
+"nameCollision.folders.alreadyExists"="フォルダ%@はすでにこの場所に存在します。";
+/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
+"nameCollision.folders.selectAction"="フォルダを結合するか、このフォルダをスキップするかを選択します。";
+/* Text of the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeTitle"="コピー＆マージ";
+/* Text describing the copy action when trying to copy a folder and already exists in destination */
+"nameCollision.folders.copy.mergeDescription"="コピー先フォルダとコピー元フォルダをマージします。";
+/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
+"nameCollision.general.dontCopy"="コピーしない";
+/* Text of the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeTitle"="移動＆マージ";
+/* Text describing the move action when trying to move a folder and already exists in destination */
+"nameCollision.folders.move.mergeDescription"="移動先フォルダと移動元フォルダをマージします。";
+/* Text of the cancel action when trying to move a folder/file and already exists in destination */
+"nameCollision.general.dontMove"="移動しません";
+/* Text of the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeTitle"="アップロード＆マージ";
+/* Text describing the upload action when trying to upload a folder and already exists in destination */
+"nameCollision.folders.upload.mergeDescription"="アップロード先フォルダとアップロード元フォルダをマージします。";
+/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
+"nameCollision.general.cancelTitle"="アップロードしない";
+/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
+"nameCollision.folders.cancelDescription"="このフォルダをスキップ。";
+/* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
+"nameCollision.files.alreadyExists"="%@という名前のファイルは、すでにこの場所に存在しています。";
+/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
+"nameCollision.files.selectAction"="保持したいファイルを選択します：";
+/* Text of the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceTitle"="コピーして置換";
+/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.replaceDescription"="コピー先フォルダのファイルを、コピーするファイルに置き換えます。";
+/* Text of the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceTitle"="移動して置換";
+/* Text describing the move and replace action when trying to move a file and already exists in destination */
+"nameCollision.files.move.replaceDescription"="移動先フォルダのファイルを、移動するファイルに置き換えます。";
+/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
+"nameCollision.files.upload.replaceTitle"="アップロードと置き換え";
+/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.replaceDescription"="目的のフォルダにあるファイルを、アップロードするファイルに置き換えます。";
+/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
+"nameCollision.files.cancelDescription"="ファイルは変更されません。ファイルを以下に保持します：";
+/* Text of the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameTitle"="コピーして名前を変更する";
+/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
+"nameCollision.files.copy.renameDescription"="コピーするファイルの名前は次のように変更されます：";
+/* Text of the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameTitle"="移動して名前を変更する";
+/* Text describing the move and rename action when trying to move a file and already exists in destination */
+"nameCollision.files.move.renameDescription"="移動するファイルの名前は次のように変更されます：";
+/* Text of the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameTitle"="アップロードして名前を変更する";
+/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.renameDescription"="アップロードするファイルの名前は、次のように変更されます：";
+/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
+"nameCollision.files.upload.updateTitle"="アップロードと更新";
+/* Text describing the upload and update action when trying to upload a file and already exists in destination */
+"nameCollision.files.upload.updateDescription"="ファイルはバージョン履歴で更新されます：";
+/* Meetings end call dialog title */
+"meetings.endCallDialog.title"="ここにいるのはあなただけです";
+/* Meetings end call dialog description */
+"meetings.endCallDialog.description"="通話は2分後に自動的に終了します（通話を継続したい場合は除きます）。";
+/* Meetings end call dialog Stay on call button title */
+"meetings.endCallDialog.stayOnCallButtonTitle"="通話に留まる";
+/* Meetings end call dialog button title */
+"meetings.endCallDialog.endCallNowButtonTitle"="今すぐ通話を終了";
+/* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
+"meetings.notification.EndCallTimerDuration"="通話は%@後に終了します";
+/* Text for the action of downloading an item to the offline section */
+"general.downloadToOffline"="Download to Offline";

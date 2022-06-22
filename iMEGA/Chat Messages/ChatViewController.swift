@@ -1,12 +1,14 @@
 import UIKit
 import MessageKit
 import KeyboardLayoutGuide
+import Combine
 
 class ChatViewController: MessagesViewController {
 
     // MARK: - Properties
     let sdk = MEGASdkManager.sharedMEGASdk()
-
+    var cancelToken = MEGACancelToken()
+    
     @objc private(set) var chatRoom: MEGAChatRoom
     
     var chatCall: MEGAChatCall?
@@ -27,6 +29,12 @@ class ChatViewController: MessagesViewController {
             reloadInputViews()
         }
     }
+    
+    var endCallSubscription: AnyCancellable?
+    var meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase?
+    var noUserJoinedSubscription: AnyCancellable?
+    var endCallDialog: EndCallDialog?
+    private(set) lazy var tonePlayer = TonePlayer()
     
     lazy var exportBarButtonItem: UIBarButtonItem = {
         let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.exportSelectedMessages))
@@ -198,7 +206,7 @@ class ChatViewController: MessagesViewController {
         addObservers()
         addChatBottomInfoScreenToView()
         configureGuesture()
-        
+        subscribeToNoUserJoinedNotification()
     }
     
     @objc func update(chatRoom: MEGAChatRoom) {
@@ -310,7 +318,7 @@ class ChatViewController: MessagesViewController {
                 customModalAlertVC?.dismiss(animated: true, completion: {
                     MEGASdkManager.sharedMEGAChatSdk().removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
                         if error.type == .MEGAChatErrorTypeOk {
-                            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.linkRemoved)
+                            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
                         }
                     }))
                     

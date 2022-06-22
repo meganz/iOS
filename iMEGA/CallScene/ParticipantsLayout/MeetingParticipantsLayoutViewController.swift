@@ -21,7 +21,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var stackViewTopConstraint: NSLayoutConstraint!
     
     private var reconncectingNotificationView: CallNotificationView?
+    private var poorConnectionNotificationView: CallNotificationView?
+    private var waitingForOthersNotificationView: CallNotificationView?
     private var appBecomeActiveObserver: NSObjectProtocol?
+    private var callEndTimerNotificationView: CallNotificationView?
 
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
@@ -162,15 +165,25 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             updateSpeaker(participant)
         case .localVideoFrame(let width, let height, let buffer):
             localUserView.frameData(width: width, height: height, buffer: buffer)
-        case .participantsStatusChanged(let addedParticipantCount, let removedParticipantCount, let addedParticipantNames, let removedParticipantNames):
+        case .participantsStatusChanged(let addedParticipantCount,
+                                        let removedParticipantCount,
+                                        let addedParticipantNames,
+                                        let removedParticipantNames,
+                                        let isOnlyMyselfRemainingInTheCall):
             participantsStatusChanged(addedParticipantsCount: addedParticipantCount,
                                       removedParticipantsCount: removedParticipantCount,
                                       addedParticipantsNames: addedParticipantNames,
-                                      removedParticipantsNames: removedParticipantNames)
+                                      removedParticipantsNames: removedParticipantNames) { [weak self] in
+                if isOnlyMyselfRemainingInTheCall {
+                    self?.viewModel.dispatch(.didEndDisplayLastPeerLeftStatusMessage)
+                }
+            }
         case .reconnecting:
             showReconnectingNotification()
+            addParticipantsBlurEffect()
         case .reconnected:
             removeReconnectingNotification()
+            removeParticipantsBlurEffect()
             showNotification(message: Strings.Localizable.online, backgroundColor: UIColor.systemGreen, textColor: Constants.notificatitionMessageWhiteTextColor)
         case .updateCameraPositionTo(let position):
             localUserView.addBlurEffect()
@@ -189,7 +202,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .showWaitingForOthersMessage:
             showWaitingForOthersMessageView()
         case .hideEmptyRoomMessage:
-            removeEmptyRoomMessageView()
+            removeEmptyRoomMessageViewIfNeeded()
+            removeWaitingForOthersMessageViewIfNeeded()
         case .updateHasLocalAudio(let audio):
             localUserView.localAudio(enabled: audio)
         case .selectPinnedCellAt(let indexPath):
@@ -200,14 +214,22 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showNotification(message: Strings.Localizable.Meetings.Notifications.moderatorPrivilege,
                              backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
                              textColor: Constants.notificatitionMessageBlackTextColor)
-        case .lowNetworkQuality:
-            showNotification(message: Strings.Localizable.poorConnection, backgroundColor: UIColor.systemOrange, textColor: Constants.notificatitionMessageWhiteTextColor)
+        case .showBadNetworkQuality:
+            if reconncectingNotificationView == nil {
+                showPoorConnectionNotification()
+            }
+        case .hideBadNetworkQuality:
+            removePoorConnectionNotification()
         case .updateAvatar(let image, let participant):
             callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
             speakerAvatarImageView.image = image
         case .updateMyAvatar(let image):
             localUserView.updateAvatar(image: image)
+        case .updateCallEndDurationRemainingString(let durationRemainingString):
+            updateCallEndDurationRemaining(string: durationRemainingString)
+        case .removeCallEndDurationView:
+            removeCallEndDurationView()
         }
     }
     
@@ -251,10 +273,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         speakerNameLabel.text = participant.name
     }
     
-    private func showNotification(message: String, backgroundColor: UIColor, textColor: UIColor) {
+    private func showNotification(message: String, backgroundColor: UIColor, textColor: UIColor, completion: (() -> Void)? = nil) {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: message, backgroundColor: backgroundColor, textColor: textColor, autoFadeOut: true)
+        notification.show(message: message, backgroundColor: backgroundColor, textColor: textColor, autoFadeOut: true, completion: completion)
     }
     
     private func updateNumberOfPageControl(for participantsCount: Int) {
@@ -264,6 +286,28 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         } else if !pageControl.isHidden && participantsCount <= 6 {
             pageControl.isHidden = true
         }
+    }
+    
+    private func updateCallEndDurationRemaining(string: String) {
+        let displayString = Strings.Localizable.Meetings.Notification.endCallTimerDuration(string)
+                
+        guard let notification = callEndTimerNotificationView else {
+            let notification = CallNotificationView.instanceFromNib
+            view.addSubview(notification)
+
+            notification.show(message: displayString,
+                              backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
+                              textColor: Constants.notificatitionMessageBlackTextColor)
+            callEndTimerNotificationView = notification
+            return
+        }
+        
+        notification.updateMessage(string: displayString)
+    }
+    
+    private func removeCallEndDurationView() {
+        callEndTimerNotificationView?.removeFromSuperview()
+        callEndTimerNotificationView = nil
     }
     
     func showRenameAlert(title: String, isMeeting: Bool) {
@@ -317,10 +361,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func showReconnectingNotification() {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: Strings.Localizable.reconnecting,
-                          backgroundColor: UIColor.systemOrange,
+        notification.show(message: Strings.Localizable.Meetings.Reconnecting.title,
+                          backgroundColor: .clear,
                           textColor: Constants.notificatitionMessageWhiteTextColor,
-                          autoFadeOut: false)
+                          autoFadeOut: false,
+                          blinking: true)
         reconncectingNotificationView = notification
     }
     
@@ -330,12 +375,47 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         reconncectingNotificationView = nil
     }
     
+    private func showPoorConnectionNotification() {
+        let notification = CallNotificationView.instanceFromNib
+        view.addSubview(notification)
+        notification.show(message: Strings.Localizable.Meetings.poorConnection,
+                          backgroundColor: .clear,
+                          textColor: Constants.notificatitionMessageWhiteTextColor,
+                          autoFadeOut: false)
+        poorConnectionNotificationView = notification
+    }
+    
+    private func removePoorConnectionNotification() {
+        guard let notification = poorConnectionNotificationView else { return }
+        notification.removeFromSuperview()
+        poorConnectionNotificationView = nil
+    }
+    
+    private func addParticipantsBlurEffect() {
+        callCollectionView.addBlurEffect()
+    }
+    
+    private func removeParticipantsBlurEffect() {
+        callCollectionView.removeBlurEffect()
+    }
+    
     private func showWaitingForOthersMessageView() {
-        let emptyMessage = EmptyMeetingMessageView.instanceFromNib
-        emptyMessage.messageLabel.text = Strings.Localizable.Meetings.Message.waitingOthers
-        view.addSubview(emptyMessage)
-        emptyMessage.autoCenterInSuperview()
-        emptyMeetingMessageView = emptyMessage
+        guard waitingForOthersNotificationView == nil else { return }
+        
+        let notification = CallNotificationView.instanceFromNib
+        view.addSubview(notification)
+        notification.show(
+            message: Strings.Localizable.Meetings.Message.waitingOthers,
+            backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
+            textColor: Constants.notificatitionMessageBlackTextColor
+        )
+        waitingForOthersNotificationView = notification
+    }
+    
+    private func removeWaitingForOthersMessageViewIfNeeded() {
+        guard let waitingForOthersNotificationView = waitingForOthersNotificationView else { return }
+        waitingForOthersNotificationView.removeFromSuperview()
+        self.waitingForOthersNotificationView = nil
     }
     
     private func showNoOneElseHereMessageView() {
@@ -346,15 +426,17 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         emptyMeetingMessageView = emptyMessage
     }
     
-    private func removeEmptyRoomMessageView() {
-        emptyMeetingMessageView?.removeFromSuperview()
-        emptyMeetingMessageView = nil
+    private func removeEmptyRoomMessageViewIfNeeded() {
+        guard let emptyMeetingMessageView = emptyMeetingMessageView else { return }
+        emptyMeetingMessageView.removeFromSuperview()
+        self.emptyMeetingMessageView = nil
     }
     
     private func participantsStatusChanged(addedParticipantsCount: Int,
                                            removedParticipantsCount: Int,
                                            addedParticipantsNames: [String]?,
-                                           removedParticipantsNames: [String]?) {
+                                           removedParticipantsNames: [String]?,
+                                           completion: (() -> Void)?) {
         let addedMessage = notificationMessage(forParticipantCount: addedParticipantsCount,
                                                participantNames: addedParticipantsNames,
                                                oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserJoined,
@@ -379,7 +461,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         if let message = message {
             showNotification(message: message,
                              backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
-                             textColor: Constants.notificatitionMessageBlackTextColor)
+                             textColor: Constants.notificatitionMessageBlackTextColor,
+                             completion: completion)
         }
     }
     
