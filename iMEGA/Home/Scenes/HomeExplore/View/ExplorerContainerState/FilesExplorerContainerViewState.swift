@@ -74,8 +74,8 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         filesExplorerViewController?.endEditingMode()
     }
     
-    func showPreferences(sender: UIBarButtonItem) {
-        fatalError("showPreferences(sender:) needs to be implemented by the subclass")
+    func toggleState() {
+        fatalError("toogleCurrentState() needs to be implemented by the subclass")
     }
     
     func toggleSelectAllNodes() {
@@ -122,6 +122,28 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.audioPlayer(hidden: hidden)
     }
     
+    @available(iOS 14.0, *)
+    func updateContextMenu(menu: UIMenu) {
+        containerViewController.updateContextMenu(menu: menu)
+    }
+    
+    @available(iOS 14.0, *)
+    func updateUploadAddMenu(menu: UIMenu) {
+        containerViewController.updateUploadAddMenu(menu: menu)
+    }
+    
+    func showActionSheet(actions: [ContextActionSheetAction]) {
+        containerViewController.showActionSheet(with: actions)
+    }
+    
+    func changeCurrentViewType() {
+        containerViewController.updateCurrentState()
+    }
+    
+    func didSelect(action: UploadAddAction) {
+        containerViewController.didSelect(action: action)
+    }
+
     // MARK: - Private methods.
     
     func updateTitle(withNodesCount count: Int) {

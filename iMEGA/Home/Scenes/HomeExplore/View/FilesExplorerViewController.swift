@@ -7,6 +7,13 @@ protocol FilesExplorerViewControllerDelegate: AnyObject {
     func showMoreButton(_ show: Bool)
     func showSelectButton(_ show: Bool)
     func audioPlayer(hidden: Bool)
+    func showActionSheet(actions: [ContextActionSheetAction])
+    @available(iOS 14.0, *)
+    func updateContextMenu(menu: UIMenu)
+    @available(iOS 14.0, *)
+    func updateUploadAddMenu(menu: UIMenu)
+    func changeCurrentViewType()
+    func didSelect(action: UploadAddAction)
 }
 
 class FilesExplorerViewController: ExplorerBaseViewController {
@@ -78,6 +85,20 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     func audioPlayer(hidden: Bool) {
         delegate?.audioPlayer(hidden: hidden)
+    }
+    
+    @available(iOS 14.0, *)
+    func updateContextMenu(menu: UIMenu) {
+        delegate?.updateContextMenu(menu: menu)
+    }
+    
+    @available(iOS 14.0, *)
+    func updateUploadAddMenu(menu: UIMenu) {
+        delegate?.updateUploadAddMenu(menu: menu)
+    }
+    
+    func showActionSheet(with actions: [ContextActionSheetAction]) {
+        delegate?.showActionSheet(actions: actions)
     }
 }
 

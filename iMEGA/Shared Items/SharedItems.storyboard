@@ -383,7 +383,7 @@
                         <action selector="selectAllAction:" destination="2AR-na-hSZ" id="Nrq-Bj-fhr"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="5z2-p0-4RD" userLabel="Edit Bar Button Item">
+                <barButtonItem width="22" style="plain" id="5z2-p0-4RD" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="2AR-na-hSZ" id="un2-ST-0gb"/>
                     </connections>
@@ -456,7 +456,6 @@
         <image name="link" width="28" height="28"/>
         <image name="linksSegmentControler" width="24" height="24"/>
         <image name="moreList" width="28" height="28"/>
-        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
         <image name="outgoingSegmentControler" width="24" height="24"/>
         <image name="removeLink" width="28" height="28"/>

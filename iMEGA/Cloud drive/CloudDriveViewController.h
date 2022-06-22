@@ -3,16 +3,16 @@
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "CloudDriveCollectionViewController.h"
 
-@class MEGANode;
-@class MEGAUser;
-@class MyAvatarManager;
+@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CloudDriveViewController : UIViewController <BrowserViewControllerDelegate, ContatctsViewControllerDelegate>
+@interface CloudDriveViewController : UIViewController <BrowserViewControllerDelegate, ContatctsViewControllerDelegate, UIDocumentPickerDelegate>
 
 @property (nonatomic, strong, nullable) MEGANode *parentNode;
 @property (nonatomic, strong, nullable) MEGAUser *user;
@@ -29,13 +29,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic, nullable) UISearchController *searchController;
 
+@property (nonatomic, strong, nullable) CloudDriveTableViewController *cdTableView;
+@property (nonatomic, strong, nullable) CloudDriveCollectionViewController *cdCollectionView;
+
 @property (assign, nonatomic) BOOL allNodesSelected;
 @property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
 @property (assign, nonatomic) BOOL isFromSharedItem;
 
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 
-- (void)presentUploadOptions;
+@property (strong, nonatomic) UIBarButtonItem *contextBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *uploadAddBarButtonItem;
+@property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
+
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
+
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)updateNavigationBarTitle;
@@ -46,9 +54,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)moveNode:(MEGANode * _Nonnull)node;
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
 - (void)setEditMode:(BOOL)editMode;
+- (void)showNodeInfo:(MEGANode *)node;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes;
 
+- (BOOL)isListViewModeSelected;
+- (void)changeViewModePreference;
+- (void)nodesSortTypeHasChanged;
+- (void)createNewFolderAction;
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType;
 @end
 
 NS_ASSUME_NONNULL_END

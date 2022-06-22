@@ -31,8 +31,6 @@
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIView *archivedChatEmptyState;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateTitle;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateCount;
@@ -68,7 +66,6 @@
 
 @property (assign, nonatomic) NSInteger contactsOnMegaCount;
 
-@property (nonatomic) GlobalDNDNotificationControl *globalDNDNotificationControl;
 @property (nonatomic) ChatNotificationControl *chatNotificationControl;
 @property (strong, nonatomic) NSObject *enterMeetingLinkObject;
 
@@ -88,6 +85,8 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self customNavigationBarLabel];
+    
+    [self configureContextMenuManager];
     
     self.chatIdIndexPathDictionary = [[NSMutableDictionary alloc] init];
     self.chatListItemArray = [[NSMutableArray alloc] init];
@@ -184,6 +183,12 @@
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     
     [self refreshMyAvatar];
+}
+
+- (void)pushNotificationSettingsLoaded {
+    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+        [self setNavigationBarButtons];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -595,46 +600,6 @@
     }
 }
 
-- (void)presentChangeOnlineStatusAlertController {
-    __weak __typeof__(self) weakSelf = self;
-    
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    
-    MEGAChatStatus onlineStatus = MEGASdkManager.sharedMEGAChatSdk.onlineStatus;
-    if (MEGAChatStatusOnline != onlineStatus) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"online", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeToOnlineStatus:MEGAChatStatusOnline];
-        }]];
-    }
-    
-    if (MEGAChatStatusAway != onlineStatus) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"away", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeToOnlineStatus:MEGAChatStatusAway];
-        }]];
-    }
-    
-    if (MEGAChatStatusBusy != onlineStatus) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"busy", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeToOnlineStatus:MEGAChatStatusBusy];
-        }]];
-    }
-    
-    if (MEGAChatStatusOffline != onlineStatus) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"offline", @"Title of the Offline section") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeToOnlineStatus:MEGAChatStatusOffline];
-        }]];
-    }
-    
-    ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.titleView];
-    [self presentViewController:moreActionSheet animated:YES completion:nil];
-}
-
-- (void)changeToOnlineStatus:(MEGAChatStatus)chatStatus {
-    if (chatStatus != [[MEGASdkManager sharedMEGAChatSdk] onlineStatus]) {
-        [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:chatStatus];
-    }
-}
-
 - (void)presentGroupOrContactDetailsForChatListItem:(MEGAChatListItem *)chatListItem {
     if (chatListItem.isGroup) {
         if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:chatListItem.chatId]]) {
@@ -987,69 +952,6 @@
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
     [self showStartConversation];
-}
-
-- (IBAction)optionsTapped:(UIBarButtonItem *)sender {
-    if (!MEGASdkManager.sharedMEGAChatSdk.presenceConfig) {
-        return;
-    }
-    
-    if (self.optionsActionSheetVC == nil) {
-        self.optionsActionSheetVC = [ActionSheetViewController.alloc initWithActions:[self setOptionsActionSheetActions] headerTitle:nil dismissCompletion:nil sender:sender];
-    } else {
-        [self.optionsActionSheetVC updateWithActions:[self setOptionsActionSheetActions] sender:sender];
-    }
-
-    [self presentViewController:self.optionsActionSheetVC animated:YES completion:nil];
-}
-
-- (NSArray<BaseAction *> *)setOptionsActionSheetActions {
-    MEGAChatStatus myStatus = MEGASdkManager.sharedMEGAChatSdk.onlineStatus;
-    NSString *chatStatusString = [NSString chatStatusString:myStatus];
-    UIView *accessoryView = [UIView.alloc initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 6.0f)];
-    accessoryView.layer.cornerRadius = 3;
-    accessoryView.backgroundColor = [UIColor mnz_colorForChatStatus:myStatus];
-    
-    ActionSheetAction *statusAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)")
-                                                                      detail:chatStatusString
-                                                               accessoryView:accessoryView
-                                                                       image:nil
-                                                                       style:UIAlertActionStyleDefault
-                                                               actionHandler:^{
-        [self presentChangeOnlineStatusAlertController];
-    }];
-    
-    BOOL isGlobalDNDEnabled = self.globalDNDNotificationControl.isGlobalDNDEnabled;
-    
-    UISwitch *dndSwitch = [[UISwitch alloc] initWithFrame: CGRectZero];
-    [dndSwitch addTarget:self action:@selector(changeDNDStatus:) forControlEvents:UIControlEventValueChanged];
-    [dndSwitch setOn:isGlobalDNDEnabled animated:NO];
-    
-    ActionSheetSwitchAction *dndAction = [ActionSheetSwitchAction.alloc initWithTitle:NSLocalizedString(@"Do Not Disturb", @"Chat settings: This text appears with the Do Not Disturb switch")
-                                                                               detail:self.globalDNDNotificationControl.timeRemainingToDeactiveDND
-                                                                           switchView:dndSwitch image:nil style:UIAlertActionStyleDefault
-                                                                        actionHandler:^{
-        
-        [dndSwitch setOn:!dndSwitch.isOn];
-        
-        [self changeDNDStatus:dndSwitch];
-    }];
-    
-    return @[statusAction, dndAction];
-}
-
--(void)changeDNDStatus:(id)sender {
-    UISwitch *dndSwitch = (UISwitch *)sender;
-
-    if (dndSwitch.isOn) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-        [self.globalDNDNotificationControl turnOnDND:self.navigationItem.rightBarButtonItem];
-    } else {
-        __weak typeof(self) weakSelf = self;
-        [self.globalDNDNotificationControl turnOffDNDWithCompletion:^{
-            [weakSelf.optionsActionSheetVC updateWithActions:[weakSelf setOptionsActionSheetActions] sender:weakSelf.navigationItem.rightBarButtonItem];
-        }];
-    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -1430,6 +1332,8 @@
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:userHandle]];
         }
     }
+    
+    [self refreshContextMenuBarButton];
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {

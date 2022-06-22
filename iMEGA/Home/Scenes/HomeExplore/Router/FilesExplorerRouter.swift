@@ -23,11 +23,13 @@ struct FilesExplorerRouter {
                                          nodesUpdateListenerRepo: nodesUpdateListenerRepo)
         let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: clipboardOperationRepo)
         let fileDownloadUseCase = FilesDownloadUseCase(repo: transferListenerRepo)
+        let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository())
         let viewModel = FilesExplorerViewModel(explorerType: explorerType,
                                                router: self,
                                                useCase: useCase,
                                                filesDownloadUseCase: fileDownloadUseCase,
-                                               nodeClipboardOperationUseCase: nodeClipboardOperationUseCase)
+                                               nodeClipboardOperationUseCase: nodeClipboardOperationUseCase,
+                                               createContextMenuUseCase: createContextMenuUseCase)
         let preference: FilesExplorerContainerViewController.ViewPreference = explorerType == .video ? .list : .both
         let vc = FilesExplorerContainerViewController(viewModel: viewModel,
                                                       viewPreference: preference)

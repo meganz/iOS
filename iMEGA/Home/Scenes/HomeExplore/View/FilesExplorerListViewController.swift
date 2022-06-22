@@ -108,6 +108,29 @@ class FilesExplorerListViewController: FilesExplorerViewController {
             self.configuration = configuration
         case .onTransferCompleted(let node):
             listSource?.onTransferCompleted(forNode: node)
+        case .updateContextMenu(let menu):
+            if #available(iOS 14.0, *) {
+                delegate?.updateContextMenu(menu: menu)
+            }
+        case .updateUploadAddMenu(let menu):
+            if #available(iOS 14.0, *) {
+                delegate?.updateUploadAddMenu(menu: menu)
+            }
+        case .showActionSheet(let actions):
+            delegate?.showActionSheet(actions: actions)
+        case .sortTypeHasChanged:
+            delegate?.updateSearchResults()
+        case .editingModeStatusChanges:
+            if tableView.isEditing {
+                endEditingMode()
+            } else {
+                setEditingMode()
+                delegate?.showSelectButton(true)
+            }
+        case .viewTypeHasChanged:
+            delegate?.changeCurrentViewType()
+        case .didSelect(let action):
+            delegate?.didSelect(action: action)
         }
     }
     

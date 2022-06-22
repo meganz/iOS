@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,17 +38,10 @@
                         <outlet property="containerView" destination="XWz-nR-M7D" id="Fjt-3Z-7Gm"/>
                         <outlet property="deleteBarButtonItem" destination="fzs-mP-547" id="An8-as-KmH"/>
                         <outlet property="editBarButtonItem" destination="n7R-gV-EFI" id="vp5-SC-z9w"/>
-                        <outlet property="moreBarButtonItem" destination="LK7-dJ-cZu" id="Utn-wB-R18"/>
                         <outlet property="selectAllBarButtonItem" destination="Rfg-dz-CVh" id="7Ma-KV-IK3"/>
-                        <outlet property="sortByBarButtonItem" destination="JRb-pO-nXf" id="qFc-VQ-bBQ"/>
                         <outlet property="toolbar" destination="e3i-Bd-kAN" id="E6b-k9-wcd"/>
                     </connections>
                 </viewController>
-                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="LK7-dJ-cZu" userLabel="More Bar Button Item">
-                    <connections>
-                        <action selector="moreAction:" destination="cPA-hf-QcT" id="Cd1-7X-WzH"/>
-                    </connections>
-                </barButtonItem>
                 <barButtonItem title="Edit" width="22" style="plain" id="n7R-gV-EFI" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="cPA-hf-QcT" id="MRD-2B-qxf"/>
@@ -70,11 +63,7 @@
                         <action selector="selectAllAction:" destination="cPA-hf-QcT" id="vAK-mC-SnE"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem width="22" style="plain" id="JRb-pO-nXf" userLabel="Sort by Bar Button Item">
-                    <connections>
-                        <action selector="sortByTapped:" destination="cPA-hf-QcT" id="u93-tb-JVN"/>
-                    </connections>
-                </barButtonItem>
+                <barButtonItem width="22" style="plain" id="JRb-pO-nXf" userLabel="Sort by Bar Button Item"/>
                 <barButtonItem enabled="NO" image="rubbishBin" width="32" style="plain" id="fzs-mP-547" userLabel="Delete Bar Button Item">
                     <connections>
                         <action selector="deleteTapped:" destination="cPA-hf-QcT" id="Fih-zp-oub"/>
@@ -97,7 +86,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="offlineTableViewCell" id="eCG-Xa-Dhr" customClass="OfflineTableViewCell">
-                                        <rect key="frame" x="0.0" y="44.5" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="375" height="60.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="eCG-Xa-Dhr" id="FIo-6z-HWv">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60.5"/>
@@ -291,10 +280,9 @@
     </designables>
     <resources>
         <image name="moreList" width="28" height="28"/>
-        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="selectAll" width="28" height="28"/>
-        <image name="share" width="28" height="28"/>
+        <image name="share" width="33.5" height="33.5"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

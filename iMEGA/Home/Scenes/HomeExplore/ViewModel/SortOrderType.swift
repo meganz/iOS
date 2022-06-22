@@ -1,5 +1,5 @@
 
-enum SortOrderType {
+enum SortOrderType: String, CaseIterable {
     case none
     case nameAscending
     case nameDescending
