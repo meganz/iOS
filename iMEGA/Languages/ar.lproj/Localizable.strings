@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="استخدام بيانات الهاتف المحمول لمقاطع الفيديو";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="بعيد-تلقائياً";
-/*  */
-"xMinutes"="[X] دقيقة";
-/*  */
-"1Minute"="1 دقيقة";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="أظهرني بحالة بعيد بعد [X] دقيقة من عدم نشاط";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]انتهت المكالمة الجماعية[/A][C]. المدة: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="مدة الاتصال: %@";
-/*  */
-"xSeconds"="%d ثانية";
-/*  */
-"1Second"="1 ثانية";
-/*  */
-"1Hour"="1 ساعة";
-/*  */
-"xHours"="%d ساعة";
-/*  */
-"1Hour1Minute"="1 ساعة، 1 دقيقة";
-/*  */
-"1HourxMinutes"="1 ساعة و %d دقيقة";
-/*  */
-"xHours1Minute"="%d ساعة و 1 دقيقة";
-/*  */
-"xHoursxMinutes"="%1$d ساعة و %2$d دقيقة";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="الملف غير مدعوم";
 /* Alert message shown when users try to stream an unsupported audio/video file */

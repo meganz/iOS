@@ -93,18 +93,6 @@ public enum Strings {
     public static let _1ContactFoundOnMEGA = Strings.tr("Localizable", "1 contact found on MEGA")
     /// 1 selected
     public static let _1Selected = Strings.tr("Localizable", "1 selected")
-    /// 1 hour
-    public static let _1Hour = Strings.tr("Localizable", "1Hour")
-    /// 1 hour, 1 minute
-    public static let _1Hour1Minute = Strings.tr("Localizable", "1Hour1Minute")
-    /// 1 hour, %d minutes
-    public static func _1HourxMinutes(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "1HourxMinutes", p1)
-    }
-    /// 1 minute
-    public static let _1Minute = Strings.tr("Localizable", "1Minute")
-    /// 1 second
-    public static let _1Second = Strings.tr("Localizable", "1Second")
     /// 24 hours
     public static let _24Hours = Strings.tr("Localizable", "24 hours")
     /// 30 minutes
@@ -2363,24 +2351,6 @@ public enum Strings {
     public static func xfilesSentSuccesfully(_ p1: Int) -> String {
       return Strings.tr("Localizable", "xfilesSentSuccesfully", p1)
     }
-    /// %d hours
-    public static func xHours(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "xHours", p1)
-    }
-    /// %d hours, 1 minute
-    public static func xHours1Minute(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "xHours1Minute", p1)
-    }
-    /// %1$d hours, %2$d minutes
-    public static func xHoursxMinutes(_ p1: Int, _ p2: Int) -> String {
-      return Strings.tr("Localizable", "xHoursxMinutes", p1, p2)
-    }
-    /// [X] minutes
-    public static let xMinutes = Strings.tr("Localizable", "xMinutes")
-    /// %d seconds
-    public static func xSeconds(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "xSeconds", p1)
-    }
     /// %d selected
     public static func xSelected(_ p1: Int) -> String {
       return Strings.tr("Localizable", "xSelected", p1)
@@ -2873,6 +2843,32 @@ public enum Strings {
         }
       }
     }
+    public enum Call {
+      public enum Duration {
+        /// Plural format key: "%#@hour@"
+        public static func hour(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "call.duration.hour", p1)
+        }
+        /// Plural format key: "%#@minute@"
+        public static func minute(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "call.duration.minute", p1)
+        }
+        /// Plural format key: "%#@second@"
+        public static func second(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "call.duration.second", p1)
+        }
+        public enum HourAndMinute {
+          /// Plural format key: "%#@hour@"
+          public static func hour(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "call.duration.hourAndMinute.hour", p1)
+          }
+          /// Plural format key: "%#@minute@"
+          public static func minute(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "call.duration.hourAndMinute.minute", p1)
+          }
+        }
+      }
+    }
     public enum CameraUploads {
       public enum Albums {
         /// Albums
@@ -2953,6 +2949,14 @@ public enum Strings {
       public enum Photos {
         /// To share photos and videos, grant MEGA access to your gallery
         public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
+      }
+      public enum Status {
+        public enum Duration {
+          /// Plural format key: "%#@minute@"
+          public static func minute(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "chat.status.duration.minute", p1)
+          }
+        }
       }
     }
     public enum CloudDrive {
@@ -3236,6 +3240,18 @@ public enum Strings {
           public static let stepTwo = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepTwo")
           /// Turn on Notifications
           public static let title = Strings.tr("Localizable", "dialog.turnOnNotifications.label.title")
+        }
+      }
+    }
+    public enum Dnd {
+      public enum Duration {
+        /// Plural format key: "%#@hour@"
+        public static func hour(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "dnd.duration.hour", p1)
+        }
+        /// Plural format key: "%#@minute@"
+        public static func minute(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "dnd.duration.minute", p1)
         }
       }
     }

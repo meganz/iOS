@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="Gunakan Data Seluler untuk Video";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-away";
-/*  */
-"xMinutes"="[X] menit";
-/*  */
-"1Minute"="1 menit";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Tunjukan saya sedang pergi setelah [X] menit tidak aktif";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Panggilan grup berakhir[/A][C]. Durasi: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durasi: %@";
-/*  */
-"xSeconds"="%d detik";
-/*  */
-"1Second"="1 detik";
-/*  */
-"1Hour"="1 jam";
-/*  */
-"xHours"="%d jam";
-/*  */
-"1Hour1Minute"="1 jam, 1 menit";
-/*  */
-"1HourxMinutes"="1 jam, %d menit";
-/*  */
-"xHours1Minute"="%d jam, 1 menit";
-/*  */
-"xHoursxMinutes"="%1$d jam, %2$d menit";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="File tidak didukung";
 /* Alert message shown when users try to stream an unsupported audio/video file */

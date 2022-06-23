@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="影片使用行動數據";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="自動顯示為離開";
-/*  */
-"xMinutes"="[X]分鐘";
-/*  */
-"1Minute"="1分鐘";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="閒置[X]分鐘後，將我狀態顯示為離開";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]群組通話結束[/A][C]。通話時間：[/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="通話時間：%@";
-/*  */
-"xSeconds"="%d秒";
-/*  */
-"1Second"="1秒";
-/*  */
-"1Hour"="1小時";
-/*  */
-"xHours"="%d小時";
-/*  */
-"1Hour1Minute"="1小時，1分鐘";
-/*  */
-"1HourxMinutes"="1小時，%d分鐘";
-/*  */
-"xHours1Minute"="%d小時，1分鐘";
-/*  */
-"xHoursxMinutes"="%1$d小時，%2$d分鐘";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="不支援的檔案";
 /* Alert message shown when users try to stream an unsupported audio/video file */

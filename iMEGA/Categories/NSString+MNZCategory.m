@@ -495,39 +495,24 @@ static NSString* const B = @"[B]";
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
     if (hours > 0) {
-        if (hours == 1) {
-            if (minutes == 0) {
-                return NSLocalizedString(@"1Hour", nil);
-            } else if (minutes == 1) {
-                return NSLocalizedString(@"1Hour1Minute", nil);
-            } else {
-                return [NSString stringWithFormat:NSLocalizedString(@"1HourxMinutes", nil), (int)minutes];
-            }
+        if (minutes == 0) {
+            NSString *format = NSLocalizedString(@"call.duration.hour", nil);
+            return [NSString stringWithFormat:format, hours];
         } else {
-            if (minutes == 0) {
-                return [NSString stringWithFormat:NSLocalizedString(@"xHours", nil), (int)hours];
-            } else if (minutes == 1) {
-                return [NSString stringWithFormat:NSLocalizedString(@"xHours1Minute", nil), (int)hours];
-            } else {
-                NSString *durationString = NSLocalizedString(@"xHoursxMinutes", nil);
-                durationString = [durationString stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%td", hours]];
-                durationString = [durationString stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%td", minutes]];
-                return durationString;
-            }
+            NSString *hourFormat = NSLocalizedString(@"call.duration.hourAndMinute.hour", nil);
+            NSString *hourString = [NSString stringWithFormat:hourFormat, hours];
+
+            NSString *minuteFormat = NSLocalizedString(@"call.duration.hourAndMinute.minute", nil);
+            NSString *minuteString = [NSString stringWithFormat:minuteFormat, minutes];
+
+            return [NSString stringWithFormat:@"%@%@", hourString, minuteString];
         }
     } else if (minutes > 0) {
-        if (minutes == 1) {
-            return NSLocalizedString(@"1Minute", nil);
-        } else {
-            NSString *xMinutes = NSLocalizedString(@"xMinutes", nil);
-            return [NSString stringWithFormat:@"%@", [xMinutes stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%ld", (long)minutes]]];
-        }
+        NSString *format = NSLocalizedString(@"call.duration.minute", nil);
+        return [NSString stringWithFormat:format, minutes];
     } else {
-        if (seconds == 1) {
-            return NSLocalizedString(@"1Second", nil);
-        } else {
-            return [NSString stringWithFormat:NSLocalizedString(@"xSeconds", nil), (int) seconds];
-        }
+        NSString *format = NSLocalizedString(@"call.duration.second", nil);
+        return [NSString stringWithFormat:format, seconds];
     }
 }
 

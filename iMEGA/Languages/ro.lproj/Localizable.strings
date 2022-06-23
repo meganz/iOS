@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="Folosește datele mobile pentru videoclipuri";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Plecat automat";
-/*  */
-"xMinutes"="[X] minute";
-/*  */
-"1Minute"="1 minut";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Afișează-mă plecat după [X] minute de inactivitate";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Apel de grup încheiat[/A][C]. Durata: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durată: %@";
-/*  */
-"xSeconds"="%d secunde";
-/*  */
-"1Second"="1 secundă";
-/*  */
-"1Hour"="1 oră";
-/*  */
-"xHours"="%d ore";
-/*  */
-"1Hour1Minute"="1 oră, 1 minut";
-/*  */
-"1HourxMinutes"="1 oră, %d minute";
-/*  */
-"xHours1Minute"="%d ore, 1 minut";
-/*  */
-"xHoursxMinutes"="%1$d ore, %2$d minute";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Fișier nesuportat";
 /* Alert message shown when users try to stream an unsupported audio/video file */

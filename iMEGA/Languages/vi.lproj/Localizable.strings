@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="Sử dụng Mạng Viễn Thông để tải lên Videos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Tự động vắng mặt";
-/*  */
-"xMinutes"="[X] phút";
-/*  */
-"1Minute"="1 phút";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Tự chuyển trạng thái thành \"Vắng mặt\" sau [X] phút không hoạt động";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Cuộc gọi nhóm kết thúc[/A][C]. Thời lượng: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Thời lượng: %@";
-/*  */
-"xSeconds"="%d giây";
-/*  */
-"1Second"="1 giây";
-/*  */
-"1Hour"="1 giờ";
-/*  */
-"xHours"="%d giờ";
-/*  */
-"1Hour1Minute"="1 giờ và 1 phút";
-/*  */
-"1HourxMinutes"="1 giờ, %d phút";
-/*  */
-"xHours1Minute"="%d giờ và 1 phút";
-/*  */
-"xHoursxMinutes"="%1$d giờ, %2$d phút";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Dạng tệp tin không được hỗ trợ";
 /* Alert message shown when users try to stream an unsupported audio/video file */
