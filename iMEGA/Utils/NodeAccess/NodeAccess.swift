@@ -63,14 +63,14 @@ class NodeAccess: NSObject {
     ///
     /// - Parameter completion: A block that the node loader calls after the node load completes. It will be called on an arbitrary dispatch queue. Please dispatch to Main queue if need to update UI.
     @objc func loadNode(completion: NodeLoadCompletion? = nil) {
-        guard let node = handle?.validNode(in: sdk) else {
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.loadNodeWithSynchronisation(completion: completion)
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let sdk = self?.sdk, let node = self?.handle?.validNode(in: sdk) else {
+                self?.loadNodeWithSynchronisation(completion: completion)
+                return
             }
-            return
+            
+            completion?(node, nil)
         }
-        
-        completion?(node, nil)
     }
     
     private func loadNodeWithSynchronisation(completion: NodeLoadCompletion? = nil) {
