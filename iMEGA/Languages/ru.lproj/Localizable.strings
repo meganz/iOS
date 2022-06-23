@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="Использовать мобильные данные для видео";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Отсутствие";
-/*  */
-"xMinutes"="[X] мин.";
-/*  */
-"1Minute"="1 минута";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Групповой вызов завершен[/A][C]. Длительность: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Длительность: %@";
-/*  */
-"xSeconds"="%d сек.";
-/*  */
-"1Second"="1 сек.";
-/*  */
-"1Hour"="1 час";
-/*  */
-"xHours"="%d ч.";
-/*  */
-"1Hour1Minute"="1 час 1 минута";
-/*  */
-"1HourxMinutes"="1 ч. %d мин.";
-/*  */
-"xHours1Minute"="%d ч. 1 мин.";
-/*  */
-"xHoursxMinutes"="%1$d ч., %2$d мин.";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Файл не поддерживается";
 /* Alert message shown when users try to stream an unsupported audio/video file */

@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="Mobile Datenverbindung für Videoupload nutzen";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-Abwesend";
-/*  */
-"xMinutes"="[X] Minuten";
-/*  */
-"1Minute"="1 Minute";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Mich nach [X] Minuten ohne Aktivität als abwesend anzeigen";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Konferenz beendet[/A][C]. Dauer: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Dauer: %@";
-/*  */
-"xSeconds"="%d Sekunden";
-/*  */
-"1Second"="1 Sekunde";
-/*  */
-"1Hour"="1 Stunde";
-/*  */
-"xHours"="%d Stunden";
-/*  */
-"1Hour1Minute"="1 Stunde, 1 Minute";
-/*  */
-"1HourxMinutes"="1 Stunde, %d Minuten";
-/*  */
-"xHours1Minute"="%d Stunden, 1 Minute";
-/*  */
-"xHoursxMinutes"="%1$d Stunden, %2$d Minuten";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Dateiformat wird nicht unterstützt";
 /* Alert message shown when users try to stream an unsupported audio/video file */

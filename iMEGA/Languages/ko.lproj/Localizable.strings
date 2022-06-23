@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="동영상에 모바일 데이터 사용";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="자동 부재중";
-/*  */
-"xMinutes"="[X]분";
-/*  */
-"1Minute"="1분";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="[X]분 이상 활동이 없으면 부재중으로 표시";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]단체 통화 종료[/A][C]. 통화 시간: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
-/*  */
-"xSeconds"="%d초";
-/*  */
-"1Second"="1초";
-/*  */
-"1Hour"="1시간";
-/*  */
-"xHours"="%d시간";
-/*  */
-"1Hour1Minute"="1시간 1분";
-/*  */
-"1HourxMinutes"="1시간 %d분";
-/*  */
-"xHours1Minute"="%d시간 1분";
-/*  */
-"xHoursxMinutes"="%1$d시간 %2$d분";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="지원하지 않는 파일";
 /* Alert message shown when users try to stream an unsupported audio/video file */

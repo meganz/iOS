@@ -1204,10 +1204,6 @@
 "Use Mobile Data for Videos"="動画にモバイルデータを使用する";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="自動退席";
-/*  */
-"xMinutes"="[X]分";
-/*  */
-"1Minute"="1分";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="非アクティブ状態が[X]分続いたら退席中と表示します";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1592,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]グループ通話が終了しました[/A][C]。通話時間：[/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="通話時間：%@";
-/*  */
-"xSeconds"="%d秒";
-/*  */
-"1Second"="1秒";
-/*  */
-"1Hour"="1時間";
-/*  */
-"xHours"="%d時間";
-/*  */
-"1Hour1Minute"="1時間、1分";
-/*  */
-"1HourxMinutes"="1時間、%d分";
-/*  */
-"xHours1Minute"="%d時間、1分";
-/*  */
-"xHoursxMinutes"="%1$d時間、%2$d分";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="ファイルがサポートされていません";
 /* Alert message shown when users try to stream an unsupported audio/video file */

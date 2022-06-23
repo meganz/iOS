@@ -55,13 +55,13 @@ enum DNDTurnOnOption: String, CaseIterable {
     var localizedTitle: String {
         switch self {
         case .thirtyMinutes:
-            return Strings.Localizable._30Minutes
+            return Strings.Localizable.Dnd.Duration.minute(30)
         case .oneHour:
-            return Strings.Localizable._1Hour
+            return Strings.Localizable.Dnd.Duration.hour(1)
         case .sixHours:
-            return Strings.Localizable._6Hours
+            return Strings.Localizable.Dnd.Duration.hour(6)
         case .twentyFourHours:
-            return Strings.Localizable._24Hours
+            return Strings.Localizable.Dnd.Duration.hour(24)
         case .morningEightAM:
             return isMorningEightToday ?  Strings.Localizable.untilThisMorning : Strings.Localizable.untilTomorrowMorning
         case .forever:
