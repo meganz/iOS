@@ -1048,8 +1048,7 @@
             
         case MegaNodeActionTypeSaveToPhotos:
             node = [MEGASdkManager.sharedMEGASdkFolder authorizeNode:node];
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
             break;
             
         case MegaNodeActionTypeSendToChat:

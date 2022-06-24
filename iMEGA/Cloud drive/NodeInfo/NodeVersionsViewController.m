@@ -32,8 +32,6 @@
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation NodeVersionsViewController
@@ -447,8 +445,7 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
             break;
             
         case MegaNodeActionTypeExportFile:

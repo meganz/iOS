@@ -4,7 +4,6 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
     
     private weak var viewController: UIViewController?
     private let link: String
-    private var cancelToken = MEGACancelToken()
 
     init(link: String, viewController: UIViewController) {
         self.link = link
@@ -41,10 +40,10 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
     private func saveToPhotos(node: MEGANode) {
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
         SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
-        cancelToken = MEGACancelToken()
+        
         let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
 
-        saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node), cancelToken: cancelToken) { error in
+        saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node)) { error in
             SVProgressHUD.dismiss()
             if error != nil {
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)

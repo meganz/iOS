@@ -1566,8 +1566,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
             break;
             
         case MegaNodeActionTypeSendToChat:

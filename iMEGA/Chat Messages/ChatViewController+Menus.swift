@@ -173,12 +173,11 @@ extension ChatViewController {
                     node = authorizedNode
                 }
                 let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
-                cancelToken = MEGACancelToken()
                 
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
                 
-                saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId, cancelToken: cancelToken, completion: { error in
+                saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId, completion: { error in
                     SVProgressHUD.dismiss()
                     if error != nil {
                         SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
