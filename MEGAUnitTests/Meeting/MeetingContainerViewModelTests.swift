@@ -207,6 +207,24 @@ final class MeetingContainerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
         XCTAssert(callManagerUseCase.muteUnmute_CalledTimes == 0)
     }
+    
+    func testAction_showHangOrEndCallDialog() {
+        let chatRoom = ChatRoomEntity(chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+
+        test(viewModel: viewModel, action: .showHangOrEndCallDialog, expectedCommands: [])
+        XCTAssert(router.showHangOrEndCallDialog_calledTimes == 1)
+    }
+    
+    func testAction_endCallForAll() {
+        let chatRoom = ChatRoomEntity(chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+
+        test(viewModel: viewModel, action: .endCallForAll, expectedCommands: [])
+        XCTAssert(router.dismiss_calledTimes == 1)
+    }
 }
 
 final class MockMeetingContainerRouter: MeetingContainerRouting {
@@ -225,6 +243,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var didShowEndDialog_calledTimes = 0
     var removeEndDialog_calledTimes = 0
     var showJoinMegaScreen_calledTimes = 0
+    var showHangOrEndCallDialog_calledTimes = 0
 
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
@@ -285,5 +304,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func showJoinMegaScreen() {
         showJoinMegaScreen_calledTimes += 1
+    }
+    
+    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
+        showHangOrEndCallDialog_calledTimes += 1
     }
 }

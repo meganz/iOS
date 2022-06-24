@@ -3044,3 +3044,7 @@
 "meetings.endCall.popupDescription"="You're a host on this call. If you leave this call it will end for all participants.";
 /* Button title - tapping on the button will end the call. */
 "meetings.endCall.buttonTitle"="End Call";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Leave";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="End for All";
