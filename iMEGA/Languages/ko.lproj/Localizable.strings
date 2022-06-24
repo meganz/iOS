@@ -2224,6 +2224,8 @@
 "Enter group name"="그룹 이름을 입력하세요";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="메시지…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="링크 삭제됨";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="%@ 내에 통화가 종료됩니다";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Make available offline";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="모두 통화 종료";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="모두의 통화를 종료할까요?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="This will end the call for all participants.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="통화 종료";

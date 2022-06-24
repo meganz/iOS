@@ -2224,6 +2224,8 @@
 "Enter group name"="Benennen Sie den Gruppenchat";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Nachricht…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Der Link wurde gelöscht";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Zum Senden loslassen, zum Abbrechen nach links ziehen";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2685,11 +2687,11 @@
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Umschalten";
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
-"meetings.reconnecting.title"="Reconnecting";
+"meetings.reconnecting.title"="Verbindung wird wiederhergestellt…";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="Verbindung kann nicht wiederhergestellt werden";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="Schlechte Verbindung";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Originalfoto für Bildvorschau verwenden";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2919,15 +2921,15 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Transfer abbrechen";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="Bei einer Unterbrechung des Transfervorgangs werden einige Elemente möglicherweise unvollständig übertragen.";
 /* Confirm action of cancelling a transfer */
-"transfers.cancellable.proceed"="Yes, cancel";
+"transfers.cancellable.proceed"="Stornieren";
 /* Dismiss action of cancelling a transfer */
-"transfers.cancellable.dismiss"="No, continue";
+"transfers.cancellable.dismiss"="Fortsetzen";
 /* First step message for cancellable transfer (letting known the user not to close the app) */
 "transfers.cancellable.scanning"="Scan läuft…";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="Bitte schließen Sie die App nicht.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transfer storniert";
 /* Title of the dialog used to send bug reports to support team. */
@@ -2991,11 +2993,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Maximal";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="Dupliziertes Element";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="Der Ordner %@ ist an diesem Ort bereits vorhanden.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="Select whether you want to merge the folders or skip this folder.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="Kopieren und zusammenführen";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -3015,9 +3017,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="Datei überspringen";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="Diesen Ordner überspringen.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="In diesem Ordner befindet sich bereits eine Datei namens %@.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Was soll mit dieser Datei passieren?";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3031,7 +3033,7 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="Ersetzen";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="Bestehende Datei im Zielordner ersetzen.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
 "nameCollision.files.cancelDescription"="Nichts tun. Diese Datei bleibt unverändert erhalten:";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,14 +3053,22 @@
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.updateDescription"="Die Datei wird aktualisiert und der Versionsverlauf gespeichert:";
 /* Meetings end call dialog title */
-"meetings.endCallDialog.title"="You’re the only one here";
+"meetings.endCallDialog.title"="Sie sind der einzige Teilnehmer";
 /* Meetings end call dialog description */
-"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+"meetings.endCallDialog.description"="Die Konferenz wird nach 2 Minuten automatisch beendet, es sei denn, Sie möchten sie fortsetzen.";
 /* Meetings end call dialog Stay on call button title */
-"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on call";
+"meetings.endCallDialog.stayOnCallButtonTitle"="Konferenz fortsetzen";
 /* Meetings end call dialog button title */
-"meetings.endCallDialog.endCallNowButtonTitle"="End call now";
+"meetings.endCallDialog.endCallNowButtonTitle"="Konferenz jetzt beenden";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
-"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+"meetings.notification.EndCallTimerDuration"="Die Konferenz wird in %@ beendet";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Offline bereitstellen";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Konferenz für alle beenden";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="Konferenz für alle beenden?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="Damit beenden Sie die Konferenz für alle Teilnehmer.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="Konferenz beenden";

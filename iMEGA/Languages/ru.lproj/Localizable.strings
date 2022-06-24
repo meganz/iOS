@@ -2224,6 +2224,8 @@
 "Enter group name"="Введите имя группы";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Сообщение…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Ссылка удалена";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Передвиньте влево для отмены, отпустите для отправки";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2687,9 +2689,9 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
 "meetings.reconnecting.title"="Переподключение";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="Не удалось восстановить подключение";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="Плохое соединение";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Превью изображений с высоким разрешением";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2919,7 +2921,7 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Отменить передачу";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="Если прервать передачи, некоторые элементы могут оказаться незавершенными.";
 /* Confirm action of cancelling a transfer */
 "transfers.cancellable.proceed"="Да, отменить";
 /* Dismiss action of cancelling a transfer */
@@ -2991,11 +2993,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Лучшее";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="Повторяющийся элемент";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="Папка «%@» уже существует в этом месте.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="Выберите, хотите ли вы объединить папки или пропустить эту папку.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="Скопировать и объединить";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -3015,9 +3017,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="Не загружать";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="Пропустить папку";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="Файл «%@» уже существует в этой папке.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Выберите файл, который хотите оставить:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3031,7 +3033,7 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="Загрузить и заменить";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="Заменить файл в папке назначения загружаемым файлом.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
 "nameCollision.files.cancelDescription"="Файлы не изменятся. Останется этот файл:";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="Звонок завершится через %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Сделать доступным офлайн";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Завершить звонок для всех";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="Завершить звонок для всех?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="Это завершит звонок для всех участников.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="Завершить звонок";

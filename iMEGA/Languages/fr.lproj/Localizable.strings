@@ -2224,6 +2224,8 @@
 "Enter group name"="Saisissez le nom du groupe";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Écrivez un message…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Le lien a été supprimé";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Faire glisser vers la gauche pour annuler, relâcher pour envoyer";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="L’appel se terminera dans %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Rendre disponible hors ligne";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Mettre fin à l’appel pour tous";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="Mettre fin à l’appel pour tous ?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="Ceci mettra fin à l’appel pour tous les participants.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="Mettre fin à l’appel";
