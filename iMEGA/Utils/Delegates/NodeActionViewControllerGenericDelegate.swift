@@ -150,7 +150,7 @@ final class NodeActionViewControllerGenericDelegate:
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
         SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
 
-        saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node), cancelToken: MEGACancelToken(), completion: saveToPhotosCompletion)
+        saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node), completion: saveToPhotosCompletion)
     }
     
     private func download(_ node: MEGANode) {
