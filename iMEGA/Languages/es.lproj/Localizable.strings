@@ -2224,6 +2224,8 @@
 "Enter group name"="Escribe el nombre del grupo";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Mensaje…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Enlace eliminado";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Arrastra hacia la izquierda para cancelar, suelta para enviar";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2995,7 +2997,7 @@
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="Select whether you want to merge the folders or skip this folder.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="Copiar y combinar";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="La llamada finalizará en %@ ";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Make available offline";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="End call for all";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="End call for all?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="This will end the call for all participants.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="End call";

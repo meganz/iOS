@@ -2224,6 +2224,8 @@
 "Enter group name"="Wprowadź nazwę grupy";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Wiadomość…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Link został usunięty";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Przeciągnij w lewo, aby anulować, zwolnij, aby wysłać";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2687,9 +2689,9 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
 "meetings.reconnecting.title"="Ponowne łączenie";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="Nie można nawiązać ponownego połączenia";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="Złe połączenie";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Podgląd obrazów w wysokiej rozdzielczości";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2919,15 +2921,15 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Anuluj transfer";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="Przerwanie procesu przesyłania może spowodować, że niektóre elementy będą niekompletne.";
 /* Confirm action of cancelling a transfer */
-"transfers.cancellable.proceed"="Yes, cancel";
+"transfers.cancellable.proceed"="Tak, anuluj";
 /* Dismiss action of cancelling a transfer */
-"transfers.cancellable.dismiss"="No, continue";
+"transfers.cancellable.dismiss"="Nie, kontynuuj";
 /* First step message for cancellable transfer (letting known the user not to close the app) */
 "transfers.cancellable.scanning"="Skanowanie…";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="Prosimy nie zamykać aplikacji.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Przesyłanie anulowane";
 /* Title of the dialog used to send bug reports to support team. */
@@ -2961,17 +2963,17 @@
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Dalej";
 /* Meetings: Notification message to be shown when one person joins the call. */
-"meetings.notification.singleUserJoined"="%@ joined";
+"meetings.notification.singleUserJoined"="%@ dołączył";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ left";
+"meetings.notification.singleUserLeft"="%@ opuścił";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
-"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+"meetings.notification.twoUsersJoined"="%@ i %@ dołączyli";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left";
+"meetings.notification.twoUsersLeft"="%@ i %@ opuścili";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+"meetings.notification.moreThanTwoUsersJoined"="%@ i %@ inni dołączyli";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+"meetings.notification.moreThanTwoUsersLeft"="%@ i %@ inni opuścili";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Przenieś do kosza";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -2991,11 +2993,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Najlepsze";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="Zduplikowany element";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="Folder %@ już istnieje w tej lokalizacji.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="Wybierz, czy chcesz scalić foldery, czy pominąć ten folder.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="Skopiuj i połącz";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -3015,9 +3017,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="Nie wgrywaj";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="Pomiń ten katalog";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="Plik o nazwie %@ już istnieje w tej lokalizacji.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Wybierz plik, który chcesz zachować:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3031,7 +3033,7 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="Wgraj i podmień";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="Zastąp plik w folderze docelowym plikiem, który chcesz przesłać.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
 "nameCollision.files.cancelDescription"="Żaden z plików nie zostanie zmieniony. Plik zostanie zachowany jako:";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,14 +3053,22 @@
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.updateDescription"="Plik zostanie zaktualizowany o historię wersji:";
 /* Meetings end call dialog title */
-"meetings.endCallDialog.title"="You’re the only one here";
+"meetings.endCallDialog.title"="Tylko ty tu jesteś";
 /* Meetings end call dialog description */
-"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+"meetings.endCallDialog.description"="Połączenie zostanie automatycznie zakończone po 2 minutach, chyba że chcesz je kontynuować.";
 /* Meetings end call dialog Stay on call button title */
-"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on call";
+"meetings.endCallDialog.stayOnCallButtonTitle"="Pozostań";
 /* Meetings end call dialog button title */
-"meetings.endCallDialog.endCallNowButtonTitle"="End call now";
+"meetings.endCallDialog.endCallNowButtonTitle"="Zakończ teraz";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
-"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+"meetings.notification.EndCallTimerDuration"="Połączenie zakończy się za %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Udostępnij w trybie offline";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Zakończ połączenie dla wszytskich";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="Zakończyć połączenie dla wszystkich?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="Spowoduje to zakończenie połączenia dla wszystkich uczestników.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="Zakończ połączenie";

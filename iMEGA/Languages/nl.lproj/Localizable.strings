@@ -2224,6 +2224,8 @@
 "Enter group name"="Voer groep naam in";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Bericht..";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Link verwijderd";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Sleep naar links om te annuleren, laat los om te verzenden";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2919,7 +2921,7 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Overdracht annuleren";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="Als u het overdrachtsproces onderbreekt, kunnen sommige items onvolledig worden.";
 /* Confirm action of cancelling a transfer */
 "transfers.cancellable.proceed"="Ja, annuleren";
 /* Dismiss action of cancelling a transfer */
@@ -2991,11 +2993,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Beste";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="Gedupliceerd item";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="De map %@ bestaat al in deze lokatie.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="Selecteer of u de mappen wilt samenvoegen of deze map wilt overslaan.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="Kopiëren en samenvoegen";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -3015,9 +3017,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="Niet uploaden";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="Sla deze map over.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="Een bestand genaamd %@ bestaat al in deze lokatie.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Selecteer het bestand die u wilt behouden:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3031,7 +3033,7 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="Uploaden en vervangen";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="Vervang het bestand in de doelmap door het bestand dat u uploadt.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
 "nameCollision.files.cancelDescription"="Er worden geen bestanden veranderd. Het bestand hieronder wordt behouden:";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="Oproep wordt beëindigt in %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Maak beschikbaar offline";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Oproep voor iedereen beëindigen";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="Oproep voor iedereen beëindigen?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="Hiermee wordt de oproep voor alle deelnemers beëindigd.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="Oproep beëindigen…";

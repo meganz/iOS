@@ -2224,6 +2224,8 @@
 "Enter group name"="กรอกชื่อกลุ่ม";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="พิมพ์ข้อความ…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="ลิงก์ถูกลบแล้ว";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="ลากไปทางซ้ายเพื่อยกเลิก หรือปล่อยเพื่อส่ง";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2687,9 +2689,9 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
 "meetings.reconnecting.title"="กำลังเชื่อมต่อใหม่";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="ไม่สามารถเชื่อมต่อใหม่ได้";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="การเชื่อมต่อไม่ดี";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="ดูตัวอย่างภาพด้วยความละเอียดสูง";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2919,7 +2921,7 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="ยกเลิกการถ่ายโอน";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="การขัดจังหวะกระบวนการถ่ายโอนอาจทำให้บางรายการไม่สมบูรณ์ได้";
 /* Confirm action of cancelling a transfer */
 "transfers.cancellable.proceed"="ใช่ ยกเลิกเลย";
 /* Dismiss action of cancelling a transfer */
@@ -2927,7 +2929,7 @@
 /* First step message for cancellable transfer (letting known the user not to close the app) */
 "transfers.cancellable.scanning"="กำลังสแกน…";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="กรุณาอย่าปิดแอปพลิเคชัน";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="การถ่ายโอนถูกยกเลิก";
 /* Title of the dialog used to send bug reports to support team. */
@@ -2991,11 +2993,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="ดีที่สุด";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="รายการที่ซ้ำกัน";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="โฟลเดอร์ %@ มีอยู่แล้วในตำแหน่งนี้";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="เลือกว่าคุณต้องการรวมโฟลเดอร์หรือข้ามโฟลเดอร์นี้";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="คัดลอกและผสาน";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -3015,9 +3017,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="ไม่ต้องอัปโหลด";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="ข้ามโฟลเดอร์นี้";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="ไฟล์ชื่อ %@ มีอยู่แล้วในตำแหน่งนี้";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="เลือกไฟล์ที่คุณต้องการเก็บ:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3031,7 +3033,7 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="อัปโหลดและแทนที่";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="แทนที่ไฟล์ในโฟลเดอร์ปลายทางด้วยไฟล์ที่คุณกำลังอัปโหลด";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
 "nameCollision.files.cancelDescription"="ไม่มีไฟล์ที่จะถูกเปลี่ยนแปลง คุณจะเก็บไฟล์ด้านล่าง:";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="จะวางสายในอีก %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="ใช้งานแบบออฟไลน์";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="วางสายทุกคน";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="วางสายทั้งหมดหรือไม่";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="การดำเนินการนี้จะวางสายผู้เข้าร่วมสายทั้งหมด";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="วางสาย";

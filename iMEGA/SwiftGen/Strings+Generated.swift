@@ -2902,6 +2902,10 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
+      public enum Link {
+        /// Link removed
+        public static let linkRemoved = Strings.tr("Localizable", "chat.link.linkRemoved")
+      }
       public enum ManageHistory {
         public enum Clearing {
           public enum Custom {
@@ -3262,7 +3266,7 @@ public enum Strings {
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
-      /// Download to Offline
+      /// Make available offline
       public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
@@ -3714,6 +3718,16 @@ public enum Strings {
         /// Display in Main View
         public static let title = Strings.tr("Localizable", "meetings.displayInMainView.title")
       }
+      public enum EndCall {
+        /// End call
+        public static let buttonTitle = Strings.tr("Localizable", "meetings.endCall.buttonTitle")
+        /// End call for all
+        public static let endForAllButtonTitle = Strings.tr("Localizable", "meetings.endCall.endForAllButtonTitle")
+        /// End call for all?
+        public static let endForAllPopupTitle = Strings.tr("Localizable", "meetings.endCall.endForAllPopupTitle")
+        /// This will end the call for all participants.
+        public static let popupDescription = Strings.tr("Localizable", "meetings.endCall.popupDescription")
+      }
       public enum EndCallDialog {
         /// Call will automatically end in 2 mins unless you want to stay on it.
         public static let description = Strings.tr("Localizable", "meetings.endCallDialog.description")
@@ -3911,7 +3925,7 @@ public enum Strings {
         }
         /// Skip this folder.
         public static let cancelDescription = Strings.tr("Localizable", "nameCollision.folders.cancelDescription")
-        /// Select wether you want to merge the folders or skip this folder.
+        /// Select whether you want to merge the folders or skip this folder.
         public static let selectAction = Strings.tr("Localizable", "nameCollision.folders.selectAction")
         public enum Copy {
           /// Merge the folder at the destination with the folder you are copying.

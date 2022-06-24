@@ -2224,6 +2224,8 @@
 "Enter group name"="Điền tên nhóm";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Viết tin nhắn…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Đường liên kết đã loại bỏ";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Kéo vào bên trái để hủy tin, thả ra để gửi tin";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -3003,11 +3005,11 @@
 /* Text of the cancel action when trying to copy a folder/file and already exists in destination */
 "nameCollision.general.dontCopy"="Đừng sao chép";
 /* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="Chuyển vào và hợp lại";
+"nameCollision.folders.move.mergeTitle"="Chuyển vào và hợp nhất";
 /* Text describing the move action when trying to move a folder and already exists in destination */
 "nameCollision.folders.move.mergeDescription"="Hợp nhất thư mục ở vị trí này với thư mục bạn đang muốn chuyển vào sau đây.";
 /* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="Đừng di chuyển";
+"nameCollision.general.dontMove"="Đừng chuyển vào";
 /* Text of the upload action when trying to upload a folder and already exists in destination */
 "nameCollision.folders.upload.mergeTitle"="Tải lên và hợp nhất";
 /* Text describing the upload action when trying to upload a folder and already exists in destination */
@@ -3035,15 +3037,15 @@
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
 "nameCollision.files.cancelDescription"="Không có thay đổi nào sẽ diễn ra. Tệp tin có sẵn này sẽ được giữ nguyên:";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="Sao chép và đánh số";
+"nameCollision.files.copy.renameTitle"="Sao chép và đánh số tên";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameDescription"="Tệp tin đang được sao chép sẽ được đổi tên thành:";
 /* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="Chuyển vào và đánh số";
+"nameCollision.files.move.renameTitle"="Chuyển vào và đánh số tên";
 /* Text describing the move and rename action when trying to move a file and already exists in destination */
 "nameCollision.files.move.renameDescription"="Tệp tin đang được chuyển vào sẽ được đổi tên thành:";
 /* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="Tải lên và đánh số tên";
+"nameCollision.files.upload.renameTitle"="Tải lên và đánh số tên tên";
 /* Text describing the upload and rename action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.renameDescription"="Tệp tin đang tải lên sẽ được đổi tên thành:";
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="Cuộc gọi sẽ kết thúc trong %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Lưu sử dụng ngoại tuyến";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Gác cuộc gọi tất cả mọi người";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="Gác cuộc gọi tất cả mọi người?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="This will end the call for all participants.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="Gác cuộc gọi";

@@ -2224,6 +2224,8 @@
 "Enter group name"="グループ名を入力";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="メッセージ…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="リンクを削除しました";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="左にドラッグしてキャンセルし、離して送信します";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通話は%@後に終了します";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="オフラインで利用できるようにする";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="全員に対して通話を終了する";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="全員に対して通話を終了しますか？";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="これで参加者全員に対する通話が終了します。";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="通話を終了する";

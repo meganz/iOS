@@ -2224,6 +2224,8 @@
 "Enter group name"="輸入群組名稱";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="輸入訊息…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="連結已移除";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="向左拖曳即可取消，放開即可發送";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -3061,4 +3063,12 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通話將於%@後結束";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="離線存取";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="結束所有人的通話";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllPopupTitle"="結束所有人的通話嗎？";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.popupDescription"="這將結束所有參與者的通話。";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.buttonTitle"="結束通話";
