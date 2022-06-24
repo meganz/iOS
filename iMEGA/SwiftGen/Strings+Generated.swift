@@ -3758,6 +3758,10 @@ public enum Strings {
         /// You’re the only one here
         public static let title = Strings.tr("Localizable", "meetings.endCallDialog.title")
       }
+      public enum EndForAll {
+        /// End for All
+        public static let buttonTitle = Strings.tr("Localizable", "meetings.endForAll.buttonTitle")
+      }
       public enum EnterMeetingLink {
         /// Enter Meeting Link
         public static let title = Strings.tr("Localizable", "meetings.enterMeetingLink.title")
@@ -3787,6 +3791,10 @@ public enum Strings {
           /// Get 20 GB for free
           public static let title = Strings.tr("Localizable", "meetings.joinMega.paragraph2.title")
         }
+      }
+      public enum LeaveCall {
+        /// Leave
+        public static let buttonTitle = Strings.tr("Localizable", "meetings.leaveCall.buttonTitle")
       }
       public enum Link {
         public enum Guest {

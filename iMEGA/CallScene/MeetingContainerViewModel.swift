@@ -2,7 +2,7 @@ import Combine
 
 enum MeetingContainerAction: ActionType {
     case onViewReady
-    case hangCall(presenter: UIViewController, sender: UIButton)
+    case hangCall(presenter: UIViewController?, sender: UIButton?)
     case tapOnBackButton
     case changeMenuVisibility
     case showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool)
@@ -20,6 +20,8 @@ enum MeetingContainerAction: ActionType {
     case showEndCallDialogIfNeeded
     case removeEndCallAlertAndEndCall
     case showJoinMegaScreen
+    case showHangOrEndCallDialog
+    case endCallForAll
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -102,7 +104,7 @@ final class MeetingContainerViewModel: ViewModelType {
                         self.noUserJoinedSubscription = nil
                 }
             }
-        case.hangCall(let presenter, let sender):
+        case .hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
         case .tapOnBackButton:
             router.dismiss(animated: true, completion: nil)
@@ -160,18 +162,42 @@ final class MeetingContainerViewModel: ViewModelType {
             removeEndCallAlertAndEndCall()
         case .showJoinMegaScreen:
             router.showJoinMegaScreen()
+        case .showHangOrEndCallDialog:
+            router.showHangOrEndCallDialog(containerViewModel: self)
+        case .endCallForAll:
+            endCallForAll()
         }
     }
     
-    
-    private func hangCall(presenter: UIViewController, sender: UIButton) {
+    //MARK: -Private
+    private func hangCall(presenter: UIViewController?, sender: UIButton?) {
         if !userUseCase.isGuest {
             dismissCall(completion: nil)
         } else {
+            guard let presenter = presenter, let sender = sender else {
+                return
+            }
             router.showEndMeetingOptions(presenter: presenter,
                                          meetingContainerViewModel: self,
                                          sender: sender)
         }
+    }
+    
+    private func endCallForAll() {
+        if let call = call {
+            if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
+               let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+                MEGALogDebug("Meeting: Container view model - End call for all - for call id \(callId) and chat id \(chatId)")
+            } else {
+                MEGALogDebug("Meeting: Container view model - End call for all - cannot get the call id and chat id string")
+            }
+            
+            callManagerUseCase.removeCallRemovedHandler()
+            callUseCase.endCall(for: call.callId)
+            callManagerUseCase.endCall(call)
+        }
+        
+        router.dismiss(animated: true, completion: nil)
     }
     
     private func dismissCall(completion: (() -> Void)?) {

@@ -179,7 +179,33 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-    func testAction_hangCall() {
+    func testAction_hangCallOneToOne() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .oneToOne)
+        let call = CallEntity()
+        let containerRouter = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: call)
+        let callManagerUserCase = MockCallManagerUseCase()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callManagerUseCase: callManagerUserCase)
+        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
+        let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      isSpeakerEnabled: false,
+                                                      callManagerUseCase: MockCallManagerUseCase(),
+                                                      callUseCase: callUseCase,
+                                                      audioSessionUseCase: MockAudioSessionUseCase(),
+                                                      devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+        
+        test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
+        XCTAssert(containerRouter.dismiss_calledTimes == 1)
+        XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
+        XCTAssert(callUseCase.hangCall_CalledTimes == 1)
+    }
+    
+    func testAction_hangMeetingWithStandarPrivileges() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
@@ -203,6 +229,59 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(containerRouter.dismiss_calledTimes == 1)
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
         XCTAssert(callUseCase.hangCall_CalledTimes == 1)
+    }
+    
+    func testAction_hangMeetingWithModeratorPrivilegesNoOneElseInMeeting() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let containerRouter = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: call)
+        let callManagerUserCase = MockCallManagerUseCase()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callManagerUseCase: callManagerUserCase)
+        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
+        let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      isSpeakerEnabled: false,
+                                                      callManagerUseCase: MockCallManagerUseCase(),
+                                                      callUseCase: callUseCase,
+                                                      audioSessionUseCase: MockAudioSessionUseCase(),
+                                                      devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+        viewModel.participantJoined(participant: CallParticipantEntity())
+
+        test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
+        XCTAssert(containerRouter.dismiss_calledTimes == 1)
+        XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
+        XCTAssert(callUseCase.hangCall_CalledTimes == 1)
+    }
+    
+    func testAction_hangMeetingWithModeratorPrivilegesAndOtherParticipants() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let containerRouter = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: call)
+        let callManagerUserCase = MockCallManagerUseCase()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callManagerUseCase: callManagerUserCase)
+        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
+        let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      isSpeakerEnabled: false,
+                                                      callManagerUseCase: MockCallManagerUseCase(),
+                                                      callUseCase: callUseCase,
+                                                      audioSessionUseCase: MockAudioSessionUseCase(),
+                                                      devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+        viewModel.participantJoined(participant: CallParticipantEntity())
+        viewModel.participantJoined(participant: CallParticipantEntity())
+        
+        test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
+        XCTAssert(containerRouter.showHangOrEndCallDialog_calledTimes == 1)
     }
     
     func testAction_shareLink_Success() {
