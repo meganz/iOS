@@ -35,14 +35,19 @@ struct NodeRepository: NodeRepositoryProtocol {
     }
     
     func sizeForNode(handle: MEGAHandle) -> UInt64? {
-        guard let node = sdk.node(forHandle: handle) else {
+        var megaNode: MEGANode
+        if let node = sdk.node(forHandle: handle) {
+            megaNode = node
+        } else if let node = sharedFolderSdk.node(forHandle: handle) {
+            megaNode = node
+        } else {
             return nil
         }
         
-        if node.isFile() {
-            return node.size?.uint64Value
+        if megaNode.isFile() {
+            return megaNode.size?.uint64Value
         } else {
-            return sdk.size(for: node).uint64Value
+            return sdk.size(for: megaNode).uint64Value
         }
     }
     
