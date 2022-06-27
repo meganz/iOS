@@ -9,8 +9,6 @@
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 
-@import DateToolsObjc;
-
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
 
@@ -869,7 +867,7 @@ static NSString* const B = @"[B]";
 + (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes {    
     NSString *lastSeenMessage;
     if (minutes < 65535) {
-        NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
+        NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes * secondsInAMinute];
         NSString *timeString = dateLastSeen.mnz_formattedHourAndMinutes;
         NSString *dateString;
         if ([[NSCalendar currentCalendar] isDateInToday:dateLastSeen]) {

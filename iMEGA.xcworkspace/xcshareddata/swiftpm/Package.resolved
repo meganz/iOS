@@ -37,15 +37,6 @@
       }
     },
     {
-      "identity" : "datetools",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/meganz/DateTools.git",
-      "state" : {
-        "revision" : "eae3fdb6c71eda73f8c473caf0c7df1af7f6df08",
-        "version" : "5.1.0"
-      }
-    },
-    {
       "identity" : "dznemptydataset",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/meganz/DZNEmptyDataSet.git",

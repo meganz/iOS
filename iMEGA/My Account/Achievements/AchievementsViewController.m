@@ -11,8 +11,6 @@
 #import "ReferralBonusesTableViewController.h"
 #import "NSArray+MNZCategory.h"
 
-@import DateToolsObjc;
-
 @interface AchievementsViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *inviteYourFriendsView;

@@ -3,18 +3,6 @@
 Here is the list of the external libraries used by the iOS Client.
 We thank them all for their contributions:
 
-#### DateTools
-https://github.com/MatthewYork/DateTools
-
-Copyright (c) 2014 Matthew York
-
-######  License: 
-The MIT License (MIT)
-
-https://github.com/MatthewYork/DateTools/blob/master/LICENSE
-
---------------------------------------------------------------------
-
 #### DZNEmptyDataSet
 https://github.com/dzenbot/DZNEmptyDataSet
 

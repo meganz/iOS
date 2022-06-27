@@ -20,8 +20,6 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
-@import DateToolsObjc;
-
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol, TextFileEditable, RecentsPreferenceProtocol>
@@ -177,7 +175,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         if (!previousRecentActionBucket) {
             return nil;
         }
-        if ([previousRecentActionBucket.timestamp isSameDay:recentActionBucket.timestamp]) {
+        if ([previousRecentActionBucket.timestamp isSameDayAsDate:recentActionBucket.timestamp]) {
             recentsTVHFV.dateLabel.text = @"";
             return recentsTVHFV;
         }
@@ -205,7 +203,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         if (!previousRecentActionBucket) {
             return 0;
         }
-        if ([previousRecentActionBucket.timestamp isSameDay:recentActionBucket.timestamp]) {
+        if ([previousRecentActionBucket.timestamp isSameDayAsDate:recentActionBucket.timestamp]) {
             return 0;
         }
     }

@@ -56,4 +56,37 @@ extension Date {
     var isThisYear: Bool {
         return Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
     }
+    
+    /// Returns the number of days the receiver's date is earlier than the provided
+    /// comparison date, 0 if the receiver's date is later than or equal to the provided comparison date.
+    /// - Parameter date: Provided date for comparison
+    /// - Returns: The number of days
+    func daysEarlier(than date: Date) -> Int {
+        abs(min(days(from: date), 0))
+    }
+    
+    /// Returns an Int representing the amount of time in days between the receiver and
+    /// the provided date.
+    ///
+    /// If the receiver is earlier than the provided date, the returned value will be negative.
+    /// Uses the default Gregorian calendar
+    ///
+    /// - Parameter date: The provided date for comparison
+    /// - Returns: The days between receiver and provided date
+    func days(from date: Date) -> Int {
+        let calendar = Calendar.autoupdatingCurrent
+        
+        let earliest = earlierDate(date)
+        let latest = (earliest == self) ? date : self
+        let multiplier = (earliest == self) ? -1 : 1
+        let components = calendar.dateComponents([.day], from: earliest, to: latest)
+        return multiplier * (components.day ?? 0)
+    }
+    
+    /// Return the earlier of two dates, between self and a given date.
+    /// - Parameter date: The date to compare to self
+    /// - Returns: The date that is earlier
+    func earlierDate(_ date: Date) -> Date {
+        (timeIntervalSince1970 <= date.timeIntervalSince1970) ? self : date
+    }
 }
