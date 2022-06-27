@@ -8,7 +8,7 @@ protocol FilesSearchRepositoryProtocol {
     func search(string: String?,
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
-                formatType: MEGANodeFormatType) async throws -> [MEGANode]?
+                formatType: MEGANodeFormatType) async throws -> [MEGANode]
     
     func cancelSearch()
 }
@@ -22,10 +22,11 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
         return operationQueue
     }()
     
-    private var cancelToken: MEGACancelToken?
+    private let cancelToken: MEGACancelToken
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
+        cancelToken = MEGACancelToken()
     }
     
     // MARK: - Protocols
@@ -33,20 +34,10 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
     func search(string: String?,
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
-                formatType: MEGANodeFormatType) async throws -> [MEGANode]? {
+                formatType: MEGANodeFormatType) async throws -> [MEGANode] {
         try await withCheckedThrowingContinuation({ continuation in
-            search(string: string, inNode: node, sortOrderType: sortOrderType, formatType: formatType) { results, fail in
-                guard Task.isCancelled == false
-                else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                if fail {
-                    continuation.resume(throwing: NodeSearchResultErrorEntity.noDataAvailable)
-                } else {
-                    continuation.resume(returning: results)
-                }
+            search(string: string, inNode: node, sortOrderType: sortOrderType, formatType: formatType) {
+                continuation.resume(with: $0)
             }
         })
     }
@@ -61,12 +52,10 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
             return completionBlock(nil, true)
         }
         
-        cancelToken = MEGACancelToken()
-        
         let searchOperation = SearchOperation(
             parentNode: inNode,
             text: string,
-            cancelToken: cancelToken!,
+            cancelToken: cancelToken,
             sortOrderType: sortOrderType,
             nodeFormatType: formatType,
             completion: completionBlock)
@@ -76,9 +65,31 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
     
     func cancelSearch() {
         if searchOperationQueue.operationCount > 0 {
-            cancelToken?.cancel(withNewValue: true)
+            cancelToken.cancel(withNewValue: true)
             searchOperationQueue.cancelAllOperations()
         }
+    }
+    
+    // MARK: - Private
+    
+    private func search(string: String?,
+                        inNode node: MEGANode?,
+                        sortOrderType: MEGASortOrderType,
+                        formatType: MEGANodeFormatType,
+                        completionBlock: @escaping (Result<[MEGANode], Error>) -> Void) {
+        
+        guard let inNode = node ?? sdk.rootNode else {
+            return completionBlock(.failure(NodeSearchResultErrorEntity.noDataAvailable))
+        }
+        
+        let searchOperation = SearchOperation(parentNode: inNode,
+                                              text: string ?? "",
+                                              cancelToken: cancelToken,
+                                              sortOrderType: sortOrderType,
+                                              nodeFormatType: formatType,
+                                              completion: completionBlock)
+        
+        searchOperationQueue.addOperation(searchOperation)
     }
 }
 
