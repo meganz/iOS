@@ -102,7 +102,12 @@
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
     MEGALogDebug(@"[StoreKit] Products request did receive response %lu products", (unsigned long)response.products.count);
-    for (SKProduct *product in response.products) {
+    
+    NSArray *sortedProducts = [response.products sortedArrayUsingComparator:^NSComparisonResult(SKProduct *a, SKProduct *b) {
+        return [a.productIdentifier compare:b.productIdentifier];
+    }];
+    
+    for (SKProduct *product in sortedProducts) {
         MEGALogDebug(@"[StoreKit] Product \"%@\" received", product.productIdentifier);
         [self.products addObject:product];
     }
