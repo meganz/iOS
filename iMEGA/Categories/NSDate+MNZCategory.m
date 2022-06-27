@@ -1,8 +1,6 @@
 
 #import "NSDate+MNZCategory.h"
 
-@import DateToolsObjc;
-
 const NSInteger secondsInAMinute = 60;
 const NSInteger secondsInAHour = 60 * 60;
 const NSInteger secondsInADay = 3600 * 24;
@@ -110,13 +108,48 @@ const long long secondsInAJulianYear = 86400 * 365.25;
 }
 
 - (NSString *)mnz_stringForLastMessageTs {
-    if (self.isToday) {
+    if ([NSCalendar.autoupdatingCurrentCalendar isDateInToday:self]) {
         return self.mnz_formattedHourAndMinutes;
     } else if (self.mnz_isInPastWeek) {
         return self.mnz_formattedAbbreviatedDayOfWeek;
     } else {
         return self.mnz_formattedDateDayMonthYear;
     }
+}
+
+- (BOOL)isYesterday {
+    return [NSCalendar.autoupdatingCurrentCalendar isDateInYesterday:self];
+}
+
+- (NSString *)formattedDateWithFormat:(NSString *)format {
+    static NSDateFormatter *formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+    });
+    
+    [formatter setDateFormat:format];
+    [formatter setTimeZone:NSTimeZone.systemTimeZone];
+    [formatter setLocale:NSLocale.autoupdatingCurrentLocale];
+    return [formatter stringFromDate:self];
+}
+
+- (NSInteger)daysUntil {
+    return [self daysLaterThan:[NSDate date]];
+}
+
+- (NSInteger)daysLaterThan:(NSDate *)date{
+    return MAX([self daysFrom:date], 0);
+}
+
+- (NSInteger)daysFrom:(NSDate *)date {
+    NSCalendar *calendar = NSCalendar.autoupdatingCurrentCalendar;
+    
+    NSDate *earliest = [self earlierDate:date];
+    NSDate *latest = (earliest == self) ? date : self;
+    NSInteger multiplier = (earliest == self) ? -1 : 1;
+    NSDateComponents *components = [calendar components:NSCalendarUnitDay fromDate:earliest toDate:latest options:0];
+    return multiplier*components.day;
 }
 
 @end

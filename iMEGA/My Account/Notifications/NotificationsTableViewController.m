@@ -1,7 +1,6 @@
 
 #import "NotificationsTableViewController.h"
 
-#import "DTConstants.h"
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "ContactDetailsViewController.h"
@@ -314,7 +313,7 @@
         }
             
         case MEGAUserAlertTypePaymentReminder: {
-            NSInteger days = ([userAlert timestampAtIndex:1] - [NSDate date].timeIntervalSince1970) / SECONDS_IN_DAY;
+            NSInteger days = ([userAlert timestampAtIndex:1] - [NSDate date].timeIntervalSince1970) / secondsInADay;
             NSString *text;
             if (days == 1) {
                 text = NSLocalizedString(@"Your PRO membership plan will expire in 1 day.", @"The professional pricing plan which the user is currently on will expire in one day.");

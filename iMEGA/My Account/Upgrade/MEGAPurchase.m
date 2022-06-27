@@ -1,7 +1,6 @@
 
 #import "MEGAPurchase.h"
 
-#import "DTConstants.h"
 #import "SVProgressHUD.h"
 
 #import "MEGA-Swift.h"

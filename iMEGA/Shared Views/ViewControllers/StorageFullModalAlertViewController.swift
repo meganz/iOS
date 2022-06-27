@@ -1,5 +1,4 @@
 import UIKit
-import DateToolsSwift
 
 class StorageFullModalAlertViewController: CustomModalAlertViewController {
     
