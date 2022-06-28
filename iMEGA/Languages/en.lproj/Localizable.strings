@@ -3039,11 +3039,13 @@
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="End Call for All";
 /*Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="End Call for All?";
+"meetings.endCall.endForAllAlert.title"="End Call for All?";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="You're a host on this call. If you leave this call it will end for all participants.";
+"meetings.endCall.endForAllAlert.description"="This will end the call for all participants.";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="End Call";
+"meetings.endCall.endForAllAlert.confirm"="Yes";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="No";
 /* Label for hang a group chat or meeting when the user is moderator */
 "meetings.leaveCall.buttonTitle"="Leave";
 /* Label for end a group chat or meeting when the user is moderator */

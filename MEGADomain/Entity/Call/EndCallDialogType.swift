@@ -8,7 +8,7 @@ enum EndCallDialogType {
         case .endCallForMyself:
             return Strings.Localizable.Meetings.EndCallDialog.title
         case .endCallForAll:
-            return Strings.Localizable.Meetings.EndCall.endForAllPopupTitle
+            return Strings.Localizable.Meetings.EndCall.EndForAllAlert.title
         }
     }
     
@@ -17,7 +17,7 @@ enum EndCallDialogType {
         case .endCallForMyself:
             return Strings.Localizable.Meetings.EndCallDialog.description
         case .endCallForAll:
-            return Strings.Localizable.Meetings.EndCall.popupDescription
+            return Strings.Localizable.Meetings.EndCall.EndForAllAlert.description
         }
     }
     
@@ -26,7 +26,7 @@ enum EndCallDialogType {
         case .endCallForMyself:
             return Strings.Localizable.Meetings.EndCallDialog.stayOnCallButtonTitle
         case .endCallForAll:
-            return Strings.Localizable.cancel
+            return Strings.Localizable.Meetings.EndCall.EndForAllAlert.cancel
         }
     }
     
@@ -35,7 +35,7 @@ enum EndCallDialogType {
         case .endCallForMyself:
             return Strings.Localizable.Meetings.EndCallDialog.endCallNowButtonTitle
         case .endCallForAll:
-            return Strings.Localizable.Meetings.EndCall.buttonTitle
+            return Strings.Localizable.Meetings.EndCall.EndForAllAlert.confirm
         }
     }
 }

@@ -116,37 +116,30 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 #pragma mark - Private
 
 - (void)populateSections {
+    NSMutableArray *sections = NSMutableArray.new;
+    [sections addObjectsFromArray:@[
+        @(GroupChatDetailsSectionChatNotifications),
+        @(GroupChatDetailsSectionRenameGroup),
+        @(GroupChatDetailsSectionSharedFiles),
+        @(GroupChatDetailsSectionGetChatLink),
+        @(GroupChatDetailsSectionManageChatHistory),
+        @(GroupChatDetailsSectionArchiveChat),
+        @(GroupChatDetailsSectionLeaveGroup)
+    ]];
+    
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoom.chatId];
-
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator
-        && call.status == MEGAChatCallStatusInProgress) {
-        self.groupDetailsSections = @[
-            @(GroupChatDetailsSectionChatNotifications),
-            @(GroupChatDetailsSectionRenameGroup),
-            @(GroupChatDetailsSectionSharedFiles),
-            @(GroupChatDetailsSectionGetChatLink),
-            @(GroupChatDetailsSectionManageChatHistory),
-            @(GroupChatDetailsSectionArchiveChat),
-            @(GroupChatDetailsSectionLeaveGroup),
-            @(GroupChatDetailsSectionEndCallForAll),
-            @(GroupChatDetailsSectionEncryptedKeyRotation),
-            @(GroupChatDetailsSectionObservers),
-            @(GroupChatDetailsSectionParticipants)
-        ];
-    } else {
-        self.groupDetailsSections = @[
-            @(GroupChatDetailsSectionChatNotifications),
-            @(GroupChatDetailsSectionRenameGroup),
-            @(GroupChatDetailsSectionSharedFiles),
-            @(GroupChatDetailsSectionGetChatLink),
-            @(GroupChatDetailsSectionManageChatHistory),
-            @(GroupChatDetailsSectionArchiveChat),
-            @(GroupChatDetailsSectionLeaveGroup),
-            @(GroupChatDetailsSectionEncryptedKeyRotation),
-            @(GroupChatDetailsSectionObservers),
-            @(GroupChatDetailsSectionParticipants)
-        ];
+        && (call.status == MEGAChatCallStatusInProgress || call.status == MEGAChatCallStatusUserNoPresent)) {
+        [sections addObject:@(GroupChatDetailsSectionEndCallForAll)];
     }
+    
+    [sections addObjectsFromArray:@[
+        @(GroupChatDetailsSectionEncryptedKeyRotation),
+        @(GroupChatDetailsSectionObservers),
+        @(GroupChatDetailsSectionParticipants)
+    ]];
+    
+    self.groupDetailsSections = sections;
 }
 
 - (void)updateAppearance {
