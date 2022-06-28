@@ -35,7 +35,10 @@ extension GroupChatDetailsViewController: MEGAChatCallDelegate {
     public func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
         guard call.chatId == self.chatRoom.chatId else { return }
         
-        if call.status == .inProgress || call.status == .terminatingUserParticipation{
+        let statusToReload: [MEGAChatCallStatus] = [.inProgress,
+                                                    .userNoPresent,
+                                                    .destroyed]
+        if statusToReload.contains(call.status) {
             self.reloadData()
         }
     }
