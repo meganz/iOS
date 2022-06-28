@@ -70,7 +70,7 @@ extension ChatViewController {
     private func endCall(_ call: CallEntity) {
         let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
         CallUseCase(repository: callRepository).hangCall(for: call.callId)
-        CallManagerUseCase().endCall(call)
+        CallCoordinatorUseCase().endCall(call)
     }
     
     private func endActiveCallAndJoinCurrentChatroomCall() {

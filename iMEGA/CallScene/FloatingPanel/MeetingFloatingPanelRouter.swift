@@ -48,7 +48,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: isSpeakerEnabled,
-                                                      callManagerUseCase: CallManagerUseCase(),
+                                                      callCoordinatorUseCase: CallCoordinatorUseCase(),
                                                       callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
