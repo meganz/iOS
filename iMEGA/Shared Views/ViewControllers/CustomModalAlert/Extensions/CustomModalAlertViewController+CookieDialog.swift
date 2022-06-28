@@ -16,8 +16,7 @@ extension CustomModalAlertViewController {
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
-                let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()), analyticsUseCase: analyticsUseCase)
+                let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
                 cookieSettingsUseCase.setCookieSettings(with: CookiesBitmap.all.rawValue) { [weak self] in
                     switch $0 {
                     case .success(_):
