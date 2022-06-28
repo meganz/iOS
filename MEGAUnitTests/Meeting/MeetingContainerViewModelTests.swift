@@ -7,15 +7,15 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_onViewReady() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let callManagerUseCase = MockCallManagerUseCase()
+        let callCoordinatorUseCase = MockCallCoordinatorUseCase()
         let viewModel = MeetingContainerViewModel(
             router: router,
             chatRoom: chatRoom,
-            callManagerUseCase: callManagerUseCase
+            callCoordinatorUseCase: callCoordinatorUseCase
         )
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [])
         XCTAssert(router.showMeetingUI_calledTimes == 1)
-        XCTAssert(callManagerUseCase.addCallRemoved_CalledTimes == 1)
+        XCTAssert(callCoordinatorUseCase.addCallRemoved_CalledTimes == 1)
     }
     
     func testAction_hangCall_attendeeIsGuest() {
@@ -33,8 +33,8 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
         let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
         let callUseCase = MockCallUseCase(call: callEntity)
-        let callManagerUserCase = MockCallManagerUseCase()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, callManagerUseCase: callManagerUserCase)
+        let callManagerUserCase = MockCallCoordinatorUseCase()
+        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.dismiss_calledTimes == 1)
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
@@ -168,12 +168,12 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         
         let userUseCase = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false)
-        let callManagerUseCase = MockCallManagerUseCase()
+        let callCoordinatorUseCase = MockCallCoordinatorUseCase()
         
-        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callManagerUseCase: callManagerUseCase, userUseCase: userUseCase)
+        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callCoordinatorUseCase: callCoordinatorUseCase, userUseCase: userUseCase)
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssert(callManagerUseCase.muteUnmute_CalledTimes == 1)
+        XCTAssert(callCoordinatorUseCase.muteUnmute_CalledTimes == 1)
     }
     
     func testAction_muteMicrophoneForGroupWhenLastParticipantLeft() {
@@ -184,12 +184,12 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         
         let userUseCase = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false)
-        let callManagerUseCase = MockCallManagerUseCase()
+        let callCoordinatorUseCase = MockCallCoordinatorUseCase()
         
-        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callManagerUseCase: callManagerUseCase, userUseCase: userUseCase)
+        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callCoordinatorUseCase: callCoordinatorUseCase, userUseCase: userUseCase)
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssert(callManagerUseCase.muteUnmute_CalledTimes == 1)
+        XCTAssert(callCoordinatorUseCase.muteUnmute_CalledTimes == 1)
     }
     
     func testAction_donotMuteMicrophoneForOneToOneWhenLastParticipantLeft() {
@@ -200,12 +200,12 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         
         let userUseCase = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false)
-        let callManagerUseCase = MockCallManagerUseCase()
+        let callCoordinatorUseCase = MockCallCoordinatorUseCase()
         
-        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callManagerUseCase: callManagerUseCase, userUseCase: userUseCase)
+        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase, chatRoomUseCase: chatRoomUsecase, callCoordinatorUseCase: callCoordinatorUseCase, userUseCase: userUseCase)
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssert(callManagerUseCase.muteUnmute_CalledTimes == 0)
+        XCTAssert(callCoordinatorUseCase.muteUnmute_CalledTimes == 0)
     }
     
     func testAction_showHangOrEndCallDialog() {

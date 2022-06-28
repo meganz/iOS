@@ -2207,7 +2207,7 @@
 		BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */; };
 		BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */; };
 		BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */; };
-		BF8895E82631213C002A18CA /* MockCallManagerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895E72631213C002A18CA /* MockCallManagerUseCase.swift */; };
+		BF8895E82631213C002A18CA /* MockCallCoordinatorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */; };
 		BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895F126312EA1002A18CA /* MockCallUseCase.swift */; };
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
 		BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */; };
@@ -4639,7 +4639,7 @@
 		BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserImageUseCase.swift; sourceTree = "<group>"; };
 		BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewModelTests.swift; sourceTree = "<group>"; };
 		BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContainerViewModelTests.swift; sourceTree = "<group>"; };
-		BF8895E72631213C002A18CA /* MockCallManagerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallManagerUseCase.swift; sourceTree = "<group>"; };
+		BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallCoordinatorUseCase.swift; sourceTree = "<group>"; };
 		BF8895F126312EA1002A18CA /* MockCallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallUseCase.swift; sourceTree = "<group>"; };
 		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
 		BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MEGAProviderDelegate.swift; path = Chat/MEGAProviderDelegate.swift; sourceTree = "<group>"; };
@@ -10799,7 +10799,7 @@
 				BF8895BF2630F487002A18CA /* MockUserUseCase.swift */,
 				2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */,
 				BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */,
-				BF8895E72631213C002A18CA /* MockCallManagerUseCase.swift */,
+				BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */,
 				BF8895F126312EA1002A18CA /* MockCallUseCase.swift */,
 				BFA6CD65263242AE00791E02 /* MockAudioSessionUseCase.swift */,
 				BFA6CD6F263247B700791E02 /* MockCaptureDeviceUseCase.swift */,
@@ -14469,7 +14469,7 @@
 				A81F9BAC27E9F74700D47C0D /* CookieSettingsUseCaseTests.swift in Sources */,
 				BFE556FD27E183B40028EF1F /* NodeHandle+Additions_Tests.swift in Sources */,
 				833CAF3F2846886500B52B64 /* MockFileCacheRepository.swift in Sources */,
-				BF8895E82631213C002A18CA /* MockCallManagerUseCase.swift in Sources */,
+				BF8895E82631213C002A18CA /* MockCallCoordinatorUseCase.swift in Sources */,
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,
 				BF6E8D1B25B53F58003A125A /* MockPSARepository.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,

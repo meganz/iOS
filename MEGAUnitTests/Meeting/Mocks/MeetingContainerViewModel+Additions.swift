@@ -7,7 +7,7 @@ extension MeetingContainerViewModel {
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(call: CallEntity()),
         chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        callManagerUseCase: CallManagerUseCaseProtocol = MockCallManagerUseCase(),
+        callCoordinatorUseCase: CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
         userUseCase: UserUseCaseProtocol = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
         authUseCase: AuthUseCaseProtocol = MockAuthUseCase(isUserLoggedIn: true),
         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
@@ -18,7 +18,7 @@ extension MeetingContainerViewModel {
             chatRoom: chatRoom,
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            callManagerUseCase: callManagerUseCase,
+            callCoordinatorUseCase: callCoordinatorUseCase,
             userUseCase: userUseCase,
             authUseCase: authUseCase,
             noUserJoinedUseCase: noUserJoinedUseCase

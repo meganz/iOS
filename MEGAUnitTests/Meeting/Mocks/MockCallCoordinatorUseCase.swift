@@ -1,6 +1,6 @@
 @testable import MEGA
 
-final class MockCallManagerUseCase: CallManagerUseCaseProtocol {
+final class MockCallCoordinatorUseCase: CallCoordinatorUseCaseProtocol {
     var endCall_calledTimes = 0
     var muteUnmute_CalledTimes = 0
     var addCall_CalledTimes = 0
