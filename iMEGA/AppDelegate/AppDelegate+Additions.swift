@@ -89,8 +89,7 @@ extension AppDelegate {
     }
     
     @objc func showCookieDialogIfNeeded() {
-        let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
-        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()), analyticsUseCase: analyticsUseCase)
+        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
         if cookieSettingsUseCase.cookieBannerEnabled() {
             cookieSettingsUseCase.cookieSettings { [weak self] in
@@ -237,14 +236,12 @@ extension AppDelegate {
     }
     
     @objc func configAppWithNewCookieSettings() {
-        let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
-        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()), analyticsUseCase: analyticsUseCase)
+        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         cookieSettingsUseCase.cookieSettings {
             switch $0 {
             case .success(let bitmap):
                 let isPerformanceAndAnalyticsEnabled = CookiesBitmap(rawValue: bitmap).contains(.analytics)
                 cookieSettingsUseCase.setCrashlyticsEnabled(isPerformanceAndAnalyticsEnabled)
-                cookieSettingsUseCase.setAnalyticsEnabled(isPerformanceAndAnalyticsEnabled)
 
             case .failure(_): break
             }
