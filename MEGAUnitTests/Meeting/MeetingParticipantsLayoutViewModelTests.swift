@@ -687,7 +687,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testCallback_outgoingRingingStop_hangOneToOne() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
-        let call = CallEntity()
+        let call = CallEntity(numberOfParticipants: 1)
         let callUseCase = MockCallUseCase(call: call)
         callUseCase.chatRoom = chatRoom
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
