@@ -236,7 +236,7 @@ final class ContextMenuBuilder {
             displayActionsMenuChildren.append(rubbishBinMenu())
         }
                 
-        if showMediaDiscovery {
+        if showMediaDiscovery && !isRubbishBinFolder {
             displayActionsMenuChildren.append(mediaDiscovery)
         }
         
