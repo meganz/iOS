@@ -853,7 +853,9 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func outgoingRingingStopReceived() {
-        if chatRoom.chatType == .oneToOne {
+        guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
+        self.call = call
+        if chatRoom.chatType == .oneToOne && call.numberOfParticipants == 1 {
             callUseCase.hangCall(for: call.callId)
             self.tonePlayer.play(tone: .callEnded)
         }
