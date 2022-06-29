@@ -3035,7 +3035,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="استبدل الملف الموجود في المجلد الوجهة بالملف الذي تقوم بترفيعه.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="لن يتم تغيير أي ملفات. ستحتفظ بالملف أدناه:";
+"nameCollision.files.cancelDescription"="تخطي هذا الملف";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="نسخ و تغيير الاسم";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,7 +3051,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="ترفيع و تحديث";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="سيتم تحديث الملف بالنسخة المحفوظة:";
+"nameCollision.files.upload.updateDescription"="سيتم استبدال الملف بالنسخة الجديدة.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="انت الوحيد هنا";
 /* Meetings end call dialog description */
@@ -3063,12 +3063,18 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="ستنتهي المكالمة في %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Make available offline";
+"general.downloadToOffline"="اجعله متاح بدون اتصال";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="إنهاء المكالمة للجميع";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="إنهاء المكالمة للجميع؟";
+"meetings.endCall.endForAllAlert.title"="إنهاء المكالمة للجميع؟";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="This will end the call for all participants.";
+"meetings.endCall.endForAllAlert.description"="سيؤدي هذا إلى إنهاء المكالمة لجميع المشاركين.";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="إنهاء المكالمة";
+"meetings.endCall.endForAllAlert.confirm"="نعم";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="لا";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="غادر";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="إنهاء المكالمة للجميع";

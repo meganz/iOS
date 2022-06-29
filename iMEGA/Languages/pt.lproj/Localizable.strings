@@ -2995,7 +2995,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="Item duplicado";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="Já existe uma pasta chamada %@ neste local.";
+"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="Selecione se você quer combinar as pastas ou ignorar esta pasta.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -3019,7 +3019,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="Ignorar esta pasta.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="Um arquivo chamado %@ já existe neste local.";
+"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Selecione o arquivo que quiser manter:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3035,7 +3035,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="Substituir o arquivo na pasta de destino pelo arquivo que você está fazendo upload.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Nenhum arquivo será alterado. Você manterá o arquivo abaixo:";
+"nameCollision.files.cancelDescription"="Skip this file.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="Copiar com um nome diferente";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,7 +3051,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="Fazer upload e atualizar";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="O arquivo será atualizado com um histórico de versões:";
+"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Não tem mais ninguém aqui";
 /* Meetings end call dialog description */
@@ -3067,8 +3067,14 @@
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Finalizar a chamada para todos";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="Finalizar a chamada para todos?";
+"meetings.endCall.endForAllAlert.title"="Finalizar a chamada para todos?";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="Fazer isso irá finalizar a chamada para todos os participantes.";
+"meetings.endCall.endForAllAlert.description"="Fazer isso irá finalizar a chamada para todos os participantes.";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="Finalizar chamada";
+"meetings.endCall.endForAllAlert.confirm"="Sim";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="Não";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Sair";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="Finalizar para todos";
