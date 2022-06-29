@@ -2995,7 +2995,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="Duplicated item";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="Select whether you want to merge the folders or skip this folder.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -3019,7 +3019,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="Skip this folder.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Selectează fișierul pe care vrei să-l păstrezi:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3035,7 +3035,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Niciun fișier nu va fi modificat. Vei păstra fișierul de mai jos:";
+"nameCollision.files.cancelDescription"="Skip this file.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="Copiază și redenumește";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,7 +3051,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="Încarcă și actualizează";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="Fișierul va fi actualizat cu istoricul versiunilor:";
+"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="You’re the only one here";
 /* Meetings end call dialog description */
@@ -3067,8 +3067,14 @@
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="End call for all";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="End call for all?";
+"meetings.endCall.endForAllAlert.title"="End call for all?";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="This will end the call for all participants.";
+"meetings.endCall.endForAllAlert.description"="This will end the call for all participants.";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="End call";
+"meetings.endCall.endForAllAlert.confirm"="Da";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="Nu";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Părăsește";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="End for all";

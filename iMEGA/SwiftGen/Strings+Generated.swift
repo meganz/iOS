@@ -3719,14 +3719,18 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.displayInMainView.title")
       }
       public enum EndCall {
-        /// End call
-        public static let buttonTitle = Strings.tr("Localizable", "meetings.endCall.buttonTitle")
         /// End call for all
         public static let endForAllButtonTitle = Strings.tr("Localizable", "meetings.endCall.endForAllButtonTitle")
-        /// End call for all?
-        public static let endForAllPopupTitle = Strings.tr("Localizable", "meetings.endCall.endForAllPopupTitle")
-        /// This will end the call for all participants.
-        public static let popupDescription = Strings.tr("Localizable", "meetings.endCall.popupDescription")
+        public enum EndForAllAlert {
+          /// No
+          public static let cancel = Strings.tr("Localizable", "meetings.endCall.endForAllAlert.cancel")
+          /// Yes
+          public static let confirm = Strings.tr("Localizable", "meetings.endCall.endForAllAlert.confirm")
+          /// This will end the call for all participants.
+          public static let description = Strings.tr("Localizable", "meetings.endCall.endForAllAlert.description")
+          /// End call for all?
+          public static let title = Strings.tr("Localizable", "meetings.endCall.endForAllAlert.title")
+        }
       }
       public enum EndCallDialog {
         /// Call will automatically end in 2 mins unless you want to stay on it.
@@ -3737,6 +3741,10 @@ public enum Strings {
         public static let stayOnCallButtonTitle = Strings.tr("Localizable", "meetings.endCallDialog.stayOnCallButtonTitle")
         /// You’re the only one here
         public static let title = Strings.tr("Localizable", "meetings.endCallDialog.title")
+      }
+      public enum EndForAll {
+        /// End for all
+        public static let buttonTitle = Strings.tr("Localizable", "meetings.endForAll.buttonTitle")
       }
       public enum EnterMeetingLink {
         /// Enter Meeting Link
@@ -3767,6 +3775,10 @@ public enum Strings {
           /// Get 20 GB for free
           public static let title = Strings.tr("Localizable", "meetings.joinMega.paragraph2.title")
         }
+      }
+      public enum LeaveCall {
+        /// Leave
+        public static let buttonTitle = Strings.tr("Localizable", "meetings.leaveCall.buttonTitle")
       }
       public enum Link {
         public enum Guest {
@@ -3875,11 +3887,11 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "nameCollision.duplicatedItem.title")
       }
       public enum Files {
-        /// A file named %@ already exists in this location.
+        /// A file named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.files.alreadyExists", String(describing: p1))
         }
-        /// No files will be changed. You will keep the file below:
+        /// Skip this file.
         public static let cancelDescription = Strings.tr("Localizable", "nameCollision.files.cancelDescription")
         /// Select the file you want to keep:
         public static let selectAction = Strings.tr("Localizable", "nameCollision.files.selectAction")
@@ -3912,14 +3924,14 @@ public enum Strings {
           public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.upload.replaceDescription")
           /// Upload and replace
           public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.upload.replaceTitle")
-          /// The file will be updated with version history:
+          /// The file will be updated with a new version.
           public static let updateDescription = Strings.tr("Localizable", "nameCollision.files.upload.updateDescription")
           /// Upload and update
           public static let updateTitle = Strings.tr("Localizable", "nameCollision.files.upload.updateTitle")
         }
       }
       public enum Folders {
-        /// The folder %@ already exists in this location.
+        /// The folder %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.folders.alreadyExists", String(describing: p1))
         }

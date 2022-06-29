@@ -2995,7 +2995,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="Повторяющийся элемент";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="Папка «%@» уже существует в этом месте.";
+"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="Выберите, хотите ли вы объединить папки или пропустить эту папку.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -3019,7 +3019,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="Пропустить папку";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="Файл «%@» уже существует в этой папке.";
+"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Выберите файл, который хотите оставить:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3035,7 +3035,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="Заменить файл в папке назначения загружаемым файлом.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Файлы не изменятся. Останется этот файл:";
+"nameCollision.files.cancelDescription"="Skip this file.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="Копировать и переименовать";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,7 +3051,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="Загрузить и заменить";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="Этот файл будет обновлён с изменением версии:";
+"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Здесь только вы";
 /* Meetings end call dialog description */
@@ -3067,8 +3067,14 @@
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Завершить звонок для всех";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="Завершить звонок для всех?";
+"meetings.endCall.endForAllAlert.title"="Завершить звонок для всех?";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="Это завершит звонок для всех участников.";
+"meetings.endCall.endForAllAlert.description"="Это завершит звонок для всех участников.";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="Завершить звонок";
+"meetings.endCall.endForAllAlert.confirm"="Да";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="Нет";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Выйти";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="Завершить для всех";

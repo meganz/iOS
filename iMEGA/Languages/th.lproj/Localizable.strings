@@ -2995,7 +2995,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="รายการที่ซ้ำกัน";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="โฟลเดอร์ %@ มีอยู่แล้วในตำแหน่งนี้";
+"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="เลือกว่าคุณต้องการรวมโฟลเดอร์หรือข้ามโฟลเดอร์นี้";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -3019,7 +3019,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="ข้ามโฟลเดอร์นี้";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="ไฟล์ชื่อ %@ มีอยู่แล้วในตำแหน่งนี้";
+"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="เลือกไฟล์ที่คุณต้องการเก็บ:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3035,7 +3035,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="แทนที่ไฟล์ในโฟลเดอร์ปลายทางด้วยไฟล์ที่คุณกำลังอัปโหลด";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="ไม่มีไฟล์ที่จะถูกเปลี่ยนแปลง คุณจะเก็บไฟล์ด้านล่าง:";
+"nameCollision.files.cancelDescription"="Skip this file.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="คัดลอกและเปลี่ยนชื่อ";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,7 +3051,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="อัปโหลดและอัปเดต";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="ไฟล์จะอัปเดตพร้อมกับประวัติของเวอร์ชัน:";
+"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="ตอนนี้มีแค่คุณที่อยู่ในสาย";
 /* Meetings end call dialog description */
@@ -3067,8 +3067,14 @@
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="วางสายทุกคน";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="วางสายทั้งหมดหรือไม่";
+"meetings.endCall.endForAllAlert.title"="วางสายทั้งหมดหรือไม่";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="การดำเนินการนี้จะวางสายผู้เข้าร่วมสายทั้งหมด";
+"meetings.endCall.endForAllAlert.description"="การดำเนินการนี้จะวางสายผู้เข้าร่วมสายทั้งหมด";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="วางสาย";
+"meetings.endCall.endForAllAlert.confirm"="ใช่";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="ไม่ใช่";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="ออก";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="End for all";

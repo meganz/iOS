@@ -2995,7 +2995,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="Gedupliceerd item";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="De map %@ bestaat al in deze lokatie.";
+"nameCollision.folders.alreadyExists"="De map %@ bestaat al op deze locatie.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="Selecteer of u de mappen wilt samenvoegen of deze map wilt overslaan.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -3019,7 +3019,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="Sla deze map over.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="Een bestand genaamd %@ bestaat al in deze lokatie.";
+"nameCollision.files.alreadyExists"="Een bestand genaamd %@ bestaat al op deze locatie.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Selecteer het bestand die u wilt behouden:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3035,7 +3035,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="Vervang het bestand in de doelmap door het bestand dat u uploadt.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Er worden geen bestanden veranderd. Het bestand hieronder wordt behouden:";
+"nameCollision.files.cancelDescription"="Dit bestand overslaan.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="Kopiëren en hernoemen";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,7 +3051,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="Uploaden en updaten";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="Het bestand wordt met de versiegeschiedenis bijgewerkt:";
+"nameCollision.files.upload.updateDescription"="Het bestand wordt bijgewerkt met een nieuwe versie.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="U bent de enige hier";
 /* Meetings end call dialog description */
@@ -3067,8 +3067,14 @@
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Oproep voor iedereen beëindigen";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="Oproep voor iedereen beëindigen?";
+"meetings.endCall.endForAllAlert.title"="Oproep voor iedereen beëindigen?";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="Hiermee wordt de oproep voor alle deelnemers beëindigd.";
+"meetings.endCall.endForAllAlert.description"="Hiermee wordt de oproep voor alle deelnemers beëindigd.";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="Oproep beëindigen…";
+"meetings.endCall.endForAllAlert.confirm"="Ja";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="Nee";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Verlaten";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="Beëindigen voor iedereen ";

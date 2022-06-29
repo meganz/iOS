@@ -2689,9 +2689,9 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
 "meetings.reconnecting.title"="Menghubungkan kembali";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="Tidak dapat menyambung kembali";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="Koneksi buruk";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Pratinjau gambar resolusi tinggi";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2921,15 +2921,15 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Batalkan transfer";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="Mengganggu proses transfer dapat membuat beberapa item tidak lengkap.";
 /* Confirm action of cancelling a transfer */
-"transfers.cancellable.proceed"="Yes, cancel";
+"transfers.cancellable.proceed"="Ya, batalkan";
 /* Dismiss action of cancelling a transfer */
-"transfers.cancellable.dismiss"="No, continue";
+"transfers.cancellable.dismiss"="Tidak, lanjutkan";
 /* First step message for cancellable transfer (letting known the user not to close the app) */
 "transfers.cancellable.scanning"="Memindai…";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="Tolong jangan tutup aplikasinya.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Pemindahan dibatalkan";
 /* Title of the dialog used to send bug reports to support team. */
@@ -2993,11 +2993,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Terbaik";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="Barang duplikat";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="Folder %@ sudah ada di tujuan ini.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select whether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="Pilih apakah anda ingin menggabungkan folder atau melewati folder ini.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="Salin dan gabungkan";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -3017,9 +3017,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="Jangan upload";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="Lewati folder ini.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="Sebuah file bernama %@ sudah ada di tujuan ini.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Pilih file yang ingin Anda simpan:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3033,9 +3033,9 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="Unggah dan ganti";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="Ganti file di folder tujuan dengan file yang anda unggah.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Tidak ada file yang akan diubah. Anda akan menyimpan file di bawah ini:";
+"nameCollision.files.cancelDescription"="Lewati file ini.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="Salin dan ganti nama";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3051,24 +3051,30 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="Unggah dan perbarui";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="File akan diperbarui dengan riwayat versi:";
+"nameCollision.files.upload.updateDescription"="File akan diperbarui dengan versi baru.";
 /* Meetings end call dialog title */
-"meetings.endCallDialog.title"="You’re the only one here";
+"meetings.endCallDialog.title"="Anda satu-satunya di sini";
 /* Meetings end call dialog description */
-"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+"meetings.endCallDialog.description"="Panggilan akan secara otomatis berakhir dalam 2 menit kecuali anda ingin tetap menggunakannya.";
 /* Meetings end call dialog Stay on call button title */
 "meetings.endCallDialog.stayOnCallButtonTitle"="Tetap di panggilan";
 /* Meetings end call dialog button title */
 "meetings.endCallDialog.endCallNowButtonTitle"="Akhiri panggilan sekarang";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
-"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+"meetings.notification.EndCallTimerDuration"="Panggilan akan berakhir dalam %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Make available offline";
+"general.downloadToOffline"="Buat tersedia saat offline";
 /* Button and title text that ends the meeting for all */
-"meetings.endCall.endForAllButtonTitle"="End call for all";
+"meetings.endCall.endForAllButtonTitle"="Akhiri panggilan untuk semua";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllPopupTitle"="End call for all?";
+"meetings.endCall.endForAllAlert.title"="Akhiri panggilan untuk semua?";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.popupDescription"="This will end the call for all participants.";
+"meetings.endCall.endForAllAlert.description"="Ini akan mengakhiri panggilan untuk semua peserta.";
 /* Button title - tapping on the button will end the call. */
-"meetings.endCall.buttonTitle"="End call";
+"meetings.endCall.endForAllAlert.confirm"="Ya";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="Tidak";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Tinggalkan";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="Akhiri untuk semua";
