@@ -166,6 +166,11 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
+        guard UIActivityViewController.isAlreadyPresented == false else {
+            MEGALogDebug("Meeting link Share controller is already presented.")
+            return
+        }
+        
         let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
         if let barButtonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
