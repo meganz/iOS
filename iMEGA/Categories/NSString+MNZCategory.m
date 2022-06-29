@@ -319,9 +319,10 @@ static NSString* const B = @"[B]";
 + (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration isGroup:(BOOL)isGroup {
     NSString *endCallReasonString;
     switch (endCallReason) {
+        case MEGAChatMessageEndCallReasonByModerator:
         case MEGAChatMessageEndCallReasonEnded: {
             if (isGroup) {
-                if (duration != nil) {
+                if (duration != nil && ![duration isEqual: @0]) {
                     endCallReasonString = [[NSLocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
                 } else {
                     endCallReasonString = NSLocalizedString(@"Group call ended", @"When an active goup call is ended");
