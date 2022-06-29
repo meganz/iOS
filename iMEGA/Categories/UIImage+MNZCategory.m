@@ -184,6 +184,7 @@
     UIImage *endCallReasonImage;
     
     switch (endCallReason) {
+        case MEGAChatMessageEndCallReasonByModerator:
         case MEGAChatMessageEndCallReasonEnded:
             endCallReasonImage = [UIImage imageNamed:@"callEnded"];
             break;
