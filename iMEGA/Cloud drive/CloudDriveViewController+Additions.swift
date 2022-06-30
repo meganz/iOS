@@ -1,5 +1,15 @@
 
 extension CloudDriveViewController {
+    
+    private func updatedParentNodeIfBelongs(_ nodeList: MEGANodeList) -> MEGANode? {
+        nodeList
+            .toNodeArray()
+            .compactMap {
+                if $0.handle == parentNode?.handle { return $0 }
+                return nil
+            }.first
+    }
+    
     @IBAction func actionsTouchUpInside(_ sender: UIBarButtonItem) {
         guard let nodes = selectedNodesArray as? [MEGANode] else {
             return
@@ -52,5 +62,12 @@ extension CloudDriveViewController {
     
     @objc func removeLinksForNodes(_ nodes: [MEGANode]) {
         nodes.publicLinkedNodes().mnz_removeLinks()
+    }
+
+    @objc func updateParentNodeIfNeeded(_ updatedNodeList: MEGANodeList) {
+        guard let updatedParentNode = updatedParentNodeIfBelongs(updatedNodeList) else { return }
+        
+        self.parentNode = updatedParentNode
+        setNavigationBarButtons()
     }
 }

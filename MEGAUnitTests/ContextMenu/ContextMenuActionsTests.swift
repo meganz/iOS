@@ -21,7 +21,7 @@ final class ContextMenuActionsTests: XCTestCase {
         let actionsIdentifiers = convertMenuToActionIdentifiers(menu: menuEntity)
         
         XCTAssertNotNil(actionsIdentifiers)
-        XCTAssertTrue(Set(actionsIdentifiers) == Set(menuActionIdentifiers))
+        XCTAssertTrue(actionsIdentifiers == menuActionIdentifiers)
     }
     
     func testUploadAddMenu() throws {
@@ -85,7 +85,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
         
-        let excludedActions: [QuickFolderAction] = [.leaveSharing]
+        let excludedActions: [QuickFolderAction] = [.manageLink, .removeLink, .manageFolder, .removeSharing, .leaveSharing]
         
         compare(menuEntity: menuEntity, menuActionIdentifiers: [QuickFolderAction
                                                                             .allCases
@@ -105,7 +105,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
         
-        let excludedActions: [QuickFolderAction] = [.shareLink, .shareFolder, .rename, .leaveSharing]
+        let excludedActions: [QuickFolderAction] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .leaveSharing]
         
         compare(menuEntity: menuEntity, menuActionIdentifiers: [QuickFolderAction
                                                                             .allCases
@@ -125,8 +125,54 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
         
+        let excludedActions: [QuickFolderAction] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename]
+        
         compare(menuEntity: menuEntity, menuActionIdentifiers: [QuickFolderAction
                                                                             .allCases
+                                                                            .filter { !excludedActions.contains($0) }
+                                                                            .compactMap{$0.rawValue},
+                                                                DisplayAction
+                                                                            .allCases
+                                                                            .filter{$0 != .clearRubbishBin}
+                                                                            .compactMap{$0.rawValue}].reduce([], +))
+    }
+    
+    func testQuickFolderActionMenu_Outgoing() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setAccessLevel(.accessOwner)
+                                                .setIsOutShare(true)
+                                                .setShowMediaDiscovery(true)
+                                                .setIsAFolder(true)
+                                                .build())
+        
+        let excludedActions: [QuickFolderAction] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .rename]
+        
+        compare(menuEntity: menuEntity, menuActionIdentifiers: [QuickFolderAction
+                                                                            .allCases
+                                                                            .filter { !excludedActions.contains($0) }
+                                                                            .compactMap{$0.rawValue},
+                                                                DisplayAction
+                                                                            .allCases
+                                                                            .filter{$0 != .clearRubbishBin}
+                                                                            .compactMap{$0.rawValue}].reduce([], +))
+    }
+    
+    func testQuickFolderActionMenu_Outgoing_exported() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setAccessLevel(.accessOwner)
+                                                .setIsOutShare(true)
+                                                .setIsExported(true)
+                                                .setShowMediaDiscovery(true)
+                                                .setIsAFolder(true)
+                                                .build())
+        
+        let excludedActions: [QuickFolderAction] = [.shareLink, .leaveSharing, .shareFolder, .rename]
+        
+        compare(menuEntity: menuEntity, menuActionIdentifiers: [QuickFolderAction
+                                                                            .allCases
+                                                                            .filter { !excludedActions.contains($0) }
                                                                             .compactMap{$0.rawValue},
                                                                 DisplayAction
                                                                             .allCases

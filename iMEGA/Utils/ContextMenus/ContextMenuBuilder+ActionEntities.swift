@@ -140,7 +140,7 @@ extension ContextMenuBuilder {
     }
     
     var download: CMActionEntity {
-        CMActionEntity(title: Strings.Localizable.download,
+        CMActionEntity(title: Strings.Localizable.General.downloadToOffline,
                        image: Asset.Images.NodeActions.offline.image,
                        identifier: QuickFolderAction.download.rawValue)
     }
@@ -151,10 +151,28 @@ extension ContextMenuBuilder {
                        identifier: QuickFolderAction.shareLink.rawValue)
     }
     
+    var manageLink: CMActionEntity {
+        CMActionEntity(title: Strings.Localizable.CloudDrive.NodeOptions.manageLink,
+                       image: Asset.Images.Generic.link.image,
+                       identifier: QuickFolderAction.manageLink.rawValue)
+    }
+    
+    var removeLink: CMActionEntity {
+        CMActionEntity(title: Strings.Localizable.General.MenuAction.RemoveLink.title(1),
+                       image: Asset.Images.NodeActions.removeLink.image,
+                       identifier: QuickFolderAction.removeLink.rawValue)
+    }
+    
     var leaveSharing: CMActionEntity {
         CMActionEntity(title: Strings.Localizable.leaveFolder,
                        image: Asset.Images.NodeActions.leaveShare.image,
                        identifier: QuickFolderAction.leaveSharing.rawValue)
+    }
+    
+    var removeSharing: CMActionEntity {
+        CMActionEntity(title: Strings.Localizable.removeSharing,
+                       image: Asset.Images.SharedItems.removeShare.image,
+                       identifier: QuickFolderAction.removeSharing.rawValue)
     }
     
     var copy: CMActionEntity {
@@ -167,6 +185,12 @@ extension ContextMenuBuilder {
         CMActionEntity(title: Strings.Localizable.shareFolder,
                        image: Asset.Images.NodeActions.shareFolder.image,
                        identifier: QuickFolderAction.shareFolder.rawValue)
+    }
+    
+    var manageFolder: CMActionEntity {
+        CMActionEntity(title: Strings.Localizable.manageShare,
+                       image: Asset.Images.NodeActions.shareFolder.image,
+                       identifier: QuickFolderAction.manageFolder.rawValue)
     }
     
     var rename: CMActionEntity {

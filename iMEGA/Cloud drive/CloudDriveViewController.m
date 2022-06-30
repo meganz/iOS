@@ -1049,6 +1049,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     BOOL shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
     
+    [self updateParentNodeIfNeeded:nodeList];
+
     if (shouldProcessOnNodesUpdate) {
         if (self.nodes.size.unsignedIntegerValue == 0) {
             self.shouldDetermineViewMode = YES;

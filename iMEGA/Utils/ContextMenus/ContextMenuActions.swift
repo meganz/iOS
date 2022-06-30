@@ -14,15 +14,15 @@ enum ContextMenuType {
 //MARK: - Context Menu grouped actions
 
 enum UploadAddAction: String, CaseIterable {
-    case chooseFromPhotos, capture, importFrom, scanDocument, newTextFile, newFolder
+    case chooseFromPhotos, capture, importFrom, scanDocument, newFolder, newTextFile
 }
 
 enum DisplayAction: String, CaseIterable {
-    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin
+    case select, thumbnailView, listView, sort, clearRubbishBin, mediaDiscovery
 }
 
 enum QuickFolderAction: String, CaseIterable {
-    case info, download, shareLink, shareFolder, rename, leaveSharing, copy
+    case info, download, shareLink, manageLink, removeLink, shareFolder, manageFolder, rename, copy, removeSharing, leaveSharing
 }
 
 enum RubbishBinAction: String, CaseIterable {

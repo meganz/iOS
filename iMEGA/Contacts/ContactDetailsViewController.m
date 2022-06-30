@@ -1065,7 +1065,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         }
             
         case MegaNodeActionTypeLeaveSharing:
-            [node mnz_leaveSharingInViewController:self];
+            [node mnz_leaveSharingInViewController:self completion:nil];
             break;
             
         case MegaNodeActionTypeFavourite:

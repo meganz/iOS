@@ -8,7 +8,7 @@ protocol DisplayMenuDelegate: ContextActionSheetDelegate {
 }
 
 protocol QuickFolderActionsMenuDelegate: ContextActionSheetDelegate {
-    func quickFolderActionsMenu(didSelect action: QuickFolderAction)
+    func quickFolderActionsMenu(didSelect action: QuickFolderAction, needToRefreshMenu: Bool)
 }
 
 protocol RubbishBinMenuDelegate: AnyObject {
@@ -113,7 +113,8 @@ final class ContextMenuManager: NSObject {
             
             if #available(iOS 14.0, *) {
                 displayMenuDelegate?.displayMenu(didSelect: action,
-                                      needToRefreshMenu: action.rawValue == DisplayAction.listView.rawValue || action.rawValue == DisplayAction.thumbnailView.rawValue)
+                                                 needToRefreshMenu: action.rawValue == DisplayAction.listView.rawValue ||
+                                                                    action.rawValue == DisplayAction.thumbnailView.rawValue)
             } else {
                 guard let subMenuActions = subMenuActions else {
                     displayMenuDelegate?.displayMenu(didSelect: action, needToRefreshMenu: false)
@@ -130,7 +131,11 @@ final class ContextMenuManager: NSObject {
             guard let action = QuickFolderAction(rawValue: identifier) else { return }
             
             if #available(iOS 14.0, *) {
-                quickFolderActionsMenuDelegate?.quickFolderActionsMenu(didSelect: action)
+                quickFolderActionsMenuDelegate?.quickFolderActionsMenu(didSelect: action,
+                                                                       needToRefreshMenu: action.rawValue != QuickFolderAction.info.rawValue &&
+                                                                                          action.rawValue != QuickFolderAction.download.rawValue &&
+                                                                                          action.rawValue != QuickFolderAction.rename.rawValue &&
+                                                                                          action.rawValue != QuickFolderAction.copy.rawValue)
             } else {
                 guard let subMenuActions = subMenuActions else {
                     return

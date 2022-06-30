@@ -1048,7 +1048,7 @@
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (self.incomingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [node mnz_leaveSharingInViewController:self];
+            [node mnz_leaveSharingInViewController:self completion:nil];
             [self endEditingMode];
         }];
         shareAction.image = [[UIImage imageNamed:@"leaveShare"] imageWithTintColor:UIColor.whiteColor];
@@ -1056,7 +1056,7 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [node mnz_removeSharing];
+            [node mnz_removeSharingWithCompletion:nil];
             [self endEditingMode];
         }];
         shareAction.image = [[UIImage imageNamed:@"removeShare"] imageWithTintColor:UIColor.whiteColor];
@@ -1211,11 +1211,11 @@
             break;
             
         case MegaNodeActionTypeLeaveSharing:
-            [node mnz_leaveSharingInViewController:self];
+            [node mnz_leaveSharingInViewController:self completion:nil];
             break;
             
         case MegaNodeActionTypeRemoveSharing:
-            [node mnz_removeSharing];
+            [node mnz_removeSharingWithCompletion:nil];
             break;
             
         case MegaNodeActionTypeShareLink:
