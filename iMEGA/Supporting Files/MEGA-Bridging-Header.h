@@ -164,3 +164,4 @@
 #import "CameraUploadOperation+Utils.h"
 #import "AssetResourceUploadOperation.h"
 #import "AssetUploadStatus.h"
+#import "AboutTableViewController.h"
