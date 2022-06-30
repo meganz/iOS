@@ -38,8 +38,6 @@
 @property (nonatomic) CGSize cellSize;
 @property (nonatomic) CGFloat cellInset;
 
-@property (nonatomic, strong) UIBarButtonItem *cachedEditBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UIView *stateView;
 @property (weak, nonatomic) IBOutlet UIButton *enableCameraUploadsButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *photosUploadedProgressView;
@@ -74,16 +72,12 @@
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     
     if (@available(iOS 14.0, *)) {
-        self.shouldShowRightBarButton = YES;
-        self.showToolBar = YES;
-        
-        [self setUpRightNavigationBarButtonItem];
         [self objcWrapper_configPhotosBannerView];
-        self.cachedEditBarButtonItem = self.objcWrapper_parent.navigationItem.rightBarButtonItem;
     }
     
     self.currentState = MEGACameraUploadsStateLoading;
     
+    [self configureContextMenuManager];
     [self configPhotoContainerView];
     [self updateAppearance];
 }
@@ -211,16 +205,30 @@
 
 #pragma mark - uploads state
 
+- (void)showEditBarButton:(BOOL)show {
+    if (@available(iOS 14.0, *)) {
+        self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
+    }
+    else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
+    if (show) {
+        [self setRightNavigationBarButtons];
+    }
+    else {
+        self.editBarButtonItem.image = nil;
+        self.editBarButtonItem.title = @"";
+    }
+}
+
 - (void)hideRightBarButtonItem:(BOOL)shouldHide {
     self.shouldShowRightBarButton = !shouldHide;
     
     if (self.shouldShowRightBarButton && self.showToolBar && self.viewModel.mediaNodesArray.count > 0) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"selectAll"]];
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = self.cachedEditBarButtonItem;
+        [self showEditBarButton:YES];
     } else {
-        self.editBarButtonItem.image = nil;
-        self.editBarButtonItem.title = @"";
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
+        [self showEditBarButton:NO];
     }
 }
 
@@ -414,20 +422,17 @@
 
 - (void)updateEditBarButton {
     if (self.viewModel.mediaNodesArray.count == 0) {
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
-        self.editBarButtonItem.title = @"";
-        [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
+        [self showEditBarButton: NO];
     } else if (self.viewModel.mediaNodesArray.count > 0 && !self.isEditing) {
         if (self.showToolBar && self.shouldShowRightBarButton) {
-            [self.editBarButtonItem setImage:[UIImage imageNamed:@"selectAll"]];
+            [self showEditBarButton: YES];
         } else {
-            self.editBarButtonItem.image = nil;
-            self.editBarButtonItem.title = @"";
+            [self showEditBarButton: NO];
         }
         
         if (@available(iOS 14.0, *)) {}
         else {
-            self.navigationItem.rightBarButtonItem = self.editButtonItem;
+            [self setRightNavigationBarButtons];
         }
     } else {
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
@@ -541,10 +546,6 @@
     [self.photosCollectionView reloadData];
 }
 
-- (IBAction)editTapped:(UIBarButtonItem *)sender {
-    [self setEditing:!self.isEditing animated:YES];
-}
-
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
@@ -605,14 +606,13 @@
     self.showToolBar = showToolbar;
     
     if (result) {
-        [self.editBarButtonItem setImage: [UIImage imageNamed:@"selectAll"]];
+        [self showEditBarButton: YES];
     } else {
-        self.editBarButtonItem.title = @"";
-        self.editBarButtonItem.image = nil;
+        [self showEditBarButton: NO];
     }
     
     [UIView animateWithDuration:0.33f animations:^ {
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = result ? self.cachedEditBarButtonItem : nil;
+        self.objcWrapper_parent.navigationItem.rightBarButtonItem = result ? self.editBarButtonItem : nil;
     } completion: NULL];
 }
 

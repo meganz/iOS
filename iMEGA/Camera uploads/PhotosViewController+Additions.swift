@@ -44,12 +44,6 @@ extension PhotosViewController {
         setEditing(false, animated: true)
     }
     
-    @objc func setUpRightNavigationBarButtonItem() {
-        editBarButtonItem?.isEnabled = true
-        objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem
-        objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal)
-    }
-    
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {
         let entityNodes = nodes.map { NodeEntity(node: $0) }
         ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)

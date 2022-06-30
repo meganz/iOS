@@ -133,4 +133,21 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                             .filter{$0 != .clearRubbishBin}
                                                                             .compactMap{$0.rawValue}].reduce([], +))
     }
+    
+    func testDisplayMenuCameraUploadExplorer() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setSortType(.newest)
+                                                .setIsSharedItems(true)
+                                                .setIsCameraUploadExplorer(true)
+                                                .build())
+
+        compare(menuEntity: menuEntity, menuActionIdentifiers: DisplayAction
+                                                                            .allCases
+                                                                            .filter{
+                                                                                $0 == .select ||
+                                                                                $0 == .sort
+                                                                            }
+                                                                            .compactMap{$0.rawValue})
+    }
 }

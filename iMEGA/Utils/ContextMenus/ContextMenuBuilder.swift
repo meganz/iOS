@@ -15,6 +15,7 @@ final class ContextMenuBuilder {
     private var isDocumentExplorer: Bool = false
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
+    private var isCameraUploadExplorer: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
     private var timeRemainingToDeactiveDND: String? = nil
@@ -94,6 +95,11 @@ final class ContextMenuBuilder {
     
     func setIsVideosExplorer(_ isVideosExplorer: Bool) -> ContextMenuBuilder {
         self.isVideosExplorer = isVideosExplorer
+        return self
+    }
+    
+    func setIsCameraUploadExplorer(_ isCameraUploadExplorer: Bool) -> ContextMenuBuilder {
+        self.isCameraUploadExplorer = isCameraUploadExplorer
         return self
     }
     
@@ -206,7 +212,10 @@ final class ContextMenuBuilder {
     private func sortMenu() -> CMEntity {
         var sortMenuActions = [sortNameAscending, sortNameDescending]
         
-        if !isSharedItems {
+        if isCameraUploadExplorer {
+            sortMenuActions = [sortNewest, sortOldest]
+        }
+        else if !isSharedItems {
             sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest, sortLabel, sortFavourite])
         }
         
