@@ -121,8 +121,8 @@ final class NameCollisionViewModel: ObservableObject {
             } else {
                 actions.append(NameCollisionAction(actionType: .replace, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
             }
-            actions.append(NameCollisionAction(actionType: .cancel, name: duplicatedItem.name, size: duplicatedItem.collisionFileSize, date: duplicatedItem.collisionFileDate, isFile: duplicatedItem.isFile, imageUrl: thumbnailCollisionUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
             actions.append(NameCollisionAction(actionType: .rename, name: duplicatedItem.rename, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+            actions.append(NameCollisionAction(actionType: .cancel, name: duplicatedItem.name, size: duplicatedItem.collisionFileSize, date: duplicatedItem.collisionFileDate, isFile: duplicatedItem.isFile, imageUrl: thumbnailCollisionUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
         } else {
             actions.append(NameCollisionAction(actionType: .merge, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
             actions.append(NameCollisionAction(actionType: .cancel, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))

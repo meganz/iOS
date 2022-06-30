@@ -3902,89 +3902,59 @@ public enum Strings {
       }
     }
     public enum NameCollision {
-      public enum DuplicatedItem {
-        /// Duplicated item
-        public static let title = Strings.tr("Localizable", "nameCollision.duplicatedItem.title")
-      }
       public enum Files {
-        /// A file named %@ already exists in this location.
+        /// A file named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.files.alreadyExists", String(describing: p1))
         }
-        /// No files will be changed. You will keep the file below:
-        public static let cancelDescription = Strings.tr("Localizable", "nameCollision.files.cancelDescription")
-        /// Select the file you want to keep:
-        public static let selectAction = Strings.tr("Localizable", "nameCollision.files.selectAction")
-        public enum Copy {
-          /// The file you are copying will be renamed as:
-          public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.copy.renameDescription")
-          /// Copy and rename
-          public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.copy.renameTitle")
-          /// Replace the file in the destination folder with the file you are copying.
-          public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.copy.replaceDescription")
-          /// Copy and replace
-          public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.copy.replaceTitle")
-        }
-        public enum Move {
-          /// The file you are moving will be renamed as:
-          public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.move.renameDescription")
-          /// Move and rename
-          public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.move.renameTitle")
-          /// Replace the file in the destination folder with the file you are moving.
-          public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.move.replaceDescription")
-          /// Move and replace
-          public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.move.replaceTitle")
-        }
-        public enum Upload {
-          /// The file you are uploading will be renamed as:
-          public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.upload.renameDescription")
-          /// Upload and rename
-          public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.upload.renameTitle")
-          /// Replace the file in the destination folder with the file you are uploading.
-          public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.upload.replaceDescription")
-          /// Upload and replace
-          public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.upload.replaceTitle")
-          /// The file will be updated with version history:
-          public static let updateDescription = Strings.tr("Localizable", "nameCollision.files.upload.updateDescription")
-          /// Upload and update
-          public static let updateTitle = Strings.tr("Localizable", "nameCollision.files.upload.updateTitle")
+        public enum Action {
+          public enum Rename {
+            /// The file will be renamed as:
+            public static let description = Strings.tr("Localizable", "nameCollision.files.action.rename.description")
+            /// Rename
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.rename.title")
+          }
+          public enum Replace {
+            /// The file at this destination will be replaced with the new file.
+            public static let description = Strings.tr("Localizable", "nameCollision.files.action.replace.description")
+            /// Replace
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.replace.title")
+          }
+          public enum Skip {
+            /// Skip this file
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.skip.title")
+          }
+          public enum Update {
+            /// The file will be updated with a new version.
+            public static let description = Strings.tr("Localizable", "nameCollision.files.action.update.description")
+            /// Update
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.update.title")
+          }
         }
       }
       public enum Folders {
-        /// The folder %@ already exists in this location.
+        /// A folder named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.folders.alreadyExists", String(describing: p1))
         }
-        /// Skip this folder.
-        public static let cancelDescription = Strings.tr("Localizable", "nameCollision.folders.cancelDescription")
-        /// Select wether you want to merge the folders or skip this folder.
-        public static let selectAction = Strings.tr("Localizable", "nameCollision.folders.selectAction")
-        public enum Copy {
-          /// Merge the folder at the destination with the folder you are copying.
-          public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.copy.mergeDescription")
-          /// Copy and merge
-          public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.copy.mergeTitle")
-        }
-        public enum Move {
-          /// Merge the folder at the destination with the folder you are moving.
-          public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.move.mergeDescription")
-          /// Move and merge
-          public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.move.mergeTitle")
-        }
-        public enum Upload {
-          /// Merge the folder at the destination with the folder you are uploading.
-          public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.upload.mergeDescription")
-          /// Upload and merge
-          public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.upload.mergeTitle")
+        public enum Action {
+          public enum Merge {
+            /// The new folder will be merged with the folder at this destination.
+            public static let description = Strings.tr("Localizable", "nameCollision.folders.action.merge.description")
+            /// Merge
+            public static let title = Strings.tr("Localizable", "nameCollision.folders.action.merge.title")
+          }
+          public enum Skip {
+            /// Skip this folder
+            public static let title = Strings.tr("Localizable", "nameCollision.folders.action.skip.title")
+          }
         }
       }
-      public enum General {
-        /// Don’t upload
-        public static let cancelTitle = Strings.tr("Localizable", "nameCollision.general.cancelTitle")
-        /// Don’t copy
-        public static let dontCopy = Strings.tr("Localizable", "nameCollision.general.dontCopy")
-        /// Don’t move
-        public static let dontMove = Strings.tr("Localizable", "nameCollision.general.dontMove")
+      public enum Title {
+        /// File already exists
+        public static let file = Strings.tr("Localizable", "nameCollision.title.file")
+        /// Folder already exists
+        public static let folder = Strings.tr("Localizable", "nameCollision.title.folder")
       }
     }
     public enum Offline {

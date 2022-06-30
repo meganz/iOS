@@ -18,9 +18,6 @@ struct HeaderView: View {
                 Text(viewModel.titleComponents[2])
                     .font(.subheadline)
             }
-            Text(viewModel.description)
-                .lineLimit(nil)
-                .font(.subheadline)
         }
         .frame(maxWidth: .infinity)
     }
