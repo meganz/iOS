@@ -15,6 +15,7 @@
 ///     - isDocumentExplorer: Indicates whether or not it is the home docs explorer
 ///     - isAudiosExplorer: Indicates whether or not it is the home audios explorer
 ///     - isVideosExplorer: Indicates whether or not it is the home videos explorer
+///     - isCameraUploadExplorer: Indicates whether or not it is the camera upload explorer
 ///     - isDoNotDisturbEnabled: Indicates wether or not the notifications are disabled
 ///     - isShareAvailable: Indicates if the share action is available
 ///     - timeRemainingToDeactiveDND: Indicates the remaining time to active again the notifications
@@ -37,6 +38,7 @@ struct CMConfigEntity {
     var isDocumentExplorer: Bool = false
     var isAudiosExplorer: Bool = false
     var isVideosExplorer: Bool = false
+    var isCameraUploadExplorer: Bool = false
     var isDoNotDisturbEnabled: Bool = false
     var isShareAvailable: Bool = false
     var timeRemainingToDeactiveDND: String? = nil
