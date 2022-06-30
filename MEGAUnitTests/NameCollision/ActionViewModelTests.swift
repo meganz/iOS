@@ -5,225 +5,99 @@ class ActionViewModelTests: XCTestCase {
     
     func test_fileActionsShouldShowItemView() {
         let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "File name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
         
         XCTAssert(viewModel.showItemView == true)
     }
     
     func test_folderActionShouldNotShowItemView() {
         let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "Folder name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
         
         XCTAssert(viewModel.showItemView == false)
     }
     
     func test_actionWithName() {
         let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
         XCTAssert(viewModel.itemName == nameCollisionAction.name)
     }
     
     func test_actionWithoutName() {
         let nameCollisionAction = NameCollisionAction(actionType: .merge, isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
         XCTAssert(viewModel.itemName == "")
     }
     
-    func test_titleForUploadCollisionMergeAction() {
+    func test_titleForMergeAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Folders.Upload.mergeTitle)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Folders.Action.Merge.title)
     }
     
-    func test_titleForUploadCollisionUpdateAction() {
+    func test_titleForUpdateAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .update, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Upload.updateTitle)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Action.Update.title)
     }
     
-    func test_titleForUploadCollisionReplaceAction() {
+    func test_titleForReplaceAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .replace, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Upload.replaceTitle)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Action.Replace.title)
     }
     
-    func test_titleForUploadCollisionRenameAction() {
+    func test_titleForRenameAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .rename, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Upload.renameTitle)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Action.Rename.title)
     }
     
-    func test_titleForUploadCollisionCancelAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.General.cancelTitle)
-    }
-    
-    func test_titleForMoveCollisionMergeAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Folders.Move.mergeTitle)
-    }
-    
-    func test_titleForMoveCollisionUpdateAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .update, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Move.replaceTitle)
-    }
-    
-    func test_titleForMoveCollisionReplaceAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .replace, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Move.replaceTitle)
-    }
-    
-    func test_titleForMoveCollisionRenameAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .rename, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Move.renameTitle)
-    }
-    
-    func test_titleForMoveCollisionCancelAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.General.dontMove)
-    }
-    
-    func test_titleForCopyCollisionMergeAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Folders.Copy.mergeTitle)
-    }
-    
-    func test_titleForCopyCollisionUpdateAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .update, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Copy.replaceTitle)
-    }
-    
-    func test_titleForCopyCollisionReplaceAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .replace, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Copy.replaceTitle)
-    }
-    
-    func test_titleForCopyCollisionRenameAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .rename, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Copy.renameTitle)
-    }
-    
-    func test_titleForCopyCollisionCancelAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.General.dontCopy)
-    }
-    
-    func test_descriptionForUploadCollisionMergeAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Folders.Upload.mergeDescription)
-    }
-    
-    func test_descriptionForUploadCollisionUpdateAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .update, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Upload.updateDescription)
-    }
-    
-    func test_descriptionForUploadCollisionReplaceAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .replace, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Upload.replaceDescription)
-    }
-    
-    func test_descriptionForUploadCollisionRenameAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .rename, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Upload.renameDescription)
-    }
-    
-    func test_descriptionForFileUploadCollisionCancelAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.cancelDescription)
-    }
-    
-    func test_descriptionForFolderUploadCollisionCancelAction() {
+    func test_titleForSkipFolderAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .upload, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Folders.cancelDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Folders.Action.Skip.title)
     }
     
-    func test_descriptionForMoveCollisionMergeAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Folders.Move.mergeDescription)
-    }
-    
-    func test_descriptionForMoveCollisionUpdateAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .update, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Move.replaceDescription)
-    }
-    
-    func test_descriptionForMoveCollisionReplaceAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .replace, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Move.replaceDescription)
-    }
-    
-    func test_descriptionForMoveCollisionRenameAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .rename, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Move.renameDescription)
-    }
-    
-    func test_descriptionForFileMoveCollisionCancelAction() {
+    func test_titleForSkipFileAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.cancelDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionTitle == Strings.Localizable.NameCollision.Files.Action.Skip.title)
     }
     
-    func test_descriptionForFolderMoveCollisionCancelAction() {
-        let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .move, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Folders.cancelDescription)
-    }
-    
-    func test_descriptionForCopyCollisionMergeAction() {
+    func test_descriptionForMergeAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .merge, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Folders.Copy.mergeDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Folders.Action.Merge.description)
     }
     
-    func test_descriptionForCopyCollisionUpdateAction() {
+    func test_descriptionForUpdateAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .update, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Copy.replaceDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Action.Update.description)
     }
     
-    func test_descriptionForCopyCollisionReplaceAction() {
+    func test_descriptionForReplaceAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .replace, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Copy.replaceDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Action.Replace.description)
     }
     
-    func test_descriptionForCopyCollisionRenameAction() {
+    func test_descriptionForRenameAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .rename, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Copy.renameDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.Action.Rename.description)
     }
     
-    func test_descriptionForFileCopyCollisionCancelAction() {
+    func test_descriptionForFileSkipAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: true, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Files.cancelDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionDescription == nil)
     }
     
-    func test_descriptionForFolderCopyCollisionCancelAction() {
+    func test_descriptionForFolderSkipAction() {
         let nameCollisionAction = NameCollisionAction(actionType: .cancel, name: "name", isFile: false, itemPlaceholder: "")
-        let viewModel = ActionViewModel(collisionType: .copy, actionItem: nameCollisionAction)
-        XCTAssert(viewModel.actionDescription == Strings.Localizable.NameCollision.Folders.cancelDescription)
+        let viewModel = ActionViewModel(actionItem: nameCollisionAction)
+        XCTAssert(viewModel.actionDescription == nil)
     }
 }
