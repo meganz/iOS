@@ -98,6 +98,11 @@ def fetchChangeLogsText(url):
 # Given a string, this method will return the change log for the string. Use `fetchChangeLogsText` to get the change logs.
 # For instance, if you want change log for 7.0 pass "7.0" as search text
 def getChangeLog(changeLogsText, searchText):
+    fallbackReleaseNotesKey = "Changelog basic"
+    # changelog does not contain the searchText.
+    if searchText not in changeLogsText:
+        searchText = fallbackReleaseNotesKey
+
     lines = changeLogsText.splitlines()
     changeLog = ''
     for line in lines:
@@ -105,6 +110,11 @@ def getChangeLog(changeLogsText, searchText):
             key, value = line.split("=", 1)
             if searchText in key:
                 changeLog = value[1:-2].replace("[Br]", "\n")
+
+    # Could not extract the change log.
+    if changeLog == '':
+        changeLog = getChangeLog(changeLogsText, fallbackReleaseNotesKey)
+
     return changeLog
 
 
