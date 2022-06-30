@@ -2362,6 +2362,8 @@
 		BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556F827E183B40028EF1F /* MEGANode+FilePaths_Tests.swift */; };
 		BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556FA27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift */; };
 		BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556FB27E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift */; };
+		BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */; };
+		BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */; };
 		BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */; };
 		BFE6907B25350E4900CD21F9 /* AudioExploreViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */; };
 		BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6908625350E6200CD21F9 /* VideoExplorerViewConfiguration.swift */; };
@@ -4774,6 +4776,7 @@
 		BFE556F827E183B40028EF1F /* MEGANode+FilePaths_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+FilePaths_Tests.swift"; sourceTree = "<group>"; };
 		BFE556FA27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecentActionBucketEntity+Mapper_Tests.swift"; sourceTree = "<group>"; };
 		BFE556FB27E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CallParticipantEntity+Mapper_Tests.swift"; sourceTree = "<group>"; };
+		BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AboutTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioExploreViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6908625350E6200CD21F9 /* VideoExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerViewConfiguration.swift; sourceTree = "<group>"; };
@@ -4984,6 +4987,7 @@
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
+				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
 				A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */,
 				A8F5156B27F6F58300AEE4D6 /* FLEX in Frameworks */,
 				A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */,
@@ -6279,6 +6283,7 @@
 			children = (
 				41AC66461AB1D493003FE8DA /* AboutTableViewController.h */,
 				41AC66471AB1D493003FE8DA /* AboutTableViewController.m */,
+				BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -11587,6 +11592,7 @@
 				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
 				BFD2ED4C281228B30018C05A /* PieChart */,
 				A828E680286B3112004CED9E /* FirebaseCrashlytics */,
+				BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -13706,6 +13712,7 @@
 				12397E232820C4BC00A30CCC /* AlbumListViewModel.swift in Sources */,
 				5D166B7725219650004F4F4A /* HomeSearchResultViewModel.swift in Sources */,
 				9428B99C281922BC00DB7250 /* CreateContextMenuUseCase.swift in Sources */,
+				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
 				123AEFF827BEE22300E6A0A7 /* PhotoDaySection.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
 				5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */,
@@ -16293,6 +16300,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */;
 			productName = PieChart;
+		};
+		BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAppDistribution-Beta";
 		};
 /* End XCSwiftPackageProductDependency section */
 
