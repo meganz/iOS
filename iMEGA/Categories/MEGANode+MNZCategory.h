@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController;
 - (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion;
 - (void)mnz_removeInViewController:(UIViewController *)viewController completion:(void (^ _Nullable)(BOOL shouldRemove))actionCompletion;
-- (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
-- (void)mnz_removeSharing;
+- (void)mnz_leaveSharingInViewController:(UIViewController *)viewController completion:(void (^ _Nullable)(BOOL))completion;
+- (void)mnz_removeSharingWithCompletion:(void (^ _Nullable)(BOOL))completion;
 - (void)mnz_restore;
 - (void)mnz_sendToChatInViewController:(UIViewController *)viewController;
 - (void)mnz_moveInViewController:(UIViewController *)viewController;

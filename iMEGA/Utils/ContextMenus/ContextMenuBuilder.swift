@@ -18,6 +18,9 @@ final class ContextMenuBuilder {
     private var isCameraUploadExplorer: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
+    private var isSharedItemsChild: Bool = false
+    private var isOutShare: Bool = false
+    private var isExported: Bool = false
     private var timeRemainingToDeactiveDND: String? = nil
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
@@ -110,6 +113,21 @@ final class ContextMenuBuilder {
     
     func setIsShareAvailable(_ isShareAvailable: Bool) -> ContextMenuBuilder {
         self.isShareAvailable = isShareAvailable
+        return self
+    }
+    
+    func setIsSharedItemsChild(_ isSharedItemsChild: Bool) -> ContextMenuBuilder {
+        self.isSharedItemsChild = isSharedItemsChild
+        return self
+    }
+    
+    func setIsOutShare(_ isOutShare: Bool) -> ContextMenuBuilder {
+        self.isOutShare = isOutShare
+        return self
+    }
+    
+    func setIsExported(_ isExported: Bool) -> ContextMenuBuilder {
+        self.isExported = isExported
         return self
     }
     
@@ -256,14 +274,19 @@ final class ContextMenuBuilder {
     private func quickFolderActions() -> CMEntity {
         var quickActions: [CMElement] = [info, download]
         
-        if accessLevel != .accessRead {
-            quickActions.append(contentsOf: [shareLink, shareFolder, rename])
+        if accessLevel == .accessOwner {
+            quickActions.append(contentsOf: isExported ? [manageLink, removeLink] : [shareLink])
+            quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder, rename])
         }
         
         quickActions.append(copy)
         
         if isIncomingShareChild {
             quickActions.append(leaveSharing)
+        }
+        
+        if isOutShare {
+            quickActions.append(removeSharing)
         }
         
         return CMEntity(displayInline: true,

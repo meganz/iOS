@@ -24,6 +24,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
                                       isIncomingShareChild: isIncomingSharedRootChild,
+                                      isOutShare: parentNode.isOutShare(),
+                                      isExported: parentNode.isExported(),
                                       showMediaDiscovery: shouldShowMediaDiscovery())
             } else {
                 return CMConfigEntity(menuType: .display,
@@ -32,7 +34,9 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)),
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
-                                      isIncomingShareChild: isIncomingSharedRootChild)
+                                      isIncomingShareChild: isIncomingSharedRootChild,
+                                      isOutShare: parentNode.isOutShare(),
+                                      isExported: parentNode.isExported())
             }
         }
     }
@@ -121,7 +125,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
     }
     
-    func quickFolderActionsMenu(didSelect action: QuickFolderAction) {
+    func quickFolderActionsMenu(didSelect action: QuickFolderAction, needToRefreshMenu: Bool) {
         guard let parentNode = parentNode else { return }
         
         switch action {
@@ -129,7 +133,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             showNodeInfo(parentNode)
         case .download:
             download([parentNode])
-        case .shareLink:
+        case .shareLink, .manageLink:
             presentGetLinkVC(for: [parentNode])
         case .shareFolder:
             showShareFolderForNodes([parentNode])
@@ -138,10 +142,27 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 self?.navigationItem.title = request.name
             }
         case .leaveSharing:
-            parentNode.mnz_leaveSharing(in: self)
-            navigationController?.popViewController(animated: true)
+            parentNode.mnz_leaveSharing(in: self) { [weak self] actionCompleted in
+                if actionCompleted {
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            }
         case .copy:
             parentNode.mnz_copy(in: self)
+        case .manageFolder:
+            manageShare(parentNode)
+        case .removeSharing:
+            parentNode.mnz_removeSharing { [weak self] actionCompleted in
+                if actionCompleted {
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            }
+        case .removeLink:
+            parentNode.mnz_removeLink()
+        }
+        
+        if #available(iOS 14, *), needToRefreshMenu {
+            setNavigationBarButtons()
         }
     }
     
