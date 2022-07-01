@@ -684,7 +684,7 @@
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (self.selectedNodesArray.count) {
             [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:YES];
-        } else {
+        } else if (self.parentNode != nil) {
             [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.parentNode] presenter:self isFolderLink:YES];
         }
         
