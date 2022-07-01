@@ -352,7 +352,7 @@
     return uploadingNodes;
 }
 
-+ (void)startUploadTransferWithTransferRecordDTO:(TransferRecordDTO *)transferRecordDTO andCancelToken:(MEGACancelToken *)cancelToken {
++ (void)startUploadTransferWithTransferRecordDTO:(TransferRecordDTO *)transferRecordDTO {
     PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[transferRecordDTO.localIdentifier]
                                                       options:nil].firstObject;
     
@@ -375,9 +375,9 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:cancelToken];
+            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
         } else {
-            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:cancelToken];
+            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
         }
         
         if (transferRecordDTO.localIdentifier) {
@@ -387,13 +387,13 @@
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", NSLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
-        [Helper startPendingUploadTransferIfNeededWithCancelToken:cancelToken];
+        [Helper startPendingUploadTransferIfNeeded];
     }];
     
     [processAsset prepare];
 }
 
-+ (void)startPendingUploadTransferIfNeededWithCancelToken:(MEGACancelToken *)cancelToken {
++ (void)startPendingUploadTransferIfNeeded {
     BOOL allUploadTransfersPaused = YES;
     
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
@@ -410,7 +410,7 @@
     if (allUploadTransfersPaused) {
         TransferRecordDTO *transferRecordDTO = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
         if (transferRecordDTO != nil) {
-            [self startUploadTransferWithTransferRecordDTO:transferRecordDTO andCancelToken:cancelToken];
+            [self startUploadTransferWithTransferRecordDTO:transferRecordDTO];
         }
     }
 }

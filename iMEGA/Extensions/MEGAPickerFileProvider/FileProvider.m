@@ -15,7 +15,6 @@
 @property (nonatomic) MEGANode *oldNode;
 @property (nonatomic) NSURL *url;
 @property (nonatomic) dispatch_semaphore_t semaphore;
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @end
 
@@ -182,8 +181,7 @@
             uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
             self.oldNode = [api nodeForHandle:handle];
             MEGANode *parent = [api parentNodeForNode:self.oldNode];
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [api startUploadWithLocalPath:self.url.path parent:parent fileName:nil appData:nil isSourceTemporary:NO startFirst:NO cancelToken:self.cancelToken delegate: self];
+            [api startUploadWithLocalPath:self.url.path parent:parent fileName:nil appData:nil isSourceTemporary:NO startFirst:NO cancelToken:nil delegate: self];
             break;
         }
             

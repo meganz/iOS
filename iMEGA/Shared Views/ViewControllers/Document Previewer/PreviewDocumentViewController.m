@@ -54,8 +54,6 @@
 
 @property (nonatomic) UIButton *openZipButton;
 
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation PreviewDocumentViewController
@@ -94,8 +92,7 @@
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
         if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [MEGASdkManager.sharedMEGASdk startDownloadNode:self.node localPath:self.nodeFilePath fileName:nil appData:nil startFirst:NO cancelToken:self.cancelToken delegate:self];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:self.node localPath:self.nodeFilePath fileName:nil appData:nil startFirst:NO cancelToken:nil delegate:self];
         } else {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }

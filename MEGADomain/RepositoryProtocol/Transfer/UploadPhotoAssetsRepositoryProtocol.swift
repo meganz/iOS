@@ -1,4 +1,4 @@
 
 protocol UploadPhotoAssetsRepositoryProtocol {
-    func upload(assets: [String], toParent parentHandle: MEGAHandle, cancelToken: MEGACancelToken)
+    func upload(assets: [String], toParent parentHandle: MEGAHandle)
 }

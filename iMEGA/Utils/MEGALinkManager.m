@@ -115,7 +115,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     MEGALinkManager.selectedOption = LinkOptionDefault;
 }
 
-+ (void)processSelectedOptionOnLinkWithCancelToken:(MEGACancelToken *)cancelToken {
++ (void)processSelectedOptionOnLink {
     if (MEGALinkManager.selectedOption == LinkOptionDefault) {
         return;
     }
