@@ -754,7 +754,9 @@
                                                                                      MEGALogError(@"Share extension error downloading resource at %@: %@", urlToDownload, error);
                                                                                      [self oneUnsupportedMore];
                                                                                  } else {
-                                                                                     [self uploadData:location withName:response.suggestedFilename toParentNode:parentNode isSourceMovable:YES isFile:YES];
+                                                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                         [self uploadData:location withName:response.suggestedFilename toParentNode:parentNode isSourceMovable:YES isFile:YES];
+                                                                                     });
                                                                                  }
                                                                              }];
     [downloadTask resume];
