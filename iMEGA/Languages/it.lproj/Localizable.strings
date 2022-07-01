@@ -2204,6 +2204,8 @@
 "Enter group name"="Inserisci nome gruppo";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Scrivi un messaggio…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Link rimosso";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Trascina a sinistra per annullare, lascia per inviare";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2665,11 +2667,11 @@
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
 "meetings.quickAction.flip"="Cambia";
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
-"meetings.reconnecting.title"="Reconnecting";
+"meetings.reconnecting.title"="Riconnessione";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="Riconnessione fallita";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="Pessima connessione";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Anteprima di immagini ad alta risoluzione";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2899,15 +2901,15 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Annulla trasferimento";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="Interrompere il processo di trasferimento potrebbe lasciare alcuni degli oggetti incompleti.";
 /* Confirm action of cancelling a transfer */
-"transfers.cancellable.proceed"="Yes, cancel";
+"transfers.cancellable.proceed"="Sì, annulla";
 /* Dismiss action of cancelling a transfer */
-"transfers.cancellable.dismiss"="No, continue";
+"transfers.cancellable.dismiss"="No, continua";
 /* First step message for cancellable transfer (letting known the user not to close the app) */
 "transfers.cancellable.scanning"="Scansione in corso…";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="Per favore, non chiudere l'app.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Trasferimento cancellato";
 /* Title of the dialog used to send bug reports to support team. */
@@ -2971,11 +2973,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Migliore";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="Oggetto duplicato";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="Seleziona se vuoi unire le cartelle o saltare questa cartella.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="Copia ed unisci";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -2995,9 +2997,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="Non caricare";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="Salta questa cartella.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Seleziona il file che vuoi mantenere:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3011,9 +3013,9 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="Carica e rimpiazza";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="Sostituisci il file nella cartella di destinazione con il file che stai caricando.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Nessun file verrà cambiati. Manterrai il file sottostante:";
+"nameCollision.files.cancelDescription"="Skip this file.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="Copia e rinomina";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3029,16 +3031,30 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="Carica ed aggiorna";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="Il file verrà aggiornato con la cronologia delle versioni:";
+"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Ci sei solo tu qui";
 /* Meetings end call dialog description */
 "meetings.endCallDialog.description"="La chiamata terminerà automaticamente tra 2 minuti, a meno che tu non voglia rimanerci.";
 /* Meetings end call dialog Stay on call button title */
-"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on call";
+"meetings.endCallDialog.stayOnCallButtonTitle"="Rimani nella chiamata";
 /* Meetings end call dialog button title */
-"meetings.endCallDialog.endCallNowButtonTitle"="End call now";
+"meetings.endCallDialog.endCallNowButtonTitle"="Termina la chiamata ora";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="La chiamata terminerà tra %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Rendi disponibile offline";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Termina la chiamata per tutti i partecipanti";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="Terminare la chiamata per tutti i partecipanti?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.description"="Questo terminerà la chiamata per tutti i partecipanti";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.endForAllAlert.confirm"="Si";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="No";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Lascia";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="End for all";

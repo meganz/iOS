@@ -42,9 +42,6 @@
 @property (nonatomic) BOOL decryptionAlertControllerHasBeenPresented;
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
-
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation FileLinkViewController
@@ -395,8 +392,7 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
             break;
             
         default:

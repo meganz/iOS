@@ -2204,6 +2204,8 @@
 "Enter group name"="输入群名称";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="输入文字…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="链接已移除";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="向左拖动即可取消，松手发送";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2667,9 +2669,9 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
 "meetings.reconnecting.title"="正在重新连接";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="无法重新连接";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="网络连接不佳";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="预览高分辨率图片";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2899,7 +2901,7 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="取消传输";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="中断传输可能会导致某些项目未完成下载。";
 /* Confirm action of cancelling a transfer */
 "transfers.cancellable.proceed"="是，取消";
 /* Dismiss action of cancelling a transfer */
@@ -2971,11 +2973,11 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="重复项目";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="选择您是否要合并文件夹或跳过此文件夹。";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeTitle"="复制并合并";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
@@ -2995,9 +2997,9 @@
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
 "nameCollision.general.cancelTitle"="不要上传";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="跳过此文件夹。";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="选择您要保留的文件：";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3011,9 +3013,9 @@
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
 "nameCollision.files.upload.replaceTitle"="上传并替换";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="将目标文件夹中的文件替换为您要上传的文件。";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="不会更改任何文件。 您将保留以下文件：";
+"nameCollision.files.cancelDescription"="Skip this file.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="复制并重命名";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3029,7 +3031,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="上传并更新";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="该文件将被更新并同时保留历史版本：";
+"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="这里只有您一人";
 /* Meetings end call dialog description */
@@ -3041,4 +3043,18 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通话将在%@后结束";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="可离线使用";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="结束所有人的通话";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="是否结束所有人的通话？";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.description"="这将结束所有参与者的通话。";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.endForAllAlert.confirm"="是";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="否";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="离开";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="End for all";

@@ -3,11 +3,11 @@
 struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
     var completionResult: Result<TransferEntity, TransferErrorEntity> = .failure(.generic)
     
-    func download(nodeHandle: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func download(nodeHandle: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         completion(completionResult)
     }
     
-    func downloadChat(nodeHandle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func downloadChat(nodeHandle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         completion(completionResult)
     }
     

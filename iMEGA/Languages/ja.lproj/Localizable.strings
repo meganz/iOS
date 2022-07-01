@@ -2204,6 +2204,8 @@
 "Enter group name"="グループ名を入力";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="メッセージ…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="リンクを削除しました";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="左にドラッグしてキャンセルし、離して送信します";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2973,7 +2975,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="重複項目";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="フォルダ%@はすでにこの場所に存在します。";
+"nameCollision.folders.alreadyExists"="%@という名前のフォルダは、この場所にすでに存在しています。";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="フォルダを結合するか、このフォルダをスキップするかを選択します。";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -2997,7 +2999,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="このフォルダをスキップ。";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="%@という名前のファイルは、すでにこの場所に存在しています。";
+"nameCollision.files.alreadyExists"="%@という名前のファイルは、この場所にすでに存在しています。";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="保持したいファイルを選択します：";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3013,7 +3015,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="目的のフォルダにあるファイルを、アップロードするファイルに置き換えます。";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="ファイルは変更されません。ファイルを以下に保持します：";
+"nameCollision.files.cancelDescription"="このファイルをとばす。";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="コピーして名前を変更する";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3029,7 +3031,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="アップロードと更新";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="ファイルはバージョン履歴で更新されます：";
+"nameCollision.files.upload.updateDescription"="ファイルは新しいバージョンに更新されます。";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="ここにいるのはあなただけです";
 /* Meetings end call dialog description */
@@ -3041,4 +3043,18 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通話は%@後に終了します";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="オフラインで利用できるようにする";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="全員に対して通話を終了する";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="全員に対して通話を終了しますか？";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.description"="これで参加者全員に対する通話が終了します。";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.endForAllAlert.confirm"="はい";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="いいえ";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="終了";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="全員に対して終了";

@@ -1,9 +1,9 @@
 import Foundation
 
 final class MediaUploadNodeAccess: NodeAccess {
-    @objc static let shared = CameraUploadNodeAccess(
+    @objc static let shared = MediaUploadNodeAccess(
         configuration: NodeAccessConfiguration(
-            updateInMemoryNotificationName: .MEGACameraUploadTargetFolderUpdatedInMemory,
+            updateInMemoryNotificationName: nil,
             updateInRemoteNotificationName: .MEGACameraUploadTargetFolderChangedInRemote,
             loadNodeRequest: MEGASdkManager.sharedMEGASdk().getCameraUploadsFolderSecondary
         )

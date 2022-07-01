@@ -92,10 +92,10 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
             SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
             
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
             cancelToken = MEGACancelToken()
             
-            saveMediaUseCase.saveToPhotos(node: node.toNodeEntity(), cancelToken: cancelToken) { error in
+            saveMediaUseCase.saveToPhotos(node: node.toNodeEntity()) { error in
                 SVProgressHUD.dismiss()
 
                 if error != nil {

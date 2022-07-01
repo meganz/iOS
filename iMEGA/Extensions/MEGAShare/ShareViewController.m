@@ -58,6 +58,8 @@
 @property (strong, nonatomic) MEGANode *parentNode;
 @property (nonatomic) NSMutableArray<CancellableTransfer *> *transfers;
 
+@property (nonatomic) MEGACancelToken *cancelToken;
+
 @end
 
 @implementation ShareViewController
@@ -151,6 +153,7 @@
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
     self.lastProgressChange = [NSDate new];
     self.transfers = NSMutableArray.new;
+    self.cancelToken = MEGACancelToken.alloc.init;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -821,8 +824,13 @@
 }
 
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile {
-    [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle path:localPath name:nil appData:[NSString.new mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo] priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
-    [self onePendingLess];
+    if (self.users || self.chats) {
+        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
+        [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:localPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:self.cancelToken delegate:self];
+    } else {
+        [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle path:localPath name:nil appData:[NSString.new mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo] priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
+        [self onePendingLess];
+    }
 }
 
 - (void)onePendingLess {
@@ -848,11 +856,24 @@
         NSString *message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [NameCollisionRouterOCWrapper.alloc.init uploadFiles:self.transfers presenter:self type:CancellableTransferTypeUpload];
+            [self processTransfers];
         }]];
         [NSOperationQueue.mainQueue addOperationWithBlock:^{
             [self presentViewController:alertController animated:YES completion:nil];
         }];
+    } else {
+        [self processTransfers];
+    }
+}
+ 
+- (void)processTransfers {
+    if (self.users || self.chats) {
+        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self hideViewWithCompletion:^{
+                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            }];
+        });
     } else {
         [NameCollisionRouterOCWrapper.alloc.init uploadFiles:self.transfers presenter:self type:CancellableTransferTypeUpload];
     }

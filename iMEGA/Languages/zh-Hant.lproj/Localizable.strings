@@ -2204,6 +2204,8 @@
 "Enter group name"="輸入群組名稱";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="輸入訊息…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="連結已移除";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="向左拖曳即可取消，放開即可發送";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2973,7 +2975,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="重複的項目";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="此位置已存在%@的資料夾。";
+"nameCollision.folders.alreadyExists"="此位置已有名稱為%@的資料夾。";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="選擇您要合併資料夾或是略過此資料夾。";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -2997,7 +2999,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="略過此資料夾。";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="此位置已存在名稱為%@的檔案。";
+"nameCollision.files.alreadyExists"="此位置已有名稱為%@的檔案。";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="選擇您要保留的檔案：";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3013,7 +3015,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="將目的地資料夾中的檔案替換為您正在上傳的檔案。";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="將不會更動任何檔案。您將保留以下檔案：";
+"nameCollision.files.cancelDescription"="略過此檔案。";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="複製並重新命名";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3029,7 +3031,7 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="上傳並更新";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="檔案將被更新同時保留歷史版本：";
+"nameCollision.files.upload.updateDescription"="檔案將更新為新版本。";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="這裡只有你一人";
 /* Meetings end call dialog description */
@@ -3041,4 +3043,18 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通話將於%@後結束";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="離線存取";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="結束所有人的通話";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="是否結束所有人通話？";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.description"="這將結束所有參與者的通話。";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.endForAllAlert.confirm"="是";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="否";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="離開";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="結束所有人通話";
