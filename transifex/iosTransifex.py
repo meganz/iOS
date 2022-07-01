@@ -32,6 +32,7 @@ if not gitlab_token:
 BASE_URL = "https://rest.api.transifex.com"
 GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2F$file/raw?ref=develop"
 PROJECT_ID = "o:meganz-1:p:ios-35"
+STORES_IOS_ID = "o:meganz-1:p:stores:r:app_store_ios"
 HEADER = {
     "Authorization": "Bearer " + transifex_token,
     "Content-Type": "application/vnd.api+json"
@@ -282,11 +283,12 @@ def run_merge(resource, branch_resource, language = False, lang_code = "Base"):
         print("Error: Resources specified for merge don't exist")
 
 # Call this function to lock an unlocked resource in Transifex to prevent translations from being saved
-def run_lock(resource, update_time = 0):
+def run_lock(resource, update_time = 0, is_stores = False):
     is_change_logs = resource == 'Changelogs'
-    if does_resource_exist(resource):
+    if is_stores or does_resource_exist(resource):
         print("Preparing to lock resource")
-        resource = PROJECT_ID + ":r:" + resource.lower()
+        if not is_stores:
+            resource = PROJECT_ID + ":r:" + resource.lower()
         response = do_request(BASE_URL + "/resource_strings?filter[resource]=" + resource)
         if "errors" in response:
             print_error(response["errors"])
@@ -602,6 +604,8 @@ def resource_get_english(resource, is_plurals = False):
             "type": "resource_strings_async_downloads",
         },
     }
+    if resource == STORES_IOS_ID:
+        payload["data"]["relationships"]["resource"]["data"]["id"] = resource
     if is_plurals:
         content = file_download(payload)
     else:
@@ -1348,6 +1352,30 @@ def print_error(errors):
             code = error["code"]
         print("Error: {}: {}.".format(code, error["detail"]))
 
+# Call this function to download the content for the stores resource
+def run_download_stores():
+    print("Downloading stores resource")
+    content = resource_get_english(STORES_IOS_ID, True) # Not a plurals resource but is not UTF-16 encoded
+    if content:
+        file_put_contents(DOWNLOAD_FOLDER + "/stores-ios.yaml", content)
+    else: 
+        print("Error: Failed to retrieve stores strings")
+    return False
+
+# Call this function to upload the content for a stores resource
+def run_upload_stores(content):
+    if content:
+        now = int(datetime.datetime.utcnow().strftime("%s")) - 30
+        print("Uploading to stores resource")
+        if resource_put_english(STORES_IOS_ID, content):
+            return run_lock(STORES_IOS_ID, now, True)
+        else:
+            print("Error: Failed to update the android stores resource file")
+        return False
+    else:
+        print("Error: No file content present")
+        return False
+
 # Parses arguments and runs relevant mode
 def main():
     print("--- Transifex Language Management ---")
@@ -1371,6 +1399,8 @@ def main():
             elif args.resource:
                 if args.resource[0] == "all":
                     run_fetch()
+                elif args.resource[0] == "stores":
+                    run_download_stores()
                 else:
                     run_download(args.resource[0], PROD_FOLDER)
             else:
@@ -1398,7 +1428,10 @@ def main():
                     file_path = args.file[0]
                 if os.path.exists(file_path):
                     content = file_get_contents(file_path)
-                    run_upload(content, resource, branch)
+                    if resource == "stores":
+                        run_upload_stores(content)
+                    else:
+                        run_upload(content, resource, branch)
                 else:
                     print("Error: Can not locate file for the specified resource")
             else:
@@ -1458,6 +1491,8 @@ def main():
         elif args.resource:
             if args.resource[0] == "all":
                 run_fetch()
+            elif args.resource[0] == "stores":
+                run_download_stores()
             else:
                 run_download(args.resource[0], PROD_FOLDER)
         else:
@@ -1485,7 +1520,10 @@ def main():
                 file_path = args.file[0]
             if os.path.exists(file_path):
                 content = file_get_contents(file_path)
-                run_upload(content, resource, branch)
+                if resource == "stores":
+                    run_upload_stores(content)
+                else:
+                    run_upload(content, resource, branch)
             else:
                 print("Error: Can not locate file for the specified resource")
         else:
