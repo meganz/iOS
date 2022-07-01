@@ -121,6 +121,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showShareMeetingError() {
+        guard CustomModalAlertViewController.isAlreadyPresented == false else { return }
+        
         let customModalAlertViewController = CustomModalAlertViewController()
         customModalAlertViewController.image = Asset.Images.Chat.chatLinkCreation.image
         customModalAlertViewController.viewTitle = chatRoom.title
