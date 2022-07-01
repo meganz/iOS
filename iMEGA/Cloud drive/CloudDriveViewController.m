@@ -1310,7 +1310,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-    [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:NO];
+    if (self.selectedNodesArray != nil) {
+        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:NO];
+    }
     [self setEditMode:NO];
 }
 
@@ -1461,7 +1463,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case MegaNodeActionTypeDownload:
             [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+            if (node != nil) {
+                [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+            }
             break;
             
         case MegaNodeActionTypeCopy:

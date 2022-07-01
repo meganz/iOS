@@ -1141,7 +1141,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     break;
                     
                 default:
-                    [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
+                    if (node != nil) {
+                        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
+                    }
                     break;
             }
             break;
