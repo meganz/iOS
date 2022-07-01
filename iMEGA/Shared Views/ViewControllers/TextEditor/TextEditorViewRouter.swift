@@ -52,7 +52,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     //MARK: - U-R-MVVM Routing
     @objc func build() -> UIViewController {
         let sdk = MEGASdkManager.sharedMEGASdk()
-        let nodeRepository = NodeRepository(sdk: sdk)
+        let nodeRepository = NodeRepository.default
         let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
         let uploadUC = UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.default)
         let downloadUC = DownloadNodeUseCase(

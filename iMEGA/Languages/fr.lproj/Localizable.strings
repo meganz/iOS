@@ -311,11 +311,11 @@
 /* Title button for the create folder alert. */
 "createFolderButton"="Créer";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
-"There is already a folder with the same name"="Un dossier du même nom existe déjà";
+"There is already a folder with the same name"="Un dossier porte déjà ce nom";
 /* A tooltip message which is shown when device does not support document scanning */
 "Document scanning is not available"="La numérisation de documents n’est pas proposée";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Un fichier du même nom existe déjà";
+"There is already a file with the same name"="Un fichier porte déjà ce nom";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Importer de Fichiers";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -2204,6 +2204,8 @@
 "Enter group name"="Saisissez le nom du groupe";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Écrivez un message…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="Le lien a été supprimé";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="Faire glisser vers la gauche pour annuler, relâcher pour envoyer";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2973,7 +2975,7 @@
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
 "nameCollision.duplicatedItem.title"="Élément en double";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="Le dossier « %@ » existe déjà dans cet emplacement.";
+"nameCollision.folders.alreadyExists"="Le dossier « %@ » existe déjà dans cette destination.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
 "nameCollision.folders.selectAction"="Choisir de fusionner les dossiers ou d’ignorer ce dossier.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
@@ -2997,7 +2999,7 @@
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
 "nameCollision.folders.cancelDescription"="Ignorer ce dossier.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="Un fichier nommé « %@ » existe déjà dans cet emplacement.";
+"nameCollision.files.alreadyExists"="Un fichier du même nom « %@ » existe déjà dans cette destination.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="Sélectionnez le fichier à conserver :";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
@@ -3013,7 +3015,7 @@
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.replaceDescription"="Remplacer le fichier dans le dossier de destination par le fichier que vous téléversez.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Aucun fichier ne sera modifié. Vous conserverez le fichier ci-dessous :";
+"nameCollision.files.cancelDescription"="Ignorer ce fichier.";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameTitle"="Copier et renommer";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
@@ -3029,16 +3031,30 @@
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
 "nameCollision.files.upload.updateTitle"="Téléverser et mettre à jour";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="Le fichier sera mis à jour avec un historique de version :";
+"nameCollision.files.upload.updateDescription"="Le fichier sera mis à jour par une nouvelle version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Vous êtes la seule personne ici";
 /* Meetings end call dialog description */
 "meetings.endCallDialog.description"="L’appel cessera dans 2 minutes à moins que vous ne vouliez rester sur l’appel.";
 /* Meetings end call dialog Stay on call button title */
-"meetings.endCallDialog.stayOnCallButtonTitle"="Rester dans l’appel";
+"meetings.endCallDialog.stayOnCallButtonTitle"="Rester sur l’appel";
 /* Meetings end call dialog button title */
 "meetings.endCallDialog.endCallNowButtonTitle"="Mettre fin à l’appel maintenant";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="L’appel se terminera dans %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Rendre disponible hors ligne";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="Mettre fin à l’appel pour tous";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="Mettre fin à l’appel pour tous ?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.description"="Ceci mettra fin à l’appel pour tous les participants.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.endForAllAlert.confirm"="Oui";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="Non";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="Quitter";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="Mettre fin à l’appel pour tous";

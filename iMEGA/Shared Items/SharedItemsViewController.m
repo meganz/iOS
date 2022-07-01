@@ -69,8 +69,6 @@
 
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation SharedItemsViewController
@@ -1238,8 +1236,7 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
             break;
             
         case MegaNodeActionTypeMove:

@@ -2204,6 +2204,8 @@
 "Enter group name"="ادخل اسم المجموعة";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="رسالة…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="تم حذف الرابط";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="اسحب لليسار للإلغاء، حرر للإرسال";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2899,15 +2901,15 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="إلغاء التراسل";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="قد تؤدي مقاطعة عملية التراسل إلى جعل بعض العناصر غير مكتملة.";
 /* Confirm action of cancelling a transfer */
-"transfers.cancellable.proceed"="Yes, cancel";
+"transfers.cancellable.proceed"="نعم، إلغاء";
 /* Dismiss action of cancelling a transfer */
-"transfers.cancellable.dismiss"="No, continue";
+"transfers.cancellable.dismiss"="لا، استمر";
 /* First step message for cancellable transfer (letting known the user not to close the app) */
 "transfers.cancellable.scanning"="جاري الفحص…";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="من فضلك لا تغلق التطبيق.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="تم الغاء التراسل";
 /* Title of the dialog used to send bug reports to support team. */
@@ -2971,37 +2973,37 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="الأفضل";
 /* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Duplicated item";
+"nameCollision.duplicatedItem.title"="عنصر مكرر";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists in this location.";
+"nameCollision.folders.alreadyExists"="المجلد %@ موجود بالفعل في هذا الموقع.";
 /* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Select wether you want to merge the folders or skip this folder.";
+"nameCollision.folders.selectAction"="اختر ما إذا كنت تريد دمج المجلدات أو تخطي هذا المجلد.";
 /* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="انسخ وادمج";
+"nameCollision.folders.copy.mergeTitle"="نسخ و دمج";
 /* Text describing the copy action when trying to copy a folder and already exists in destination */
 "nameCollision.folders.copy.mergeDescription"="ادمج المجلد الموجود في الوجهة مع المجلد الذي تنسخه.";
 /* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="لا تنسخ";
+"nameCollision.general.dontCopy"="لا تقم بالنسخ";
 /* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="انقل وادمج";
+"nameCollision.folders.move.mergeTitle"=" نقل و دمج";
 /* Text describing the move action when trying to move a folder and already exists in destination */
 "nameCollision.folders.move.mergeDescription"="ادمج المجلد الموجود في الوجهة مع المجلد الذي تنقله.";
 /* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="لا تنقل";
+"nameCollision.general.dontMove"="لا تقم بالنقل";
 /* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="ارفع وادمج";
+"nameCollision.folders.upload.mergeTitle"="ترفيع و دمج";
 /* Text describing the upload action when trying to upload a folder and already exists in destination */
 "nameCollision.folders.upload.mergeDescription"="ادمج المجلد الموجود في الوجهة مع المجلد الذي تقوم بترفيعه.";
 /* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="لا ترفع";
+"nameCollision.general.cancelTitle"="لا تقم بالترفيع";
 /* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Skip this folder.";
+"nameCollision.folders.cancelDescription"="تخطى هذا المجلد.";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists in this location.";
+"nameCollision.files.alreadyExists"="يوجد ملف اسمه %@ بالفعل في هذا الموقع.";
 /* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
 "nameCollision.files.selectAction"="اختر الملف الذي تريد حفظه:";
 /* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="نسخ واستبدال";
+"nameCollision.files.copy.replaceTitle"="نسخ و استبدال";
 /* Text describing the copy and replace action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.replaceDescription"="استبدل الملف الموجود في المجلد الوجهة بالملف الذي تنسخه.";
 /* Text of the move and replace action when trying to move a file and already exists in destination */
@@ -3009,36 +3011,50 @@
 /* Text describing the move and replace action when trying to move a file and already exists in destination */
 "nameCollision.files.move.replaceDescription"="استبدل الملف في المجلد الوجهة بالملف الذي تقوم بنقله.";
 /* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="ارفع واستبدل";
+"nameCollision.files.upload.replaceTitle"="ترفيع و استبدال";
 /* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Replace the file in the destination folder with the file you are uploading.";
+"nameCollision.files.upload.replaceDescription"="استبدل الملف الموجود في المجلد الوجهة بالملف الذي تقوم بترفيعه.";
 /* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="لن يتم تغيير أي ملفات. ستحتفظ بالملف أدناه:";
+"nameCollision.files.cancelDescription"="تخطي هذا الملف";
 /* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="انسخ وغير الاسم";
+"nameCollision.files.copy.renameTitle"="نسخ و تغيير الاسم";
 /* Text describing the copy and rename action when trying to copy a file and already exists in destination */
 "nameCollision.files.copy.renameDescription"="الملف الذي نسخته سيتم إعادة تسميته إلى:";
 /* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="انقل وغير الاسم";
+"nameCollision.files.move.renameTitle"="نقل و تغيير الاسم";
 /* Text describing the move and rename action when trying to move a file and already exists in destination */
 "nameCollision.files.move.renameDescription"="الملف الذي نقلته سيتم إعادة تسميته إلى:";
 /* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="ارفع وغير الاسم";
+"nameCollision.files.upload.renameTitle"="ترفيع و تغيير الاسم";
 /* Text describing the upload and rename action when trying to upload a file and already exists in destination */
 "nameCollision.files.upload.renameDescription"="الملف الذي ترفع سيتم تسميته إلى:";
 /* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="رفع التحديث";
+"nameCollision.files.upload.updateTitle"="ترفيع و تحديث";
 /* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="سيتم تحديث الملف بالنسخة المحفوظة:";
+"nameCollision.files.upload.updateDescription"="سيتم استبدال الملف بالنسخة الجديدة.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="انت الوحيد هنا";
 /* Meetings end call dialog description */
 "meetings.endCallDialog.description"="ستنتهي المكالمة تلقائيًا في غضون 2 دقيقتين ما لم ترغب في الاستمرار فيها.";
 /* Meetings end call dialog Stay on call button title */
-"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on call";
+"meetings.endCallDialog.stayOnCallButtonTitle"="البقاء في اتصال";
 /* Meetings end call dialog button title */
-"meetings.endCallDialog.endCallNowButtonTitle"="End call now";
+"meetings.endCallDialog.endCallNowButtonTitle"="انهاء الاتصال";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="ستنتهي المكالمة في %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="اجعله متاح بدون اتصال";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="إنهاء المكالمة للجميع";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="إنهاء المكالمة للجميع؟";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.description"="سيؤدي هذا إلى إنهاء المكالمة لجميع المشاركين.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.endForAllAlert.confirm"="نعم";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="لا";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="غادر";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="إنهاء المكالمة للجميع";

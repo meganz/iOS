@@ -35,8 +35,7 @@ final class HomeRecentActionViewModel:
                 guard let self = self else { return }
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
-                self.cancelToken = MEGACancelToken()
-                self.saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node), cancelToken: self.cancelToken) { error in
+                self.saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node)) { error in
                     SVProgressHUD.dismiss()
                     if error != nil {
                         SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
@@ -115,7 +114,6 @@ final class HomeRecentActionViewModel:
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
     }
     
-    private var cancelToken = MEGACancelToken()
 }
 
 // MARK: - View Error

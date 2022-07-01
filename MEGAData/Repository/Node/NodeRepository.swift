@@ -1,14 +1,16 @@
 
 extension NodeRepository {
-    static let `default` = NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())
+    static let `default` = NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())
 }
 
 struct NodeRepository: NodeRepositoryProtocol {
     private let sdk: MEGASdk
+    private let sharedFolderSdk: MEGASdk
     private let chatSdk: MEGAChatSdk
 
-    init(sdk: MEGASdk, chatSdk: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()) {
+    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, chatSdk: MEGAChatSdk) {
         self.sdk = sdk
+        self.sharedFolderSdk = sharedFolderSdk
         self.chatSdk = chatSdk
     }
     
@@ -33,14 +35,19 @@ struct NodeRepository: NodeRepositoryProtocol {
     }
     
     func sizeForNode(handle: MEGAHandle) -> UInt64? {
-        guard let node = sdk.node(forHandle: handle) else {
+        var megaNode: MEGANode
+        if let node = sdk.node(forHandle: handle) {
+            megaNode = node
+        } else if let node = sharedFolderSdk.node(forHandle: handle) {
+            megaNode = node
+        } else {
             return nil
         }
         
-        if node.isFile() {
-            return node.size?.uint64Value
+        if megaNode.isFile() {
+            return megaNode.size?.uint64Value
         } else {
-            return sdk.size(for: node).uint64Value
+            return sdk.size(for: megaNode).uint64Value
         }
     }
     
@@ -97,20 +104,23 @@ struct NodeRepository: NodeRepositoryProtocol {
     func copyNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?, isFolderLink: Bool) async throws -> NodeHandle {
         try await withCheckedThrowingContinuation { continuation in
             var megaNode: MEGANode
-            guard let parentNode = sdk.node(forHandle: parentHandle),
-                  let node = sdk.node(forHandle: handle) else {
+            guard let parentNode = sdk.node(forHandle: parentHandle) else {
                 continuation.resume(throwing: CopyOrMoveErrorEntity.nodeNotFound)
                 return
             }
             
-            megaNode = node
-
             if isFolderLink {
-                guard let authorizedNode = sdk.authorizeNode(node) else {
+                guard let linkNode = sharedFolderSdk.node(forHandle: handle), let authorizedNode = sharedFolderSdk.authorizeNode(linkNode) else {
                     continuation.resume(throwing: CopyOrMoveErrorEntity.nodeAuthorizeFailed)
                     return
                 }
                 megaNode = authorizedNode
+            } else {
+                guard let node = sdk.node(forHandle: handle) else {
+                    continuation.resume(throwing: CopyOrMoveErrorEntity.nodeNotFound)
+                    return
+                }
+                megaNode = node
             }
             
             let delegate = RequestDelegate { result in

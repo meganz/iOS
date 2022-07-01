@@ -7,7 +7,6 @@ class ChatViewController: MessagesViewController {
 
     // MARK: - Properties
     let sdk = MEGASdkManager.sharedMEGASdk()
-    var cancelToken = MEGACancelToken()
     
     @objc private(set) var chatRoom: MEGAChatRoom
     

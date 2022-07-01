@@ -46,12 +46,14 @@ final class NameCollisionViewModel: ObservableObject {
         self.collisionType = collisionType
         self.isFolderLink = isFolderLink
         self.duplicatedItem = DuplicatedItem(name: "", isFile: false, size: "", date: "", itemPlaceholder: Asset.Images.Photos.photoCardPlaceholder.name)
-        fileVersionsUseCase.isFileVersionsEnabled(completion: { result in
+        fileVersionsUseCase.isFileVersionsEnabled(completion: { [weak self] result in
             switch result {
             case .success(let enabled):
-                self.isVersioningEnabled = enabled
-            case .failure(_):
-                break
+                self?.isVersioningEnabled = enabled
+            case .failure(let error):
+                if error == .optionNeverSet {
+                    self?.isVersioningEnabled = true //default value
+                }
             }
         })
     }

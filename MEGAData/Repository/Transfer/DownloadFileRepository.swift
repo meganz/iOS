@@ -12,7 +12,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    func download(nodeHandle: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func download(nodeHandle: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             completion(.failure(.couldNotFindNodeByHandle))
             return
@@ -21,7 +21,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         sdk.startDownloadNode(node, localPath: path, fileName: nil, appData: appData, startFirst: true, cancelToken: cancelToken, delegate: TransferDelegate(completion: completion))
     }
     
-    func downloadChat(nodeHandle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func downloadChat(nodeHandle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         guard let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), nodeHandle == node.handle else {
             completion(.failure(.couldNotFindNodeByHandle))
             return

@@ -458,8 +458,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)saveToPhotos:(MEGANode *)node {
-    self.cancelToken = MEGACancelToken.alloc.init;
-    [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node cancelToken:self.cancelToken];
+    [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
 }
 
 #pragma mark - UIScrollViewDelegate
