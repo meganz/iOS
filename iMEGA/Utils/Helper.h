@@ -38,7 +38,7 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (NSMutableArray *)uploadingNodes;
-+ (void)startPendingUploadTransferIfNeededWithCancelToken:(MEGACancelToken *)cancelToken;
++ (void)startPendingUploadTransferIfNeeded;
 
 #pragma mark - Utils
 

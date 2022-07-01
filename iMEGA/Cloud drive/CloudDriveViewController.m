@@ -590,8 +590,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             for (PHAsset *asset in assets) {
                 [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
             }
-            self.cancelToken = MEGACancelToken.alloc.init;
-            [Helper startPendingUploadTransferIfNeededWithCancelToken:self.cancelToken];
+            [Helper startPendingUploadTransferIfNeeded];
         }
     }];
     MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];

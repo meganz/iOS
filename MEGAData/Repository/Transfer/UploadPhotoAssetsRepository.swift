@@ -8,11 +8,11 @@ struct UploadPhotoAssetsRepository: UploadPhotoAssetsRepositoryProtocol {
         self.store = store
     }
     
-    func upload(assets: [String], toParent parentHandle: MEGAHandle, cancelToken: MEGACancelToken) {
+    func upload(assets: [String], toParent parentHandle: MEGAHandle) {
         assets.forEach { identifier in
             store.insertUploadTransfer(withLocalIdentifier: identifier, parentNodeHandle: parentHandle)
         }
         
-        Helper.startPendingUploadTransferIfNeeded(with: cancelToken)
+        Helper.startPendingUploadTransferIfNeeded()
     }
 }

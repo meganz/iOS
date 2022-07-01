@@ -22,7 +22,7 @@
 
 + (void)resetUtilsForLinksWithoutSession;
 
-+ (void)processSelectedOptionOnLinkWithCancelToken:(MEGACancelToken *)cancelToken;
++ (void)processSelectedOptionOnLink;
 
 #pragma mark - Spotlight
 

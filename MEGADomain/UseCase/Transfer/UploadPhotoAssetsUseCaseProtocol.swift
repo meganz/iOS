@@ -13,13 +13,11 @@ final class UploadPhotoAssetsUseCase: UploadPhotoAssetsUseCaseProtocol {
 
     private let uploadFromAlbumRepository: UploadPhotoAssetsRepositoryProtocol
 
-    private let cancelToken = MEGACancelToken()
-
     init(uploadPhotoAssetsRepository: UploadPhotoAssetsRepositoryProtocol) {
         self.uploadFromAlbumRepository = uploadPhotoAssetsRepository
     }
     
     func upload(photoIdentifiers: [String], to parentHandle: MEGAHandle) {
-        uploadFromAlbumRepository.upload(assets: photoIdentifiers, toParent: parentHandle, cancelToken: cancelToken)
+        uploadFromAlbumRepository.upload(assets: photoIdentifiers, toParent: parentHandle)
     }
 }

@@ -58,8 +58,6 @@
 @property (strong, nonatomic) MEGANode *parentNode;
 @property (nonatomic) NSMutableArray<CancellableTransfer *> *transfers;
 
-@property (nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation ShareViewController
@@ -153,7 +151,6 @@
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
     self.lastProgressChange = [NSDate new];
     self.transfers = NSMutableArray.new;
-    self.cancelToken = MEGACancelToken.alloc.init;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -826,7 +823,7 @@
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile {
     if (self.users || self.chats) {
         NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
-        [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:localPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:self.cancelToken delegate:self];
+        [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:localPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil delegate:self];
     } else {
         [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle path:localPath name:nil appData:[NSString.new mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo] priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
         [self onePendingLess];
