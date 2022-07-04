@@ -529,7 +529,7 @@
                                     break;
                                 } else if (supportedClass == NSURL.class) {
                                     NSURL *url = (NSURL *)data;
-                                    if (url.hasDirectoryPath) {
+                                    if ([url.scheme isEqualToString:@"file"] && url.hasDirectoryPath) {
                                         [ShareAttachment addFolderURL:url];
                                     } else if (url.isFileURL) {
                                         [ShareAttachment addFileURL:url];
