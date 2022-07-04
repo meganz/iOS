@@ -1,6 +1,8 @@
 @testable import MEGA
 
 struct MockFileSystemRepository: FileSystemRepositoryProtocol {
+    static let newRepo = MockFileSystemRepository()
+    
     var sizeAvailability: Int64 = 0
     var fileExists: Bool = false
     var copiedNode: Bool = false

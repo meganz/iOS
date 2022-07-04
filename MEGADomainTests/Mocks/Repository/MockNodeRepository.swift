@@ -1,6 +1,8 @@
 @testable import MEGA
 
 struct MockNodeRepository: NodeRepositoryProtocol {
+    static let newRepo = MockNodeRepository()
+    
     var node: NodeEntity?
     var name: String?
     var size: UInt64?

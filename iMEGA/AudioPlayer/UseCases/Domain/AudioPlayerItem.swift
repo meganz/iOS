@@ -18,7 +18,7 @@ final class AudioPlayerItem: AVPlayerItem {
     private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
         return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
                                         fileSystemClient: .live,
-                                        thumbnailRepo: ThumbnailRepository.default)
+                                        thumbnailRepo: ThumbnailRepository.newRepo)
     }()
     
     init(name: String, url: URL, node: MEGANode?, hasThumbnail: Bool = false) {

@@ -18,8 +18,8 @@ struct AlbumContentRouter: Routing {
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
         let photoUseCase = PhotoLibraryUseCase(
-            photosRepository: PhotoLibraryRepository.default,
-            searchRepository: SDKFilesSearchRepository.default
+            photosRepository: PhotoLibraryRepository.newRepo,
+            searchRepository: SDKFilesSearchRepository.newRepo
         )
         
         let albumContentsUseCase = AlbumContentsUseCase(

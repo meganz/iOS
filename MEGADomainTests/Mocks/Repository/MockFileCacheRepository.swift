@@ -1,6 +1,8 @@
 @testable import MEGA
 
 struct MockFileCacheRepository: FileCacheRepositoryProtocol {
+    static let newRepo = MockFileCacheRepository()
+    
     var base64Handle: MEGABase64Handle = ""
     var name: String = ""
     

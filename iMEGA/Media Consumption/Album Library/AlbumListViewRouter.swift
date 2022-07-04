@@ -13,15 +13,15 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     func cell(withCameraUploadNode node: NodeEntity?) -> AlbumCell {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let favouriteRepo = FavouriteNodesRepository(sdk: sdk)
-        let thumbnailRepo = ThumbnailRepository.default
+        let thumbnailRepo = ThumbnailRepository.newRepo
         let nodesUpdateRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
         let albumContentsRepo = AlbumContentsUpdateNotifierRepository(
             sdk: sdk,
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
         let photoUseCase = PhotoLibraryUseCase(
-            photosRepository: PhotoLibraryRepository.default,
-            searchRepository: SDKFilesSearchRepository.default
+            photosRepository: PhotoLibraryRepository.newRepo,
+            searchRepository: SDKFilesSearchRepository.newRepo
         )
         
         let thumbnailUsecase = ThumbnailUseCase(repository: thumbnailRepo)

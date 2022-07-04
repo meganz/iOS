@@ -180,7 +180,7 @@
     
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [[AppFirstLaunchSecurityChecker defaultChecker] performSecurityCheck];
+    [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
     
     [AppearanceManager setupAppearance:self.window.traitCollection];
     

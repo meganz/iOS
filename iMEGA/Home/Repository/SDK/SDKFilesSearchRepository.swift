@@ -1,4 +1,4 @@
-protocol FilesSearchRepositoryProtocol {
+protocol FilesSearchRepositoryProtocol: RepositoryProtocol {
     func search(string: String?,
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
@@ -14,6 +14,10 @@ protocol FilesSearchRepositoryProtocol {
 }
 
 final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
+    static var newRepo: SDKFilesSearchRepository {
+        SDKFilesSearchRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     
     private lazy var searchOperationQueue: OperationQueue = {
@@ -91,8 +95,4 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
         
         searchOperationQueue.addOperation(searchOperation)
     }
-}
-
-extension SDKFilesSearchRepository {
-    static let `default` = SDKFilesSearchRepository(sdk: MEGASdkManager.sharedMEGASdk())
 }

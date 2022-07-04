@@ -1,10 +1,10 @@
 import Foundation
 
-extension AppGroupContainerRepository {
-    static let `default` = AppGroupContainerRepository(fileManager: .default)
-}
-
 struct AppGroupContainerRepository: AppGroupContainerRepositoryProtocol {
+    static var newRepo: AppGroupContainerRepository {
+        AppGroupContainerRepository(fileManager: .default)
+    }
+    
     private let fileManager: FileManager
     private let container: AppGroupContainer
     

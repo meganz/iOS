@@ -16,7 +16,7 @@ final class HomeScreenFactory: NSObject {
                 megaAvatarClient: .live,
                 avatarFileSystemClient: .live,
                 megaUserClient: .live,
-                thumbnailRepo: ThumbnailRepository.default
+                thumbnailRepo: ThumbnailRepository.newRepo
             ),
             megaAvatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
                 storeUserClient: .live,
@@ -52,7 +52,7 @@ final class HomeScreenFactory: NSObject {
             nodeFavouriteActionUseCase: NodeFavouriteActionUseCase(
                 nodeFavouriteRepository: NodeFavouriteActionRepository()
             ),
-            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
+            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(
             userBannerUseCase: UserBannerUseCase(
@@ -92,7 +92,7 @@ final class HomeScreenFactory: NSObject {
                 nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCase(
                     sdkNodeClient: .live,
                     fileSystemClient: .live,
-                    thumbnailRepo: ThumbnailRepository.default
+                    thumbnailRepo: ThumbnailRepository.newRepo
                 )
             ),
             router: HomeSearchResultRouter(

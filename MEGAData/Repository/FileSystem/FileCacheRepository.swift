@@ -1,10 +1,10 @@
 import Foundation
 
-extension FileCacheRepository {
-    static let `default` = FileCacheRepository(fileManager: .default)
-}
-
 final class FileCacheRepository: FileCacheRepositoryProtocol {
+    static var newRepo: FileCacheRepository {
+        FileCacheRepository(fileManager: .default)
+    }
+    
     private enum Constants {
         static let originalCacheDirectory = "originalV3"
         static let uploadsDirectory = "Uploads"
