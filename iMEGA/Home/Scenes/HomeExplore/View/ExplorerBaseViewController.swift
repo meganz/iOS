@@ -167,6 +167,11 @@ class ExplorerBaseViewController: UIViewController {
         endEditingMode()
     }
     
+    fileprivate func handleRemoveLinks(for nodes: [MEGANode]) {
+        nodes.publicLinkedNodes().mnz_removeLinks()
+        endEditingMode()
+    }
+    
     //MARK:- Methods needs to be overriden by the subclass
     
     func selectedNodes() -> [MEGANode]? {
@@ -222,6 +227,8 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             didPressedExportFile(sender)
         case .sendToChat:
             didPressedSendToChat(sender)
+        case .removeLink:
+            handleRemoveLinks(for: nodes)
         default:
             break
         }

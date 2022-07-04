@@ -12,7 +12,4 @@ final class HeaderViewModel: ObservableObject {
         let stringComponents = (isFile ? Strings.Localizable.NameCollision.Files.alreadyExists(name) : Strings.Localizable.NameCollision.Folders.alreadyExists(name)).components(separatedBy: name)
         return [stringComponents[safe: 0] ?? "", name, stringComponents[safe: 1] ?? ""]
     }
-    
-    var description: String { isFile ? Strings.Localizable.NameCollision.Files.selectAction : Strings.Localizable.NameCollision.Folders.selectAction
-    }
 }

@@ -13,7 +13,7 @@ struct NameCollisionView: View {
         VStack {
             HStack {
                 Spacer()
-                Text( Strings.Localizable.NameCollision.DuplicatedItem.title)
+                Text(viewModel.duplicatedItem.isFile ? Strings.Localizable.NameCollision.Title.file : Strings.Localizable.NameCollision.Title.folder)
                     .font(.headline)
                 Spacer()
                 Button(Strings.Localizable.cancel) {
@@ -31,7 +31,7 @@ struct NameCollisionView: View {
                         ItemView(name: viewModel.duplicatedItem.name, size: viewModel.duplicatedItem.collisionFileSize, date: viewModel.duplicatedItem.collisionFileDate, imageUrl: viewModel.thumbnailCollisionUrl, imagePlaceholder: viewModel.duplicatedItem.itemPlaceholder)
                             .padding()
                     }
-                    ActionsView(collisionType: viewModel.collisionType, duplicatedItem: viewModel.duplicatedItem, imageUrl: viewModel.thumbnailUrl, collisionImageUrl: viewModel.thumbnailCollisionUrl, actions: viewModel.actionsForCurrentDuplicatedItem()) { action in
+                    ActionsView(duplicatedItem: viewModel.duplicatedItem, imageUrl: viewModel.thumbnailUrl, collisionImageUrl: viewModel.thumbnailCollisionUrl, actions: viewModel.actionsForCurrentDuplicatedItem()) { action in
                         viewModel.selectedAction(action)
                     }
                 }

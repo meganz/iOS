@@ -165,9 +165,6 @@ class PhotoExplorerViewModel: NSObject {
             updatedNodes.hasModifiedAttributes() ||
             updatedNodes.hasModifiedParent() ||
             !updatedNodes.modifiedFavourites().isEmpty {
-            
-            updatedNodes.updatePhotoFavouritesIfNeeded()
-                
             debouncer.start { [weak self] in
                 self?.loadAllPhotos()
             }

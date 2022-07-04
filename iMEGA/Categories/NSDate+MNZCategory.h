@@ -30,6 +30,17 @@ FOUNDATION_EXPORT const long long secondsInAGregorianYear;
 
 - (NSString *)mnz_stringForLastMessageTs;
 
+- (BOOL)isYesterday;
+
+/// Convenience method that returns a formatted string representing the receiver's date formatted to a given date format
+/// @param format NSString - String representing the desired date format
+/// @return NSString representing the formatted date string
+- (NSString *)formattedDateWithFormat:(NSString *)format;
+
+/// Returns the number of days until the receiver's date. Returns 0 if the receiver is the same or earlier than now.
+/// @return NSInteger representiation of days
+- (NSInteger)daysUntil;
+
 @end
 
 NS_ASSUME_NONNULL_END

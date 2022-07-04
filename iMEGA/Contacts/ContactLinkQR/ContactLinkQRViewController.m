@@ -7,7 +7,6 @@
 
 #import "CustomModalAlertViewController.h"
 #import "DevicePermissionsHelper.h"
-#import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -28,12 +27,9 @@ typedef NS_ENUM(NSInteger, QRSection) {
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet MEGASegmentedControl *segmentedControl;
-@property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
-@property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
 @property (weak, nonatomic) IBOutlet UIView *avatarBackgroundView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UILabel *contactLinkLabel;
 @property (weak, nonatomic) IBOutlet UIButton *linkCopyButton;
 
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
@@ -51,8 +47,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 
 @property (nonatomic) BOOL queryInProgress;
-
-@property (nonatomic) MEGAContactLinkCreateRequestDelegate *contactLinkCreateDelegate;
 
 @end
 
@@ -84,9 +78,12 @@ typedef NS_ENUM(NSInteger, QRSection) {
         
         self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size color:[UIColor mnz_qr:self.traitCollection] backgroundColor:[UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]];
         [self setUserAvatar];
+        [self setMoreButtonAction];
     }];
     
     [self updateAppearance];
+    
+    [self configureContextMenuManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -230,40 +227,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (IBAction)linkCopyButtonTapped:(UIButton *)sender {
     [UIPasteboard generalPasteboard].string = self.contactLinkLabel.text;
     [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
-}
-
-- (IBAction)moreButtonTapped:(UIButton *)sender {
-    UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [moreAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    if (self.contactLinkLabel.text.length>0) {
-        UIAlertAction *shareAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactLinkLabel.text] applicationActivities:nil];
-            [activityVC.popoverPresentationController setSourceView:self.view];
-            [activityVC.popoverPresentationController setSourceRect:sender.frame];
-            
-            [self presentViewController:activityVC animated:YES completion:nil];
-        }];
-        [moreAlertController addAction:shareAlertAction];
-    }
-    
-    UIAlertAction *settingsAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"settingsTitle", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UINavigationController *qrSettingsNC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"QRSettingsNavigationControllerID"];
-        [self presentViewController:qrSettingsNC animated:YES completion:nil];
-    }];
-    [moreAlertController addAction:settingsAlertAction];
-    
-    UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.qrImageView.image = nil;
-        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self.contactLinkCreateDelegate];
-    }];
-    [moreAlertController addAction:resetAlertAction];
-    
-    moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    moreAlertController.popoverPresentationController.sourceRect = sender.frame;
-    moreAlertController.popoverPresentationController.sourceView = sender.superview;
-
-    [self presentViewController:moreAlertController animated:YES completion:nil];
 }
 
 #pragma mark - QR recognizing

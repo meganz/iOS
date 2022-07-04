@@ -398,14 +398,6 @@
 "filesSentToChat"="Bestanden verstuurd naar gesprek";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d bestanden succesvol verzonden";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Link Verwijderen";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Links Verwijderen";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Link verwijderd";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Links verwijderd";
 /* Title show when a file is being downloaded */
 "downloading"="Aan het downloaden";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -1204,10 +1196,6 @@
 "Use Mobile Data for Videos"="Gebruik Mobiele Data voor Video's";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Automatisch op afwezig";
-/*  */
-"xMinutes"="[X] minuten";
-/*  */
-"1Minute"="1 minuut";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Zet mijn status op afwezig na [X] minuten van inactiviteit";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1584,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Groepsoproep beëindigd [/A][C]. Duur: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duur: %@";
-/*  */
-"xSeconds"="%d seconden";
-/*  */
-"1Second"="1 seconde";
-/*  */
-"1Hour"="1 uur";
-/*  */
-"xHours"="%d uren";
-/*  */
-"1Hour1Minute"="1 uur, 1 minuut";
-/*  */
-"1HourxMinutes"="1 uur, %d minuten";
-/*  */
-"xHours1Minute"="%d uren, 1 minuut";
-/*  */
-"xHoursxMinutes"="%1$d uren, %2$d minuten";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Bestand niet ondersteund";
 /* Alert message shown when users try to stream an unsupported audio/video file */
@@ -2992,66 +2964,34 @@
 "media.quality.high"="Hoog";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Beste";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Gedupliceerd item";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="Map bestaat al";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="De map %@ bestaat al op deze locatie.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Selecteer of u de mappen wilt samenvoegen of deze map wilt overslaan.";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="Kopiëren en samenvoegen";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="Voeg de map op de bestemming samen met de map die u kopieert.";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="Niet kopiëren";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="Verplaatsen en samenvoegen";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="Voeg de map op de bestemming samen met de map die u verplaatst.";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="Niet verplaatsen";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="Uploaden en samenvoegen";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="Voeg de map op de bestemming samen met de map die u aan het uploaden bent.";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="Niet uploaden";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Sla deze map over.";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="Deze map overslaan";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="Een bestand genaamd %@ bestaat al op deze locatie.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="Selecteer het bestand die u wilt behouden:";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="Kopiëren en vervangen";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="Vervang het bestand in de locatiemap met het bestand dat u kopieert.";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="Verplaats en vervang";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="Vervang het bestand in de locatiemap met het bestand dat u verplaatst.";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="Uploaden en vervangen";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Vervang het bestand in de doelmap door het bestand dat u uploadt.";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Dit bestand overslaan.";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="Kopiëren en hernoemen";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="Het bestand die u kopieert wordt hernoemt als:";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="Verplaatsen en hernoemen";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="Het bestand die u verplaatst wordt hernoemd als:";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="Updaten en hernoemen";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="Het bestand dat u upload wordt hernoemd als:";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="Uploaden en updaten";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="Het bestand wordt bijgewerkt met een nieuwe versie.";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="Vervangen";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="Hernoemen";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="Update";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="Het bestand wordt bijgewerkt met een nieuwe versie.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="U bent de enige hier";
 /* Meetings end call dialog description */

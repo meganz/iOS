@@ -1,6 +1,10 @@
 
 struct FileVersionsRepository: FileVersionsRepositoryProtocol {
     
+    static var newRepo: FileVersionsRepository {
+        FileVersionsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     
     init(sdk: MEGASdk) {

@@ -1,6 +1,6 @@
 import Foundation
 
-protocol FileSystemRepositoryProtocol {
+protocol FileSystemRepositoryProtocol: RepositoryProtocol {
     func fileExists(at url: URL) -> Bool
     func systemVolumeAvailability() -> Int64
     func moveFile(at sourceURL: URL, to destinationURL: URL, name: String) -> Bool

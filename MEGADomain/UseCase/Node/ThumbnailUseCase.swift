@@ -112,7 +112,3 @@ struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtoco
             .eraseToAnyPublisher()
     }
 }
-
-extension ThumbnailUseCase where T == ThumbnailRepository {
-    static let `default` = ThumbnailUseCase(repository: T.default)
-}

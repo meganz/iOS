@@ -1,5 +1,5 @@
 // MARK: - Use case protocol -
-protocol CallManagerUseCaseProtocol {
+protocol CallCoordinatorUseCaseProtocol {
     func endCall(_ call: CallEntity)
     func muteUnmuteCall(_ call: CallEntity, muted: Bool)
     func addCall(_ call: CallEntity)
@@ -10,7 +10,7 @@ protocol CallManagerUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct CallManagerUseCase: CallManagerUseCaseProtocol {
+struct CallCoordinatorUseCase: CallCoordinatorUseCaseProtocol {
     
     private var megaCallManager: MEGACallManager? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,

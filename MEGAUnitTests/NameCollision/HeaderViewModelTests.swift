@@ -21,16 +21,4 @@ class HeaderViewModelTests: XCTestCase {
         let title = viewModel.titleComponents.joined()
         XCTAssert(title == Strings.Localizable.NameCollision.Folders.alreadyExists(name))
     }
-    
-    func test_fileDescription() {
-        let viewModel = HeaderViewModel(isFile: true, name: "name")
-        
-        XCTAssert(viewModel.description == Strings.Localizable.NameCollision.Files.selectAction)
-    }
-    
-    func test_folderDescription() {
-        let viewModel = HeaderViewModel(isFile: false, name: "name")
-        
-        XCTAssert(viewModel.description == Strings.Localizable.NameCollision.Folders.selectAction)
-    }
 }

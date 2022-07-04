@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, WarningViewModel, PhotoAlbumContainerViewController, PhotoViewModel;
+@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, WarningViewModel, PhotoAlbumContainerViewController, PhotoViewModel, ContextMenuManager;
 
 typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateDisabled,
@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 
 @property (nonatomic, strong) PhotoViewModel *viewModel;
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
+
+@property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 
 - (void)reloadHeader;
 - (void)reloadPhotos;

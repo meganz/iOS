@@ -2,6 +2,10 @@
 import Combine
 
 final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedRepositoryProtocol {
+    static var newRepo: MeetingNoUserJoinedRepository {
+        MeetingNoUserJoinedRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk())
+    }
+    
     private var subscription: AnyCancellable?
         
     private let chatSDK: MEGAChatSdk
@@ -52,9 +56,3 @@ extension MeetingNoUserJoinedRepository: MEGAChatCallDelegate {
         }
     }
 }
-
-
-extension MeetingNoUserJoinedRepository {
-    static let `default` = MeetingNoUserJoinedRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk())
-}
-

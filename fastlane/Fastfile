@@ -253,6 +253,7 @@ platform :ios do
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       disable_package_automatic_updates: true,
+      xcargs: "GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS FIREBASE_BUILD=1'",
       export_options: {
         iCloudContainerEnvironment: "Production"
       }

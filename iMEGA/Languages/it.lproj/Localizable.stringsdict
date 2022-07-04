@@ -194,8 +194,10 @@
         <string>d</string>
         <key>one</key>
         <string>%d file</string>
+        <key>many</key>
+        <string>%d file</string>
         <key>other</key>
-        <string>%d files</string>
+        <string>%d file</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -209,9 +211,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d folder</string>
+        <string>%d cartella</string>
+        <key>many</key>
+        <string>%d cartelle</string>
         <key>other</key>
-        <string>%d folders</string>
+        <string>%d cartelle</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -225,9 +229,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d folder</string>
+        <string>%d cartella</string>
+        <key>many</key>
+        <string>%d cartelle</string>
         <key>other</key>
-        <string>%d folders</string>
+        <string>%d cartelle</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.file</key>
@@ -242,8 +248,10 @@
         <string>d</string>
         <key>one</key>
         <string>• %d file</string>
+        <key>many</key>
+        <string>• %d file</string>
         <key>other</key>
-        <string>• %d files</string>
+        <string>• %d file</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -293,9 +301,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] of %d file</string>
+        <string>[A] su %d file</string>
+        <key>many</key>
+        <string>[A] su %d file</string>
         <key>other</key>
-        <string>[A] of %d files</string>
+        <string>[A] su %d file</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -310,8 +320,188 @@
         <string>d</string>
         <key>one</key>
         <string>%d file</string>
+        <key>many</key>
+        <string>%d file</string>
         <key>other</key>
-        <string>%d files</string>
+        <string>%d file</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Rimuovi il link</string>
+        <key>many</key>
+        <string>Rimuovi i link</string>
+        <key>other</key>
+        <string>Rimuovi i link</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.message.success</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link rimosso</string>
+        <key>many</key>
+        <string>Link rimossi</string>
+        <key>other</key>
+        <string>Link rimossi</string>
+      </dict>
+    </dict>
+    <key>call.duration.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@second@</string>
+      <key>second</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d second</string>
+        <key>other</key>
+        <string>%d seconds</string>
+      </dict>
+    </dict>
+    <key>call.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minuto</string>
+        <key>many</key>
+        <string>%d di minuti</string>
+        <key>other</key>
+        <string>%d minuti</string>
+      </dict>
+    </dict>
+    <key>call.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d ora</string>
+        <key>many</key>
+        <string>%d di ore</string>
+        <key>other</key>
+        <string>%d ore</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d ora</string>
+        <key>many</key>
+        <string>%d di ore</string>
+        <key>other</key>
+        <string>%d ore</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>, %d minuto</string>
+        <key>many</key>
+        <string>, %d di minuti</string>
+        <key>other</key>
+        <string>, %d minuti</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minuto</string>
+        <key>many</key>
+        <string>%d di minuti</string>
+        <key>other</key>
+        <string>%d minuti</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d ora</string>
+        <key>many</key>
+        <string>%d di ore</string>
+        <key>other</key>
+        <string>%d ore</string>
+      </dict>
+    </dict>
+    <key>chat.status.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minuto</string>
+        <key>many</key>
+        <string>%d di minuti</string>
+        <key>other</key>
+        <string>%d minuti</string>
       </dict>
     </dict>
   </dict>

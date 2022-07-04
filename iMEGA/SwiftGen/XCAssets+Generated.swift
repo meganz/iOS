@@ -285,6 +285,7 @@ internal enum Asset {
       internal static let confirmEdit = ImageAsset(name: "confirmEdit")
       internal static let createGroup = ImageAsset(name: "createGroup")
       internal static let downloadGif = ImageAsset(name: "download_gif")
+      internal static let endCall = ImageAsset(name: "endCall")
       internal static let forwardToolbar = ImageAsset(name: "forwardToolbar")
       internal static let giphyCellBackground = ImageAsset(name: "giphyCellBackground")
       internal static let groupChat = ImageAsset(name: "groupChat")

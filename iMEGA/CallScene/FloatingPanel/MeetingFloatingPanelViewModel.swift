@@ -38,7 +38,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var call: CallEntity? {
         return callUseCase.call(for: chatRoom.chatId)
     }
-    private let callManagerUseCase: CallManagerUseCaseProtocol
+    private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
     private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
@@ -64,7 +64,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
          isSpeakerEnabled: Bool,
-         callManagerUseCase: CallManagerUseCaseProtocol,
+         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
@@ -74,7 +74,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
-        self.callManagerUseCase = callManagerUseCase
+        self.callCoordinatorUseCase = callCoordinatorUseCase
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
@@ -125,17 +125,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 updateSpeakerInfo()
             }
         case .hangCall(let presenter, let sender):
-            if let call = call {
-                if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
-                   let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
-                    MEGALogDebug("Meeting: Floating panel - Hang call for call id \(callId) and chat id \(chatId)")
-                } else {
-                    MEGALogDebug("Meeting: Floating panel - Hang call - cannot get the call id and chat id string")
-                }
-            } else {
-                MEGALogDebug("Meeting: Hang call - no call found")
-            }
-            containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
+            manageHangCall(presenter, sender)
         case .shareLink(let presenter, let sender):
             containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
         case .inviteParticipants:
@@ -158,7 +148,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let call = self.call else { return }
             checkForAudioPermission(forCall: call) { granted in
                 let microphoneMuted = granted ? muted : true
-                self.callManagerUseCase.muteUnmuteCall(call, muted: microphoneMuted)
+                self.callCoordinatorUseCase.muteUnmuteCall(call, muted: microphoneMuted)
                 self.invokeCommand?(.microphoneMuted(muted: microphoneMuted))
             }
         case .turnCamera(let on):
@@ -328,6 +318,24 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatId: chatRoom.chatId)})
         if !participants.isEmpty {
             callParticipants.append(contentsOf: participants)
+        }
+    }
+    
+    private func manageHangCall(_ presenter: UIViewController, _ sender: UIButton) {
+        if let call = call {
+            if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
+               let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+                MEGALogDebug("Meeting: Floating panel - Hang call for call id \(callId) and chat id \(chatId)")
+            } else {
+                MEGALogDebug("Meeting: Floating panel - Hang call - cannot get the call id and chat id string")
+            }
+        } else {
+            MEGALogDebug("Meeting: Hang call - no call found")
+        }
+        if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && callParticipants.count > 1 {
+            containerViewModel?.dispatch(.showHangOrEndCallDialog)
+        } else {
+            containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
         }
     }
 }

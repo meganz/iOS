@@ -398,14 +398,6 @@
 "filesSentToChat"="Les fichiers ont été envoyés vers la conversation";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d fichiers ont été envoyés avec succès";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Supprimer le lien";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Supprimer des liens";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Le lien a été supprimé";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Les liens ont été supprimés";
 /* Title show when a file is being downloaded */
 "downloading"="Téléchargement en cours";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -1204,10 +1196,6 @@
 "Use Mobile Data for Videos"="Utiliser les données mobiles pour les vidéos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Absence automatique";
-/*  */
-"xMinutes"="[X] minutes";
-/*  */
-"1Minute"="1 minute";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="M’afficher comme absent après [X] minutes d’inactivité";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1584,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Fin de l’appel de groupe[/A][C]. Durée : [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durée : %@";
-/*  */
-"xSeconds"="%d secondes";
-/*  */
-"1Second"="1 seconde";
-/*  */
-"1Hour"="1 heure";
-/*  */
-"xHours"="%d heures";
-/*  */
-"1Hour1Minute"="1 heure, 1 minute";
-/*  */
-"1HourxMinutes"="1 heure, %d minutes";
-/*  */
-"xHours1Minute"="%d heures, 1 minute";
-/*  */
-"xHoursxMinutes"="%1$d heures, %2$d minutes";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Le fichier n’est pas pris en charge";
 /* Alert message shown when users try to stream an unsupported audio/video file */
@@ -2992,66 +2964,34 @@
 "media.quality.high"="Haute";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="La meilleure";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Élément en double";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="Le dossier existe déjà";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="Le dossier « %@ » existe déjà dans cette destination.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Choisir de fusionner les dossiers ou d’ignorer ce dossier.";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="Copier et fusionner";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="Sur la destination, fusionner le dossier avec celui que vous copiez.";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="Ne pas copier";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="Déplacer et fusionner";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="Sur la destination, fusionner le dossier avec celui que vous déplacez.";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="Ne pas déplacer";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="Téléverser et fusionner";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="Sur la destination, fusionner le dossier avec celui que vous téléversez.";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="Ne pas téléverser";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Ignorer ce dossier.";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="Ignorer ce dossier";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="Un fichier du même nom « %@ » existe déjà dans cette destination.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="Sélectionnez le fichier à conserver :";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="Copier et remplacer";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="Remplacer le fichier dans le dossier de destination par le fichier que vous copiez.";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="Déplacer et remplacer";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="Remplacer le fichier dans le dossier de destination par le fichier que vous déplacez.";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="Téléverser et remplacer";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Remplacer le fichier dans le dossier de destination par le fichier que vous téléversez.";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Ignorer ce fichier.";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="Copier et renommer";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="Le fichier que vous copiez sera renommé :";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="Déplacer et renommer";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="Le fichier que vous déplacez sera renommé :";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="Téléverser et renommer";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="Le fichier que vous téléversez sera renommé :";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="Téléverser et mettre à jour";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="Le fichier sera mis à jour par une nouvelle version.";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="Remplacer";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="Renommer";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="Mettre à jour";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="Le fichier sera mis à jour par une nouvelle version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Vous êtes la seule personne ici";
 /* Meetings end call dialog description */

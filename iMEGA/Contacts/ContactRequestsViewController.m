@@ -4,7 +4,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
-#import "DateTools.h"
 
 #import "ContactRequestsTableViewCell.h"
 #import "EmptyStateView.h"
@@ -12,6 +11,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 
 typedef NS_ENUM(NSInteger, Segment) {
     SegmentReceived = 0,
@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, Segment) {
 @property (nonatomic, getter=isDeletingLastRequest) BOOL deletingLastRequest;
 @property (nonatomic, getter=isPerformingRequest) BOOL performingRequest;
 
+@property (nonatomic, strong) NSRelativeDateTimeFormatter *relativeDateTimeFormatter;
+
 @end
 
 @implementation ContactRequestsViewController
@@ -45,6 +47,8 @@ typedef NS_ENUM(NSInteger, Segment) {
     self.tableView.emptyDataSetDelegate = self;
     
     self.navigationItem.titleView = self.contactRequestsSegmentedControl;
+    
+    self.relativeDateTimeFormatter = NSRelativeDateTimeFormatter.alloc.init;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -239,7 +243,6 @@ typedef NS_ENUM(NSInteger, Segment) {
     cell.declineButton.tag = indexPath.row;
     [cell.declineButton addTarget:self action:@selector(declineOrDeleteTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
-    NSString *pendingString = [[@" (" stringByAppendingString:NSLocalizedString(@"pending", nil)] stringByAppendingString:@")"];
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
         case SegmentReceived: {
             [cell.acceptButton setHidden:NO];
@@ -251,7 +254,7 @@ typedef NS_ENUM(NSInteger, Segment) {
             NSString *avatarSecondaryColorString = [MEGASdk avatarSecondaryColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
             cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_fromHexString:avatarColorString] backgroundGradientColor:[UIColor mnz_fromHexString:avatarSecondaryColorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest sourceEmail];
-            cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
+            cell.timeAgoLabel.text = [self.relativeDateTimeFormatter localizedStringForDate:[contactRequest modificationTime] relativeToDate:NSDate.date];
             
             break;
         }
@@ -264,7 +267,7 @@ typedef NS_ENUM(NSInteger, Segment) {
             NSString *avatarSecondaryColorString = [MEGASdk avatarSecondaryColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
             cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_fromHexString:avatarColorString] backgroundGradientColor:[UIColor mnz_fromHexString:avatarSecondaryColorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest targetEmail];
-            cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
+            cell.timeAgoLabel.text = [self.relativeDateTimeFormatter localizedStringForDate:[contactRequest modificationTime] relativeToDate:NSDate.date];
             break;
         }
             

@@ -48,7 +48,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: isSpeakerEnabled,
-                                                      callManagerUseCase: CallManagerUseCase(),
+                                                      callCoordinatorUseCase: CallCoordinatorUseCase(),
                                                       callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
                                                       audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
@@ -59,7 +59,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
-            thumbnailRepo: ThumbnailRepository.default
+            thumbnailRepo: ThumbnailRepository.newRepo
         )
 
         let vc = MeetingFloatingPanelViewController(viewModel: viewModel,

@@ -4,8 +4,6 @@
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
-@import DateToolsObjc;
-
 @interface AchievementsDetailsViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *checkImageView;

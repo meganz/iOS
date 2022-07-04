@@ -17,7 +17,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoYearCard(
             viewModel: PhotoYearCardViewModel(
                 photoByYear: photoByYear,
-                thumbnailUseCase: ThumbnailUseCase.default
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
             )
         )
     }
@@ -26,7 +26,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoMonthCard(
             viewModel: PhotoMonthCardViewModel(
                 photoByMonth: photoByMonth,
-                thumbnailUseCase: ThumbnailUseCase.default
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
             )
         )
     }
@@ -35,7 +35,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
                 photoByDay: photoByDay,
-                thumbnailUseCase: ThumbnailUseCase.default
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
             )
         )
     }
@@ -45,7 +45,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
-                thumbnailUseCase: ThumbnailUseCase.default
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
             )
         )
     }

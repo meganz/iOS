@@ -93,18 +93,6 @@ public enum Strings {
     public static let _1ContactFoundOnMEGA = Strings.tr("Localizable", "1 contact found on MEGA")
     /// 1 selected
     public static let _1Selected = Strings.tr("Localizable", "1 selected")
-    /// 1 hour
-    public static let _1Hour = Strings.tr("Localizable", "1Hour")
-    /// 1 hour, 1 minute
-    public static let _1Hour1Minute = Strings.tr("Localizable", "1Hour1Minute")
-    /// 1 hour, %d minutes
-    public static func _1HourxMinutes(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "1HourxMinutes", p1)
-    }
-    /// 1 minute
-    public static let _1Minute = Strings.tr("Localizable", "1Minute")
-    /// 1 second
-    public static let _1Second = Strings.tr("Localizable", "1Second")
     /// 24 hours
     public static let _24Hours = Strings.tr("Localizable", "24 hours")
     /// 30 minutes
@@ -1125,16 +1113,12 @@ public enum Strings {
     public static let linkCopied = Strings.tr("Localizable", "linkCopied")
     /// Invalid link
     public static let linkNotValid = Strings.tr("Localizable", "linkNotValid")
-    /// Link removed
-    public static let linkRemoved = Strings.tr("Localizable", "linkRemoved")
     /// Links
     public static let links = Strings.tr("Localizable", "Links")
     /// Links Copied to Clipboard
     public static let linksCopiedToClipboard = Strings.tr("Localizable", "Links Copied to Clipboard")
     /// Links copied
     public static let linksCopied = Strings.tr("Localizable", "linksCopied")
-    /// Links removed
-    public static let linksRemoved = Strings.tr("Localizable", "linksRemoved")
     /// Unavailable link
     public static let linkUnavailable = Strings.tr("Localizable", "linkUnavailable")
     /// Link with key
@@ -1693,10 +1677,6 @@ public enum Strings {
     public static let removeItemFromOffline = Strings.tr("Localizable", "removeItemFromOffline")
     /// Are you sure you want to delete these items from Offline?
     public static let removeItemsFromOffline = Strings.tr("Localizable", "removeItemsFromOffline")
-    /// Remove Link
-    public static let removeLink = Strings.tr("Localizable", "removeLink")
-    /// Remove Links
-    public static let removeLinks = Strings.tr("Localizable", "removeLinks")
     /// Are you sure you want to remove these shares? (Shared with %d contacts)
     public static func removeMultipleSharesMultipleContactsMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "removeMultipleSharesMultipleContactsMessage", p1)
@@ -2371,24 +2351,6 @@ public enum Strings {
     public static func xfilesSentSuccesfully(_ p1: Int) -> String {
       return Strings.tr("Localizable", "xfilesSentSuccesfully", p1)
     }
-    /// %d hours
-    public static func xHours(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "xHours", p1)
-    }
-    /// %d hours, 1 minute
-    public static func xHours1Minute(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "xHours1Minute", p1)
-    }
-    /// %1$d hours, %2$d minutes
-    public static func xHoursxMinutes(_ p1: Int, _ p2: Int) -> String {
-      return Strings.tr("Localizable", "xHoursxMinutes", p1, p2)
-    }
-    /// [X] minutes
-    public static let xMinutes = Strings.tr("Localizable", "xMinutes")
-    /// %d seconds
-    public static func xSeconds(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "xSeconds", p1)
-    }
     /// %d selected
     public static func xSelected(_ p1: Int) -> String {
       return Strings.tr("Localizable", "xSelected", p1)
@@ -2881,6 +2843,32 @@ public enum Strings {
         }
       }
     }
+    public enum Call {
+      public enum Duration {
+        /// Plural format key: "%#@hour@"
+        public static func hour(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "call.duration.hour", p1)
+        }
+        /// Plural format key: "%#@minute@"
+        public static func minute(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "call.duration.minute", p1)
+        }
+        /// Plural format key: "%#@second@"
+        public static func second(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "call.duration.second", p1)
+        }
+        public enum HourAndMinute {
+          /// Plural format key: "%#@hour@"
+          public static func hour(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "call.duration.hourAndMinute.hour", p1)
+          }
+          /// Plural format key: "%#@minute@"
+          public static func minute(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "call.duration.hourAndMinute.minute", p1)
+          }
+        }
+      }
+    }
     public enum CameraUploads {
       public enum Albums {
         /// Albums
@@ -2961,6 +2949,14 @@ public enum Strings {
       public enum Photos {
         /// To share photos and videos, grant MEGA access to your gallery
         public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
+      }
+      public enum Status {
+        public enum Duration {
+          /// Plural format key: "%#@minute@"
+          public static func minute(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "chat.status.duration.minute", p1)
+          }
+        }
       }
     }
     public enum CloudDrive {
@@ -3247,6 +3243,18 @@ public enum Strings {
         }
       }
     }
+    public enum Dnd {
+      public enum Duration {
+        /// Plural format key: "%#@hour@"
+        public static func hour(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "dnd.duration.hour", p1)
+        }
+        /// Plural format key: "%#@minute@"
+        public static func minute(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "dnd.duration.minute", p1)
+        }
+      }
+    }
     public enum Extensions {
       public enum Share {
         public enum Destination {
@@ -3529,6 +3537,18 @@ public enum Strings {
         public static let deletePermanently = Strings.tr("Localizable", "general.menuAction.deletePermanently")
         /// Move to rubbish bin
         public static let moveToRubbishBin = Strings.tr("Localizable", "general.menuAction.moveToRubbishBin")
+        public enum RemoveLink {
+          /// Plural format key: "%#@link@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.removeLink.title", p1)
+          }
+          public enum Message {
+            /// Plural format key: "%#@link@"
+            public static func success(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "general.menuAction.removeLink.message.success", p1)
+            }
+          }
+        }
       }
       public enum Security {
         /// MEGA-RECOVERYKEY
@@ -3882,52 +3902,34 @@ public enum Strings {
       }
     }
     public enum NameCollision {
-      public enum DuplicatedItem {
-        /// Duplicated item
-        public static let title = Strings.tr("Localizable", "nameCollision.duplicatedItem.title")
-      }
       public enum Files {
         /// A file named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.files.alreadyExists", String(describing: p1))
         }
-        /// Skip this file.
-        public static let cancelDescription = Strings.tr("Localizable", "nameCollision.files.cancelDescription")
-        /// Select the file you want to keep:
-        public static let selectAction = Strings.tr("Localizable", "nameCollision.files.selectAction")
-        public enum Copy {
-          /// The file you are copying will be renamed as:
-          public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.copy.renameDescription")
-          /// Copy and rename
-          public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.copy.renameTitle")
-          /// Replace the file in the destination folder with the file you are copying.
-          public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.copy.replaceDescription")
-          /// Copy and replace
-          public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.copy.replaceTitle")
-        }
-        public enum Move {
-          /// The file you are moving will be renamed as:
-          public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.move.renameDescription")
-          /// Move and rename
-          public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.move.renameTitle")
-          /// Replace the file in the destination folder with the file you are moving.
-          public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.move.replaceDescription")
-          /// Move and replace
-          public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.move.replaceTitle")
-        }
-        public enum Upload {
-          /// The file you are uploading will be renamed as:
-          public static let renameDescription = Strings.tr("Localizable", "nameCollision.files.upload.renameDescription")
-          /// Upload and rename
-          public static let renameTitle = Strings.tr("Localizable", "nameCollision.files.upload.renameTitle")
-          /// Replace the file in the destination folder with the file you are uploading.
-          public static let replaceDescription = Strings.tr("Localizable", "nameCollision.files.upload.replaceDescription")
-          /// Upload and replace
-          public static let replaceTitle = Strings.tr("Localizable", "nameCollision.files.upload.replaceTitle")
-          /// The file will be updated with a new version.
-          public static let updateDescription = Strings.tr("Localizable", "nameCollision.files.upload.updateDescription")
-          /// Upload and update
-          public static let updateTitle = Strings.tr("Localizable", "nameCollision.files.upload.updateTitle")
+        public enum Action {
+          public enum Rename {
+            /// The file will be renamed as:
+            public static let description = Strings.tr("Localizable", "nameCollision.files.action.rename.description")
+            /// Rename
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.rename.title")
+          }
+          public enum Replace {
+            /// The file at this destination will be replaced with the new file.
+            public static let description = Strings.tr("Localizable", "nameCollision.files.action.replace.description")
+            /// Replace
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.replace.title")
+          }
+          public enum Skip {
+            /// Skip this file
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.skip.title")
+          }
+          public enum Update {
+            /// The file will be updated with a new version.
+            public static let description = Strings.tr("Localizable", "nameCollision.files.action.update.description")
+            /// Update
+            public static let title = Strings.tr("Localizable", "nameCollision.files.action.update.title")
+          }
         }
       }
       public enum Folders {
@@ -3935,36 +3937,24 @@ public enum Strings {
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.folders.alreadyExists", String(describing: p1))
         }
-        /// Skip this folder.
-        public static let cancelDescription = Strings.tr("Localizable", "nameCollision.folders.cancelDescription")
-        /// Select whether you want to merge the folders or skip this folder.
-        public static let selectAction = Strings.tr("Localizable", "nameCollision.folders.selectAction")
-        public enum Copy {
-          /// Merge the folder at the destination with the folder you are copying.
-          public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.copy.mergeDescription")
-          /// Copy and merge
-          public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.copy.mergeTitle")
-        }
-        public enum Move {
-          /// Merge the folder at the destination with the folder you are moving.
-          public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.move.mergeDescription")
-          /// Move and merge
-          public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.move.mergeTitle")
-        }
-        public enum Upload {
-          /// Merge the folder at the destination with the folder you are uploading.
-          public static let mergeDescription = Strings.tr("Localizable", "nameCollision.folders.upload.mergeDescription")
-          /// Upload and merge
-          public static let mergeTitle = Strings.tr("Localizable", "nameCollision.folders.upload.mergeTitle")
+        public enum Action {
+          public enum Merge {
+            /// The new folder will be merged with the folder at this destination.
+            public static let description = Strings.tr("Localizable", "nameCollision.folders.action.merge.description")
+            /// Merge
+            public static let title = Strings.tr("Localizable", "nameCollision.folders.action.merge.title")
+          }
+          public enum Skip {
+            /// Skip this folder
+            public static let title = Strings.tr("Localizable", "nameCollision.folders.action.skip.title")
+          }
         }
       }
-      public enum General {
-        /// Don’t upload
-        public static let cancelTitle = Strings.tr("Localizable", "nameCollision.general.cancelTitle")
-        /// Don’t copy
-        public static let dontCopy = Strings.tr("Localizable", "nameCollision.general.dontCopy")
-        /// Don’t move
-        public static let dontMove = Strings.tr("Localizable", "nameCollision.general.dontMove")
+      public enum Title {
+        /// File already exists
+        public static let file = Strings.tr("Localizable", "nameCollision.title.file")
+        /// Folder already exists
+        public static let folder = Strings.tr("Localizable", "nameCollision.title.folder")
       }
     }
     public enum Offline {

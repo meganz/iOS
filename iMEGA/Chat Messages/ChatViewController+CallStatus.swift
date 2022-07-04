@@ -7,10 +7,7 @@ extension ChatViewController {
     }
     
     func checkIfChatHasActiveCall() {
-        guard chatRoom.ownPrivilege == .standard
-                || chatRoom.ownPrivilege == .moderator
-                || !MEGAReachabilityManager.isReachable(),
-              let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId),
+        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId),
               call.status != .destroyed,
               call.status != .terminatingUserParticipation else {
             joinCallCleanup()
@@ -70,7 +67,7 @@ extension ChatViewController {
     private func endCall(_ call: CallEntity) {
         let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
         CallUseCase(repository: callRepository).hangCall(for: call.callId)
-        CallManagerUseCase().endCall(call)
+        CallCoordinatorUseCase().endCall(call)
     }
     
     private func endActiveCallAndJoinCurrentChatroomCall() {
@@ -93,7 +90,7 @@ extension ChatViewController {
     }
     
     func subscribeToNoUserJoinedNotification() {
-        let usecase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.default)
+        let usecase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo)
         noUserJoinedSubscription = usecase
             .monitor
             .receive(on: DispatchQueue.main)

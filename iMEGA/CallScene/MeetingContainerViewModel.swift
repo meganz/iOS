@@ -2,7 +2,7 @@ import Combine
 
 enum MeetingContainerAction: ActionType {
     case onViewReady
-    case hangCall(presenter: UIViewController, sender: UIButton)
+    case hangCall(presenter: UIViewController?, sender: UIButton?)
     case tapOnBackButton
     case changeMenuVisibility
     case showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool)
@@ -20,6 +20,8 @@ enum MeetingContainerAction: ActionType {
     case showEndCallDialogIfNeeded
     case removeEndCallAlertAndEndCall
     case showJoinMegaScreen
+    case showHangOrEndCallDialog
+    case endCallForAll
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -33,7 +35,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let router: MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
     private let callUseCase: CallUseCaseProtocol
-    private let callManagerUseCase: CallManagerUseCaseProtocol
+    private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
@@ -53,7 +55,7 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoom: ChatRoomEntity,
          callUseCase: CallUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
-         callManagerUseCase: CallManagerUseCaseProtocol,
+         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
          authUseCase: AuthUseCaseProtocol,
          noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol) {
@@ -61,15 +63,15 @@ final class MeetingContainerViewModel: ViewModelType {
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
-        self.callManagerUseCase = callManagerUseCase
+        self.callCoordinatorUseCase = callCoordinatorUseCase
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
         
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
-        self.callManagerUseCase.addCallRemoved { [weak self] uuid in
+        self.callCoordinatorUseCase.addCallRemoved { [weak self] uuid in
             guard let uuid = uuid, let self = self, callUUID == uuid else { return }
-            self.callManagerUseCase.removeCallRemovedHandler()
+            self.callCoordinatorUseCase.removeCallRemovedHandler()
             router.dismiss(animated: false, completion: nil)
         }
     }
@@ -102,7 +104,7 @@ final class MeetingContainerViewModel: ViewModelType {
                         self.noUserJoinedSubscription = nil
                 }
             }
-        case.hangCall(let presenter, let sender):
+        case .hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
         case .tapOnBackButton:
             router.dismiss(animated: true, completion: nil)
@@ -160,18 +162,42 @@ final class MeetingContainerViewModel: ViewModelType {
             removeEndCallAlertAndEndCall()
         case .showJoinMegaScreen:
             router.showJoinMegaScreen()
+        case .showHangOrEndCallDialog:
+            router.showHangOrEndCallDialog(containerViewModel: self)
+        case .endCallForAll:
+            endCallForAll()
         }
     }
     
-    
-    private func hangCall(presenter: UIViewController, sender: UIButton) {
+    //MARK: -Private
+    private func hangCall(presenter: UIViewController?, sender: UIButton?) {
         if !userUseCase.isGuest {
             dismissCall(completion: nil)
         } else {
+            guard let presenter = presenter, let sender = sender else {
+                return
+            }
             router.showEndMeetingOptions(presenter: presenter,
                                          meetingContainerViewModel: self,
                                          sender: sender)
         }
+    }
+    
+    private func endCallForAll() {
+        if let call = call {
+            if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
+               let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+                MEGALogDebug("Meeting: Container view model - End call for all - for call id \(callId) and chat id \(chatId)")
+            } else {
+                MEGALogDebug("Meeting: Container view model - End call for all - cannot get the call id and chat id string")
+            }
+            
+            callCoordinatorUseCase.removeCallRemovedHandler()
+            callUseCase.endCall(for: call.callId)
+            callCoordinatorUseCase.endCall(call)
+        }
+        
+        router.dismiss(animated: true, completion: nil)
     }
     
     private func dismissCall(completion: (() -> Void)?) {
@@ -183,9 +209,9 @@ final class MeetingContainerViewModel: ViewModelType {
                 MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
             }
 
-            callManagerUseCase.removeCallRemovedHandler()
+            callCoordinatorUseCase.removeCallRemovedHandler()
             callUseCase.hangCall(for: call.callId)
-            callManagerUseCase.endCall(call)
+            callCoordinatorUseCase.endCall(call)
         }
        
         router.dismiss(animated: true, completion: completion)
@@ -194,8 +220,9 @@ final class MeetingContainerViewModel: ViewModelType {
     private func muteMicrophoneIfNoOtherParticipantsArePresent() {
         if let call = call,
            call.hasLocalAudio,
+           isOneToOneChat == false,
            isOnlyMyselfInTheMeeting() {
-            callManagerUseCase.muteUnmuteCall(call, muted: true)
+            callCoordinatorUseCase.muteUnmuteCall(call, muted: true)
         }
     }
     
@@ -249,7 +276,7 @@ final class MeetingContainerViewModel: ViewModelType {
     deinit {
         cancelMuteMicrophoneSubscription()
         cancelNoUserJoinedSubscription()
-        self.callManagerUseCase.removeCallRemovedHandler()
+        self.callCoordinatorUseCase.removeCallRemovedHandler()
     }
     
 }

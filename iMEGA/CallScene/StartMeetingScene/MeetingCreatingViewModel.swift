@@ -1,3 +1,4 @@
+import Combine
 
 enum MeetingCreatingViewAction: ActionType {
     case onViewReady
@@ -57,6 +58,10 @@ final class MeetingCreatingViewModel: ViewModelType {
     private var userHandle: UInt64
     
     private var chatId: UInt64?
+    
+    var appDidBecomeActiveSubscription: AnyCancellable?
+    var appWillResignActiveSubscription: AnyCancellable?
+
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
@@ -87,6 +92,21 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.userUseCase = userUseCase
         self.userHandle = userHandle
+        
+        appDidBecomeActiveSubscription = NotificationCenter.default
+            .publisher(for: UIApplication.didBecomeActiveNotification)
+            .sink() { [weak self] _ in
+                guard let self = self else { return }
+                self.audioSessionUseCase.configureAudioSession()
+                self.addRouteChangedListener()
+                self.enableLoudSpeaker(enabled: self.isSpeakerEnabled)
+            }
+        
+        appWillResignActiveSubscription = NotificationCenter.default
+            .publisher(for: UIApplication.willResignActiveNotification)
+            .sink() { [weak self] _ in
+                self?.removeRouteChangedListener()
+            }
     }
     
     // MARK: - Dispatch action
@@ -94,10 +114,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             audioSessionUseCase.configureAudioSession()
-            audioSessionUseCase.routeChanged { [weak self] routeChangedReason, _ in
-                guard let self = self else { return }
-                self.sessionRouteChanged(routeChangedReason: routeChangedReason)
-            }
+            addRouteChangedListener()
             if audioSessionUseCase.isBluetoothAudioRouteAvailable {
                 isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
                 updateSpeakerInfo()
@@ -189,6 +206,17 @@ final class MeetingCreatingViewModel: ViewModelType {
                 }
             }
         }
+    }
+    
+    private func addRouteChangedListener() {
+        audioSessionUseCase.routeChanged { [weak self] routeChangedReason, _ in
+            guard let self = self else { return }
+            self.sessionRouteChanged(routeChangedReason: routeChangedReason)
+        }
+    }
+    
+    private func removeRouteChangedListener() {
+        audioSessionUseCase.routeChanged(handler: nil)
     }
     
     private func enableLoudSpeaker(enabled: Bool) {
@@ -366,7 +394,6 @@ final class MeetingCreatingViewModel: ViewModelType {
     
     private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
         MEGALogDebug("Create meeting: session route changed with \(routeChangedReason) , current port \(audioSessionUseCase.currentSelectedAudioPort)")
-        isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
         updateSpeakerInfo()
     }
 }

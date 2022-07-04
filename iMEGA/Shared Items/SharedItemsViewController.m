@@ -27,14 +27,9 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate, SharedItemsTableViewCellDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate, SharedItemsTableViewCellDelegate> {
     BOOL allNodesSelected;
 }
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
@@ -65,16 +60,11 @@
 @property (nonatomic, strong) NSMutableDictionary *outgoingIndexPathsMutableDictionary;
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
-@property (nonatomic) UISearchController *searchController;
-
-@property (nonatomic) MEGASortOrderType sortOrderType;
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
-@property (weak, nonatomic) IBOutlet UIButton *incomingButton;
+
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;
-@property (weak, nonatomic) IBOutlet UIButton *outgoingButton;
 @property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
-@property (weak, nonatomic) IBOutlet UIButton *linksButton;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
 
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
@@ -101,9 +91,9 @@
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
     
     self.navigationItem.title = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
+    self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
     
-    self.editBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
-    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    [self setNavigationBarButtons];
     
     [self.incomingButton setTitle:NSLocalizedString(@"incoming", nil) forState:UIControlStateNormal];
     [self.outgoingButton setTitle:NSLocalizedString(@"outgoing", nil) forState:UIControlStateNormal];
@@ -598,38 +588,15 @@
     return photoBrowserVC;
 }
 
+- (void)nodesSortTypeHasChanged {
+    [self reloadUI];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
     if (self.tableView.isEditing) {
         [self endEditingMode];
-    } else {
-        __weak __typeof__(self) weakSelf = self;
-        UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
-
-        NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
-            NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
-                weakSelf.sortOrderType = MEGASortOrderTypeDefaultAsc;
-                [weakSelf reloadUI];
-                [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
-            }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:nil accessoryView:self.sortOrderType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
-                weakSelf.sortOrderType = MEGASortOrderTypeDefaultDesc;
-                [weakSelf reloadUI];
-                [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
-            }]];
-            
-            ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-            [weakSelf presentViewController:sortByActionSheet animated:YES completion:nil];
-        }]];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf didTapSelect];
-        }]];
-        
-        ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-        [self presentViewController:moreActionSheet animated:YES completion:nil];
     }
 }
 
@@ -650,11 +617,9 @@
     
     [self updateNavigationBarTitle];
     
+    [self setNavigationBarButtons];
+    
     if (editing) {
-        self.editBarButtonItem.image = nil;
-        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
-        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-        
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
@@ -679,7 +644,6 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
@@ -1082,7 +1046,7 @@
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (self.incomingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [node mnz_leaveSharingInViewController:self];
+            [node mnz_leaveSharingInViewController:self completion:nil];
             [self endEditingMode];
         }];
         shareAction.image = [[UIImage imageNamed:@"leaveShare"] imageWithTintColor:UIColor.whiteColor];
@@ -1090,7 +1054,7 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [node mnz_removeSharing];
+            [node mnz_removeSharingWithCompletion:nil];
             [self endEditingMode];
         }];
         shareAction.image = [[UIImage imageNamed:@"removeShare"] imageWithTintColor:UIColor.whiteColor];
@@ -1162,89 +1126,6 @@
 - (void)didPresentSearchController:(UISearchController *)searchController {
     if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.searchController.searchBar.superview.frame = CGRectMake(0, self.selectorView.frame.size.height + self.navigationController.navigationBar.frame.size.height, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
-    }
-}
-
-#pragma mark - DZNEmptyDataSetSource
-
-- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
-    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
-    
-    return emptyStateView;
-}
-
-#pragma mark - Empty State
-
-- (NSString *)titleForEmptyState {
-    NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive) {
-            if (self.searchController.searchBar.text.length > 0) {
-                text = NSLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
-            }
-        } else {
-            if (self.incomingButton.selected) {
-                text = NSLocalizedString(@"noIncomingSharedItemsEmptyState_text", nil);
-            } else if (self.outgoingButton.selected) {
-                text = NSLocalizedString(@"noOutgoingSharedItemsEmptyState_text", nil);
-            } else if (self.linksButton.selected) {
-                text = NSLocalizedString(@"No Public Links", @"Title for empty state view of 'Links' in Shared Items.");
-            }
-        }
-    } else {
-        text = NSLocalizedString(@"noInternetConnection",  nil);
-    }
-    
-    return text;
-}
-
-- (NSString *)descriptionForEmptyState {
-    NSString *text = @"";
-    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
-    }
-    
-    return text;
-}
-
-- (UIImage *)imageForEmptyState {
-    UIImage *image;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive) {
-            if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"searchEmptyState"];
-            } else {
-                return nil;
-            }
-        } else {
-            if (self.incomingButton.selected) {
-                image = [UIImage imageNamed:@"incomingEmptyState"];
-            } else if (self.outgoingButton.selected) {
-                image = [UIImage imageNamed:@"outgoingEmptyState"];
-            } else if (self.linksButton.selected) {
-                image = [UIImage imageNamed:@"linksEmptyState"];
-            }
-        }
-    } else {
-        image = [UIImage imageNamed:@"noInternetEmptyState"];
-    }
-    
-    return image;
-}
-
-- (NSString *)buttonTitleForEmptyState {
-    NSString *text = @"";
-    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
-    }
-    
-    return text;
-}
-
-- (void)buttonTouchUpInsideEmptyState {
-    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }
 }
 
@@ -1330,11 +1211,11 @@
             break;
             
         case MegaNodeActionTypeLeaveSharing:
-            [node mnz_leaveSharingInViewController:self];
+            [node mnz_leaveSharingInViewController:self completion:nil];
             break;
             
         case MegaNodeActionTypeRemoveSharing:
-            [node mnz_removeSharing];
+            [node mnz_removeSharingWithCompletion:nil];
             break;
             
         case MegaNodeActionTypeShareLink:
