@@ -1,10 +1,9 @@
 import Foundation
 
-extension OfflineFilesRepository {
-    static let `default` = OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk())
-}
-
-class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
+final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
+    static var newRepo: OfflineFilesRepository {
+        OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk())
+    }
     
     private let store: MEGAStore
     private let sdk: MEGASdk

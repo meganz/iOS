@@ -1,10 +1,10 @@
 import Foundation
 
-extension ThumbnailRepository {
-    static let `default` = ThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), fileManager: .default)
-}
-
 struct ThumbnailRepository: ThumbnailRepositoryProtocol {
+    static var newRepo: ThumbnailRepository {
+        ThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), fileManager: .default)
+    }
+    
     private enum Constants {
         static let thumbnailCacheDirectory = "thumbnailsV3"
         static let previewCacheDirectory = "previewsV3"

@@ -31,7 +31,7 @@ protocol ReportIssueViewRouting: Routing {
         let zippedLogsUrl = areLogsEnabled ? compressor.compressedFileURL(sourceURL:Logger.shared().logsDirectoryUrl, toNewFilename: filename) : nil
         
         let uploadRepo = UploadFileRepository(sdk: sdk)
-        let uploadUseCase = UploadFileUseCase(uploadFileRepository: uploadRepo, fileSystemRepository: FileSystemRepository.default, nodeRepository: NodeRepository.default, fileCacheRepository: FileCacheRepository.default)
+        let uploadUseCase = UploadFileUseCase(uploadFileRepository: uploadRepo, fileSystemRepository: FileSystemRepository.newRepo, nodeRepository: NodeRepository.newRepo, fileCacheRepository: FileCacheRepository.newRepo)
         let supportRepo = SupportRepository(sdk: sdk)
         let supportUseCase = SupportUseCase(repo: supportRepo)
         let monitorRepo = NetworkMonitorRepository()

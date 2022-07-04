@@ -1,5 +1,5 @@
 
-protocol FileVersionsRepositoryProtocol {
+protocol FileVersionsRepositoryProtocol: RepositoryProtocol {
     func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
     func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
 #if MAIN_APP_TARGET

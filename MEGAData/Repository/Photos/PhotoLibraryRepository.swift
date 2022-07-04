@@ -1,8 +1,8 @@
-extension PhotoLibraryRepository {
-    static let `default` = PhotoLibraryRepository(sdk: MEGASdkManager.sharedMEGASdk())
-}
-
 struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol {
+    static var newRepo: PhotoLibraryRepository {
+        PhotoLibraryRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     
     init(sdk: MEGASdk) {

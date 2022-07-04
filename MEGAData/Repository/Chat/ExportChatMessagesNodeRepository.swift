@@ -1,11 +1,11 @@
 
 import Foundation
 
-extension ExportChatMessagesRepository {
-    static let `default` = ExportChatMessagesRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk(), store: MEGAStore.shareInstance())
-}
-
-class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
+final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
+    static var newRepo: ExportChatMessagesRepository {
+        ExportChatMessagesRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk(), store: MEGAStore.shareInstance())
+    }
+    
     private let sdk: MEGASdk
     private let chatSdk: MEGAChatSdk
     private let store: MEGAStore

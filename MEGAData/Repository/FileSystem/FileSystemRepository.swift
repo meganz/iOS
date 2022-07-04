@@ -1,10 +1,10 @@
 import Foundation
 
-extension FileSystemRepository {
-    static let `default` = FileSystemRepository(fileManager: .default)
-}
-
 struct FileSystemRepository: FileSystemRepositoryProtocol {
+    static var newRepo: FileSystemRepository {
+        FileSystemRepository(fileManager: .default)
+    }
+    
     private let fileManager: FileManager
     
     init(fileManager: FileManager) {

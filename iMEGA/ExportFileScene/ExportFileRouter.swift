@@ -30,13 +30,13 @@ final class ExportFileRouter: ExportFileViewRouting {
     //MARK: - Private -
     private lazy var viewModel: ExportFileViewModel = {
         let uc = ExportFileUseCase(
-            downloadFileRepository: DownloadFileRepository.default,
-            offlineFilesRepository: OfflineFilesRepository.default,
-            fileCacheRepository: FileCacheRepository.default,
-            thumbnailRepository: ThumbnailRepository.default,
-            fileSystemRepository: FileSystemRepository.default,
-            exportChatMessagesRepository: ExportChatMessagesRepository.default,
-            importNodeRepository: ImportNodeRepository.default)
+            downloadFileRepository: DownloadFileRepository.newRepo,
+            offlineFilesRepository: OfflineFilesRepository.newRepo,
+            fileCacheRepository: FileCacheRepository.newRepo,
+            thumbnailRepository: ThumbnailRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.newRepo,
+            exportChatMessagesRepository: ExportChatMessagesRepository.newRepo,
+            importNodeRepository: ImportNodeRepository.newRepo)
         
         return ExportFileViewModel(router: self, exportFileUseCase: uc)
     }()

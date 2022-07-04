@@ -1,6 +1,6 @@
 import Foundation
 
-protocol FileCacheRepositoryProtocol {
+protocol FileCacheRepositoryProtocol: RepositoryProtocol {
     func tempFileURL(for node: NodeEntity) -> URL
     func existingTempFileURL(for node: NodeEntity) -> URL?
     

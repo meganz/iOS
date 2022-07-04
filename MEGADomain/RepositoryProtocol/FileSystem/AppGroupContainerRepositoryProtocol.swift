@@ -1,5 +1,5 @@
 import Foundation
 
-protocol AppGroupContainerRepositoryProtocol {
+protocol AppGroupContainerRepositoryProtocol: RepositoryProtocol {
     func cleanContainer()
 }

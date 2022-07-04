@@ -1,9 +1,8 @@
-
-extension NodeRepository {
-    static let `default` = NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())
-}
-
 struct NodeRepository: NodeRepositoryProtocol {
+    static var newRepo: NodeRepository {
+        NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())
+    }
+    
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
     private let chatSdk: MEGAChatSdk

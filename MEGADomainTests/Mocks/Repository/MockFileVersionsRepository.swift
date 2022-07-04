@@ -1,5 +1,7 @@
 
 struct MockFileVersionsRepository: FileVersionsRepositoryProtocol {
+    static let newRepo = MockFileVersionsRepository()
+    
     var versions: Int64 = 0
     var versionsSize: Int64 = 0
     var isFileVersionsEnabled: (Result<Bool, FileVersionErrorEntity>) = .failure(.generic)

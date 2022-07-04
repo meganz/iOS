@@ -1,10 +1,10 @@
 import Foundation
 
-extension ImportNodeRepository {
-    static let `default` = ImportNodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk(), myChatFilesFolder: MyChatFilesFolderNodeAccess.shared)
-}
-
 struct ImportNodeRepository: ImportNodeRepositoryProtocol {
+    static var newRepo: ImportNodeRepository {
+        ImportNodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk(), myChatFilesFolder: MyChatFilesFolderNodeAccess.shared)
+    }
+    
     private let sdk: MEGASdk
     private let chatSdk: MEGAChatSdk
     private let myChatFilesFolder: MyChatFilesFolderNodeAccess

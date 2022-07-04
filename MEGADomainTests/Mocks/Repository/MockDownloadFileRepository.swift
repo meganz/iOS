@@ -1,6 +1,8 @@
 @testable import MEGA
 
 struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
+    static let newRepo = MockDownloadFileRepository()
+    
     var completionResult: Result<TransferEntity, TransferErrorEntity> = .failure(.generic)
     
     func download(nodeHandle: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {

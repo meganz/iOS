@@ -13,7 +13,7 @@ final class FileExplorerGridCellViewModel {
     private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
         return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
                                         fileSystemClient: .live,
-                                        thumbnailRepo: ThumbnailRepository.default)
+                                        thumbnailRepo: ThumbnailRepository.newRepo)
     }()
     
     private weak var delegate: FileExplorerGridCellViewModelDelegate?

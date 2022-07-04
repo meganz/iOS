@@ -128,7 +128,7 @@
     
     [ExtensionAppearanceManager setupAppearance:self.traitCollection];
     [SVProgressHUD setViewForExtension:self.view];
-    [[AppFirstLaunchSecurityChecker defaultChecker] performSecurityCheck];
+    [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
         [self initChatAndStartLogging];

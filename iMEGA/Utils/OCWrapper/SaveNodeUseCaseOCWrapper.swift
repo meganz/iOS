@@ -2,8 +2,8 @@
 @objc class SaveNodeUseCaseOCWrapper: NSObject {
     let saveNodeUseCase = SaveNodeUseCase(
         offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk()),
-        fileCacheRepository: FileCacheRepository.default,
-        nodeRepository: NodeRepository.default,
+        fileCacheRepository: FileCacheRepository.newRepo,
+        nodeRepository: NodeRepository.newRepo,
         photosLibraryRepository: PhotosLibraryRepository())
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
