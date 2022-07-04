@@ -30,7 +30,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         }
     }
     
-    func saveToPhotosChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, completion: @escaping  (SaveMediaToPhotosErrorEntity?) -> Void) {
+    func saveToPhotosChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void) {
         guard let base64Handle = nodeRepository.base64ForChatNode(handle: handle, messageId: messageId, chatId: chatId), let name = nodeRepository.nameForChatNode(handle: handle, messageId: messageId, chatId: chatId) else {
             completion(.downloadFailed)
             return
@@ -39,6 +39,24 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         let tempUrl = fileCacheRepository.cachedFileURL(for: base64Handle, name: name)
         
         downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl.path, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
+            switch result {
+            case .success:
+                completion(nil)
+            case .failure:
+                completion(.downloadFailed)
+            }
+        }
+    }
+    
+    func saveToPhotosMEGANode(node: MEGANode, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void) {
+        guard let base64Handle = MEGASdk.base64Handle(forHandle: node.handle), let name = node.name else {
+            completion(.downloadFailed)
+            return
+        }
+
+        let tempUrl = fileCacheRepository.cachedFileURL(for: base64Handle, name: name)
+       
+        downloadFileRepository.download(node: node, to: tempUrl.path, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
             switch result {
             case .success:
                 completion(nil)

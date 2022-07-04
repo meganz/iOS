@@ -206,6 +206,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                                                                                      presenting: nil,
                                                                                      preferredIndex: UInt(foundIndex ?? 0))
                     photoBrowserVC?.delegate = self
+                    photoBrowserVC?.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId)
                     present(viewController: photoBrowserVC!)
                 } else {
                     node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil)

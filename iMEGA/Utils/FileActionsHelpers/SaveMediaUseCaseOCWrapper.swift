@@ -1,23 +1,24 @@
 
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
-    
-    private let completionBlock: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
-        SVProgressHUD.dismiss()
+    @objc func saveToPhotos(node: MEGANode, isFolderLink: Bool = false) {
+        let sdk = isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
+        
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
 
-        if error != nil {
-            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+        let completionBlock: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
+            SVProgressHUD.dismiss()
+
+            if error != nil {
+                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+            }
         }
-    }
-    
-    let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.default, nodeRepository: NodeRepository.default)
-    
-    @objc func saveToPhotos(node: MEGANode) {
+        
         DevicePermissionsHelper.photosPermission { granted in
             if granted {
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
                 let nodeEntity = NodeEntity(node: node)
-                self.saveMediaUseCase.saveToPhotos(node: nodeEntity, completion: self.completionBlock)
+                saveMediaUseCase.saveToPhotos(node: nodeEntity, completion: completionBlock)
             } else {
                 DevicePermissionsHelper.alertPhotosPermission()
             }

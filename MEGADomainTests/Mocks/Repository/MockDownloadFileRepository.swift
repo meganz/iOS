@@ -7,6 +7,10 @@ struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
         completion(completionResult)
     }
     
+    func download(node: MEGANode, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+        completion(completionResult)
+    }
+
     func downloadChat(nodeHandle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         completion(completionResult)
     }

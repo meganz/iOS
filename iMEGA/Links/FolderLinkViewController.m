@@ -1046,7 +1046,7 @@
             
         case MegaNodeActionTypeSaveToPhotos:
             node = [MEGASdkManager.sharedMEGASdkFolder authorizeNode:node];
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node isFolderLink:YES];
             break;
             
         case MegaNodeActionTypeSendToChat:

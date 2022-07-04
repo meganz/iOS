@@ -405,8 +405,9 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                     }
                 }
                 
-                guard let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: nodes, api: MEGASdkManager.sharedMEGASdk(), displayMode: .chatSharedFiles, presenting: selectedNode, preferredIndex: 0) else { return }
+                guard let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: nodes, api: MEGASdkManager.sharedMEGASdk(), displayMode: .chatSharedFiles, presenting: selectedNode, preferredIndex: 0), let message = messagesArray[safe: indexPath.row] else { return }
                 
+                photoBrowserVC.configureMediaAttachment(forMessageId: message.messageId, inChatId: chatRoom.chatId)
                 navigationController?.present(photoBrowserVC, animated: true, completion: nil)
             } else {
                 if chatRoom.isPreview {
