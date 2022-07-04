@@ -60,8 +60,6 @@
 @property (nonatomic, strong) MEGAGenericRequestDelegate* requestDelegate;
 @property (nonatomic, strong) GlobalDelegate* globalDelegate;
 
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation FolderLinkViewController
@@ -684,7 +682,7 @@
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (self.selectedNodesArray.count) {
             [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:YES];
-        } else {
+        } else if (self.parentNode != nil) {
             [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.parentNode] presenter:self isFolderLink:YES];
         }
         

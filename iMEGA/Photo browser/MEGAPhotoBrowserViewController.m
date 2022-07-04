@@ -66,8 +66,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation MEGAPhotoBrowserViewController
@@ -102,7 +100,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.modalPresentationCapturesStatusBarAppearance = YES;
     
     self.currentIndex = self.preferredIndex;
-    self.cancelToken = MEGACancelToken.alloc.init;
     self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     
@@ -683,7 +680,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             MEGAStartDownloadTransferDelegate *delegate =[[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:transferProgress completion:transferCompletion onError:nil];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             
-            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath fileName:nil appData:nil startFirst:NO cancelToken:self.cancelToken delegate:delegate];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:node localPath:temporaryImagePath fileName:nil appData:nil startFirst:NO cancelToken:nil delegate:delegate];
             
             break;
         }
@@ -1141,7 +1138,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     break;
                     
                 default:
-                    [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
+                    if (node != nil) {
+                        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
+                    }
                     break;
             }
             break;

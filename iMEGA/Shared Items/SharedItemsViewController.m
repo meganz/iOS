@@ -1164,7 +1164,9 @@
         }
             
         case MegaNodeActionTypeDownload:
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+            if (node != nil) {
+                [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+            }
             break;
             
         case MegaNodeActionTypeRename:

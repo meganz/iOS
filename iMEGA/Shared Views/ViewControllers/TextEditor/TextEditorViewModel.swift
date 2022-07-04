@@ -67,8 +67,6 @@ final class TextEditorViewModel: ViewModelType {
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     
-    private var cancelToken = MEGACancelToken()
-
     init(
         router: TextEditorViewRouting,
         textFile: TextFile,
@@ -181,7 +179,7 @@ final class TextEditorViewModel: ViewModelType {
         let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
         do {
             try content.write(toFile: tempPath, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
-            uploadFileUseCase.uploadFile(withLocalPath: tempPath, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, cancelToken: cancelToken, start: nil, update: nil) { result in
+            uploadFileUseCase.uploadFile(withLocalPath: tempPath, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, cancelToken: nil, start: nil, update: nil) { result in
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
                 }
@@ -252,7 +250,7 @@ final class TextEditorViewModel: ViewModelType {
     
     private func downloadToTempFolder() {
         guard let nodeHandle = nodeEntity?.handle else { return }
-        downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil, cancelToken: cancelToken) { (transferEntity) in
+        downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil, cancelToken: nil) { (transferEntity) in
             let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
             self.invokeCommand?(.updateProgressView(progress: percentage))
         } completion: { (result) in
