@@ -34,5 +34,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) NSString *publicLink;
 @property (nonatomic) NSString *encryptedLink;
 @property (nonatomic) BOOL needsReload;
+@property (nonatomic) MEGAHandle chatId;
+@property (nonatomic) MEGAHandle messageId;
 
 @end

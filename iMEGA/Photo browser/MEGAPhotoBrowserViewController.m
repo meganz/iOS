@@ -454,10 +454,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     return NO;
 }
 
-- (void)saveToPhotos:(MEGANode *)node {
-    [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
-}
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -808,7 +804,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (node == nil) {
         return;
     }
-    [self saveToPhotos:node];
+    [self saveToPhotosWithNode:node];
 }
 
 - (IBAction)didPressForwardbarButton:(UIBarButtonItem *)sender {
@@ -872,7 +868,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            [self saveToPhotos:node];
+            [self saveToPhotosWithNode:node];
             break;
             
         default:
@@ -1220,7 +1216,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [self saveToPhotos:node];
+            [self saveToPhotosWithNode:node];
             break;
             
         case MegaNodeActionTypeShareLink:

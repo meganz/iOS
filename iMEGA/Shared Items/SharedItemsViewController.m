@@ -1357,7 +1357,7 @@
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node];
+            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node isFolderLink:NO];
             break;
             
         case MegaNodeActionTypeMove:
