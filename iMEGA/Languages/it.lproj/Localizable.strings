@@ -398,14 +398,6 @@
 "filesSentToChat"="I file sono stati inviati alla chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d file inviati con successo";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Rimuovi link";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Rimuovi i link";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Link rimosso";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Link rimossi";
 /* Title show when a file is being downloaded */
 "downloading"="Scaricando";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -2972,66 +2964,34 @@
 "media.quality.high"="Alta";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Migliore";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Oggetto duplicato";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="Una cartella con lo stesso nome esiste già";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Seleziona se vuoi unire le cartelle o saltare questa cartella.";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="Copia ed unisci";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="Unisci la cartella di destinazione con la cartella che stai copiando.";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="Non copiare";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="Sposta e unisci";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="Unisci la cartella di destinazione con la cartella che stai spostando.";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="Non spostare";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="Carica e unisci";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="Unisci la cartella di destinazione con la cartella che stai caricando.";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="Non caricare";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Salta questa cartella.";
+"nameCollision.folders.alreadyExists"="";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="Salta questa cartella";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="Seleziona il file che vuoi mantenere:";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="Copia e rimpiazza";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="Sostituisci il file nella cartella di destinazione con il file che stai copiando.";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="Muovi e rimpiazza";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="Sostituisci il file nella cartella di destinazione con il file che stai spostando.";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="Carica e rimpiazza";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Sostituisci il file nella cartella di destinazione con il file che stai caricando.";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Skip this file.";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="Copia e rinomina";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="Il file che stai copiando sarà rinominato in:";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="Sposta e rinomina";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="Il file che stai spostando sarà rinominato in:";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="Carica e rinomina";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="Il file che stai caricando verrà rinominato in:";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="Carica ed aggiorna";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
+"nameCollision.files.alreadyExists"="";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="Sostituisci";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="Rinomina";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="Aggiorna";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Ci sei solo tu qui";
 /* Meetings end call dialog description */

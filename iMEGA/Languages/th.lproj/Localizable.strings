@@ -398,14 +398,6 @@
 "filesSentToChat"="ไฟล์ถูกส่งไปยังแชทแล้ว";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="ส่งไฟล์ %d เรียบร้อยแล้ว";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="ลบลิงก์ออก";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="ลบลิงก์ออก";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="ลิงก์ถูกลบแล้ว";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="ลิงก์ถูกลบแล้ว";
 /* Title show when a file is being downloaded */
 "downloading"="กำลังดาวน์โหลด";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -2972,66 +2964,34 @@
 "media.quality.high"="สูง";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="ดีที่สุด";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="รายการที่ซ้ำกัน";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="โฟลเดอร์นี้มีการใช้งานแล้ว";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="เลือกว่าคุณต้องการรวมโฟลเดอร์หรือข้ามโฟลเดอร์นี้";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="คัดลอกและผสาน";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="ผสานโฟลเดอร์ที่ปลายทางกับโฟลเดอร์ที่คุณกำลังคัดลอกไว้.";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="ไม่ต้องคัดลอก";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="ย้ายและผสาน";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="รวมโฟลเดอร์ที่ปลายทางเข้ากับโฟลเดอร์ที่คุณกำลังย้าย";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="ไม่ต้องย้าย";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="อัปโหลดและผสาน";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="รวมโฟลเดอร์ที่ปลายทางเข้ากับโฟลเดอร์ที่คุณกำลังอัปโหลด";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="ไม่ต้องอัปโหลด";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="ข้ามโฟลเดอร์นี้";
+"nameCollision.folders.alreadyExists"="โฟลเดอร์ %@ มีอยู่แล้วในปลายทางนี้";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="ข้ามโฟลเดอร์นี้";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="เลือกไฟล์ที่คุณต้องการเก็บ:";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="คัดลอกและวาง";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="แทนที่ไฟล์ในโฟลเดอร์ปลายทางด้วยไฟล์ที่คุณกำลังคัดลอก.";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="ย้ายและแทนที่";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="แทนที่ไฟล์ในโฟลเดอร์ปลายทางด้วยไฟล์ที่คุณกำลังย้าย.";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="อัปโหลดและแทนที่";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="แทนที่ไฟล์ในโฟลเดอร์ปลายทางด้วยไฟล์ที่คุณกำลังอัปโหลด";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Skip this file.";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="คัดลอกและเปลี่ยนชื่อ";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="ไฟล์ที่คุณกำลังคัดลอกจะเปลี่ยนชื่อเป็น:";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="ย้ายและเปลี่ยนชื่อ";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="ไฟล์ที่คุณกำลังย้ายจะเปลี่ยนชื่อเป็น:";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="อัปโหลดและเปลี่ยนชื่อ";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="ไฟล์ที่คุณกำลังอัปโหลดจะถูกเปลี่ยนชื่อเป็น:";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="อัปโหลดและอัปเดต";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
+"nameCollision.files.alreadyExists"="ไฟล์ชื่อ %@ มีอยู่แล้วในปลายทางนี้";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="แทนที่";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="เปลี่ยนชื่อ";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="อัปเดต";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="ไฟล์จะได้รับการอัปเดตเป็นเวอร์ชันใหม่";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="ตอนนี้มีแค่คุณที่อยู่ในสาย";
 /* Meetings end call dialog description */
@@ -3045,7 +3005,7 @@
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="ใช้งานแบบออฟไลน์";
 /* Button and title text that ends the meeting for all */
-"meetings.endCall.endForAllButtonTitle"="วางสายทุกคน";
+"meetings.endCall.endForAllButtonTitle"="วางสายทั้งหมด";
 /* Title of the popup that ends the meeting for all */
 "meetings.endCall.endForAllAlert.title"="วางสายทั้งหมดหรือไม่";
 /* Description of the popup that ends the meeting for all */
@@ -3057,4 +3017,4 @@
 /* Label for hang a group chat or meeting when the user is moderator */
 "meetings.leaveCall.buttonTitle"="ออก";
 /* Label for end a group chat or meeting when the user is moderator */
-"meetings.endForAll.buttonTitle"="End for all";
+"meetings.endForAll.buttonTitle"="วางสายทั้งหมด";

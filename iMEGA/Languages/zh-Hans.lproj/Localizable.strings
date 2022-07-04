@@ -398,14 +398,6 @@
 "filesSentToChat"="已发送文件到聊天";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="已成功发送%d个文件";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="移除链接";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="移除链接";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="链接已移除";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="链接已移除";
 /* Title show when a file is being downloaded */
 "downloading"="正在下载";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -2972,66 +2964,34 @@
 "media.quality.high"="较高";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="重复项目";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="文件夹已存在";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="选择您是否要合并文件夹或跳过此文件夹。";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="复制并合并";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="将目标文件夹与您要复制的文件夹合并。";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="不要复制";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="移动并合并";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="将目标文件夹与您要移动的文件夹合并。";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="不要移动";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="上传并合并";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="将目标文件夹与您要上传的文件夹合并。";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="不要上传";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="跳过此文件夹。";
+"nameCollision.folders.alreadyExists"="此位置已存在名为%@的文件夹。";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="跳过此文件夹";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="选择您要保留的文件：";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="复制并替换";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="将目标文件夹中的文件替换为您要复制的文件。";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="移动并替换";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="将目标文件夹中的文件替换为您要移动的文件。";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="上传并替换";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="将目标文件夹中的文件替换为您要上传的文件。";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Skip this file.";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="复制并重命名";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="您所复制的文件将被重命名为：";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="移动并重命名";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="您正在移动的文件将被重命名为：";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="上传并重命名";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="正在上传的文件将被重命名为：";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="上传并更新";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
+"nameCollision.files.alreadyExists"="此位置已存在名为%@的文件。";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="替换";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="重命名";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="更新";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="该文件将更新为新版本。";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="这里只有您一人";
 /* Meetings end call dialog description */
@@ -3057,4 +3017,4 @@
 /* Label for hang a group chat or meeting when the user is moderator */
 "meetings.leaveCall.buttonTitle"="离开";
 /* Label for end a group chat or meeting when the user is moderator */
-"meetings.endForAll.buttonTitle"="End for all";
+"meetings.endForAll.buttonTitle"="结束所有人的通话";

@@ -398,14 +398,6 @@
 "filesSentToChat"="檔案已發送至對話中";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="已成功發送%d個檔案";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="移除連結";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="移除連結";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="已移除連結";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="已移除連結";
 /* Title show when a file is being downloaded */
 "downloading"="下載中";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -2972,66 +2964,34 @@
 "media.quality.high"="高";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高的";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="重複的項目";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="資料夾已存在";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="此位置已有名稱為%@的資料夾。";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="選擇您要合併資料夾或是略過此資料夾。";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="複製並合併";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="將目的地資料夾與您複製的資料夾合併。";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="不要複製";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="移動並合併";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="將目的地資料夾與您移動的資料夾合併。";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="不要移動";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="上傳並合併";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="將目的地資料夾與您上傳的資料夾合併。";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="不要上傳";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="略過此資料夾。";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="略過此資料夾";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="此位置已有名稱為%@的檔案。";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="選擇您要保留的檔案：";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="複製並取代";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="您複製的檔案將取代目的地資料夾中的檔案。";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="移動並取代";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="將目的地資料夾中的檔案替換為您正在移動的檔案。";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="上傳並取代";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="將目的地資料夾中的檔案替換為您正在上傳的檔案。";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="略過此檔案。";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="複製並重新命名";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="您複製的檔案將重新命名為：";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="移動並重新命名";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="您移動的檔案將重新命名為：";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="上傳並重新命名";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="您上傳的檔案將重新命名為：";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="上傳並更新";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="檔案將更新為新版本。";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="取代";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="重新命名";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="更新";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="檔案將更新為新版本。";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="這裡只有你一人";
 /* Meetings end call dialog description */

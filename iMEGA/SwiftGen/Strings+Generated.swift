@@ -3274,7 +3274,7 @@ public enum Strings {
       public static let cookiePolicy = Strings.tr("Localizable", "general.cookiePolicy")
       /// Cookie Settings
       public static let cookieSettings = Strings.tr("Localizable", "general.cookieSettings")
-      /// Download to Offline
+      /// Make available offline
       public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
@@ -3739,7 +3739,7 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.displayInMainView.title")
       }
       public enum EndCall {
-        /// End Call for All
+        /// End call for all
         public static let endForAllButtonTitle = Strings.tr("Localizable", "meetings.endCall.endForAllButtonTitle")
         public enum EndForAllAlert {
           /// No
@@ -3748,7 +3748,7 @@ public enum Strings {
           public static let confirm = Strings.tr("Localizable", "meetings.endCall.endForAllAlert.confirm")
           /// This will end the call for all participants.
           public static let description = Strings.tr("Localizable", "meetings.endCall.endForAllAlert.description")
-          /// End Call for All?
+          /// End call for all?
           public static let title = Strings.tr("Localizable", "meetings.endCall.endForAllAlert.title")
         }
       }
@@ -3763,7 +3763,7 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.endCallDialog.title")
       }
       public enum EndForAll {
-        /// End for All
+        /// End for all
         public static let buttonTitle = Strings.tr("Localizable", "meetings.endForAll.buttonTitle")
       }
       public enum EnterMeetingLink {
@@ -3933,7 +3933,7 @@ public enum Strings {
         }
       }
       public enum Folders {
-        /// A folder named %@ already exists at this destination.
+        /// The folder %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.folders.alreadyExists", String(describing: p1))
         }

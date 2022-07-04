@@ -15,7 +15,7 @@
         <key>one</key>
         <string>heure</string>
         <key>many</key>
-        <string>d’1heures</string>
+        <string>d’heures</string>
         <key>other</key>
         <string>heures</string>
       </dict>
@@ -177,7 +177,7 @@
         <key>one</key>
         <string>1 an</string>
         <key>many</key>
-        <string>%d d’années1</string>
+        <string>%d d’années</string>
         <key>other</key>
         <string>%d ans</string>
       </dict>
@@ -324,6 +324,186 @@
         <string>%d de fichiers</string>
         <key>other</key>
         <string>%d fichiers</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Supprimer le lien</string>
+        <key>many</key>
+        <string>Supprimer les liens</string>
+        <key>other</key>
+        <string>Supprimer les liens</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.message.success</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Le lien a été supprimé</string>
+        <key>many</key>
+        <string>Les liens ont été supprimés</string>
+        <key>other</key>
+        <string>Les liens ont été supprimés</string>
+      </dict>
+    </dict>
+    <key>call.duration.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@second@</string>
+      <key>second</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d seconde</string>
+        <key>many</key>
+        <string>%d de secondes</string>
+        <key>other</key>
+        <string>%d secondes</string>
+      </dict>
+    </dict>
+    <key>call.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minute</string>
+        <key>many</key>
+        <string>%d de minutes</string>
+        <key>other</key>
+        <string>%d minutes</string>
+      </dict>
+    </dict>
+    <key>call.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d heure</string>
+        <key>many</key>
+        <string>%d d’heures</string>
+        <key>other</key>
+        <string>%d heures</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d heure</string>
+        <key>many</key>
+        <string>%d d’heures</string>
+        <key>other</key>
+        <string>%d heures</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>, %d minute</string>
+        <key>many</key>
+        <string>, %d de minutes</string>
+        <key>other</key>
+        <string>, %d minutes</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minute</string>
+        <key>many</key>
+        <string>%d de minutes</string>
+        <key>other</key>
+        <string>%d minutes</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d heure</string>
+        <key>many</key>
+        <string>%d d’heures</string>
+        <key>other</key>
+        <string>%d heures</string>
+      </dict>
+    </dict>
+    <key>chat.status.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minute</string>
+        <key>many</key>
+        <string>%d de minutes</string>
+        <key>other</key>
+        <string>%d minutes</string>
       </dict>
     </dict>
   </dict>

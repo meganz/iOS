@@ -252,10 +252,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ملف</string>
         <key>one</key>
-        <string>%d file</string>
+        <string>%d ملف</string>
+        <key>two</key>
+        <string>%d ملفان</string>
+        <key>few</key>
+        <string>%d ملفات</string>
+        <key>many</key>
+        <string>%d ملفاً</string>
         <key>other</key>
-        <string>%d files</string>
+        <string>%d ملف</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -268,10 +276,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d مجلد</string>
         <key>one</key>
-        <string>%d folder</string>
+        <string>%d مجلد</string>
+        <key>two</key>
+        <string>%d مجلدان</string>
+        <key>few</key>
+        <string>%d مجلدات</string>
+        <key>many</key>
+        <string>%d مجلداً</string>
         <key>other</key>
-        <string>%d folders</string>
+        <string>%d مجلد</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -284,10 +300,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d مجلد</string>
         <key>one</key>
-        <string>%d folder</string>
+        <string>%d مجلد</string>
+        <key>two</key>
+        <string>%d مجلدان</string>
+        <key>few</key>
+        <string>%d مجلدات</string>
+        <key>many</key>
+        <string>%d مجلداً</string>
         <key>other</key>
-        <string>%d folders</string>
+        <string>%d مجلد</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.file</key>
@@ -300,10 +324,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %d ملف</string>
         <key>one</key>
-        <string>• %d file</string>
+        <string>• %d ملف</string>
+        <key>two</key>
+        <string>• %d ملفان</string>
+        <key>few</key>
+        <string>• %d ملفات</string>
+        <key>many</key>
+        <string>• %d ملفاً</string>
         <key>other</key>
-        <string>• %d files</string>
+        <string>• %d ملف</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -364,10 +396,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] من %d ملف</string>
         <key>one</key>
-        <string>[A] of %d file</string>
+        <string>[A] من %d ملف</string>
+        <key>two</key>
+        <string>[A] من %d ملفين</string>
+        <key>few</key>
+        <string>[A] من %d ملفات</string>
+        <key>many</key>
+        <string>[A] من %d ملفاً</string>
         <key>other</key>
-        <string>[A] of %d files</string>
+        <string>[A] من %d ملف</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -380,10 +420,258 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ملف</string>
         <key>one</key>
-        <string>%d file</string>
+        <string>%d ملف</string>
+        <key>two</key>
+        <string>%d ملفان</string>
+        <key>few</key>
+        <string>%d ملفات</string>
+        <key>many</key>
+        <string>%d ملفاً</string>
         <key>other</key>
-        <string>%d files</string>
+        <string>%d ملف</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>إزالة الرابط</string>
+        <key>one</key>
+        <string>إزالة الرابط</string>
+        <key>two</key>
+        <string>إزالة الروابط</string>
+        <key>few</key>
+        <string>إزالة الروابط</string>
+        <key>many</key>
+        <string>إزالة الروابط</string>
+        <key>other</key>
+        <string>إزالة الروابط</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.message.success</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تمت إزالة الرابط</string>
+        <key>one</key>
+        <string>تمت إزالة الرابط</string>
+        <key>two</key>
+        <string>تمت إزالة الروابط</string>
+        <key>few</key>
+        <string>تمت إزالة الروابط</string>
+        <key>many</key>
+        <string>تمت إزالة الروابط</string>
+        <key>other</key>
+        <string>تمت إزالة الروابط</string>
+      </dict>
+    </dict>
+    <key>call.duration.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@second@</string>
+      <key>second</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d ثانية</string>
+        <key>one</key>
+        <string>%dثانية </string>
+        <key>two</key>
+        <string>%d ثانيتين</string>
+        <key>few</key>
+        <string>%d ثواني</string>
+        <key>many</key>
+        <string>%d ثانية</string>
+        <key>other</key>
+        <string>%d ثانية</string>
+      </dict>
+    </dict>
+    <key>call.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d دقيقة</string>
+        <key>one</key>
+        <string>%d دقيقة</string>
+        <key>two</key>
+        <string>%d دقيقتين</string>
+        <key>few</key>
+        <string>%d دقائق</string>
+        <key>many</key>
+        <string>%d دقيقة</string>
+        <key>other</key>
+        <string>%d دقيقة</string>
+      </dict>
+    </dict>
+    <key>call.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d ساعة</string>
+        <key>one</key>
+        <string>%d ساعة</string>
+        <key>two</key>
+        <string>%d ساعتين</string>
+        <key>few</key>
+        <string>%d ساعات</string>
+        <key>many</key>
+        <string>%d ساعة</string>
+        <key>other</key>
+        <string>%d ساعة</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d ساعة</string>
+        <key>one</key>
+        <string>%d ساعة</string>
+        <key>two</key>
+        <string>%d ساعتين</string>
+        <key>few</key>
+        <string>%d ساعات</string>
+        <key>many</key>
+        <string>%d ساعة</string>
+        <key>other</key>
+        <string>%d ساعة</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>، %d دقيقة</string>
+        <key>one</key>
+        <string>، %d دقيقة</string>
+        <key>two</key>
+        <string>، %d دقيقتين</string>
+        <key>few</key>
+        <string>، %d دقائق</string>
+        <key>many</key>
+        <string>، %d دقيقة</string>
+        <key>other</key>
+        <string>، %d دقيقة</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d دقيقة</string>
+        <key>one</key>
+        <string>%d دقيقة</string>
+        <key>two</key>
+        <string>%d دقيقتين</string>
+        <key>few</key>
+        <string>%d دقائق</string>
+        <key>many</key>
+        <string>%d دقيقة</string>
+        <key>other</key>
+        <string>%d دقيقة</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d ساعة</string>
+        <key>one</key>
+        <string>%d ساعة</string>
+        <key>two</key>
+        <string>%d ساعتين</string>
+        <key>few</key>
+        <string>%d ساعات</string>
+        <key>many</key>
+        <string>%d ساعة</string>
+        <key>other</key>
+        <string>%d ساعة</string>
+      </dict>
+    </dict>
+    <key>chat.status.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d دقيقة</string>
+        <key>one</key>
+        <string>%d دقيقة</string>
+        <key>two</key>
+        <string>%d دقيقتين</string>
+        <key>few</key>
+        <string>%d دقائق</string>
+        <key>many</key>
+        <string>%d دقيقة</string>
+        <key>other</key>
+        <string>%d دقيقة</string>
       </dict>
     </dict>
   </dict>

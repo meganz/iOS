@@ -398,14 +398,6 @@
 "filesSentToChat"="ファイルがチャットに送信されました";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%dファイルが正常に送信されました";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="リンクを削除";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="リンクを削除";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="リンクを削除しました";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="リンクを削除しました";
 /* Title show when a file is being downloaded */
 "downloading"="ダウンロード中";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -2972,66 +2964,34 @@
 "media.quality.high"="高い";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="重複項目";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="フォルダがすでに存在しています";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="%@という名前のフォルダは、この場所にすでに存在しています。";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="フォルダを結合するか、このフォルダをスキップするかを選択します。";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="コピー＆マージ";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="コピー先フォルダとコピー元フォルダをマージします。";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="コピーしない";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="移動＆マージ";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="移動先フォルダと移動元フォルダをマージします。";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="移動しません";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="アップロード＆マージ";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="アップロード先フォルダとアップロード元フォルダをマージします。";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="アップロードしない";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="このフォルダをスキップ。";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="このフォルダをスキップ";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="%@という名前のファイルは、この場所にすでに存在しています。";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="保持したいファイルを選択します：";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="コピーして置換";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="コピー先フォルダのファイルを、コピーするファイルに置き換えます。";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="移動して置換";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="移動先フォルダのファイルを、移動するファイルに置き換えます。";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="アップロードと置き換え";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="目的のフォルダにあるファイルを、アップロードするファイルに置き換えます。";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="このファイルをとばす。";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="コピーして名前を変更する";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="コピーするファイルの名前は次のように変更されます：";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="移動して名前を変更する";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="移動するファイルの名前は次のように変更されます：";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="アップロードして名前を変更する";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="アップロードするファイルの名前は、次のように変更されます：";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="アップロードと更新";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="ファイルは新しいバージョンに更新されます。";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="置き換える";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="名前を変更";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="更新";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="ファイルは新しいバージョンに更新されます。";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="ここにいるのはあなただけです";
 /* Meetings end call dialog description */
