@@ -112,7 +112,6 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
-		1E4FEE43BA4A9B2FBBB75D86 /* Pods_iMEGA_MEGAShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E09DE516BF65F4D90B64B2C /* Pods_iMEGA_MEGAShare.framework */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
 		2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */; };
 		2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */; };
@@ -214,7 +213,6 @@
 		3293D8092845B4380013EA72 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3293D8082845B4380013EA72 /* PhotoViewModel.swift */; };
 		32CB4911284EF42400697BA9 /* PhotoLibraryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4910284EF42400697BA9 /* PhotoLibraryUseCase.swift */; };
 		32CB4914284EF56900697BA9 /* PhotoLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */; };
-		32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */; };
 		32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */; };
 		32F9E68028348B320002132D /* AlbumContentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67F28348B320002132D /* AlbumContentsUseCase.swift */; };
 		32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */; };
@@ -272,7 +270,6 @@
 		41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
-		4D0B2F71E80816B269390FE4 /* Pods_iMEGA_MEGA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */; };
 		5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */; };
 		5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */; };
 		5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0343D825822867005307A6 /* UIApplication+Additions.swift */; };
@@ -823,7 +820,6 @@
 		77FD20182359E42B004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
 		77FD20192359E42E004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
 		77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
-		7E04501233DD45005BD169D5 /* Pods_iMEGA_MEGANotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82180C05739A204E51DBC53A /* Pods_iMEGA_MEGANotifications.framework */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830C265E25DFC6D300E9B56E /* FavouriteNodesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C265D25DFC6D300E9B56E /* FavouriteNodesRepositoryProtocol.swift */; };
 		830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C268025DFC78D00E9B56E /* FavouriteNodesRepository.swift */; };
@@ -1623,7 +1619,6 @@
 		A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F71FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m */; };
 		A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
-		AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
 		B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
@@ -2541,9 +2536,6 @@
 		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
-		D5AA6B2E51A36623F0D218DB /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F9B3EA07F8F091C5227E3C /* Pods_iMEGA_MEGAWidgetExtension.framework */; };
-		D73C71AA95D9B6E977AC1E94 /* Pods_iMEGA_MEGAPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37516D1F358D226D33BD2C /* Pods_iMEGA_MEGAPicker.framework */; };
-		DAECA35E488889DD64F98876 /* Pods_iMEGA_MEGAPickerFileProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635E004E70F3D28EB93A99B8 /* Pods_iMEGA_MEGAPickerFileProvider.framework */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -2660,8 +2652,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPickerFileProvider/Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig"; sourceTree = "<group>"; };
-		0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MEGAUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D0B536D262557B200E9BB16 /* UploadFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileUseCase.swift; sourceTree = "<group>"; };
 		0D0B53802625585600E9BB16 /* UploadFileRespositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileRespositoryProtocol.swift; sourceTree = "<group>"; };
 		0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileRepository.swift; sourceTree = "<group>"; };
@@ -2687,8 +2677,6 @@
 		0D8DD97625B513830084FE6F /* FolderContentStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContentStat.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
 		0DE3035F26B11E7800E4A66B /* FileProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderItem.swift; sourceTree = "<group>"; };
-		0E09DE516BF65F4D90B64B2C /* Pods_iMEGA_MEGAShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		12084047286120020079127B /* SearchOperation+Initialize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchOperation+Initialize.swift"; sourceTree = "<group>"; };
 		1208CEC427FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellVideoDurationViewModifier.swift; sourceTree = "<group>"; };
 		120B4A7827430F3E00312B35 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
@@ -2766,9 +2754,6 @@
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		188452451A89DE30F4BC1BDB /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAWidgetExtension/Pods-iMEGA-MEGAWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
-		21E5A8341CCF4BBF58BC37EE /* Pods-iMEGA-MEGAShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAShare.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAShare/Pods-iMEGA-MEGAShare.debug.xcconfig"; sourceTree = "<group>"; };
-		27106B2654702F4890215A22 /* Pods-iMEGA-MEGAPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.release.xcconfig"; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
 		2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManagmentTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageActionMenuViewController.swift; sourceTree = "<group>"; };
@@ -2876,7 +2861,6 @@
 		32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfigurator.swift; sourceTree = "<group>"; };
 		32F9E683283490A40002132D /* AlbumToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarProvider.swift; sourceTree = "<group>"; };
 		32F9E69A283728D20002132D /* AlbumContentsUpdateNotifierRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepositoryProtocol.swift; sourceTree = "<group>"; };
-		3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAIntent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -2982,8 +2966,6 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		4F65E4F9FEFEB4A036CF93C9 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.debug.xcconfig"; sourceTree = "<group>"; };
-		553A9E85EBBC3A2DE5994EEF /* Pods-iMEGA-MEGA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.release.xcconfig"; sourceTree = "<group>"; };
 		5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallTableViewCell.h; sourceTree = "<group>"; };
 		5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallTableViewCell.m; sourceTree = "<group>"; };
 		5B00B6E6210745BF0076D5BB /* FileManagementTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagementTableViewController.h; sourceTree = "<group>"; };
@@ -3386,10 +3368,6 @@
 		5DFBF1EF24F4AEC700BB662B /* UploadPhotoAssetsUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPhotoAssetsUseCaseProtocol.swift; sourceTree = "<group>"; };
 		5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserClient.swift; sourceTree = "<group>"; };
 		5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAavatarGeneratingUseCaseTests.swift; sourceTree = "<group>"; };
-		635E004E70F3D28EB93A99B8 /* Pods_iMEGA_MEGAPickerFileProvider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAPickerFileProvider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6462E4EC10864E0093B28129 /* Pods-iMEGA-MEGAIntent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAIntent.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAIntent/Pods-iMEGA-MEGAIntent.release.xcconfig"; sourceTree = "<group>"; };
-		6EB2987BE3BFDB8070962245 /* Pods-iMEGA-MEGA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGA.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGA/Pods-iMEGA-MEGA.debug.xcconfig"; sourceTree = "<group>"; };
-		70F9B3EA07F8F091C5227E3C /* Pods_iMEGA_MEGAWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7271895727FF030600B2DB08 /* FeedbackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackRepository.swift; sourceTree = "<group>"; };
 		7271895B27FF0F0F00B2DB08 /* GetFeedbackInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedbackInfoUseCase.swift; sourceTree = "<group>"; };
 		7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAReachabilityManager+Additions.swift"; sourceTree = "<group>"; };
@@ -3493,8 +3471,6 @@
 		77FD1FFF2359A5A7004FB892 /* libnative_api.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_api.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_api.a; sourceTree = "<group>"; };
 		77FD20002359A5A7004FB892 /* libvideocapture_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvideocapture_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideocapture_objc.a; sourceTree = "<group>"; };
 		77FD20012359A5A7004FB892 /* libnative_video.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_video.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_video.a; sourceTree = "<group>"; };
-		7EA1ECE334811A47056CABEE /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPickerFileProvider/Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig"; sourceTree = "<group>"; };
-		82180C05739A204E51DBC53A /* Pods_iMEGA_MEGANotifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGANotifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830C265D25DFC6D300E9B56E /* FavouriteNodesRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteNodesRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -4081,8 +4057,6 @@
 		A8F6E88E1F9E75B60087859C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGANotifications.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGANotifications/Pods-iMEGA-MEGANotifications.release.xcconfig"; sourceTree = "<group>"; };
-		AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
 		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
@@ -4465,9 +4439,6 @@
 		B6FD651F268D8EF100988A17 /* NodeEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+Additions.swift"; sourceTree = "<group>"; };
 		B6FD6521268D8F3600988A17 /* ShareEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareEntity+Additions.swift"; sourceTree = "<group>"; };
 		B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemImageCacheClient.swift; sourceTree = "<group>"; };
-		BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAPicker.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAPicker/Pods-iMEGA-MEGAPicker.debug.xcconfig"; sourceTree = "<group>"; };
-		BCFC42FA4598E47348346875 /* Pods-MEGAUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.release.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.release.xcconfig"; sourceTree = "<group>"; };
-		BE1F7FA2469778EA57259FC9 /* Pods-MEGAUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEGAUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-MEGAUnitTests/Pods-MEGAUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 4.xcdatamodel"; sourceTree = "<group>"; };
 		BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceClipInputBar.swift; sourceTree = "<group>"; };
 		BF006CEE24613BDB00C9CADE /* VoiceClipInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceClipInputBar.xib; sourceTree = "<group>"; };
@@ -4506,7 +4477,6 @@
 		BF33EF8324457A0700CD35AC /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
-		BF37516D1F358D226D33BD2C /* Pods_iMEGA_MEGAPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMEGA_MEGAPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF3809E72577494700689A63 /* UITableView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Additions.swift"; sourceTree = "<group>"; };
 		BF46B7F125A68316008641BB /* PSARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSARepository.swift; sourceTree = "<group>"; };
 		BF46B81125A6A524008641BB /* PSARepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSARepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -4902,7 +4872,6 @@
 		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
-		E6B77FEB7A645A11A64A31AE /* Pods-iMEGA-MEGAShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAShare.release.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAShare/Pods-iMEGA-MEGAShare.release.xcconfig"; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -4978,7 +4947,6 @@
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
 		E8F7917C1BC5754A00C58676 /* ShareFolderActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFolderActivity.h; sourceTree = "<group>"; };
 		E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFolderActivity.m; sourceTree = "<group>"; };
-		FE81B51B3AC6FB2F5A212B06 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMEGA-MEGAIntent.debug.xcconfig"; path = "Target Support Files/Pods-iMEGA-MEGAIntent/Pods-iMEGA-MEGAIntent.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5034,7 +5002,6 @@
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
-				4D0B2F71E80816B269390FE4 /* Pods_iMEGA_MEGA.framework in Frameworks */,
 				A8F5158527F6FF4F00AEE4D6 /* FlexLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5075,7 +5042,6 @@
 				77AEB94623CDBC560047CEBF /* libvideoframebuffer_objc.a in Frameworks */,
 				7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */,
 				A811DCBF2476C4EB002FCD98 /* CoreServices.framework in Frameworks */,
-				7E04501233DD45005BD169D5 /* Pods_iMEGA_MEGANotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5116,7 +5082,6 @@
 				835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */,
 				83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */,
 				83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */,
-				D5AA6B2E51A36623F0D218DB /* Pods_iMEGA_MEGAWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5124,7 +5089,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFB9E5289DE713C9923B72ED /* Pods_iMEGA_MEGAIntent.framework in Frameworks */,
 				A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5182,7 +5146,6 @@
 				A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				A828E68B286B31F9004CED9E /* FirebaseCrashlytics in Frameworks */,
 				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
-				D73C71AA95D9B6E977AC1E94 /* Pods_iMEGA_MEGAPicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5217,7 +5180,6 @@
 				A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				942ED2B51EDEE5F500C9908D /* libz.tbd in Frameworks */,
-				DAECA35E488889DD64F98876 /* Pods_iMEGA_MEGAPickerFileProvider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5265,7 +5227,6 @@
 				A811DCBA2476C47F002FCD98 /* MetalKit.framework in Frameworks */,
 				A811DCBE2476C4E0002FCD98 /* CoreServices.framework in Frameworks */,
 				943F8B2B1EF2864D00AFD89F /* libz.tbd in Frameworks */,
-				1E4FEE43BA4A9B2FBBB75D86 /* Pods_iMEGA_MEGAShare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5273,7 +5234,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32E91C90F91FF51AEBFD2C55 /* Pods_MEGAUnitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5632,7 +5592,6 @@
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
 				77AEB94223CDB9EA0047CEBF /* Recovered References */,
-				6A14AF05052121F51C5E2D0C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -6193,14 +6152,6 @@
 				9432290A1EDD8271007DB542 /* QuartzCore.framework */,
 				83199F1225556CD900344531 /* WidgetKit.framework */,
 				83199F1425556CDA00344531 /* SwiftUI.framework */,
-				0B634CA592019DDB325E50D1 /* Pods_MEGAUnitTests.framework */,
-				AA1A6725FCB16210474B7742 /* Pods_iMEGA_MEGA.framework */,
-				3DC16A53C2A4D456573BAEE1 /* Pods_iMEGA_MEGAIntent.framework */,
-				82180C05739A204E51DBC53A /* Pods_iMEGA_MEGANotifications.framework */,
-				BF37516D1F358D226D33BD2C /* Pods_iMEGA_MEGAPicker.framework */,
-				635E004E70F3D28EB93A99B8 /* Pods_iMEGA_MEGAPickerFileProvider.framework */,
-				0E09DE516BF65F4D90B64B2C /* Pods_iMEGA_MEGAShare.framework */,
-				70F9B3EA07F8F091C5227E3C /* Pods_iMEGA_MEGAWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -7793,29 +7744,6 @@
 				5D62093724ED1511004648A1 /* MEGANotificationUseCaseTests.swift */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		6A14AF05052121F51C5E2D0C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BE1F7FA2469778EA57259FC9 /* Pods-MEGAUnitTests.debug.xcconfig */,
-				BCFC42FA4598E47348346875 /* Pods-MEGAUnitTests.release.xcconfig */,
-				6EB2987BE3BFDB8070962245 /* Pods-iMEGA-MEGA.debug.xcconfig */,
-				553A9E85EBBC3A2DE5994EEF /* Pods-iMEGA-MEGA.release.xcconfig */,
-				FE81B51B3AC6FB2F5A212B06 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */,
-				6462E4EC10864E0093B28129 /* Pods-iMEGA-MEGAIntent.release.xcconfig */,
-				4F65E4F9FEFEB4A036CF93C9 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */,
-				A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */,
-				BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */,
-				27106B2654702F4890215A22 /* Pods-iMEGA-MEGAPicker.release.xcconfig */,
-				082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */,
-				7EA1ECE334811A47056CABEE /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */,
-				21E5A8341CCF4BBF58BC37EE /* Pods-iMEGA-MEGAShare.debug.xcconfig */,
-				E6B77FEB7A645A11A64A31AE /* Pods-iMEGA-MEGAShare.release.xcconfig */,
-				11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */,
-				188452451A89DE30F4BC1BDB /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		7288547227F711F700EFE506 /* Settings */ = {
@@ -11553,7 +11481,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "MEGA" */;
 			buildPhases = (
-				5D2EF5C25E3D5EA36A14929E /* [CP] Check Pods Manifest.lock */,
 				B5D57CB327968B820043BA50 /* SwiftGen Script */,
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
@@ -11605,7 +11532,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7794AEDE231E4E0A0039C1D2 /* Build configuration list for PBXNativeTarget "MEGANotifications" */;
 			buildPhases = (
-				C4BEDEAE5B76A0F7B4B12BDD /* [CP] Check Pods Manifest.lock */,
 				7794AED0231E4E0A0039C1D2 /* Sources */,
 				7794AED1231E4E0A0039C1D2 /* Frameworks */,
 				7794AED2231E4E0A0039C1D2 /* Resources */,
@@ -11627,7 +11553,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83199F2325556CDE00344531 /* Build configuration list for PBXNativeTarget "MEGAWidgetExtension" */;
 			buildPhases = (
-				9C6AD6E6C71ACDB04A768452 /* [CP] Check Pods Manifest.lock */,
 				83199F0D25556CD900344531 /* Sources */,
 				83199F0E25556CD900344531 /* Frameworks */,
 				83199F0F25556CD900344531 /* Resources */,
@@ -11649,7 +11574,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 831B4916256FED700086002B /* Build configuration list for PBXNativeTarget "MEGAIntent" */;
 			buildPhases = (
-				82FB76D6AD4E16551B2DC94C /* [CP] Check Pods Manifest.lock */,
 				831B490A256FED6F0086002B /* Sources */,
 				831B490B256FED6F0086002B /* Frameworks */,
 				831B490C256FED6F0086002B /* Resources */,
@@ -11670,7 +11594,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 942254FC1EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPicker" */;
 			buildPhases = (
-				36F095DBB25B8BB2F337B561 /* [CP] Check Pods Manifest.lock */,
 				942254D81EDC03130074C51A /* Sources */,
 				942254D91EDC03130074C51A /* Frameworks */,
 				942254DA1EDC03130074C51A /* Resources */,
@@ -11697,7 +11620,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 942254F91EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPickerFileProvider" */;
 			buildPhases = (
-				56262E2C75BA0B5BCF780399 /* [CP] Check Pods Manifest.lock */,
 				942254E71EDC03140074C51A /* Sources */,
 				942254E81EDC03140074C51A /* Frameworks */,
 				942254E91EDC03140074C51A /* Resources */,
@@ -11719,7 +11641,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 943F8B1D1EF26E9C00AFD89F /* Build configuration list for PBXNativeTarget "MEGAShare" */;
 			buildPhases = (
-				83C1A17A656507E15D14B3FC /* [CP] Check Pods Manifest.lock */,
 				943F8B0B1EF26E9C00AFD89F /* Sources */,
 				943F8B0C1EF26E9C00AFD89F /* Frameworks */,
 				943F8B0D1EF26E9C00AFD89F /* Resources */,
@@ -11746,7 +11667,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6CED49422B8AC70009C4861 /* Build configuration list for PBXNativeTarget "MEGAUnitTests" */;
 			buildPhases = (
-				D678B681B385A70EC4307942 /* [CP] Check Pods Manifest.lock */,
 				B6CED48722B8AC70009C4861 /* Sources */,
 				B6CED48822B8AC70009C4861 /* Frameworks */,
 				B6CED48922B8AC70009C4861 /* Resources */,
@@ -12244,138 +12164,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
 		};
-		36F095DBB25B8BB2F337B561 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAPicker-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		56262E2C75BA0B5BCF780399 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAPickerFileProvider-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5D2EF5C25E3D5EA36A14929E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGA-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		82FB76D6AD4E16551B2DC94C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAIntent-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		83C1A17A656507E15D14B3FC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAShare-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9C6AD6E6C71ACDB04A768452 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGAWidgetExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B5D57CB327968B820043BA50 /* SwiftGen Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -12392,51 +12180,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftGen/bin/swiftgen\" config run --config ./SwiftGen/swiftgen.yml\n";
-		};
-		C4BEDEAE5B76A0F7B4B12BDD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iMEGA-MEGANotifications-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D678B681B385A70EC4307942 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MEGAUnitTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "\"${PROJECT_DIR}/swiftgen/swiftgen-6.5.1/bin/swiftgen\" config run --config ./SwiftGen/swiftgen.yml\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -14887,7 +14631,6 @@
 		};
 		137361B11A6664C400B740E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EB2987BE3BFDB8070962245 /* Pods-iMEGA-MEGA.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -14941,7 +14684,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DMAIN_APP_TARGET";
+				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
@@ -14961,7 +14704,6 @@
 		};
 		137361B21A6664C400B740E8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553A9E85EBBC3A2DE5994EEF /* Pods-iMEGA-MEGA.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -15014,7 +14756,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DMAIN_APP_TARGET";
+				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
@@ -15034,7 +14776,6 @@
 		};
 		7794AEDC231E4E0A0039C1D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F65E4F9FEFEB4A036CF93C9 /* Pods-iMEGA-MEGANotifications.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15098,7 +14839,6 @@
 		};
 		7794AEDD231E4E0A0039C1D2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A94DF5C94FAC70F89FBF3691 /* Pods-iMEGA-MEGANotifications.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15161,7 +14901,6 @@
 		};
 		83199F1F25556CDE00344531 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 11C7FF88BFFD3EA483617882 /* Pods-iMEGA-MEGAWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -15223,7 +14962,6 @@
 		};
 		83199F2025556CDE00344531 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 188452451A89DE30F4BC1BDB /* Pods-iMEGA-MEGAWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -15284,7 +15022,6 @@
 		};
 		831B4917256FED700086002B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE81B51B3AC6FB2F5A212B06 /* Pods-iMEGA-MEGAIntent.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -15326,7 +15063,6 @@
 		};
 		831B4918256FED700086002B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6462E4EC10864E0093B28129 /* Pods-iMEGA-MEGAIntent.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -15367,7 +15103,6 @@
 		};
 		942254FA1EDC03150074C51A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 082DBB20E5CB3365612DDA94 /* Pods-iMEGA-MEGAPickerFileProvider.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15415,7 +15150,6 @@
 		};
 		942254FB1EDC03150074C51A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7EA1ECE334811A47056CABEE /* Pods-iMEGA-MEGAPickerFileProvider.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15465,7 +15199,6 @@
 		};
 		942254FD1EDC03150074C51A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BBBBBB6EBD65E33BF9F902DC /* Pods-iMEGA-MEGAPicker.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15529,7 +15262,6 @@
 		};
 		942254FE1EDC03150074C51A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27106B2654702F4890215A22 /* Pods-iMEGA-MEGAPicker.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15593,7 +15325,6 @@
 		};
 		943F8B1B1EF26E9C00AFD89F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21E5A8341CCF4BBF58BC37EE /* Pods-iMEGA-MEGAShare.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15657,7 +15388,6 @@
 		};
 		943F8B1C1EF26E9C00AFD89F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6B77FEB7A645A11A64A31AE /* Pods-iMEGA-MEGAShare.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -15722,7 +15452,6 @@
 		};
 		B6CED49222B8AC70009C4861 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BE1F7FA2469778EA57259FC9 /* Pods-MEGAUnitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -15786,7 +15515,6 @@
 		};
 		B6CED49322B8AC70009C4861 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCFC42FA4598E47348346875 /* Pods-MEGAUnitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -16307,7 +16035,6 @@
 		};
 		BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8ECCA0D285B2AD000E6BB7F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseAppDistribution-Beta";
 		};
 /* End XCSwiftPackageProductDependency section */

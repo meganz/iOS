@@ -87,19 +87,6 @@ pipeline {
                     }
                 }
 
-                stage('Update pods') {
-                    steps {
-                        gitlabCommitStatus(name: 'Update pods') {
-                            injectEnvironments({
-                                sh "bundle install"
-                                sh "bundle exec pod repo update"
-                                sh "bundle exec pod cache clean --all --verbose"
-                                sh "bundle exec pod install --verbose"
-                            })
-                        }
-                    }
-                }
-
                 stage('Downloading third party libraries') {
                     steps {
                         gitlabCommitStatus(name: 'Downloading third party libraries') {
