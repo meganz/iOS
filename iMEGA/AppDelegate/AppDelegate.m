@@ -98,8 +98,6 @@
 @property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
 @property (nonatomic, strong) SpotlightIndexer *spotlightIndexer;
 
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 @end
 
 @implementation AppDelegate
@@ -733,8 +731,7 @@
                     self.newAccount = NO;
                 }
         
-                self.cancelToken = MEGACancelToken.alloc.init;
-                [MEGALinkManager processSelectedOptionOnLinkWithCancelToken:self.cancelToken];
+                [MEGALinkManager processSelectedOptionOnLink];
                 [self showCookieDialogIfNeeded];
             } else {
                 [self processActionsAfterSetRootVC];
@@ -1311,8 +1308,7 @@
         
         [self postNodeUpdatesNotificationsFor:nodeList];
     } else {
-        self.cancelToken = MEGACancelToken.alloc.init;
-        [Helper startPendingUploadTransferIfNeededWithCancelToken:self.cancelToken];
+        [Helper startPendingUploadTransferIfNeeded];
     }
 }
 
@@ -1800,8 +1796,7 @@
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (transfer.state == MEGATransferStatePaused) {
-        self.cancelToken = MEGACancelToken.alloc.init;
-        [Helper startPendingUploadTransferIfNeededWithCancelToken:self.cancelToken];
+        [Helper startPendingUploadTransferIfNeeded];
     }
 }
 
@@ -1840,8 +1835,7 @@
             NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
             [[Helper uploadingNodes] removeObject:localIdentifier];
         }
-        self.cancelToken = MEGACancelToken.alloc.init;
-        [Helper startPendingUploadTransferIfNeededWithCancelToken:self.cancelToken];
+        [Helper startPendingUploadTransferIfNeeded];
     }
     
     if (error.type) {

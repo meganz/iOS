@@ -14,7 +14,7 @@ final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
         completion?(result)
     }
 
-    func downloadFileToTempFolder(nodeHandle: MEGAHandle, appData: String?, cancelToken: MEGACancelToken, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func downloadFileToTempFolder(nodeHandle: MEGAHandle, appData: String?, cancelToken: MEGACancelToken?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         guard let transferEntity = transferEntity,
               let update = update else { return }
         update(transferEntity)

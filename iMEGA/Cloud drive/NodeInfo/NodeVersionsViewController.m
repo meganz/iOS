@@ -264,7 +264,10 @@
     }
         
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[[self nodeForIndexPath:indexPath]] presenter:self isFolderLink:NO];
+        MEGANode *node = [self nodeForIndexPath:indexPath];
+        if (node != nil) {
+            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+        }
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
@@ -431,7 +434,9 @@
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+            if (node != nil) {
+                [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
+            }
             break;
             
         case MegaNodeActionTypeRemove:

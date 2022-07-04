@@ -18,7 +18,6 @@ extension CGFloat {
 class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     var currentNode: MEGANode?
     var currentTransfer: MEGATransfer?
-    let cancelToken = MEGACancelToken()
 
     let autoDownloadThresholdSize = 5.0 * 1024 * 1024
 
@@ -175,7 +174,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
                 
                 downloadGifIcon.isHidden = true
             } else if node.size?.doubleValue ?? 0 < autoDownloadThresholdSize {
-                MEGASdkManager.sharedMEGASdk().startDownloadNode(node, localPath: originalImagePath, fileName: nil, appData: nil, startFirst: true, cancelToken: cancelToken)
+                MEGASdkManager.sharedMEGASdk().startDownloadNode(node, localPath: originalImagePath, fileName: nil, appData: nil, startFirst: true, cancelToken: nil)
                 downloadGifIcon.isHidden = true
             } else {
                 downloadGifIcon.isHidden = !loadingIndicator.isHidden

@@ -149,7 +149,7 @@
 }
 
 - (void)downloadSelectedNodes {
-    if (self.tableView.isEditing) {
+    if (self.tableView.isEditing && self.selectedNodesMutableArray != nil) {
         [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:self.selectedNodesMutableArray messageId:self.message.messageId chatId:self.chatId presenter:self];
     }
 }
