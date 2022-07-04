@@ -13,10 +13,6 @@ protocol NameCollisionUseCaseProtocol {
     func node(for handle: MEGAHandle) -> NodeEntity?
 }
 
-extension NameCollisionUseCase where T == NodeRepository, U == FileSystemRepository {
-    static let `default` = NameCollisionUseCase(nodeRepository: T.default, fileSystemRepository: U.default)
-}
-
 // MARK: - Use case implementation -
 struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryProtocol>: NameCollisionUseCaseProtocol {
     private let nodeRepository: T

@@ -7,6 +7,7 @@
 
 #import "CompressingLogFileManager.h"
 #import <zlib.h>
+#import "MEGA-Swift.h"
 
 
 @interface CompressingLogFileManager ()
@@ -43,41 +44,6 @@
         [self performSelector:@selector(compressNextLogFile) withObject:nil afterDelay:5.0];
     }
     return self;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Utility
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (NSString *)applicationName {
-    static NSString *_appName;
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
-        _appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
-        
-        if (_appName.length == 0) {
-            _appName = [[NSProcessInfo processInfo] processName];
-        }
-        
-        if (_appName.length == 0) {
-            _appName = @"";
-        }
-    });
-    
-    return _appName;
-}
-
-
-- (BOOL)isLogFile:(NSString *)fileName {
-    NSString *appName = [self applicationName];
-    
-    // We need to add a space to the name as otherwise we could match applications that have the name prefix.
-    BOOL hasProperPrefix = [fileName hasPrefix:[appName stringByAppendingString:@" "]];
-    BOOL hasProperSuffix = [fileName hasSuffix:@".log"] || [fileName hasSuffix:@".gz"];
-    
-    return (hasProperPrefix && hasProperSuffix);
 }
 
 - (void)dealloc {
@@ -135,6 +101,8 @@
     self.isCompressing = NO;
     
     [self compressNextLogFile];
+    
+    [self deleteOldestFilesIfNeeded];
 }
 
 - (void)compressionDidFail:(DDLogFileInfo *)logFile {

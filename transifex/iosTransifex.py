@@ -32,6 +32,7 @@ if not gitlab_token:
 BASE_URL = "https://rest.api.transifex.com"
 GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2F$file/raw?ref=develop"
 PROJECT_ID = "o:meganz-1:p:ios-35"
+STORES_IOS_ID = "o:meganz-1:p:stores:r:app_store_ios"
 HEADER = {
     "Authorization": "Bearer " + transifex_token,
     "Content-Type": "application/vnd.api+json"
@@ -282,11 +283,12 @@ def run_merge(resource, branch_resource, language = False, lang_code = "Base"):
         print("Error: Resources specified for merge don't exist")
 
 # Call this function to lock an unlocked resource in Transifex to prevent translations from being saved
-def run_lock(resource, update_time = 0):
+def run_lock(resource, update_time = 0, is_stores = False):
     is_change_logs = resource == 'Changelogs'
-    if does_resource_exist(resource):
+    if is_stores or does_resource_exist(resource):
         print("Preparing to lock resource")
-        resource = PROJECT_ID + ":r:" + resource.lower()
+        if not is_stores:
+            resource = PROJECT_ID + ":r:" + resource.lower()
         response = do_request(BASE_URL + "/resource_strings?filter[resource]=" + resource)
         if "errors" in response:
             print_error(response["errors"])
@@ -467,6 +469,73 @@ def run_comment(resource):
     else:
         print("Error: Unable to find the resource")
 
+# Call this function to initiate pruning for the Localizable resource by the Transifex bot.
+def run_pruning():
+    url = os.getenv('TRANSIFEX_BOT_URL')
+    token = os.getenv('TRANSIFEX_BOT_TOKEN')
+    localizable = PROJECT_ID + ':r:localizable'
+    if url and token:
+        i = 30
+        while i > 0:
+            request = Request(url + '?o=prune&pid=193&token=' + token)
+            try:
+                response = urlopen(request)
+            except HTTPError as ex:
+                content = ex.read().decode('utf8')
+                print('Error: ' + content)
+                return False
+            content = response.read().decode('utf8')
+            if content == '':
+                print('Empty response from the Transifex bot')
+                return False
+            else:
+                try:
+                    content = json.loads(content)
+                    if 'ok' in content:
+                        if content['ok']:
+                            if 'status' in content and content['status'] == 'pending':
+                                if i % 5 == 0:
+                                    print('Processing.....')
+                                time.sleep(10)
+                            i = i - 1
+                        elif 'error' in content:
+                            print('Error: ' + content['error'])
+                            return False
+                        else:
+                            print('Unknown error')
+                            return False
+                    elif localizable in content and 'ok' in content[localizable]:
+                        if content[localizable]['ok']:
+                            print("-------------------------------------------------------------------------")
+                            for string in content[localizable]["confirm"]:
+                                print(string)
+                            print("-------------------------------------------------------------------------")
+                            print("Confirm that the strings above are no longer in use.")
+                            print("If confirmed the file without these strings will be uploaded to Transifex (Y)")
+                            print("If not confirmed nothing will be uploaded and a manual update of Localizable can be made removing strings as needed (N)")
+                            confirmed = input("Confirm removal of the specified strings (Y/N):")
+                            if confirmed.lower()[0] == "y":
+                                print("Uploading file.")
+                                run_upload(content[localizable]["file"], "Localizable", False)
+                            else:
+                                print("Nothing removed.")
+                            return True
+                        elif 'error' in content[localizable]:
+                            print('Error: ' + content[localizable]['error'])
+                            return False
+                        else:
+                            print('Unknown error when pruning Localizable')
+                            return False
+                    else:
+                        print('Error: Unexpected result')
+                        return False
+                except:
+                    print('Error: ' + str(content))
+                    return False
+        print('Error: Pruning timed out')
+    else:
+        print('Invalid environment variables')
+
 # Call this function to perform a request to Transifex
 def do_request(url, json_payload = None, type = "GET"):
     is_git_request = "code.developers.mega.co.nz" in url
@@ -602,6 +671,8 @@ def resource_get_english(resource, is_plurals = False):
             "type": "resource_strings_async_downloads",
         },
     }
+    if resource == STORES_IOS_ID:
+        payload["data"]["relationships"]["resource"]["data"]["id"] = resource
     if is_plurals:
         content = file_download(payload)
     else:
@@ -1348,6 +1419,30 @@ def print_error(errors):
             code = error["code"]
         print("Error: {}: {}.".format(code, error["detail"]))
 
+# Call this function to download the content for the stores resource
+def run_download_stores():
+    print("Downloading stores resource")
+    content = resource_get_english(STORES_IOS_ID, True) # Not a plurals resource but is not UTF-16 encoded
+    if content:
+        file_put_contents(DOWNLOAD_FOLDER + "/stores-ios.yaml", content)
+    else: 
+        print("Error: Failed to retrieve stores strings")
+    return False
+
+# Call this function to upload the content for a stores resource
+def run_upload_stores(content):
+    if content:
+        now = int(datetime.datetime.utcnow().strftime("%s")) - 30
+        print("Uploading to stores resource")
+        if resource_put_english(STORES_IOS_ID, content):
+            return run_lock(STORES_IOS_ID, now, True)
+        else:
+            print("Error: Failed to update the android stores resource file")
+        return False
+    else:
+        print("Error: No file content present")
+        return False
+
 # Parses arguments and runs relevant mode
 def main():
     print("--- Transifex Language Management ---")
@@ -1371,6 +1466,8 @@ def main():
             elif args.resource:
                 if args.resource[0] == "all":
                     run_fetch()
+                elif args.resource[0] == "stores":
+                    run_download_stores()
                 else:
                     run_download(args.resource[0], PROD_FOLDER)
             else:
@@ -1398,7 +1495,10 @@ def main():
                     file_path = args.file[0]
                 if os.path.exists(file_path):
                     content = file_get_contents(file_path)
-                    run_upload(content, resource, branch)
+                    if resource == "stores":
+                        run_upload_stores(content)
+                    else:
+                        run_upload(content, resource, branch)
                 else:
                     print("Error: Can not locate file for the specified resource")
             else:
@@ -1448,6 +1548,8 @@ def main():
                 run_comment(args.resource[0])
             else:
                 print("Error: No resource specified")
+        elif mode == "clean":
+            run_pruning()
     elif args.download:
         resource = "Localizable"
         branch = get_branch_name()
@@ -1458,6 +1560,8 @@ def main():
         elif args.resource:
             if args.resource[0] == "all":
                 run_fetch()
+            elif args.resource[0] == "stores":
+                run_download_stores()
             else:
                 run_download(args.resource[0], PROD_FOLDER)
         else:
@@ -1485,7 +1589,10 @@ def main():
                 file_path = args.file[0]
             if os.path.exists(file_path):
                 content = file_get_contents(file_path)
-                run_upload(content, resource, branch)
+                if resource == "stores":
+                    run_upload_stores(content)
+                else:
+                    run_upload(content, resource, branch)
             else:
                 print("Error: Can not locate file for the specified resource")
         else:

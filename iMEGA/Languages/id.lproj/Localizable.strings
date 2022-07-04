@@ -398,14 +398,6 @@
 "filesSentToChat"="File dikirim ke obrolan";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d file berhasil dikirim";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Hapus Link";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Hapus Link";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Link terhapus";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Links terhapus";
 /* Title show when a file is being downloaded */
 "downloading"="Mengunduh";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -1204,10 +1196,6 @@
 "Use Mobile Data for Videos"="Gunakan Data Seluler untuk Video";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-away";
-/*  */
-"xMinutes"="[X] menit";
-/*  */
-"1Minute"="1 menit";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Tunjukan saya sedang pergi setelah [X] menit tidak aktif";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1584,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Panggilan grup berakhir[/A][C]. Durasi: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durasi: %@";
-/*  */
-"xSeconds"="%d detik";
-/*  */
-"1Second"="1 detik";
-/*  */
-"1Hour"="1 jam";
-/*  */
-"xHours"="%d jam";
-/*  */
-"1Hour1Minute"="1 jam, 1 menit";
-/*  */
-"1HourxMinutes"="1 jam, %d menit";
-/*  */
-"xHours1Minute"="%d jam, 1 menit";
-/*  */
-"xHoursxMinutes"="%1$d jam, %2$d menit";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="File tidak didukung";
 /* Alert message shown when users try to stream an unsupported audio/video file */
@@ -2992,66 +2964,34 @@
 "media.quality.high"="Tinggi";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Terbaik";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Barang duplikat";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="Folder sudah ada";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="Folder %@ sudah ada di tujuan ini.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Pilih apakah anda ingin menggabungkan folder atau melewati folder ini.";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="Salin dan gabungkan";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="Gabungkan folder di tujuan dengan folder yang anda salin.";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="Jangan salin";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="Pindah dan gabungkan";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="Gabungkan folder di tempat tujuan dengan folder yang anda pindahkan.";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="Jangan pindahkan";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="Unggah dan gabungkan";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="Gabungkan folder di tujuan dengan folder yang anda unggah.";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="Jangan upload";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Lewati folder ini.";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="Lewati folder ini";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="Sebuah file bernama %@ sudah ada di tujuan ini.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="Pilih file yang ingin Anda simpan:";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="Copy dan ganti";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="Ganti file di folder tujuan dengan file yang anda salin.";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="Pindahkan dan ganti";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="Ganti file di folder tujuan dengan file yang anda pindahkan.";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="Unggah dan ganti";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Ganti file di folder tujuan dengan file yang anda unggah.";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Lewati file ini.";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="Salin dan ganti nama";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="File yang anda salin akan diganti namanya menjadi:";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="Pindahkan dan ganti nama";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="File yang anda pindahkan akan diganti namanya menjadi:";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="Unggah dan ganti nama";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="File yang Anda upload akan diganti namanya menjadi:";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="Unggah dan perbarui";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="File akan diperbarui dengan versi baru.";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="Ganti";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="Ubah nama";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="Perbarui";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="File akan diperbarui dengan versi baru.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Anda satu-satunya di sini";
 /* Meetings end call dialog description */

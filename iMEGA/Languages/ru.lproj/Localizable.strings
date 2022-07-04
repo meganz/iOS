@@ -398,14 +398,6 @@
 "filesSentToChat"="Файлы отправлены в чат";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="Файлы успешно отправлены (%d)";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Удалить ссылку";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Удалить ссылки";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Ссылка удалена";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Ссылки удалены";
 /* Title show when a file is being downloaded */
 "downloading"="Загрузка";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -1204,10 +1196,6 @@
 "Use Mobile Data for Videos"="Использовать мобильные данные для видео";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Отсутствие";
-/*  */
-"xMinutes"="[X] мин.";
-/*  */
-"1Minute"="1 минута";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1596,22 +1584,6 @@
 "[A]Group call ended[/A][C]. Duration: [/C]"="[A]Групповой вызов завершен[/A][C]. Длительность: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Длительность: %@";
-/*  */
-"xSeconds"="%d сек.";
-/*  */
-"1Second"="1 сек.";
-/*  */
-"1Hour"="1 час";
-/*  */
-"xHours"="%d ч.";
-/*  */
-"1Hour1Minute"="1 час 1 минута";
-/*  */
-"1HourxMinutes"="1 ч. %d мин.";
-/*  */
-"xHours1Minute"="%d ч. 1 мин.";
-/*  */
-"xHoursxMinutes"="%1$d ч., %2$d мин.";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Файл не поддерживается";
 /* Alert message shown when users try to stream an unsupported audio/video file */
@@ -2992,66 +2964,34 @@
 "media.quality.high"="Высокое";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Лучшее";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="Повторяющийся элемент";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="Папка уже существует";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="Выберите, хотите ли вы объединить папки или пропустить эту папку.";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="Скопировать и объединить";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="Объединить существующую папку с копируемой.";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="Не копировать";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="Переместить и объединить";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="Объединить существующую папку с перемещаемой.";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="Не перемещать";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="Загрузить и объединить";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="Объединить существующую папку с загружаемой.";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="Не загружать";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="Пропустить папку";
+"nameCollision.folders.alreadyExists"="В этой папке уже существует папка «%@».";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="Пропустить эту папку";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="Выберите файл, который хотите оставить:";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="Копировать и заменить";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="Заменить файл в папке назначения копируемым.";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="Переместить и заменить";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="Заменить файл в папке назначения перемещаемым.";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="Загрузить и заменить";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="Заменить файл в папке назначения загружаемым файлом.";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="Skip this file.";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="Копировать и переименовать";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="Копируемый файл будет переименован в:";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="Переместить и переименовать";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="Перемещаемый файл будет переименован в:";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="Загрузить и переименовать";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="Загружаемый файл будет переименован в:";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="Загрузить и заменить";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="The file will be updated with a new version.";
+"nameCollision.files.alreadyExists"="В этой папке уже существует файл «%@».";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="Заменить";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="Переименовать";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="Изменить";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="Этот файл будет обновлён новой версией:";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Здесь только вы";
 /* Meetings end call dialog description */

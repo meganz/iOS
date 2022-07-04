@@ -1,4 +1,3 @@
-import DateToolsSwift
 
 extension Date {
     func string(withDateFormat dateFormat: String) -> String {

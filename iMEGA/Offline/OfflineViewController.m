@@ -37,9 +37,7 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
@@ -74,7 +72,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
     }
     
-    self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
+    [self setNavigationBarButtons];
     
     self.definesPresentationContext = YES;
     
@@ -85,8 +83,6 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
-
-    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -406,8 +402,6 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.navigationItem.searchController = self.searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
-    
-    self.moreBarButtonItem.enabled = self.offlineSortedItems.count > 0;
 
     [self updateNavigationBarTitle];
     
@@ -624,11 +618,19 @@ static NSString *kisDirectory = @"kisDirectory";
     return navigationController;
 }
 
+- (void)changeEditingModeStatus {
+    BOOL enableEditing = self.offlineTableView ? !self.offlineTableView.tableView.isEditing : !self.offlineCollectionView.collectionView.allowsMultipleSelection;
+    [self setEditMode:enableEditing];
+}
+
+- (void)nodesSortTypeHasChanged {
+    [self reloadUI];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL enableEditing = self.offlineTableView ? !self.offlineTableView.tableView.isEditing : !self.offlineCollectionView.collectionView.allowsMultipleSelection;
-    [self setEditMode:enableEditing];
+    [self changeEditingModeStatus];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -688,76 +690,13 @@ static NSString *kisDirectory = @"kisDirectory";
     } andCancelAction:nil];
 }
 
-- (IBAction)sortByTapped:(UIBarButtonItem *)sender {
-    MEGASortOrderType sortType = [Helper sortTypeFor:self.currentOfflinePath];
-
-    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
-
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.currentOfflinePath];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.currentOfflinePath];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.currentOfflinePath];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.currentOfflinePath];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.currentOfflinePath];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.currentOfflinePath];
-        [self reloadUI];
-    }]];
-    
-    ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-    [self presentViewController:sortByActionSheet animated:YES completion:nil];
-}
-
-- (IBAction)moreAction:(UIBarButtonItem *)sender {
-    __weak __typeof__(self) weakSelf = self;
-
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    if ([self numberOfRows]) {
-        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? NSLocalizedString(@"Thumbnail View", @"Text shown for switching from list view to thumbnail view.") : NSLocalizedString(@"List View", @"Text shown for switching from thumbnail view to list view.");
-        UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeViewModePreference];
-        }]];
-    }
-    
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.currentOfflinePath]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf sortByTapped:self.sortByBarButtonItem];
-    }]];
-    
-    if (self.offlineSortedItems.count) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf editTapped:self.editButtonItem];
-        }]];
-    }
-
-    ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.moreBarButtonItem];
-    [self presentViewController:moreActionSheet animated:YES completion:nil];
-}
-
 #pragma mark - Public
 
 - (void)enableButtonsByNumberOfItems {
     NSInteger rows = self.searchController.isActive ? self.searchItemsArray.count : self.offlineSortedItems.count;
     if (rows == 0) {
-        self.sortByBarButtonItem.enabled = NO;
         [self.editBarButtonItem setEnabled:NO];
     } else {
-        self.sortByBarButtonItem.enabled = YES;
         [self.editBarButtonItem setEnabled:YES];
     }
 }
@@ -881,7 +820,7 @@ static NSString *kisDirectory = @"kisDirectory";
             }];
         }
     } else {
-        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
+        [self setNavigationBarButtons];
         self.allItemsSelected = NO;
         self.selectedItems = nil;
         self.navigationItem.leftBarButtonItems = @[];

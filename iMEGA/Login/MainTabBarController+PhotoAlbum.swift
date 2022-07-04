@@ -16,8 +16,9 @@ extension MainTabBarController {
             photosVC.configureMyAvatarManager()
             
             let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photosVC)
-            let photoLibraryRepository = PhotoLibraryRepository.default
-            let photoLibraryUseCase = PhotoLibraryUseCase(repository: photoLibraryRepository)
+            let photoLibraryRepository = PhotoLibraryRepository.newRepo
+            let fileSearchRepository = SDKFilesSearchRepository.newRepo
+            let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
             let viewModel = PhotoViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
                 photoLibraryUseCase: photoLibraryUseCase

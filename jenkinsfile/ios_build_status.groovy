@@ -14,6 +14,7 @@ pipeline {
     options {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
+        gitlabCommitStatus(name: 'Jenkins')
     }
     post { 
         failure {
@@ -28,7 +29,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
                         final String response = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
                         def json = new groovy.json.JsonSlurperClassic().parseText(response)
-                        env.MARKDOWN_LINK = ":x: Build Failed <br />Build Log: ${json.markdown}"
+                        env.MARKDOWN_LINK = ":x: Build status check Failed <br />Build Log: ${json.markdown}"
                         env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
                         sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
                     }
@@ -44,6 +45,23 @@ pipeline {
                     }
                 }
             }
+            
+            updateGitlabCommitStatus name: 'Jenkins', state: 'failed'
+        }
+        success {
+            script {
+                if (env.BRANCH_NAME.startsWith('MR-')) {
+                    def mrNumber = env.BRANCH_NAME.replace('MR-', '')
+
+                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                        env.MARKDOWN_LINK = ":white_check_mark: Build status check succeeded"
+                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
+                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+                    }
+                }
+            }
+
+            updateGitlabCommitStatus name: 'Jenkins', state: 'success'
         }
         cleanup {
             cleanWs()
@@ -65,19 +83,6 @@ pipeline {
                                     }
                                 })
                             }
-                        }
-                    }
-                }
-
-                stage('Update pods') {
-                    steps {
-                        gitlabCommitStatus(name: 'Update pods') {
-                            injectEnvironments({
-                                sh "bundle install"
-                                sh "bundle exec pod repo update"
-                                sh "bundle exec pod cache clean --all --verbose"
-                                sh "bundle exec pod install --verbose"
-                            })
                         }
                     }
                 }

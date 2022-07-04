@@ -22,15 +22,17 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
     }
     
     func build() -> UIViewController {
-        let viewModel = NameCollisionViewModel(router: self,
-                                               thumbnailUseCase: ThumbnailUseCase.default,
-                                               nameCollisionUseCase: NameCollisionUseCase.default, fileVersionsUseCase:
-                                                FileVersionsUseCase(repo: FileVersionsRepository(sdk: MEGASdkManager.sharedMEGASdk())),
-                                               transfers: transfers,
-                                               nodes: nodes,
-                                               collisions: collisions,
-                                               collisionType: collisionType,
-                                               isFolderLink: isFolderLink)
+        let viewModel = NameCollisionViewModel(
+            router: self,
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            nameCollisionUseCase: NameCollisionUseCase(nodeRepository: NodeRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo),
+            fileVersionsUseCase: FileVersionsUseCase(repo: FileVersionsRepository.newRepo),
+            transfers: transfers,
+            nodes: nodes,
+            collisions: collisions,
+            collisionType: collisionType,
+            isFolderLink: isFolderLink
+        )
         self.viewModel = viewModel
         let nameCollisionView = NameCollisionView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: nameCollisionView)

@@ -62,7 +62,7 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     @MainActor
     private func loadNodes() async {
         do {
-            let nodes = try await albumContentsUseCase.favouriteAlbumNodes(withCameraUploadNode: cameraUploadNode)
+            let nodes = try await albumContentsUseCase.favouriteAlbumNodes()
             
             invokeCommand?(.showAlbum(nodes: nodes))
         } catch {

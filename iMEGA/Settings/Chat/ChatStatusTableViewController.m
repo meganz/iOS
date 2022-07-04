@@ -188,15 +188,13 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 }
 
 - (void)updateAutoAwayTimeLabel {
-    NSString *xMinutes;
-    if ((self.presenceConfig.autoAwayTimeout / 60) < 2) {
-        xMinutes = NSLocalizedString(@"1Minute", nil);
-        self.autoAwayTimeTextField.text = xMinutes;
-    } else {
-        xMinutes = NSLocalizedString(@"xMinutes", nil);
-        self.autoAwayTimeTextField.text = [xMinutes stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+    NSInteger minutes = (self.presenceConfig.autoAwayTimeout / 60);
+    if (minutes < 1) {
+        return;
     }
     
+    NSString *format = NSLocalizedString(@"chat.status.duration.minute", nil);
+    self.autoAwayTimeTextField.text = [NSString stringWithFormat:format, minutes];
     self.autoAwayTimeSaveButton.hidden = YES;
 }
 

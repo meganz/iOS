@@ -383,21 +383,28 @@
     }
 }
 
-- (void)mnz_leaveSharingInViewController:(UIViewController *)viewController {
+- (void)mnz_leaveSharingInViewController:(UIViewController *)viewController completion:(void (^ _Nullable)(BOOL))completion {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *alertTitle = NSLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
         NSString *alertMessage = NSLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
         
         UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            if (completion) {
+                completion(NO);
+            }
+        }]];
         
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                void (^completion)(void) = ^{
+                void (^comp)(void) = ^{
                     [viewController dismissViewControllerAnimated:YES completion:nil];
+                    if (completion) {
+                        completion(YES);
+                    }
                 };
-                MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:2 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+                MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:2 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:comp];
                 [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
             }
         }]];
@@ -406,7 +413,7 @@
     }
 }
 
-- (void)mnz_removeSharing {
+- (void)mnz_removeSharingWithCompletion:(void (^ _Nullable)(BOOL))completion {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
         
@@ -420,11 +427,18 @@
         }
         NSString *alertMessage = outSharesForNodeMutableArray.count == 1 ? NSLocalizedString(@"removeOneShareOneContactMessage", nil) : [NSString stringWithFormat:NSLocalizedString(@"removeOneShareMultipleContactsMessage", nil), outSharesForNodeMutableArray.count];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            if (completion) {
+                completion(NO);
+            }
+        }]];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
             for (MEGAShare *share in outSharesForNodeMutableArray) {
                 [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+            }
+            if (completion) {
+                completion(YES);
             }
         }]];
         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
@@ -439,14 +453,6 @@
         [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
         [MEGASdkManager.sharedMEGASdk disableExportNode:self];
     }
-}
-
-- (void)mnz_removeLink {
-    MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
-        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
-    } multipleLinks:NO];
-    
-    [MEGASdkManager.sharedMEGASdk disableExportNode:self delegate:requestDelegate];
 }
 
 - (void)mnz_sendToChatInViewController:(UIViewController *)viewController {

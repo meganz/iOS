@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ActionsView: View {
-    var collisionType: NameCollisionType
     var duplicatedItem: DuplicatedItem
     var imageUrl: URL?
     var collisionImageUrl: URL?
@@ -10,7 +9,7 @@ struct ActionsView: View {
     
     var body: some View {
         ForEach(actions) { actionItem in
-            ActionView(viewModel: ActionViewModel(collisionType: collisionType, actionItem: actionItem))
+            ActionView(viewModel: ActionViewModel(actionItem: actionItem))
                 .gesture(
                     TapGesture()
                         .onEnded({ _ in
@@ -46,9 +45,11 @@ struct ActionView: View {
                         Text(viewModel.actionTitle)
                             .font(.body.bold())
                             .foregroundColor(Color(Colors.General.Green._00C29A.name))
-                        Text(viewModel.actionDescription)
-                            .font(.footnote)
-                            .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.black.opacity(0.8))
+                        if let description = viewModel.actionDescription {
+                            Text(description)
+                                .font(.footnote)
+                                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.black.opacity(0.8))
+                        }
                     }
                     if viewModel.showItemView {
                         ItemView(name: viewModel.itemName, size: viewModel.actionItem.size, date: viewModel.actionItem.date, imageUrl: viewModel.actionItem.imageUrl, imagePlaceholder: viewModel.actionItem.itemPlaceholder)

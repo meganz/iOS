@@ -44,7 +44,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         
         loadingTask = Task {
             do {
-                let nodes = try await albumContentsUseCase.favouriteAlbumNodes(withCameraUploadNode: cameraUploadNode)
+                let nodes = try await albumContentsUseCase.favouriteAlbumNodes()
                 
                 let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
                 numberOfNodes = albumEntity.numberOfNodes

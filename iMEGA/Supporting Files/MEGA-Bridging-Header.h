@@ -156,7 +156,6 @@
 #import "CloudDriveCollectionViewController.h"
 #import "OfflineCollectionViewController.h"
 #import "CompressingLogFileManager.h"
-#import "CameraUploadsTableViewController.h"
 #import "ConfirmAccountViewcontroller.h"
 #import "HelpTableViewController.h"
 #import "CameraUploadBackgroundRefreshPerformer.h"
@@ -165,3 +164,4 @@
 #import "CameraUploadOperation+Utils.h"
 #import "AssetResourceUploadOperation.h"
 #import "AssetUploadStatus.h"
+#import "AboutTableViewController.h"

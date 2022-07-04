@@ -1,5 +1,5 @@
 
-protocol NodeRepositoryProtocol {
+protocol NodeRepositoryProtocol: RepositoryProtocol {
     func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity?
     func nameForNode(handle: MEGAHandle) -> String?
     func nameForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String?

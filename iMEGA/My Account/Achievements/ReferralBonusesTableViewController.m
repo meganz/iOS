@@ -6,10 +6,9 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 
 #import "AchievementsTableViewCell.h"
-
-@import DateToolsObjc;
 
 @interface ReferralBonusesTableViewController () <UITableViewDataSource>
 

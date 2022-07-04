@@ -22,11 +22,9 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
         guard let cookieSettingsTVC = UIStoryboard(name: "CookieSettings", bundle: nil).instantiateViewController(withIdentifier: "CookieSettingsTableViewControllerID") as? CookieSettingsTableViewController else {
             fatalError("Could not instantiate CookieSettingsTableViewController")
         }
-        
-        let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
 
         let viewModel = CookieSettingsViewModel(
-            cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository(sdk:  MEGASdkManager.sharedMEGASdk()), analyticsUseCase: analyticsUseCase),
+            cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository(sdk:  MEGASdkManager.sharedMEGASdk())),
             router: self
         )
         

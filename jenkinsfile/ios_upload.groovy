@@ -173,19 +173,6 @@ pipeline {
                     }
                 }
 
-                stage('Update pods') {
-                    steps {
-                        gitlabCommitStatus(name: 'Update pods') {
-                            injectEnvironments({
-                                sh "bundle install"
-                                sh "bundle exec pod repo update"
-                                sh "bundle exec pod cache clean --all --verbose"
-                                sh "bundle exec pod install --verbose"
-                            })
-                        }
-                    }
-                }
-
                 stage('Downloading third party libraries') {
                     steps {
                         gitlabCommitStatus(name: 'Downloading third party libraries') {
@@ -326,10 +313,14 @@ pipeline {
                         gitlabCommitStatus(name: 'Prepare archive zip to be uploaded to MEGA') {
                             injectEnvironments({
                                 script {
-                                    def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}.zip"
-                                    def zipPath = "${WORKSPACE}/${fileName}"
-                                    sh "bundle exec fastlane zip_Archive archive_path:\'${env.MEGA_BUILD_ARCHIVE_PATH}\' zip_path:${zipPath}"
-                                    sh "mkdir -p ./../iOS-Archives/ && mv ${zipPath} ./../iOS-Archives/"
+                                    withCredentials([usernamePassword(credentialsId: 'Lancy-Artifactory-Credentials', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                                        def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}.zip"
+                                        env.zipPath = "${WORKSPACE}/${fileName}"
+                                        env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/${fileName}"
+                                        sh "bundle exec fastlane zip_Archive archive_path:\'${env.MEGA_BUILD_ARCHIVE_PATH}\' zip_path:${env.zipPath}"
+                                        sh 'curl -u${USERNAME}:${TOKEN} -T ${zipPath} \"${targetPath}\"'
+                                        sh 'rm ${zipPath}'
+                                    }
                                 } 
                             })
                         }

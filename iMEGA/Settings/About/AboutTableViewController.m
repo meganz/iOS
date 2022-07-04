@@ -89,7 +89,15 @@
     }
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - TableView Datasource and Delegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+#ifdef FIREBASE_BUILD
+    return 3;
+#else
+    return (section == 0) ? 3 : 2;
+#endif
+}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
@@ -107,6 +115,12 @@
             } else if (indexPath.row == 1) { //Acknowledgements
                 [[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"] mnz_presentSafariViewController];
             }
+#ifdef FIREBASE_BUILD
+            else if (indexPath.row == 2) { // Firebase - Check for updates.
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                [self checkForFirebaseUpdates];
+            }
+#endif
             break;
         }
     }

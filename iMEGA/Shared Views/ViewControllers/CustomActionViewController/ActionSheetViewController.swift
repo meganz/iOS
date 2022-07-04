@@ -319,7 +319,7 @@ extension ActionSheetViewController: UITableViewDataSource {
             
             return cell
         } else {
-            let cell: ActionSheetCell = tableView.dequeueReusableCell(withIdentifier:"ActionSheetCell") as? ActionSheetCell ?? ActionSheetCell(style: .value1, reuseIdentifier: "ActionSheetCell")
+            let cell: ActionSheetCell = ActionSheetCell(style: .value1, reuseIdentifier: "ActionSheetCell")
             cell.configureCell(action: actions[indexPath.row] )
 
             return cell
@@ -329,19 +329,20 @@ extension ActionSheetViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let action = actions[indexPath.row] as? ActionSheetAction else {
-            return
-        }
-        
-        if action.isKind(of: ActionSheetSwitchAction.self) {
-            action.actionHandler()
-        } else {
-            dismiss(animated: true, completion: {
+        if let action = actions[indexPath.row] as? ActionSheetAction {
+            if action.isKind(of: ActionSheetSwitchAction.self) {
                 action.actionHandler()
+            } else {
+                dismiss(animated: true, completion: {
+                    action.actionHandler()
+                })
+            }
+        } else if let action = actions[indexPath.row] as? ContextActionSheetAction {
+            dismiss(animated: true, completion: {
+                action.actionHandler(action)
             })
         }
     }
-
 }
 
 extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {

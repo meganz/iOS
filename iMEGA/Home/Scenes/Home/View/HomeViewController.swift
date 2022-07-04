@@ -50,7 +50,7 @@ final class HomeViewController: UIViewController {
 
     private weak var startConversationItem: UIBarButtonItem!
 
-    private weak var startUploadBarButtonItem: UIBarButtonItem!
+    private let startUploadBarButtonItem: UIBarButtonItem = UIBarButtonItem()
 
     private weak var badgeButton: BadgeButton!
 
@@ -163,11 +163,15 @@ final class HomeViewController: UIViewController {
         uploadViewModel.notifyUpdate = { [weak self] homeUploadingViewModel in
             asyncOnMain {
                 guard let self = self else { return }
-                self.startUploadBarButtonItem?.isEnabled = homeUploadingViewModel.networkReachable
+                self.startUploadBarButtonItem.isEnabled = homeUploadingViewModel.networkReachable
 
                 switch homeUploadingViewModel.state {
                 case .permissionDenied(let error): self.handle(error)
                 case .normal: break
+                }
+                
+                if #available(iOS 14.0, *) {
+                    self.startUploadBarButtonItem.menu = homeUploadingViewModel.contextMenu
                 }
             }
         }
@@ -272,15 +276,16 @@ final class HomeViewController: UIViewController {
         )
         startConversationItem.accessibilityLabel = Strings.Localizable.startConversation
         self.startConversationItem = startConversationItem
-
-        let startUploadBarButtonItem = UIBarButtonItem(
-            image: Asset.Images.Home.uploadFile.image,
-            style: .plain,
-            target: self,
-            action: .didTapNewUpload
-        )
+        
+        startUploadBarButtonItem.image = Asset.Images.Home.uploadFile.image
+        
+        if #unavailable(iOS 14.0) {
+            startUploadBarButtonItem.style = .plain
+            startUploadBarButtonItem.target = self
+            startUploadBarButtonItem.action = .didTapNewUpload
+        }
+        
         startUploadBarButtonItem.accessibilityLabel = Strings.Localizable.upload
-        self.startUploadBarButtonItem = startUploadBarButtonItem
 
         navigationItem.setRightBarButtonItems([startUploadBarButtonItem, startConversationItem], animated: false)
     }
@@ -353,14 +358,14 @@ final class HomeViewController: UIViewController {
     }
 
     @objc fileprivate func didTapNewUpload() {
-        let sourceItems = uploadViewModel.inputs.didTapUploadFromSourceItems()
-        let sourceActions = sourceItems.map { [weak self] item -> ActionSheetAction in
-            ActionSheetAction(title: item.title, detail: nil, accessoryView: nil, image: item.icon, style: .default) {
-                self?.didSelectUploadSource(item.source)
-            }
-        }
+        guard let actions = uploadViewModel.inputs.didTapUploadFromSourceItems() else { return }
+        
+        let actionSheetVC = ActionSheetViewController(actions: actions,
+                                                      headerTitle: nil,
+                                                      dismissCompletion: nil,
+                                                      sender: nil)
 
-        router.didTap(on: .uploadButton, with: sourceActions)
+        self.present(actionSheetVC, animated: true)
     }
     
     @objc func activateSearch() {
@@ -481,41 +486,16 @@ extension HomeViewController: SlidePanelDelegate {
 
 extension HomeViewController: ExploreViewStackDelegate {
     func tappedCard(_ card: MEGAExploreViewStyle) {
-        let analyticsUseCase = AnalyticsUseCase(repository: GoogleAnalyticsRepository())
 
         switch card {
         case .images:
-            analyticsUseCase.logEvent(AnalyticsEventEntity.imagesExplorerCardTappedString, parameters: nil)
             router.photosExplorerSelected()
         case .documents:
-            analyticsUseCase.logEvent(AnalyticsEventEntity.docsExplorerCardTappedString, parameters: nil)
             router.documentsExplorerSelected()
         case .audio:
-            analyticsUseCase.logEvent(AnalyticsEventEntity.audioExplorerCardTappedString, parameters: nil)
             router.audioExplorerSelected()
         case .video:
-            analyticsUseCase.logEvent(AnalyticsEventEntity.videoExplorerCardTappedString, parameters: nil)
             router.videoExplorerSelected()
-        }
-    }
-}
-
-// MARK: - File Upload
-
-extension HomeViewController {
-
-    private func didSelectUploadSource(_ source: FileUploadingSourceItem.Source) {
-        switch source {
-        case .photos:
-            uploadViewModel.inputs.didTapUploadFromPhotoAlbum()
-        case .textFile:
-            uploadViewModel.inputs.didTapUploadFromNewTextFile()
-        case .capture:
-            uploadViewModel.inputs.didTapUploadFromCamera()
-        case .imports:
-            uploadViewModel.inputs.didTapUploadFromImports()
-        case .documentScan:
-            uploadViewModel.inputs.didTapUploadFromDocumentScan()
         }
     }
 }

@@ -21,14 +21,15 @@ final class AppFirstLaunchSecurityChecker: NSObject {
 }
 
 extension AppFirstLaunchSecurityChecker {
-    @objc(defaultChecker)
-    static let `default` = AppFirstLaunchSecurityChecker(
-        appFirstLaunchUseCase: AppFirstLaunchUseCase(preferenceUserCase: PreferenceUseCase.group),
-        accountCleanerUseCase: AccountCleanerUseCase(
-            credentialRepo: CredentialRepository.default,
-            groupContainerRepo: AppGroupContainerRepository.default
+    @objc static var newChecker: AppFirstLaunchSecurityChecker {
+        AppFirstLaunchSecurityChecker(
+            appFirstLaunchUseCase: AppFirstLaunchUseCase(preferenceUserCase: PreferenceUseCase.group),
+            accountCleanerUseCase: AccountCleanerUseCase(
+                credentialRepo: CredentialRepository.newRepo,
+                groupContainerRepo: AppGroupContainerRepository.newRepo
+            )
         )
-    )
+    }
 }
 
 

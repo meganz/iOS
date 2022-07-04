@@ -1,6 +1,8 @@
 @testable import MEGA
 
 struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
+    static let newRepo = MockOfflineFilesRepository()
+    
     var relativeOfflinePath: String = "Documents/"
     var offlineFilesMock: [OfflineFileEntity] = []
     var offlineFileMock: OfflineFileEntity?

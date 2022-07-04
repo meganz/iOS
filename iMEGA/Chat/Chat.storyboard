@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -450,27 +450,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="p5b-7o-fgJ">
                         <barButtonItem key="backBarButtonItem" title=" " id="1Ub-kM-Jrr"/>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Item" image="moreNavigationBar" id="8yY-z6-rqz">
-                                <connections>
-                                    <action selector="optionsTapped:" destination="Li1-XI-VLz" id="aB2-1V-dni"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="startConversation" id="fu8-g8-gHZ">
-                                <connections>
-                                    <action selector="addTapped:" destination="Li1-XI-VLz" id="zKR-Fq-am2"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="addBarButtonItem" destination="fu8-g8-gHZ" id="MMk-4L-0Gs"/>
                         <outlet property="archivedChatEmptyState" destination="ouL-g8-Aj6" id="AFd-bR-bJ8"/>
                         <outlet property="archivedChatEmptyStateCount" destination="Neh-p3-j5J" id="9RW-xU-gK1"/>
                         <outlet property="archivedChatEmptyStateTitle" destination="dFA-7b-ajV" id="DVx-Wf-zhh"/>
                         <outlet property="contactsOnMegaEmptyStateTitle" destination="3ZN-5d-SgR" id="SfE-ku-j31"/>
                         <outlet property="contactsOnMegaEmptyStateView" destination="Trx-xU-y0T" id="dZo-8p-n1b"/>
-                        <outlet property="moreBarButtonItem" destination="8yY-z6-rqz" id="Vub-Sb-a48"/>
                         <outlet property="tableView" destination="OEw-WR-Lm7" id="4K9-2w-rBx"/>
                         <outlet property="topBannerCameraEnabledImageView" destination="24l-2s-x7s" id="ZMV-bu-uX6"/>
                         <outlet property="topBannerLabel" destination="hDV-mu-alE" id="vEJ-kV-4OG"/>
@@ -1872,7 +1858,6 @@
         <image name="inviteToChat" width="40" height="40"/>
         <image name="location" width="28" height="28"/>
         <image name="locationPin" width="40" height="40"/>
-        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="mutedChat" width="28" height="28"/>
         <image name="onACall" width="10" height="10"/>
         <image name="privateChat" width="24" height="24"/>
@@ -1881,7 +1866,6 @@
         <image name="selectAll" width="28" height="28"/>
         <image name="sendThisLocation" width="40" height="40"/>
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>
-        <image name="startConversation" width="28" height="28"/>
         <image name="userMuted-banner" width="16" height="16"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="groupTableViewBackgroundColor">

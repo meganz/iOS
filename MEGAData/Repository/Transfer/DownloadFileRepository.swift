@@ -1,9 +1,8 @@
-
-extension DownloadFileRepository {
-    static let `default` = DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: nil, chatSdk: MEGASdkManager.sharedMEGAChatSdk())
-}
-
 struct DownloadFileRepository: DownloadFileRepositoryProtocol {
+    static var newRepo: DownloadFileRepository {
+        DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: nil, chatSdk: MEGASdkManager.sharedMEGAChatSdk())
+    }
+    
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk?
     private let chatSdk: MEGAChatSdk

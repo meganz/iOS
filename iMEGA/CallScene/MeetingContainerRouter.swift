@@ -18,6 +18,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)?)
     func removeEndCallDialog(completion: (() -> Void)?)
     func showJoinMegaScreen()
+    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -28,6 +29,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
+    private weak var hangOrEndCallRouter: HangOrEndCallRouting?
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private weak var containerViewModel: MeetingContainerViewModel?
     private var endCallDialog: EndCallDialog?
@@ -65,15 +67,15 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func build() -> UIViewController {
         let authUseCase = AuthUseCase(
             repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()),
-            credentialRepo: CredentialRepository.default
+            credentialRepo: CredentialRepository.newRepo
         )
-        let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.default)
+        let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo)
         
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
                                                   callUseCase: createCallUseCase,
                                                   chatRoomUseCase: chatRoomUseCase,
-                                                  callManagerUseCase: CallManagerUseCase(),
+                                                  callCoordinatorUseCase: CallCoordinatorUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),
                                                   authUseCase: authUseCase,
                                                   noUserJoinedUseCase: meetingNoUserJoinedUseCase)
@@ -107,12 +109,20 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
             MEGALogDebug("Meeting ended for call \(callId) - dismiss called will animated \(animated)")
         }
-        floatingPanelRouter?.dismiss(animated: animated)
-        baseViewController?.dismiss(animated: animated, completion: completion)
+        
+        if let hangOrEndCallRouter = hangOrEndCallRouter {
+            hangOrEndCallRouter.dismiss(animated: true) {
+                self.dismissCallUI(animated: animated, completion: completion)
+            }
+        } else {
+            dismissCallUI(animated: animated, completion: completion)
+        }
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
     func showShareMeetingError() {
+        guard CustomModalAlertViewController.isAlreadyPresented == false else { return }
+        
         let customModalAlertViewController = CustomModalAlertViewController()
         customModalAlertViewController.image = Asset.Images.Chat.chatLinkCreation.image
         customModalAlertViewController.viewTitle = chatRoom.title
@@ -158,6 +168,11 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
+        guard UIActivityViewController.isAlreadyPresented == false else {
+            MEGALogDebug("Meeting link Share controller is already presented.")
+            return
+        }
+        
         let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
         if let barButtonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
@@ -232,6 +247,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         EncourageGuestUserToJoinMegaRouter(presenter: UIApplication.mnz_presentingViewController()).start()
     }
     
+    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
+        let hangOrEndCallRouter = HangOrEndCallRouter(presenter: UIApplication.mnz_presentingViewController(), meetingContainerViewModel: containerViewModel)
+        hangOrEndCallRouter.start()
+        self.hangOrEndCallRouter = hangOrEndCallRouter
+    }
+    
     //MARK:- Private methods.
     private func showCallViewRouter(containerViewModel: MeetingContainerViewModel) {
         guard let baseViewController = baseViewController else { return }
@@ -272,5 +293,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                     self.showFloatingPanel(containerViewModel: containerViewModel)
                 }
             }
+    }
+    
+    private func dismissCallUI(animated: Bool, completion: (() -> Void)?) {
+        floatingPanelRouter?.dismiss(animated: animated)
+        baseViewController?.dismiss(animated: animated, completion: completion)
     }
 }
