@@ -2969,7 +2969,7 @@
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Folder already exists";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
+"nameCollision.folders.alreadyExists"="The folder %@ already exists at this destination.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.merge.title"="Merge";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
@@ -3003,11 +3003,11 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="Call will end in %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="Make available offline";
 /* Button and title text that ends the meeting for all */
-"meetings.endCall.endForAllButtonTitle"="End Call for All";
-/*Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllAlert.title"="End Call for All?";
+"meetings.endCall.endForAllButtonTitle"="End call for all";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="End call for all?";
 /* Description of the popup that ends the meeting for all */
 "meetings.endCall.endForAllAlert.description"="This will end the call for all participants.";
 /* Button title - tapping on the button will end the call. */
@@ -3017,4 +3017,4 @@
 /* Label for hang a group chat or meeting when the user is moderator */
 "meetings.leaveCall.buttonTitle"="Leave";
 /* Label for end a group chat or meeting when the user is moderator */
-"meetings.endForAll.buttonTitle"="End for All";
+"meetings.endForAll.buttonTitle"="End for all";

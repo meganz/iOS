@@ -398,14 +398,6 @@
 "filesSentToChat"="파일이 대화로 전송됨";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="파일 %d개 전송됨";
-/* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="링크 제거";
-/* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="링크 제거";
-/* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="링크 삭제됨";
-/* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="링크 삭제됨";
 /* Title show when a file is being downloaded */
 "downloading"="다운로드 중";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -2204,6 +2196,8 @@
 "Enter group name"="그룹 이름을 입력하세요";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="메시지…";
+/* Chat: Message shown when the chat link was removed successfully */
+"chat.link.linkRemoved"="링크 삭제됨";
 /* Action suggestion text to the user in voice recording view */
 "Drag left to cancel, release to send"="취소하려면 왼쪽으로 끌고, 전송하려면 놓으세요";
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
@@ -2970,66 +2964,34 @@
 "media.quality.high"="높음";
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="최고";
-/* Text to indicate the user that some file or folder is duplicated when uploading/copying/moving */
-"nameCollision.duplicatedItem.title"="중복된 항목";
+/* Text to indicate the user that file already exists when uploading/copying/moving */
+"nameCollision.title.file"="";
+/* Text to indicate the user that folder already exists when uploading/copying/moving */
+"nameCollision.title.folder"="폴더가 이미 존재합니다";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="%@ 폴더가 이미 이 위치에 존재합니다.";
-/* Text to ask the user what to do with the folder when trying to upload/copy/move and already exists in destination */
-"nameCollision.folders.selectAction"="폴더를 합칠지 또는 건너뛸지 선택하세요.";
-/* Text of the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeTitle"="복사하고 합치기";
-/* Text describing the copy action when trying to copy a folder and already exists in destination */
-"nameCollision.folders.copy.mergeDescription"="복사하려는 폴더와 대상 위치의 폴더를 합칩니다.";
-/* Text of the cancel action when trying to copy a folder/file and already exists in destination */
-"nameCollision.general.dontCopy"="복사하지 않기";
-/* Text of the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeTitle"="이동하고 합치기";
-/* Text describing the move action when trying to move a folder and already exists in destination */
-"nameCollision.folders.move.mergeDescription"="이동하려는 폴더와 대상 위치의 폴더를 합칩니다.";
-/* Text of the cancel action when trying to move a folder/file and already exists in destination */
-"nameCollision.general.dontMove"="이동하지 않기";
-/* Text of the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeTitle"="업로드하고 합치기";
-/* Text describing the upload action when trying to upload a folder and already exists in destination */
-"nameCollision.folders.upload.mergeDescription"="업로드하려는 폴더와 대상 위치의 폴더를 합칩니다.";
-/* Text of the cancel action when trying to upload a folder/file and already exists in destination */
-"nameCollision.general.cancelTitle"="업로드 하지 않기";
-/* Text describing the cancel action when trying to copy/move/upload a folder and already exists in destination */
-"nameCollision.folders.cancelDescription"="이 폴더 건너뛰기.";
+"nameCollision.folders.alreadyExists"="";
+/* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.merge.title"="";
+/* Text description for the merge action when upload/copy/move and already exists in destination */
+"nameCollision.folders.action.merge.description"="";
+/* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
+"nameCollision.folders.action.skip.title"="이 폴더 건너뛰기";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="%@ 파일이 이미 이 위치에 존재합니다.";
-/* Text to ask the user what to do with the file when trying to upload/copy/move and already exists in destination */
-"nameCollision.files.selectAction"="유지할 파일을 선택하세요:";
-/* Text of the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceTitle"="복사하고 교체";
-/* Text describing the copy and replace action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.replaceDescription"="대상 폴더에 있는 파일을 복사하려는 파일로 교체합니다.";
-/* Text of the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceTitle"="이동하고 교체";
-/* Text describing the move and replace action when trying to move a file and already exists in destination */
-"nameCollision.files.move.replaceDescription"="대상 폴더에 있는 파일을 이동하려는 파일로 교체.";
-/* Text of the upload and replace action when trying to upload a file and already exists in destination (versioning disabled) */
-"nameCollision.files.upload.replaceTitle"="업로드하고 교체하기";
-/* Text describing the upload and replace action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.replaceDescription"="대상 폴더에 있는 파일을 업로드 중인 파일로 교체합니다.";
-/* Text describing the cancel action when trying to copy/move/upload a file and already exists in destination */
-"nameCollision.files.cancelDescription"="파일이 변경되지 않습니다. 아래의 파일을 유지합니다:";
-/* Text of the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameTitle"="복사하고 이름 바꾸기";
-/* Text describing the copy and rename action when trying to copy a file and already exists in destination */
-"nameCollision.files.copy.renameDescription"="복사하려는 파일이 다음과 같이 변경됩니다:";
-/* Text of the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameTitle"="이동하고 이름 바꾸기";
-/* Text describing the move and rename action when trying to move a file and already exists in destination */
-"nameCollision.files.move.renameDescription"="이동하려는 파일이 다음과 같이 변경됩니다:";
-/* Text of the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameTitle"="업로드하고 이름 바꾸기";
-/* Text describing the upload and rename action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.renameDescription"="업로드하는 파일은 다음과 같이 이름이 변경됩니다:";
-/* Text of the upload and update action when trying to upload a file and already exists in destination (versioning enabled) */
-"nameCollision.files.upload.updateTitle"="업로드하고 업데이트하기";
-/* Text describing the upload and update action when trying to upload a file and already exists in destination */
-"nameCollision.files.upload.updateDescription"="파일이 버전 기록과 함께 업데이트됩니다:";
+"nameCollision.files.alreadyExists"="";
+/* Text of the replace action trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.replace.title"="바꾸기";
+/* Text description for the replace action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.replace.description"="";
+/* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.skip.title"="";
+/* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
+"nameCollision.files.action.rename.title"="이름 바꾸기";
+/* Text description for the rename action when upload/copy/move and already exists in destination */
+"nameCollision.files.action.rename.description"="";
+/* Text of the update action when trying to upload a file and already exists in destination */
+"nameCollision.files.action.update.title"="업데이트";
+/* Text description for the update action when upload and already exists in destination */
+"nameCollision.files.action.update.description"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="여기에 당신만 있습니다";
 /* Meetings end call dialog description */
@@ -3041,4 +3003,18 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="%@ 내에 통화가 종료됩니다";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Download to Offline";
+"general.downloadToOffline"="오프라인에서 이용 가능하게 하기";
+/* Button and title text that ends the meeting for all */
+"meetings.endCall.endForAllButtonTitle"="모두 통화 종료";
+/* Title of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.title"="모두의 통화를 종료할까요?";
+/* Description of the popup that ends the meeting for all */
+"meetings.endCall.endForAllAlert.description"="이것은 모든 참여자의 통화를 종료할 것입니다.";
+/* Button title - tapping on the button will end the call. */
+"meetings.endCall.endForAllAlert.confirm"="예";
+/* Button title - tapping on the button dismiss without ending the call. */
+"meetings.endCall.endForAllAlert.cancel"="아니오";
+/* Label for hang a group chat or meeting when the user is moderator */
+"meetings.leaveCall.buttonTitle"="떠나기";
+/* Label for end a group chat or meeting when the user is moderator */
+"meetings.endForAll.buttonTitle"="End for all";
