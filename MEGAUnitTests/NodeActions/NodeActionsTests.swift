@@ -37,6 +37,18 @@ class NodeActionsTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .saveToPhotos, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testSlideShowWithCloudDriveNodeContainsImageFile() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setShowSlideshow(true)
+            .setIsMediaFile(true)
+            .setIsFile(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .slideShow, .saveToPhotos, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
+    }
+    
     func testCloudDriveNodeMediaFileExported() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)

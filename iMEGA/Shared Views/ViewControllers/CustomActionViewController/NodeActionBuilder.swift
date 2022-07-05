@@ -1,28 +1,28 @@
-
 final class NodeActionBuilder {
-    
     private var displayMode: DisplayMode = .unknown
     private var accessLevel: MEGAShareType = .accessUnknown
-    private var isMediaFile: Bool = false
-    private var isEditableTextFile: Bool = false
-    private var isFile: Bool = false
-    private var versionCount: Int = 0
-    private var isFavourite: Bool = false
+    private var isMediaFile = false
+    private var showSlideshow = false
+    private var isEditableTextFile = false
+    private var isFile = false
+    private var versionCount = 0
+    private var isFavourite = false
     private var label: MEGANodeLabel = .unknown
-    private var isRestorable: Bool = false
-    private var isPdf: Bool = false
-    private var isLink: Bool = false
-    private var isPageView: Bool = true
-    private var isIncomingShareChildView: Bool = false
-    private var isExported: Bool = false
-    private var linkedNodeCount: Int = 0
-    private var isOutShare: Bool = false
-    private var isChildVersion: Bool = false
-    private var isBackupFolder: Bool = false
-    private var isInVersionsView: Bool = false
+    private var isRestorable = false
+    private var isPdf = false
+    private var isLink = false
+    private var isPageView = true
+    private var isIncomingShareChildView = false
+    private var isExported = false
+    private var linkedNodeCount = 0
+    private var isOutShare = false
+    private var isChildVersion = false
+    private var isBackupFolder = false
+    private var isInVersionsView = false
     private var viewMode: ViewModePreference = .list
     private var nodeSelectionType: NodeSelectionType = .single
     private var isTakedown = false
+    
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -36,6 +36,11 @@ final class NodeActionBuilder {
     
     func setIsMediaFile(_ isMediaFile: Bool) -> NodeActionBuilder {
         self.isMediaFile = isMediaFile
+        return self
+    }
+    
+    func setShowSlideshow(_ showSlideshow: Bool) -> NodeActionBuilder {
+        self.showSlideshow = showSlideshow
         return self
     }
     
@@ -330,6 +335,11 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
             nodeActions.append(NodeAction.labelAction(label: label))
         }
+        
+        if showSlideshow {
+            nodeActions.append(NodeAction.slideShowAction())
+        }
+        
         if isMediaFile {
             nodeActions.append(NodeAction.saveToPhotosAction())
         }
@@ -434,6 +444,10 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
             nodeActions.append(NodeAction.labelAction(label: label))
+        }
+        
+        if showSlideshow {
+            nodeActions.append(NodeAction.slideShowAction())
         }
         
         if isMediaFile {
