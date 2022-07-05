@@ -93,7 +93,6 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
             
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            cancelToken = MEGACancelToken()
             
             saveMediaUseCase.saveToPhotos(node: node.toNodeEntity()) { error in
                 SVProgressHUD.dismiss()
