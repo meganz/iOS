@@ -9,53 +9,55 @@ import UIKit
 }
 
 class NodeActionViewController: ActionSheetViewController {
-    
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
-    var delegate: NodeActionViewControllerDelegate
+    private let viewModel = NodeActionViewModel(nodeActionUseCase: NodeActionUseCase(repo: NodeActionRepository.newRepo))
+    
     var sender: Any
+    var delegate: NodeActionViewControllerDelegate
+    
     private var viewMode: ViewModePreference?
-
+    
     let nodeImageView = UIImageView.newAutoLayout()
     let titleLabel = UILabel.newAutoLayout()
     let subtitleLabel = UILabel.newAutoLayout()
     let downloadImageView = UIImageView.newAutoLayout()
     let separatorLineView = UIView.newAutoLayout()
-
+    
     // MARK: - NodeActionViewController initializers
-
+    
     convenience init?(
         node: MEGAHandle,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         isIncoming: Bool = false,
         sender: Any) {
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: node) else { return nil }
-        self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, sender: sender)
-    }
+            guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: node) else { return nil }
+            self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, sender: sender)
+        }
     
     init?(
         nodeHandle: MEGAHandle,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         sender: Any) {
-        
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
-        self.nodes = [node]
-        self.displayMode = displayMode
-        self.delegate = delegate
-        self.sender = sender
-        
-        super.init(nibName: nil, bundle: nil)
-        
-        configurePresentationStyle(from: sender)
-        
-        self.actions = NodeActionBuilder()
-            .setDisplayMode(displayMode)
-            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-            .build()
-    }
-
+            
+            guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
+            self.nodes = [node]
+            self.displayMode = displayMode
+            self.delegate = delegate
+            self.sender = sender
+            
+            super.init(nibName: nil, bundle: nil)
+            
+            configurePresentationStyle(from: sender)
+            
+            self.actions = NodeActionBuilder()
+                .setDisplayMode(displayMode)
+                .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+                .build()
+        }
+    
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
@@ -116,32 +118,6 @@ class NodeActionViewController: ActionSheetViewController {
                           displayMode: displayMode,
                           isInVersionsView: isInVersionsView)
     }
-
-    
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false) {
-        let isImageOrVideoFile = node.name?.mnz_isImagePathExtension == true || node.name?.mnz_isVideoPathExtension == true
-        let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
-        let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
-        let isTakedown = node.isTakenDown()
-        self.actions = NodeActionBuilder()
-            .setDisplayMode(displayMode)
-            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-            .setIsMediaFile(isMediaFile)
-            .setIsEditableTextFile(isEditableTextFile)
-            .setIsFile(node.isFile())
-            .setVersionCount(node.mnz_numberOfVersions())
-            .setIsFavourite(node.isFavourite)
-            .setLabel(node.label)
-            .setIsRestorable(node.mnz_isRestorable())
-            .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
-            .setisIncomingShareChildView(isIncoming)
-            .setIsExported(node.isExported())
-            .setIsOutshare(node.isOutShare())
-            .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
-            .setIsInVersionsView(isInVersionsView)
-            .setIsTakedown(isTakedown)
-            .build()
-    }
     
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference, sender: Any) {
         self.nodes = [node]
@@ -192,7 +168,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNodeHeaderView()
@@ -235,20 +211,20 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     // MARK: - Private
-
+    
     private func configureNodeHeaderView() {
         guard nodes.count == 1, let node = nodes.first else {
             return
         }
         
         headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 80)
-
+        
         headerView?.addSubview(nodeImageView)
         nodeImageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
         nodeImageView.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 8)
         nodeImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         nodeImageView.mnz_setThumbnail(by: node)
-
+        
         headerView?.addSubview(titleLabel)
         titleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
         titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
@@ -281,12 +257,39 @@ class NodeActionViewController: ActionSheetViewController {
         } else {
             subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
         }
-    
+        
         headerView?.addSubview(separatorLineView)
         separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
         separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
         separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
         separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
         separatorLineView.backgroundColor = tableView.separatorColor
+    }
+    
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false) {
+        let isImageOrVideoFile = node.name?.mnz_isVisualMediaPathExtension == true
+        let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
+        let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
+        let isTakedown = node.isTakenDown()
+        
+        self.actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
+            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .setIsMediaFile(isMediaFile)
+            .setShowSlideshow(viewModel.shouldShowSlideShow(with: node.toNodeEntity()))
+            .setIsEditableTextFile(isEditableTextFile)
+            .setIsFile(node.isFile())
+            .setVersionCount(node.mnz_numberOfVersions())
+            .setIsFavourite(node.isFavourite)
+            .setLabel(node.label)
+            .setIsRestorable(node.mnz_isRestorable())
+            .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
+            .setisIncomingShareChildView(isIncoming)
+            .setIsExported(node.isExported())
+            .setIsOutshare(node.isOutShare())
+            .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
+            .setIsInVersionsView(isInVersionsView)
+            .setIsTakedown(isTakedown)
+            .build()
     }
 }

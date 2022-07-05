@@ -206,6 +206,8 @@
 "noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="Slideshow";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */

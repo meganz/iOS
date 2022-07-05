@@ -1,6 +1,11 @@
+import Foundation
 @testable import MEGA
 
-final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
+struct MockNodeActionRepository: NodeActionRepositoryProtocol {
+    static var newRepo: MockNodeActionRepository {
+        MockNodeActionRepository()
+    }
+    
     var nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown
     var labelString: String = ""
     
@@ -8,19 +13,13 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     var versions: Bool = false
     var downloaded: Bool = false
     var inRubbishBin: Bool = false
-    let slideShowImages: [NodeEntity]
+    var images: [NodeEntity] = []
     
-    init(slideShowImages: [NodeEntity] = []) {
-        self.slideShowImages = slideShowImages
+    func nodeAccessLevel() -> MEGA.NodeAccessTypeEntity {
+        nodeAccessLevelVariable
     }
     
-    func nodeAccessLevel() -> NodeAccessTypeEntity {
-        return nodeAccessLevelVariable
-    }
-    
-    func downloadToOffline() { }
-    
-    func labelString(label: NodeLabelTypeEntity) -> String {
+    func labelString(label: MEGA.NodeLabelTypeEntity) -> String {
         labelString
     }
     
@@ -40,7 +39,11 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
         inRubbishBin
     }
     
-    func slideShowImages(for node: NodeEntity) -> [NodeEntity] {
-        slideShowImages
+    func images(for parentNode: NodeEntity) -> [NodeEntity] {
+        images
+    }
+    
+    func images(for parentHandle: MEGAHandle) -> [NodeEntity] {
+        images
     }
 }

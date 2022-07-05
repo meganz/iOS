@@ -4051,6 +4051,14 @@ public enum Strings {
         }
       }
     }
+    public enum SharedItems {
+      public enum Menu {
+        public enum Slideshow {
+          /// Slideshow
+          public static let title = Strings.tr("Localizable", "sharedItems.menu.slideshow.title")
+        }
+      }
+    }
     public enum Transfer {
       public enum Cell {
         public enum ShareOwnerStorageQuota {

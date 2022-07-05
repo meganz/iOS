@@ -582,6 +582,7 @@ internal enum Asset {
       internal static let sendToChat = ImageAsset(name: "sendToChat")
       internal static let share = ImageAsset(name: "share")
       internal static let shareFolder = ImageAsset(name: "shareFolder")
+      internal static let slideshow = ImageAsset(name: "slideshow")
       internal static let textfile = ImageAsset(name: "textfile")
     }
     internal enum Onboarding {
