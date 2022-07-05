@@ -30,7 +30,7 @@ extension PhotosViewController {
         present(actionSheetVC, animated: true)
     }
     
-    @objc func setRightNavigationBarButtons() {
+    private func enableContextMenuOnCameraUploader() {
         if #available(iOS 14.0, *) {
             guard let menuConfig = contextMenuConfiguration() else { return }
             editBarButtonItem?.image = Asset.Images.NavigationBar.moreNavigationBar.image
@@ -45,20 +45,46 @@ extension PhotosViewController {
         }
     }
     
+    private func disableContextMenuOnCameraUploader() {
+        if #available(iOS 14.0, *) {
+            editBarButtonItem?.image = Asset.Images.NavigationBar.selectAll.image
+            editBarButtonItem?.menu = nil
+            editBarButtonItem?.isEnabled = true
+            editBarButtonItem?.target = self
+            editBarButtonItem?.action = #selector(onSelect)
+        
+            objcWrapper_parent.navigationItem.rightBarButtonItem = editBarButtonItem
+            objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
+            )
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(onSelect))
+        }
+    }
+    
+    @objc func setRightNavigationBarButtons() {
+        if FeatureFlag.shouldEnableContextMenuOnCameraUploadExplorer {
+            enableContextMenuOnCameraUploader()
+        } else {
+            disableContextMenuOnCameraUploader()
+        }
+    }
+    
     @objc func cancelEditing (sender:UIButton) {
         setEditing(!isEditing, animated: true)
         setRightNavigationBarButtons()
-        editBarButtonItem?.action = nil
+        
+        if FeatureFlag.shouldEnableContextMenuOnCameraUploadExplorer {
+            editBarButtonItem?.action = nil
+        }
     }
     
-    private func onSelect() {
+    private func enableContextMenuOnCameraUploaderOnSelect() {
         if #available(iOS 14.0, *) {
             setEditing(!isEditing, animated: true)
             editBarButtonItem?.menu = nil
             editBarButtonItem?.target = self
             editBarButtonItem?.action = #selector(cancelEditing)
-        }
-        else {
+        } else {
             setEditing(!isEditing, animated: true)
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 title: Strings.Localizable.cancel,
@@ -68,6 +94,33 @@ extension PhotosViewController {
             )
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
             )
+        }
+    }
+    
+    private func disableContextMenuOnCameraUploaderOnSelect() {
+        if #available(iOS 14.0, *) {
+            setEditing(!isEditing, animated: true)
+            editBarButtonItem?.menu = nil
+            editBarButtonItem?.target = self
+            editBarButtonItem?.action = #selector(cancelEditing)
+        } else {
+            setEditing(!isEditing, animated: true)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: Strings.Localizable.cancel,
+                style: .plain,
+                target: self,
+                action: #selector(cancelEditing)
+            )
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
+            )
+        }
+    }
+    
+    @objc private func onSelect() {
+        if FeatureFlag.shouldEnableContextMenuOnCameraUploadExplorer {
+            enableContextMenuOnCameraUploaderOnSelect()
+        } else {
+            disableContextMenuOnCameraUploaderOnSelect()
         }
     }
 }
