@@ -42,8 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIBarButtonItem *uploadAddBarButtonItem;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 
-@property (strong, nonatomic) MEGACancelToken *cancelToken;
-
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)updateNavigationBarTitle;

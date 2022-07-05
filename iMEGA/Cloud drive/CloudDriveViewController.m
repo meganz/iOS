@@ -82,6 +82,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (nonatomic, assign) ViewModePreference viewModePreference;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @property (nonatomic, assign) BOOL onlyUploadOptions;
 
