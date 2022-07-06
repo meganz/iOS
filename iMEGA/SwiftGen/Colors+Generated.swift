@@ -119,6 +119,9 @@ internal enum Colors {
   internal enum MediaDiscovery {
     internal static let exitButtonTint = ColorAsset(name: "exitButtonTint")
   }
+  internal enum Meeting {
+    internal static let startConversationImageBackground = ColorAsset(name: "startConversationImageBackground")
+  }
   internal enum PROAccount {
     internal static let proLITE = ColorAsset(name: "proLITE")
     internal static let redProI = ColorAsset(name: "redProI")

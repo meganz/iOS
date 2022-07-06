@@ -25,6 +25,8 @@
 ///     - versionsCount: The number of versions of the current node
 ///     - showMediaDiscovery:  Indicates whether or not it is avaiable to show Media Discovery
 ///     - chatStatus: Indicates the user chat status (online, away, busy, offline...)
+///     - shouldStartMeeting: Indicates whether or not to start a meeting
+///     - shouldJoiningMeeting: Indicated whether or not to join a meeting
 ///
 struct CMConfigEntity {
     let menuType: ContextMenuType
@@ -52,4 +54,6 @@ struct CMConfigEntity {
     var versionsCount: Int = 0
     var showMediaDiscovery: Bool = false
     var chatStatus: ChatStatus = .invalid
+    var shouldStartMeeting = false
+    var shouldJoiningMeeting = false
 }

@@ -3942,6 +3942,14 @@ public enum Strings {
         /// Meeting link could not be generated. Please try again.
         public static let error = Strings.tr("Localizable", "meetings.sharelink.Error")
       }
+      public enum StartConversation {
+        public enum ContextMenu {
+          /// Join Meeting
+          public static let joinMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.joinMeeting")
+          /// Start Meeting
+          public static let startMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.startMeeting")
+        }
+      }
     }
     public enum NameCollision {
       public enum Files {

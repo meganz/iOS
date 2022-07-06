@@ -23,10 +23,6 @@ extension ChatRoomsViewController {
         (chatSelectorButton?.isSelected ?? true) ? .nonMeeting : .meeting
     }
     
-    @objc func createNewMeeting() {
-        MeetingCreatingViewRouter(viewControllerToPresent: self, type: .start, link: nil, userhandle: 0).start()
-    }
-    
     @IBAction func meetingSelectorDidTap(_ sender: UIButton) {
         switchSelector(toChatType: .meeting)
     }
@@ -41,6 +37,7 @@ extension ChatRoomsViewController {
         meetingSelectorButton?.isSelected = chatType == .meeting
         updateSelector(forChatType: chatType)
         reloadData()
+        setNavigationBarButtons()
     }
     
     private func updateSelector(forChatType chatType: MEGAChatType) {

@@ -249,4 +249,18 @@ extension ContextMenuBuilder {
         CMActionEntity(title: Strings.Localizable.resetQrCode,
                        identifier: MyQRAction.resetQR.rawValue)
     }
+    
+    //MARK: - Meeting
+    
+    var startMeeting: CMActionEntity {
+        CMActionEntity(title: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting,
+                       image: Asset.Images.Meetings.startMeeting.image,
+                       identifier: MeetingAction.startMeeting.rawValue)
+    }
+    
+    var joinMeeting: CMActionEntity {
+        CMActionEntity(title: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting,
+                       image: Asset.Images.Meetings.joinAMeeting.image,
+                       identifier: MeetingAction.joinMeeting.rawValue)
+    }
 }
