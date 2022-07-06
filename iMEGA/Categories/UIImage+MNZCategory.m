@@ -296,7 +296,7 @@
 }
 
 + (UIImage *)mnz_uploadQueuedTransferImage {    
-    return [UIImage imageNamed:@"uploadQueued"];
+    return [UIImage imageNamed:@"uploading"];
 }
 
 + (UIImage *)mnz_errorTransferImage {
